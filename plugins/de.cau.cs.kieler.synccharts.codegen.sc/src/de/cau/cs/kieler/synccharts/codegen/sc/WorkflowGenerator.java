@@ -54,7 +54,6 @@ public class WorkflowGenerator {
             int value = random.nextInt(max);
             buffer.append(allowedChars.charAt(value));
         }
-        System.out.println(buffer.toString());
         return buffer.toString();
     }
 
@@ -85,6 +84,8 @@ public class WorkflowGenerator {
 
         if (sim) {
             outPath = System.getProperty("java.io.tmpdir") + "/" + randomString() + "/";
+            // for debugging un-comment the following line and replace "tam"
+            outPath = "/home/tam/scdebug/";
         }
         
 
@@ -98,9 +99,9 @@ public class WorkflowGenerator {
         generator.addOutlet(outlet);
 
         if (sim) {
-            generator.setExpand("template::simCodegen::main FOR model");
+            generator.setExpand("template::SimCodegen::main FOR model");
         } else {
-            generator.setExpand("template::codegen::main FOR model");
+            generator.setExpand("template::Codegen::main FOR model");
         }
 
         Workflow workflow = new Workflow();

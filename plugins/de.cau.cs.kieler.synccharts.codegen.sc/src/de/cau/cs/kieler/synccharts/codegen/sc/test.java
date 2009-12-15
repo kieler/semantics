@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
-import org.eclipse.emf.ecore.EObject;
 
 public class test {
 
@@ -9,9 +8,11 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        WorkflowGenerator wg = new WorkflowGenerator();
-        EObject myModel = wg.getModel();
-        System.out.println(myModel.toString());
+        Graph g = new Graph(10);
+        g.addEdge(1, 3, 1);
+        g.addEdge(4, 6, -1);
+        int x = g.numberOfEdges;
+        System.out.println(x);
 
     }
 

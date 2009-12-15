@@ -1,0 +1,6 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE region FOR Region-»
+«ENDDEFINE»

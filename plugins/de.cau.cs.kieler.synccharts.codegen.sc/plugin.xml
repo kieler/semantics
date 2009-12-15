@@ -22,6 +22,15 @@
                mnemonic="generate SC-Code"
                style="push"
                tooltip="generate SC-Code for the current SyncChart">
+               <visibleWhen
+                  checkEnabled="true">
+               		<with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>

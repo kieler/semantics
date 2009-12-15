@@ -1,0 +1,52 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE state FOR State-»
+
+«IF (this.regions.size == 1)-»
+«EXPAND generateForkOneRegion FOR this-»
+«EXPAND state FOR getInitialState(this.regions.first())-»
+
+«this.id»_main:
+«ELSE-»
+«this.id-»:
+«ENDIF-»
+«IF this.outgoingTransitions.isEmpty-»
+			«EXPAND CodegenMisc::callJSONState-»
+			// this should be HALT; but for simulation:
+			PAUSE;
+			GOTO(«this.id»);
+«ELSE-»
+		«FOREACH sortTransitionPrios(this) AS outTrans-»
+			«IF ((Transition)outTrans).isImmediate-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«ENDIF-»
+		«ENDFOREACH-»
+		«EXPAND CodegenMisc::callJSONState-»
+			PAUSE;
+		«FOREACH sortTransitionPrios(this) AS outTrans-»
+			«IF !((Transition)outTrans).isImmediate-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«ENDIF-»
+		«ENDFOREACH-»
+	«IF !(this.outgoingTransitions.exists(t|t.trigger == null))-»
+		«IF !(this.regions.isEmpty)-»
+			GOTO(«this.id»_main);
+		«ELSE-»
+			GOTO(«this.id»);
+		«ENDIF-»
+	«ENDIF-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).targetState != ((Transition)outTrans).sourceState)-»
+			«EXPAND state FOR ((Transition)outTrans).targetState-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE generateForkOneRegion FOR State-»
+«this.id»:
+			FORK(«getInitialState(this.regions.first()).id-», «getForkNumber(this)-»);
+			FORKE(«this.id»_main);
+«ENDDEFINE»

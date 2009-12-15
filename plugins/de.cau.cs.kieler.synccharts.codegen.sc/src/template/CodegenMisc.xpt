@@ -1,0 +1,87 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE generateSigType FOR List-»
+typedef enum {«FOREACH this AS signal SEPARATOR ", "-»
+«((Signal)signal).name-»
+«ENDFOREACH-»} signaltype;
+
+«ENDDEFINE»
+
+«DEFINE generateSigArray FOR List-»
+const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
+"«((Signal)signal).name-»"«ENDFOREACH-»};
+
+«ENDDEFINE»
+
+«DEFINE callJSONState FOR State-»
+			JSONstate("«getURI()»");
+«ENDDEFINE»
+
+«DEFINE generateInputSignals FOR Signal-»
+void «this.parentState.label»_I_«this.name»(){
+	signals = signals | (1 << «this.name»);
+}
+«ENDDEFINE»
+
+«DEFINE generateCallOutputs FOR List-»
+void callOutputs(){
+	«FOREACH this AS signal-»
+		«IF ((Signal)signal).isOutput-»
+	if(signals & (1 << «((Signal)signal).name-»)){
+	  «((Signal)signal).parentState.label»_O_«((Signal)signal).name-»();
+  }	
+		«ENDIF-»
+	«ENDFOREACH-»
+}
+«ENDDEFINE»
+
+«DEFINE generateReset FOR Region-»
+void reset(){
+	signals = 0;
+}
+
+«ENDDEFINE»
+
+«DEFINE debug FOR Region-»
+B:
+			FORK(C, 1);
+			PRIO(2);
+			FORKE(B_main);
+
+C:
+			JSONstate("//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0");
+			PAUSE;
+		if (PRESENT(S)){
+			EMIT(O);
+			GOTO(D);
+		}
+			GOTO(C);
+
+D:
+			JSONstate("//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1");
+			// this should be HALT; but for simulation:
+			PAUSE;
+			GOTO(D);
+
+B_main:
+			JSONstate("//@innerStates.0/@regions.0/@innerStates.0");
+			PAUSE;
+		if (PRESENT(X)){
+			ABORT;
+			GOTO(F);
+		}
+		if (PRESENT(R)){
+			PRIO(1);
+			ABORT;
+			GOTO(B);
+		}
+			GOTO(B_main);
+
+F:
+			JSONstate("//@innerStates.0/@regions.0/@innerStates.1");
+			// this should be HALT; but for simulation:
+			PAUSE;
+			GOTO(F);
+«ENDDEFINE»

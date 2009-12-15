@@ -1,0 +1,41 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE transition FOR Transition-»
+	«IF !(this.triggersAndEffects == null)-»
+		«IF !(this.trigger == null)-»
+			«IF (this.trigger.metaType == SignalReference)-»
+					«EXPAND simpleTrigger FOR this-»
+			«ELSE-»
+					«EXPAND complexTrigger FOR this-»
+			«ENDIF-»
+		«ELSE-»
+			«EXPAND transitionEffects FOR this-»
+		«ENDIF-»
+	«ENDIF-»
+	«IF this.type == TransitionType::STRONGABORT-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE simpleTrigger FOR Transition-»
+		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+	«EXPAND transitionEffects FOR this-»
+		}
+«ENDDEFINE»
+
+«DEFINE complexTrigger FOR Transition-»
+>>>> TODO complex Trigger
+«ENDDEFINE»
+
+«DEFINE transitionEffects FOR Transition-»
+	«FOREACH this.effects AS effect-»
+			EMIT(«((Emission)effect).signal.name-»);
+	«ENDFOREACH-»
+	«IF !(this.sourceState.regions.isEmpty)-»
+			ABORT;
+	«ENDIF-»
+	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
+			GOTO(«this.targetState.id»);
+	«ENDIF-»
+«ENDDEFINE»

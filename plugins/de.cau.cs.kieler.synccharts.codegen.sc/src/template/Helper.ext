@@ -1,0 +1,37 @@
+import synccharts;
+
+String builtString(List stateList): 
+	// is the list empty?
+	stateList.isEmpty ? "":
+	"id2b("
+	+ ((synccharts::State)stateList.first()).label
+	+ ") | "
+	+ builtString(stateList.withoutFirst())
+	+ builtString(((synccharts::State)stateList.first()).regions.innerStates.select(e|!(e.isFinal) && !(e.isInitial)))
+;
+
+String getChildrenSet(List stateList):
+	builtString(stateList).subString(0, builtString(stateList).length - 3)
+;
+	
+List sortTransitionPrios(State state):
+	state.outgoingTransitions.sortBy(e|e.priority)
+;
+
+String getURI(State state):
+	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.State)
+;
+	
+// funktioniert noch nicht richtig
+int getForkNumber(State s):
+	s.parentRegion == null ? 0 :
+	getForkNumber(s.parentRegion.parentState) + 1
+;
+
+State getInitialState(Region region):
+	region.innerStates.select(s|s.isInitial).first()
+;
+
+List computeThreadPriorities(State state) :
+	JAVA template.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
+;

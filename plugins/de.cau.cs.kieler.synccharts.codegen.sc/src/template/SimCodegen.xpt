@@ -1,0 +1,51 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE main FOR Region-»
+	«FILE "sim.c"-»
+	
+// generated SC-code //
+	«EXPAND init-»
+	«EXPAND start-»
+	«EXPAND finish-»
+	«ENDFILE-»
+	«EXPAND CodegenData::main»
+«ENDDEFINE»
+
+«DEFINE init FOR Region-»
+#include "sc.h"
+
+extern void JSONstate(char*);
+
+	«EXPAND CodegenMisc::generateSigType FOR innerStates.signals-»
+	«EXPAND CodegenMisc::generateSigArray FOR innerStates.signals-»
+
+	«FOREACH innerStates.signals AS signal-»
+		«IF signal.isInput-»
+			«EXPAND CodegenMisc::generateInputSignals FOR signal»
+		«ENDIF-»
+	«ENDFOREACH-»
+	«EXPAND CodegenMisc::generateCallOutputs FOR innerStates.signals»
+	«EXPAND CodegenMisc::generateReset-»
+int tick(int isInit){
+
+			TICKSTART(isInit, «EXPAND computeMainTreadPriority-»);
+			////////////////
+			// Debug is «computeThreadPriorities(this.innerStates.first())»
+«ENDDEFINE»
+
+«DEFINE computeMainTreadPriority FOR Region-»2«ENDDEFINE»
+
+«DEFINE start FOR Region-»
+	«EXPAND CodegenMisc::debug FOR this»
+	«REM»
+	«EXPAND CodegenState::state FOR getInitialState(innerStates.regions.first())-»
+	«ENDREM»
+«ENDDEFINE»
+
+«DEFINE finish FOR Region-»
+
+			TICKEND;
+}
+«ENDDEFINE»
