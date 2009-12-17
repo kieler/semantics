@@ -14,9 +14,6 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
@@ -25,6 +22,9 @@ import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 
+import de.cau.cs.kieler.core.ui.util.CompoundCondition;
+import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
+import de.cau.cs.kieler.core.ui.util.ICondition;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
@@ -33,7 +33,6 @@ import de.cau.cs.kieler.synccharts.TransitionType;
  * This class represents attribute aware transition figures.
  * 
  * @author schm
- * 
  */
 public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 
@@ -51,66 +50,46 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         this.setLineWidth(2);
 
         // Create all needed conditions
-        Condition kindWeakAbort = new Condition(SyncchartsPackage.eINSTANCE
+        FeatureValueCondition kindWeakAbort = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getTransition_Type(), TransitionType.WEAKABORT);
-        Condition kindStrongAbort = new Condition(SyncchartsPackage.eINSTANCE
+        FeatureValueCondition kindStrongAbort = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getTransition_Type(), TransitionType.STRONGABORT);
-        Condition kindNormalTermination = new Condition(SyncchartsPackage.eINSTANCE
-                .getTransition_Type(), TransitionType.NORMALTERMINATION);
-        Condition isHistory = new Condition(SyncchartsPackage.eINSTANCE
+        FeatureValueCondition kindNormalTermination = new FeatureValueCondition(
+                SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
+        FeatureValueCondition isHistory = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getTransition_IsHistory(), true);
 
-        // Combine them in lists
-        List<Condition> weakAbortHistorySF = new LinkedList<Condition>();
-        weakAbortHistorySF.add(kindWeakAbort);
-        weakAbortHistorySF.add(isHistory);
+        // Combine them in compound conditions
+        ICondition weakAbortHistorySF = new CompoundCondition(new ICondition[] {
+                kindWeakAbort, isHistory
+        });
 
-        List<Condition> strongAbortHistorySF = new LinkedList<Condition>();
-        strongAbortHistorySF.add(kindStrongAbort);
-        strongAbortHistorySF.add(isHistory);
+        ICondition strongAbortHistorySF = new CompoundCondition(new ICondition[] {
+                kindStrongAbort, isHistory
+        });
+        
+        ICondition normalTerminationHistorySF = new CompoundCondition(new ICondition[] {
+                kindNormalTermination, isHistory
+        });
 
-        List<Condition> normalTerminationHistorySF = new LinkedList<Condition>();
-        normalTerminationHistorySF.add(kindNormalTermination);
-        normalTerminationHistorySF.add(isHistory);
-
-        List<Condition> weakAbortSF = new LinkedList<Condition>();
-        weakAbortSF.add(kindWeakAbort);
-
-        List<Condition> strongAbortSF = new LinkedList<Condition>();
-        strongAbortSF.add(kindStrongAbort);
-
-        List<Condition> normalTerminationSF = new LinkedList<Condition>();
-        normalTerminationSF.add(kindNormalTermination);
-
-        // Add the looks that are to be displayed when all the conditions in
-        // the list are true
-        ConditionalConnectionLook weakAbortHistoryCF = new ConditionalConnectionLook(weakAbortHistorySF,
-                createWeakAbortionDecoration(), createHistoryDecoration());
-        ConditionalConnectionLook strongAbortHistoryCF = new ConditionalConnectionLook(
-                strongAbortHistorySF, createStrongAbortionDecoration(), createHistoryDecoration());
-        ConditionalConnectionLook normalTerminationHistoryCF = new ConditionalConnectionLook(
-                normalTerminationHistorySF, createNormalTerminationDecoration(),
-                createHistoryDecoration());
-
-        ConditionalConnectionLook weakAbortCF = new ConditionalConnectionLook(weakAbortSF,
-                createWeakAbortionDecoration(), createArrowDecoration());
-        ConditionalConnectionLook strongAbortCF = new ConditionalConnectionLook(strongAbortSF,
-                createStrongAbortionDecoration(), createArrowDecoration());
-        ConditionalConnectionLook normalTerminationCF = new ConditionalConnectionLook(
-                normalTerminationSF, createNormalTerminationDecoration(), createArrowDecoration());
-
-        // Add all ConditionalConnectionLooks to the figure's list
-        List<ConditionalConnectionLook> figureList = getConditionalFigureList();
-        figureList.add(weakAbortHistoryCF);
-        figureList.add(strongAbortHistoryCF);
-        figureList.add(normalTerminationHistoryCF);
-        figureList.add(weakAbortCF);
-        figureList.add(strongAbortCF);
-        figureList.add(normalTerminationCF);
+        // Add all decorations with associated conditions to the figure's list
+        addConditionalDecoration(createWeakAbortionDecoration(), createArrowDecoration(),
+                kindWeakAbort);
+        addConditionalDecoration(createStrongAbortionDecoration(), createArrowDecoration(),
+                kindStrongAbort);
+        addConditionalDecoration(createNormalTerminationDecoration(), createArrowDecoration(),
+                kindNormalTermination);
+        addConditionalDecoration(createWeakAbortionDecoration(), createHistoryDecoration(),
+                weakAbortHistorySF);
+        addConditionalDecoration(createStrongAbortionDecoration(), createHistoryDecoration(),
+                strongAbortHistorySF);
+        addConditionalDecoration(createNormalTerminationDecoration(), createHistoryDecoration(),
+                normalTerminationHistorySF);
 
         // Set default and current look
-        this.setDefaultLook(weakAbortCF);
-        this.setLook(weakAbortCF);
+        setDefaultDecoration(createWeakAbortionDecoration(), createArrowDecoration());
+        setSourceDecoration(createWeakAbortionDecoration());
+        setTargetDecoration(createArrowDecoration());
 
         // check conditions
         notifyChanged(null);

@@ -23,7 +23,7 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -84,7 +84,7 @@ public class StateLayout extends AbstractHintLayout {
         // check whether the figure is an attribute aware state and whether it is
         // a simple or a complex state
         if (parent instanceof AttributeAwareFigure) {
-            EObject modelElement = ((AttributeAwareFigure) parent).getModelElement();
+            Notifier modelElement = ((AttributeAwareFigure) parent).getTarget();
             if (modelElement instanceof State) {
                 invalidateLabels(parent);
                 State state = (State) modelElement;
@@ -375,7 +375,7 @@ public class StateLayout extends AbstractHintLayout {
      */
     @Override
     public Dimension calculateMinimumSize(final IFigure parent, final int whint, final int hhint) {
-        EObject modelElement = ((AttributeAwareFigure) parent).getModelElement();
+        Notifier modelElement = ((AttributeAwareFigure) parent).getTarget();
         if (modelElement instanceof State) {
             State state = (State) modelElement;
             @SuppressWarnings("unchecked")

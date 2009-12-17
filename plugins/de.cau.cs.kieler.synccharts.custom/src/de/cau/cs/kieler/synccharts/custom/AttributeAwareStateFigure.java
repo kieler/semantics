@@ -14,14 +14,15 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.EditPart;
 
+import de.cau.cs.kieler.core.ui.util.CompoundCondition;
+import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
+import de.cau.cs.kieler.core.ui.util.ICondition;
+import de.cau.cs.kieler.core.ui.util.ListSizeCondition;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.State;
@@ -102,82 +103,53 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
         setCurrentFigure(normalNChildrenStateFigure);
 
         // Create all needed conditions
-        Condition typeNormal = new Condition(SyncchartsPackage.eINSTANCE
+        ICondition typeNormal = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getState_Type(), StateType.NORMAL);
-        Condition typeConditional = new Condition(SyncchartsPackage.eINSTANCE
+        ICondition typeConditional = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getState_Type(), StateType.CONDITIONAL);
-//        Condition typeReference = new Condition(SyncchartsPackage.eINSTANCE
+//        FeatureValueCondition typeReference = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
 //                .getState_Type(), StateType.REFERENCE);
-//        Condition typeTextual = new Condition(SyncchartsPackage.eINSTANCE
+//        FeatureValueCondition typeTextual = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
 //                .getState_Type(), StateType.TEXTUAL);
 
-        Condition flagInitial = new Condition(SyncchartsPackage.eINSTANCE
+        ICondition flagInitial = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getState_IsInitial(), true);
-        Condition flagFinal = new Condition(SyncchartsPackage.eINSTANCE
+        ICondition flagFinal = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
                 .getState_IsFinal(), true);
 
-        Condition noChildren = new SizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_Regions(), new Integer(0));
-        Condition noSignals = new SizeCondition(SyncchartsPackage.eINSTANCE
+        ICondition noChildren = new ListSizeCondition(SyncchartsPackage.eINSTANCE
+                .getState_Regions(), 0);
+        ICondition noSignals = new ListSizeCondition(SyncchartsPackage.eINSTANCE
                 .getState_Signals(), new Integer(0));
-        Condition noEntryActions = new SizeCondition(SyncchartsPackage.eINSTANCE
+        ICondition noEntryActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
                 .getState_EntryActions(), new Integer(0));
-        Condition noInnerActions = new SizeCondition(SyncchartsPackage.eINSTANCE
+        ICondition noInnerActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
                 .getState_InnerActions(), new Integer(0));
-        Condition noExitActions = new SizeCondition(SyncchartsPackage.eINSTANCE
+        ICondition noExitActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
                 .getState_ExitActions(), new Integer(0));
 
-        // Combine conditions in lists
-        List<Condition> normalNCSF = new LinkedList<Condition>();
-        normalNCSF.add(typeNormal);
-        // normalNCSF.add(flagNormal);
-        normalNCSF.add(noChildren);
-        normalNCSF.add(noSignals);
-        normalNCSF.add(noEntryActions);
-        normalNCSF.add(noInnerActions);
-        normalNCSF.add(noExitActions);
+        // Combine conditions in compound conditions
+        ICondition normalNCSF = new CompoundCondition(new ICondition[] {
+                typeNormal, noChildren, noSignals, noEntryActions, noInnerActions, noExitActions
+        });
 
-        List<Condition> initialNCSF = new LinkedList<Condition>();
-        initialNCSF.add(typeNormal);
-        initialNCSF.add(flagInitial);
-        initialNCSF.add(noChildren);
-        initialNCSF.add(noSignals);
-        initialNCSF.add(noEntryActions);
-        initialNCSF.add(noInnerActions);
-        initialNCSF.add(noExitActions);
+        ICondition initialNCSF = new CompoundCondition(new ICondition[] {
+                typeNormal, flagInitial, noChildren, noSignals, noEntryActions, noInnerActions,
+                noExitActions
+        });
 
-        List<Condition> finalNCSF = new LinkedList<Condition>();
-        finalNCSF.add(typeNormal);
-        finalNCSF.add(flagFinal);
-        finalNCSF.add(noChildren);
-        finalNCSF.add(noSignals);
-        finalNCSF.add(noEntryActions);
-        finalNCSF.add(noInnerActions);
-        finalNCSF.add(noExitActions);
-
-        List<Condition> initialSF = new LinkedList<Condition>();
-        initialSF.add(flagInitial);
-
-        List<Condition> finalSF = new LinkedList<Condition>();
-        finalSF.add(flagFinal);
-
-        List<Condition> conditionalSF = new LinkedList<Condition>();
-        conditionalSF.add(typeConditional);
+        ICondition finalNCSF = new CompoundCondition(new ICondition[] {
+                typeNormal, flagFinal, noChildren, noSignals, noEntryActions, noInnerActions,
+                noExitActions
+        });
 
         // Add all conditional figures to the list
-        List<ConditionalFigure> figureList = getConditionalFigureList();
-        figureList.add(new ConditionalFigure(conditionalSF,
-                conditionalStateFigure));
-        figureList.add(new ConditionalFigure(initialNCSF,
-                initialNChildrenStateFigure));
-        figureList.add(new ConditionalFigure(initialSF,
-                initialStateFigure));
-        figureList.add(new ConditionalFigure(finalNCSF,
-                finalNChildrenStateFigure));
-        figureList.add(new ConditionalFigure(finalSF,
-                finalStateFigure));
-        figureList.add(new ConditionalFigure(normalNCSF,
-                normalNChildrenStateFigure));
+        addConditionalFigure(conditionalStateFigure, typeConditional);
+        addConditionalFigure(initialNChildrenStateFigure, initialNCSF);
+        addConditionalFigure(initialStateFigure, flagInitial);
+        addConditionalFigure(finalNChildrenStateFigure, finalNCSF);
+        addConditionalFigure(finalStateFigure, flagFinal);
+        addConditionalFigure(normalNChildrenStateFigure, normalNCSF);
 
         // check conditions
         notifyChanged(null);

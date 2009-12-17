@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -28,27 +29,30 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
+import de.cau.cs.kieler.core.ui.util.ICondition;
+import de.cau.cs.kieler.core.util.Pair;
+
 /**
  * This class represents node figures that are aware of changes made to their
  * corresponding model element.
  * 
  * @author schm
+ * @author msp
  */
 public abstract class AttributeAwareFigure extends Figure implements Adapter {
 
-    /**
-     * This list contains all possible figures and when they are to be displayed.
-     */
-    private List<ConditionalFigure> conditionalFigureList;
+    /** Contains all possible figures and conditions when they are to be displayed. */
+    private List<Pair<IFigure, ICondition>> conditionalFigures
+            = new LinkedList<Pair<IFigure, ICondition>>();
     /** This figure's corresponding model element. */
     private EObject modelElement;
     /**
-     * The default figure that is to be displayed when no conditions of the
-     * figure are fulfilled.
+     * The default figure that is to be displayed when no conditions of other
+     * figures are fulfilled.
      */
-    private Figure defaultFigure;
+    private IFigure defaultFigure;
     /** The figure that will be drawn when the paint method is called. */
-    private Figure currentFigure;
+    private IFigure currentFigure;
 
     /**
      * The constructor.
@@ -58,22 +62,13 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
     }
 
     /**
-     * Returns the model element the figure has to watch.
-     * 
-     * @return The model element to be watched.
-     */
-    public EObject getModelElement() {
-        return modelElement;
-    }
-
-    /**
      * Establish a link between the figure and its edit part.
      * 
      * @param e The edit part to watch.
      */
     public void setModelElementAndRegisterFromEditPart(final EditPart e) {
         modelElement = ((View) (e.getModel())).getElement();
-        ((Notifier) modelElement).eAdapters().add(this);
+        modelElement.eAdapters().add(this);
     }
 
     /**
@@ -108,7 +103,7 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
      * 
      * @return The current figure that is to be drawn.
      */
-    public Figure getCurrentFigure() {
+    public IFigure getCurrentFigure() {
         return currentFigure;
     }
 
@@ -117,7 +112,7 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
      * 
      * @param f The figure that is currently to be drawn.
      */
-    public void setCurrentFigure(final Figure f) {
+    public void setCurrentFigure(final IFigure f) {
         currentFigure = f;
     }
 
@@ -146,19 +141,11 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
      *            model element.
      */
     public void notifyChanged(final Notification notification) {
-        for (ConditionalFigure cf : getConditionalFigureList()) {
-            boolean fulfilled = true;
-            for (Condition c : cf.getConditions()) {
-                if (!(c.isValid(modelElement))) {
-                    fulfilled = false;
-                    break;
-                }
-            }
-            if (fulfilled) {
-                setCurrentFigure(cf.getFigure());
+        currentFigure = defaultFigure;
+        for (Pair<IFigure, ICondition> cf : conditionalFigures) {
+            if (cf.getSecond().evaluate(modelElement)) {
+                currentFigure = cf.getFirst();
                 break;
-            } else {
-                setCurrentFigure(defaultFigure);
             }
         }
         this.repaint();
@@ -181,14 +168,12 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
     }
 
     /**
-     * Returns the conditionalFigureList.
-     *
-     * @return the conditionalFigureList
+     * Adds a figure with associated condition.
+     * 
+     * @param figure the figure
+     * @param condition the condition
      */
-    protected List<ConditionalFigure> getConditionalFigureList() {
-        if (conditionalFigureList == null) {
-            conditionalFigureList = new LinkedList<ConditionalFigure>();
-        }
-        return conditionalFigureList;
+    protected void addConditionalFigure(final IFigure figure, final ICondition condition) {
+        conditionalFigures.add(new Pair<IFigure, ICondition>(figure, condition));
     }
 }

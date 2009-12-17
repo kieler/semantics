@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0",
  org.eclipse.gmf.runtime.draw2d.ui;bundle-version="1.1.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.1.0",
  de.cau.cs.kieler.core,
- de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.ui,
+ de.cau.cs.kieler.synccharts
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.draw2d,
  org.eclipse.emf.common,

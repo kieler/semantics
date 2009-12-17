@@ -17,6 +17,8 @@ package de.cau.cs.kieler.synccharts.custom;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.draw2d.PolylineConnection;
+import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -25,41 +27,63 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
 import org.eclipse.gmf.runtime.notation.View;
 
+import de.cau.cs.kieler.core.ui.util.ICondition;
+import de.cau.cs.kieler.core.util.Pair;
+
 /**
  * This class represents connections that are able to change their appearance
  * when properties of their corresponding model elements change.
  * 
  * @author schm
+ * @author msp
  */
 public abstract class AttributeAwareConnection extends PolylineConnectionEx implements Adapter {
 
-    /**
-     * The look of a figure contains only its decorations, but can easily be
-     * extended to also contain line color etc. This list contains all possible
-     * looks and when they are to be displayed
-     */
-    private List<ConditionalConnectionLook> conditionalFigureList;
-
-    /** The model element that corresponds to this figure. */
+    /** Container for source and target decoration. */
+    private static class Decoration {
+        private RotatableDecoration sourceDeco;
+        private RotatableDecoration targetDeco;
+        
+        /**
+         * Creates a decoration container.
+         * 
+         * @param thesourceDeco the source decoration
+         * @param thetargetDeco the target decoration
+         */
+        public Decoration(final RotatableDecoration thesourceDeco,
+                final RotatableDecoration thetargetDeco) {
+            this.sourceDeco = thesourceDeco;
+            this.targetDeco = thetargetDeco;
+        }
+        
+        /**
+         * Applies the decoration to a given connection figure.
+         * 
+         * @param connection the connection figure
+         */
+        public void apply(final PolylineConnection connection) {
+            connection.setSourceDecoration(sourceDeco);
+            connection.setTargetDecoration(targetDeco);
+        }
+        
+    }
+    
+    /** Contains all possible decorations and conditions when they are to be displayed. */
+    private List<Pair<Decoration, ICondition>> conditionalFigures
+            = new LinkedList<Pair<Decoration, ICondition>>();
+    /** This figure's corresponding model element. */
     private EObject modelElement;
-    /** The default look that is to be displayed when no conditionalFigure's
-     * conditions are all fulfilled. */
-    private ConditionalConnectionLook defaultLook;
+    /** 
+     * The default decoration that is to be displayed when no conditions of
+     * other decorations are fulfilled.
+     */
+    private Decoration defaultDeco;
 
     /**
      * The constructor.
      */
     public AttributeAwareConnection() {
         super();
-    }
-
-    /**
-     * Returns the modelElement the connection is supposed to react to.
-     * 
-     * @return The model element
-     */
-    public EObject getModelElement() {
-        return modelElement;
     }
 
     /**
@@ -73,21 +97,14 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
     }
 
     /**
-     * Set the default look of the connection.
+     * Set the default decoration of the connection.
      * 
-     * @param look The look that is used if no condition is fulfilled.
+     * @param sourceDeco the default source decoration
+     * @param targetDeco the default target decoration
      */
-    public void setDefaultLook(final ConditionalConnectionLook look) {
-        defaultLook = look;
-    }
-
-    /**
-     * Returns the default look.
-     * 
-     * @return The look that is to be used if no condition is fulfilled.
-     */
-    public ConditionalConnectionLook getDefaultLook() {
-        return defaultLook;
+    public void setDefaultDecoration(final RotatableDecoration sourceDeco,
+            final RotatableDecoration targetDeco) {
+        this.defaultDeco = new Decoration(sourceDeco, targetDeco);
     }
 
     /**
@@ -98,44 +115,14 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
      *            model element.
      */
     public void notifyChanged(final Notification notification) {
-        for (ConditionalConnectionLook cf : conditionalFigureList) {
-            boolean fulfilled = true;
-            for (Condition c : cf.getConditions()) {
-                if (!(c.isValid(modelElement))) {
-                    fulfilled = false;
-                    break;
-                }
-            }
-            if (fulfilled) {
-                setLook(cf);
+        defaultDeco.apply(this);
+        for (Pair<Decoration, ICondition> cf : conditionalFigures) {
+            if (cf.getSecond().evaluate(modelElement)) {
+                cf.getFirst().apply(this);
                 break;
-            } else {
-                setLook(defaultLook);
             }
         }
         this.repaint();
-    }
-
-    /**
-     * Set the current look of the connection.
-     * 
-     * @param look The current look.
-     */
-    protected void setLook(final ConditionalConnectionLook look) {
-        this.setSourceDecoration(look.getSourceDeco());
-        this.setTargetDecoration(look.getTargetDeco());
-    }
-
-    /**
-     * Returns the conditionalFigureList.
-     *
-     * @return the conditionalFigureList
-     */
-    protected List<ConditionalConnectionLook> getConditionalFigureList() {
-        if (conditionalFigureList == null) {
-            conditionalFigureList = new LinkedList<ConditionalConnectionLook>();
-        }
-        return conditionalFigureList;
     }
 
     /**
@@ -152,6 +139,19 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
         if (newTarget instanceof EObject) {
             modelElement = (EObject) newTarget;
         }
+    }
+
+    /**
+     * Adds a decoration with associated condition.
+     * 
+     * @param sourceDeco the source decoration
+     * @param targetDeco the target decoration
+     * @param condition the condition
+     */
+    protected void addConditionalDecoration(final RotatableDecoration sourceDeco,
+            final RotatableDecoration targetDeco, final ICondition condition) {
+        conditionalFigures.add(new Pair<Decoration, ICondition>(
+                new Decoration(sourceDeco, targetDeco), condition));
     }
 
 }
