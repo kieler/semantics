@@ -50,10 +50,17 @@
     	</transformation>
        <transformation
              icon="icons/obj16/Region.gif"
-             keyboardShortcut="M1+K R"
-             name="Add Region"
-             transformation="addParallelRegion"
-             transformationId="de.cau.cs.kieler.ksbase.addRegion">
+             keyboardShortcut="M1+K U"
+             name="UpgradeState"
+             transformation="upgradeState"
+             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+       </transformation>
+       <transformation
+             icon="icons/obj16/Region.gif"
+             keyboardShortcut="M1+K D"
+             name="Downgrade State"
+             transformation="downgradeState"
+             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
        </transformation>
 			</transformations>
 			<menus>
@@ -63,7 +70,10 @@
 					</transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addSuc"></transformationCommand>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.ksbase.addRegion">
+           transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.downgradeState">
      </transformationCommand>
      						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addABRO"></transformationCommand>
 						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.empty">
@@ -83,12 +93,15 @@
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addSuc">
        </transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addRegion">
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.upgradeState">
 					</transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.downgradeState">
+     </transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
 				</menuContribution>
     <menuContribution
-          locationURI="popup:de.cau.cs.kieler">
+          locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addSuc">
        </transformationCommand>
@@ -96,7 +109,10 @@
              transformationId="de.cau.cs.kieler.ksbase.addPred">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.addRegion">
+             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
        </transformationCommand>
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addChoice">

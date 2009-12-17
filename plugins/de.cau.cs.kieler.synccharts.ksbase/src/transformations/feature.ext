@@ -74,13 +74,18 @@ source.outgoingTransitions.add(t)
 ;
 
 //Adds a parallel region to the given state
-Void addParallelRegion(State parentState):
+Void upgradeState(State parentState):
 let region = new Region:
 let state = new State:
 state.setIsInitial(true) ->
 state.setLabel("S") ->
 region.innerStates.add(state) ->
 parentState.regions.add(region)
+;
+
+Void downgradeState(State parentState):
+if parentState.regions.size > 0 then
+ parentState.regions.remove(parentState.regions.last())
 ;
 
 //Copies a state, i.e. stores a reference in a 
