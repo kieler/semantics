@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * Main preference page for the KIELER project. All subprojects should put their
  * preference pages into this page.
  * 
- * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
+ * @author msp
  */
 public class KielerPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
