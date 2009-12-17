@@ -155,8 +155,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             for (Iterator it = myDiagram.eResource().getContents().iterator(); it.hasNext();) {
                 EObject nextEObject = (EObject) it.next();
                 if (nextEObject == myDiagram) {
-                    return new FileEditorInput(WorkspaceSynchronizer
-                            .getFile(myDiagram.eResource()));
+                    return new FileEditorInput(WorkspaceSynchronizer.getFile(myDiagram.eResource()));
                 }
                 if (nextEObject instanceof Diagram) {
                     break;

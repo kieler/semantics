@@ -41,8 +41,7 @@ public class TransitionCreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    public TransitionCreateCommand(CreateRelationshipRequest request, EObject source,
-            EObject target) {
+    public TransitionCreateCommand(CreateRelationshipRequest request, EObject source, EObject target) {
         super(request.getLabel(), null, request);
         this.source = source;
         this.target = target;
@@ -101,8 +100,7 @@ public class TransitionCreateCommand extends EditElementCommand {
         IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
         ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
                 elementType);
-        configureRequest
-                .setClientContext(((CreateElementRequest) getRequest()).getClientContext());
+        configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
         configureRequest.setParameter(CreateRelationshipRequest.SOURCE, getSource());
         configureRequest.setParameter(CreateRelationshipRequest.TARGET, getTarget());

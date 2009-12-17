@@ -77,8 +77,8 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
         }
         String extension = getExtension();
         if (extension != null && !getFilePath().toString().endsWith("." + extension)) {
-            setErrorMessage(NLS.bind(Messages.SyncchartsCreationWizardPageExtensionError,
-                    extension));
+            setErrorMessage(NLS
+                    .bind(Messages.SyncchartsCreationWizardPageExtensionError, extension));
             return false;
         }
         return true;

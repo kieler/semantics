@@ -26,8 +26,8 @@ public class ElementInitializers {
                     .getEInt());
             instance.setPriority(((Integer) value_1).intValue());
         } catch (RuntimeException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Element initialization failed", e); //$NON-NLS-1$						
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Element initialization failed", e); //$NON-NLS-1$						
         }
     }
 

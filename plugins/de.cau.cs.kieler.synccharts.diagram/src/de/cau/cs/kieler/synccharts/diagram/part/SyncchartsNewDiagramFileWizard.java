@@ -61,8 +61,7 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         assert editingDomain != null : "Editing domain must be specified"; //$NON-NLS-1$
 
         myFileCreationPage = new WizardNewFileCreationPage(
-                Messages.SyncchartsNewDiagramFileWizard_CreationPageName,
-                StructuredSelection.EMPTY);
+                Messages.SyncchartsNewDiagramFileWizard_CreationPageName, StructuredSelection.EMPTY);
         myFileCreationPage.setTitle(Messages.SyncchartsNewDiagramFileWizard_CreationPageTitle);
         myFileCreationPage.setDescription(NLS.bind(
                 Messages.SyncchartsNewDiagramFileWizard_CreationPageDescription,

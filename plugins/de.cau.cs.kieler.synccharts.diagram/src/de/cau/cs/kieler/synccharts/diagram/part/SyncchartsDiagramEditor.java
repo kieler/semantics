@@ -210,8 +210,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
                 .getActivePage().getEditorReferences();
         for (int i = 0; i < editorRefs.length; i++) {
             if (matchingStrategy.matches(editorRefs[i], newInput)) {
-                MessageDialog.openWarning(shell,
-                        Messages.SyncchartsDiagramEditor_SaveAsErrorTitle,
+                MessageDialog.openWarning(shell, Messages.SyncchartsDiagramEditor_SaveAsErrorTitle,
                         Messages.SyncchartsDiagramEditor_SaveAsErrorMessage);
                 return;
             }

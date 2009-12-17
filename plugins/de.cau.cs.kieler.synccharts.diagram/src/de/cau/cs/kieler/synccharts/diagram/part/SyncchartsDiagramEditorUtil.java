@@ -156,8 +156,8 @@ public class SyncchartsDiagramEditorUtil {
             IProgressMonitor progressMonitor) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
-        progressMonitor.beginTask(Messages.SyncchartsDiagramEditorUtil_CreateDiagramProgressTask,
-                3);
+        progressMonitor
+                .beginTask(Messages.SyncchartsDiagramEditorUtil_CreateDiagramProgressTask, 3);
         final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
         final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
         final String diagramName = diagramURI.lastSegment();

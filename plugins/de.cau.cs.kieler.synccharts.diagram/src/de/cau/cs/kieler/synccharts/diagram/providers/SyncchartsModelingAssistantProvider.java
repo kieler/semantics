@@ -166,8 +166,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
             return ((StateEditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         if (sourceEditPart instanceof State2EditPart) {
-            return ((State2EditPart) sourceEditPart)
-                    .getMARelTypesOnSourceAndTarget(targetEditPart);
+            return ((State2EditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         return Collections.EMPTY_LIST;
     }

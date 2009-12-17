@@ -164,30 +164,31 @@
       <?gmfgen generated="true"?>
       <page
             id="de.cau.cs.kieler.synccharts.diagram.general"
-            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.general"
+            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.general"  
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramGeneralPreferencePage">
       </page>
       <page
             id="de.cau.cs.kieler.synccharts.diagram.appearance"
-            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.appearance"
+            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.appearance"  
             category="de.cau.cs.kieler.synccharts.diagram.general"
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramAppearancePreferencePage">
       </page>
       <page
             id="de.cau.cs.kieler.synccharts.diagram.connections"
-            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.connections"
+            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.connections"  
             category="de.cau.cs.kieler.synccharts.diagram.general"
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramConnectionsPreferencePage">
       </page>
       <page
             id="de.cau.cs.kieler.synccharts.diagram.printing"
-            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.printing"
+            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.printing"  
             category="de.cau.cs.kieler.synccharts.diagram.general"
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramPrintingPreferencePage">
       </page>
       <page
             id="de.cau.cs.kieler.synccharts.diagram.rulersAndGrid"
-            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.rulersAndGrid"
+            name="%prefpage.de.cau.cs.kieler.synccharts.diagram.rulersAndGrid"  
             category="de.cau.cs.kieler.synccharts.diagram.general"
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramRulersAndGridPreferencePage">
       </page>

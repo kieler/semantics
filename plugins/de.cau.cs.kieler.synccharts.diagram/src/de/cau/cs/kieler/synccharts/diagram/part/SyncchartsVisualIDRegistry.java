@@ -65,8 +65,8 @@ public class SyncchartsVisualIDRegistry {
                 return -1;
             }
         }
-        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                .getVisualID(view.getType());
+        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry.getVisualID(view
+                .getType());
     }
 
     /**

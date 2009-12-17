@@ -31,8 +31,8 @@ public class SyncchartsDomainNavigatorLabelProvider implements ICommonLabelProvi
      */
     public Image getImage(Object element) {
         if (element instanceof SyncchartsDomainNavigatorItem) {
-            return myAdapterFactoryLabelProvider
-                    .getImage(((SyncchartsDomainNavigatorItem) element).getEObject());
+            return myAdapterFactoryLabelProvider.getImage(((SyncchartsDomainNavigatorItem) element)
+                    .getEObject());
         }
         return null;
     }

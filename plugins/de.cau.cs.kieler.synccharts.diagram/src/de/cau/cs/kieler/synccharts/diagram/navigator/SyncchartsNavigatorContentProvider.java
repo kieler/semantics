@@ -149,8 +149,7 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
         myWorkspaceSynchronizer.dispose();
         myWorkspaceSynchronizer = null;
         myViewerRefreshRunnable = null;
-        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it
-                .hasNext();) {
+        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it.hasNext();) {
             Resource resource = (Resource) it.next();
             resource.unload();
         }

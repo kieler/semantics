@@ -445,8 +445,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
                     rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
-                    .size()]));
+            return new MultiRule((ISchedulingRule[]) rules
+                    .toArray(new ISchedulingRule[rules.size()]));
         }
         return null;
     }
@@ -466,8 +466,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
                     rules.add(computeSchedulingRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
-                    .size()]));
+            return new MultiRule((ISchedulingRule[]) rules
+                    .toArray(new ISchedulingRule[rules.size()]));
         }
         return null;
     }
@@ -487,8 +487,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
                     rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().refreshRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
-                    .size()]));
+            return new MultiRule((ISchedulingRule[]) rules
+                    .toArray(new ISchedulingRule[rules.size()]));
         }
         return null;
     }
@@ -562,8 +562,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
         ResourceSetInfo info = getResourceSetInfo(element);
         if (info != null) {
             if (!overwrite && !info.isSynchronized()) {
-                throw new CoreException(new Status(IStatus.ERROR,
-                        SyncchartsDiagramEditorPlugin.ID, IResourceStatus.OUT_OF_SYNC_LOCAL,
+                throw new CoreException(new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
+                        IResourceStatus.OUT_OF_SYNC_LOCAL,
                         Messages.SyncchartsDocumentProvider_UnsynchronizedFileSaveError, null));
             }
             info.stopResourceListening();
@@ -638,8 +638,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
                     .createResource(newResoruceURI);
             final Diagram diagramCopy = (Diagram) EcoreUtil.copy(diagramDocument.getDiagram());
             try {
-                new AbstractTransactionalCommand(diagramDocument.getEditingDomain(), NLS
-                        .bind(Messages.SyncchartsDocumentProvider_SaveAsOperation, diagramCopy
+                new AbstractTransactionalCommand(diagramDocument.getEditingDomain(),
+                        NLS.bind(Messages.SyncchartsDocumentProvider_SaveAsOperation, diagramCopy
                                 .getName()), affectedFiles) {
                     protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
                             IAdaptable info) throws ExecutionException {
@@ -650,12 +650,12 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
                 newResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
             } catch (ExecutionException e) {
                 fireElementStateChangeFailed(element);
-                throw new CoreException(new Status(IStatus.ERROR,
-                        SyncchartsDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
+                throw new CoreException(new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
+                        0, e.getLocalizedMessage(), null));
             } catch (IOException e) {
                 fireElementStateChangeFailed(element);
-                throw new CoreException(new Status(IStatus.ERROR,
-                        SyncchartsDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
+                throw new CoreException(new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
+                        0, e.getLocalizedMessage(), null));
             }
             newResource.unload();
         }

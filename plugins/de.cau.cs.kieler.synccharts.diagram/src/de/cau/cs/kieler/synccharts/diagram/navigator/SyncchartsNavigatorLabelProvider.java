@@ -218,9 +218,9 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getState_2001Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_2001,
-                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
-                        .getType(StateLabelEditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_2001, view
+                .getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                .getType(StateLabelEditPart.VISUAL_ID));
         if (parser != null) {
             return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
                     .getElement() : view), ParserOptions.NONE.intValue());
@@ -249,9 +249,9 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getState_3002Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_3002,
-                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
-                        .getType(StateLabel2EditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_3002, view
+                .getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                .getType(StateLabel2EditPart.VISUAL_ID));
         if (parser != null) {
             return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
                     .getElement() : view), ParserOptions.NONE.intValue());
@@ -351,9 +351,8 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getTransition_4001Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Transition_4001, view.getElement() != null ? view
-                        .getElement() : view, SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Transition_4001,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(TransitionTriggersAndEffectsEditPart.VISUAL_ID));
         if (parser != null) {
             return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view

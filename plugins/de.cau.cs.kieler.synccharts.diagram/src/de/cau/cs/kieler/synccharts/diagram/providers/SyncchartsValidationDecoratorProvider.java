@@ -73,8 +73,7 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
      */
     public void createDecorators(IDecoratorTarget decoratorTarget) {
         EditPart editPart = (EditPart) decoratorTarget.getAdapter(EditPart.class);
-        if (editPart instanceof GraphicalEditPart
-                || editPart instanceof AbstractConnectionEditPart) {
+        if (editPart instanceof GraphicalEditPart || editPart instanceof AbstractConnectionEditPart) {
             Object model = editPart.getModel();
             if ((model instanceof View)) {
                 View view = (View) model;
@@ -163,8 +162,7 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
                 TransactionUtil.getEditingDomain(view).runExclusive(new Runnable() {
 
                     public void run() {
-                        StatusDecorator.this.viewId = view != null ? ViewUtil.getIdStr(view)
-                                : null;
+                        StatusDecorator.this.viewId = view != null ? ViewUtil.getIdStr(view) : null;
                     }
                 });
             } catch (Exception e) {
@@ -213,8 +211,7 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
                 String attribute = marker.getAttribute(
                         org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID, ""); //$NON-NLS-1$
                 if (attribute.equals(elementId)) {
-                    int nextSeverity = marker
-                            .getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+                    int nextSeverity = marker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
                     Image nextImage = getImage(nextSeverity);
                     if (foundMarker == null) {
                         foundMarker = marker;
@@ -248,8 +245,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
                     int margin = -1;
                     if (editPart instanceof org.eclipse.gef.GraphicalEditPart) {
                         margin = MapModeUtil.getMapMode(
-                                ((org.eclipse.gef.GraphicalEditPart) editPart).getFigure())
-                                .DPtoLP(margin);
+                                ((org.eclipse.gef.GraphicalEditPart) editPart).getFigure()).DPtoLP(
+                                margin);
                     }
                     setDecoration(getDecoratorTarget().addShapeDecoration(getImage(severity),
                             IDecoratorTarget.Direction.NORTH_EAST, margin, true));
@@ -380,8 +377,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
          * @generated
          */
         public void handleMarkerAdded(IMarker marker) {
-            if (marker.getAttribute(
-                    org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID, null) != null) {
+            if (marker.getAttribute(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
+                    null) != null) {
                 handleMarkerChanged(marker);
             }
         }

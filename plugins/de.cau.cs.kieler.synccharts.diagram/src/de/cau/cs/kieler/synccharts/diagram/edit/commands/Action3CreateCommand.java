@@ -72,8 +72,7 @@ public class Action3CreateCommand extends EditElementCommand {
         IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
         ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
                 elementType);
-        configureRequest
-                .setClientContext(((CreateElementRequest) getRequest()).getClientContext());
+        configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
         ICommand configureCommand = elementType.getEditCommand(configureRequest);
         if (configureCommand != null && configureCommand.canExecute()) {

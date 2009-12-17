@@ -72,8 +72,7 @@ public class ValidateAction extends Action {
                     }
                 }).run(new NullProgressMonitor());
             } catch (Exception e) {
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .logError("Validation action failed", e); //$NON-NLS-1$
+                SyncchartsDiagramEditorPlugin.getInstance().logError("Validation action failed", e); //$NON-NLS-1$
             }
         }
     }
@@ -199,9 +198,10 @@ public class ValidateAction extends Action {
                 EObject element = (EObject) data.get(0);
                 View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart, element,
                         element2ViewMap);
-                addMarker(diagramEditPart.getViewer(), target, view.eResource().getURIFragment(
-                        view), EMFCoreUtil.getQualifiedName(element, true), nextDiagnostic
-                        .getMessage(), diagnosticToStatusSeverity(nextDiagnostic.getSeverity()));
+                addMarker(diagramEditPart.getViewer(), target, view.eResource()
+                        .getURIFragment(view), EMFCoreUtil.getQualifiedName(element, true),
+                        nextDiagnostic.getMessage(), diagnosticToStatusSeverity(nextDiagnostic
+                                .getSeverity()));
             }
         }
     }
