@@ -84,43 +84,43 @@ T90 : 'pre' ;
 T91 : '??' ;
 T92 : 'tick' ;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9491
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9715
 RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') ('-'|'+')? RULE_INT) 'f'?|RULE_INT 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9493
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9717
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9495
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9719
 RULE_BASETYPE : ('boolean'|'integer'|'float'|'double'|'string');
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9497
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9721
 RULE_ESTEREL_SL_COMMENT : '%' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9499
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9723
 RULE_ESTEREL_ML_COMMENT : '%' '{' ( options {greedy=false;} : . )*'}' '%';
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9501
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9725
 RULE_ESTERELID : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9503
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9727
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9505
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9729
 RULE_INT : ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9507
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9731
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9509
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9733
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9511
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9735
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9513
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9737
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9515
+// $ANTLR src "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g" 9739
 RULE_ANY_OTHER : .;
 
 
