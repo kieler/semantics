@@ -4,17 +4,16 @@
 package de.cau.cs.kieler.synccharts.labelparser.scoping;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
-
-import com.google.inject.Scope;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
@@ -35,10 +34,42 @@ public class ActionLabelScopeProvider extends
 
     @Override
     public IScope getScope(EObject context, EReference reference) {
-        if (parent != null)
-            return new ValuedObjectScope(parent);
+        if (parent != null){
+        	IScope scope = createHierarchicScope(parent);
+        	return scope;
+        }
+        // this is likely to return the NULLSCOPE
         return super.getScope(context, reference);
     }
 
-  
+    private Iterable<IEObjectDescription> getElements(EObject parent){
+    	ArrayList<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
+		if (parent != null && parent instanceof Region) {
+			List<Signal> signals = ((Region) parent).getSignals();
+			for (Signal signal : signals) {
+				elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
+			}
+			List<Variable> variables = ((Region) parent).getVariables();
+			for (Variable variable : variables) {
+				elements.add(new EObjectDescription(variable.getName(), variable, Collections.EMPTY_MAP));
+			}
+		} else if (parent != null && parent instanceof State) {
+			List<Signal> signals = ((State) parent).getSignals();
+			for (Signal signal : signals) {
+				elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
+			}
+		}
+		return elements;
+    }
+    
+    private IScope createHierarchicScope(EObject child){
+    	if(child.eContainer()!=null){
+    		IScope parentScope = createHierarchicScope(child.eContainer());
+    		SimpleScope scope = new SimpleScope(parentScope, this.getElements(child));
+    		return scope;
+    	}
+    	else{
+    		return new SimpleScope(this.getElements(child));
+    	}
+    }
 }
