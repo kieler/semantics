@@ -22,6 +22,7 @@ import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareConnection;
+import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
 import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
 import de.cau.cs.kieler.core.ui.util.ICondition;
@@ -175,7 +176,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         CircleDecoration historyDecoration = new CircleDecoration() {
             protected void outlineShape(final Graphics g) {
                 super.outlineShape(g);
-                Rectangle ovalBounds = getBoundsFromPoints();
+                Rectangle ovalBounds = getBounds();
                 g.setForegroundColor(ColorConstants.black);
                 g.drawString("H", ovalBounds.x + 2, ovalBounds.y - 2);
             }

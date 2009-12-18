@@ -211,30 +211,22 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
      * NeigborAwareOpenRectangleFigures might be nested in an additional parent.
      * Like:
      * <ul>
-     * <li>Parent Figure</li>
-     * <li>
-     * <ul>
-     * <li>DefaultSizeNodeFigure</li>
-     * <li>
-     * <ul>
-     * <li>NeighborAwareOpenRectangleFigure</li>
-     * </ul>
-     * </li>
-     * <li>DefaultSizeNodeFigure</li>
-     * <li>
-     * <ul>
-     * <li>NeighborAwareOpenRectangleFigure</li>
-     * </ul>
-     * </li>
-     * <li>DefaultSizeNodeFigure</li>
-     * <li>
-     * <ul>
-     * <li>NeighborAwareOpenRectangleFigure</li>
-     * </ul>
-     * </li>
-     * <li>...</li>
-     * </ul>
-     * </li>
+     *   <li>Parent Figure</li>
+     *   <li><ul>
+     *     <li>DefaultSizeNodeFigure</li>
+     *     <li><ul>
+     *         <li>NeighborAwareOpenRectangleFigure</li>
+     *     </ul></li>
+     *     <li>DefaultSizeNodeFigure</li>
+     *     <li><ul>
+     *       <li>NeighborAwareOpenRectangleFigure</li>
+     *     </ul></li>
+     *     <li>DefaultSizeNodeFigure</li>
+     *     <li><ul>
+     *       <li>NeighborAwareOpenRectangleFigure</li>
+     *     </ul></li>
+     *     <li>...</li>
+     *   </ul></li>
      * </ul>
      * 
      * Hence this siblingLevel tells the figure not only look into its parent,

@@ -20,6 +20,7 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
+import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
 import de.cau.cs.kieler.core.ui.util.ICondition;

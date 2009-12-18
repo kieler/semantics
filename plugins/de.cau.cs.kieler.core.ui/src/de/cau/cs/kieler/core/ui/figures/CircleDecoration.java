@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.core.ui.figures;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
@@ -24,7 +24,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A decoration that depicts a circle.
  * 
  * @author schm
- * 
  */
 public class CircleDecoration extends PolygonDecoration {
 
@@ -44,7 +43,7 @@ public class CircleDecoration extends PolygonDecoration {
      */
     @Override
     protected void outlineShape(final Graphics g) {
-        Rectangle ovalBounds = getBoundsFromPoints();
+        Rectangle ovalBounds = getBounds();
         g.drawOval(ovalBounds);
     }
 
@@ -53,7 +52,7 @@ public class CircleDecoration extends PolygonDecoration {
      */
     @Override
     protected void fillShape(final Graphics g) {
-        Rectangle ovalBounds = getBoundsFromPoints();
+        Rectangle ovalBounds = getBounds();
         g.fillOval(ovalBounds);
     }
 
@@ -62,17 +61,17 @@ public class CircleDecoration extends PolygonDecoration {
      * 
      * @return The bounds of the decoration.
      */
-    protected Rectangle getBoundsFromPoints() {
+    public Rectangle getBounds() {
         if (getPoints().size() < 2) {
             return null;
         }
 
         PointList pointList = getPoints();
-
-        int top = pointList.getFirstPoint().y;
-        int left = pointList.getFirstPoint().x;
-        int right = pointList.getFirstPoint().x;
-        int bottom = pointList.getFirstPoint().y;
+        Point firstPoint = pointList.getFirstPoint();
+        int top = firstPoint.y;
+        int left = firstPoint.x;
+        int right = firstPoint.x;
+        int bottom = firstPoint.y;
 
         // Take the outermost coordinates of all points as bounds
         for (int i = 1; i < getPoints().size(); i++) {

@@ -29,6 +29,7 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
+import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 

@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.core.ui.figures;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RoundedRectangle;
@@ -41,23 +41,23 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
      * @param graphics the graphics object
      */
     protected void outlineShape(final Graphics graphics) {
-        Rectangle f = Rectangle.SINGLETON;
-        Rectangle r = getBounds();
-        f.x = r.x + lineWidth / 2;
-        f.y = r.y + lineWidth / 2;
-        f.width = r.width - lineWidth;
-        f.height = r.height - lineWidth;
+        Rectangle rect = new Rectangle();
+        Rectangle bounds = getBounds();
+        rect.x = bounds.x + lineWidth / 2;
+        rect.y = bounds.y + lineWidth / 2;
+        rect.width = bounds.width - lineWidth;
+        rect.height = bounds.height - lineWidth;
         // calculate corners according to current dimensions
-        int actualCornerWidth = Math.min(corner.width, r.width);
-        int actualCornerHeight = Math.min(corner.height, r.height);
+        int cornerWidth = Math.min(corner.width, bounds.width);
+        int cornerHeight = Math.min(corner.height, bounds.height);
         
-        graphics.drawRoundRectangle(f, actualCornerWidth, actualCornerHeight);
+        graphics.drawRoundRectangle(rect, cornerWidth, cornerHeight);
         // Draw the second rectangle inside the first one
-        f.x += BORDER_WIDTH;
-        f.y += BORDER_WIDTH;
-        f.width -=  2 * BORDER_WIDTH;
-        f.height -= 2 * BORDER_WIDTH;
-        graphics.drawRoundRectangle(f, actualCornerWidth - 2 * BORDER_WIDTH,
-                actualCornerHeight - 2 * BORDER_WIDTH);
+        rect.x += BORDER_WIDTH;
+        rect.y += BORDER_WIDTH;
+        rect.width -=  2 * BORDER_WIDTH;
+        rect.height -= 2 * BORDER_WIDTH;
+        graphics.drawRoundRectangle(rect, cornerWidth - 2 * BORDER_WIDTH,
+                cornerHeight - 2 * BORDER_WIDTH);
     }
 }

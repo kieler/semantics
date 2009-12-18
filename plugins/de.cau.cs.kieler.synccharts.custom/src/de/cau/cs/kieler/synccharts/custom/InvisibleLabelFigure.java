@@ -58,11 +58,11 @@ public class InvisibleLabelFigure extends Shape {
             if (child instanceof WrappingLabel) {
                 WrappingLabel label = (WrappingLabel) child;
                 int width = label.getPreferredSize().width + WIDTH_GROW;
-                int height = label.getPreferredSize().height;
                 if (width > prefSize.width) {
                     prefSize.width = width;
                 }
-                if (width > prefSize.height) {
+                int height = label.getPreferredSize().height;
+                if (height > prefSize.height) {
                     prefSize.height = height;
                 }
             }

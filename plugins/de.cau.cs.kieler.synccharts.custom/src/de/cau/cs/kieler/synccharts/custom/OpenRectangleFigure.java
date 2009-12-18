@@ -21,8 +21,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 /**
  * A rectangle figure that can be configured to draw only specific
  * outline sides, e.g. omit drawing one or multiple lines.
+ * 
  * @author haf
- *
  */
 public class OpenRectangleFigure extends Shape {
 
@@ -61,7 +61,7 @@ public class OpenRectangleFigure extends Shape {
      * {@inheritDoc}
      */
     protected void fillShape(final Graphics graphics) {
-            graphics.fillRectangle(getBounds());
+        graphics.fillRectangle(getBounds());
     }
     
     /**
