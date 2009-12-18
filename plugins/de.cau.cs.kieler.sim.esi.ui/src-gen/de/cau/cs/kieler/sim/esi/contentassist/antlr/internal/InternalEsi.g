@@ -57,7 +57,8 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
 
 // Entry rule entryRuletracelist
-entryRuletracelist :
+entryRuletracelist 
+:
 { before(grammarAccess.getTracelistRule()); }
 	 ruletracelist
 { after(grammarAccess.getTracelistRule()); } 
@@ -69,7 +70,7 @@ ruletracelist
     @init {
 		int stackSize = keepStackSize();
     }
- :
+	:
 (
 { before(grammarAccess.getTracelistAccess().getGroup()); }
 (rule__Tracelist__Group__0)
@@ -84,7 +85,8 @@ finally {
 
 
 // Entry rule entryRuletrace
-entryRuletrace :
+entryRuletrace 
+:
 { before(grammarAccess.getTraceRule()); }
 	 ruletrace
 { after(grammarAccess.getTraceRule()); } 
@@ -96,7 +98,7 @@ ruletrace
     @init {
 		int stackSize = keepStackSize();
     }
- :
+	:
 (
 (
 { before(grammarAccess.getTraceAccess().getTicksAssignment()); }
@@ -118,7 +120,8 @@ finally {
 
 
 // Entry rule entryRuletick
-entryRuletick :
+entryRuletick 
+:
 { before(grammarAccess.getTickRule()); }
 	 ruletick
 { after(grammarAccess.getTickRule()); } 
@@ -130,7 +133,7 @@ ruletick
     @init {
 		int stackSize = keepStackSize();
     }
- :
+	:
 (
 { before(grammarAccess.getTickAccess().getGroup()); }
 (rule__Tick__Group__0)
@@ -145,7 +148,8 @@ finally {
 
 
 // Entry rule entryRulesignal
-entryRulesignal :
+entryRulesignal 
+:
 { before(grammarAccess.getSignalRule()); }
 	 rulesignal
 { after(grammarAccess.getSignalRule()); } 
@@ -157,7 +161,7 @@ rulesignal
     @init {
 		int stackSize = keepStackSize();
     }
- :
+	:
 (
 { before(grammarAccess.getSignalAccess().getGroup()); }
 (rule__Signal__Group__0)
