@@ -47,8 +47,7 @@ public class SyncchartsPaletteFactory {
         NodeToolEntry entry = new NodeToolEntry(Messages.State1CreationTool_title,
                 Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
-        entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.State_2001));
+        entry.setSmallIcon(SyncchartsElementTypes.getImageDescriptor(SyncchartsElementTypes.State_2001));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

@@ -20,12 +20,16 @@
 	«LET (if figureQualifiedClassName = null then 'org.eclipse.draw2d.RectangleFigure' else figureQualifiedClassName endif) AS fqn-»
 		«EXPAND xpt::Common::generatedMemberComment»
 		protected org.eclipse.draw2d.IFigure createNodeShape() {
-			«REM» Added "this" «ENDREM»
-			return primaryShape = new «fqn»(this)«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
+			primaryShape = new «fqn»()«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
 				protected boolean useLocalCoordinates() {
 					return true;
 				}
 			}«ENDIF»;
+			«REM» added conditional setting of adapter target «ENDREM»
+			if (primaryShape instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+				((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+			}
+			return primaryShape;
 		}
 
 		«EXPAND getPrimaryShapeMethod FOR fqn-»
@@ -35,8 +39,11 @@
 «DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::InnerClassViewmap-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.draw2d.IFigure createNodeShape() {
-		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
-		«className» figure = new «className»(this);
+		org.eclipse.draw2d.IFigure figure = new «className»();
+		«REM» added conditional setting of adapter target «ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+		}
 		«IF node.childNodes->size() > 0 and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT-»
  		figure.setUseLocalCoordinates(true);
 		«ENDIF-»

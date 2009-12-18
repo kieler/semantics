@@ -36,8 +36,7 @@ public class Region2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdi
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
-                null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {
@@ -85,8 +84,8 @@ public class Region2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdi
                                 continue;
                             }
                         }
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(),
+                                cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;

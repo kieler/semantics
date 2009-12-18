@@ -84,8 +84,8 @@ public class ModelElementSelectionPage extends WizardPage {
         layoutData.heightHint = 300;
         layoutData.widthHint = 300;
         modelViewer.getTree().setLayoutData(layoutData);
-        modelViewer.setContentProvider(new AdapterFactoryContentProvider(
-                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
+        modelViewer.setContentProvider(new AdapterFactoryContentProvider(SyncchartsDiagramEditorPlugin
+                .getInstance().getItemProvidersAdapterFactory()));
         modelViewer.setLabelProvider(new AdapterFactoryLabelProvider(SyncchartsDiagramEditorPlugin
                 .getInstance().getItemProvidersAdapterFactory()));
         if (selectedModelElement != null) {

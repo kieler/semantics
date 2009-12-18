@@ -20,7 +20,8 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.synccharts.custom.AttributeAwareInvisibleFigure;
+import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
+import de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.SignalItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
@@ -91,8 +92,11 @@ public class SignalEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
+        IFigure figure = new InvisibleFigure();
 
-        InvisibleFigure figure = new InvisibleFigure(this);
+        if (figure instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+        }
         return primaryShape = figure;
     }
 
@@ -242,14 +246,13 @@ public class SignalEditPart extends ShapeNodeEditPart {
      * @generated
      */
     public EditPart getPrimaryChildEditPart() {
-        return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(SignalNameEditPart.VISUAL_ID));
+        return getChildBySemanticHint(SyncchartsVisualIDRegistry.getType(SignalNameEditPart.VISUAL_ID));
     }
 
     /**
      * @generated
      */
-    public class InvisibleFigure extends AttributeAwareInvisibleFigure {
+    public class InvisibleFigure extends InvisibleLabelFigure {
 
         /**
          * @generated
@@ -259,8 +262,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
         /**
          * @generated
          */
-        public InvisibleFigure(EditPart e) {
-            super(e);
+        public InvisibleFigure() {
 
             createContents();
         }

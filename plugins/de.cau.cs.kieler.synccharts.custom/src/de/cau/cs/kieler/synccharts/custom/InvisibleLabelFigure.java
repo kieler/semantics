@@ -16,55 +16,27 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import java.util.List;
 
-import org.eclipse.draw2d.RoundedRectangle;
+import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
 /**
- * This class represents invisible figures, which usually serve as container for
- * labels.
+ * Represents invisible figures, which usually serve as container for labels.
+ * This is the figure for objects that are not supposed to be seen,
+ * such as the background figures needed for signal and action labels.
  * 
  * @author schm
  */
-public class AttributeAwareInvisibleFigure extends AttributeAwareFigure {
+public class InvisibleLabelFigure extends Shape {
 
-    /**
-     * The constructor. The figure for figures that are not supposed to be seen,
-     * such as the background figures needed for signal and action labels; actually
-     * they do not need to be attribute aware, but if they were not, the code
-     * templates would not work since we cannot distinguish different classes in
-     * code templates (at least I can't).
-     * 
-     * @param e The edit part the figure is supposed to watch.
+     /**
+     * The constructor.
      */
-    public AttributeAwareInvisibleFigure(final EditPart e) {
+    public InvisibleLabelFigure() {
         super();
-        this.setModelElementAndRegisterFromEditPart(e);
-
-        RoundedRectangle invisibleFigure = new RoundedRectangle();
-        invisibleFigure.setFill(false);
-        invisibleFigure.setOutline(false);
-
-        this.setDefaultFigure(invisibleFigure);
-        this.setCurrentFigure(invisibleFigure);
-
-    }
-
-    /**
-     * The constructor without the edit part. Use this if you do not want your
-     * figure to be attribute aware.
-     */
-    public AttributeAwareInvisibleFigure() {
-        super();
-
-        RoundedRectangle invisibleFigure = new RoundedRectangle();
-        invisibleFigure.setFill(false);
-        invisibleFigure.setOutline(false);
-
-        this.setDefaultFigure(invisibleFigure);
-        this.setCurrentFigure(invisibleFigure);
-
+        setFill(false);
+        setOutline(false);
     }
 
     private static final int WIDTH_GROW = 5;
@@ -114,8 +86,15 @@ public class AttributeAwareInvisibleFigure extends AttributeAwareFigure {
     /**
      * {@inheritDoc}
      */
-    public boolean isAdapterForType(final Object type) {
-        return false;
+    @Override
+    protected void fillShape(final Graphics graphics) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void outlineShape(final Graphics graphics) {
     }
     
 }

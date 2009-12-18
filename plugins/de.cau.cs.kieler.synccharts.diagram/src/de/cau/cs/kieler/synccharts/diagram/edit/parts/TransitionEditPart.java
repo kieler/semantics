@@ -7,10 +7,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITreeBranchEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
 
+import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticEditPolicy;
 
@@ -91,8 +89,12 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      */
 
     protected Connection createConnectionFigure() {
+        Connection figure = new TransitionFigure();
 
-        return new TransitionFigure(this);
+        if (figure instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+        }
+        return figure;
     }
 
     /**
@@ -115,8 +117,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
         /**
          * @generated
          */
-        public TransitionFigure(EditPart e) {
-            super(e);
+        public TransitionFigure() {
 
             createContents();
         }

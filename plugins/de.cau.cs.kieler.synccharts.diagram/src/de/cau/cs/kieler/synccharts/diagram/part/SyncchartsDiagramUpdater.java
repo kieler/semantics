@@ -582,9 +582,7 @@ public class SyncchartsDiagramUpdater {
         Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource().getResourceSet()
                 .getResources());
         List result = new LinkedList();
-        result
-                .addAll(getIncomingTypeModelFacetLinks_Transition_4001(modelElement,
-                        crossReferences));
+        result.addAll(getIncomingTypeModelFacetLinks_Transition_4001(modelElement, crossReferences));
         return result;
     }
 
@@ -603,9 +601,7 @@ public class SyncchartsDiagramUpdater {
         Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource().getResourceSet()
                 .getResources());
         List result = new LinkedList();
-        result
-                .addAll(getIncomingTypeModelFacetLinks_Transition_4001(modelElement,
-                        crossReferences));
+        result.addAll(getIncomingTypeModelFacetLinks_Transition_4001(modelElement, crossReferences));
         return result;
     }
 

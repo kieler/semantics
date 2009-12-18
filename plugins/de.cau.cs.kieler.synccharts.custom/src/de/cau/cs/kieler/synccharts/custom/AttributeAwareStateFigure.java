@@ -15,10 +15,11 @@
 package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.gef.EditPart;
 
+import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
 import de.cau.cs.kieler.core.ui.util.ICondition;
@@ -31,128 +32,116 @@ import de.cau.cs.kieler.synccharts.State;
  * This class represents attribute aware state figures.
  * 
  * @author schm
- * 
+ * @author msp
  */
-public class AttributeAwareStateFigure extends AttributeAwareFigure {
+public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
+    /** line width for initial states. */
     private static final int INIT_LINE_WIDTH = 4;
+    
+    private static final ICondition COND_NORMAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
+    private static final ICondition COND_CONDITIONAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.CONDITIONAL);
+//    private static final ICondition COND_REFERENCE = new FeatureValueCondition(
+//            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.REFERENCE);
+//    private static final ICondition COND_TEXTUAL = new FeatureValueCondition(
+//            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.TEXTUAL);
+
+    private static final ICondition COND_INITIAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_IsInitial(), true);
+    private static final ICondition COND_FINAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_IsFinal(), true);
+
+    private static final ICondition COND_NOREGIONS = new ListSizeCondition(
+            SyncchartsPackage.eINSTANCE.getState_Regions(), 0);
+    private static final ICondition COND_NOSIGNALS = new ListSizeCondition(
+            SyncchartsPackage.eINSTANCE.getState_Signals(), 0);
+    private static final ICondition COND_NOENTRYACT = new ListSizeCondition(
+            SyncchartsPackage.eINSTANCE.getState_EntryActions(), 0);
+    private static final ICondition COND_NOINSIDEACT = new ListSizeCondition(
+            SyncchartsPackage.eINSTANCE.getState_InnerActions(), 0);
+    private static final ICondition COND_NOEXITACT = new ListSizeCondition(
+            SyncchartsPackage.eINSTANCE.getState_ExitActions(), 0);
+    
+    private static final ICondition COND_SIMPLE = new CompoundCondition(new ICondition[] {
+            COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS, COND_NOENTRYACT,
+            COND_NOINSIDEACT, COND_NOEXITACT
+    });
+    private static final ICondition COND_SIMPLE_INITIAL = new CompoundCondition(new ICondition[] {
+            COND_INITIAL, COND_SIMPLE
+    });
+    private static final ICondition COND_SIMPLE_FINAL = new CompoundCondition(new ICondition[] {
+            COND_FINAL, COND_SIMPLE
+    });
     
     /**
      * The constructor.
-     * 
-     * @param e The edit part the figure is supposed to watch.
      */
-    public AttributeAwareStateFigure(final EditPart e) {
+    public AttributeAwareStateFigure() {
         super();
 
-        // Register edit part
-        this.setModelElementAndRegisterFromEditPart(e);
-
         // Create all needed figures
-        //  - complex state
-        RoundedRectangle normalStateFigure = new RoundedRectangle();
-        normalStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        normalStateFigure.setFill(false);
-        normalStateFigure.setLineWidth(1);
-        normalStateFigure.setForegroundColor(ColorConstants.black);
-                
-        //  - simple state
-        RoundedRectangle normalNChildrenStateFigure = new RoundedRectangle();
-        normalNChildrenStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        normalNChildrenStateFigure.setFill(false);
-        normalNChildrenStateFigure.setLineWidth(1);
-        normalNChildrenStateFigure.setForegroundColor(ColorConstants.black);
-        
-        // - initial state
-        RoundedRectangle initialStateFigure = new RoundedRectangle();
-        initialStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        initialStateFigure.setFill(false);
-        initialStateFigure.setLineWidth(INIT_LINE_WIDTH);
-        initialStateFigure.setForegroundColor(ColorConstants.black);
-
-        RoundedRectangle initialNChildrenStateFigure = new RoundedRectangle();
-        initialNChildrenStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        initialNChildrenStateFigure.setFill(false);
-        initialNChildrenStateFigure.setLineWidth(INIT_LINE_WIDTH - 1);
-        initialNChildrenStateFigure.setForegroundColor(ColorConstants.black);
-
-        // - finalState
-        RoundedRectangle finalStateFigure = new DoubleRoundedRectangle();
-        finalStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        finalStateFigure.setFill(false);
-        finalStateFigure.setLineWidth(1);
-        finalStateFigure.setForegroundColor(ColorConstants.black);
-
-        RoundedRectangle finalNChildrenStateFigure = new DoubleRoundedRectangle();
-        finalNChildrenStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        finalNChildrenStateFigure.setFill(false);
-        finalNChildrenStateFigure.setLineWidth(1);
-        finalNChildrenStateFigure.setForegroundColor(ColorConstants.black);
-
-        //  - conditional state
-        ConditionalStateFigure conditionalStateFigure = new ConditionalStateFigure();
+        IFigure normalFigure = createNormalFigure(); 
+        IFigure initialFigure = createInitialFigure();
+        IFigure finalFigure = createFinalFigure();
+        IFigure conditionalFigure = new ConditionalStateFigure();
 
         // Set default and current figure
-        setDefaultFigure(normalStateFigure);
-        setCurrentFigure(normalNChildrenStateFigure);
-
-        // Create all needed conditions
-        ICondition typeNormal = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getState_Type(), StateType.NORMAL);
-        ICondition typeConditional = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getState_Type(), StateType.CONDITIONAL);
-//        FeatureValueCondition typeReference = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-//                .getState_Type(), StateType.REFERENCE);
-//        FeatureValueCondition typeTextual = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-//                .getState_Type(), StateType.TEXTUAL);
-
-        ICondition flagInitial = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getState_IsInitial(), true);
-        ICondition flagFinal = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getState_IsFinal(), true);
-
-        ICondition noChildren = new ListSizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_Regions(), 0);
-        ICondition noSignals = new ListSizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_Signals(), new Integer(0));
-        ICondition noEntryActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_EntryActions(), new Integer(0));
-        ICondition noInnerActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_InnerActions(), new Integer(0));
-        ICondition noExitActions = new ListSizeCondition(SyncchartsPackage.eINSTANCE
-                .getState_ExitActions(), new Integer(0));
-
-        // Combine conditions in compound conditions
-        ICondition normalNCSF = new CompoundCondition(new ICondition[] {
-                typeNormal, noChildren, noSignals, noEntryActions, noInnerActions, noExitActions
-        });
-
-        ICondition initialNCSF = new CompoundCondition(new ICondition[] {
-                typeNormal, flagInitial, noChildren, noSignals, noEntryActions, noInnerActions,
-                noExitActions
-        });
-
-        ICondition finalNCSF = new CompoundCondition(new ICondition[] {
-                typeNormal, flagFinal, noChildren, noSignals, noEntryActions, noInnerActions,
-                noExitActions
-        });
+        setDefaultFigure(normalFigure);
 
         // Add all conditional figures to the list
-        addConditionalFigure(conditionalStateFigure, typeConditional);
-        addConditionalFigure(initialNChildrenStateFigure, initialNCSF);
-        addConditionalFigure(initialStateFigure, flagInitial);
-        addConditionalFigure(finalNChildrenStateFigure, finalNCSF);
-        addConditionalFigure(finalStateFigure, flagFinal);
-        addConditionalFigure(normalNChildrenStateFigure, normalNCSF);
-
-        // check conditions
-        notifyChanged(null);
+        addConditionalFigure(conditionalFigure, COND_CONDITIONAL);
+        addConditionalFigure(initialFigure, COND_SIMPLE_INITIAL);
+        addConditionalFigure(initialFigure, COND_INITIAL);
+        addConditionalFigure(finalFigure, COND_SIMPLE_FINAL);
+        addConditionalFigure(finalFigure, COND_FINAL);
+        addConditionalFigure(normalFigure, COND_SIMPLE);
+    }
+    
+    /**
+     * Create a figure for normal states.
+     * 
+     * @return a figure for normal states
+     */
+    private IFigure createNormalFigure() {
+        RoundedRectangle figure = new RoundedRectangle();
+        figure.setCornerDimensions(new Dimension(
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setFill(false);
+        figure.setLineWidth(1);
+        figure.setForegroundColor(ColorConstants.black);
+        return figure;
+    }
+    
+    /**
+     * Create a figure for initial states.
+     * 
+     * @return a figure for initial states.
+     */
+    private IFigure createInitialFigure() {
+        RoundedRectangle figure = new RoundedRectangle();
+        figure.setCornerDimensions(new Dimension(
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setFill(false);
+        figure.setLineWidth(INIT_LINE_WIDTH);
+        figure.setForegroundColor(ColorConstants.black);
+        return figure;
+    }
+    
+    /**
+     * Create a figure for final states.
+     * 
+     * @return a figure for final states
+     */
+    private IFigure createFinalFigure() {
+        RoundedRectangle figure = new DoubleRoundedRectangle();
+        figure.setCornerDimensions(new Dimension(
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setFill(false);
+        figure.setLineWidth(1);
+        figure.setForegroundColor(ColorConstants.black);
+        return figure;
     }
 
     /**

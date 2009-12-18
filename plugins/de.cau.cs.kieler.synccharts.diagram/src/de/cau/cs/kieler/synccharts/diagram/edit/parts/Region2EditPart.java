@@ -18,7 +18,8 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.synccharts.custom.AttributeAwareRegionFigure;
+import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
+import de.cau.cs.kieler.synccharts.custom.RegionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.Region2ItemSemanticEditPolicy;
 
 /**
@@ -88,15 +89,19 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
+        primaryShape = new RegionFigure();
 
-        return primaryShape = new AttributeAwareRegionFigure(this);
+        if (primaryShape instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+        }
+        return primaryShape;
     }
 
     /**
      * @generated
      */
-    public AttributeAwareRegionFigure getPrimaryShape() {
-        return (AttributeAwareRegionFigure) primaryShape;
+    public RegionFigure getPrimaryShape() {
+        return (RegionFigure) primaryShape;
     }
 
     /**

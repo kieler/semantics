@@ -100,8 +100,8 @@ public class ValidateAction extends Action {
      * @generated
      */
     public static void runNonUIValidation(View view) {
-        DiagramEditPart diagramEditPart = OffscreenEditPartFactory.getInstance()
-                .createDiagramEditPart(view.getDiagram());
+        DiagramEditPart diagramEditPart = OffscreenEditPartFactory.getInstance().createDiagramEditPart(
+                view.getDiagram());
         runValidation(diagramEditPart, view);
     }
 
@@ -139,15 +139,14 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static void validate(DiagramEditPart diagramEditPart, View view) {
-        IFile target = view.eResource() != null ? WorkspaceSynchronizer.getFile(view.eResource())
-                : null;
+        IFile target = view.eResource() != null ? WorkspaceSynchronizer.getFile(view.eResource()) : null;
         if (target != null) {
             SyncchartsMarkerNavigationProvider.deleteMarkers(target);
         }
         Diagnostic diagnostic = runEMFValidator(view);
         createMarkers(target, diagnostic, diagramEditPart);
-        IBatchValidator validator = (IBatchValidator) ModelValidationService.getInstance()
-                .newValidator(EvaluationMode.BATCH);
+        IBatchValidator validator = (IBatchValidator) ModelValidationService.getInstance().newValidator(
+                EvaluationMode.BATCH);
         validator.setIncludeLiveConstraints(true);
         if (view.isSetElement() && view.getElement() != null) {
             IStatus status = validator.validate(view.getElement());
@@ -170,11 +169,11 @@ public class ValidateAction extends Action {
                         allStatuses));
         for (Iterator it = allStatuses.iterator(); it.hasNext();) {
             IConstraintStatus nextStatus = (IConstraintStatus) it.next();
-            View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart, nextStatus
-                    .getTarget(), element2ViewMap);
+            View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart, nextStatus.getTarget(),
+                    element2ViewMap);
             addMarker(diagramEditPart.getViewer(), target, view.eResource().getURIFragment(view),
-                    EMFCoreUtil.getQualifiedName(nextStatus.getTarget(), true), nextStatus
-                            .getMessage(), nextStatus.getSeverity());
+                    EMFCoreUtil.getQualifiedName(nextStatus.getTarget(), true), nextStatus.getMessage(),
+                    nextStatus.getSeverity());
         }
     }
 
@@ -198,10 +197,9 @@ public class ValidateAction extends Action {
                 EObject element = (EObject) data.get(0);
                 View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart, element,
                         element2ViewMap);
-                addMarker(diagramEditPart.getViewer(), target, view.eResource()
-                        .getURIFragment(view), EMFCoreUtil.getQualifiedName(element, true),
-                        nextDiagnostic.getMessage(), diagnosticToStatusSeverity(nextDiagnostic
-                                .getSeverity()));
+                addMarker(diagramEditPart.getViewer(), target, view.eResource().getURIFragment(view),
+                        EMFCoreUtil.getQualifiedName(element, true), nextDiagnostic.getMessage(),
+                        diagnosticToStatusSeverity(nextDiagnostic.getSeverity()));
             }
         }
     }
@@ -228,8 +226,7 @@ public class ValidateAction extends Action {
             return IStatus.INFO;
         } else if (diagnosticSeverity == Diagnostic.WARNING) {
             return IStatus.WARNING;
-        } else if (diagnosticSeverity == Diagnostic.ERROR
-                || diagnosticSeverity == Diagnostic.CANCEL) {
+        } else if (diagnosticSeverity == Diagnostic.ERROR || diagnosticSeverity == Diagnostic.CANCEL) {
             return IStatus.ERROR;
         }
         return IStatus.INFO;
@@ -267,8 +264,7 @@ public class ValidateAction extends Action {
         }
         if (diagnostic.getChildren() != null && !diagnostic.getChildren().isEmpty()) {
             for (Iterator it = diagnostic.getChildren().iterator(); it.hasNext();) {
-                collectTargetElements((Diagnostic) it.next(), targetElementCollector,
-                        allDiagnostics);
+                collectTargetElements((Diagnostic) it.next(), targetElementCollector, allDiagnostics);
             }
         }
         return targetElementCollector;

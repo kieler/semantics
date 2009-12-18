@@ -46,8 +46,7 @@ public class SyncchartsNavigatorLinkHelper implements ILinkHelper {
             }
         }
         URI uri = EcoreUtil.getURI(diagram);
-        String editorName = uri.lastSegment()
-                + "#" + diagram.eResource().getContents().indexOf(diagram); //$NON-NLS-1$
+        String editorName = uri.lastSegment() + "#" + diagram.eResource().getContents().indexOf(diagram); //$NON-NLS-1$
         IEditorInput editorInput = new URIEditorInput(uri, editorName);
         return editorInput;
     }
@@ -56,8 +55,8 @@ public class SyncchartsNavigatorLinkHelper implements ILinkHelper {
      * @generated
      */
     public IStructuredSelection findSelection(IEditorInput anInput) {
-        IDiagramDocument document = SyncchartsDiagramEditorPlugin.getInstance()
-                .getDocumentProvider().getDiagramDocument(anInput);
+        IDiagramDocument document = SyncchartsDiagramEditorPlugin.getInstance().getDocumentProvider()
+                .getDiagramDocument(anInput);
         if (document == null) {
             return StructuredSelection.EMPTY;
         }
@@ -103,10 +102,9 @@ public class SyncchartsNavigatorLinkHelper implements ILinkHelper {
         aPage.bringToTop(editor);
         if (editor instanceof DiagramEditor) {
             DiagramEditor diagramEditor = (DiagramEditor) editor;
-            ResourceSet diagramEditorResourceSet = diagramEditor.getEditingDomain()
-                    .getResourceSet();
-            EObject selectedView = diagramEditorResourceSet.getEObject(EcoreUtil
-                    .getURI(navigatorView), true);
+            ResourceSet diagramEditorResourceSet = diagramEditor.getEditingDomain().getResourceSet();
+            EObject selectedView = diagramEditorResourceSet.getEObject(EcoreUtil.getURI(navigatorView),
+                    true);
             if (selectedView == null) {
                 return;
             }

@@ -63,9 +63,9 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         myFileCreationPage = new WizardNewFileCreationPage(
                 Messages.SyncchartsNewDiagramFileWizard_CreationPageName, StructuredSelection.EMPTY);
         myFileCreationPage.setTitle(Messages.SyncchartsNewDiagramFileWizard_CreationPageTitle);
-        myFileCreationPage.setDescription(NLS.bind(
-                Messages.SyncchartsNewDiagramFileWizard_CreationPageDescription,
-                RegionEditPart.MODEL_ID));
+        myFileCreationPage.setDescription(NLS
+                .bind(Messages.SyncchartsNewDiagramFileWizard_CreationPageDescription,
+                        RegionEditPart.MODEL_ID));
         IPath filePath;
         String fileName = URI.decode(domainModelURI.trimFileExtension().lastSegment());
         if (domainModelURI.isPlatformResource()) {
@@ -77,8 +77,8 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
             throw new IllegalArgumentException("Unsupported URI: " + domainModelURI); //$NON-NLS-1$
         }
         myFileCreationPage.setContainerFullPath(filePath);
-        myFileCreationPage.setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(filePath,
-                fileName, "kids")); //$NON-NLS-1$
+        myFileCreationPage.setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(filePath, fileName,
+                "kids")); //$NON-NLS-1$
 
         diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
                 Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageName);
@@ -107,8 +107,7 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         IFile diagramFile = myFileCreationPage.createNewFile();
         SyncchartsDiagramEditorUtil.setCharset(diagramFile);
         affectedFiles.add(diagramFile);
-        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(),
-                true);
+        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
         ResourceSet resourceSet = myEditingDomain.getResourceSet();
         final Resource diagramResource = resourceSet.createResource(diagramModelURI);
         AbstractTransactionalCommand command = new AbstractTransactionalCommand(myEditingDomain,
@@ -130,13 +129,13 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
             }
         };
         try {
-            OperationHistoryFactory.getOperationHistory().execute(command,
-                    new NullProgressMonitor(), null);
+            OperationHistoryFactory.getOperationHistory().execute(command, new NullProgressMonitor(),
+                    null);
             diagramResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
             SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
         } catch (ExecutionException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create model and diagram", e); //$NON-NLS-1$
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Unable to create model and diagram", e); //$NON-NLS-1$
         } catch (IOException ex) {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$

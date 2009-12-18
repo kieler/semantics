@@ -58,14 +58,14 @@
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="RegionFigure"
-          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.AttributeAwareRegionFigure"/>
+          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.RegionFigure"/>
     </descriptors>
     <descriptors
         name="InvisibleFigure">
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="InvisibleFigure"
-          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.AttributeAwareInvisibleFigure">
+          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure">
         <children
             xsi:type="gmfgraph:Label"
             name="InvisibleFigureLabelFigure"

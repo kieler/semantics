@@ -34,8 +34,7 @@ public class SyncchartsPropertySection extends AdvancedPropertySection implement
         }
         AdapterFactory af = getAdapterFactory(object);
         if (af != null) {
-            IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
-                    IItemPropertySource.class);
+            IItemPropertySource ips = (IItemPropertySource) af.adapt(object, IItemPropertySource.class);
             if (ips != null) {
                 return new PropertySource(object, ips);
             }

@@ -15,8 +15,12 @@
 
 «DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::InnerClassViewmap»
 	protected org.eclipse.draw2d.Connection createConnectionFigure() {
-		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
-		return new «className»(this);
+		org.eclipse.draw2d.Connection figure = new «className»();
+		«REM» added conditional setting of adapter target «ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+		}
+		return figure;
 	}
 
 	«EXPAND xpt::Common::generatedMemberComment»

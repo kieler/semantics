@@ -1,5 +1,5 @@
-<project name="empty diagram project" default="empty" basedir=".">
-	<target name="empty">
+<project name="clean diagram project" default="clean" basedir=".">
+	<target name="clean">
 		<delete>
 			<fileset dir="src">
 				<include name="**/*.java" />

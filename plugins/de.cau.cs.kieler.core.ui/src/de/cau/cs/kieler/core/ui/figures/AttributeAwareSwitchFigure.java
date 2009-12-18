@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.core.ui.figures;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,25 +21,21 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.ui.util.ICondition;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
- * This class represents node figures that are aware of changes made to their
- * corresponding model element.
+ * An attribute aware figure that switches the displayed figure according to attribute changes. 
  * 
  * @author schm
  * @author msp
  */
-public abstract class AttributeAwareFigure extends Figure implements Adapter {
+public abstract class AttributeAwareSwitchFigure extends Figure implements IAttributeAwareFigure {
 
     /** Contains all possible figures and conditions when they are to be displayed. */
     private List<Pair<IFigure, ICondition>> conditionalFigures
@@ -57,27 +53,8 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
     /**
      * The constructor.
      */
-    public AttributeAwareFigure() {
+    public AttributeAwareSwitchFigure() {
         super();
-    }
-
-    /**
-     * Establish a link between the figure and its edit part.
-     * 
-     * @param e The edit part to watch.
-     */
-    public void setModelElementAndRegisterFromEditPart(final EditPart e) {
-        modelElement = ((View) (e.getModel())).getElement();
-        modelElement.eAdapters().add(this);
-    }
-
-    /**
-     * Set the figure that is to be drawn if no condition id fulfilled.
-     * 
-     * @param figure The figure to be drawn if no condition is fulfilled.
-     */
-    public void setDefaultFigure(final Figure figure) {
-        defaultFigure = figure;
     }
 
     /**
@@ -99,21 +76,22 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
     }
 
     /**
+     * Set the figure that is to be drawn if no condition is fulfilled.
+     * 
+     * @param figure The figure to be drawn if no condition is fulfilled.
+     */
+    public void setDefaultFigure(final IFigure figure) {
+        defaultFigure = figure;
+        currentFigure = figure;
+    }
+
+    /**
      * Returns the current figure that is to be drawn.
      * 
      * @return The current figure that is to be drawn.
      */
     public IFigure getCurrentFigure() {
         return currentFigure;
-    }
-
-    /**
-     * Sets the figure that is currently to be drawn.
-     * 
-     * @param f The figure that is currently to be drawn.
-     */
-    public void setCurrentFigure(final IFigure f) {
-        currentFigure = f;
     }
 
     /**
@@ -162,9 +140,19 @@ public abstract class AttributeAwareFigure extends Figure implements Adapter {
      * {@inheritDoc}
      */
     public void setTarget(final Notifier newTarget) {
-        if (newTarget instanceof EObject) {
-            modelElement = (EObject) newTarget;
+        // do not react to target change, as only {@link listenTo} may be used to change the target
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void listenTo(final EObject object) {
+        if (modelElement != null) {
+            modelElement.eAdapters().remove(this);
         }
+        modelElement = object;
+        modelElement.eAdapters().add(this);  
+        notifyChanged(null);
     }
 
     /**

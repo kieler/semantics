@@ -107,15 +107,14 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
                 .setDescription(Messages.SyncchartsCreationWizard_DiagramModelFilePageDescription);
         addPage(diagramModelFilePage);
 
-        domainModelFilePage = new SyncchartsCreationWizardPage(
-                "DomainModelFile", getSelection(), "kixs") { //$NON-NLS-1$ //$NON-NLS-2$
+        domainModelFilePage = new SyncchartsCreationWizardPage("DomainModelFile", getSelection(), "kixs") { //$NON-NLS-1$ //$NON-NLS-2$
 
             public void setVisible(boolean visible) {
                 if (visible) {
                     String fileName = diagramModelFilePage.getFileName();
                     fileName = fileName.substring(0, fileName.length() - ".kids".length()); //$NON-NLS-1$
-                    setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(
-                            getContainerFullPath(), fileName, "kixs")); //$NON-NLS-1$
+                    setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(getContainerFullPath(),
+                            fileName, "kixs")); //$NON-NLS-1$
                 }
                 super.setVisible(visible);
             }
@@ -132,8 +131,7 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
     public boolean performFinish() {
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 
-            protected void execute(IProgressMonitor monitor) throws CoreException,
-                    InterruptedException {
+            protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException {
                 diagram = SyncchartsDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(),
                         domainModelFilePage.getURI(), monitor);
                 if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
@@ -141,8 +139,7 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
                         SyncchartsDiagramEditorUtil.openDiagram(diagram);
                     } catch (PartInitException e) {
                         ErrorDialog.openError(getContainer().getShell(),
-                                Messages.SyncchartsCreationWizardOpenEditorError, null, e
-                                        .getStatus());
+                                Messages.SyncchartsCreationWizardOpenEditorError, null, e.getStatus());
                     }
                 }
             }

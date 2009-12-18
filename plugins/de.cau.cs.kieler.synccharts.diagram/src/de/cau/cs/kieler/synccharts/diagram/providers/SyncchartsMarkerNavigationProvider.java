@@ -44,7 +44,7 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
         EditPart targetEditPart = (EditPart) editPartRegistry.get(targetView);
         if (targetEditPart != null) {
             SyncchartsDiagramEditorUtil.selectElementsInDiagram(editor, Arrays
-                    .asList(new EditPart[] { targetEditPart }));
+                    .asList(new EditPart[] {targetEditPart}));
         }
     }
 
@@ -80,8 +80,8 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
             }
             marker.setAttribute(IMarker.SEVERITY, markerSeverity);
         } catch (CoreException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Failed to create validation marker", e); //$NON-NLS-1$
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Failed to create validation marker", e); //$NON-NLS-1$
         }
         return marker;
     }

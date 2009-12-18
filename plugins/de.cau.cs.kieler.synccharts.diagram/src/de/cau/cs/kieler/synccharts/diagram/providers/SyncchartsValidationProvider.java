@@ -27,8 +27,7 @@ public class SyncchartsValidationProvider {
     /**
      * @generated
      */
-    public static void runWithConstraints(TransactionalEditingDomain editingDomain,
-            Runnable operation) {
+    public static void runWithConstraints(TransactionalEditingDomain editingDomain, Runnable operation) {
         final Runnable op = operation;
         Runnable task = new Runnable() {
             public void run() {

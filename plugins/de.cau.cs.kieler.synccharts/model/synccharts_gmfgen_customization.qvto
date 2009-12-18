@@ -15,6 +15,7 @@ main() {
 	model.diagramFileExtension := "kids"; // kieler diagram syntax for SyncCharts
 	
 	// some general plugin settings	
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.ui";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.labelparser.bridge";
 	model.plugin.version := "0.1.0.qualifier";
@@ -29,11 +30,6 @@ main() {
 	
 	// use our own category for the "new" wizard
 	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
-	
-	// customize class bodies of figures (required for attribute awareness)
-	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
-	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
-	model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
 	
 	// special settings for all compartments
 	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
@@ -85,15 +81,3 @@ mapping inout GenCompartment::compartmentSettings(){
 		else "";
 	};
 }
-
-mapping inout InnerClassViewmap::customizeClassBody(){
-	// build a new class body by splitting it up and inserting
-	// a parameter in the constructor (the edit part) such that
-	// every figure has a reference to its corresponding
-	// edit part. Required for attribute awareness.
-	var string1 := self.classBody.substringBefore("Figure() {");
-	var string2 := "Figure(org.eclipse.gef.EditPart e) {super(e);";
-	var string3 := self.classBody.substringAfter("Figure() {");
-	self.classBody := string1.+(string2).+(string3);
-}
-

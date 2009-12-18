@@ -97,8 +97,8 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
         semanticCommand = getEditHelperCommand(completedRequest, semanticCommand);
         if (completedRequest instanceof DestroyRequest) {
             DestroyRequest destroyRequest = (DestroyRequest) completedRequest;
-            return shouldProceed(destroyRequest) ? addDeleteViewCommand(semanticCommand,
-                    destroyRequest) : null;
+            return shouldProceed(destroyRequest) ? addDeleteViewCommand(semanticCommand, destroyRequest)
+                    : null;
         }
         return semanticCommand;
     }
@@ -107,8 +107,8 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
      * @generated
      */
     protected Command addDeleteViewCommand(Command mainCommand, DestroyRequest completedRequest) {
-        Command deleteViewCommand = getGEFWrapper(new DeleteCommand(getEditingDomain(),
-                (View) getHost().getModel()));
+        Command deleteViewCommand = getGEFWrapper(new DeleteCommand(getEditingDomain(), (View) getHost()
+                .getModel()));
         return mainCommand == null ? deleteViewCommand : mainCommand.chain(deleteViewCommand);
     }
 
@@ -123,8 +123,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
             request.setParameter(SyncchartsBaseEditHelper.EDIT_POLICY_COMMAND, command);
         }
         IElementType requestContextElementType = getContextElementType(request);
-        request.setParameter(SyncchartsBaseEditHelper.CONTEXT_ELEMENT_TYPE,
-                requestContextElementType);
+        request.setParameter(SyncchartsBaseEditHelper.CONTEXT_ELEMENT_TYPE, requestContextElementType);
         ICommand command = requestContextElementType.getEditCommand(request);
         request.setParameter(SyncchartsBaseEditHelper.EDIT_POLICY_COMMAND, null);
         request.setParameter(SyncchartsBaseEditHelper.CONTEXT_ELEMENT_TYPE, null);
@@ -243,8 +242,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
     /**
      * @generated
      */
-    protected Command getReorientReferenceRelationshipCommand(
-            ReorientReferenceRelationshipRequest req) {
+    protected Command getReorientReferenceRelationshipCommand(ReorientReferenceRelationshipRequest req) {
         return UnexecutableCommand.INSTANCE;
     }
 

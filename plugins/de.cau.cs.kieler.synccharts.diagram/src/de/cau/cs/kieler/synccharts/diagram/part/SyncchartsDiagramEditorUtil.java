@@ -50,7 +50,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 
@@ -75,11 +74,10 @@ public class SyncchartsDiagramEditorUtil {
      */
     public static boolean openDiagram(Resource diagram) throws PartInitException {
         String path = diagram.getURI().toPlatformString(true);
-        IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(
-                new Path(path));
+        IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot()
+                .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
-            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
+            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             return null != page.openEditor(new FileEditorInput((IFile) workspaceResource),
                     SyncchartsDiagramEditor.ID);
         }
@@ -104,8 +102,7 @@ public class SyncchartsDiagramEditorUtil {
     /**
      * @generated
      */
-    public static String getUniqueFileName(IPath containerFullPath, String fileName,
-            String extension) {
+    public static String getUniqueFileName(IPath containerFullPath, String fileName, String extension) {
         if (containerFullPath == null) {
             containerFullPath = new Path(""); //$NON-NLS-1$
         }
@@ -152,18 +149,15 @@ public class SyncchartsDiagramEditorUtil {
      * This method should be called within a workspace modify operation since it creates resources.
      * @generated
      */
-    public static Resource createDiagram(URI diagramURI, URI modelURI,
-            IProgressMonitor progressMonitor) {
+    public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
-        progressMonitor
-                .beginTask(Messages.SyncchartsDiagramEditorUtil_CreateDiagramProgressTask, 3);
+        progressMonitor.beginTask(Messages.SyncchartsDiagramEditorUtil_CreateDiagramProgressTask, 3);
         final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
         final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
         final String diagramName = diagramURI.lastSegment();
         AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-                Messages.SyncchartsDiagramEditorUtil_CreateDiagramCommandLabel,
-                Collections.EMPTY_LIST) {
+                Messages.SyncchartsDiagramEditorUtil_CreateDiagramCommandLabel, Collections.EMPTY_LIST) {
             protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
                     throws ExecutionException {
                 Region model = createInitialModel();
@@ -196,8 +190,8 @@ public class SyncchartsDiagramEditorUtil {
             OperationHistoryFactory.getOperationHistory().execute(command,
                     new SubProgressMonitor(progressMonitor, 1), null);
         } catch (ExecutionException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create model and diagram", e); //$NON-NLS-1$
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Unable to create model and diagram", e); //$NON-NLS-1$
         }
         setCharset(WorkspaceSynchronizer.getFile(modelResource));
         setCharset(WorkspaceSynchronizer.getFile(diagramResource));

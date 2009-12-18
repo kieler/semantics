@@ -12,32 +12,30 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.core.ui.figures;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.RotatableDecoration;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
-import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.core.ui.util.ICondition;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
- * This class represents connections that are able to change their appearance
- * when properties of their corresponding model elements change.
+ * An attribute aware polyline connection figure that is able to change its
+ * decoration according to attribute changes. 
  * 
  * @author schm
  * @author msp
  */
-public abstract class AttributeAwareConnection extends PolylineConnectionEx implements Adapter {
+public abstract class AttributeAwareConnection extends PolylineConnectionEx
+        implements IAttributeAwareFigure {
 
     /** Container for source and target decoration. */
     private static class Decoration {
@@ -87,16 +85,6 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
     }
 
     /**
-     * Tells a connection which edit part it has to watch.
-     * 
-     * @param e The edit part to watch.
-     */
-    public void setModelElementAndRegisterFromEditPart(final EditPart e) {
-        modelElement = ((View) (e.getModel())).getElement();
-        modelElement.eAdapters().add(this);
-    }
-
-    /**
      * Set the default decoration of the connection.
      * 
      * @param sourceDeco the default source decoration
@@ -104,7 +92,8 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
      */
     public void setDefaultDecoration(final RotatableDecoration sourceDeco,
             final RotatableDecoration targetDeco) {
-        this.defaultDeco = new Decoration(sourceDeco, targetDeco);
+        defaultDeco = new Decoration(sourceDeco, targetDeco);
+        defaultDeco.apply(this);
     }
 
     /**
@@ -136,9 +125,19 @@ public abstract class AttributeAwareConnection extends PolylineConnectionEx impl
      * {@inheritDoc}
      */
     public void setTarget(final Notifier newTarget) {
-        if (newTarget instanceof EObject) {
-            modelElement = (EObject) newTarget;
+        // do not react to target change, as only {@link listenTo} may be used to change the target
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void listenTo(final EObject object) {
+        if (modelElement != null) {
+            modelElement.eAdapters().remove(this);
         }
+        modelElement = object;
+        modelElement.eAdapters().add(this);
+        notifyChanged(null);
     }
 
     /**

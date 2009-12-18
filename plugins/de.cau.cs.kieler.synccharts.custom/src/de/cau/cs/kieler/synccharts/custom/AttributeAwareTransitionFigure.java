@@ -20,8 +20,8 @@ import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gef.EditPart;
 
+import de.cau.cs.kieler.core.ui.figures.AttributeAwareConnection;
 import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
 import de.cau.cs.kieler.core.ui.util.ICondition;
@@ -33,66 +33,55 @@ import de.cau.cs.kieler.synccharts.TransitionType;
  * This class represents attribute aware transition figures.
  * 
  * @author schm
+ * @author msp
  */
 public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 
+    private static final ICondition COND_WEAKAB = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.WEAKABORT);
+    private static final ICondition COND_STRONGAB = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.STRONGABORT);
+    private static final ICondition COND_TERMINATION = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
+    private static final ICondition COND_HISTORY = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getTransition_IsHistory(), true);
+
+    private static final ICondition COND_WEAKAB_HIST = new CompoundCondition(new ICondition[] {
+            COND_WEAKAB, COND_HISTORY
+    });
+    private static final ICondition COND_STRONGAB_HIST = new CompoundCondition(new ICondition[] {
+            COND_STRONGAB, COND_HISTORY
+    });
+    private static final ICondition COND_TERMINATION_HIST = new CompoundCondition(new ICondition[] {
+            COND_TERMINATION, COND_HISTORY
+    });
+    
     /**
      * The constructor.
-     * 
-     * @param e The edit part the figure is supposed to watch.
      */
-    public AttributeAwareTransitionFigure(final EditPart e) {
+    public AttributeAwareTransitionFigure() {
         super();
-        this.setModelElementAndRegisterFromEditPart(e);
 
         this.setForegroundColor(ColorConstants.black);
         this.setBackgroundColor(ColorConstants.black);
         this.setLineWidth(2);
 
-        // Create all needed conditions
-        FeatureValueCondition kindWeakAbort = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getTransition_Type(), TransitionType.WEAKABORT);
-        FeatureValueCondition kindStrongAbort = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getTransition_Type(), TransitionType.STRONGABORT);
-        FeatureValueCondition kindNormalTermination = new FeatureValueCondition(
-                SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
-        FeatureValueCondition isHistory = new FeatureValueCondition(SyncchartsPackage.eINSTANCE
-                .getTransition_IsHistory(), true);
-
-        // Combine them in compound conditions
-        ICondition weakAbortHistorySF = new CompoundCondition(new ICondition[] {
-                kindWeakAbort, isHistory
-        });
-
-        ICondition strongAbortHistorySF = new CompoundCondition(new ICondition[] {
-                kindStrongAbort, isHistory
-        });
+        RotatableDecoration arrowDeco = createArrowDecoration();
+        RotatableDecoration weakAbortDeco = createWeakAbortDecoration();
+        RotatableDecoration stronAbortDeco = createStrongAbortDecoration();
+        RotatableDecoration terminationDeco = createTerminationDecoration();
+        RotatableDecoration historyDeco = createHistoryDecoration();
         
-        ICondition normalTerminationHistorySF = new CompoundCondition(new ICondition[] {
-                kindNormalTermination, isHistory
-        });
-
         // Add all decorations with associated conditions to the figure's list
-        addConditionalDecoration(createWeakAbortionDecoration(), createArrowDecoration(),
-                kindWeakAbort);
-        addConditionalDecoration(createStrongAbortionDecoration(), createArrowDecoration(),
-                kindStrongAbort);
-        addConditionalDecoration(createNormalTerminationDecoration(), createArrowDecoration(),
-                kindNormalTermination);
-        addConditionalDecoration(createWeakAbortionDecoration(), createHistoryDecoration(),
-                weakAbortHistorySF);
-        addConditionalDecoration(createStrongAbortionDecoration(), createHistoryDecoration(),
-                strongAbortHistorySF);
-        addConditionalDecoration(createNormalTerminationDecoration(), createHistoryDecoration(),
-                normalTerminationHistorySF);
+        addConditionalDecoration(weakAbortDeco, arrowDeco, COND_WEAKAB);
+        addConditionalDecoration(stronAbortDeco, arrowDeco, COND_STRONGAB);
+        addConditionalDecoration(terminationDeco, arrowDeco, COND_TERMINATION);
+        addConditionalDecoration(weakAbortDeco, historyDeco, COND_WEAKAB_HIST);
+        addConditionalDecoration(stronAbortDeco, historyDeco, COND_STRONGAB_HIST);
+        addConditionalDecoration(terminationDeco, historyDeco, COND_TERMINATION_HIST);
 
         // Set default and current look
-        setDefaultDecoration(createWeakAbortionDecoration(), createArrowDecoration());
-        setSourceDecoration(createWeakAbortionDecoration());
-        setTargetDecoration(createArrowDecoration());
-
-        // check conditions
-        notifyChanged(null);
+        setDefaultDecoration(weakAbortDeco, arrowDeco);
     }
 
     private static final int STRONG_ABORT_SIZE = 2;
@@ -103,7 +92,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
      * 
      * @return The decoration.
      */
-    private static RotatableDecoration createStrongAbortionDecoration() {
+    private static RotatableDecoration createStrongAbortDecoration() {
         PolygonDecoration circleDecoration = new CircleDecoration();
         circleDecoration.setLineWidth(1);
         circleDecoration.setForegroundColor(ColorConstants.black);
@@ -121,7 +110,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
      * 
      * @return The decoration.
      */
-    private RotatableDecoration createWeakAbortionDecoration() {
+    private RotatableDecoration createWeakAbortDecoration() {
         PolygonDecoration pointDecoration = new PolygonDecoration();
         pointDecoration.setForegroundColor(ColorConstants.black);
         pointDecoration.setBackgroundColor(ColorConstants.black);
@@ -140,7 +129,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
      * 
      * @return The decoration.
      */
-    private RotatableDecoration createNormalTerminationDecoration() {
+    private RotatableDecoration createTerminationDecoration() {
         PolygonDecoration triangleDecoration = new PolygonDecoration();
         triangleDecoration.setLineWidth(1);
         triangleDecoration.setForegroundColor(ColorConstants.black);

@@ -52,7 +52,7 @@ public class ListCompartmentLayout extends XYLayout {
             // special layout, which are those that contain attribute aware invisible
             // figures; for these, only their minimum size is considered.
             if ((childFigure.getChildren() != null) && (childFigure.getChildren().size() > 0)
-                    && (childFigure.getChildren().get(0) instanceof AttributeAwareInvisibleFigure)) {
+                    && (childFigure.getChildren().get(0) instanceof InvisibleLabelFigure)) {
                 newBounds.width = childFigure.getMinimumSize().width;
                 newBounds.height = childFigure.getMinimumSize().height;
             } else {

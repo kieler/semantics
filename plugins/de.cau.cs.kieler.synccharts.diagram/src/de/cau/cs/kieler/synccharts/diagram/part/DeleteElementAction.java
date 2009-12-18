@@ -68,8 +68,8 @@ public class DeleteElementAction extends AbstractDeleteFromAction {
             return UnexecutableCommand.INSTANCE;
         }
         Iterator editParts = operationSet.iterator();
-        CompositeTransactionalCommand command = new CompositeTransactionalCommand(
-                getEditingDomain(), getCommandLabel());
+        CompositeTransactionalCommand command = new CompositeTransactionalCommand(getEditingDomain(),
+                getCommandLabel());
         while (editParts.hasNext()) {
             EditPart editPart = (EditPart) editParts.next();
             Command curCommand = editPart.getCommand(request);

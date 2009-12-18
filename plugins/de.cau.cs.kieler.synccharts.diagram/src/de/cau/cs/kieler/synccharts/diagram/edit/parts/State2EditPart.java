@@ -25,11 +25,9 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
 
+import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigure;
 import de.cau.cs.kieler.synccharts.custom.StateLayout;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.State2ItemSemanticEditPolicy;
@@ -103,8 +101,11 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
+        IFigure figure = new StateFigure();
 
-        StateFigure figure = new StateFigure(this);
+        if (figure instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+        }
         return primaryShape = figure;
     }
 
@@ -120,8 +121,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateLabel2EditPart) {
-            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
+            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape().getFigureStateNameFigure());
             return true;
         }
         return false;
@@ -254,8 +254,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     public EditPart getPrimaryChildEditPart() {
-        return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(StateLabel2EditPart.VISUAL_ID));
+        return getChildBySemanticHint(SyncchartsVisualIDRegistry.getType(StateLabel2EditPart.VISUAL_ID));
     }
 
     /**
@@ -334,8 +333,7 @@ public class State2EditPart extends ShapeNodeEditPart {
         /**
          * @generated
          */
-        public StateFigure(EditPart e) {
-            super(e);
+        public StateFigure() {
 
             StateLayout layoutThis = new StateLayout();
 

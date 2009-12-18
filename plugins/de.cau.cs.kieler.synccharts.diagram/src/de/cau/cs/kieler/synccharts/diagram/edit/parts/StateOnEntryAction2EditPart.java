@@ -74,12 +74,10 @@ public class StateOnEntryAction2EditPart extends ShapeCompartmentEditPart {
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new ResizableCompartmentEditPolicy());
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new StateOnEntryAction2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new StateOnEntryAction2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
         installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
-        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-                new StateOnEntryAction2CanonicalEditPolicy());
+        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new StateOnEntryAction2CanonicalEditPolicy());
     }
 
     /**
