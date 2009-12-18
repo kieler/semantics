@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 }
 
 @parser::members {
- 
+
  	private EsiGrammarAccess grammarAccess;
  	
     public InternalEsiParser(TokenStream input, IAstFactory factory, EsiGrammarAccess grammarAccess) {
@@ -69,7 +69,8 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
 
 // Entry rule entryRuletracelist
-entryRuletracelist returns [EObject current=null] :
+entryRuletracelist returns [EObject current=null] 
+	:
 	{ currentNode = createCompositeNode(grammarAccess.getTracelistRule(), currentNode); }
 	 iv_ruletracelist=ruletracelist 
 	 { $current=$iv_ruletracelist.current; } 
@@ -107,15 +108,15 @@ ruletracelist returns [EObject current=null]
 	    }
 
 )
-)?('!' 
+)?(	'!' 
     {
         createLeafNode(grammarAccess.getTracelistAccess().getExclamationMarkKeyword_1_0(), null); 
     }
-'reset' 
+	'reset' 
     {
         createLeafNode(grammarAccess.getTracelistAccess().getResetKeyword_1_1(), null); 
     }
-';' 
+	';' 
     {
         createLeafNode(grammarAccess.getTracelistAccess().getSemicolonKeyword_1_2(), null); 
     }
@@ -143,14 +144,16 @@ ruletracelist returns [EObject current=null]
 	    }
 
 )
-))+);
+))+)
+;
 
 
 
 
 
 // Entry rule entryRuletrace
-entryRuletrace returns [EObject current=null] :
+entryRuletrace returns [EObject current=null] 
+	:
 	{ currentNode = createCompositeNode(grammarAccess.getTraceRule(), currentNode); }
 	 iv_ruletrace=ruletrace 
 	 { $current=$iv_ruletrace.current; } 
@@ -188,14 +191,16 @@ ruletrace returns [EObject current=null]
 	    }
 
 )
-)+;
+)+
+;
 
 
 
 
 
 // Entry rule entryRuletick
-entryRuletick returns [EObject current=null] :
+entryRuletick returns [EObject current=null] 
+	:
 	{ currentNode = createCompositeNode(grammarAccess.getTickRule(), currentNode); }
 	 iv_ruletick=ruletick 
 	 { $current=$iv_ruletick.current; } 
@@ -233,15 +238,15 @@ ruletick returns [EObject current=null]
 	    }
 
 )
-)*('%' 
+)*(	'%' 
     {
         createLeafNode(grammarAccess.getTickAccess().getPercentSignKeyword_1_0(), null); 
     }
-'Output' 
+	'Output' 
     {
         createLeafNode(grammarAccess.getTickAccess().getOutputKeyword_1_1(), null); 
     }
-':' 
+	':' 
     {
         createLeafNode(grammarAccess.getTickAccess().getColonKeyword_1_2(), null); 
     }
@@ -271,7 +276,7 @@ ruletick returns [EObject current=null]
 )
 )*)?(
 (
-		lv_n_5_0=';' 
+		lv_n_5_0=	';' 
     {
         createLeafNode(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0(), "n"); 
     }
@@ -290,14 +295,16 @@ ruletick returns [EObject current=null]
 	    }
 
 )
-));
+))
+;
 
 
 
 
 
 // Entry rule entryRulesignal
-entryRulesignal returns [EObject current=null] :
+entryRulesignal returns [EObject current=null] 
+	:
 	{ currentNode = createCompositeNode(grammarAccess.getSignalRule(), currentNode); }
 	 iv_rulesignal=rulesignal 
 	 { $current=$iv_rulesignal.current; } 
@@ -337,7 +344,7 @@ rulesignal returns [EObject current=null]
 )
 )((
 (
-		lv_valued_1_0='(' 
+		lv_valued_1_0=	'(' 
     {
         createLeafNode(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0(), "valued"); 
     }
@@ -380,11 +387,12 @@ rulesignal returns [EObject current=null]
 	    }
 
 )
-)')' 
+)	')' 
     {
         createLeafNode(grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2(), null); 
     }
-)?);
+)?)
+;
 
 
 

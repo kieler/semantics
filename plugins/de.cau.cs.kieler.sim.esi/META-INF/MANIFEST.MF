@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.sim.esi
-Bundle-Vendor: Christian Albrechts Univiersity of Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sim.esi; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
