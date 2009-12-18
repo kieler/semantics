@@ -63,7 +63,7 @@ public class CircleDecoration extends PolygonDecoration {
      */
     public Rectangle getBounds() {
         if (getPoints().size() < 2) {
-            return null;
+            return super.getBounds();
         }
 
         PointList pointList = getPoints();
