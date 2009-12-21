@@ -21,6 +21,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEd
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.parsers.MessageFormatParser;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -177,6 +178,26 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
     /**
      * @generated
      */
+    private IParser transitionPriority_6002Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getTransitionPriority_6002Parser() {
+        if (transitionPriority_6002Parser == null) {
+            EAttribute[] features = new EAttribute[] {SyncchartsPackage.eINSTANCE
+                    .getTransition_Priority()};
+            EAttribute[] editableFeatures = new EAttribute[] {SyncchartsPackage.eINSTANCE
+                    .getTransition_Priority()};
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
+            transitionPriority_6002Parser = parser;
+        }
+        return transitionPriority_6002Parser;
+    }
+
+    /**
+     * @generated
+     */
     protected IParser getParser(int visualID) {
         switch (visualID) {
         case StateLabelEditPart.VISUAL_ID:
@@ -195,6 +216,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             return getActionTriggersAndEffects_5006Parser();
         case TransitionTriggersAndEffectsEditPart.VISUAL_ID:
             return getTransitionTriggersAndEffects_6001Parser();
+        case TransitionPriorityEditPart.VISUAL_ID:
+            return getTransitionPriority_6002Parser();
         }
         return null;
     }

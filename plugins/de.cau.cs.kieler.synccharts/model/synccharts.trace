@@ -38,5 +38,6 @@
   </childNodeTraces>
   <linkTraces visualID="4001" queryText="modelFacet.oclIsKindOf(gmfgen::TypeLinkModelFacet) and (let _eClass_:ecore::EClass = modelFacet.oclAsType(gmfgen::TypeLinkModelFacet).metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts' and _eClass_.name = 'Transition')">
     <linkLabelTraces visualID="6001" queryText="true"/>
+    <linkLabelTraces visualID="6002" queryText="true"/>
   </linkTraces>
 </trace:TraceModel>

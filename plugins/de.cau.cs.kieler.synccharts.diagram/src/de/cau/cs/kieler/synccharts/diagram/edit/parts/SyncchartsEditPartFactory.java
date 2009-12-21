@@ -122,6 +122,9 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case TransitionTriggersAndEffectsEditPart.VISUAL_ID:
                 return new TransitionTriggersAndEffectsEditPart(view);
 
+            case TransitionPriorityEditPart.VISUAL_ID:
+                return new TransitionPriorityEditPart(view);
+
             }
         }
         return createUnrecognizedEditPart(context, model);

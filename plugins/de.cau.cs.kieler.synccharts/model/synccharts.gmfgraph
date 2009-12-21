@@ -177,6 +177,6 @@
       accessor="//@figures.0/@descriptors.1/@accessors.1">
     <facets
         xsi:type="gmfgraph:AlignmentFacet"
-        alignment="CENTER"/>
+        alignment="END"/>
   </labels>
 </gmfgraph:Canvas>

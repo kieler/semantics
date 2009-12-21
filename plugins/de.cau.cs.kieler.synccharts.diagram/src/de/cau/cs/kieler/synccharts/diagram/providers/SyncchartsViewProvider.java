@@ -73,6 +73,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
@@ -104,10 +105,10 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
      */
     protected boolean provides(CreateViewForKindOperation op) {
         /*
-        		if (op.getViewKind() == Node.class)
-        			return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
-        		if (op.getViewKind() == Edge.class)
-        			return getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
+            if (op.getViewKind() == Node.class)
+              return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
+            if (op.getViewKind() == Edge.class)
+              return getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
         */
         return true;
     }
@@ -649,6 +650,12 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         Location location6001 = (Location) label6001.getLayoutConstraint();
         location6001.setX(0);
         location6001.setY(40);
+        Node label6002 = createLabel(edge, SyncchartsVisualIDRegistry
+                .getType(TransitionPriorityEditPart.VISUAL_ID));
+        label6002.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
+        Location location6002 = (Location) label6002.getLayoutConstraint();
+        location6002.setX(0);
+        location6002.setY(60);
         return edge;
     }
 

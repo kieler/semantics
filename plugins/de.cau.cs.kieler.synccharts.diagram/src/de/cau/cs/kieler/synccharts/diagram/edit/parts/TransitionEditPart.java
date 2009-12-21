@@ -46,6 +46,11 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
                     .getFigureTransitionTriggersAndEffectsFigure());
             return true;
         }
+        if (childEditPart instanceof TransitionPriorityEditPart) {
+            ((TransitionPriorityEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureTransitionPriorityFigure());
+            return true;
+        }
         return false;
     }
 
@@ -64,6 +69,9 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
+            return true;
+        }
+        if (childEditPart instanceof TransitionPriorityEditPart) {
             return true;
         }
         return false;
@@ -117,6 +125,11 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
         /**
          * @generated
          */
+        private WrappingLabel fFigureTransitionPriorityFigure;
+
+        /**
+         * @generated
+         */
         public TransitionFigure() {
 
             createContents();
@@ -131,6 +144,11 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
             fFigureTransitionTriggersAndEffectsFigure.setText("");
 
             this.add(fFigureTransitionTriggersAndEffectsFigure);
+
+            fFigureTransitionPriorityFigure = new WrappingLabel();
+            fFigureTransitionPriorityFigure.setText("");
+
+            this.add(fFigureTransitionPriorityFigure);
 
         }
 
@@ -158,6 +176,13 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
          */
         public WrappingLabel getFigureTransitionTriggersAndEffectsFigure() {
             return fFigureTransitionTriggersAndEffectsFigure;
+        }
+
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureTransitionPriorityFigure() {
+            return fFigureTransitionPriorityFigure;
         }
 
     }

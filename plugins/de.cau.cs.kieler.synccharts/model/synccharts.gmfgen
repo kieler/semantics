@@ -456,7 +456,8 @@
           visualID="6002"
           editPartClassName="TransitionPriorityEditPart"
           itemSemanticEditPolicyClassName="TransitionPriorityItemSemanticEditPolicy"
-          notationViewFactoryClassName="TransitionPriorityViewFactory">
+          notationViewFactoryClassName="TransitionPriorityViewFactory"
+          alignment="TARGET">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -775,7 +776,7 @@
   </diagram>
   <plugin
       name="SyncCharts Diagram Editor"
-      provider="Christian-Albrechts-UniversitÃ¤t zu Kiel"
+      provider="Christian-Albrechts-Universit√§t zu Kiel"
       version="0.1.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>

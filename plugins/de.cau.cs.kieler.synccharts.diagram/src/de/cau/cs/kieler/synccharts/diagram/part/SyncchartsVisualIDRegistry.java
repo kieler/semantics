@@ -38,6 +38,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 
 /**
@@ -387,6 +388,9 @@ public class SyncchartsVisualIDRegistry {
             break;
         case TransitionEditPart.VISUAL_ID:
             if (TransitionTriggersAndEffectsEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (TransitionPriorityEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
