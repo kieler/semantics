@@ -119,6 +119,7 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
      *            model element.
      */
     public void notifyChanged(final Notification notification) {
+        IFigure oldFigure = currentFigure;
         currentFigure = defaultFigure;
         for (Pair<IFigure, ICondition> cf : conditionalFigures) {
             if (cf.getSecond().evaluate(modelElement)) {
@@ -126,7 +127,21 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
                 break;
             }
         }
-        this.repaint();
+        if (oldFigure != currentFigure) {
+            checkState(modelElement);
+            this.repaint();
+        }
+    }
+    
+    /**
+     * Check the new state of the given object. This method is called whenever
+     * a change to the model object is detected, before the figure is painted again.
+     * Subclasses may override to adapt the layout to the new properties.
+     * The default implementation does nothing.
+     * 
+     * @param object the model object that was changed
+     */
+    protected void checkState(final EObject object) {
     }
 
     /**

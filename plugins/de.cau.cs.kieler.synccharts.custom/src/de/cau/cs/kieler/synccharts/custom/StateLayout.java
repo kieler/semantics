@@ -28,8 +28,8 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
-import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
+import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 
@@ -78,22 +78,25 @@ public class StateLayout extends AbstractHintLayout {
     /**
      * {@inheritDoc}
      */
-    public void layout(final IFigure parent) {
-        if (isObservingVisibility && !parent.isVisible()) {
+    public void layout(final IFigure stateFigure) {
+        if (isObservingVisibility && !stateFigure.isVisible()) {
             return;
         }
 
         // check whether the figure is an attribute aware state and whether it is
         // a simple or a complex state
-        if (parent instanceof AttributeAwareSwitchFigure) {
-            Notifier modelElement = ((AttributeAwareSwitchFigure) parent).getTarget();
+        if (stateFigure instanceof IAttributeAwareFigure) {
+            Notifier modelElement = ((IAttributeAwareFigure) stateFigure).getTarget();
             if (modelElement instanceof State) {
-                invalidateLabels(parent);
                 State state = (State) modelElement;
+                // check the size of the state and correct it if required
+                checkSize(stateFigure, state);
+                
+                invalidateLabels(stateFigure);
                 if (checkComplex(state)) {
-                    complexLayout(parent, state);
+                    complexLayout(stateFigure, state);
                 } else {
-                    simpleLayout(parent, state);
+                    simpleLayout(stateFigure, state);
                 }
             }
         }
@@ -145,21 +148,21 @@ public class StateLayout extends AbstractHintLayout {
         containsExitActions = state.getExitActions().size() > 0;
         containsSuspensionTrigger = state.getSuspensionTrigger() != null;
         
-        return containsRegions || containsSignals || containsVariables
+        return (containsRegions || containsSignals || containsVariables
                 || containsEntryActions || containsInsideActions || containsExitActions
-                || containsSuspensionTrigger;
+                || containsSuspensionTrigger) && state.getType() != StateType.CONDITIONAL;
     }
 
     /**
      * Apply layout for complex states.
      * 
-     * @param parent the state figure
+     * @param stateFigure the state figure
      * @parem state the state model object
      */
-    private void complexLayout(final IFigure parent, final State state) {
+    private void complexLayout(final IFigure stateFigure, final State state) {
         @SuppressWarnings("unchecked")
-        List<IFigure> children = parent.getChildren();
-        Rectangle clientArea = parent.getClientArea();
+        List<IFigure> children = stateFigure.getChildren();
+        Rectangle clientArea = stateFigure.getClientArea();
 
         // collect preferred widths and heights
         int numChildren = children.size();
@@ -172,11 +175,13 @@ public class StateLayout extends AbstractHintLayout {
         int i = 0;
         for (IFigure childFigure : children) {
             if (!(childFigure instanceof Polyline)) {
-                int newWidth = childFigure.getPreferredSize().width;
-                int newHeight = childFigure.getPreferredSize().height;
+                Dimension preferredSize = childFigure.getPreferredSize();
+                int newWidth = preferredSize.width;
+                int newHeight = preferredSize.height;
                 // empty compartments are not considered
                 if (childFigure instanceof ResizableCompartmentFigure) {
-                    ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) childFigure;
+                    ResizableCompartmentFigure compartment =
+                        (ResizableCompartmentFigure) childFigure;
                     String compartmentName = getName(compartment);
                     if (compartmentName.equals(REGION_COMP_NAME)) {
                         if (!containsRegions) {
@@ -196,7 +201,7 @@ public class StateLayout extends AbstractHintLayout {
                         setTitleVisibility(compartment, true);
                     }
                 }
-
+    
                 // take maximum width and sum of heights
                 prefWidths[i] = newWidth;
                 prefHeights[i] = newHeight;
@@ -315,25 +320,24 @@ public class StateLayout extends AbstractHintLayout {
     /**
      * Apply layout for simple states.
      * 
-     * @param parent the state figure
+     * @param stateFigure the state figure
      * @param state the state model object
      */
-    private void simpleLayout(final IFigure parent, final State state) {
+    private void simpleLayout(final IFigure stateFigure, final State state) {
         @SuppressWarnings("unchecked")
-        List<IFigure> children = parent.getChildren();
-        Rectangle clientArea = parent.getClientArea();
+        List<IFigure> children = stateFigure.getChildren();
+        Rectangle clientArea = stateFigure.getClientArea();
         
         int prefWidth = 0;
         int prefHeight = 0;
         for (IFigure childFigure : children) {
             if (childFigure instanceof WrappingLabel) {
-                int newWidth = childFigure.getPreferredSize().width;
-                int newHeight = childFigure.getPreferredSize().height;
-                if (newWidth > prefWidth) {
-                    prefWidth = newWidth;
+                Dimension preferredSize = childFigure.getPreferredSize();
+                if (preferredSize.width > prefWidth) {
+                    prefWidth = preferredSize.width;
                 }
-                if (newHeight > prefHeight) {
-                    prefHeight = newHeight;
+                if (preferredSize.height > prefHeight) {
+                    prefHeight = preferredSize.height;
                 }
             }
         }
@@ -343,12 +347,11 @@ public class StateLayout extends AbstractHintLayout {
         for (IFigure childFigure : children) {
             if (childFigure instanceof WrappingLabel) {
                 Rectangle newBounds = new Rectangle();
-                prefWidth = childFigure.getPreferredSize().width;
-                prefHeight = childFigure.getPreferredSize().height;
-                newBounds.x = clientArea.x + (clientArea.width / 2) - (prefWidth / 2);
-                newBounds.y = clientArea.y + (clientArea.height / 2) - (prefHeight / 2);
-                newBounds.width = prefWidth + 2;
-                newBounds.height = prefHeight;
+                Dimension preferredSize = childFigure.getPreferredSize();
+                newBounds.x = clientArea.x + (clientArea.width / 2) - (preferredSize.width / 2);
+                newBounds.y = clientArea.y + (clientArea.height / 2) - (preferredSize.height / 2);
+                newBounds.width = preferredSize.width + 2;
+                newBounds.height = preferredSize.height;
                 childFigure.setBounds(newBounds);
             } else if (childFigure instanceof ResizableCompartmentFigure) {
                 Rectangle newBounds = new Rectangle();
@@ -370,21 +373,24 @@ public class StateLayout extends AbstractHintLayout {
      * children's minimum heights, while its minimum width is the maximum of all
      * its children's minimum sizes. However, empty compartments are not considered.
      * 
-     * @param parent the figure on which this layout is installed
+     * @param stateFigure the figure on which this layout is installed
      * @param whint the width hint
      * @param hhint the height hint
      * @return the layout's minimum size
      */
     @Override
-    public Dimension calculateMinimumSize(final IFigure parent, final int whint, final int hhint) {
-        Notifier modelElement = ((AttributeAwareSwitchFigure) parent).getTarget();
+    public Dimension calculateMinimumSize(final IFigure stateFigure, final int whint, final int hhint) {
+        if (!(stateFigure instanceof IAttributeAwareFigure)) {
+            return super.calculateMinimumSize(stateFigure, whint, hhint);
+        }
+        Notifier modelElement = ((IAttributeAwareFigure) stateFigure).getTarget();
         if (modelElement instanceof State) {
             State state = (State) modelElement;
             @SuppressWarnings("unchecked")
-            List<IFigure> children = parent.getChildren();
+            List<IFigure> children = stateFigure.getChildren();
 
             if (state.getType() == StateType.CONDITIONAL) {
-                return new Dimension(StateLayout.COND_WIDTH, StateLayout.COND_HEIGHT);
+                return new Dimension(COND_WIDTH, COND_HEIGHT);
             } else if (checkComplex(state)) {
                 int prefWidth = MIN_WIDTH;
                 int prefHeight = 0;
@@ -414,7 +420,7 @@ public class StateLayout extends AbstractHintLayout {
                         if (preferredSize.width >= prefWidth) {
                             prefWidth = preferredSize.width;
                         }
-                        prefHeight += preferredSize.height;                        
+                        prefHeight += preferredSize.height;
                     }
                 }
                 return new Dimension(prefWidth, prefHeight);
@@ -424,9 +430,10 @@ public class StateLayout extends AbstractHintLayout {
                     // increase the size a bit such that the text looks proper even
                     // for a final state
                     if (childFigure instanceof WrappingLabel) {
+                        Dimension preferredSize = childFigure.getPreferredSize();
                         return new Dimension(
-                                Math.max(childFigure.getPreferredSize().width, MIN_WIDTH),
-                                Math.max(childFigure.getPreferredSize().height, MIN_HEIGHT));
+                                Math.max(preferredSize.width, MIN_WIDTH),
+                                Math.max(preferredSize.height, MIN_HEIGHT));
                     }
                 }
             }
@@ -438,20 +445,42 @@ public class StateLayout extends AbstractHintLayout {
     /**
      * Calculate the preferred size of the figure.
      * 
-     * @param parent the figure
+     * @param stateFigure the figure
      * @param whint the width hint
      * @param hhint the height hint
      * @return the preferred size
      */
     @Override
-    protected Dimension calculatePreferredSize(final IFigure parent, final int whint, final int hhint) {
-        Dimension size = calculateMinimumSize(parent, whint, hhint);
-        if (size.width < whint) {
-            size.width = whint;
-        }
-        if (size.height < hhint) {
-            size.height = hhint;
-        }
+    protected Dimension calculatePreferredSize(final IFigure stateFigure,
+            final int whint, final int hhint) {
+        Dimension size = calculateMinimumSize(stateFigure, whint, hhint);
         return size;
     }
+    
+    /**
+     * Checks the current size of the state figure.
+     * 
+     * @param stateFigure the state figure
+     * @param state the corresponding model element
+     */
+    public void checkSize(final IFigure stateFigure, final State state) {
+        Rectangle bounds = stateFigure.getBounds();
+        if (state.getType() == StateType.CONDITIONAL) {
+            if (bounds.width != StateLayout.COND_WIDTH || bounds.height != StateLayout.COND_HEIGHT) {
+                bounds.width = StateLayout.COND_WIDTH;
+                bounds.height = StateLayout.COND_HEIGHT;
+                stateFigure.getParent().setBounds(bounds);
+                stateFigure.setBounds(bounds);
+            }
+        } else {
+            Dimension minSize = calculateMinimumSize(stateFigure, -1, -1);
+            if (bounds.width < minSize.width || bounds.height < minSize.height) {
+                bounds.width = Math.max(bounds.width, minSize.width);
+                bounds.height = Math.max(bounds.height, minSize.height);
+                stateFigure.getParent().setBounds(bounds);
+                stateFigure.setBounds(bounds);
+            }
+        }
+    }
+    
 }

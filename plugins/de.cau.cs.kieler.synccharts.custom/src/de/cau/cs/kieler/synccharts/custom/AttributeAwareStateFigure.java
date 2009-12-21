@@ -16,8 +16,12 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
@@ -146,23 +150,40 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     }
 
     /**
-     * Returns the preferred size of the figure. Here it is the same as the
-     * minimum size.
-     * 
-     * @param hint width hint
-     * @param hint2 height hint
-     * @return The preferred size of the figure.
-     */
-//    @Override
-//    public Dimension getPreferredSize(final int hint, final int hint2) {
-//        return getMinimumSize(hint, hint2);
-//    }
-
-    /**
      * {@inheritDoc}
      */
     public boolean isAdapterForType(final Object type) {
         return State.class == type;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void checkState(final EObject object) {
+        LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager instanceof StateLayout && object instanceof State) {
+            ((StateLayout)layoutManager).checkSize(this, (State)object);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setBounds(final Rectangle rect) {
+        Notifier target = getTarget();
+        if (target instanceof State) {
+            State state = (State) target;
+            if (state.getType() == StateType.CONDITIONAL) {
+                if (rect.width != StateLayout.COND_WIDTH || rect.height != StateLayout.COND_HEIGHT) {
+                    rect.width = StateLayout.COND_WIDTH;
+                    rect.height = StateLayout.COND_HEIGHT;
+                    getParent().setBounds(rect);
+                }
+            }
+        }
+        super.setBounds(rect);
     }
 
 }
