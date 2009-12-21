@@ -223,6 +223,17 @@
       <features
           href="synccharts.ecore#//Action/triggersAndEffects"/>
     </labelMappings>
+    <labelMappings
+        xsi:type="gmfmap:FeatureLabelMapping"
+        editorPattern=""
+        editPattern="">
+      <diagramLabel
+          href="synccharts.gmfgraph#TransitionPriority"/>
+      <features
+          href="synccharts.ecore#//Transition/priority"/>
+      <editableFeatures
+          href="synccharts.ecore#//Transition/priority"/>
+    </labelMappings>
     <containmentFeature
         href="synccharts.ecore#//State/outgoingTransitions"/>
     <tool

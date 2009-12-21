@@ -49,9 +49,14 @@
             xsi:type="gmfgraph:Label"
             name="TransitionTriggersAndEffectsFigure"
             text=""/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="TransitionPriorityFigure"/>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
+      <accessors
+          figure="//@figures.0/@descriptors.1/@actualFigure/@children.1"/>
     </descriptors>
     <descriptors
         name="RegionFigure">
@@ -165,4 +170,13 @@
       figure="InvisibleFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.3/@accessors.0"/>
+  <labels
+      name="TransitionPriority"
+      figure="TransitionFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.1/@accessors.1">
+    <facets
+        xsi:type="gmfgraph:AlignmentFacet"
+        alignment="CENTER"/>
+  </labels>
 </gmfgraph:Canvas>
