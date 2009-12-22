@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -160,16 +161,19 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     @Override
     public void setBounds(final Rectangle rect) {
         Notifier target = getTarget();
-        if (target instanceof State) {
-            State state = (State) target;
-            if (state.getType() == StateType.CONDITIONAL) {
-                if (rect.width != StateLayout.COND_WIDTH || rect.height != StateLayout.COND_HEIGHT) {
-                    rect.width = StateLayout.COND_WIDTH;
-                    rect.height = StateLayout.COND_HEIGHT;
-                    getParent().setBounds(rect);
-                }
-            }
+        LayoutManager layoutManager = getLayoutManager();
+        if (target instanceof State && layoutManager instanceof StateLayout) {
+            ((StateLayout)layoutManager).checkNewSize(this, (State) target, rect);
         }
+        super.setBounds(rect);
+    }
+
+    /**
+     * Directly set the bounds of this figure, without further checks.
+     * 
+     * @param rect the new bounds
+     */
+    public void setBoundsDirect(final Rectangle rect) {
         super.setBounds(rect);
     }
 

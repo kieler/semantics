@@ -86,11 +86,12 @@ public class StateLayout extends AbstractHintLayout {
         // check whether the figure is an attribute aware state and whether it is
         // a simple or a complex state
         if (stateFigure instanceof IAttributeAwareFigure) {
-            Notifier modelElement = ((IAttributeAwareFigure) stateFigure).getTarget();
+            AttributeAwareStateFigure attrStateFigure = (AttributeAwareStateFigure) stateFigure;
+            Notifier modelElement = attrStateFigure.getTarget();
             if (modelElement instanceof State) {
                 State state = (State) modelElement;
                 // check the size of the state and correct it if required
-                checkSize(stateFigure, state);
+                checkSize(attrStateFigure, state);
                 
                 invalidateLabels(stateFigure);
                 if (checkComplex(state)) {
@@ -457,28 +458,56 @@ public class StateLayout extends AbstractHintLayout {
         return size;
     }
     
+    /** size of the state figure as cached from the last size check. */
+    private Dimension cachedSize;
+    
     /**
      * Checks the current size of the state figure.
      * 
      * @param stateFigure the state figure
      * @param state the corresponding model element
      */
-    public void checkSize(final IFigure stateFigure, final State state) {
+    private void checkSize(final AttributeAwareStateFigure stateFigure, final State state) {
         Rectangle bounds = stateFigure.getBounds();
         if (state.getType() == StateType.CONDITIONAL) {
             if (bounds.width != StateLayout.COND_WIDTH || bounds.height != StateLayout.COND_HEIGHT) {
+                cachedSize = bounds.getSize();
                 bounds.width = StateLayout.COND_WIDTH;
                 bounds.height = StateLayout.COND_HEIGHT;
                 stateFigure.getParent().setBounds(bounds);
-                stateFigure.setBounds(bounds);
+                stateFigure.setBoundsDirect(bounds);
             }
         } else {
             Dimension minSize = calculateMinimumSize(stateFigure, -1, -1);
             if (bounds.width < minSize.width || bounds.height < minSize.height) {
-                bounds.width = Math.max(bounds.width, minSize.width);
-                bounds.height = Math.max(bounds.height, minSize.height);
+                if (cachedSize == null) {
+                    bounds.width = Math.max(bounds.width, minSize.width);
+                    bounds.height = Math.max(bounds.height, minSize.height);
+                } else {
+                    bounds.width = cachedSize.width;
+                    bounds.height = cachedSize.height;
+                }
                 stateFigure.getParent().setBounds(bounds);
-                stateFigure.setBounds(bounds);
+                stateFigure.setBoundsDirect(bounds);
+            }
+        }
+    }
+    
+    /**
+     * Checks the new size of the state figure.
+     * 
+     * @param stateFigure the state figure
+     * @param state the corresponding model element
+     * @param newBounds the new bounds of the state figure
+     */
+    public void checkNewSize(final IFigure stateFigure, final State state, final Rectangle newBounds) {
+        if (state.getType() == StateType.CONDITIONAL) {
+            if (newBounds.width != StateLayout.COND_WIDTH
+                    || newBounds.height != StateLayout.COND_HEIGHT) {
+                cachedSize = newBounds.getSize();
+                newBounds.width = StateLayout.COND_WIDTH;
+                newBounds.height = StateLayout.COND_HEIGHT;
+                stateFigure.getParent().setBounds(newBounds);
             }
         }
     }
