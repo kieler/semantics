@@ -16,12 +16,10 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
@@ -154,17 +152,6 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      */
     public boolean isAdapterForType(final Object type) {
         return State.class == type;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void checkState(final EObject object) {
-        LayoutManager layoutManager = getLayoutManager();
-        if (layoutManager instanceof StateLayout && object instanceof State) {
-            ((StateLayout)layoutManager).checkSize(this, (State)object);
-        }
     }
     
     /**

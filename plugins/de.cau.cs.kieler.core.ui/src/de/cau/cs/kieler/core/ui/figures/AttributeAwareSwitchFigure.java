@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -128,20 +129,12 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
             }
         }
         if (oldFigure != currentFigure) {
-            checkState(modelElement);
+            LayoutManager layoutManager = getLayoutManager();
+            if (layoutManager != null) {
+                layoutManager.layout(this);
+            }
             this.repaint();
         }
-    }
-    
-    /**
-     * Check the new state of the given object. This method is called whenever
-     * a change to the model object is detected, before the figure is painted again.
-     * Subclasses may override to adapt the layout to the new properties.
-     * The default implementation does nothing.
-     * 
-     * @param object the model object that was changed
-     */
-    protected void checkState(final EObject object) {
     }
 
     /**
@@ -167,7 +160,15 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
         }
         modelElement = object;
         modelElement.eAdapters().add(this);  
-        notifyChanged(null);
+        
+        // set proper initial figure
+        currentFigure = defaultFigure;
+        for (Pair<IFigure, ICondition> cf : conditionalFigures) {
+            if (cf.getSecond().evaluate(modelElement)) {
+                currentFigure = cf.getFirst();
+                break;
+            }
+        }
     }
 
     /**
