@@ -10,7 +10,7 @@
     testsPluginID="de.cau.cs.kieler.synccharts.tests">
   <foreignModel>synccharts.ecore</foreignModel>
   <genPackages prefix="Synccharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
-      ecorePackage="synccharts.ecore#/">
+      fileExtensions="kixs" ecorePackage="synccharts.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts.ecore#//CombineOperator">
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/ADD"/>

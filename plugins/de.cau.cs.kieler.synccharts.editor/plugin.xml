@@ -2,8 +2,17 @@
 <?eclipse version="3.0"?>
 
 <!--
- <copyright>
- </copyright>
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ 
+ http://www.informatik.uni-kiel.de/rtsys/kieler/
+ 
+ Copyright 2009 by
+ + Christian-Albrechts-University of Kiel
+   + Department of Computer Science
+     + Real-Time and Embedded Systems Group
+ 
+ This code is provided under the terms of the Eclipse Public License (EPL).
+ See the file epl-v10.html for the license text.
 
  $Id$
 -->
@@ -11,14 +20,11 @@
 <plugin>
 
    <extension point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizardID"
             name="%_UI_SyncchartsModelWizard_label"
             class="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            category="de.cau.cs.kieler"
             icon="icons/full/obj16/SyncchartsModelFile.gif">
          <description>%_UI_SyncchartsModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
@@ -30,7 +36,7 @@
             id="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID"
             name="%_UI_SyncchartsEditor_label"
             icon="icons/full/obj16/SyncchartsModelFile.gif"
-            extensions="synccharts"
+            extensions="kixs"
             class="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor"
             contributorClass="de.cau.cs.kieler.synccharts.presentation.SyncchartsActionBarContributor">
       </editor>
