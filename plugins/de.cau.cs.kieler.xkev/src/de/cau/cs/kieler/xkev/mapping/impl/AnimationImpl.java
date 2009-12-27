@@ -6,15 +6,11 @@
  */
 package de.cau.cs.kieler.xkev.mapping.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Animation;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
-import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -25,7 +21,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Animation</b></em>'.
+ * An implementation of the model object '<em><b>RunnableAnimation</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -181,28 +177,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getActualJSONValue(Object jsonObject, String svgElementID) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void applyAnimation(Object jsonObject, String svgElementID) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -302,7 +276,7 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * It just returns the jsonValue from the jsonObject, if exists.
      * <!-- end-user-doc -->
      */
-    public String getActualJSONValue(JSONObject jsonObject, String svgElementID) {
+    public String getActualJSONValue(Object jsonObject, String svgElementID) {
         String jsonValue = null;
          
         //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
@@ -318,7 +292,7 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
             if (getAccessID() != null && !getAccessID().isEmpty()) {
                 try {
                     int pos = Integer.parseInt(getAccessID());
-                    JSONArray jsonArray = jsonObject.optJSONArray(getKey());
+                    JSONArray jsonArray = ((JSONObject) jsonObject).optJSONArray(getKey());
                     
                     //check, whether the value is in a valid array-range
                     if (jsonArray == null || pos < 0 || pos >= jsonArray.length()) {
@@ -332,21 +306,12 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
                 }
             } else {
                 //If the accessID is either empty or null, we treat the JSONValue as a normal value instead of an JSONArray
-                jsonValue = jsonObject.optString(getKey());
+                jsonValue = ((JSONObject) jsonObject).optString(getKey());
             }
         }
         return jsonValue;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * This method should be implemented by each animation.
-     * It should contain the special animation-code, which is different for each animation.
-     * <!-- end-user-doc -->
-     */
-    public void applyAnimation() {
-
-    }
 
 
 } //AnimationImpl

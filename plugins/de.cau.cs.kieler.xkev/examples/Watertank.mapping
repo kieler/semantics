@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/Watertank.svg">
   <svgElement id="water">
-    <animation xsi:type="mapping:Move" input="[0...28];[29..57]" x_range="" y_range="[70:80..400];[360:350...65]"/>
+    <animation xsi:type="mapping:Move" input="0..28" x_range="" y_range="71..350"/>
+    <animation xsi:type="mapping:Move" input="29..58" x_range="" y_range="350..71"/>
+    <animation xsi:type="mapping:Colorize" input="on" fill_color="#626262"/>
   </svgElement>
   <svgElement id="text">
-    <animation xsi:type="mapping:Textbox" input="[0..57]" key="water" value="$text"/>
+    <animation xsi:type="mapping:Text" input="0,3,8,12,45,56" key="water" text_value="Leer, voller als eben, 100.0945, noch mehr, heiß, kalt" font_color="red" font_size="12" font_opacity="1"/>
   </svgElement>
 </mapping:SVGFile>

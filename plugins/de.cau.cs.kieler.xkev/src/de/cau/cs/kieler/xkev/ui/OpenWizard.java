@@ -45,12 +45,15 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.views.KevView;
 
 /**
  * 
@@ -93,17 +96,23 @@ public class OpenWizard extends Wizard {
             page.setErrorMessage("Please enter a valid mapping file (*.mapping).");
             return false;
         }
+        try {
+            //Set the ExecutionManager view active, for initialization
+            Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                    .showView("de.cau.cs.kieler.sim.kiem.view");
+        } catch (PartInitException e) {
+            Activator.reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) can't be initialized!");
+        }
         if (resourceNameField.getText().contains("bundleentry://")) {
             //Load the SVG file from bundle resources specified in the mapping file
             String filename = resourceNameField.getText().substring(resourceNameField.getText().lastIndexOf("/")+1);
             Activator.setCurrentMapAnimation(new MapAnimations(filename, true));
-            return true;
         } else {
           //Load the SVG file from filesystem
             Activator.setCurrentMapAnimation(new MapAnimations(resourceNameField.getText(), false));
         }
         savePreferences();
-        return false;
+        return true;
     }
 
     /**

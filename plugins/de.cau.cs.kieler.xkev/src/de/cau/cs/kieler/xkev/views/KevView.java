@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.batik.swing.JSVGCanvas;
-import org.eclipse.jface.action.Action; // import org.eclipse.jface.action.ControlContribution;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -132,8 +132,19 @@ public class KevView extends ViewPart {
      * 
      * @param action
      */
-    public void enableButton() {
-        openWizardAction.setEnabled(true);
+    public void enableButton(int id) {
+        switch (id) {
+        case 1:
+            openWizardAction.setEnabled(true);
+            break;
+        case 2:
+            refreshAction.setEnabled(true);
+            break;
+        case 3:
+            openWizardAction.setEnabled(true);
+            refreshAction.setEnabled(true);
+            break;
+        }        
     }
 
     /**
@@ -141,8 +152,19 @@ public class KevView extends ViewPart {
      * 
      * @param action
      */
-    public void disableButton() {
-        openWizardAction.setEnabled(false);
+    public void disableButton(int id) {
+        switch (id) {
+        case 1:
+            openWizardAction.setEnabled(false);
+            break;
+        case 2:
+            refreshAction.setEnabled(false);
+            break;
+        case 3:
+            openWizardAction.setEnabled(false);
+            refreshAction.setEnabled(false);
+            break;
+        }
     }
 
     /**

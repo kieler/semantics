@@ -8,6 +8,7 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
@@ -22,8 +23,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGElement;
 
+import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
@@ -33,8 +37,9 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getColor <em>Color</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getStyle <em>Style</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getFill_color <em>Fill color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getStroke_color <em>Stroke color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getStroke_width <em>Stroke width</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,46 +47,71 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
  */
 public class ColorizeImpl extends AnimationImpl implements Colorize {
     /**
-     * The default value of the '{@link #getColor() <em>Color</em>}' attribute.
+     * The default value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getColor()
+     * @see #getFill_color()
      * @generated
      * @ordered
      */
-    protected static final String COLOR_EDEFAULT = null;
+    protected static final String FILL_COLOR_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getColor() <em>Color</em>}' attribute.
+     * The cached value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getColor()
+     * @see #getFill_color()
      * @generated
      * @ordered
      */
-    protected String color = COLOR_EDEFAULT;
+    protected String fill_color = FILL_COLOR_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getStyle() <em>Style</em>}' attribute.
+     * The default value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStyle()
+     * @see #getStroke_color()
      * @generated
      * @ordered
      */
-    protected static final String STYLE_EDEFAULT = "solid";
+    protected static final String STROKE_COLOR_EDEFAULT = "";
 
     /**
-     * The cached value of the '{@link #getStyle() <em>Style</em>}' attribute.
+     * The cached value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStyle()
+     * @see #getStroke_color()
      * @generated
      * @ordered
      */
-    protected String style = STYLE_EDEFAULT;
+    protected String stroke_color = STROKE_COLOR_EDEFAULT;
 
-/**
+    /**
+     * The default value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStroke_width()
+     * @generated
+     * @ordered
+     */
+    protected static final String STROKE_WIDTH_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStroke_width()
+     * @generated
+     * @ordered
+     */
+    protected String stroke_width = STROKE_WIDTH_EDEFAULT;
+
+    /**
+     * The hashmap for mapping the input values to output
+     */
+    private HashMap<String, HashMap<String, String>> hashMapList = null;
+    
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -105,8 +135,8 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getColor() {
-        return color;
+    public String getFill_color() {
+        return fill_color;
     }
 
     /**
@@ -114,11 +144,11 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setColor(String newColor) {
-        String oldColor = color;
-        color = newColor;
+    public void setFill_color(String newFill_color) {
+        String oldFill_color = fill_color;
+        fill_color = newFill_color;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__COLOR, oldColor, color));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__FILL_COLOR, oldFill_color, fill_color));
     }
 
     /**
@@ -126,8 +156,8 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getStyle() {
-        return style;
+    public String getStroke_color() {
+        return stroke_color;
     }
 
     /**
@@ -135,85 +165,34 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setStyle(String newStyle) {
-        String oldStyle = style;
-        style = newStyle;
+    public void setStroke_color(String newStroke_color) {
+        String oldStroke_color = stroke_color;
+        stroke_color = newStroke_color;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STYLE, oldStyle, style));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_COLOR, oldStroke_color, stroke_color));
     }
 
-    
-    
-    private void colorizeAnimation(String svgElementID, String jsonValue) {
-        MapAnimations mapAnimation = new MapAnimations();
-        SVGDocument svgDoc = mapAnimation.getSVGDocument();
-        if (svgDoc == null) {
-            //Do nothing, if the document doesn't exists anymore (eq viewpart is closed)
-            return;
-        }
-        try {
-            Element e = svgDoc.getElementById(svgElementID);
-            if (e != null) {
-                String oldStr, newStr, s;
-                int start, end;
-                s = e.getAttribute("style");
-                if (s != null && !s.isEmpty()) {
-                    start = s.indexOf("fill:");// +"fill:".length();
-                    //todo: if fill does not exists, insert new style-tag
-                    end = s.substring(start).indexOf(";") + 1;
-                    oldStr = s.substring(start, start + end);
-                    newStr = "fill:" + jsonValue + ";";
-    
-                    e.setAttribute("style", s.replace(oldStr, newStr));
-                } else {
-                    Activator.reportErrorMessage("\"style\"-tag doesn't exists in "+svgDoc.getURL());
-                }
-            } else {
-                Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL()); 
-            }
-        } catch (DOMException e1) {
-            Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
-        }
-
-
-    }
-    
     /**
-     * Applies the animation and replaces the current style-tag with an new fill value.
-     * @param jsonObject
-     * @param svgElementID
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
      */
-    public void applyAnimation(JSONObject jsonObject, String svgElementID) {
-        MapAnimations mapAnimation = new MapAnimations();
-        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-        ArrayList<HashMap<String,String>> hashMapArray;
-        HashMap<String,String> hashMap;
-
-        if (jsonValue != null) {
-            hashMapArray = mapAnimation.mapInputToOutput(getInput(), getColor());
-            for (int i = 0; i < hashMapArray.size(); i++) {
-                hashMap = hashMapArray.get(i);
-                //If the value is in the hashMap, we can apply the animation
-                if (hashMap.containsKey(jsonValue)) {
-                    String value = hashMap.get(jsonValue);
-                    //Check if the value is a JSON Key (indicated by "$")
-                    if (value.indexOf("$") == 0) {
-                        //Now we need to load the JSON value from object
-                        value = jsonObject.optString(value.substring(1));
-                        if (value != null) { 
-                            colorizeAnimation(svgElementID, value);
-//                            System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
-                        }
-                    } else {
-                        colorizeAnimation(svgElementID, hashMap.get(jsonValue));
-                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
-                    }
-                }
-                
-            }
-        }
+    public String getStroke_width() {
+        return stroke_width;
     }
-  
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setStroke_width(String newStroke_width) {
+        String oldStroke_width = stroke_width;
+        stroke_width = newStroke_width;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_WIDTH, oldStroke_width, stroke_width));
+    }
+
     /**
      * Does some checks an runs the colorizeAnimation()-method, if the checks were successful.
      * This method is equal for all Animations (Don't know where to put it else)
@@ -278,7 +257,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     
     /**
      * <!-- begin-user-doc -->
-     * The apply-Method applies the Animation to the SVG-Document
+     * The apply-Method applies the RunnableAnimation to the SVG-Document
      * <!-- end-user-doc -->
      * @generated NOT
      */
@@ -353,10 +332,12 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__COLOR:
-                return getColor();
-            case MappingPackage.COLORIZE__STYLE:
-                return getStyle();
+            case MappingPackage.COLORIZE__FILL_COLOR:
+                return getFill_color();
+            case MappingPackage.COLORIZE__STROKE_COLOR:
+                return getStroke_color();
+            case MappingPackage.COLORIZE__STROKE_WIDTH:
+                return getStroke_width();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -369,11 +350,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__COLOR:
-                setColor((String)newValue);
+            case MappingPackage.COLORIZE__FILL_COLOR:
+                setFill_color((String)newValue);
                 return;
-            case MappingPackage.COLORIZE__STYLE:
-                setStyle((String)newValue);
+            case MappingPackage.COLORIZE__STROKE_COLOR:
+                setStroke_color((String)newValue);
+                return;
+            case MappingPackage.COLORIZE__STROKE_WIDTH:
+                setStroke_width((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -387,11 +371,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__COLOR:
-                setColor(COLOR_EDEFAULT);
+            case MappingPackage.COLORIZE__FILL_COLOR:
+                setFill_color(FILL_COLOR_EDEFAULT);
                 return;
-            case MappingPackage.COLORIZE__STYLE:
-                setStyle(STYLE_EDEFAULT);
+            case MappingPackage.COLORIZE__STROKE_COLOR:
+                setStroke_color(STROKE_COLOR_EDEFAULT);
+                return;
+            case MappingPackage.COLORIZE__STROKE_WIDTH:
+                setStroke_width(STROKE_WIDTH_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -405,10 +392,12 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__COLOR:
-                return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
-            case MappingPackage.COLORIZE__STYLE:
-                return STYLE_EDEFAULT == null ? style != null : !STYLE_EDEFAULT.equals(style);
+            case MappingPackage.COLORIZE__FILL_COLOR:
+                return FILL_COLOR_EDEFAULT == null ? fill_color != null : !FILL_COLOR_EDEFAULT.equals(fill_color);
+            case MappingPackage.COLORIZE__STROKE_COLOR:
+                return STROKE_COLOR_EDEFAULT == null ? stroke_color != null : !STROKE_COLOR_EDEFAULT.equals(stroke_color);
+            case MappingPackage.COLORIZE__STROKE_WIDTH:
+                return STROKE_WIDTH_EDEFAULT == null ? stroke_width != null : !STROKE_WIDTH_EDEFAULT.equals(stroke_width);
         }
         return super.eIsSet(featureID);
     }
@@ -423,13 +412,209 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (color: ");
-        result.append(color);
-        result.append(", style: ");
-        result.append(style);
+        result.append(" (fill_color: ");
+        result.append(fill_color);
+        result.append(", stroke_color: ");
+        result.append(stroke_color);
+        result.append(", stroke_width: ");
+        result.append(stroke_width);
         result.append(')');
         return result.toString();
     }
+    
+    /**
+     * Applies the animation and replaces the current style-tag with an new fill value.
+     * @param jsonObject
+     * @param svgElementID
+     */
+    public void apply(Object jsonObject, String svgElementID) {
+        
+        RunnableAnimation runnableAnimation = new RunnableAnimation((JSONObject) jsonObject, svgElementID) {
+            
+            public void run() {
+                Element elem = getSVGElement();
+                String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
+    
+                if (jsonValue != null) {
+                    //apply animation
+                    if (jsonValue.indexOf("$") == 0) {
+                        jsonValue = ((JSONObject) getJSONObject()).optString(jsonValue.substring(1));
+                    }
+                    if (elem != null) {
+                        //Do RunnableAnimation
+                        try {
+                            String styleAttribute, hashValue;
+                            styleAttribute = elem.getAttribute("style");
+    
+                            hashValue = hashMapList.get("fill_color").get(jsonValue);
+                            if (hashValue != null) {
+                                if (hashValue.indexOf("$") == 0) {
+                                    hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
+                                }
+                                if (styleAttribute.contains("fill:")) {
+                                    styleAttribute = styleAttribute.replaceFirst("fill:[^;]+", "fill:"+hashValue);                                
+                                } else {
+                                    styleAttribute += ";fill"+hashValue;
+                                }
+    
+                            }
+                            hashValue = hashMapList.get("stroke_color").get(jsonValue);
+                            if (hashValue != null) {
+                                if (hashValue.indexOf("$") == 0) {
+                                    hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
+                                }
+                                if (styleAttribute.contains("stroke:")) {
+                                    styleAttribute = styleAttribute.replaceFirst("stroke:[^;]+", "stroke:"+hashValue);                                
+                                } else {
+                                    styleAttribute += ";stroke:"+hashValue;
+                                }
+                            }
+                            hashValue = hashMapList.get("stroke_width").get(jsonValue);
+                            if (hashValue != null) {
+                                if (hashValue.indexOf("$") == 0) {
+                                    hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
+                                }
+                                if (styleAttribute.contains("stroke-width:")) {
+                                    styleAttribute = styleAttribute.replaceFirst("stroke-width:[^;]+", "stroke-width:"+hashValue);
+                                } else {
+                                    styleAttribute += ";stroke-width:"+hashValue;
+                                }
+                            }
+                            //only change if old value and new value aren't the same
+                            if (!elem.getAttribute("style").equals(styleAttribute)) {
+                                elem.setAttribute("style", styleAttribute);
+                            }
+                        } catch (DOMException e1) {
+                            Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
+                        }
+                    }
+                }
+            }
+        };
+        EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue().invokeLater(runnableAnimation);
+//        
+//        if (jsonValue != null) {
+//            //apply animation
+//            if (jsonValue.indexOf("$") == 0) {
+//                jsonValue = ((JSONObject) jsonObject).optString(jsonValue.substring(1));
+//            }
+//            
+//            SVGDocument svgDoc = mapAnimation.getSVGDocument();
+//            if (svgDoc != null) {
+//                try {
+//                    Element e = svgDoc.getElementById(svgElementID);
+//                    if (e != null) {
+//                        String styleAttribute, hashValue;
+//                        styleAttribute = e.getAttribute("style");
+//                        
+//                        hashValue = hashMapList.get("fill_color").get(jsonValue);
+//                        if (hashValue != null) {
+//                            if (hashValue.indexOf("$") == 0) {
+//                                hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+//                            }
+//                            if (styleAttribute.contains("fill:")) {
+//                                styleAttribute = styleAttribute.replaceFirst("fill:[^;]+", "fill:"+hashValue);                                
+//                            } else {
+//                                styleAttribute += ";fill"+hashValue;
+//                            }
+//                            
+//                        }
+//                        hashValue = hashMapList.get("stroke_color").get(jsonValue);
+//                        if (hashValue != null) {
+//                            if (hashValue.indexOf("$") == 0) {
+//                                hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+//                            }
+//                            if (styleAttribute.contains("stroke:")) {
+//                                styleAttribute = styleAttribute.replaceFirst("stroke:[^;]+", "stroke:"+hashValue);                                
+//                            } else {
+//                                styleAttribute += ";stroke:"+hashValue;
+//                            }
+//                        }
+//                        hashValue = hashMapList.get("stroke_width").get(jsonValue);
+//                        if (hashValue != null) {
+//                            if (hashValue.indexOf("$") == 0) {
+//                                hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+//                            }
+//                            if (styleAttribute.contains("stroke-width:")) {
+//                                styleAttribute = styleAttribute.replaceFirst("stroke-width:[^;]+", "stroke-width:"+hashValue);
+//                            } else {
+//                                styleAttribute += ";stroke-width:"+hashValue;
+//                            }
+//                             
+//                        }
+//                        //only change if old value and new value aren't the same
+//                        if (!e.getAttribute("style").equals(styleAttribute)) {
+//                            e.setAttribute("style", styleAttribute);
+//                        }
+//                    }
+//                } catch (DOMException e1) {
+//                    Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
+//                }
+//            }
+//        }
+    }
+  
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#initialize()
+     */
+    public void initialize() {
+        MapAnimations mapAnimation = new MapAnimations();
+        this.hashMapList = new HashMap<String, HashMap<String,String>>();
+        
+        ArrayList<String> outputList, inputList;
+        inputList = mapAnimation.attributeParser(getInput(), true);
 
+        outputList = mapAnimation.attributeParser(getFill_color(), false);
+        this.hashMapList.put("fill_color",mapAnimation.mapInputToOutput(inputList, outputList));
+        outputList = mapAnimation.attributeParser(getStroke_color(), false);
+        this.hashMapList.put("stroke_color",mapAnimation.mapInputToOutput(inputList, outputList));
+        outputList = mapAnimation.attributeParser(getStroke_width(), false);
+        this.hashMapList.put("stroke_width",mapAnimation.mapInputToOutput(inputList, outputList));
+    }
 
+//    if (jsonValue != null) {
+//        if (this.hashMap.containsKey(jsonValue)) {
+//            String value = this.hashMap.get(jsonValue);
+//            //Check if the value is a JSON Key (indicated by "$")
+//            if (value.indexOf("$") == 0) {
+//                //Now we need to load the JSON value from object
+//                value = ((JSONObject) jsonObject).optString(value.substring(1));
+//            }
+//            
+//            if (getColor_property().equals("stroke")) {
+//                colorProperty = "stroke";
+//            }
+//            
+//            //apply animation
+//            SVGDocument svgDoc = mapAnimation.getSVGDocument();
+//            if (svgDoc != null) {
+//                try {
+//                    Element e = svgDoc.getElementById(svgElementID);
+//                    if (e != null) {
+//                        String oldStr, newStr, s;
+//                        int start, end;
+//                        s = e.getAttribute("style");
+//                        if (s != null && !s.isEmpty()) {
+//                            start = s.indexOf("fill:");// +"fill:".length();
+//                            //todo: if fill does not exists, insert new style-tag
+//                            end = s.substring(start).indexOf(";") + 1;
+//                            oldStr = s.substring(start, start + end);
+//                            newStr = "fill:" + jsonValue + ";";
+//            
+//                            e.setAttribute("style", s.replace(oldStr, newStr));
+//                        } else {
+//                            Activator.reportErrorMessage("\"style\"-tag doesn't exists in "+svgDoc.getURL());
+//                        }
+//                    } else {
+//                        Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL()); 
+//                    }
+//                } catch (DOMException e1) {
+//                    Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
+//                }
+//            }
+//        }
+//    }
+//}
+    
+    
 } //ColorizeImpl

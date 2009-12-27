@@ -12,7 +12,7 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Animation</b></em>'.
+ * A representation of the model object '<em><b>RunnableAnimation</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -124,22 +124,14 @@ public interface Animation extends EObject {
      * @model
      * @generated
      */
-    void applyAnimation(Object jsonObject, String svgElementID);
+    void apply(Object jsonObject, String svgElementID);
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @model
-     */    
-    void applyAnimation(JSONObject jsonObject, String svgElementID);
-    
-    /**
-     * <!-- begin-user-doc -->
-     * This method should have this two parameters, which was not possible to delcare in the emf model
-     * <!-- end-user-doc -->
-     * @model kind="operation"
+     * @generated
      */
-    String getActualJSONValue(JSONObject jsonObject, String svgElementID);
+    void initialize();
 
-
-} // Animation
+} // RunnableAnimation

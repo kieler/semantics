@@ -19,6 +19,8 @@ import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
+import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -85,6 +87,17 @@ public class MoveImpl extends AnimationImpl implements Move {
      */
     protected String y_range = YRANGE_EDEFAULT;
 
+    /**
+     * The hashmap for mapping the input to the corresponding x_range output
+     */
+    private HashMap<String, String> hashMapXRange = null;
+
+    /**
+     * The hashmap for mapping the input to the corresponding x_range output
+     */
+    private HashMap<String, String> hashMapYRange = null;
+    
+    
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -232,44 +245,36 @@ public class MoveImpl extends AnimationImpl implements Move {
         return result.toString();
     }
     
-    private void moveAnimation(String svgElementId, String xValue, String yValue) {
-        //Create a new Instance of MapAnimations for Method access and SVGDocument-Reference
-        MapAnimations mapAnimation = new MapAnimations();
-        SVGDocument svgDoc = mapAnimation.getSVGDocument();
-//        System.out.println("xRange: "+xValue+" yRange:"+yValue);
-        if (svgDoc == null) {
-            return;
-        }
-        
-        Element e = svgDoc.getElementById(svgElementId);
-        //Test whether the svg element exists or not
-        if (e != null) {
-            float xPos, yPos;
-
-            try {
-                xPos = Float.parseFloat(e.getAttribute("x"));
-                yPos = Float.parseFloat(e.getAttribute("y"));
-//                System.out.println("xPos: "+xPos+"  yPos: "+yPos);
-                
-                if (xValue != null) {
-//                    xPos += Float.parseFloat(xRange);
-//                    e.setAttribute("x",Float.toString(xPos));
-                    e.setAttribute("x",xValue);
+    //Computes the range values
+    private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
+        ArrayList<String> range = new ArrayList<String>();
+        if (Pattern.matches("[-]?[\\d]+[.]{2,3}[-]?[\\d]+", value)) {
+            Scanner sc = new Scanner(value).useDelimiter("[.]+");
+            //We have exactly two values
+            float first, last, numberOfRangeValues;
+            first = sc.nextFloat();
+            last = sc.nextFloat();
+            
+            numberOfRangeValues = Math.abs(first-last);
+            System.out.println("first: "+first+ " last: "+last+ " NumberofRangeValues:"+numberOfRangeValues);
+            float x = numberOfRangeValues / numberOfInputValues;
+            System.out.println(x);
+            if (first <= last) {
+                for (int i = 0; i < numberOfInputValues; i++) {
+                    range.add(Float.toString((x*i)+first));
                 }
-                if (yValue != null) {
-//                    yPos += Float.parseFloat(yRange);
-//                    e.setAttribute("y",Float.toString(yPos));
-                    e.setAttribute("y",yValue);
+            } else {
+                for (int i = 0; i < numberOfInputValues; i++) {
+                    range.add(Float.toString(first-(x*i)));
                 }
-            } catch (NumberFormatException  e1) {
-                Activator.reportErrorMessage("Attribute in "+svgDoc.getURL()+" has a wrong NumberFormat!", e1);
-            } catch (DOMException e2) {
-                Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e2);
             }
-        } else {
-            Activator.reportErrorMessage("SVGElement with ID: "+svgElementId+" doesn't exists in "+svgDoc.getURL());
-        }
-       
+        } else if (Pattern.matches("[-]?[\\d]+", value)) {
+            for (int i = 0; i < numberOfInputValues; i++) {
+                range.add(value);
+            }
+        } //else we have invalid values for move x_range and y_range
+        System.out.println("Range size:"+ range.size());
+        return range;
     }
     
     
@@ -279,55 +284,72 @@ public class MoveImpl extends AnimationImpl implements Move {
      * <!-- end-user-doc -->
      * @generated NOT
      */
-    public void applyAnimation(JSONObject jsonObject, String svgElementID) {
-        MapAnimations mapAnimation = new MapAnimations();
-        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-        ArrayList<HashMap<String,String>> hashMapArray_XRange, hashMapArray_YRange;
-        HashMap<String,String> hashMap_XRange, hashMap_YRange;
-        
-        if (jsonValue != null) {
-            hashMapArray_XRange = mapAnimation.mapInputToOutput(getInput(), getX_range(), true);
-            hashMapArray_YRange = mapAnimation.mapInputToOutput(getInput(), getY_range(), true);
-            int xRangeSize = hashMapArray_XRange.size();
-            int yRangeSize = hashMapArray_YRange.size();
-            int maxSize = Math.max(xRangeSize, yRangeSize);
+    public void apply(Object jsonObject, String svgElementID) {
+        RunnableAnimation runnableAnimation = new RunnableAnimation((JSONObject) jsonObject, svgElementID) {
             
-            if (maxSize == xRangeSize) {
-                //Now we know, that yRangeSize is the minimum
-                for (int i = 0; i < yRangeSize; i++) {
-                    hashMap_XRange = hashMapArray_XRange.get(i);
-                    hashMap_YRange = hashMapArray_YRange.get(i);
-                    if (hashMap_XRange.containsKey(jsonValue) || hashMap_YRange.containsKey(jsonValue)) {
-                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), hashMap_YRange.get(jsonValue));
-                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue x-range: "+hashMap_XRange.get(jsonValue)+" MappedValue y-range: "+hashMap_YRange.get(jsonValue));
-                    }
-                }
-                //Now go on for the rest (until maxSize == xRangeSize)
-                for (int i = yRangeSize; i < maxSize; i++) {
-                    hashMap_XRange = hashMapArray_XRange.get(i);
-                    if (hashMap_XRange.containsKey(jsonValue)) {
-                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), null);
-                    }
-                }
-            } else {
-                //Now we know, that xRangeSize is the minimum
-                for (int i = 0; i < xRangeSize; i++) {
-                    hashMap_XRange = hashMapArray_XRange.get(i);
-                    hashMap_YRange = hashMapArray_YRange.get(i);
-                    if (hashMap_XRange.containsKey(jsonValue) || hashMap_YRange.containsKey(jsonValue)) {
-                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), hashMap_YRange.get(jsonValue));
-                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue x-range: "+hashMap_XRange.get(jsonValue)+" MappedValue y-range: "+hashMap_YRange.get(jsonValue));
-                    }
-                }
-                //Now go on for the rest (until maxSize == yRangeSize)
-                for (int i = xRangeSize; i < maxSize; i++) {
-                    hashMap_YRange = hashMapArray_YRange.get(i);
-                    if (hashMap_YRange.containsKey(jsonValue)) {
-                        moveAnimation(svgElementID, null, hashMap_YRange.get(jsonValue));
-                    }
+            public void run() {
+                Element elem = getSVGElement();
+                String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
+                if (jsonValue != null) {
+                    //Now apply the animation
+                    if (elem != null) {
+                        try {
+                            if (hashMapXRange.get(jsonValue) != null) {
+                                elem.setAttribute("x", hashMapXRange.get(jsonValue));
+                            }
+                            if (hashMapYRange.get(jsonValue) != null) {
+                                elem.setAttribute("y",hashMapYRange.get(jsonValue));
+                            }
+                        } catch (DOMException e1) {
+                            Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e1);
+                        }
+                    } else {
+                        Activator.reportErrorMessage("SVGElement with ID: "+getSVGElementID()+" doesn't exists in "+EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
+                    }                
                 }
             }
-        }
+        };
+        EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue().invokeLater(runnableAnimation);
+//        
+//        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+//
+//        if (jsonValue != null) {
+//            //Now apply the animation
+//            SVGDocument svgDoc = mapAnimation.getSVGDocument();
+//            if (svgDoc != null) {
+//                Element e = svgDoc.getElementById(svgElementID);
+//                //Test whether the svg element exists or not
+//                if (e != null) {
+//                    try {
+//                        if (hashMapXRange.get(jsonValue) != null) {
+//                            e.setAttribute("x", hashMapXRange.get(jsonValue));
+//                        }
+//                        if (hashMapYRange.get(jsonValue) != null) {
+//                            e.setAttribute("y",hashMapYRange.get(jsonValue));
+//                        }
+//                    } catch (DOMException e1) {
+//                        Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e1);
+//                    }
+//                } else {
+//                    Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL());
+//                }                
+//            }
+//        }
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#initialize()
+     */
+    public void initialize() {
+        MapAnimations mapAnimation = new MapAnimations();
+
+        ArrayList<String> inputArray, xRange, yRange;
+        inputArray = mapAnimation.attributeParser(getInput(), true);
+        xRange = computeRange(getX_range(), inputArray.size());
+        yRange = computeRange(getY_range(), inputArray.size());
+        
+        this.hashMapXRange = mapAnimation.mapInputToOutput(inputArray, xRange);
+        this.hashMapYRange = mapAnimation.mapInputToOutput(inputArray, yRange);
     }
 
 } //MoveImpl

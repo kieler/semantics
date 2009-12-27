@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>Animation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>RunnableAnimation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getId <em>Id</em>}</li>
  * </ul>
  * </p>
@@ -29,15 +29,15 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SVGElement extends EObject {
     /**
-     * Returns the value of the '<em><b>Animation</b></em>' containment reference list.
+     * Returns the value of the '<em><b>RunnableAnimation</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.xkev.mapping.Animation}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Animation</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>RunnableAnimation</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Animation</em>' containment reference list.
+     * @return the value of the '<em>RunnableAnimation</em>' containment reference list.
      * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getSVGElement_Animation()
      * @model containment="true" required="true"
      * @generated

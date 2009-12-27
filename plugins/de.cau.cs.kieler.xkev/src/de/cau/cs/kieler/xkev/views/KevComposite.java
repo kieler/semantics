@@ -12,6 +12,14 @@
  * See the file epl-v10.html for the license text.
  */
 
+/**
+ * 
+ * 
+ * @author skn
+ * @author haf
+ */
+
+
 package de.cau.cs.kieler.xkev.views;
 
 import java.awt.BorderLayout;
@@ -149,7 +157,10 @@ public class KevComposite extends Composite implements ISelectionListener {
                 while (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
                   //Do nothing until the single instance is successfully created
                 }
+            } else {//Otherwise set the sourcepath to the current document uri
+                setSVGURI(URI.create(EclipseJSVGCanvas.getInstance().getSVGDocument().getURL()));
             }
+            
             //Get the single instance of the EclipseJSVGCanvas
             svgCanvas = EclipseJSVGCanvas.getInstance();
 //            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);

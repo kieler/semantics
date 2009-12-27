@@ -107,7 +107,7 @@ public interface MappingPackage extends EPackage {
     int SVG_ELEMENT = 1;
 
     /**
-     * The feature id for the '<em><b>Animation</b></em>' containment reference list.
+     * The feature id for the '<em><b>RunnableAnimation</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -134,7 +134,7 @@ public interface MappingPackage extends EPackage {
     int SVG_ELEMENT_FEATURE_COUNT = 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>RunnableAnimation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl
@@ -171,13 +171,150 @@ public interface MappingPackage extends EPackage {
     int ANIMATION__KEY = 2;
 
     /**
-     * The number of structural features of the '<em>Animation</em>' class.
+     * The number of structural features of the '<em>RunnableAnimation</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
     int ANIMATION_FEATURE_COUNT = 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl <em>Move Path</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl
+     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMovePath()
+     * @generated
+     */
+    int MOVE_PATH = 3;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__INPUT = ANIMATION__INPUT;
+
+    /**
+     * The feature id for the '<em><b>Access ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__ACCESS_ID = ANIMATION__ACCESS_ID;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__KEY = ANIMATION__KEY;
+
+    /**
+     * The feature id for the '<em><b>Path</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__PATH = ANIMATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Anchor point</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__ANCHOR_POINT = ANIMATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Auto orientation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH__AUTO_ORIENTATION = ANIMATION_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Move Path</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MOVE_PATH_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.RotateImpl <em>Rotate</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.xkev.mapping.impl.RotateImpl
+     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getRotate()
+     * @generated
+     */
+    int ROTATE = 4;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE__INPUT = ANIMATION__INPUT;
+
+    /**
+     * The feature id for the '<em><b>Access ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE__ACCESS_ID = ANIMATION__ACCESS_ID;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE__KEY = ANIMATION__KEY;
+
+    /**
+     * The feature id for the '<em><b>Angle range</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE__ANGLE_RANGE = ANIMATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Pivot</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE__PIVOT = ANIMATION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Rotate</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROTATE_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -187,7 +324,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMove()
      * @generated
      */
-    int MOVE = 3;
+    int MOVE = 5;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -251,7 +388,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getColorize()
      * @generated
      */
-    int COLORIZE = 4;
+    int COLORIZE = 6;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -281,22 +418,31 @@ public interface MappingPackage extends EPackage {
     int COLORIZE__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Color</b></em>' attribute.
+     * The feature id for the '<em><b>Fill color</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COLORIZE__COLOR = ANIMATION_FEATURE_COUNT + 0;
+    int COLORIZE__FILL_COLOR = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Style</b></em>' attribute.
+     * The feature id for the '<em><b>Stroke color</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COLORIZE__STYLE = ANIMATION_FEATURE_COUNT + 1;
+    int COLORIZE__STROKE_COLOR = ANIMATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Stroke width</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COLORIZE__STROKE_WIDTH = ANIMATION_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Colorize</em>' class.
@@ -305,7 +451,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COLORIZE_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 2;
+    int COLORIZE_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl <em>Text</em>}' class.
@@ -315,7 +461,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getText()
      * @generated
      */
-    int TEXT = 5;
+    int TEXT = 7;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -442,10 +588,10 @@ public interface MappingPackage extends EPackage {
     EClass getSVGElement();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>Animation</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>RunnableAnimation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Animation</em>'.
+     * @return the meta object for the containment reference list '<em>RunnableAnimation</em>'.
      * @see de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation()
      * @see #getSVGElement()
      * @generated
@@ -464,10 +610,10 @@ public interface MappingPackage extends EPackage {
     EAttribute getSVGElement_Id();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>RunnableAnimation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Animation</em>'.
+     * @return the meta object for class '<em>RunnableAnimation</em>'.
      * @see de.cau.cs.kieler.xkev.mapping.Animation
      * @generated
      */
@@ -505,6 +651,81 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EAttribute getAnimation_Key();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.MovePath <em>Move Path</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Move Path</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.MovePath
+     * @generated
+     */
+    EClass getMovePath();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.MovePath#getPath <em>Path</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Path</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.MovePath#getPath()
+     * @see #getMovePath()
+     * @generated
+     */
+    EAttribute getMovePath_Path();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.MovePath#getAnchor_point <em>Anchor point</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Anchor point</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.MovePath#getAnchor_point()
+     * @see #getMovePath()
+     * @generated
+     */
+    EAttribute getMovePath_Anchor_point();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.MovePath#getAuto_orientation <em>Auto orientation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Auto orientation</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.MovePath#getAuto_orientation()
+     * @see #getMovePath()
+     * @generated
+     */
+    EAttribute getMovePath_Auto_orientation();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Rotate <em>Rotate</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Rotate</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Rotate
+     * @generated
+     */
+    EClass getRotate();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getAngle_range <em>Angle range</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Angle range</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Rotate#getAngle_range()
+     * @see #getRotate()
+     * @generated
+     */
+    EAttribute getRotate_Angle_range();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getPivot <em>Pivot</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Pivot</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Rotate#getPivot()
+     * @see #getRotate()
+     * @generated
+     */
+    EAttribute getRotate_Pivot();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Move <em>Move</em>}'.
@@ -549,26 +770,37 @@ public interface MappingPackage extends EPackage {
     EClass getColorize();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getColor <em>Color</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getFill_color <em>Fill color</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Color</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Colorize#getColor()
+     * @return the meta object for the attribute '<em>Fill color</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Colorize#getFill_color()
      * @see #getColorize()
      * @generated
      */
-    EAttribute getColorize_Color();
+    EAttribute getColorize_Fill_color();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getStyle <em>Style</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getStroke_color <em>Stroke color</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Style</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Colorize#getStyle()
+     * @return the meta object for the attribute '<em>Stroke color</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Colorize#getStroke_color()
      * @see #getColorize()
      * @generated
      */
-    EAttribute getColorize_Style();
+    EAttribute getColorize_Stroke_color();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getStroke_width <em>Stroke width</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Stroke width</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Colorize#getStroke_width()
+     * @see #getColorize()
+     * @generated
+     */
+    EAttribute getColorize_Stroke_width();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Text <em>Text</em>}'.
@@ -694,7 +926,7 @@ public interface MappingPackage extends EPackage {
         EClass SVG_ELEMENT = eINSTANCE.getSVGElement();
 
         /**
-         * The meta object literal for the '<em><b>Animation</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>RunnableAnimation</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -710,7 +942,7 @@ public interface MappingPackage extends EPackage {
         EAttribute SVG_ELEMENT__ID = eINSTANCE.getSVGElement_Id();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>RunnableAnimation</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl
@@ -742,6 +974,66 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EAttribute ANIMATION__KEY = eINSTANCE.getAnimation_Key();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl <em>Move Path</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl
+         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMovePath()
+         * @generated
+         */
+        EClass MOVE_PATH = eINSTANCE.getMovePath();
+
+        /**
+         * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MOVE_PATH__PATH = eINSTANCE.getMovePath_Path();
+
+        /**
+         * The meta object literal for the '<em><b>Anchor point</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MOVE_PATH__ANCHOR_POINT = eINSTANCE.getMovePath_Anchor_point();
+
+        /**
+         * The meta object literal for the '<em><b>Auto orientation</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MOVE_PATH__AUTO_ORIENTATION = eINSTANCE.getMovePath_Auto_orientation();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.RotateImpl <em>Rotate</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.xkev.mapping.impl.RotateImpl
+         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getRotate()
+         * @generated
+         */
+        EClass ROTATE = eINSTANCE.getRotate();
+
+        /**
+         * The meta object literal for the '<em><b>Angle range</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ROTATE__ANGLE_RANGE = eINSTANCE.getRotate_Angle_range();
+
+        /**
+         * The meta object literal for the '<em><b>Pivot</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ROTATE__PIVOT = eINSTANCE.getRotate_Pivot();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -780,20 +1072,28 @@ public interface MappingPackage extends EPackage {
         EClass COLORIZE = eINSTANCE.getColorize();
 
         /**
-         * The meta object literal for the '<em><b>Color</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Fill color</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COLORIZE__COLOR = eINSTANCE.getColorize_Color();
+        EAttribute COLORIZE__FILL_COLOR = eINSTANCE.getColorize_Fill_color();
 
         /**
-         * The meta object literal for the '<em><b>Style</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Stroke color</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COLORIZE__STYLE = eINSTANCE.getColorize_Style();
+        EAttribute COLORIZE__STROKE_COLOR = eINSTANCE.getColorize_Stroke_color();
+
+        /**
+         * The meta object literal for the '<em><b>Stroke width</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute COLORIZE__STROKE_WIDTH = eINSTANCE.getColorize_Stroke_width();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl <em>Text</em>}' class.

@@ -14,6 +14,8 @@ import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Text;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
+import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -141,6 +143,11 @@ public class TextImpl extends AnimationImpl implements Text {
      * @ordered
      */
     protected String font_opacity = FONT_OPACITY_EDEFAULT;
+    
+    /**
+     * The hashmap for mapping the input values to output
+     */
+    private HashMap<String, String> hashMap = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -388,56 +395,77 @@ public class TextImpl extends AnimationImpl implements Text {
         return result.toString();
     }
 
-    public void textAnimation(String elementID, String jsonValue) {
-        MapAnimations mapAnimation = new MapAnimations();
-        SVGDocument svgDoc = mapAnimation.getSVGDocument();
-        
-        if (svgDoc != null) {
-            try {
-               Element e = svgDoc.getElementById(elementID);
-               if (e != null) { 
-                       //We need to read the first child, to get the textcontent of the tag
-                       if (e.getChildNodes() != null) {
-                           e.getChildNodes().item(0).setNodeValue(jsonValue);
-                       }
-               }
-           } catch (DOMException e) {
-               Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
-           }
-        }
-    }
-    
-    
+   public void apply(Object jsonObject, String svgElementID) {
+       RunnableAnimation runnableAnimation = new RunnableAnimation((JSONObject) jsonObject, svgElementID) {
 
-   public void applyAnimation(JSONObject jsonObject, String svgElementID) {
-       MapAnimations mapAnimation = new MapAnimations();
-       String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-       ArrayList<HashMap<String,String>> hashMapArray;
-       HashMap<String,String> hashMap;
-       
-       if (jsonValue != null) {
-           hashMapArray = mapAnimation.mapInputToOutput(getInput(), getText_value());
-           for (int i = 0; i < hashMapArray.size(); i++) {
-               hashMap = hashMapArray.get(i);
-               //If the value is in the hashMap, we can apply the animation
-               if (hashMap.containsKey(jsonValue)) {
-                   String value = hashMap.get(jsonValue);
-                   //Check if the value is a JSON Key (indicated by "$")
-                   if (value.indexOf("$") == 0) {
-                       //Now we need to load the JSON value from object
-                       value = jsonObject.optString(value.substring(1));
-                       if (value != null) { 
-                           textAnimation(svgElementID, value);
-//                           System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
+           public void run() {
+               Element elem = getSVGElement();
+               String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
+               if (jsonValue != null) {
+                   String textValue = hashMap.get(jsonValue);
+                   if (textValue != null) {
+                       if (textValue.indexOf("$") == 0) {
+                           textValue = ((JSONObject) getJSONObject()).optString(textValue.substring(1));
                        }
-                   } else {
-                       textAnimation(svgElementID, hashMap.get(jsonValue));
-//                       System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
-                   }
+                       //Now apply the animation
+                       if (elem != null) { 
+                           try {
+                               //We need to read the first child, to get the textcontent of the tag
+                               if (elem.getChildNodes() != null) {
+                                   elem.getChildNodes().item(0).setNodeValue(textValue);
+                               }
+                           }
+                           catch (DOMException e) {
+                               Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
+                           }
+                       }
+                   }   
                }
-               
            }
-       }
+       };
+       EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue().invokeLater(runnableAnimation);
+
+       
+//       String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+//
+//       if (jsonValue != null) {
+//           
+//           String textValue = this.hashMap.get(jsonValue);
+//           if (textValue != null) {
+//               if (textValue.indexOf("$") == 0) {
+//                   textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
+//               }
+//               //Now apply the animation
+//               SVGDocument svgDoc = mapAnimation.getSVGDocument();
+//               if (svgDoc != null) {
+//                   try {
+//                      Element e = svgDoc.getElementById(svgElementID);
+//                      if (e != null) { 
+//                          //We need to read the first child, to get the textcontent of the tag
+//                          if (e.getChildNodes() != null) {
+//                              e.getChildNodes().item(0).setNodeValue(textValue);
+//                          }
+//                      }
+//                  } catch (DOMException e) {
+//                      Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
+//                  }
+//               }
+//           }
+//       }
    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#initialize()
+     */
+    public void initialize() {
+        MapAnimations mapAnimation = new MapAnimations();
+        
+        ArrayList<String> inputArray, textArray;
+        inputArray = mapAnimation.attributeParser(getInput(), true);
+        textArray = mapAnimation.attributeParser(getText_value(), false);
+        
+        //mapping of input list to the text_value list
+        this.hashMap = mapAnimation.mapInputToOutput(inputArray, textArray);
+    }
 
 } //TextImpl

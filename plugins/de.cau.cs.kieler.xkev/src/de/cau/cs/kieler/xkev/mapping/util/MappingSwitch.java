@@ -105,6 +105,20 @@ public class MappingSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case MappingPackage.MOVE_PATH: {
+                MovePath movePath = (MovePath)theEObject;
+                T result = caseMovePath(movePath);
+                if (result == null) result = caseAnimation(movePath);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case MappingPackage.ROTATE: {
+                Rotate rotate = (Rotate)theEObject;
+                T result = caseRotate(rotate);
+                if (result == null) result = caseAnimation(rotate);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case MappingPackage.MOVE: {
                 Move move = (Move)theEObject;
                 T result = caseMove(move);
@@ -161,17 +175,47 @@ public class MappingSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Animation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>RunnableAnimation</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Animation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>RunnableAnimation</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
     public T caseAnimation(Animation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Move Path</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Move Path</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMovePath(MovePath object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Rotate</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Rotate</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRotate(Rotate object) {
         return null;
     }
 

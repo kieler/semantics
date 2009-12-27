@@ -41,9 +41,10 @@ import de.cau.cs.kieler.xkev.mapping.Animation;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
+import de.cau.cs.kieler.xkev.mapping.Rotate;
 import de.cau.cs.kieler.xkev.mapping.SVGElement;
 import de.cau.cs.kieler.xkev.mapping.SVGFile;
-import de.cau.cs.kieler.xkev.mapping.Textbox;
+import de.cau.cs.kieler.xkev.mapping.Text;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 /**
@@ -164,6 +165,7 @@ public class MapAnimations {
             resource = resSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID+"/examples/"+filename, true), true);
             // Get the first model element and cast it to the right type, in my
             // example everything is hierarchical included in this first node
+            System.out.println("Size: "+resource.getContents().size());
             svgFile = (SVGFile) resource.getContents().get(0);        
             createHashMap(svgFile);
             if (!svgFile.getFilename().isEmpty()) {
@@ -235,27 +237,33 @@ public class MapAnimations {
 
     private void loadSpecifiedSVGFile(final String filename) {
         SVGLoadingStatusListener loadingStatusListener = svgCanvas.getSVGLoadingStatusListener();
-
+        URL url = null;
         if (filename.indexOf("resource:") == 0) {
             String path = filename.substring("resource:".length());
             // Get the resource from examples folder
-            URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path(path), null);
+            
+            url = FileLocator.find(Activator.getDefault().getBundle(), new Path(path), null);
 
-            System.out.println("Bundleentry: " + url.toExternalForm());
-            // setSVGFile(url);
-            // KevComposite.getInstance().setSVGFile(url);
-            svgCanvas.loadSVGDocument(url.toExternalForm());
-            // Sometimes on first load, the fileloading get's cancelled, don't know why and from
-            // whom, so try again
-            if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
-                // KevComposite.getInstance().paintSVGFile();
+            if (url != null) {
+                System.out.println("Bundleentry: " + url.toExternalForm());
+                // setSVGFile(url);
+                // KevComposite.getInstance().setSVGFile(url);
                 svgCanvas.loadSVGDocument(url.toExternalForm());
+                // Sometimes on first load, the fileloading get's cancelled, don't know why and from
+                // whom, so try again
+                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
+                    // KevComposite.getInstance().paintSVGFile();
+                    svgCanvas.loadSVGDocument(url.toExternalForm());
+                }
+            } else {
+                Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
+                return;
             }
             // svgCanvas.loadSVGDocument(url.toExternalForm());
         } else {
             try {
                 //URL url = new URL("file:/" + filename);
-                URL url = new URL(filename);
+                url = new URL(filename);
                 // KevComposite.getInstance().setSVGFile(url);
                 svgCanvas.loadSVGDocument(url.toExternalForm());
                 // Sometimes on first load, the fileloading get's cancelled, don't know why and from
@@ -266,11 +274,15 @@ public class MapAnimations {
                 }
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
             }
         }
         // Wait until loading was successful or an Errorstatus occurs (status < 2)
         while (loadingStatusListener.getLoadingStatus() < SVGLoadingStatusListener.LOADING_COMPLETED) {
+        }
+        if (url != null) {
+            //Set the uri of the current svg file (needed for the refresh)
+            Activator.getKevView().getComposite().setSVGURI(java.net.URI.create(url.toExternalForm()));
         }
     }
 
@@ -282,8 +294,14 @@ public class MapAnimations {
         this.svgElementsHashMap = new HashMap<String, EList<Animation>>();
         Iterator<SVGElement> elementIterator = mappingFile.getSvgElement().iterator();
         SVGElement svgElement;
+        Iterator<Animation> animationIterator;
         while (elementIterator.hasNext()) {
             svgElement = elementIterator.next();
+            animationIterator = svgElement.getAnimation().iterator();
+            //Now we have to initialize all animations once
+            while (animationIterator.hasNext()) {
+                animationIterator.next().initialize();
+            }
             this.svgElementsHashMap.put(svgElement.getId(), svgElement.getAnimation());
         }
     }
@@ -312,33 +330,73 @@ public class MapAnimations {
                 // Get all animations for each SVG element
                 Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
 
-                Animation animation;
                 while (animationIterator.hasNext()) {
-                    animation = animationIterator.next();
-
                     // We need to apply all animations for each SVG element
-                    if (animation instanceof Colorize) {
-                        Colorize colorizeAnimation = (Colorize) animation;
-                        colorizeAnimation.applyAnimation(flatJSONObject, svgElementID);
-                    } else if (animation instanceof Move) {
-                        Move moveAnimation = (Move) animation;
-                        moveAnimation.applyAnimation(flatJSONObject, svgElementID);
-                    } else if (animation instanceof Textbox) {
-                        Textbox textboxAnimation = (Textbox) animation;
-                        textboxAnimation.applyAnimation(flatJSONObject, svgElementID);
-                    } else {
-                        System.out.println("Animation " + animation.getClass().getSimpleName()
-                                + " does not exists!");
-                    }
-
+                    animationIterator.next().apply(flatJSONObject, svgElementID);
                 }
             }
             // Now we still need to apply all animations to the SVG document
-            updateSVGGraphik();
+//            updateSVGGraphik();
         } catch (JSONException e) {
             //Something went wrong with the JSONObject.
         }
-    }
+    }    
+    
+    
+//    /**
+//     * Applies the Animations for all JSON-Keys which exists in the mapping file.
+//     * 
+//     * @param jsonObject
+//     */
+//    public void doAnimations(final JSONObject jsonObject) {
+//        // Check whether the HashMap has been created
+//        if (this.svgElementsHashMap == null) {
+//            System.out.println("HashMap is not initialized!");
+//            return;
+//        }
+//        
+//        try {
+////            System.out.println(jsonObject.toString());
+//            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
+//            JSONObject flatJSONObject = makeItFlat(jsonObject);
+////            System.out.println(flatJSONObject.toString());
+//            //For each svg element id we need to check if all any animation can be applied. 
+//            Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
+//            while (svgElementIDIterator.hasNext()) {
+//                String svgElementID = svgElementIDIterator.next();
+//                // Get all animations for each SVG element
+//                Iterator<RunnableAnimation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
+//
+//                RunnableAnimation animation;
+//                while (animationIterator.hasNext()) {
+//                    animation = animationIterator.next();
+//
+//                    // We need to apply all animations for each SVG element
+//                    if (animation instanceof Colorize) {
+//                        Colorize colorizeAnimation = (Colorize) animation;
+//                        colorizeAnimation.applyAnimation(flatJSONObject, svgElementID);
+//                    } else if (animation instanceof Move) {
+//                        Move moveAnimation = (Move) animation;
+//                        moveAnimation.applyAnimation(flatJSONObject, svgElementID);
+//                    } else if (animation instanceof Text) {
+//                        Text textAnimation = (Text) animation;
+//                        textAnimation.applyAnimation(flatJSONObject, svgElementID);
+//                    } else if (animation instanceof Rotate) {
+//                        Rotate rotateAnimation = (Rotate) animation;
+//                        rotateAnimation.applyAnimation(flatJSONObject, svgElementID);
+//                    } else {
+//                        System.out.println("RunnableAnimation " + animation.getClass().getSimpleName()
+//                                + " does not exists!");
+//                    }
+//
+//                }
+//            }
+//            // Now we still need to apply all animations to the SVG document
+//            updateSVGGraphik();
+//        } catch (JSONException e) {
+//            //Something went wrong with the JSONObject.
+//        }
+//    }
     
     //OLD VERSION DOES ONLY ANIMATIONS IF THE JSON KEY EQUALS THE SVG ELEMENT ID
     //------------------------------------------------------------------------------------------
@@ -366,9 +424,9 @@ public class MapAnimations {
 //                // Mapping-HashMap
 //                if (this.svgElementsHashMap.containsKey(key)) {
 //                    // Get all animations for each SVG element
-//                    Iterator<Animation> animationIterator = svgElementsHashMap.get(key).iterator();
+//                    Iterator<RunnableAnimation> animationIterator = svgElementsHashMap.get(key).iterator();
 //    
-//                    Animation animation;
+//                    RunnableAnimation animation;
 //                    while (animationIterator.hasNext()) {
 //                        animation = animationIterator.next();
 //    
@@ -383,7 +441,7 @@ public class MapAnimations {
 //                            Textbox textboxAnimation = (Textbox) animation;
 //                            textboxAnimation.applyAnimation(flatJSONObject, key);
 //                        } else {
-//                            System.out.println("Animation " + animation.getClass().getSimpleName()
+//                            System.out.println("RunnableAnimation " + animation.getClass().getSimpleName()
 //                                    + " does not exists!");
 //                        }
 //    
@@ -402,98 +460,88 @@ public class MapAnimations {
      * ArrayList with no duplicates of the inputstring.
      * 
      */
-    private ArrayList<String> generateArrayListFromInput(final String input,
-            final boolean integerOnly) {
+    public ArrayList<String> attributeParser(final String input,
+            final boolean isInputAttribute) {
         ArrayList<String> inputArray = new ArrayList<String>();
         HashSet<String> inputSet = new HashSet<String>();
         // Now we begin with the input tokens
         String pattern;
-        if (integerOnly) {
-            // Allow only valid integer values.
-            pattern = "[-]?[\\d]+";
-        } else {
-            // Allow all chars, except these ",;[]"
-            pattern = "[^,;\\[\\]]+";
-        }
-
-        if (Pattern.matches("\\[([^,\\[\\]]+[,])*[^,\\[\\]]+\\]", input)) {
-            // Correct brackets for a valid list
-            // System.out.println("Korrekte Liste: "+input);
-            Scanner inputScanner = new Scanner(input).useDelimiter("[\\[,\\]]");
-            while (inputScanner.hasNext()) {
-                // This means a range plus a distance between [number1]:[number2]
-                if (inputScanner.hasNext("[-]?[\\d]+:[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {
-                    Scanner sc = new Scanner(inputScanner.next()).useDelimiter("[.:]+");
-                    // We have exactly three integer values if this pattern matches
-                    int first, second, last;
-                    first = sc.nextInt();
-                    second = sc.nextInt();
-                    last = sc.nextInt();
-                    if (first < second && last >= second) {
-                        // Example: [200:210..220] = three steps (200, 210, 220)
-                        for (int i = first; i < last; i += (second - first)) {
-                            if (inputSet.add(Integer.toString(i))) {
-                                inputArray.add(Integer.toString(i));
-                            }// Else, the input is already in the Array
-                        }
-                    } else if (first > second && last <= second) {
-                        // Example: [220:210..210] = two steps (220, 210)
-                        for (int i = first; i > last; i -= (first - second)) {
-                            if (inputSet.add(Integer.toString(i))) {
-                                inputArray.add(Integer.toString(i));
-                            }// Else, the input is already in the Array
-                        }
-                    } // Others makes no sense
-                } else if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {// Test if the
-                                                                                  // next input
-                                                                                  // matches
-                                                                                  // "[-]NUMBER..[.][-]NUMBER"
-                    // Now we know, that the inputScanner.next() contains exactly 2 integer values
-                    Scanner sc = new Scanner(inputScanner.next()).useDelimiter("[.]+");
-                    int leftint = sc.nextInt();
-                    int rightint = sc.nextInt();
-                    // int min, max;
-                    // min = Math.min(leftint, rightint);
-                    // max = Math.max(leftint, rightint);
-                    if (leftint <= rightint) {
-                        for (int j = leftint; j <= rightint; j++) {
-                            if (inputSet.add(Integer.toString(j))) {
-                                inputArray.add(Integer.toString(j));
-                            }// Else, the input is already in the Array
-                        }
-                    } else {// leftint is greater then rightint
-                        for (int j = leftint; j >= rightint; j--) {
-                            if (inputSet.add(Integer.toString(j))) {
-                                inputArray.add(Integer.toString(j));
-                            }// Else, the input is already in the Array
-                        }
-                    }
-                } else {
-                    String token = inputScanner.next();
-                    if (Pattern.matches(pattern, token)) {
-                        // The input can be everything now
-                        if (inputSet.add(token)) {
-                            inputArray.add(token);
-//                            System.out.println("Genau ein Wert: "+token);
+        // Allow all chars, except these ","
+        pattern = "[^,]+";
+        
+        if (input != null) {
+            if (Pattern.matches("([^,]+[,])*[^,]+", input)) {
+                // Correct brackets for a valid list
+                // System.out.println("Korrekte Liste: "+input);//delimeter is , + whitespace
+                Scanner inputScanner = new Scanner(input).useDelimiter("\\s*,\\s*");
+                while (inputScanner.hasNext()) {
+                    // This means a range plus a distance between [number1]:[number2]
+                    if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {// Test if the
+                                                                                      // next input
+                                                                                      // matches
+                                                                                      // "[-]NUMBER..[.][-]NUMBER"
+                        // Now we know, that the inputScanner.next() contains exactly 2 integer values
+                        Scanner sc = new Scanner(inputScanner.next()).useDelimiter("[.]+");
+                        int leftint = sc.nextInt();
+                        int rightint = sc.nextInt();
+                        // int min, max;
+                        // min = Math.min(leftint, rightint);
+                        // max = Math.max(leftint, rightint);
+                        //if it is the input attribute, we need all values 
+                        if (isInputAttribute) {
+                            if (leftint <= rightint) {
+                                for (int j = leftint; j <= rightint; j++) {
+                                    if (inputSet.add(Integer.toString(j))) {
+                                        inputArray.add(Integer.toString(j));
+                                    }// Else, the input is already in the Array
+                                }
+                            } else {// leftint is greater then rightint
+                                for (int j = leftint; j >= rightint; j--) {
+                                    if (inputSet.add(Integer.toString(j))) {
+                                        inputArray.add(Integer.toString(j));
+                                    }// Else, the input is already in the Array
+                                }
+                            }
+                        } else {
+                            //allow multiple values only if it is not the input
+                            inputArray.add(Integer.toString(leftint));
+                            inputArray.add(Integer.toString(rightint));
                         }
                     } else {
-                        // Error - wrong Syntax, was not accepted!
-//                        System.out.println("Falsche Syntax: "+token);
+                        String token = inputScanner.next();
+                        if (Pattern.matches(pattern, token)) {
+                            // The input can be everything now
+                            if (isInputAttribute) {
+                                if (inputSet.add(token)) {
+                                    inputArray.add(token);
+    //                                System.out.println("Genau ein Wert: "+token);
+                                }
+                            } else {
+                                inputArray.add(token);
+                            }
+                        } else {
+                            // Error - wrong Syntax, was not accepted!
+    //                        System.out.println("Falsche Syntax: "+token);
+                        }
                     }
                 }
+            } else if (Pattern.matches(pattern, input)) {
+                // Valid value (exactly one)
+    //            System.out.println("Genau ein Wert: "+input);
+                if (isInputAttribute) {
+                    if (inputSet.add(input)) {
+                        inputArray.add(input);
+                    }// Else, the input is already in the Array
+                } else {
+                    inputArray.add(input);
+                }
+            } else {
+                // Error - wrong Syntax, was not accepted!
+    //            System.out.println("Falsche Syntax: "+input);
             }
-        } else if (Pattern.matches(pattern, input)) {
-            // Valid value (exactly one)
-//            System.out.println("Genau ein Wert: "+input);
-            if (inputSet.add(input)) {
-                inputArray.add(input);
-            }// Else, the input is already in the Array
-        } else {
-            // Error - wrong Syntax, was not accepted!
-//            System.out.println("Falsche Syntax: "+input);
+    //         for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
+    //         System.out.println();
         }
-        // for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
-        // System.out.println();
         return inputArray;
     }
 
@@ -503,9 +551,9 @@ public class MapAnimations {
      * @param output
      * @return
      */
-    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String output) {
-        return mapInputToOutput(input, output, false);
-    }
+//    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String output) {
+//        return mapInputToOutput(input, output, false);
+//    }
 
     /**
      * THIS Method is really important and should be used for all animations! This method maps the
@@ -516,89 +564,32 @@ public class MapAnimations {
      * Example: input="[1..10,20..30];[40,45,50];900"
      * output=x_range="[200..215,220,225,230,235,240];[1..3];200" PROBLEME MIT DEM PARSEN DES
      * OUTPUTS HIER NOCHMAL SCHAUEN!
+     * UPDATE: This method does no parsing at all! it just maps an input arraylist to an outputarraylist 
+     * 
      */
-    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input,
-            final String output, final boolean outputIntegerOnly) {
-        // First of all, we delete any space in the input an output strings
-        String in, out;
-        in = input.replace(" ", "");
-        out = output.replace(" ", "");
-        // At the beginning we want to separate all inputs and outputs specified by ";"
-        StringTokenizer inTokenizer = new StringTokenizer(in, ";");
-        StringTokenizer outTokenizer = new StringTokenizer(out, ";");
-        // System.out.println("in:"+in+" out:"+out);
-        // System.out.println("#in:"+inTokenizer.countTokens()+" #out:"+outTokenizer.countTokens());
-        // System.out.println("inTokenizer:");
-        // while (inTokenizer.hasMoreTokens()) {
-        // System.out.println(inTokenizer.nextToken());
-        // }
-        // System.out.println("outTokenizer:");
-        // while (outTokenizer.hasMoreTokens()) {
-        // System.out.println(outTokenizer.nextToken());
-        // }
-        // Now we need to check whether the number of input tokens is the same as the number of
-        // output tokens.
-        // If not, we need to compare only to the minimum of both
-        int minTokens = Math.min(inTokenizer.countTokens(), outTokenizer.countTokens());
+    
+    
+    
+    public HashMap<String, String> mapInputToOutput(final ArrayList<String> inputArray, final ArrayList<String> outputArray) {
         ArrayList<HashMap<String, String>> hashMapArray = new ArrayList<HashMap<String, String>>();
-        for (int i = 0; i < minTokens; i++) {
-            // Now for each token, we create an ArrayList first an parallel to it a HashSet to
-            // guarantee that each value
-            // exists only once in the ArrayList.
-            ArrayList<String> inputArray = new ArrayList<String>();
-            ArrayList<String> outputArray = new ArrayList<String>();
+//            // For each token we generate an input and output Array
+//            // and create a HashMap of it
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+//            inputArray = generateArrayListFromInput(inTokenizer.nextToken(), false); // The input
+//                                                                                     // should
+//                                                                                     // always allow
+//                                                                                     // all values
+//            outputArray = generateArrayListFromInput(outTokenizer.nextToken(), outputIntegerOnly);
 
-            // For each token we generate an input and output Array
-            // and create a HashMap of it
-            HashMap<String, String> hashMap = new HashMap<String, String>();
-            inputArray = generateArrayListFromInput(inTokenizer.nextToken(), false); // The input
-                                                                                     // should
-                                                                                     // always allow
-                                                                                     // all values
-            outputArray = generateArrayListFromInput(outTokenizer.nextToken(), outputIntegerOnly);
-
-            Iterator<String> inputIterator = inputArray.iterator();
-            Iterator<String> outputIterator = outputArray.iterator();
-
-            // Do some size calculation
-            // Only go on, if we have two arrays which are greater then zero
-            if (Math.min(inputArray.size(), outputArray.size()) > 0) {
-                if (inputArray.size() > outputArray.size()) {
-                    // This is the cyclic version
-                    while (inputIterator.hasNext()) {
-                        // This while loop is necessary for the cyclic mapping
-                        for (int j = 0; j < outputArray.size(); j++) {
-                            if (inputIterator.hasNext()) {
-                                hashMap.put(inputIterator.next(), outputArray.get(j));
-                            }
-                        }
-                    }
-                } else if (inputArray.size() == outputArray.size()) {
-                    while (inputIterator.hasNext()) {
-                        hashMap.put(inputIterator.next(), outputIterator.next());
-                    }
-                } else {// inputArray.size() < outputArray.size()
-                    for (int j = 0; j < inputArray.size(); j++) {
-                        hashMap.put(inputArray.get(j), outputArray.get(j));
-                    }
-                }
+        // Do some size calculation
+        // Only go on, if we have two arrays which are greater then zero
+        int minArraySize = Math.min(inputArray.size(), outputArray.size());
+        if (minArraySize > 0) {
+            for (int j = 0; j < minArraySize; j++) {
+                hashMap.put(inputArray.get(j), outputArray.get(j));
             }
-
-            // DEBUG-BEGIN
-            // System.out.println("hashMapSize: "+hashMap.size());
-            // Iterator<String> it = hashMap.keySet().iterator();
-            // String key;
-            // while (it.hasNext()) {
-            // key = it.next();
-            // System.out.println("Input: "+i+" Key: "+key+" Value: "+hashMap.get(key));
-            // }
-            // DEBUG-END
-
-            // Now the actual token is successfully saved in the hashMap.
-            // So we just need to put it to the HashMap-ArrayList
-            hashMapArray.add(hashMap);
         }
-        return hashMapArray;
+        return hashMap;
     }
 
     /**

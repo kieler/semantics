@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
@@ -42,10 +43,10 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         // the old SVG-Graphic and updated afterwards
         try {
            JSONobject.put("water", Integer.toString(counter));
-           if (counter <= 29) {
-               JSONobject.put("text", Double.toString((29-counter)*10.5));
+           if (counter <= 50) {
+               JSONobject.put("text", Double.toString((50-counter)*10.5));
            } else {
-               JSONobject.put("text", Double.toString((counter-29)*10.5));
+               JSONobject.put("text", Double.toString((counter-50)*10.5));
            }
            
            
@@ -56,15 +57,15 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
             e.printStackTrace();
         }
 
-        if (counter<58) counter++;
+        if (counter<360) counter++;
         else counter = 0;
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(50);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         return null;// Because it's only an Observer right now
     }
     
@@ -73,7 +74,8 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
 
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
-        mapAnimation = new MapAnimations("Watertank.mapping", true);
+        //mapAnimation = new MapAnimations("My.mapping", true);
+        mapAnimation = Activator.getCurrentMapAnimation();
     }
 
 

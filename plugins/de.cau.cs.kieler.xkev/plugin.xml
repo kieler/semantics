@@ -25,5 +25,13 @@
             name="xKEV-Observer">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_04"
+            id="de.cau.cs.kieler.xkev.extension.DataObserverExample"
+            name="Example (Watertank &amp; MovePath)">
+      </content>
+   </extension>
 
 </plugin>

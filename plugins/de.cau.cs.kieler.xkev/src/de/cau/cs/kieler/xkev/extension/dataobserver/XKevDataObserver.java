@@ -14,7 +14,17 @@ package de.cau.cs.kieler.xkev.extension.dataobserver;
 
 import java.util.Iterator;
 
+import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.dom.svg.SVGOMDocument;
+import org.apache.batik.dom.svg.SVGOMPathElement;
+import org.apache.batik.dom.svg.SVGOMSVGElement;
 import org.eclipse.ui.PartInitException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGAnimateMotionElement;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGPathElement;
 
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
@@ -35,7 +45,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
 
     /** Sets the sleep time for the step-method. */
     private static final int SLEEP_TIME = 100;
-    
+       
     /**
      * Applies the JSON data to the SVG document.
      * 
@@ -105,13 +115,13 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
             }
         } else {
             // Disable OpenWizardButton during execution
-            Activator.getKevView().disableButton();
+            Activator.getKevView().disableButton(3);
 
         }
         // Only go one, if a valid svg document already exists.
         if (EclipseJSVGCanvas.getInstance().getSVGDocument() == null) {
             // Reactivate the button, because the execution will be stopped.
-            Activator.getKevView().enableButton();
+            Activator.getKevView().enableButton(1);
             throw new KiemInitializationException(
                     "No svg file was loaded! Please select a valid mapping file before execution.",
                     true, null);
@@ -119,6 +129,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
             // Update the composite uri path for refreshing the canvas if button is pressed
             // Activator.getKevView().getComposite().setSVGURI(java.net.URI.create(EclipseJSVGCanvas.getInstance().getSVGDocument().getURL()));
         }
+        
     }
 
     /**
@@ -164,7 +175,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
         // Kev icon openwizard action should be reactivated after execution has fished.
         // But only if the KevView is visible
         if (Activator.getKevView() != null) {
-            Activator.getKevView().enableButton();
+            Activator.getKevView().enableButton(3);
         }
     }
 

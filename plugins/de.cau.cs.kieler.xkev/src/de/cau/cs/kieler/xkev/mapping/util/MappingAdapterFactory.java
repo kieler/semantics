@@ -84,6 +84,14 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createAnimationAdapter();
             }
             @Override
+            public Adapter caseMovePath(MovePath object) {
+                return createMovePathAdapter();
+            }
+            @Override
+            public Adapter caseRotate(Rotate object) {
+                return createRotateAdapter();
+            }
+            @Override
             public Adapter caseMove(Move object) {
                 return createMoveAdapter();
             }
@@ -144,7 +152,7 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>RunnableAnimation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -154,6 +162,34 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnimationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.MovePath <em>Move Path</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.xkev.mapping.MovePath
+     * @generated
+     */
+    public Adapter createMovePathAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Rotate <em>Rotate</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.xkev.mapping.Rotate
+     * @generated
+     */
+    public Adapter createRotateAdapter() {
         return null;
     }
 

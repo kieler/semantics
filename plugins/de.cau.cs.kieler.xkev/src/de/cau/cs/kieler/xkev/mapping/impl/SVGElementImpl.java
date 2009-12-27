@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.SVGElementImpl#getAnimation <em>Animation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.SVGElementImpl#getAnimation <em>RunnableAnimation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.SVGElementImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
@@ -42,7 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SVGElementImpl extends EObjectImpl implements SVGElement {
     /**
-     * The cached value of the '{@link #getAnimation() <em>Animation</em>}' containment reference list.
+     * The cached value of the '{@link #getAnimation() <em>RunnableAnimation</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getAnimation()

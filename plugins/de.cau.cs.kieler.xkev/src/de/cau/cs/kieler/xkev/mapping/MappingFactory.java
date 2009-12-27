@@ -44,6 +44,24 @@ public interface MappingFactory extends EFactory {
     SVGElement createSVGElement();
 
     /**
+     * Returns a new object of class '<em>Move Path</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Move Path</em>'.
+     * @generated
+     */
+    MovePath createMovePath();
+
+    /**
+     * Returns a new object of class '<em>Rotate</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Rotate</em>'.
+     * @generated
+     */
+    Rotate createRotate();
+
+    /**
      * Returns a new object of class '<em>Move</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
