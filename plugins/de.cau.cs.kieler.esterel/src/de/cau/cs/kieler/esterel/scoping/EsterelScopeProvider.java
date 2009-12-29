@@ -4,14 +4,15 @@
 package de.cau.cs.kieler.esterel.scoping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
-import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.esterel.esterel.DataCurrent;
@@ -46,7 +47,6 @@ import de.cau.cs.kieler.esterel.esterel.TrapDecl;
 import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-
 
 /**
  * This class contains custom scoping description.
@@ -105,8 +105,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	}
 
-	private ArrayList<IScopedElement> getInterfaceSignals(EObject context) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+	private ArrayList<IEObjectDescription> getInterfaceSignals(EObject context) {
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		while (!(parent instanceof ModuleInterface)) {
 			parent = parent.eContainer();
@@ -117,7 +117,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			for (SignalDecl sigDecl : intSignalDecl) {
 				EList<Signal> sigList = sigDecl.getSignal();
 				for (Signal sig : sigList) {
-					scopeElems.add(ScopedElement.create(sig.getName(), sig));
+					scopeElems.add(new EObjectDescription(sig.getName(), sig,
+							Collections.EMPTY_MAP));
 				}
 			}
 		}
@@ -125,8 +126,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	// Gets all Signals (local and global) belonging to the scope of context
-	private ArrayList<IScopedElement> getAllSignals(EObject context) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+	private ArrayList<IEObjectDescription> getAllSignals(EObject context) {
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		// Go up in the Structure until Module/MainModule
 		while (!(parent instanceof ModuleBody)) {
@@ -137,7 +138,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				EList<Signal> signals = ((LocalSignal) localSigList)
 						.getSignal();
 				for (Signal sig : signals) {
-					scopeElems.add(ScopedElement.create(sig.getName(), sig));
+					scopeElems.add(new EObjectDescription(sig.getName(), sig,
+							Collections.EMPTY_MAP));
 				}
 			}
 			parent = parent.eContainer();
@@ -155,7 +157,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			for (SignalDecl sigDecl : intSignalDecl) {
 				EList<Signal> sigList = sigDecl.getSignal();
 				for (Signal sig : sigList) {
-					scopeElems.add(ScopedElement.create(sig.getName(), sig));
+					scopeElems.add(new EObjectDescription(sig.getName(), sig,
+							Collections.EMPTY_MAP));
 				}
 			}
 		}
@@ -163,7 +166,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	IScope scope_Exit_trap(Exit context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		// find all Traps
 		while (!(parent instanceof ModuleBody)) {
@@ -172,7 +175,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 						.getTrapDecl();
 				// add Trap to the scope
 				for (TrapDecl trap : trapDecl) {
-					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+					scopeElems.add(new EObjectDescription(trap.getName(), trap,
+							Collections.EMPTY_MAP));
 				}
 			}
 			parent = parent.eContainer();
@@ -181,7 +185,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	IScope scope_DataTrap_trap(DataTrap context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		// find all Traps
 		while (!(parent instanceof ModuleBody)) {
@@ -190,7 +194,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 						.getTrapDecl();
 				// add Trap to the scope
 				for (TrapDecl trap : trapDecl) {
-					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+					scopeElems.add(new EObjectDescription(trap.getName(), trap,
+							Collections.EMPTY_MAP));
 				}
 			}
 			parent = parent.eContainer();
@@ -200,7 +205,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	IScope scope_DataFunction_function(DataFunction context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		// Go up in the Structure until Module/MainModule
 		while (!(parent instanceof ModuleBody)) {
@@ -219,7 +224,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			for (FunctionDecl funDecl : intFunctionDecl) {
 				EList<Function> funList = funDecl.getFunction();
 				for (Function fun : funList) {
-					scopeElems.add(ScopedElement.create(fun.getName(), fun));
+					scopeElems.add(new EObjectDescription(fun.getName(), fun,
+							Collections.EMPTY_MAP));
 				}
 			}
 		}
@@ -233,7 +239,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
 
 	IScope scope_SignalRenaming_oldName(SignalRenaming context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<SignalDecl> intSignalDecl = modInt.getIntSignalDecl();
@@ -241,8 +247,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (SignalDecl sigDecl : intSignalDecl) {
 					EList<Signal> sigList = sigDecl.getSignal();
 					for (Signal sig : sigList) {
-						scopeElems
-								.add(ScopedElement.create(sig.getName(), sig));
+						scopeElems.add(new EObjectDescription(sig.getName(),
+								sig, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -257,7 +263,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	IScope scope_TypeRenaming_oldName(TypeRenaming context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
@@ -265,8 +271,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (TypeDecl typeDecl : intTypeDecl) {
 					EList<Type> typeList = typeDecl.getType();
 					for (Type type : typeList) {
-						scopeElems.add(ScopedElement.create(type.getName(),
-								type));
+						scopeElems.add(new EObjectDescription(type.getName(),
+								type, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -275,7 +281,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	IScope scope_TypeRenaming_newName(TypeRenaming context, EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
@@ -293,8 +299,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (TypeDecl typeDecl : intTypeDecl) {
 					EList<Type> typeList = typeDecl.getType();
 					for (Type type : typeList) {
-						scopeElems.add(ScopedElement.create(type.getName(),
-								type));
+						scopeElems.add(new EObjectDescription(type.getName(),
+								type, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -304,7 +310,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	IScope scope_FunctionRenaming_oldName(FunctionRenaming context,
 			EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
@@ -312,8 +318,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (FunctionDecl funDecl : intFunDecl) {
 					EList<Function> funList = funDecl.getFunction();
 					for (Function fun : funList) {
-						scopeElems
-								.add(ScopedElement.create(fun.getName(), fun));
+						scopeElems.add(new EObjectDescription(fun.getName(),
+								fun, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -323,7 +329,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	IScope scope_FunctionRenaming_newName(FunctionRenaming context,
 			EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
@@ -341,8 +347,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (FunctionDecl funDecl : intFunDecl) {
 					EList<Function> funList = funDecl.getFunction();
 					for (Function fun : funList) {
-						scopeElems
-								.add(ScopedElement.create(fun.getName(), fun));
+						scopeElems.add(new EObjectDescription(fun.getName(),
+								fun, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -352,7 +358,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	IScope scope_ProcedureRenaming_oldName(ProcedureRenaming context,
 			EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
@@ -360,8 +366,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (ProcedureDecl procDecl : intProcDecl) {
 					EList<Procedure> procList = procDecl.getProcedure();
 					for (Procedure proc : procList) {
-						scopeElems.add(ScopedElement.create(proc.getName(),
-								proc));
+						scopeElems.add(new EObjectDescription(proc.getName(),
+								proc, Collections.EMPTY_MAP));
 					}
 				}
 			}
@@ -371,7 +377,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	IScope scope_ProcedureRenaming_newName(ProcedureRenaming context,
 			EReference ref) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		EObject parent = context.eContainer();
 		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
@@ -389,8 +395,8 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				for (ProcedureDecl procDecl : intProcDecl) {
 					EList<Procedure> procList = procDecl.getProcedure();
 					for (Procedure proc : procList) {
-						scopeElems.add(ScopedElement.create(proc.getName(),
-								proc));
+						scopeElems.add(new EObjectDescription(proc.getName(),
+								proc, Collections.EMPTY_MAP));
 					}
 				}
 			}
