@@ -1,0 +1,14 @@
+import synccharts;
+
+List[Transition] sortTransitionPrios(State transitions):
+	transitions.outgoingTransitions.sortBy(e|e.priority).reject(e|e.type==TransitionType::NORMALTERMINATION);
+
+Boolean hasNT(State s):
+  !s.outgoingTransitions.select(e|e.type==TransitionType::NORMALTERMINATION).isEmpty;
+  
+Transition getNT(State s):
+     s.outgoingTransitions.select(e|e.type==TransitionType::NORMALTERMINATION).first();
+    
+List[State] sortStates (List[State] states):
+  JAVA de.cau.cs.kieler.synccharts.codegen.quartz.Helper.sortStates(java.util.List);
+     

@@ -1,0 +1,76 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+«FILE innerStates.first().id + ".qrz"-»
+module «innerStates.first().id»(event 
+«FOREACH innerStates.first().signals AS sig SEPARATOR ", "-»«IF sig.isInput»?«ENDIF-»«IF sig.isOutput»!«ENDIF-»«sig.name»
+«ENDFOREACH-»
+){
+  «FOREACH innerStates.first().regions AS region»«EXPAND Constelation FOR region»«ENDFOREACH-»
+}
+«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE Constelation FOR Region-»
+  {event T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH»;
+  emit (goto_«this.innerStates.first().id»);
+  loop{
+    weak abort{ 
+    «FOREACH this.innerStates.sortStates() AS state-»
+      if (goto_«state.id»){
+        event start_«state.id»;
+        «EXPAND Star FOR state-»
+        if(!start_«state.label»){
+          emit (T_«innerStates.first().id»);
+        }
+      }
+    «ENDFOREACH-»
+      halt;
+    }when (T_«innerStates.first().id»);
+  }
+  }
+«ENDDEFINE»
+
+«DEFINE Star FOR synccharts::State-»
+ // «id»
+ «FOREACH this.outgoingTransitions AS trans»
+   «IF trans.type==TransitionType::WEAKABORT-»weak «IF trans.isImmediate»immediate «ENDIF-»abort{«ENDIF-»
+   «IF trans.type==TransitionType::STRONGABORT-»«IF trans.isImmediate»immediate «ENDIF-»abort{«ENDIF-»
+ «ENDFOREACH»
+ «IF this.regions.isEmpty-»
+    halt;
+ «ELSE-»{
+   «FOREACH this.regions AS region SEPARATOR "||"-»
+   «EXPAND Constelation FOR region»
+   «ENDFOREACH-»
+   }
+  «IF this.hasNT()-»
+  «FOREACH getNT().effects AS eff-»«EXPAND Effect FOR eff»«ENDFOREACH-»
+  «ENDIF-»
+ «ENDIF» 
+ «FOREACH sortTransitionPrios() AS trans-»
+  «IF trans.type!=TransitionType::NORMALTERMINATION-»
+  } when («IF trans.trigger==null»true«ELSE»«EXPAND Trigger FOR trans.trigger»«ENDIF»); 
+  emit (goto_«trans.targetState.id»);
+  «FOREACH trans.effects AS eff-»
+    «EXPAND Effect FOR eff»
+  «ENDFOREACH-»
+  «ENDIF-»
+  «ENDFOREACH-»  
+«ENDDEFINE»
+
+
+«DEFINE Effect FOR Emission»emit («this.signal.name»);«ENDDEFINE»
+
+«DEFINE Effect FOR Effect»//effects«ENDDEFINE»
+
+
+«DEFINE Trigger FOR Expression»//TODO  expression«ENDDEFINE»
+
+«DEFINE Trigger FOR Value»«this.toString()»«ENDDEFINE»
+
+«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+
+«DEFINE Trigger FOR ComplexExpression»//TODO complex expression«ENDDEFINE» 
