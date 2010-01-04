@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.synccharts.codegen.quartz;
 
-import java.util.Random;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -29,123 +27,111 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 public class WorkflowGenerator {
 
-	EObject myModel = null;
-	String outPath = null;
-	String uriString = null;
-	IEditorPart editor = null;
-	URI uri = null;
+    EObject myModel = null;
+    String outPath = null;
+    String uriString = null;
+    IEditorPart editor = null;
+    URI uri = null;
 
-	public String part2Location(IEditorPart editor) {
-		String out = null;
+    private String part2Location(IEditorPart editor) {
+        String out = null;
 
-		FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-		String outName = uri.getName();
-		out = uri.getURI().getRawPath().replace(outName, "");
+        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
+        String outName = uri.getName();
+        out = uri.getURI().getRawPath().replace(outName, "");
 
-		return out;
-	}
+        return out;
+    }
 
-	public String randomString() {
-		String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
-		Random random = new Random();
-		int max = allowedChars.length();
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < 16; i++) {
-			int value = random.nextInt(max);
-			buffer.append(allowedChars.charAt(value));
-		}
-		System.out.println(buffer.toString());
-		return buffer.toString();
-	}
+   
 
-	public WorkflowGenerator() {
-		IWorkbenchPage activePage = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
+    public WorkflowGenerator() {
+        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage();
 
-		editor = activePage.getActiveEditor();
-		outPath = part2Location(editor);
-		uriString = null;
-		if (editor instanceof DiagramEditor) {
-			DiagramEditor diagramEditor = (DiagramEditor) editor;
-			View notationElement = ((View) diagramEditor.getDiagramEditPart()
-					.getModel());
-			myModel = (EObject) notationElement.getElement();
-			uri = myModel.eResource().getURI();
-			uriString = uri.toString();
-		}
-	}
+        editor = activePage.getActiveEditor();
+        outPath = part2Location(editor);
+        uriString = null;
+        if (editor instanceof DiagramEditor) {
+            DiagramEditor diagramEditor = (DiagramEditor) editor;
+            View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
+            myModel = (EObject) notationElement.getElement();
+            uri = myModel.eResource().getURI();
+            uriString = uri.toString();
+        }
+    }
 
-	public void invokeWorkflow() {
-		// EMF reader
-		Reader emfReader = new Reader();
-		emfReader.setUri(uriString);
-		emfReader.setModelSlot("model");
+    public void invokeWorkflow() {
+        // EMF reader
+        Reader emfReader = new Reader();
+        emfReader.setUri(uriString);
+        emfReader.setModelSlot("model");
 
-		// Meta model
-		EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+        // Meta model
+        EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
-		outPath = "/home/ctr/";
+       // outPath =part2location(  uri.path();  //"/home/ctr/";
 
-		// Outlet
-		Outlet outlet = new Outlet();
-		outlet.setPath(outPath);
+        // Outlet
+        Outlet outlet = new Outlet();
+         outlet.setPath(outPath);
 
-		// Generator
-		Generator generator = new Generator();
-		generator.addMetaModel(metaModel);
-		generator.addOutlet(outlet);
+        // Generator
+        Generator generator = new Generator();
+        generator.addMetaModel(metaModel);
+        generator.addOutlet(outlet);
 
-		generator.setExpand("template::quartz::main FOR model");
+        generator.setExpand("template::quartz::main FOR model");
 
-		Workflow workflow = new Workflow();
+        Workflow workflow = new Workflow();
 
-		workflow.addComponent(emfReader);
-		workflow.addComponent(generator);
+        workflow.addComponent(emfReader);
+        workflow.addComponent(generator);
 
-		WorkflowContext wfx = new WorkflowContextDefaultImpl();
-		Issues issues = new IssuesImpl();
-		NullProgressMonitor monitor = new NullProgressMonitor();
-		try{
-		workflow.invoke(wfx, monitor, issues);
-		}catch (Exception e){
-			e.printStackTrace();
-		}catch(Throwable t){
-			t.printStackTrace();
-		}
-		StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
-		for (MWEDiagnostic s : issues.getIssues()) {
-			issue.append(s + "\n");
-		}
-		for (MWEDiagnostic s : issues.getErrors()) {
-			issue.append(s + "\n");
-		}
-		for (MWEDiagnostic s : issues.getWarnings()) {
-			issue.append(s + "\n");
-		}
-		for (MWEDiagnostic s : issues.getInfos()) {
-			issue.append(s + "\n");
-		}
-		StatusManager.getManager().handle(
-				new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue
-						.toString(), null), StatusManager.LOG);
-	}
+        WorkflowContext wfx = new WorkflowContextDefaultImpl();
+        Issues issues = new IssuesImpl();
+        NullProgressMonitor monitor = new NullProgressMonitor();
+        try {
+            workflow.invoke(wfx, monitor, issues);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
+        for (MWEDiagnostic s : issues.getIssues()) {
+            issue.append(s + "\n");
+        }
+        for (MWEDiagnostic s : issues.getErrors()) {
+            issue.append(s + "\n");
+        }
+        for (MWEDiagnostic s : issues.getWarnings()) {
+            issue.append(s + "\n");
+        }
+        for (MWEDiagnostic s : issues.getInfos()) {
+            issue.append(s + "\n");
+        }
+        StatusManager.getManager().handle(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue.toString(), null),
+                StatusManager.LOG);
+    }
 
-	public EObject getModel() {
-		return myModel;
-	}
+    public EObject getModel() {
+        return myModel;
+    }
 
-	public URI getURI() {
-		return uri;
-	}
+    public URI getURI() {
+        return uri;
+    }
 
-	public String getOutPath() {
-		return outPath;
-	}
+    public String getOutPath() {
+        return outPath;
+    }
 
-	public String getFileName() {
-		String out = "";
-		out = uri.lastSegment().replace("." + uri.fileExtension(), "");
-		return out;
-	}
+    public String getFileName() {
+        String out = "";
+        out = uri.lastSegment().replace("." + uri.fileExtension(), "");
+        return out;
+    }
 
 }
