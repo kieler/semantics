@@ -79,7 +79,7 @@ import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent implements ICommunicationListener{
+public final class DataComponent extends JSONObjectDataComponent implements ICommunicationListener {
 
     private JNIConnection connection = null;
     private CommunicationProtocol protocol = null;
@@ -222,7 +222,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         }
         JSONObject signals = new JSONObject();
         connection = new JNIConnection();
-        
+
         connection.setLogFile(getProperties()[propertyLog].getValue());
         try {
             IEditorPart editor = page.getActiveEditor();
@@ -386,7 +386,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         KepAssembler kep = new KepAssembler();
         assembler = kep;
         InputStream in = file.getContents();
-        //Reader reader = new BufferedReader(new InputStreamReader(in));
+        // Reader reader = new BufferedReader(new InputStreamReader(in));
         kep.assemble(name, in);
     }
 
@@ -513,7 +513,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         KepAssembler kep = new KepAssembler();
         assembler = kep;
 
-        //Reader reader = new BufferedReader(new InputStreamReader(kasm));
+        // Reader reader = new BufferedReader(new InputStreamReader(kasm));
         kep.assemble(name, kasm);
     }
 
@@ -537,7 +537,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
      * {@inheritDoc}
      */
     public void dataReceived(final String data) {
-       ConnectionView.log("-> " + data);
+        ConnectionView.log("-> " + data);
     }
 
     /**
