@@ -17,8 +17,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
@@ -364,12 +362,7 @@ public class KepProtocol extends CommunicationProtocol {
             // wait for possible error reply
             String reply = getConnection().hark(1);
             if (reply.length() > 0) {
-                final String notify = reply;
-                Display.getDefault().asyncExec(new Runnable() {
-                    public void run() {
-                        notifyReceive(notify);
-                    }
-                });
+                notifyReceive(reply);                  
             }
             if (reply.length() == 1 && reply.charAt(0) == END_REPLY) {
                 return false;

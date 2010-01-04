@@ -14,22 +14,18 @@
 
 package de.cau.cs.kieler.krep.evalbench;
 
-import org.eclipse.ui.IPageListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
-import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 
 /**
  * The activator class controls the plug-in life cycle.
  * 
  * @author ctr
  */
-public final class Activator extends AbstractUIPlugin implements IPageListener {
+public final class Activator extends Plugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.krep.evalbench.base";
@@ -40,9 +36,6 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
     /** The common layer for data exchange. */
     private CommonLayer commonLayer = new CommonLayer();
 
-    /** The viewer to show the current program. */
-    private AssemblerView viewer = null;
-
     /** current execution Trace. */
     private TraceList traces = new TraceList();
 
@@ -51,21 +44,6 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
      */
     public Activator() {
         super();
-    }
-
-    /**
-     * @return Viewer to display the current assembler.
-     */
-    public AssemblerView getViewer() {
-        return viewer;
-    }
-
-    /**
-     * @param v
-     *            to display the assembler
-     */
-    public void setViewer(final AssemblerView v) {
-        this.viewer = v;
     }
 
     /**
@@ -90,8 +68,6 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
         plugin = this;
         // initialize the common layer
         getCommonLayer().initialize();
-        // register as page listener
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPageListener(this);
     }
 
     @Override
@@ -109,29 +85,6 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
      */
     public static Activator getDefault() {
         return plugin;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void pageActivated(final IWorkbenchPage page) {
-        page.addPartListener(getCommonLayer());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void pageClosed(final IWorkbenchPage page) {
-        // Nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)
-     */
-    public void pageOpened(final IWorkbenchPage page) {
-        // Nothing to do
     }
 
     /**

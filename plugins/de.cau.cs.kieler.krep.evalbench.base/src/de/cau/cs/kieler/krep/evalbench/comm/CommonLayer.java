@@ -19,16 +19,6 @@ import java.util.LinkedList;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -37,18 +27,13 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.IO;
 import de.cau.cs.kieler.krep.evalbench.trace.Tick;
-import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
-import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
-import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
-import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
  * Data layer common to all interface parts; connects the UI to specific protocols.
  * 
- * @author msp
+ * @author msp, ctr
  */
-public class CommonLayer implements IPartListener {
+public class CommonLayer {
 
     /** Identifier of serial connection type. */
     public static final String SERIAL_CON = "serial";
@@ -56,9 +41,7 @@ public class CommonLayer implements IPartListener {
     /** Identifier of TCP/IP connection type. */
     public static final String TCPIP_CON = "tcpip";
 
-    /**
-     * Identifier of java native interface connection.
-     */
+    /** Identifier of java native interface connection. */
     public static final String JNI_CON = "jni";
 
     /** List of connection names for supported connections. */
@@ -85,10 +68,6 @@ public class CommonLayer implements IPartListener {
     /** The currently used connection protocol. */
     private IConnectionProtocol currentConnection;
 
-   
-    /** The currently synchronized assembler editor. */
-    private AssemblerEditor currentEditor = null;
-
     /** Serial port names available for connection. */
     private String[] serialPorts;
 
@@ -100,23 +79,7 @@ public class CommonLayer implements IPartListener {
 
     private IAssembler currentProgram = null;
 
-    /**
-     * Display an error message box.
-     * 
-     * @param title
-     *            title of the message box
-     * @param message
-     *            message to be displayed
-     * @param exception
-     *            exception that caused the error box to be displayed
-     */
-    // TODO: remove function
-    private static void displayError(final String title, final String message,
-            final Exception exception) {
-        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "message", exception);
-        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-    }
-
+ 
     /**
      * Displays a message in the connection view, if available. If no connection view is available
      * and <code>errorTitle</code> is not <code>null</code>, an error message box is displayed.
@@ -130,35 +93,22 @@ public class CommonLayer implements IPartListener {
      *            exception to display in the error message box
      * @return the connection view, or <code>null</code> if none is available
      */
-    private static ConnectionView logConnection(final String errorTitle, final String message,
+    private static void logConnection(final String errorTitle, final String message,
             final Exception exception) {
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-        if (window == null) {
-            return null;
-        }
-        IWorkbenchPage workbenchPage = window.getActivePage();
-        IViewPart connectionView = workbenchPage.findView(ConnectionView.VIEW_ID);
-        if (connectionView != null) {
-            if (exception != null) {
-                ((ConnectionView) connectionView).getViewer().append(
-                        message + ":\n" + exception.getMessage() + "\n");
-            } else {
-                ((ConnectionView) connectionView).getViewer().append(message + "\n");
-            }
-        } else if (errorTitle != null) {
-            displayError("Connection Failure", message, exception);
-        }
-        return (ConnectionView) connectionView;
-    }
 
-    /**
-     * Builds up the common layer.
-     */
-    /*public CommonLayer() {
-    // create list of signal listeners
-        signalListeners = new LinkedList<ISignalListener>();
-    }*/
+        // TODO: log
+        // IViewPart connectionView = workbenchPage.findView(ConnectionView.VIEW_ID);
+        // if (connectionView != null) {
+        // if (exception != null) {
+        // ((ConnectionView) connectionView).getViewer().append(
+        // message + ":\n" + exception.getMessage() + "\n");
+        // } else {
+        // ((ConnectionView) connectionView).getViewer().append(message + "\n");
+        // }
+        // } else if (errorTitle != null) {
+        // displayError("Connection Failure", message, exception);
+        // }
+    }
 
     /**
      * Establish connection to a a reactive processor.
@@ -168,9 +118,12 @@ public class CommonLayer implements IPartListener {
      * @param protocolType
      *            protocol of the reactive processor: KEP or KLP. For JNI, this also defines which
      *            processor to start.
-     * @param portName name of the serial port for RS232 connection
-     * @param hostName name of the host for TCP/IP connection
-     * @param portNumber number of the port for TCP/IP connection 
+     * @param portName
+     *            name of the serial port for RS232 connection
+     * @param hostName
+     *            name of the host for TCP/IP connection
+     * @param portNumber
+     *            number of the port for TCP/IP connection
      */
     public final void connect(final String connectionType, final String protocolType,
             final String portName, final String hostName, final int portNumber) {
@@ -218,7 +171,7 @@ public class CommonLayer implements IPartListener {
                 error = true;
             }
         } else {
-            displayError("Error in loaded preferences",
+            logConnection("Error in loaded preferences",
                     "The loaded preferences contained an invalid connection type identifier.", null);
             error = true;
         }
@@ -238,12 +191,6 @@ public class CommonLayer implements IPartListener {
             } else {
                 currentProtocol = null;
             }
-            // send message to connection view
-            ConnectionView connectionView = logConnection(null, message, null);
-            if (connectionView != null) {
-                kepProtocol.addCommunicationListener(connectionView);
-                krepProtocol.addCommunicationListener(connectionView);
-            }
             // reset tick counter
             tickCount = 0;
         }
@@ -252,89 +199,89 @@ public class CommonLayer implements IPartListener {
     /**
      * Reads connection settings from the preference store and connects to the set up device.
      */
-    public final void connect() {
-        // close the previous connection
-        if (currentConnection != null) {
-            currentConnection.dispose();
-            currentConnection = null;
-        }
-
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        // select the proper connection type
-        String connectionType = preferenceStore.getString(ConnectionPreferencePage.CONNECTION_TYPE);
-        String message = "";
-        boolean error = false;
-
-        if (connectionType.equals(SERIAL_CON)) {
-            try {
-                currentConnection = new RxtxSerialConnection();
-                String portName = preferenceStore
-                        .getString(ConnectionPreferencePage.SERIAL_PORT_NAME);
-                String initResult = currentConnection.initialize(portName, 0);
-                // show initialization result in connection view
-                message = "Initialized serial connection:\n" + initResult;
-            } catch (CommunicationException e) {
-                logConnection("Initialization Error",
-                        "Initialization of serial connection failed.", e);
-                error = true;
-            }
-        } else if (connectionType.equals(TCPIP_CON)) {
-            try {
-                currentConnection = new SocketConnection();
-                String hostName = preferenceStore.getString(ConnectionPreferencePage.HOST_NAME);
-                int portNumber = preferenceStore.getInt(ConnectionPreferencePage.PORT_NUMBER);
-                String initResult = currentConnection.initialize(hostName, portNumber);
-                // show initialization result in connection view
-                message = "Initialized TCP/IP connection:\n" + initResult;
-            } catch (CommunicationException e) {
-                logConnection("Initialization Error",
-                        "Initialization of TCP/IP connection failed.", e);
-                error = true;
-            }
-        } else if (connectionType.equals(JNI_CON)) {
-            try {
-                currentConnection = new JNIConnection();
-                String initResult = currentConnection.initialize("", 0);
-                // show initialization result in connection view
-                message = "Initialized JNI connection:\n" + initResult;
-            } catch (Exception e) {
-                logConnection("Initialization Error", "Initialization of JNI connection failed.", e);
-                error = true;
-            }
-        } else {
-            displayError("Error in loaded preferences",
-                    "The loaded preferences contained an invalid connection type identifier.", null);
-            error = true;
-        }
-
-        if (error) {
-            currentConnection = null;
-        } else {
-            // create communication protocol instances
-            kepProtocol = new KepProtocol(currentConnection);
-            krepProtocol = new KrepProtocol(currentConnection);
-            // select proper protocol
-            if (currentProtocolType == null) {
-                currentProtocolType = preferenceStore
-                        .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
-            }
-            if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
-                currentProtocol = kepProtocol;
-            } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
-                currentProtocol = krepProtocol;
-            } else {
-                currentProtocol = null;
-            }
-            // send message to connection view
-            ConnectionView connectionView = logConnection(null, message, null);
-            if (connectionView != null) {
-                kepProtocol.addCommunicationListener(connectionView);
-                krepProtocol.addCommunicationListener(connectionView);
-            }
-            // reset tick counter
-            tickCount = 0;
-        }
-    }
+    // public final void connect() {
+    // // close the previous connection
+    // if (currentConnection != null) {
+    // currentConnection.dispose();
+    // currentConnection = null;
+    // }
+    //
+    // IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+    // // select the proper connection type
+    // String connectionType = preferenceStore.getString(ConnectionPreferencePage.CONNECTION_TYPE);
+    // String message = "";
+    // boolean error = false;
+    //
+    // if (connectionType.equals(SERIAL_CON)) {
+    // try {
+    // currentConnection = new RxtxSerialConnection();
+    // String portName = preferenceStore
+    // .getString(ConnectionPreferencePage.SERIAL_PORT_NAME);
+    // String initResult = currentConnection.initialize(portName, 0);
+    // // show initialization result in connection view
+    // message = "Initialized serial connection:\n" + initResult;
+    // } catch (CommunicationException e) {
+    // logConnection("Initialization Error",
+    // "Initialization of serial connection failed.", e);
+    // error = true;
+    // }
+    // } else if (connectionType.equals(TCPIP_CON)) {
+    // try {
+    // currentConnection = new SocketConnection();
+    // String hostName = preferenceStore.getString(ConnectionPreferencePage.HOST_NAME);
+    // int portNumber = preferenceStore.getInt(ConnectionPreferencePage.PORT_NUMBER);
+    // String initResult = currentConnection.initialize(hostName, portNumber);
+    // // show initialization result in connection view
+    // message = "Initialized TCP/IP connection:\n" + initResult;
+    // } catch (CommunicationException e) {
+    // logConnection("Initialization Error",
+    // "Initialization of TCP/IP connection failed.", e);
+    // error = true;
+    // }
+    // } else if (connectionType.equals(JNI_CON)) {
+    // try {
+    // currentConnection = new JNIConnection();
+    // String initResult = currentConnection.initialize("", 0);
+    // // show initialization result in connection view
+    // message = "Initialized JNI connection:\n" + initResult;
+    // } catch (Exception e) {
+    // logConnection("Initialization Error", "Initialization of JNI connection failed.", e);
+    // error = true;
+    // }
+    // } else {
+    // displayError("Error in loaded preferences",
+    // "The loaded preferences contained an invalid connection type identifier.", null);
+    // error = true;
+    // }
+    //
+    // if (error) {
+    // currentConnection = null;
+    // } else {
+    // // create communication protocol instances
+    // kepProtocol = new KepProtocol(currentConnection);
+    // krepProtocol = new KrepProtocol(currentConnection);
+    // // select proper protocol
+    // if (currentProtocolType == null) {
+    // currentProtocolType = preferenceStore
+    // .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
+    // }
+    // if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
+    // currentProtocol = kepProtocol;
+    // } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
+    // currentProtocol = krepProtocol;
+    // } else {
+    // currentProtocol = null;
+    // }
+    // // send message to connection view
+    // ConnectionView connectionView = logConnection(null, message, null);
+    // if (connectionView != null) {
+    // kepProtocol.addCommunicationListener(connectionView);
+    // krepProtocol.addCommunicationListener(connectionView);
+    // }
+    // // reset tick counter
+    // tickCount = 0;
+    // }
+    // }
 
     /**
      * Initializes the common layer.
@@ -344,31 +291,20 @@ public class CommonLayer implements IPartListener {
         serialPorts = RxtxSerialConnection.getSerialPorts();
 
         // set up plugin preferences
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        preferenceStore.setDefault(EvalBenchPreferencePage.PROTOCOL_TYPE,
-                ICommunicationProtocol.P_KEP);
-        preferenceStore.setDefault(EvalBenchPreferencePage.KEP_TYPE, KasmAssembler.S_KEPE);
-        preferenceStore.setDefault(EvalBenchPreferencePage.EXTERNAL_ASSEMBLER,
-                KasmAssembler.KASM2KLST);
-        preferenceStore.setDefault(ConnectionPreferencePage.CONNECTION_TYPE, JNI_CON);
-        if (serialPorts.length != 0) {
-            preferenceStore.setDefault(ConnectionPreferencePage.SERIAL_PORT_NAME, serialPorts[0]);
-        }
-        preferenceStore.setDefault(ConnectionPreferencePage.HOST_NAME, DEFAULT_HOST);
-        preferenceStore.setDefault(ConnectionPreferencePage.PORT_NUMBER, DEFAULT_PORT);
-
-        // look for extensions of the tick manager extension point
-        /*
-         * IConfigurationElement[] configElements = Platform.getExtensionRegistry()
-         * .getConfigurationElementsFor(AbstractTickManager.EXTENSION_ID); for (int i = 0; i <
-         * configElements.length; i++) { try { // create a new instance of the implementing class
-         * AbstractTickManager manager = (AbstractTickManager) configElements[i]
-         * .createExecutableExtension("class"); // add manager to the list of signal listeners
-         * addSignalListener(manager); } catch (Exception e) {
-         * displayError("Error initializing extension", "The configuration element " +
-         * configElements[i].getName() + " could not be initialized for the extension point " +
-         * AbstractTickManager.EXTENSION_ID, e); } }
-         */
+        // IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+        // preferenceStore.setDefault(EvalBenchPreferencePage.PROTOCOL_TYPE,
+        // ICommunicationProtocol.P_KEP);
+        // preferenceStore.setDefault(EvalBenchPreferencePage.KEP_TYPE, KasmAssembler.S_KEPE);
+        // preferenceStore.setDefault(EvalBenchPreferencePage.EXTERNAL_ASSEMBLER,
+        // KasmAssembler.KASM2KLST);
+        // preferenceStore.setDefault(ConnectionPreferencePage.CONNECTION_TYPE, JNI_CON);
+        // if (serialPorts.length != 0) {
+        // preferenceStore.setDefault(ConnectionPreferencePage.SERIAL_PORT_NAME, serialPorts[0]);
+        // }
+        // preferenceStore.setDefault(ConnectionPreferencePage.HOST_NAME, DEFAULT_HOST);
+        // preferenceStore.setDefault(ConnectionPreferencePage.PORT_NUMBER, DEFAULT_PORT);
+        //
+        //  
     }
 
     /**
@@ -381,75 +317,40 @@ public class CommonLayer implements IPartListener {
     }
 
     /**
-     * Adds a new signal listener that is notified of tick events.
-     * 
-     * @param listener
-     *            listener to be added
-     */
-    /*public final void addSignalListener(final ISignalListener listener) {
-        signalListeners.add(listener);
-    }*/
-
-    /**
-     * Removes a given signal listener.
-     * 
-     * @param listener
-     *            listener to be removed
-     */
-    /*public void removeSignalListener(final ISignalListener listener) {
-        signalListeners.remove(listener);
-    }*/
-
-    /**
      * Execute the <i>verify communication</i> command and display results in the connection view.
      */
-    public void checkConnection() {
-        // runWithProgress(new IRunnableWithProgress() {
-        // // public void run(IProgressMonitor monitor) {
-        // monitor.beginTask("Check connection", IProgressMonitor.UNKNOWN);
+    public boolean checkConnection() {
         try {
             String result = currentProtocol.verifyCommunication();
-            logConnection(null, result, null);
+            // logConnection(null, result, null);
         } catch (CommunicationException e) {
-            logConnection("Connection Failure", "Error in received return string", e);
+            return false;
+            // logConnection("Connection Failure", "Error in received return string", e);
         } catch (NullPointerException e) {
-            logConnection("No Connection", "Connection was not initialized yet", e);
+            return false;
+            // logConnection("No Connection", "Connection was not initialized yet", e);
         }
-        // monitor.done();
-        // }
-        // });
+        return true;
     }
 
     /**
-     * Get target information and display it in the target view.
+     * Get target information for the currently connected processor. and display it in the target
+     * view.
+     * 
+     * @return target information
      */
-    public void getTargetInfo() {
-        // runWithProgress(new IRunnableWithProgress() {
-        // public void run(IProgressMonitor monitor) {
-        // monitor.beginTask("Get target information",
-        // IProgressMonitor.UNKNOWN);
-        // find active target view
-        IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage();
-        IViewPart targetView = workbenchPage.findView(TargetView.VIEW_ID);
+    public String getTargetInfo() {
         String targetMessage;
         try {
             // get target info through the current communication protocol
             targetMessage = currentProtocol.getTargetInfo();
         } catch (CommunicationException e) {
-            logConnection("Connection Failure", "Error in received return string", e);
-            targetMessage = "Could not get target information, see Connection View.";
+            targetMessage = "Could not get target information, Error in received return string.";
         } catch (NullPointerException e) {
-            logConnection("No Connection", "Connection was not initialized yet", e);
-            targetMessage = "Could not get target information, see Connection View.";
+            targetMessage = "Could not get target information, Connection was not initialized yet.";
         }
         // send target information to target view
-        if (targetView != null) {
-            ((TargetView) targetView).getViewer().setText(targetMessage);
-        }
-        // monitor.done();
-        // }
-        // });
+        return targetMessage;
     }
 
     /**
@@ -487,21 +388,6 @@ public class CommonLayer implements IPartListener {
     }
 
     /**
-     * Load currently displayed program onto target and synchronize with that program.
-     * 
-     * @param monitor
-     *            process monitor to show how the download proceeds or null
-     * @throws CommunicationException
-     *             thrown when any communication error occurred
-     * @throws LoadException
-     *             thrown when processor cannot execute this program
-     */
-    public void loadProgram(final IProgressMonitor monitor) throws CommunicationException,
-            LoadException {
-        loadProgram(currentEditor.getAssembler(), monitor);
-    }
-
-    /**
      * Perform a program reset for the current program.
      * 
      * @throws CommunicationException
@@ -530,11 +416,7 @@ public class CommonLayer implements IPartListener {
         try {
             LinkedList<Signal> inputs;
             LinkedList<Signal> outputs;
-            if (t == null) {
-                inputs = currentEditor.getInputs();
-            } else {
-                inputs = t.getInputs();
-            }
+            inputs = t.getInputs();
             outputs = currentProgram.getOutputs();
             // perform tick and exchange signal status
             int n = currentProgram.getInputs().size() + currentProgram.getOutputs().size();
@@ -545,21 +427,10 @@ public class CommonLayer implements IPartListener {
                 }
             }
             out.setRT(tickLength);
-            // notify signal listeners
-            //Iterator<ISignalListener> iterator = signalListeners.iterator();
-            //while (iterator.hasNext()) {
-             //   iterator.next().tickPerformed(inputs, outputs);
-            //}
+
             // get execution trace
             final int[] addresses = currentProtocol.getExecutionTrace();
-            // show the executed instructions in the assembler editor
-            if (currentEditor != null) {
-                Display.getDefault().asyncExec(new Runnable() {
-                    public void run() {
-                        currentEditor.setSelectedRows(addresses);
-                    }
-                });
-            }
+
             // update status message
             statusMessage = "Program tick " + tickCount + " performed, length " + tickLength;
             // increase internal tick counter
@@ -612,15 +483,6 @@ public class CommonLayer implements IPartListener {
     }
 
     /**
-     * Gets the currently active input editor.
-     * 
-     * @return the active input editor
-     */
-    public AssemblerEditor getActiveAssemblerEditor() {
-        return currentEditor;
-    }
-
-    /**
      * Gets the last status message.
      * 
      * @return the status message
@@ -628,137 +490,4 @@ public class CommonLayer implements IPartListener {
     public String getStatusMessage() {
         return statusMessage;
     }
-
-    /**
-     * Updates the signal views of the evaluation bench.
-     */
-    // public void updateSignalViews() {
-    // if (currentEditor != null) {
-    // IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-    // .getActiveWorkbenchWindow().getActivePage();
-    // // find and update input view
-    // IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-    // if (inputView != null) {
-    // ((InputView) inputView).setInput(currentEditor.getInputs());
-    // }
-    // // find and update output view
-    // IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
-    // if (outputView != null) {
-    // ((OutputView) outputView).setInput(currentEditor.getOutputs());
-    // }
-    // }
-    // }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart )
-     */
-    public void partBroughtToTop(final IWorkbenchPart part) {
-        if (part instanceof AssemblerEditor) {
-            // set current editor to the activated editor part
-            currentEditor = (AssemblerEditor) part;
-            // select proper protocol
-            currentProtocolType = currentEditor.getProtocolType();
-            if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
-                currentProtocol = kepProtocol;
-            } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
-                currentProtocol = krepProtocol;
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partOpened(final IWorkbenchPart part) {
-        // if (part instanceof AssemblerEditor) {
-        // // activate editor specific actions
-        // IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-        // .getActiveWorkbenchWindow().getActivePage();
-        // IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-        // if (inputView != null) {
-        // ((InputView) inputView).setActionsEnabled(true);
-        // }
-        // IViewPart connectionView = workbenchPage
-        // .findView(ConnectionView.VIEW_ID);
-        // if (connectionView != null) {
-        // ((ConnectionView) connectionView).setActionsEnabled(true);
-        // }
-        // } else if (part instanceof ConnectionView) {
-        // if (kepProtocol != null) {
-        // kepProtocol.addCommunicationListener((ConnectionView) part);
-        // }
-        // if (krepProtocol != null) {
-        // krepProtocol.addCommunicationListener((ConnectionView) part);
-        // }
-        // } else if (part instanceof OutputView) {
-        // addSignalListener((OutputView) part);
-        // if (currentEditor != null) {
-        // ((OutputView) part).setInput(currentEditor.getOutputs());
-        // }
-        // } else if (part instanceof InputView && currentEditor != null) {
-        // ((InputView) part).setInput(currentEditor.getInputs());
-        // }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partClosed(final IWorkbenchPart part) {
-        if (part instanceof AssemblerEditor) {
-            if (part.equals(currentEditor)) {
-                // remove reference to the closed editor part
-                currentEditor = null;
-                // refresh input, output and connection views
-                IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage();
-                if (workbenchPage != null) {
-                    IViewPart connectionView = workbenchPage.findView(ConnectionView.VIEW_ID);
-                    if (connectionView != null) {
-                        ((ConnectionView) connectionView).setActionsEnabled(false);
-                    }
-                }
-                // select default protocol
-                IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-                currentProtocolType = preferenceStore
-                        .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
-                if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
-                    currentProtocol = kepProtocol;
-                } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
-                    currentProtocol = krepProtocol;
-                }
-            }
-        } else if (part instanceof ConnectionView) {
-            if (kepProtocol != null) {
-                kepProtocol.removeCommunicationListener((ConnectionView) part);
-            }
-            if (krepProtocol != null) {
-                krepProtocol.removeCommunicationListener((ConnectionView) part);
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partActivated(final IWorkbenchPart part) {
-        // Nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart )
-     */
-    public void partDeactivated(final IWorkbenchPart part) {
-        // Nothing to do
-    }
-
 }

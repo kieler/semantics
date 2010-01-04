@@ -16,11 +16,6 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.HashMap;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
-import de.cau.cs.kieler.krep.evalbench.Activator;
-import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
-
 /**
  * Pure or valued signal for the synchronous signal model.
  * 
@@ -58,12 +53,7 @@ public class Signal implements Comparable<Signal> {
      */
     public Signal(final String n, final boolean s, final Integer v,
             final HashMap<String, Integer> tIndex) {
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
-            this.name = n;
-        } else {
-            this.name = n.toUpperCase();
-        }
+        this.name = n;
 
         this.valued = v != null;
         this.value = v;
@@ -91,12 +81,7 @@ public class Signal implements Comparable<Signal> {
      */
     public Signal(final String tName, final boolean tStatus, final Integer tValue,
             final Integer tIndex) {
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
-            this.name = tName;
-        } else {
-            this.name = tName.toUpperCase();
-        }
+        this.name = tName;
 
         this.valued = tValue != null;
         this.value = tValue;
@@ -133,13 +118,7 @@ public class Signal implements Comparable<Signal> {
      *            initial value for a valued signal, null for a pure signal
      */
     public Signal(final String tName, final Integer tValue) {
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
-
-            this.name = tName;
-        } else {
-            this.name = tName.toUpperCase();
-        }
+         this.name = tName;
         this.valued = tValue != null;
         this.value = tValue;
         this.index = 0;

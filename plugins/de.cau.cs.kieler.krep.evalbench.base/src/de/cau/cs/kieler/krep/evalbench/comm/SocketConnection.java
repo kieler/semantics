@@ -21,7 +21,6 @@ import java.net.Socket;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -59,8 +58,8 @@ public class SocketConnection extends ConnectionProtocol {
             socket.close();
         } catch (IOException e) {
             // Ignore silently
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error closing socket", e);
-            StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+            //tatus myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error closing socket", e);
+            //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
         }
     }
 

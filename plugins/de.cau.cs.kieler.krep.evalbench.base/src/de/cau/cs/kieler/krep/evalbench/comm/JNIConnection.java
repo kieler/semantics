@@ -14,14 +14,10 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.LinkedList;
-
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.program.Config;
-import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 
 /**
  * Connection to software emulation of the processor via java native interfaces.
@@ -84,9 +80,10 @@ public class JNIConnection implements IConnectionProtocol {
      * 
      */
     public String initialize(final String device, final int port) throws CommunicationException {
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        String currentProtocolType = preferenceStore
-                .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
+       // TODO: protocol Type
+        String currentProtocolType = ICommunicationProtocol.P_KEP;        
+            //preferenceStore
+              //  .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
         return initialize(currentProtocolType);
     }
     

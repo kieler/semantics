@@ -17,8 +17,6 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.eclipse.swt.widgets.Display;
-
 /**
  * Abstract class, implements common protocol features.
  * 
@@ -53,14 +51,10 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            data that was sent
      */
     protected void notifySend(final String data) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
-                while (iterator.hasNext()) {
-                    iterator.next().dataSent(data);
-                }
-            }
-        });
+        Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().dataSent(data);
+        }
     }
 
     /**
@@ -70,14 +64,10 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            data that was received
      */
     protected void notifyReceive(final String data) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
-                while (iterator.hasNext()) {
-                    iterator.next().dataReceived(data);
-                }
-            }
-        });
+        Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().dataReceived(data);
+        }
     }
 
     /**
@@ -87,14 +77,10 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            comment about the next transaction
      */
     protected void notifyComment(final String comment) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
-                while (iterator.hasNext()) {
-                    iterator.next().comment(comment);
-                }
-            }
-        });
+        Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().comment(comment);
+        }
     }
 
     /**

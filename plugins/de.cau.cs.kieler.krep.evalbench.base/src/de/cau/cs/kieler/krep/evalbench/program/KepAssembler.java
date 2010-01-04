@@ -27,7 +27,6 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
@@ -121,10 +120,12 @@ public class KepAssembler implements IAssembler {
 
             error = parser.getError();
             errorMsg = parser.getErrorMsg();
-            if (error) {
-                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMsg, null);
-                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-            }
+           if (error) {
+               throw new ParseException(errorMsg);
+           }
+           //     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMsg, null);
+           //     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+            //}
         } catch (final IOException e) {
             throw new ParseException(e.getMessage());
         } catch (RecognitionException e) {

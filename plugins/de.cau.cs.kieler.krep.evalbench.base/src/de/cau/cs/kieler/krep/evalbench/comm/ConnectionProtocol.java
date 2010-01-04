@@ -23,7 +23,6 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -128,7 +127,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     } catch (InterruptedException e) {
                         Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                                 "Error during Timeout", e);
-                        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                        //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -169,7 +168,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     } catch (InterruptedException e) {
                         Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                                 "Error during Timeout", e);
-                        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                        //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -188,7 +187,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 } catch (IOException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                             "Error while closing connection", e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                    //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
 
                 }
             }
@@ -317,7 +316,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 } catch (IOException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                             "Error while sending data", e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                    //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                 }
             }
         }
@@ -348,7 +347,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             } catch (IOException e) {
                 Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                         "Error while sending data", e);
-                StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
             }
         }
     }

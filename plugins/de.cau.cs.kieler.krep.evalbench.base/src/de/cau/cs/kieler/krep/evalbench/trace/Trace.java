@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
@@ -30,7 +28,7 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  * @author ctr
  * 
  */
-public class Trace implements IPartListener, Iterator<Tick> {
+public class Trace implements Iterator<Tick> {
 
     /** List of ticks in this trace. */
     protected ArrayList<Tick> ticks = new ArrayList<Tick>();
@@ -267,50 +265,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
         return res.toString();
     }
 
-    // Editor functions
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partActivated(final IWorkbenchPart part) {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partBroughtToTop(final IWorkbenchPart part) {
-        // nothing to do
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partClosed(final IWorkbenchPart part) {
-        // / nothing to do
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partDeactivated(final IWorkbenchPart part) {
-        // nothing to do
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partOpened(final IWorkbenchPart part) {
-        // nothing to do
-
-    }
+   
 
     /**
      * @return String to indicate minimal, average and maximal execution times

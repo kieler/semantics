@@ -20,11 +20,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
-import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 
 /**
  * JNI wrapper for the Kiel Esterel Processor.
@@ -53,9 +50,9 @@ public class KepWrapper implements IKrepWrapper {
         final String msg = "";
         kep_reset(msg);
 
-        final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-
-        final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
+           // TODO: log to esi
+        final String fileName = "kep.esi";
+            //preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger(fileName);
         esi.reset();
     }

@@ -22,11 +22,6 @@ import java.util.ListIterator;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -40,7 +35,7 @@ import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
  * 
  *         a list of different independent traces, as they are stored in esi files
  */
-public class TraceList implements IPartListener {
+public class TraceList {
 
     /**
      * 
@@ -92,7 +87,7 @@ public class TraceList implements IPartListener {
             traces.clear();
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Parse Error in trace file", e);
-            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+            // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         for (Trace trace : traces) {
             size += trace.size() + 1;
@@ -208,57 +203,10 @@ public class TraceList implements IPartListener {
      *            true if the complete trace has changed, false if only the current step changed
      */
     public static void notifyListeners(final boolean newTrace) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                Iterator<ITraceListener> i = listeners.iterator();
-                while (i.hasNext()) {
-                    i.next().traceChanged(newTrace);
-                }
-            }
-        });
-    }
-
-    // Editor functions
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partActivated(final IWorkbenchPart part) {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partBroughtToTop(final IWorkbenchPart part) {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partClosed(final IWorkbenchPart part) {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partDeactivated(final IWorkbenchPart part) {
-        // nothing to do
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void partOpened(final IWorkbenchPart part) {
-        notifyListeners(true);
-
+        Iterator<ITraceListener> i = listeners.iterator();
+        while (i.hasNext()) {
+            i.next().traceChanged(newTrace);
+        }
     }
 
     /**
@@ -290,7 +238,7 @@ public class TraceList implements IPartListener {
      * @throws CommunicationException
      *             thrown for any communication errors
      */
-    public boolean executeStep(final IStatusLineManager manager) throws CommunicationException {
+    public boolean executeStep() throws CommunicationException {
         // System.out.println("execute step " + this.tablePos + "/" + size);
         if (hasNext()) {
             Tick tick = next();
@@ -317,15 +265,16 @@ public class TraceList implements IPartListener {
                 final int updateEach = 128;
 
                 if (!hasNext() || pos % updateEach == 0) {
-                    Display.getDefault().asyncExec(new Runnable() {
-                        public void run() {
-                            if (!manager.isDirty()) {
-                                manager.setMessage("Tick " + pos + "/" + dsize + ": " + rt + " {"
-                                        + dmin + ", " + davg / pos + ", " + dmax + "}");
-                            }
-                        }
+                    //TODO: notify user
+                   // Display.getDefault().asyncExec(new Runnable() {
+                   //     public void run() {
+                   //         if (!manager.isDirty()) {
+                   //             manager.setMessage("Tick " + pos + "/" + dsize + ": " + rt + " {"
+                    //                    + dmin + ", " + davg / pos + ", " + dmax + "}");
+                   //         }
+                    //    }
 
-                    });
+                   // });
                 }
                 notifyListeners(true);
                 return valid;

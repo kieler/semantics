@@ -22,12 +22,9 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
-import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 
 /**
  * Wrapper to software simulation of the Kiel Lustre Processor.
@@ -57,10 +54,11 @@ public class KlpWrapper implements IKrepWrapper {
         final String msg = "";
         klp_reset(msg);
 
-        final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+        //final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-        final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
-        esi = new EsiLogger(fileName);
+        // TODO: log File
+        //final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
+        esi = new EsiLogger("klp.esi");
         esi.reset();
         step();
 
@@ -148,7 +146,7 @@ public class KlpWrapper implements IKrepWrapper {
         } catch (IOException e) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error saving esi log file: " + esiFile, e);
-            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+           // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         } finally {
             if (out != null) {
                 try {
@@ -156,7 +154,7 @@ public class KlpWrapper implements IKrepWrapper {
                 } catch (IOException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                             "Error saving esi log file: " + esiFile, e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                    //StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
         }

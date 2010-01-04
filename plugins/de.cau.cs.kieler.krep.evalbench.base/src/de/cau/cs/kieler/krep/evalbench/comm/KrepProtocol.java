@@ -19,13 +19,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
-import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 
 /**
  * Implementation of the communication protocol interface that uses the KREP protocol.
@@ -73,50 +71,32 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private void sendCmd(final byte data) throws CommunicationException {
         getConnection().send(data);
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifySend(Integer.toHexString(data) + "(" + String.valueOf((char) data) + ")");
-            }
-        });
+        notifySend(Integer.toHexString(data) + "(" + String.valueOf((char) data) + ")");
     }
 
     private void send(final byte data) throws CommunicationException {
         getConnection().send(data);
-        ConnectionView.log("-> " + data);
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifySend(Integer.toHexString(data));
-            }
-        });
+        // log("-> " + data);
+        notifySend(Integer.toHexString(data));
+
     }
 
     private void send(final byte[] data) throws CommunicationException {
         getConnection().send(data);
-        ConnectionView.log("-> " + data);
-        String t = "";
+        // ConnectionView.log("-> " + data);
+        StringBuffer t = new StringBuffer();
         for (byte b : data) {
-            t += Integer.toHexString(b);
+            t.append(Integer.toHexString(b));
         }
-        final String hex = t;
-
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifySend(hex);
-            }
-        });
+        notifySend(t.toString());
     }
 
     private LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         final LinkedList<Integer> res = getConnection().receiveByte(n);
-        String s = "";
 
-        final String t = s;
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifyReceive(t);
-            }
-        });
-        ConnectionView.log("<- " + res);
+        notifyReceive(String.valueOf(res));
+
+        // ConnectionView.log("<- " + res);
         return res;
     }
 
@@ -144,7 +124,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public int[] getExecutionTrace() throws CommunicationException {
-        ConnectionView.log("getTrace");
+        notifyComment("getTrace");
         ArrayList<Integer> trace = new ArrayList<Integer>();
         int bytes = (krp.getIrom()) / BYTE_LENGTH;
         sendCmd(TRACE_COMMAND);
@@ -195,7 +175,7 @@ public class KrepProtocol extends CommunicationProtocol {
         int nReg = i.next();
         int nROM = 1 << i.next();
 
-        krp = new KrepConfig(nCores, nIO, nReg, nROM);      
+        krp = new KrepConfig(nCores, nIO, nReg, nROM);
         return stringBuffer.toString();
     }
 
@@ -204,7 +184,7 @@ public class KrepProtocol extends CommunicationProtocol {
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
-        ConnectionView.log("load program");
+        notifyComment("load program");
         if (krp == null) {
             getTargetInfo();
         }
@@ -244,7 +224,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public void resetStatus() throws CommunicationException {
-        ConnectionView.log("reset");
+        notifyComment("reset");
         sendCmd(RESET_COMMAND);
         sendCmd(TICK_COMMAND); // Initialize
         receiveByte(1);
@@ -264,7 +244,7 @@ public class KrepProtocol extends CommunicationProtocol {
      */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
-        ConnectionView.log("tick");
+        notifyComment("tick");
         int rt = 0;
         // send inputs
         byte i = 0;
@@ -332,7 +312,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      */
     public String verifyCommunication() throws CommunicationException {
-        ConnectionView.log("verifiy");
+        notifyComment("verifiy");
         sendCmd(VERIFY_COMMAND);
         String reply = getConnection().receive(VERIFICATION_STRING.length());
         if (reply.equals(VERIFICATION_STRING)) {
