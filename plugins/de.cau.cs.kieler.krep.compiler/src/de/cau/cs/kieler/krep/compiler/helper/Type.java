@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.krep.compiler.helper;
 
 /**
- * @author ctr Basic Lustre types
+ *  Basic Lustre types.
+ * 
+ * @author ctr
  */
 public enum Type {
     /**
