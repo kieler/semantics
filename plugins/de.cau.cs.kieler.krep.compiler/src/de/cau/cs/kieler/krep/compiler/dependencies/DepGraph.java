@@ -26,7 +26,9 @@ import java.util.Collections;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
 
 /**
- * @author ctr dependency graph of the dataflow program
+ * Dependency graph of the dataflow program.
+ * 
+ * @author ctr
  */
 public class DepGraph {
     private final Map<String, Node> nodes = new HashMap<String, Node>();
@@ -151,43 +153,43 @@ public class DepGraph {
     }
 
     /**
-     * @param printHeader print initialization code?
+     * @param printHeader
+     *            print initialization code?
      * @return description of the dependency graph in the dot-format
      */
     public String toDot(final boolean printHeader) {
         final String[] colors = { "BLACK", "RED", "BLUE", "GREEN", "YELLOW" };
-        String res = "";
+        StringBuffer res = new StringBuffer();
         if (printHeader) {
-            res = "digraph G {\n";
-            res += "graph[rankdir=LR]\n\n";
+            res.append("digraph G {\n");
+            res.append("graph[rankdir=LR]\n\n");
         }
         for (final Node n : nodes.values()) {
-            res += n.getName() + "[ color = " + colors[core.get(n.getName())] + ",  label=\""
-                    + n.getName() + " (" + n.getPrio() + ")\"];\n";
+            res.append(n.getName() + "[ color = " + colors[core.get(n.getName())] + ",  label=\""
+                    + n.getName() + " (" + n.getPrio() + ")\"];\n");
             if (subGraphs.containsKey(n.getName())) {
-                res += "{";
-                res += subGraphs.get(n.getName()).toDot(false);
-                res += "}\n";
+                res.append("{" + subGraphs.get(n.getName()).toDot(false) + "}\n");
             }
             for (final Edge e : n.getOut()) {
-                res += n.getName() + " -> " + e.getNode();
+                res.append(n.getName() + " -> " + e.getNode());
                 if (e.getDelay() == 1) {
-                    res += "[style=\"dashed\"]";
+                    res.append("[style=\"dashed\"]");
                 }
                 if (e.getDelay() > 1) {
-                    res += "[style=\"dotted\" taillabel=\"" + e.getDelay() + "\"]";
+                    res.append("[style=\"dotted\" taillabel=\"" + e.getDelay() + "\"]");
                 }
-                res += ";\n";
+                res.append(";\n");
             }
         }
         if (printHeader) {
-            res += "}\n";
+            res.append("}\n");
         }
-        return res;
+        return res.toString();
     }
 
     /**
-     * @param name of  a node
+     * @param name
+     *            of a node
      * @return priority of that node
      */
     public int getPrio(final String name) {
@@ -209,11 +211,11 @@ public class DepGraph {
         return maxPrio;
     }
 
- 
-
     /**
-     * @param name name of the subgraph 
-     * @param d a dependency graph that is added
+     * @param name
+     *            name of the subgraph
+     * @param d
+     *            a dependency graph that is added
      */
     public void addSubGraph(final String name, final DepGraph d) {
         subGraphs.put(name, d);

@@ -19,6 +19,8 @@ import java.util.Set;
 /**
  * A node, ie, a variable in the Dependency graph. A node has in- and outgoing edges and a variable.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -105,7 +107,6 @@ public class Node {
         return name;
     }
 
-    
     /**
      * @return priority of this node
      */

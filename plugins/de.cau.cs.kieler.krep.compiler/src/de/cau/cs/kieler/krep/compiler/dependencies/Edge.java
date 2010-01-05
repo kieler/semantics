@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.compiler.dependencies;
 
 /**
- * @author ctr edge in the dependency graph
+ * An edge in the dependency graph.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class Edge {
 

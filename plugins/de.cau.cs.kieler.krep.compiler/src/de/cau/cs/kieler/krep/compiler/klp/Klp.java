@@ -30,6 +30,10 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
 /**
+ * Klp assembler, extends a program by the compiler from CEQs into actual klp assembler.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr Klp Assembler
  */
 public class Klp extends Program {

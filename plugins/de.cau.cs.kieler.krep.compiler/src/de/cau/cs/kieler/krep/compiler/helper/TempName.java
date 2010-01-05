@@ -16,7 +16,11 @@ package de.cau.cs.kieler.krep.compiler.helper;
 import java.util.HashMap;
 
 /**
- * @author ctr compute unique temporary names
+ * Compute unique temporary names.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public final class TempName {
 

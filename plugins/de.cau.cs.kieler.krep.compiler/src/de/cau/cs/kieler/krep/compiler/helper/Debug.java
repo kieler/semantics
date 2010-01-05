@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.compiler.helper;
 
 /**
- * @author ctr print Debug informations with different verbose levels
+ * Print debug informations with different levels of detail.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public final class Debug {
 

@@ -16,7 +16,11 @@ package de.cau.cs.kieler.krep.compiler.exceptions;
 import de.cau.cs.kieler.krep.compiler.lustre.Expression;
 
 /**
- * @author ctr thrown for any error during type inference
+ * Exceptions that is thrown for any error during type inference.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class TypeException extends Exception {
 
