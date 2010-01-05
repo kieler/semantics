@@ -20,7 +20,12 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr A Variable declaration ceq.
+ * A Variable declaration in CEQ. A variable has a name, a type and a scope, i.e., input output,
+ * local or temporary. A variable also has a register id.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Variable {
 
@@ -305,7 +310,6 @@ public class Variable {
     }
 
     /**
-     * 
      * @return number of defined variables
      */
     public static int getMax() {

@@ -21,8 +21,12 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr Abstract superclass for all ceq Expressions Not that every sub-expression should have
- *         a unique name
+ * Abstract superclass for all ceq Expressions. Note that every sub-expression should have a unique
+ * name.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public abstract class Expression {
     /**
@@ -32,7 +36,8 @@ public abstract class Expression {
 
     /**
      * 
-     * @param n name of the expression.
+     * @param n
+     *            name of the expression.
      */
     protected Expression(final String n) {
         this.setName(n);
@@ -123,7 +128,8 @@ public abstract class Expression {
     public abstract Expression staticEval();
 
     /**
-     * @param equiv list of equivalent variables.
+     * @param equiv
+     *            list of equivalent variables.
      */
     public abstract void replaceVar(HashMap<String, Variable> equiv);
 
@@ -133,14 +139,17 @@ public abstract class Expression {
     public abstract int wcrt();
 
     /**
-     * @param var name of the expression to replace
-     * @param expr expression by which the variable is replaced.
-     * @return new expression 
+     * @param var
+     *            name of the expression to replace
+     * @param expr
+     *            expression by which the variable is replaced.
+     * @return new expression
      */
     public abstract Expression replace(String var, Expression expr);
 
     /**
-     * @param n the name to set
+     * @param n
+     *            the name to set
      */
     protected void setName(final String n) {
         this.name = n;

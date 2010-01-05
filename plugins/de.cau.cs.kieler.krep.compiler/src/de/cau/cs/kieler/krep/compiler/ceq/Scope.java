@@ -16,8 +16,11 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 import java.util.LinkedList;
 
 /**
- * @author ctr
  * Scope of a program. This is either  a complete program or a state.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public interface Scope {
 

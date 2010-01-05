@@ -13,7 +13,13 @@
  */
 
 /**
- * Implementation of clocked equations.
+ * Implementation of clocked equations. 
+ * Clocked equations are implemented as manually designed classes, 
+ * where each class contains code to generate assembler from it. 
+ * Maybe this should be converted into an ecore model using expand or xtend to 
+ * generate assembler code.
+ * 
+ * @author ctr 
  */
 package de.cau.cs.kieler.krep.compiler.ceq;
 

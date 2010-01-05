@@ -24,7 +24,11 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr boolean not
+ * A boolean not.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Not extends Expression {
     private Expression expr;

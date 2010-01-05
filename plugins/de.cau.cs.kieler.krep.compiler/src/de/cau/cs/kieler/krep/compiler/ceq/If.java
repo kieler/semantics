@@ -29,7 +29,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * if expression: if e1 then e2 else e3.
+ * Conditional: if e1 then e2 else e3.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
  */

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Compiler
+Bundle-Name: Krep Compiler
 Bundle-SymbolicName: de.cau.cs.kieler.krep.compiler
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: compiler.jar,
@@ -18,3 +18,4 @@ Export-Package: de.cau.cs.kieler.krep.compiler.ceq,
  de.cau.cs.kieler.krep.compiler.prog,
  org.apache.commons.cli
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Christian Albrechts Universität zu Kiel

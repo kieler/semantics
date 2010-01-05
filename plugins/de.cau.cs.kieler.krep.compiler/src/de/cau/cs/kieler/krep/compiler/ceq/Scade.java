@@ -28,6 +28,10 @@ import de.cau.cs.kieler.krep.compiler.parser.scadeParser;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
+ * Representation of a Scade program, this extends a ceq program by a parser for Scade files.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -44,10 +48,14 @@ public class Scade extends Program implements Scope {
     /**
      * parse input stream which is expected to be a Scade textual file.
      * 
-     * @param in input stream with scade program.
-     * @throws IOException thrown when the input stream cannot be read
-     * @throws ClockException thrown at errors in clock inference
-     * @throws TypeException thrown at errors in type inference
+     * @param in
+     *            input stream with scade program.
+     * @throws IOException
+     *             thrown when the input stream cannot be read
+     * @throws ClockException
+     *             thrown at errors in clock inference
+     * @throws TypeException
+     *             thrown at errors in type inference
      */
     public Scade(final InputStream in) throws IOException, ClockException, TypeException {
         super("Scade");
@@ -132,15 +140,16 @@ public class Scade extends Program implements Scope {
     }
 
     /**
-     * @param s name of input signal
-     * @param t type of new input signal
+     * @param s
+     *            name of input signal
+     * @param t
+     *            type of new input signal
      */
     public void addInput(final String s, final Type t) {
         Variable v = Variable.get(s, Kind.INPUT, t);
         addVar(v);
     }
 
-   
     /**
      * 
      * {@inheritDoc}

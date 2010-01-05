@@ -26,7 +26,12 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr A clocked equation
+ * A clocked equation, consisting of a name, a initial expression, a runtime expression, and a
+ * clock.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Equation {
     private String name;
@@ -52,7 +57,7 @@ public class Equation {
      *            expression to compute the value during runtim
      * @param clk
      *            the clock on which the equation is evaluated
-     *
+     * 
      */
     public Equation(final String id, final Expression i, final Expression e, final String clk) {
         super();
@@ -66,8 +71,10 @@ public class Equation {
     /**
      * generate Equation without initializer which runs on the base clock.
      * 
-     * @param id name of the equation
-     * @param expr expression to compute the equation.
+     * @param id
+     *            name of the equation
+     * @param expr
+     *            expression to compute the equation.
      */
     public Equation(final String id, final Expression expr) {
         this(id, null, expr, null);
@@ -145,7 +152,8 @@ public class Equation {
     }
 
     /**
-     * @param vars list of new introduced variables
+     * @param vars
+     *            list of new introduced variables
      * @return replace complex expressions
      */
     public LinkedList<Equation> flatten(final HashMap<String, Variable> vars) {
@@ -165,10 +173,14 @@ public class Equation {
 
     /**
      * generate KLP code to compute this equation.
-     * @param useClocks true if hw clocks f the klp are used
-     * @param scope scope of the equation
      * 
-     * @param vars list of all used variables
+     * @param useClocks
+     *            true if hw clocks f the klp are used
+     * @param scope
+     *            scope of the equation
+     * 
+     * @param vars
+     *            list of all used variables
      * @return list ofKLP instructions to compute the value
      */
     public LinkedList<Instruction> toKlp(final boolean useClocks, final String scope,
@@ -223,7 +235,8 @@ public class Equation {
     }
 
     /**
-     * @param con constant values.
+     * @param con
+     *            constant values.
      * @return propagate constant values
      */
     public Const propagateConst(final HashMap<String, Const> con) {
@@ -292,7 +305,8 @@ public class Equation {
     }
 
     /**
-     * @param equiv list of equivalent variables.
+     * @param equiv
+     *            list of equivalent variables.
      */
     public void replaceVar(final HashMap<String, Variable> equiv) {
         if (initialize != null) {
@@ -342,8 +356,9 @@ public class Equation {
     }
 
     /**
-     * @param eq equation to replace.
-     * @return true if the replacement was succesful. 
+     * @param eq
+     *            equation to replace.
+     * @return true if the replacement was succesful.
      */
     public boolean replace(final Equation eq) {
         if (eq.initialize != null) {

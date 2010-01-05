@@ -29,6 +29,8 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
  * Implement automaton as part of clocked equations. An automaton contains other automata and
  * dataflow equations.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -76,11 +78,11 @@ public class Automaton {
 
     @Override
     public String toString() {
-        String res = "automaton " + name + "\n";
+        StringBuffer res = new StringBuffer("automaton " + name + "\n");
         for (State s : states) {
-            res += s.toString() + "\n";
+            res.append(s.toString() + "\n");
         }
-        return res;
+        return res.toString();
     }
 
     /**
@@ -107,7 +109,6 @@ public class Automaton {
         }
 
         // Controller
-        // res.add(Label.get(name));
         for (State s : states) {
             res.add(Label.get(name + "_" + s.getName()));
             res.getLast().setComment("Controller for state " + s.getName());

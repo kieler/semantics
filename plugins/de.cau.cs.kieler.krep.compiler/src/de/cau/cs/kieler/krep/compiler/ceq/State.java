@@ -26,6 +26,12 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
 /**
+ * A state in a Safe State Machine, consisting of a name, a flag whether this is an initial state,
+ * and outgoing transitions. Transitions are either weak or strong aborts, normal termination is not
+ * supported.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -75,22 +81,22 @@ public class State implements Scope {
 
     @Override
     public String toString() {
-        String res = (isInitial ? "initial " : "") + "state " + name + "\n";
+        StringBuffer res = new StringBuffer((isInitial ? "initial " : "") + "state " + name + "\n");
         if (!saborts.isEmpty()) {
-            res += "unless\n";
+            res.append("unless\n");
             for (Transition t : saborts) {
-                res += t.toString() + "\n";
+                res.append(t.toString() + "\n");
             }
         }
-        res += content.toLustre();
+        res.append(content.toLustre());
         if (!waborts.isEmpty()) {
-            res += "until\n";
+            res.append("until\n");
             for (Transition t : waborts) {
-                res += t.toString() + "\n";
+                res.append(t.toString() + "\n");
             }
         }
 
-        return res;
+        return res.toString();
     }
 
     /**

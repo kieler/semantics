@@ -23,7 +23,11 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr Constant, can either be an integer number or a boolean
+ * Constant, can either be an integer number or a boolean.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Const extends Expression {
     private int val;

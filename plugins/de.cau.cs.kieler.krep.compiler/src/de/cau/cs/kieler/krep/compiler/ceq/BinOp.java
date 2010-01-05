@@ -24,7 +24,11 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * @author ctr CEQ binary operations, this includes comparison, arithmetic and logic
+ * CEQ binary operations, this includes comparison, arithmetic and logical operators.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class BinOp extends Expression {
     private Expression e1, e2;
@@ -181,7 +185,6 @@ public class BinOp extends Expression {
                     new Read(temp2), op));
             Variable.destroyTemp(getName());
             Variable.destroyTemp(getName());
-            // System.err.println("non trivial binary operator: " + toString());
         }
         return instr;
     }
@@ -328,12 +331,12 @@ public class BinOp extends Expression {
         if (e1 instanceof VarAccess) {
             v1 = (VarAccess) e1;
         } else if (e1 instanceof Const) {
-             c1 = (Const) e1;
+            c1 = (Const) e1;
         }
         if (e2 instanceof VarAccess) {
             v2 = (VarAccess) e2;
         } else if (e2 instanceof Const) {
-             c2 = (Const) e2;
+            c2 = (Const) e2;
         }
 
         if (v1 != null && v2 != null) {

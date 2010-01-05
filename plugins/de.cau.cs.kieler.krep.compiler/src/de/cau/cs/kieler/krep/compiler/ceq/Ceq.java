@@ -16,7 +16,11 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 import java.util.LinkedList;
 
 /**
- * @author ctr static helper classes for clocked equations
+ * Static helper functions for clocked equations.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public final class Ceq {
 
@@ -24,43 +28,49 @@ public final class Ceq {
     }
 
     /**
-     * @param name name of the main node
-     * @param inputs list of all input signals
-     * @param outputs list of all output singals
-     * @param locals list of all local signals
-     * @param eqs all clocked equations
-     * @param ssms all automata
+     * @param name
+     *            name of the main node
+     * @param inputs
+     *            list of all input signals
+     * @param outputs
+     *            list of all output singals
+     * @param locals
+     *            list of all local signals
+     * @param eqs
+     *            all clocked equations
+     * @param ssms
+     *            all automata
      * @return generate Lustre code for a given set of clocked equations
      */
     public static String toLustre(final String name, final LinkedList<? extends Variable> inputs,
             final LinkedList<? extends Variable> outputs,
             final LinkedList<? extends Variable> locals, final LinkedList<Equation> eqs,
             final LinkedList<Automaton> ssms) {
-        String res = "node " + name + " (\n";
+        StringBuffer res = new StringBuffer("node " + name + " (\n");
         for (final Variable v : inputs) {
-            res += "    " + v.toString() + ";\n";
+            res.append("    " + v.toString() + ";\n");
         }
-        res += ") returns (\n";
+        res.append(") returns (\n");
         for (final Variable v : outputs) {
-            res += "    " + v.toString() + ";\n";
+            res.append("    " + v.toString() + ";\n");
         }
-        res += ");\n";
+        res.append(");\n");
         if (!locals.isEmpty()) {
-            res += "var\n";
+            res.append("var\n");
             for (final Variable v : locals) {
-                res += "    " + v.toString() + ";\n";
+                res.append("    " + v.toString() + ";\n");
             }
         }
-        res += "let\n";
+        res.append("let\n");
         for (final Equation eq : eqs) {
-            res += "  " + eq.toString();
+            res.append("  " + eq.toString());
         }
-        res += "\n";
+        res.append("\n");
 
         for (final Automaton ssm : ssms) {
-            res += ssm.toString();
+            res.append(ssm.toString());
         }
-        res += "tel\n";
-        return res;
+        res.append("tel\n");
+        return res.toString();
     }
 }

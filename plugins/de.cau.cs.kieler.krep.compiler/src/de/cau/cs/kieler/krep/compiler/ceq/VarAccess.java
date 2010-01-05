@@ -25,13 +25,13 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
-//import klp.Register;
-
 /**
- * @author ctr
+ * A Variable access in ceq. This includes the information, if the current or previous value is
+ * accessed
  * 
- *         A Variable access in ceq. This includes the information, if the current or previous value
- *         is accessed
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class VarAccess extends Expression {
 
@@ -70,15 +70,15 @@ public class VarAccess extends Expression {
 
     @Override
     public String toString() {
-        String res = "";
+        StringBuffer res = new StringBuffer();
         for (int i = 0; i < pre; i++) {
-            res += "pre(";
+            res.append("pre(");
         }
-        res += getName();
+        res.append(getName());
         for (int i = 0; i < pre; i++) {
-            res += ")";
+            res.append(")");
         }
-        return res;
+        return res.toString();
     }
 
     @Override
@@ -119,13 +119,8 @@ public class VarAccess extends Expression {
             // on different core
             pre += n - d - 1; // reader - writer - communication
         }
-        /*
-         * if(pre>0){ if(d == n+1){ pre=0; }else{ pre=n+1; }
-         * 
-         * }else{ pre=d-n; }
-         */
         if (pre < 0) {
-            System.err.println("try to access future value of " + getName());
+            Debug.high("try to access future value of " + getName());
         }
         return this;
     }

@@ -22,8 +22,13 @@ import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
 
 /**
- * @author ctr CEQ program, eg, a bunch of CEQ equation plus information on inputs and outputs
- */
+ * CEQ program, eg, a set of CEQ equation and Safe State Machines plus information on inputs and
+ * outputs.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
+ * */
 public class Program {
     /**
      * name of the program.
@@ -78,8 +83,10 @@ public class Program {
     /**
      * generate program from an existing one.
      * 
-     * @param n name of the new program
-     * @param p program to copy.
+     * @param n
+     *            name of the new program
+     * @param p
+     *            program to copy.
      */
     public Program(final String n, final Program p) {
         this.setName(n);
@@ -130,7 +137,7 @@ public class Program {
             getDepGraph().addSubGraph(ssm.getName(), ssm.getDepGraph());
         }
         // make sure that outputs are not reordered
-     
+
         LinkedList<Equation> tmp = new LinkedList<Equation>();
         List<String> sort = getDepGraph().sort();
         for (String s : sort) {
@@ -303,7 +310,8 @@ public class Program {
     }
 
     /**
-     * @param equiv list of quivalent variables.
+     * @param equiv
+     *            list of quivalent variables.
      */
     public void replace(final HashMap<String, Variable> equiv) {
         if (!equiv.isEmpty()) {
@@ -341,28 +349,32 @@ public class Program {
     }
 
     /**
-     * @param v new local variable
+     * @param v
+     *            new local variable
      */
     public void addLocal(final Variable v) {
         getLocals().add(v);
     }
 
     /**
-     * @param v new output variable
+     * @param v
+     *            new output variable
      */
     public void addOutput(final Variable v) {
         getOutputs().add(v);
     }
 
     /**
-     * @param v new input variable
+     * @param v
+     *            new input variable
      */
     public void addInput(final Variable v) {
         getInputs().add(v);
     }
 
     /**
-     * simplify all equations.
+     * simplify all equations by replacing variables that are only read once. This is in partcular
+     * necessary for code that is generated from graphical dataflow models.
      */
     public void simplify() {
         // Count number of readers for each flow
@@ -414,84 +426,91 @@ public class Program {
     }
 
     /**
-     * @param dG the depGraph to set
+     * @param dG
+     *            the dependency graph
      */
     protected void setDepGraph(final DepGraph dG) {
         this.depGraph = dG;
     }
 
     /**
-     * @return the depGraph
+     * @return the dependency graph
      */
     protected DepGraph getDepGraph() {
         return depGraph;
     }
 
     /**
-     * @param s the ssms to set
+     * @param s
+     *            the Safe State Machines
      */
     protected void setSsms(final LinkedList<Automaton> s) {
         this.ssms = s;
     }
 
     /**
-     * @return the ssms
+     * @return the Safe State Machines
      */
     protected LinkedList<Automaton> getSsms() {
         return ssms;
     }
 
     /**
-     * @param equations the eqs to set
+     * @param equations
+     *            the CEQ equations
      */
     protected void setEqs(final LinkedList<Equation> equations) {
         this.eqs = equations;
     }
 
     /**
-     * @return the eqs
+     * @return the CEQ equations
      */
     protected LinkedList<Equation> getEqs() {
         return eqs;
     }
 
     /**
-     * @param loc the locals to set
+     * @param loc
+     *            the new local variables
      */
     protected void setLocals(final LinkedList<Variable> loc) {
         this.locals = loc;
     }
 
     /**
-     * @return the locals
+     * @return the local variables
      */
     protected LinkedList<Variable> getLocals() {
         return locals;
     }
 
     /**
-     * @param outs the outputs to set
+     * @param outs
+     *            the outputs to set
      */
     protected void setOutputs(final LinkedList<Variable> outs) {
         this.outputs = outs;
     }
 
     /**
-     * @param i the inputs to set
+     * @param i
+     *            the inputs to set
      */
     protected void setInputs(final LinkedList<Variable> i) {
         this.inputs = i;
     }
 
     /**
-     * @param v the vars to set
+     * @param v
+     *            the new variables of the program
      */
     protected void setVars(final HashMap<String, Variable> v) {
         this.vars = v;
     }
 
     /**
-     * @return the vars
+     * @return the variables of the program
      */
     protected HashMap<String, Variable> getVars() {
         return vars;

@@ -25,7 +25,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
- * A transition in an ssm.
+ * A transition in an Safe State Machine, consitiing of a trigger and a target state.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
  * 
@@ -62,9 +64,12 @@ public class Transition {
     /**
      * 
      * 
-     * @param ssm name of the ssm that contains the transitions
-     * @param source source state
-     * @param suffix additional suffix to allow uniqe transition names
+     * @param ssm
+     *            name of the ssm that contains the transitions
+     * @param source
+     *            source state
+     * @param suffix
+     *            additional suffix to allow uniqe transition names
      * @return klp instructions to implement the transitions
      */
     public LinkedList<Instruction> compile(final String ssm, final String source,
@@ -83,7 +88,8 @@ public class Transition {
     }
 
     /**
-     * @param equiv map of equivalent variables
+     * @param equiv
+     *            map of equivalent variables
      */
     public void replace(final HashMap<String, Variable> equiv) {
         trigger.replaceVar(equiv);
