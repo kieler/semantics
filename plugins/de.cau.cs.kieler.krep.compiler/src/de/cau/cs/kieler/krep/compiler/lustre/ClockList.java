@@ -20,7 +20,7 @@ import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 
 /**
  * List of clocks according to Lustre clock calculus.
- *  
+ * 
  * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
@@ -39,7 +39,8 @@ public class ClockList implements Cloneable {
     /**
      * remove outermost clock.
      * 
-     * @throws ClockException if no clock can be removed
+     * @throws ClockException
+     *             if no clock can be removed
      */
     public void removeClock() throws ClockException {
         if (clocks.isEmpty()) {
@@ -105,17 +106,17 @@ public class ClockList implements Cloneable {
 
     @Override
     public String toString() {
-        String res = "[";
+        StringBuffer res = new StringBuffer("[");
 
         Iterator<String> i = clocks.iterator();
         if (i.hasNext()) {
-            res += i.next();
+            res.append(i.next());
             while (i.hasNext()) {
-                res += ", " + i.next();
+                res.append(", " + i.next());
             }
         }
-        res += "]";
-        return res;
+        res.append("]");
+        return res.toString();
 
     }
 

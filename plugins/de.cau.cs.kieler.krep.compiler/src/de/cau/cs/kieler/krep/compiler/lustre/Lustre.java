@@ -130,7 +130,8 @@ public class Lustre {
 
         // copy eqs
         for (Entry<String, Expression> e : eqs.entrySet()) {
-            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
+            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux 
+            = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
             Expression expr = e.getValue();
             de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(e.getKey(), 0, null, aux);
             eq.setName(e.getKey());
