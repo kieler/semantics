@@ -10,53 +10,64 @@
                editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
 			<transformations>
-				<transformation keyboardShortcut="M1+K S"
-					name="Add Successor State" transformation="addSuccessorState"
-					transformationId="de.cau.cs.kieler.ksbase.addSuc">
+				<transformation
+          icon="icons/successor_state.gif"
+          keyboardShortcut="M1+K S"
+          name="Add Successor State"
+          transformation="addSuccessorState"
+          transformationId="de.cau.cs.kieler.ksbase.addSuc">
 				</transformation>
-				<transformation keyboardShortcut="M1+K P"
-					name="Add Predecessor State" transformation="addPredecessorState"
-					transformationId="de.cau.cs.kieler.ksbase.addPred">
+				<transformation
+          icon="icons/predecessor_state.gif"
+          keyboardShortcut="M1+K P"
+          name="Add Predecessor State"
+          transformation="addPredecessorState"
+          transformationId="de.cau.cs.kieler.ksbase.addPred">
 				</transformation>
-				<transformation keyboardShortcut="M1+K C" name="Add Choice"
-					transformation="addChoice"
-					transformationId="de.cau.cs.kieler.ksbase.addChoice">
+				<transformation
+          icon="icons/choice.gif"
+          keyboardShortcut="M1+K C"
+          name="Add Choice"
+          transformation="addChoice"
+          transformationId="de.cau.cs.kieler.ksbase.addChoice">
 				</transformation>
-				<transformation icon="icons/obj16/Transition.gif"
+				<transformation icon="icons/flip.gif"
 					keyboardShortcut="M1+K F" name="Flip Transition" 
 					transformation="flipTransition" transformationId="de.cau.cs.kieler.ksbase.flip">
 				</transformation>
-				<transformation icon="icons/obj16/Action.gif"
+				<transformation icon="icons/connect.gif"
 					keyboardShortcut="M1+K W" name="Connect States" 
 					transformation="connectStates" transformationId="de.cau.cs.kieler.ksbase.connect">
 				</transformation>
-				<transformation icon="icons/obj16/Region.gif" name="Add ABRO"
+				<transformation icon="icons/abro.gif" name="Add ABRO"
 					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">
 				</transformation>
-				<transformation icon="icons/obj16/Signal.gif" name="Create Default"
+				<transformation icon="icons/default.gif" name="Create Default"
 					transformation="createDefault" transformationId="de.cau.cs.kieler.ksbase.empty">
 				</transformation>
     <transformation
+          icon="icons/reconnect_target.gif"
           keyboardShortcut="M1+K Q"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
        </transformation>
        <transformation
+             icon="icons/reconnect_source.gif"
              keyboardShortcut="M1+K J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
              transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
     	</transformation>
        <transformation
-             icon="icons/obj16/Region.gif"
+             icon="icons/upgrade.gif"
              keyboardShortcut="M1+K U"
              name="UpgradeState"
              transformation="upgradeState"
              transformationId="de.cau.cs.kieler.ksbase.upgradeState">
        </transformation>
        <transformation
-             icon="icons/obj16/Region.gif"
+             icon="icons/downgrade.gif"
              keyboardShortcut="M1+K D"
              name="Downgrade State"
              transformation="downgradeState"
