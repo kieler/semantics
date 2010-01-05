@@ -311,14 +311,10 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      */
-    public String verifyCommunication() throws CommunicationException {
+    public boolean verifyCommunication() throws CommunicationException {
         notifyComment("verifiy");
         sendCmd(VERIFY_COMMAND);
         String reply = getConnection().receive(VERIFICATION_STRING.length());
-        if (reply.equals(VERIFICATION_STRING)) {
-            return "Return string is valid.";
-        } else {
-            return "Return string is invalid!";
-        }
+        return reply.equals(VERIFICATION_STRING);
     }
 }

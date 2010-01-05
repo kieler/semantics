@@ -20,9 +20,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
@@ -85,9 +82,6 @@ public class TraceList {
             e.printStackTrace();
         } catch (ParseException e) {
             traces.clear();
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    "Parse Error in trace file", e);
-            // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         for (Trace trace : traces) {
             size += trace.size() + 1;
@@ -233,13 +227,10 @@ public class TraceList {
      * Execute one step of the current trace.
      * 
      * @return when the outputs match the reference output
-     * @param manager
-     *            to display the current status
      * @throws CommunicationException
      *             thrown for any communication errors
      */
     public boolean executeStep() throws CommunicationException {
-        // System.out.println("execute step " + this.tablePos + "/" + size);
         if (hasNext()) {
             Tick tick = next();
             if (tick == null) {
@@ -251,31 +242,11 @@ public class TraceList {
                 setOutput(output);
                 boolean valid = validateCurrent();
 
-                final int pos = this.tablePos;
                 final int rt = output.getRT();
                 min = Math.min(min, rt);
                 max = Math.max(rt, max);
                 avg += rt;
-                final int dmin = min;
-                final int dmax = max;
-                final int davg = avg;
-                final int dsize = size;
 
-                /** update display each steps */
-                final int updateEach = 128;
-
-                if (!hasNext() || pos % updateEach == 0) {
-                    //TODO: notify user
-                   // Display.getDefault().asyncExec(new Runnable() {
-                   //     public void run() {
-                   //         if (!manager.isDirty()) {
-                   //             manager.setMessage("Tick " + pos + "/" + dsize + ": " + rt + " {"
-                    //                    + dmin + ", " + davg / pos + ", " + dmax + "}");
-                   //         }
-                    //    }
-
-                   // });
-                }
                 notifyListeners(true);
                 return valid;
             }

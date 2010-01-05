@@ -17,14 +17,10 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.IO;
 import de.cau.cs.kieler.krep.evalbench.trace.Tick;
 
@@ -47,12 +43,6 @@ public class CommonLayer {
     /** List of connection names for supported connections. */
     public static final String[] CON_NAMES = { "JNI", "Serial", "TCP/IP" };
 
-    /** Default host name to use. */
-    private static final String DEFAULT_HOST = "localhost";
-
-    /** Default TCP/IP port to use. */
-    private static final int DEFAULT_PORT = 19777;
-
     /** The KEP protocol used with the current connection. */
     private KepProtocol kepProtocol;
 
@@ -61,9 +51,6 @@ public class CommonLayer {
 
     /** The currently used communication protocol. */
     private ICommunicationProtocol currentProtocol = null;
-
-    /** The currently used communication protocol type. */
-    private String currentProtocolType;
 
     /** The currently used connection protocol. */
     private IConnectionProtocol currentConnection;
@@ -79,7 +66,6 @@ public class CommonLayer {
 
     private IAssembler currentProgram = null;
 
- 
     /**
      * Displays a message in the connection view, if available. If no connection view is available
      * and <code>errorTitle</code> is not <code>null</code>, an error message box is displayed.
@@ -91,7 +77,6 @@ public class CommonLayer {
      *            message to display
      * @param exception
      *            exception to display in the error message box
-     * @return the connection view, or <code>null</code> if none is available
      */
     private static void logConnection(final String errorTitle, final String message,
             final Exception exception) {
@@ -141,8 +126,6 @@ public class CommonLayer {
             try {
                 currentConnection = new RxtxSerialConnection();
                 String initResult = currentConnection.initialize(portName, 0);
-                // show initialization result in connection view
-                message = "Initialized serial connection:\n" + initResult;
             } catch (CommunicationException e) {
                 logConnection("Initialization Error",
                         "Initialization of serial connection failed.", e);
@@ -197,93 +180,6 @@ public class CommonLayer {
     }
 
     /**
-     * Reads connection settings from the preference store and connects to the set up device.
-     */
-    // public final void connect() {
-    // // close the previous connection
-    // if (currentConnection != null) {
-    // currentConnection.dispose();
-    // currentConnection = null;
-    // }
-    //
-    // IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-    // // select the proper connection type
-    // String connectionType = preferenceStore.getString(ConnectionPreferencePage.CONNECTION_TYPE);
-    // String message = "";
-    // boolean error = false;
-    //
-    // if (connectionType.equals(SERIAL_CON)) {
-    // try {
-    // currentConnection = new RxtxSerialConnection();
-    // String portName = preferenceStore
-    // .getString(ConnectionPreferencePage.SERIAL_PORT_NAME);
-    // String initResult = currentConnection.initialize(portName, 0);
-    // // show initialization result in connection view
-    // message = "Initialized serial connection:\n" + initResult;
-    // } catch (CommunicationException e) {
-    // logConnection("Initialization Error",
-    // "Initialization of serial connection failed.", e);
-    // error = true;
-    // }
-    // } else if (connectionType.equals(TCPIP_CON)) {
-    // try {
-    // currentConnection = new SocketConnection();
-    // String hostName = preferenceStore.getString(ConnectionPreferencePage.HOST_NAME);
-    // int portNumber = preferenceStore.getInt(ConnectionPreferencePage.PORT_NUMBER);
-    // String initResult = currentConnection.initialize(hostName, portNumber);
-    // // show initialization result in connection view
-    // message = "Initialized TCP/IP connection:\n" + initResult;
-    // } catch (CommunicationException e) {
-    // logConnection("Initialization Error",
-    // "Initialization of TCP/IP connection failed.", e);
-    // error = true;
-    // }
-    // } else if (connectionType.equals(JNI_CON)) {
-    // try {
-    // currentConnection = new JNIConnection();
-    // String initResult = currentConnection.initialize("", 0);
-    // // show initialization result in connection view
-    // message = "Initialized JNI connection:\n" + initResult;
-    // } catch (Exception e) {
-    // logConnection("Initialization Error", "Initialization of JNI connection failed.", e);
-    // error = true;
-    // }
-    // } else {
-    // displayError("Error in loaded preferences",
-    // "The loaded preferences contained an invalid connection type identifier.", null);
-    // error = true;
-    // }
-    //
-    // if (error) {
-    // currentConnection = null;
-    // } else {
-    // // create communication protocol instances
-    // kepProtocol = new KepProtocol(currentConnection);
-    // krepProtocol = new KrepProtocol(currentConnection);
-    // // select proper protocol
-    // if (currentProtocolType == null) {
-    // currentProtocolType = preferenceStore
-    // .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
-    // }
-    // if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
-    // currentProtocol = kepProtocol;
-    // } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
-    // currentProtocol = krepProtocol;
-    // } else {
-    // currentProtocol = null;
-    // }
-    // // send message to connection view
-    // ConnectionView connectionView = logConnection(null, message, null);
-    // if (connectionView != null) {
-    // kepProtocol.addCommunicationListener(connectionView);
-    // krepProtocol.addCommunicationListener(connectionView);
-    // }
-    // // reset tick counter
-    // tickCount = 0;
-    // }
-    // }
-
-    /**
      * Initializes the common layer.
      */
     public final void initialize() {
@@ -318,19 +214,18 @@ public class CommonLayer {
 
     /**
      * Execute the <i>verify communication</i> command and display results in the connection view.
+     * 
+     * @return true if the connection works correctly
      */
     public boolean checkConnection() {
         try {
-            String result = currentProtocol.verifyCommunication();
-            // logConnection(null, result, null);
+            return currentProtocol.verifyCommunication();
         } catch (CommunicationException e) {
             return false;
-            // logConnection("Connection Failure", "Error in received return string", e);
         } catch (NullPointerException e) {
             return false;
-            // logConnection("No Connection", "Connection was not initialized yet", e);
         }
-        return true;
+
     }
 
     /**
@@ -482,12 +377,5 @@ public class CommonLayer {
         return serialPorts;
     }
 
-    /**
-     * Gets the last status message.
-     * 
-     * @return the status message
-     */
-    public String getStatusMessage() {
-        return statusMessage;
-    }
+
 }

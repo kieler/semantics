@@ -20,10 +20,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 
 /**
@@ -54,10 +50,10 @@ public class KlpWrapper implements IKrepWrapper {
         final String msg = "";
         klp_reset(msg);
 
-        //final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+        // final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
         // TODO: log File
-        //final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
+        // final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger("klp.esi");
         esi.reset();
         step();
@@ -93,15 +89,9 @@ public class KlpWrapper implements IKrepWrapper {
         String msg = "";
         String io = ";";
         byte c = klp_step(msg);
-        // if (msg.length() > 0) {
-        // MessageView.print(msg);
-        // }
         if (c != 0) {
             msg = "";
             c = klp_recv(msg);
-            // if (msg.length() > 0) {
-            // MessageView.print(msg);
-            // }
             io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
@@ -119,9 +109,6 @@ public class KlpWrapper implements IKrepWrapper {
         step();
         esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         klp_send(b, msg);
-        // if (msg.length() > 0) {
-        // MessageView.print(msg);
-        // }
         step();
 
     }
@@ -144,17 +131,19 @@ public class KlpWrapper implements IKrepWrapper {
             out = new BufferedWriter(new FileWriter(f));
             out.write(esi.toString());
         } catch (IOException e) {
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    "Error saving esi log file: " + esiFile, e);
-           // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+            // silently ignore
+            //Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+            //        "Error saving esi log file: " + esiFile, e);
+            // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Error saving esi log file: " + esiFile, e);
-                    //StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                    // silently ignore
+                   // Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                   //        "Error saving esi log file: " + esiFile, e);
+                    // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
         }

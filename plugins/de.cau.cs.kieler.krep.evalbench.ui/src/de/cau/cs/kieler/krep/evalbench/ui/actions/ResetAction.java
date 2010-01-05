@@ -73,7 +73,6 @@ public class ResetAction extends Action {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        statusLineManager.setMessage(Activator.getDefault().getCommonLayer().getStatusMessage());
-    }
+     }
 
 }

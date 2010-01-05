@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EvalBench UI
-Bundle-SymbolicName: de.cau.cs.kieler.krep.evalbench.ui
+Bundle-SymbolicName: de.cau.cs.kieler.krep.evalbench.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.krep.evalbench.ui.Activator
 Bundle-Vendor: Christian Albrechts Universität zu Kiel
@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text;bundle-version="3.5.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.krep.evalbench.ui.actions;uses:="org.eclipse.jface.action,de.cau.cs.kieler.krep.evalbench.trace,org.eclipse.jface.viewers",
+Export-Package: de.cau.cs.kieler.krep.evalbench.ui,
+ de.cau.cs.kieler.krep.evalbench.ui.actions;uses:="org.eclipse.jface.action,de.cau.cs.kieler.krep.evalbench.trace,org.eclipse.jface.viewers",
  de.cau.cs.kieler.krep.evalbench.ui.editors;
   uses:="org.eclipse.core.runtime,
    de.cau.cs.kieler.krep.evalbench.trace,

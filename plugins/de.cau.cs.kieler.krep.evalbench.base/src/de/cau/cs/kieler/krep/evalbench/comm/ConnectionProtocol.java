@@ -21,10 +21,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 /**
@@ -125,9 +121,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     try {
                         Thread.sleep(SHORT_TIMEOUT);
                     } catch (InterruptedException e) {
-                        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                                "Error during Timeout", e);
-                        //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                        throw new CommunicationException(
+                                "Timeout interrupted while waiting for character '" + exit + "'");
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -166,9 +161,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     try {
                         Thread.sleep(SHORT_TIMEOUT);
                     } catch (InterruptedException e) {
-                        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                                "Error during Timeout", e);
-                        //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                        throw new CommunicationException("Timeout interrupted while waiting " + n
+                                + " characters");
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -185,10 +179,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Error while closing connection", e);
-                    //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
-
+                    // Silently ignore
                 }
             }
         }
@@ -314,9 +305,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Error while sending data", e);
-                    //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                    // silently ignore
                 }
             }
         }
@@ -345,9 +334,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     writer.close();
                 }
             } catch (IOException e) {
-                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                        "Error while sending data", e);
-                //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                throw new CommunicationException("Error while sending data");
             }
         }
     }

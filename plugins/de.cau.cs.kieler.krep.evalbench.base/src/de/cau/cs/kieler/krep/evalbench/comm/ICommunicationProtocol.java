@@ -54,11 +54,12 @@ public interface ICommunicationProtocol {
     /**
      * Verifies communication by sending a command and receiving a return string.
      * 
-     * @return readable text describing verification result
+     * @return true if the correct return string can be received from the processor.
+     * 
      * @throws CommunicationException
-     *             when the return string is invalid
+     *             when no return string could be read
      */
-    String verifyCommunication() throws CommunicationException;
+    boolean verifyCommunication() throws CommunicationException;
 
     /**
      * Requests target information from the target and translates the received return string.

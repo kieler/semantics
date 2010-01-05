@@ -31,7 +31,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.DisconnectAction;
 /**
  * A View for logging of connection messages to targets.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public class ConnectionView extends ViewPart implements ICommunicationListener {
 
@@ -57,15 +57,16 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         viewer = new TextViewer(parent);
 
         // create actions
-        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-        toolBarManager.add(new ConnectAction());
-        toolBarManager.add(new DisconnectAction());
-        toolBarManager.add(new CheckConnectionAction());
+        //IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        //toolBarManager.add(new ConnectAction());
+        //toolBarManager.add(new DisconnectAction());
+        //toolBarManager.add(new CheckConnectionAction());
         //loadProgramAction = new LoadProgramAction();
-        toolBarManager.add(loadProgramAction);
+        //toolBarManager.add(loadProgramAction);
         // toolBarManager.add(new DumpRomAction());
         // loadProgramAction.setEnabled(false);
 
+        
         preferenceStore = Activator.getDefault().getPreferenceStore();
     }
 
@@ -119,6 +120,10 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         // loadProgramAction.setEnabled(enabled);
     }
 
+    /**
+     * @param msg
+     * @return
+     */
     public static boolean log(final String msg) {
 
         IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();

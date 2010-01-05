@@ -20,7 +20,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 
 /**

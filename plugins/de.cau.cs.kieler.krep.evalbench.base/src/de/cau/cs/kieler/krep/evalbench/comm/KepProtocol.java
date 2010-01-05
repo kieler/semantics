@@ -484,13 +484,9 @@ public class KepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      * 
      */
-    public String verifyCommunication() throws CommunicationException {
+    public boolean verifyCommunication() throws CommunicationException {
         send(VERIFY_COMMAND);
         String reply = receive(END_REPLY);
-        if (reply.equals(VERIFICATION_STRING)) {
-            return "Return string is valid.";
-        } else {
-            return "Return string is invalid!";
-        }
+        return reply.equals(VERIFICATION_STRING);
     }
 }

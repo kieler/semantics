@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.LinkedList;
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.program.Config;
