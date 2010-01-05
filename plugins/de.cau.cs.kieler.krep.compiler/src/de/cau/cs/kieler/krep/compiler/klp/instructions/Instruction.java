@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 /**
- * @author ctr abstract superclass for all KLP assembler instructions
+ * Abstract superclass for all KLP assembler instructions.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public abstract class Instruction {
 

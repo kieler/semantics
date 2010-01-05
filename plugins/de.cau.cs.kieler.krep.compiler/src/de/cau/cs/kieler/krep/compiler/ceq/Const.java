@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.IMov;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * Constant, can either be an integer number or a boolean.

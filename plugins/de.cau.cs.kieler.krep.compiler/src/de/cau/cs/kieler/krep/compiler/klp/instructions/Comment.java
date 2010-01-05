@@ -14,8 +14,12 @@
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 /**
+ * Comment inside the klp program.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
- * Comment for some program part.
+ * 
  */
 public class Comment extends Instruction {
 

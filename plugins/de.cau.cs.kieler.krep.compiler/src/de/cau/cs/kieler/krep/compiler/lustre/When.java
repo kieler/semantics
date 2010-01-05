@@ -19,10 +19,14 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 
 /**
- * @author ctr Lustre binary expression this includes when and ->
+ * Implementation of the when operator.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class When extends Expression {
     private Expression expr;

@@ -16,6 +16,9 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 /**
  * 
  * Prio statement to change the priority of a thread.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  *
  */

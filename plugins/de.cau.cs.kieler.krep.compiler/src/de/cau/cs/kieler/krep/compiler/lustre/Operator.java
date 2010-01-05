@@ -16,6 +16,8 @@ package de.cau.cs.kieler.krep.compiler.lustre;
 /**
  * Implement binary operators.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  */
 

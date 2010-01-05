@@ -25,8 +25,8 @@ import org.antlr.runtime.*;
 
 import de.cau.cs.kieler.krep.compiler.ceq.*;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 import java.util.Stack;
 import java.util.List;

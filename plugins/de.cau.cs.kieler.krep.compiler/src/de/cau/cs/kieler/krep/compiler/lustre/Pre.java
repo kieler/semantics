@@ -21,7 +21,11 @@ import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
 
 /**
- * @author ctr Lustre previous expression
+ * Lustre previous expression.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Pre extends Expression {
     private Expression expr;

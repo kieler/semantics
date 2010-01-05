@@ -19,10 +19,14 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 
 /**
- * @author ctr integer constant in a Lustre program
+ * Integer constant in a Lustre program.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class Number extends Expression {
     private int value;

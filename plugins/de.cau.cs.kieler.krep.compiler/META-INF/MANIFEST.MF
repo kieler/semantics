@@ -15,7 +15,6 @@ Export-Package: de.cau.cs.kieler.krep.compiler.ceq,
  de.cau.cs.kieler.krep.compiler.lustre,
  de.cau.cs.kieler.krep.compiler.main,
  de.cau.cs.kieler.krep.compiler.parser,
- de.cau.cs.kieler.krep.compiler.prog,
  org.apache.commons.cli
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian Albrechts Universität zu Kiel

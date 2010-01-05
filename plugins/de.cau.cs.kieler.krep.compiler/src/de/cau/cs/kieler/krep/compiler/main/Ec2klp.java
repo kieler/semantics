@@ -34,7 +34,11 @@ import de.cau.cs.kieler.krep.compiler.klp.Klp;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
 
 /**
- * @author ctr Compile Lustre ec-file to KLP assembler
+ * Compile Lustre ec-file to KLP assembler.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public final class Ec2klp {
 

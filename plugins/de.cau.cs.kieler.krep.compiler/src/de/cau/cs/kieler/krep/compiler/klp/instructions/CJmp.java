@@ -14,7 +14,12 @@
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 /**
- * @author ctr Conditional Jump
+ * Conditional Jump.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
+ * 
  */
 public class CJmp extends Instruction {
 

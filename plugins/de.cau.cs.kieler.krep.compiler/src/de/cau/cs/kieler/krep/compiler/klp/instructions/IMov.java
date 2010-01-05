@@ -16,7 +16,11 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 
 /**
- * @author ctr immediate move
+ * Immediate move.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class IMov extends Instruction {
 

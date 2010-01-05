@@ -19,7 +19,11 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 
 /**
- * @author ctr List of lcokcs according to Lustre clock calculus
+ * List of clocks according to Lustre clock calculus.
+ *  
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class ClockList implements Cloneable {
     private LinkedList<String> clocks = new LinkedList<String>();

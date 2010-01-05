@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Mov;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * A Variable access in ceq. This includes the information, if the current or previous value is

@@ -31,7 +31,11 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
 
 /**
- * @author ctr Compile ec file inte clock equations and write them again as lustre (or ec) files
+ * Compile ec file intoclock equations and write them again as Lustre (or ec) files.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public final class Ec2ceq {
 

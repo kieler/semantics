@@ -20,6 +20,8 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
 /**
  * Label in the assembler code. Connects names and actual addresses.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */

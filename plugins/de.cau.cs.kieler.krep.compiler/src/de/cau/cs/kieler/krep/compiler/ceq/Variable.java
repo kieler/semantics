@@ -15,9 +15,9 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 
 import java.util.HashMap;
 
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.Klp;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * A Variable declaration in CEQ. A variable has a name, a type and a scope, i.e., input output,

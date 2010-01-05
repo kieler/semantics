@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 /**
- * @author ctr Done instruction to indicate the end of the tick
+ * Done instruction to indicate the end of the tick.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Done extends Instruction {
 

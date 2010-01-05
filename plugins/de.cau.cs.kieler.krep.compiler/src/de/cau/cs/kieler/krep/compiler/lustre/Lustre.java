@@ -30,10 +30,12 @@ import de.cau.cs.kieler.krep.compiler.parser.lustreLexer;
 import de.cau.cs.kieler.krep.compiler.parser.lustreParser;
 
 /**
+ * Container class to hold parsed lustre or ec file. Contains methods for type and clock inference.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
- *         Container class to hold parsed lustre or ec file. Contains methods for type and clock
- *         inference.
  */
 public class Lustre {
 
@@ -128,8 +130,7 @@ public class Lustre {
 
         // copy eqs
         for (Entry<String, Expression> e : eqs.entrySet()) {
-            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux 
-            = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
+            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
             Expression expr = e.getValue();
             de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(e.getKey(), 0, null, aux);
             eq.setName(e.getKey());
@@ -192,26 +193,26 @@ public class Lustre {
      * @return write program in Lustre syntax
      */
     public String toLustre() {
-        String res = "node " + name + "(";
+        StringBuffer res = new StringBuffer("node " + name + "(");
         for (Variable v : input) {
-            res += v.getName() + ":" + v.getType() + ";";
+            res.append(v.getName() + ":" + v.getType() + ";");
         }
-        res += ") returns (";
+        res.append(") returns (");
         for (Variable v : output) {
-            res += v.getName() + ":" + v.getType() + ";";
+            res.append(v.getName() + ":" + v.getType() + ";");
         }
-        res += ");\n";
+        res.append(");\n");
 
         for (Variable v : local) {
-            res += "  " + v.getName() + ":" + v.getType() + ";\n";
+            res.append("  " + v.getName() + ":" + v.getType() + ";\n");
         }
-        res += "let\n";
+        res.append("let\n");
 
         for (Entry<String, Expression> e : eqs.entrySet()) {
-            res += "  " + e.getKey() + " = " + e.getValue().toString() + ";\n";
+            res.append("  " + e.getKey() + " = " + e.getValue().toString() + ";\n");
         }
-        res += "tel\n";
-        return res;
+        res.append("tel\n");
+        return res.toString();
     }
 
     /**

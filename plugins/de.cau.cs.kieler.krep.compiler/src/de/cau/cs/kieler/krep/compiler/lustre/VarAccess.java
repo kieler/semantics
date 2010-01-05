@@ -23,6 +23,8 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
 /**
  * Implement the possible immediate access to a Lustre variable.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */

@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 /**
- * @author ctr uncondintional jump
+ *  Uncondintional jump.
+ *  
+ *  @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Jmp extends Instruction {
 
@@ -32,10 +36,4 @@ public class Jmp extends Instruction {
     public String toString() {
         return "  " + "JMP\t" + label.getName();
     }
-
-    /*
-     * @Override public String getObj() { return writeObj(Opcode.JMP.getCode(), label.getPos(),0,0);
-     * }
-     */
-
 }

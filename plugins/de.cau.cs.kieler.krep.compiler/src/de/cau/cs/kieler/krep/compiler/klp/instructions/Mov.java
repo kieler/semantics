@@ -16,7 +16,11 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 
 /**
- * @author ctr Copy register value to another register
+ * Copy register value to another register.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class Mov extends Instruction {
 

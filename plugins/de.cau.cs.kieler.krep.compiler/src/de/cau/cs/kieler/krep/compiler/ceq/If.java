@@ -20,13 +20,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.krep.compiler.helper.TempName;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Jmp;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * Conditional: if e1 then e2 else e3.

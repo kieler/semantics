@@ -18,13 +18,14 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 
 /**
  * Abstract superclass for Lustre(ec) expression.
  * 
- * @author ctr
+ * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
+ * @author ctr
  */
 public abstract class Expression {
     /** type of this expression. */

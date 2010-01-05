@@ -30,7 +30,11 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
 import de.cau.cs.kieler.krep.compiler.klp.Klp;
 
 /**
- * @author ctr Compile Lustre ec-file to KLP assembler
+ * Compile Lustre ec-file to KLP assembler.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public final class Scade2klp {
 

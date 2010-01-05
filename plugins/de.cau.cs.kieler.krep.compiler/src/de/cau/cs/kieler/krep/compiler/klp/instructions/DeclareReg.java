@@ -16,8 +16,13 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
 /**
+ * Declare that a register is used. This implicitly gives the connection of the program to the
+ * environment, by connecting registers and io ports.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
- *
+ * 
  */
 public class DeclareReg extends Instruction {
 
@@ -25,8 +30,10 @@ public class DeclareReg extends Instruction {
     private Kind kind;
 
     /**
-     * @param r register ot declare
-     * @param ioKind input, output, local
+     * @param r
+     *            register to declare
+     * @param ioKind
+     *            input, output, local
      */
     public DeclareReg(final String r, final Kind ioKind) {
         this.reg = r;

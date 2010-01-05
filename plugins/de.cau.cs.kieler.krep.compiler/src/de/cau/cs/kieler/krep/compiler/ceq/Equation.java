@@ -18,12 +18,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * A clocked equation, consisting of a name, a initial expression, a runtime expression, and a

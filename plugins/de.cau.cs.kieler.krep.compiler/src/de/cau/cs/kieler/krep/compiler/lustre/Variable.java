@@ -15,10 +15,14 @@ package de.cau.cs.kieler.krep.compiler.lustre;
 
 import java.util.HashMap;
 
-import de.cau.cs.kieler.krep.compiler.prog.Type;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 
 /**
- * @author ctr a Lustre variable This is used both for declaration and access of a variable
+ * A Lustre variable. This is used both for declaration and access of a variable.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class Variable {
 

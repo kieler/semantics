@@ -16,8 +16,11 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
 /**
- * @author ctr
  * Initialize register.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class InitReg extends Instruction {
 
@@ -26,10 +29,14 @@ public class InitReg extends Instruction {
     private String label;
 
     /**
-     * @param r register to initialize
-     * @param kind io kind of register
-     * @param l label with runtime code
-     * @param clk clock of the register
+     * @param r
+     *            register to initialize
+     * @param kind
+     *            io kind of register
+     * @param l
+     *            label with runtime code
+     * @param clk
+     *            clock of the register
      */
     public InitReg(final String r, final Kind kind, final String l, final String clk) {
         this.reg = r;

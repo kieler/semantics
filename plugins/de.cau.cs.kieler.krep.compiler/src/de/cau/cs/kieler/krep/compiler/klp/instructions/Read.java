@@ -15,10 +15,14 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 import de.cau.cs.kieler.krep.compiler.ceq.VarAccess;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 
 /**
- * @author ctr Reading access to a register. Can read either previous or current value.
+ * Reading access to a register. Can read either previous or current value.
+ * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public class Read {
     private Variable var;

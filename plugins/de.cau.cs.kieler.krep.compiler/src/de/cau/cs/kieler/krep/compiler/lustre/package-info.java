@@ -13,8 +13,10 @@
  */
 
 /**
- * Implementation of arbitrary Lustre equations.
+ * Implementation of arbitrary Lustre equations. 
+ * This is a manually designed abstract syntax tree, should be replaced by an ecore model.
  * 
  * @author ctr
  */
 package de.cau.cs.kieler.krep.compiler.lustre;
+

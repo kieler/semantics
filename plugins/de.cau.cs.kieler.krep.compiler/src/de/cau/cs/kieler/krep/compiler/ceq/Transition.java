@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
+import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
-import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
  * A transition in an Safe State Machine, consitiing of a trigger and a target state.
