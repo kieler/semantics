@@ -28,6 +28,8 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
 /**
  * Dependency graph of the dataflow program.
  * 
+ * @kieler.rating 2010-01-05 proposed yellow ctr
+ * 
  * @author ctr
  */
 public class DepGraph {
