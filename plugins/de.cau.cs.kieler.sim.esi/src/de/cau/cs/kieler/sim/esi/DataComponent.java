@@ -47,8 +47,8 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author ctr Data-component to read traces in esi format
@@ -129,10 +129,6 @@ public class DataComponent extends JSONObjectDataComponent {
     @Override
     public boolean isPauseFlag() {
         return false;
-    }
-
-    @Override
-    public void commandPause() {
     }
 
     /*
