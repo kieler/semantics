@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
+import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
  * The DataComponent class implements the basic behavior of a data observer and/or data producer

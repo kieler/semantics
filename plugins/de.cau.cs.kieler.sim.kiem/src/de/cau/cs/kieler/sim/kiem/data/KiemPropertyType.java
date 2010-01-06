@@ -49,7 +49,7 @@ public abstract class KiemPropertyType implements IKiemPropertyType {
 
     /**
      * Instantiates a new KiemPropertyType. The cell editor will be created when the
-     * {@link de.cau.cs.kieler.sim.kiem.views.KiemPropertyEditing#getCellEditor} is called by the
+     * {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemPropertyEditing#getCellEditor} is called by the
      * EditingSupport of the KiemView table-tree.
      */
     public KiemPropertyType() {

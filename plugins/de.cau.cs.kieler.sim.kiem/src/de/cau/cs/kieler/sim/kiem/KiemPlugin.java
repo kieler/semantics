@@ -48,7 +48,8 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
+import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -112,7 +113,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * all DataComponents in the default order ({@link #getDefaultComponentExList()}). The execution
      * is null by default. The KIEMViewInstance is set, in the constructor of the.
      * 
-     * @see de.cau.cs.kieler.sim.kiem.views.KiemView
+     * @see de.cau.cs.kieler.sim.kiem.ui.views.KiemView
      */
     public KiemPlugin() {
         dataComponentList = this.getDataComponentList();
@@ -316,7 +317,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /**
      * Sets the KIEM view instance. This method is called by the constructor of the Class
-     * {@link de.cau.cs.kieler.sim.kiem.views.KiemView} so that this plug-in (or the execution
+     * {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemView} so that this plug-in (or the execution
      * thread) is able to trigger updates on the view.
      * 
      * @param kIEMViewInstanceParam
