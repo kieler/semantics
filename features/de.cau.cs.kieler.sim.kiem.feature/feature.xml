@@ -227,6 +227,7 @@ litigation.
       <import plugin="org.eclipse.ui.views.log" version="1.0.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.json"/>
    </requires>
 
    <plugin
@@ -254,11 +255,18 @@ litigation.
          id="de.cau.cs.kieler.sim.esi"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.esi.ui"
+         download-size="0"
+         install-size="0"
+         version="0.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.json"
          download-size="0"
          install-size="0"
          version="0.0.0"
