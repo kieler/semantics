@@ -49,7 +49,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
 
 import java.io.File;
@@ -87,8 +87,8 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
