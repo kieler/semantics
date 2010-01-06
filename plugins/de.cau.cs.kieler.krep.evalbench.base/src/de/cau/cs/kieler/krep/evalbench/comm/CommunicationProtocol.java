@@ -83,13 +83,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void comment(final String comment) {
-        getConnection().comment(comment);
-    }
-
+  
     /**
      * {@inheritDoc}
      */

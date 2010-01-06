@@ -13,10 +13,12 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -26,8 +28,10 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.CheckConnectionAction;
+import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ConnectAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.DisconnectAction;
+
 /**
  * A View for logging of connection messages to targets.
  * 
@@ -42,9 +46,10 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     private TextViewer viewer = null;
 
     /** The load program action. */
-    private IAction loadProgramAction = null;
+    // private IAction loadProgramAction = null;
 
     private IPreferenceStore preferenceStore = null;
+    private Display display;
 
     /*
      * (non-Javadoc)
@@ -56,17 +61,19 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         // create text viewer
         viewer = new TextViewer(parent);
 
+        display = Display.findDisplay(Thread.currentThread());
+
         // create actions
-        //IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-        //toolBarManager.add(new ConnectAction());
-        //toolBarManager.add(new DisconnectAction());
-        //toolBarManager.add(new CheckConnectionAction());
-        //loadProgramAction = new LoadProgramAction();
-        //toolBarManager.add(loadProgramAction);
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        // toolBarManager.add(new ConnectAction());
+        // toolBarManager.add(new DisconnectAction());
+        toolBarManager.add(new CheckConnectionAction());
+        toolBarManager.add(new ClearAction(viewer));
+        // loadProgramAction = new LoadProgramAction();
+        // toolBarManager.add(loadProgramAction);
         // toolBarManager.add(new DumpRomAction());
         // loadProgramAction.setEnabled(false);
 
-        
         preferenceStore = Activator.getDefault().getPreferenceStore();
     }
 
@@ -84,8 +91,14 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * {@inheritDoc}
      */
     public void dataReceived(final String data) {
-        if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
-            viewer.append("< " + data + "\n");
+        // if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
+
+        if (viewer !=null && display != null) {
+            display.asyncExec(new Runnable() {
+                public void run() {
+                    viewer.append("< " + data + "\n");
+                }
+            });
         }
     }
 
@@ -95,9 +108,15 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      */
     public void dataSent(final String data) {
 
-        if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
-            viewer.append("> " + data + "\n");
+        // if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
+        if (viewer !=null && display != null) {
+            display.asyncExec(new Runnable() {
+                public void run() {
+                    viewer.append("> " + data + "\n");
+                }
+            });
         }
+        // }
     }
 
     /**
@@ -116,13 +135,13 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      *            the new state
      */
     public void setActionsEnabled(final boolean enabled) {
-        loadProgramAction.setEnabled(true);
+        // loadProgramAction.setEnabled(true);
         // loadProgramAction.setEnabled(enabled);
     }
 
     /**
      * @param msg
-     * @return
+     * @return true if the message was displayed
      */
     public static boolean log(final String msg) {
 
@@ -140,11 +159,25 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
+     * @param msg
+     */
+    public void show(final String msg) {
+        if (viewer !=null && display != null) {
+            if (display != null) {
+                display.asyncExec(new Runnable() {
+                    public void run() {
+                        viewer.append(msg + "\n");
+                    }
+                });
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public void comment(final String comment) {
-        log(comment);
-
+        show(comment);
     }
 
 }

@@ -89,14 +89,14 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * 
      * @return the input stream, or <code>null</code> if no input stream is available
      */
-    protected abstract InputStream getInputStream();
+    protected abstract InputStreamReader getInput();
 
     /**
      * Retrieves the output stream for this connection.
      * 
      * @return the output stream, or <code>null</code> if no output stream is available
      */
-    protected abstract OutputStream getOutputStream();
+    protected abstract OutputStream getOutput();
 
     /**
      * {@inheritDoc}
@@ -104,11 +104,11 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      */
     public String receive(final char exit) throws CommunicationException {
         try {
-            InputStream inputStream = getInputStream();
-            if (inputStream == null) {
-                throw new CommunicationException("No input stream available");
-            }
-            InputStreamReader reader = new InputStreamReader(inputStream);
+         //   InputStream inputStream = getInput();
+         //   if (inputStream == null) {
+          //      throw new CommunicationException("No input stream available");
+          //  }
+            InputStreamReader reader = getInput();//new InputStreamReader(inputStream);
             StringBuffer stringBuffer = new StringBuffer();
             String input;
             long startTime = System.currentTimeMillis();
@@ -144,11 +144,11 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     public String receive(final int n) throws CommunicationException {
         InputStreamReader reader = null;
         try {
-            InputStream inputStream = getInputStream();
-            if (inputStream == null) {
-                throw new CommunicationException("No input stream available");
-            }
-            reader = new InputStreamReader(inputStream);
+            //InputStream inputStream = getInput();
+            //if (inputStream == null) {
+            //    throw new CommunicationException("No input stream available");
+           // }
+            reader = getInput();//new InputStreamReader(inputStream);
             StringBuffer stringBuffer = new StringBuffer();
             String input;
             long startTime = System.currentTimeMillis();
@@ -192,11 +192,11 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         InputStreamReader reader = null;
         try {
-            InputStream inputStream = getInputStream();
-            if (inputStream == null) {
-                throw new CommunicationException("No input stream available");
-            }
-            reader = new InputStreamReader(inputStream);
+           // InputStream inputStream = getInput();
+         //   if (inputStream == null) {
+          //      throw new CommunicationException("No input stream available");
+          //  }
+            reader = getInput(); //new InputStreamReader(inputStream);
             LinkedList<Integer> res = new LinkedList<Integer>();
             int i = 0;
             long startTime = System.currentTimeMillis();
@@ -236,11 +236,11 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      */
     public String hark(final int n) throws CommunicationException {
         try {
-            InputStream inputStream = getInputStream();
-            if (inputStream == null) {
-                throw new CommunicationException("No input stream available");
-            }
-            InputStreamReader reader = new InputStreamReader(inputStream);
+          //  InputStream inputStream = getInput();
+         //   if (inputStream == null) {
+          //      throw new CommunicationException("No input stream available");
+           // }
+            InputStreamReader reader = getInput();// new InputStreamReader(inputStream);
             if (reader.ready()) {
                 return readInput(reader, n);
             } else {
@@ -258,15 +258,17 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      */
     private LinkedList<Integer> harkByte(final int n) throws CommunicationException {
         try {
-            InputStream inputStream = getInputStream();
-            if (inputStream == null) {
-                throw new CommunicationException("No input stream available");
-            }
+            //InputStream inputStream = getInput();
+           // if (inputStream == null) {
+            //    throw new CommunicationException("No input stream available");
+            //}
+            InputStreamReader reader = getInput();
+            
             LinkedList<Integer> res = new LinkedList<Integer>();
-            if (inputStream.available() > 0) {
+            if (reader.ready()) {
                 int i = 0;
                 while (i < n) {
-                    int b = inputStream.read();
+                    int b = reader.read();
                     if (b == -1) {
                         break;
                     }
@@ -290,24 +292,24 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     public void send(final String data) throws CommunicationException {
         OutputStreamWriter writer = null;
         try {
-            OutputStream outputStream = getOutputStream();
+            OutputStream outputStream = getOutput();
             if (outputStream == null) {
                 throw new CommunicationException("No output stream available");
             }
             writer = new OutputStreamWriter(outputStream);
             writer.write(data);
             writer.flush();
-            writer.close();
+            //writer.close();
         } catch (IOException e) {
             throw new CommunicationException("Error while writing to connection: " + e.getMessage());
         } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    // silently ignore
-                }
-            }
+           // if (writer != null) {
+               // try {
+                  //  writer.close();
+              //  } catch (IOException e) {
+              //      // silently ignore
+              //  }
+           // }
         }
     }
 
@@ -318,25 +320,25 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     public void send(final byte data) throws CommunicationException {
         OutputStreamWriter writer = null;
         try {
-            OutputStream outputStream = getOutputStream();
+            OutputStream outputStream = getOutput();
             if (outputStream == null) {
                 throw new CommunicationException("No output stream available");
             }
             writer = new OutputStreamWriter(outputStream);
             writer.write(data);
             writer.flush();
-            writer.close();
+            //writer.close();
         } catch (IOException e) {
             throw new CommunicationException("Error while writing to connection: " + e.getMessage());
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                throw new CommunicationException("Error while sending data");
-            }
-        }
+        } //finally {
+           // try {
+              //  if (writer != null) {
+                   // writer.close();
+                //}
+           // } catch (IOException e) {
+            //    throw new CommunicationException("Error while sending data");
+            //}
+        //}
     }
 
     /**
@@ -345,7 +347,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      */
     public void send(final byte[] data) throws CommunicationException {
         try {
-            OutputStream outputStream = getOutputStream();
+            OutputStream outputStream = getOutput();
             if (outputStream == null) {
                 throw new CommunicationException("No output stream available");
             }

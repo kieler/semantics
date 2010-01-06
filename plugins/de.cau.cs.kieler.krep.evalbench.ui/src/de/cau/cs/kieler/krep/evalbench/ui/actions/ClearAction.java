@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -16,39 +16,38 @@ package de.cau.cs.kieler.krep.evalbench.ui.actions;
 import org.eclipse.jface.action.Action;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
+import de.cau.cs.kieler.krep.evalbench.ui.views.TextViewer;
 
 /**
- * Connect to processor.
- * 
  * @author ctr
  * 
  */
-public class DisconnectAction extends Action {
+public class ClearAction extends Action {
+
+    private TextViewer viewer;
 
     /** Identifier string for this action. */
-    private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.disconnect";
+    private static final String CLEAR_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.clear";
+    
     /** Relative path to the icon to use for this action. */
-    private static final String ICON_PATH = "icons/disconnect.gif";
+    private static final String ICON_PATH = "icons/clear.gif";
 
     /**
-     * Creates a new Check Connection Action.
+     * @param v
      */
-    public DisconnectAction() {
-        setId(ACTION_ID);
-        setText("Disconnect");
-        setToolTipText("Disconnect from the currently connected target");
-        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ICON_PATH));
+    public ClearAction(final TextViewer v) {
+        super();
+        setId(CLEAR_ID);
+        setText("C&lear");
+        setToolTipText("Verify all benchmarks");
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
+        viewer = v;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.Action#run()
-     */
     @Override
     public void run() {
-     //   Activator.getDefault().getCommonLayer().dispose();
+        viewer.setText("");
+        viewer.refresh();
     }
 
 }

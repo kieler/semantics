@@ -17,7 +17,7 @@ package de.cau.cs.kieler.krep.evalbench;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
+//import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
@@ -34,7 +34,7 @@ public final class Activator extends Plugin {
     private static Activator plugin;
 
     /** The common layer for data exchange. */
-    private CommonLayer commonLayer = new CommonLayer();
+ //   private CommonLayer commonLayer = new CommonLayer();
 
     /** current execution Trace. */
     private TraceList traces = new TraceList();
@@ -67,13 +67,13 @@ public final class Activator extends Plugin {
         super.start(context);
         plugin = this;
         // initialize the common layer
-        getCommonLayer().initialize();
+ //       getCommonLayer().initialize();
     }
 
     @Override
     public void stop(final BundleContext context) throws Exception {
         // dispose the common layer
-        getCommonLayer().dispose();
+  //      getCommonLayer().dispose();
         plugin = null;
         super.stop(context);
     }
@@ -87,19 +87,19 @@ public final class Activator extends Plugin {
         return plugin;
     }
 
-    /**
-     * @param theCommonLayer
-     *            the commonLayer to set
-     */
-    public void setCommonLayer(final CommonLayer theCommonLayer) {
-        this.commonLayer = theCommonLayer;
-    }
-
-    /**
-     * @return the commonLayer
-     */
-    public CommonLayer getCommonLayer() {
-        return commonLayer;
-    }
+//    /**
+//     * @param theCommonLayer
+//     *            the commonLayer to set
+//     */
+//    public void setCommonLayer(final CommonLayer theCommonLayer) {
+//        this.commonLayer = theCommonLayer;
+//    }
+//
+//    /**
+//     * @return the commonLayer
+//     */
+//    public CommonLayer getCommonLayer() {
+//        return commonLayer;
+//    }
 
 }

@@ -26,7 +26,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
-import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
 
 /**
  * Preference page for connections.
@@ -82,21 +81,21 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage implemen
     @Override
     protected void createFieldEditors() {
         // create field editor for connection type
-        String[][] labels = new String[][] { { "JNI", CommonLayer.JNI_CON },
-                { "Serial port", CommonLayer.SERIAL_CON }, { "TCP/IP", CommonLayer.TCPIP_CON } };
-        FieldEditor fieldEditor = new RadioGroupFieldEditor(CONNECTION_TYPE, "Connection type:", 1,
-                labels, getFieldEditorParent());
-        addField(fieldEditor);
+       String[][] labels;// = new String[][] { { "JNI", CommonLayer.JNI_CON },
+       //         { "Serial port", CommonLayer.SERIAL_CON }, { "TCP/IP", CommonLayer.TCPIP_CON } };
+       FieldEditor fieldEditor;// = new RadioGroupFieldEditor(CONNECTION_TYPE, "Connection type:", 1,
+      //          labels, getFieldEditorParent());
+      //  addField(fieldEditor);
 
         // create field editor for serial port name
-        String[] serialPorts = de.cau.cs.kieler.krep.evalbench.Activator.getDefault().getCommonLayer().getSerialPorts();
-        labels = new String[serialPorts.length][2];
-        for (int i = 0; i < serialPorts.length; i++) {
-            labels[i] = new String[] { serialPorts[i], serialPorts[i] };
-        }
-        fieldEditor = new ComboFieldEditor(SERIAL_PORT_NAME, "Serial port name:", labels,
-                getFieldEditorParent());
-        addField(fieldEditor);
+        //String[] serialPorts = de.cau.cs.kieler.krep.evalbench.Activator.getDefault().getCommonLayer().getSerialPorts();
+        //labels = new String[serialPorts.length][2];
+        //for (int i = 0; i < serialPorts.length; i++) {
+        //    labels[i] = new String[] { serialPorts[i], serialPorts[i] };
+        //}
+        //fieldEditor = new ComboFieldEditor(SERIAL_PORT_NAME, "Serial port name:", labels,
+        //        getFieldEditorParent());
+        //addField(fieldEditor);
 
         // create field editor for host name
         fieldEditor = new StringFieldEditor(HOST_NAME, "Host name:", getFieldEditorParent());

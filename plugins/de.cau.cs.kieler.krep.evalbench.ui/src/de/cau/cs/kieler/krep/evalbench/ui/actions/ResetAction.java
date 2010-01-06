@@ -35,7 +35,7 @@ public class ResetAction extends Action {
     private static final String ICON_PATH = "icons/reset.gif";
 
     /** The status line manager that can be used to display messages. */
-    private IStatusLineManager statusLineManager;
+    //private IStatusLineManager statusLineManager;
 
     private TraceList traces;
 
@@ -52,7 +52,7 @@ public class ResetAction extends Action {
         setText("&Reset");
         setToolTipText("Reset the current program");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
-        this.statusLineManager = manager;
+       //this.statusLineManager = manager;
         this.traces = traceList;
     }
 
@@ -67,12 +67,12 @@ public class ResetAction extends Action {
             traces.reset();
         }
 
-        try {
-            Activator.getDefault().getCommonLayer().reset();
-        } catch (CommunicationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //try {
+         //   Activator.getDefault().getCommonLayer().reset();
+        //} catch (CommunicationException e) {
+        //    // TODO Auto-generated catch block
+       //    e.printStackTrace();
+        //}
      }
 
 }

@@ -26,19 +26,8 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  */
 public interface IConnectionProtocol {
 
-    /**
-     * Initializes connection.
-     * 
-     * @param device
-     *            device to connect with, e.g. serial port name
-     * @param port
-     *            port number, e.g. for socket connections
-     * @return message describing initialization results
-     * @throws CommunicationException
-     *             when an error occurred during initialization
-     */
-    String initialize(String device, int port) throws CommunicationException;
 
+    
     /**
      * Closes connection and removes locks on the involved device.
      */
@@ -125,6 +114,6 @@ public interface IConnectionProtocol {
      * @param comment
      *            the comment to add to the log File
      */
-    void comment(String comment);
+    // void comment(String comment);
 
 }

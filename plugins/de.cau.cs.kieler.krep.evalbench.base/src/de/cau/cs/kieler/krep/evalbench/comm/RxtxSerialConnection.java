@@ -16,6 +16,7 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 
 //import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream; //import java.util.Enumeration;
 import java.util.LinkedList;
 
@@ -46,36 +47,31 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     public static String[] getSerialPorts() {
         LinkedList<String> portNames = new LinkedList<String>();
         /*
-         * Enumeration<CommPortIdentifier> ports =
-         * CommPortIdentifier.getPortIdentifiers(); while
-         * (ports.hasMoreElements()) { CommPortIdentifier identifier =
-         * ports.nextElement(); if (identifier.getPortType() ==
-         * CommPortIdentifier.PORT_SERIAL) {
+         * Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers(); while
+         * (ports.hasMoreElements()) { CommPortIdentifier identifier = ports.nextElement(); if
+         * (identifier.getPortType() == CommPortIdentifier.PORT_SERIAL) {
          * portNames.add(identifier.getName()); } }
          */
-        portNames.add("no serial port available");
+        //portNames.add("no serial port available");
         return portNames.toArray(new String[portNames.size()]);
     }
 
     /**
-     * {@inheritDoc}
+     * @param device name of the serial port 
+     * @throws CommunicationException 
      * 
      */
-    public String initialize(final String device, final int port)
-            throws CommunicationException {
+    public RxtxSerialConnection(final String device) throws CommunicationException {
+        // TODO: implement
         /*
-         * try { CommPortIdentifier portIdentifier =
-         * CommPortIdentifier.getPortIdentifier(device); serialPort =
-         * (SerialPort)portIdentifier.open(Activator.PLUGIN_ID, 2000);
-         * serialPort.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8,
-         * SerialPort.STOPBITS_1, SerialPort.PARITY_NONE); return "Serial port "
-         * + device + " set up for " + BAUD_RATE +
-         * " baud, 8 data bits, 1 stop bit, no parity check."; } catch
-         * (Exception e) { throw new
-         * CommunicationException("Error during initialization of port " +
-         * device + ": " + e.getMessage()); }
+         * try { CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(device);
+         * serialPort = (SerialPort)portIdentifier.open(Activator.PLUGIN_ID, 2000);
+         * serialPort.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
+         * SerialPort.PARITY_NONE); return "Serial port " + device + " set up for " + BAUD_RATE +
+         * " baud, 8 data bits, 1 stop bit, no parity check."; } catch (Exception e) { throw new
+         * CommunicationException("Error during initialization of port " + device + ": " +
+         * e.getMessage()); }
          */
-        return "not supported";
     }
 
     /**
@@ -91,10 +87,9 @@ public class RxtxSerialConnection extends ConnectionProtocol {
      * 
      */
     @Override
-    protected InputStream getInputStream() {
+    protected InputStreamReader getInput() {
         /*
-         * try { return serialPort.getInputStream(); } catch (IOException e) {
-         * return null; }
+         * try { return serialPort.getInputStream(); } catch (IOException e) { return null; }
          */
         return null;
     }
@@ -104,21 +99,10 @@ public class RxtxSerialConnection extends ConnectionProtocol {
      * 
      */
     @Override
-    protected OutputStream getOutputStream() {
+    protected OutputStream getOutput() {
         /*
-         * try { return serialPort.getOutputStream(); } catch (IOException e) {
-         * return null; }
+         * try { return serialPort.getOutputStream(); } catch (IOException e) { return null; }
          */
         return null;
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void comment(final String comment) {
-        // Nothing to do
-
-    }
-
 }

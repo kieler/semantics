@@ -19,8 +19,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 
 
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
-
+import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 /**
  * Perspective related to the evaluation bench.
  * 
@@ -36,14 +35,9 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
     /** Identifier string for the message view. */
    // private static final String ID_MESSAGE = MessageView.VIEW_ID;
     /** Identifier string for the target view. */
-    private static final String ID_TARGET = TargetView.VIEW_ID;
-    /** Identifier string for the input view. */
-   // private static final String ID_INPUT = InputView.VIEW_ID;
-
-    /** Identifier string for the trace view. */
+    private static final String ID_KREP = ConnectionView.VIEW_ID;
+ /** Identifier string for the trace view. */
    // private static final String ID_TRACE = TraceView.VIEW_ID;
-    /** Identifier string for the output view. */
-    //private static final String ID_OUTPUT = OutputView.VIEW_ID;
 
     /**
      * {@inheritDoc}
@@ -52,7 +46,7 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
     public void createInitialLayout(final IPageLayout layout) {
 
         final float ratioBottom = 0.7f;
-        //final float ratioOutput = 0.7f;
+        final float ratioOutput = 0.7f;
         final float ratioInput = 0.57f;
 
         // get the editor area.
@@ -67,8 +61,7 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
         // bottom: Target view and Execution Manager
         IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom,
                 editorArea);
-        //bottom.addView(ID_CONNECTION);
-        bottom.addView(ID_TARGET);
+        bottom.addView(ID_KREP);
         bottom.addView("de.cau.cs.kieler.sim.kiem.view");
         //bottom.addView(ID_MESSAGE);
         
@@ -96,7 +89,5 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
 
         // add this perspective as shortcut
         layout.addPerspectiveShortcut(EvalBenchPerspective.PERSPECTIVE_ID);
-        //layout.addPerspectiveShortcut(TracePerspective.PERSPECTIVE_ID);
-        //layout.addPerspectiveShortcut(VerifyPerspective.PERSPECTIVE_ID);
     }
 }

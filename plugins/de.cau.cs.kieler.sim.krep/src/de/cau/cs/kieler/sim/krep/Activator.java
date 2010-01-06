@@ -12,15 +12,17 @@
  * See the file epl-v10.html for the license text.
  */
 
-
 package de.cau.cs.kieler.sim.krep;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
-
 
 /**
  * The activator class controls the plug-in life cycle.
+ * 
  * @author ctr
  */
 public class Activator extends Plugin {
@@ -39,6 +41,7 @@ public class Activator extends Plugin {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
      */
     @Override
@@ -49,6 +52,7 @@ public class Activator extends Plugin {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
      */
     @Override
@@ -66,4 +70,11 @@ public class Activator extends Plugin {
         return plugin;
     }
 
+    /**
+     * @param debugMsg a Message to show in the debug log.
+     */
+    public static void debug(final String debugMsg) {
+        StatusManager.getManager().handle(
+                new Status(IStatus.INFO, Activator.PLUGIN_ID, debugMsg, null), StatusManager.LOG);
+    }
 }

@@ -47,10 +47,13 @@ import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.IConnectionProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.KrepProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.RxtxSerialConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
+import de.cau.cs.kieler.krep.evalbench.comm.SocketConnection;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
@@ -59,7 +62,6 @@ import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
@@ -79,20 +81,24 @@ import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent implements ICommunicationListener {
+public final class DataComponent extends JSONObjectDataComponent {
 
-    private JNIConnection connection = null;
+    private IConnectionProtocol connection = null;
     private CommunicationProtocol protocol = null;
     private IAssembler assembler = null;
 
     private AssemblerView viewer = null;
-    private TargetView target = null;
+    private ConnectionView krepView = null;
 
-    // private final int propertyConnection = 0;
-    // private final int propertyPort = 1;
-    // private final int propertyHost = 2;
-    // private final int propertyCom = 3;
+    private final int propertyConnection = 0;
+    private final int propertyPort = 1;
+    private final int propertyHost = 2;
+    private final int propertyCom = 3;
     private final int propertyLog = 4;
+
+    private final String ID_JNI = "JNI";
+    private final String ID_RS232 = "RS 232";
+    private final String ID_TCPIP = "TCP/IP";
 
     /**
      * {@inheritDoc}
@@ -102,7 +108,6 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         LinkedList<Signal> inputs = assembler.getInputs();
         LinkedList<Signal> outputs = assembler.getOutputs();
         int[] trace;
-        connection.comment("step");
         try {
             for (Signal s : inputs) {
                 if (data.has(s.getName())) {
@@ -176,14 +181,21 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         }
         connection = null;
         assembler = null;
-        protocol = null;
         viewer = null;
     }
 
     @Override
     public KiemProperty[] provideProperties() {
         LinkedList<KiemProperty> properties = new LinkedList<KiemProperty>();
-        String[] items = { "JNI", "TCP/IP", "RS232" };
+
+        String[] serialPorts = RxtxSerialConnection.getSerialPorts();
+
+        String[] items;
+        if (serialPorts.length == 0) {
+            items = new String[] { ID_JNI, ID_TCPIP };
+        } else {
+            items = new String[] { ID_JNI, ID_TCPIP, ID_RS232 };
+        }
         properties.add(new KiemProperty("Connection", new KiemPropertyTypeChoice(items), items[0]));
 
         KiemProperty p = new KiemProperty("Port", new KiemPropertyTypeString());
@@ -194,9 +206,10 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         p.setValue("localhost");
         properties.add(p);
 
-        String[] ports = { "No port found" };
-        p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(ports));
-        properties.add(p);
+        if (serialPorts.length > 0) {
+            p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(serialPorts));
+            properties.add(p);
+        }
 
         p = new KiemProperty("logFile", new KiemPropertyTypeFile());
         p.setValue("klp.esi");
@@ -215,15 +228,13 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         }
 
         try {
-            target = (TargetView) (page.showView(TargetView.VIEW_ID, null,
+            krepView = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
                     IWorkbenchPage.VIEW_VISIBLE));
         } catch (PartInitException e) {
             throw new KiemInitializationException("Cannot show target view", true, e);
         }
         JSONObject signals = new JSONObject();
-        connection = new JNIConnection();
-
-        connection.setLogFile(getProperties()[propertyLog].getValue());
+        // connection.setLogFile(getProperties()[propertyLog].getValue());
         try {
             IEditorPart editor = page.getActiveEditor();
             if (editor.getEditorInput().exists()
@@ -252,16 +263,20 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         } catch (CoreException e) {
             throw new KiemInitializationException("Core exception", true, e);
         }
+
         if (assembler != null) {
-            protocol.addCommunicationListener(this);
+            if (krepView != null) {
+                protocol.addCommunicationListener(krepView);
+            }
+
             try {
                 if (viewer != null) {
                     viewer.setAssembler(assembler);
                 }
-                if (target != null) {
-                    target.show(protocol.getTargetInfo());
+                if (krepView != null) {
+                    krepView.show(protocol.getTargetInfo());
                 }
-                connection.comment("Download Program");
+
                 protocol.loadProgram(assembler, null);
                 int[] trace = protocol.getExecutionTrace();
                 viewer.markTrace(trace);
@@ -289,6 +304,33 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
     }
 
     /**
+     * @param protocolType
+     * @return
+     * @throws KiemInitializationException
+     */
+    private IConnectionProtocol connect(final String protocolType)
+            throws KiemInitializationException {
+        String type = this.getProperties()[propertyConnection].getValue();
+        try {
+            if (type.equals(ID_JNI)) {
+                return new JNIConnection(protocolType);
+
+            } else if (type.equals(ID_TCPIP)) {
+
+                String device = getProperties()[propertyHost].getValue();
+                int port = Integer.parseInt(getProperties()[propertyPort].getValue());
+                return new SocketConnection(device, port);
+            } else if (type.equals(ID_RS232)) {
+                String device = getProperties()[propertyCom].getValue();
+                return new RxtxSerialConnection(device);
+            }
+        } catch (CommunicationException e) {
+            throw new KiemInitializationException("Could not establish connection", true, e);
+        }
+        throw new KiemInitializationException("Unknown connection protocol" + type, true, null);
+    }
+
+    /**
      * @param name
      * @param file
      * @throws CommunicationException
@@ -311,7 +353,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
 
         String lus2ec = "/home/esterel/bin/lus2ec";
 
-        connection.initialize(ICommunicationProtocol.P_KREP);
+        connection = connect(ICommunicationProtocol.P_KREP);
         protocol = new KrepProtocol(connection);
         KlpAssembler klpAsm = new KlpAssembler();
 
@@ -356,7 +398,7 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
      */
     private void klp2klp(final String name, final IFile file) throws CommunicationException,
             CoreException, KiemInitializationException, ParseException {
-        connection.initialize(ICommunicationProtocol.P_KREP);
+        connection = connect(ICommunicationProtocol.P_KREP);
         protocol = new KrepProtocol(connection);
         assembler = new KlpAssembler();
         InputStream in = file.getContents();
@@ -377,10 +419,11 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
      * @throws CommunicationException
      * @throws CoreException
      * @throws ParseException
+     * @throws KiemInitializationException
      */
     private void kasm2kep(final String name, final IFile file) throws CommunicationException,
-            CoreException, ParseException {
-        connection.initialize(ICommunicationProtocol.P_KEP);
+            CoreException, ParseException, KiemInitializationException {
+        connection = connect(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
         KepAssembler kep = new KepAssembler();
@@ -419,11 +462,9 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
         InputStream stderr = p.getErrorStream();
         OutputStream stdin = p.getOutputStream();
 
-        System.out.println("===========================Esterel==================================");
         while (strl.available() > 0) {
             int r = strl.read();
             stdin.write(r);
-            System.out.print(Character.toChars(r));
         }
         stdin.close();
         try {
@@ -431,18 +472,21 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
             if (p.exitValue() != 0) {
                 checkErrors(stderr);
             }
-            System.out.println("===========================XML==================================");
+            StringBuffer debug = new StringBuffer(
+                    "===========================XML==================================");
 
             // expand modules
             p = Runtime.getRuntime().exec(path + "cec-expandmodules");
             InputStream exp = p.getInputStream();
             stdin = p.getOutputStream();
             stderr = p.getErrorStream();
+
             while (xml.available() > 0) {
                 int r = xml.read();
                 stdin.write(r);
-                System.out.print(Character.toChars(r));
+                debug.append(Character.toChars(r));
             }
+            Activator.debug(debug.toString());
             stdin.close();
             p.waitFor();
             if (p.exitValue() != 0) {
@@ -455,13 +499,16 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
             InputStream dis = p.getInputStream();
             stdin = p.getOutputStream();
             stderr = p.getErrorStream();
-            System.out.println("===========================EXP==================================");
+
+            debug = new StringBuffer(
+                    "===========================EXP==================================");
 
             while (exp.available() > 0) {
                 int r = exp.read();
                 stdin.write(r);
-                System.out.print(Character.toChars(r));
+                debug.append(Character.toChars(r));
             }
+            Activator.debug(debug.toString());
             stdin.close();
             p.waitFor();
             if (p.exitValue() != 0) {
@@ -474,20 +521,20 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
             InputStream k = p.getInputStream();
             stdin = p.getOutputStream();
             stderr = p.getErrorStream();
-            System.out.println("===========================DIS==================================");
+            debug = new StringBuffer(
+                    "===========================DIS==================================");
 
             while (dis.available() > 0) {
                 int r = dis.read();
                 stdin.write(r);
-                System.out.print(Character.toChars(r));
+                debug.append(Character.toChars(r));
             }
+            Activator.debug(debug.toString());
             stdin.close();
             p.waitFor();
             if (p.exitValue() != 0) {
                 checkErrors(stderr);
             }
-
-            System.out.println("===========================kep==================================");
 
             // to kasm
             p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
@@ -502,12 +549,10 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
             if (p.exitValue() != 0) {
                 checkErrors(stderr);
             }
-
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ParseException(e.getMessage());
         }
-        connection.initialize(ICommunicationProtocol.P_KEP);
+        connection = connect(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
         KepAssembler kep = new KepAssembler();
@@ -531,26 +576,5 @@ public final class DataComponent extends JSONObjectDataComponent implements ICom
             }
             throw new KiemInitializationException("Parse Error: " + s.toString(), false, null);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void dataReceived(final String data) {
-        ConnectionView.log("-> " + data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void dataSent(final String data) {
-        ConnectionView.log("<- " + data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void comment(final String comment) {
-        ConnectionView.log(comment);
     }
 }

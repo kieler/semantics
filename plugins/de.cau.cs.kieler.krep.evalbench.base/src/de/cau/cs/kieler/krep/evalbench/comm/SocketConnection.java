@@ -16,11 +16,11 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-
 
 /**
  * Connection that uses sockets from <code>java.net</code>.
@@ -31,14 +31,21 @@ public class SocketConnection extends ConnectionProtocol {
 
     /** The socket used for connection. */
     private Socket socket;
+    private InputStreamReader reader=null;
 
     /**
-     * {@inheritDoc}
+     * Initializes connection.
+     * 
+     * @param device
+     *            serial port name
+     * @param port
+     *            port number
+     * @throws CommunicationException
+     *             when an error occurred during initialization
      */
-    public String initialize(final String device, final int port) throws CommunicationException {
+    public SocketConnection(final String device, final int port) throws CommunicationException {
         try {
             socket = new Socket(device, port);
-            return "Connected to host " + device + ", port " + port + ".";
         } catch (IOException e) {
             throw new CommunicationException("Error during initialization of host " + device
                     + " on port " + port + ": " + e.getMessage());
@@ -54,8 +61,9 @@ public class SocketConnection extends ConnectionProtocol {
             socket.close();
         } catch (IOException e) {
             // Ignore silently
-            //tatus myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error closing socket", e);
-            //StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+            // tatus myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+            // "Error closing socket", e);
+            // StatusManager.getManager().handle(myStatus, StatusManager.LOG);
         }
     }
 
@@ -64,28 +72,25 @@ public class SocketConnection extends ConnectionProtocol {
      * 
      */
     @Override
-    protected InputStream getInputStream() {
-        try {
-            return socket.getInputStream();
-        } catch (IOException e) {
-            return null;
+    protected InputStreamReader getInput() {
+        if (reader != null) {
+            return reader;
+        } else {
+            try {
+                return new InputStreamReader(socket.getInputStream());
+            } catch (IOException e) {
+                return null;
+            }
         }
     }
 
     @Override
-    protected OutputStream getOutputStream() {
+    protected OutputStream getOutput() {
         try {
             return socket.getOutputStream();
         } catch (IOException e) {
             return null;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void comment(final String comment) {
-        // Nothing to do
     }
 
 }

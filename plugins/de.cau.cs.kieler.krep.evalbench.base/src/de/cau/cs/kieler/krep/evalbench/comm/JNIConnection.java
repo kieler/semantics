@@ -46,13 +46,12 @@ public class JNIConnection implements IConnectionProtocol {
      * 
      * @param protocol
      *            use KEP or KReP protocol
-     * @return String to indicate the status of the connection.
      * @throws CommunicationException
      *             thrown for any connection errors, e.g., if the software simulation is not found
      * 
      * 
      */
-    public String initialize(final String protocol) throws CommunicationException {
+    public JNIConnection(final String protocol) throws CommunicationException {
         String name = "unknown";
         if (krep != null) {
             krep.terminate();
@@ -71,21 +70,7 @@ public class JNIConnection implements IConnectionProtocol {
             throw new CommunicationException("Error generating " + name + "\n" + t.getMessage()
                     + "\nLibrary path: " + System.getProperty("java.library.path"));
         }
-        return "started new " + ((krep != null) ? krep.getName() : "unknown processor");
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public String initialize(final String device, final int port) throws CommunicationException {
-       // TODO: protocol Type
-        String currentProtocolType = ICommunicationProtocol.P_KEP;        
-            //preferenceStore
-              //  .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
-        return initialize(currentProtocolType);
-    }
-    
 
     /**
      * {@inheritDoc}
@@ -151,17 +136,6 @@ public class JNIConnection implements IConnectionProtocol {
     public void send(final byte data) throws CommunicationException {
         krep.send(data);
         log(data);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void comment(final String comment) {
-        krep.comment(comment);
-        if (esi != null) {
-            esi.comment(comment);
-        }
     }
 
     /**

@@ -144,6 +144,6 @@ public interface ICommunicationProtocol {
      * @param string
      *            comment to the next operation
      */
-    void comment(String string);
+    //void comment(String string);
 
 }
