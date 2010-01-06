@@ -31,26 +31,41 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
     private int submittedWork = 0;
 
     /**
-     * Creates a progress monitor wrapper for a given Eclipse progress monitor.
+     * Creates a progress monitor wrapper for a given Eclipse progress monitor. The number
+     * of hierarchy levels for which progress is reported to the Eclipse monitor is infinite.
      * 
      * @param theprogressMonitor the progress monitor
      */
     public KielerProgressMonitor(final IProgressMonitor theprogressMonitor) {
         this.progressMonitor = theprogressMonitor;
     }
+    
+    /**
+     * Creates a progress monitor wrapper with given maximal number of hierarchy levels. Progress
+     * is reported to parent monitors only up to the specified hierarchy level.
+     * 
+     * @param theprogressMonitor the progress monitor
+     * @param maxLevels maximal number of hierarchy levels for which progress is reported
+     */
+    public KielerProgressMonitor(final IProgressMonitor theprogressMonitor, final int maxLevels) {
+        super(maxLevels);
+        this.progressMonitor = theprogressMonitor;
+    }
 
     /**
-     * Reports to the integrated Eclipse progress monitor that the current task
-     * begins.
+     * Reports to the integrated Eclipse progress monitor that the current task begins.
      * 
      * @param name task name
      * @param totalWork total amount of work for the new task
      * @param topInstance if true, this progress monitor is the top instance
+     * @param maxHierarchyLevels maximal number of reported hierarchy levels
      */
-    protected void doBegin(final String name, final int totalWork, final boolean topInstance) {
+    @Override
+    protected void doBegin(final String name, final int totalWork,
+            final boolean topInstance, final int maxHierarchyLevels) {
         if (topInstance) {
             progressMonitor.beginTask(name, totalWork <= 0 ? IProgressMonitor.UNKNOWN : totalWork);
-        } else {
+        } else if (maxHierarchyLevels != 0) {
             progressMonitor.subTask(name);
         }
     }
@@ -60,8 +75,10 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * done, if this is the top instance.
      * 
      * @param topInstance if true, this progress monitor is the top instance
+     * @param maxHierarchyLevels maximal number of reported hierarchy levels
      */
-    protected void doDone(final boolean topInstance) {
+    @Override
+    protected void doDone(final boolean topInstance, final int maxHierarchyLevels) {
         if (topInstance) {
             progressMonitor.done();
         }
@@ -82,10 +99,17 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * 
      * @param work amount of work that is completed in the current monitor
      *            instance when the sub-task ends
+     * @param maxHierarchyLevels the maximal number of hierarchy levels for the parent
+     *         progress monitor
      * @return a new progress monitor instance
      */
-    public BasicProgressMonitor doSubTask(final int work) {
-        return new KielerProgressMonitor(progressMonitor);
+    @Override
+    public BasicProgressMonitor doSubTask(final int work, final int maxHierarchyLevels) {
+        if (maxHierarchyLevels > 0) {
+            return new KielerProgressMonitor(progressMonitor, maxHierarchyLevels - 1);
+        } else {
+            return new KielerProgressMonitor(progressMonitor, maxHierarchyLevels);            
+        }
     }
 
     /**
@@ -96,6 +120,7 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * @param completedWork total number of work that is done for this task
      * @param topInstance if true, this progress monitor is the top instance
      */
+    @Override
     protected void doWorked(final float work, final float completedWork, final boolean topInstance) {
         if (topInstance) {
             int newWork = (int) completedWork;
