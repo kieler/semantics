@@ -14,7 +14,9 @@
 
 package de.cau.cs.kieler.sim.mobile.tablemaster;
 
-import de.cau.cs.kieler.sim.kiem.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * The Class JSONMerger implements the merging functionality of used

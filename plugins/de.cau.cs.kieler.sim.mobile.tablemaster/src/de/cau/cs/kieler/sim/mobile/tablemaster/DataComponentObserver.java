@@ -14,184 +14,214 @@
 
 package de.cau.cs.kieler.sim.mobile.tablemaster;
 
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
- * The DataComponentObserver of the mobile table master plug-in implements the
- * KIEM observer extension point and is responsible for notifying the remote
- * data table unit whenever it gets new or updated data from the Execution 
- * Manager.  <BR>
- * Within its step method also the current an total steps are enclosed in the
- * JSON string assuming that the key "_KIEMExecutionSteps" is NOT used
- * elsewhere. The data is send to the remote table unit with either a preceding
- * "P" indicating a present step or a preceding "H" indicating a history step.
- * For the sending the TCPServer's print methods are used. During the 
- * initialization the interface variables are also being sent to the remote
- * unit.  
+ * The DataComponentObserver of the mobile table master plug-in implements the KIEM observer
+ * extension point and is responsible for notifying the remote data table unit whenever it gets new
+ * or updated data from the Execution Manager. <BR>
+ * Within its step method also the current an total steps are enclosed in the JSON string assuming
+ * that the key "_KIEMExecutionSteps" is NOT used elsewhere. The data is send to the remote table
+ * unit with either a preceding "P" indicating a present step or a preceding "H" indicating a
+ * history step. For the sending the TCPServer's print methods are used. During the initialization
+ * the interface variables are also being sent to the remote unit.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
- *
+ * 
  */
 public class DataComponentObserver extends JSONStringDataComponent implements
-		IJSONStringDataComponent {
+        IJSONStringDataComponent {
 
-	/** The current step of the execution. */
-	private long currentStep;
-	
-	/** The total steps of the execution. */
-	private	long totalSteps;
-	
-	/** The executing flag indicating a running execution. */
-	private boolean executing;
-	
-	/** The one and only instance of the observer (not multi-instantiable). */
-	private static DataComponentObserver instance;
+    /** The current step of the execution. */
+    private long currentStep;
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * This method returns the one and only instance of this observer 
-	 * DataComponent. 
-	 * 
-	 * @return the instance
-	 */
-	public static DataComponentObserver getInstance() {
-		return instance;
-	}
-	
-	//-------------------------------------------------------------------------
+    /** The total steps of the execution. */
+    private long totalSteps;
 
-	/**
-	 * Instantiates a new DataComponentObserver.
-	 */
-	public DataComponentObserver() {
-		instance = this;
-	}
-	
-	//-------------------------------------------------------------------------
-	
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#notifyStep(long, long)
-	 */
-	@Override
-	public void notifyStep(long currentStep, long totalSteps) {
-		//update the local currentStep and totalSteps variables that are send
-		//in each step() method call
-		this.currentStep = currentStep;
-		this.totalSteps = totalSteps;
-	}
+    /** The executing flag indicating a running execution. */
+    private boolean executing;
 
-	//-------------------------------------------------------------------------
-	
-	public String step(String jSONString) throws KiemExecutionException {
-		JSONObject object = null;
-		try{
-			//try to accumulate/enclose the currenStep information under the
-			//"_KIEMExecutionSteps" JSON key
-			object = new JSONObject(jSONString);
-			String stepsString = currentStep+"/"+totalSteps;
-			if (currentStep == totalSteps)
-				stepsString = currentStep+"";
-			object.accumulate("_KIEMExecutionSteps",stepsString);
-		}catch(Exception e){}
-		String type = "P"; //present step
-		if (this.isHistoryStep()) type = "H"; //history step
-		String inData = type + object.toString();
-		//finally send this as one line with the help of the TCPServer
-		//(this may rise an error)
-		try {
-			DataComponentMaster.tcpServer.println(inData);
-		}catch(Exception e) {
-			new KiemExecutionException("Cannot send data to remote table", 
-										false, e);
-		}
-		return null;
-	}
+    /** The one and only instance of the observer (not multi-instantiable). */
+    private static DataComponentObserver instance;
 
-	//-------------------------------------------------------------------------
-	
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
-	 */
-	public void initialize() throws KiemInitializationException {
-		//set the executing flag to true
-		executing = true;
-		JSONObject object = new JSONObject();
-		String[] interfaceKeys = this.getInterfaceKeys();
-		if (interfaceKeys == null) return;
-		//enclose the interface keys for the remote table unit
-		for (int c = 0; c < interfaceKeys.length; c++) {
-			try {
-				object.accumulate(""+c, interfaceKeys[c]);
-			}catch(Exception e) {
-				throw new KiemInitializationException(
-						"Cannot marshall interface keys", true, e);
-			}
-		}
-		DataComponentMaster.tcpServer.println("I"+object.toString());
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * This method returns the one and only instance of this observer DataComponent.
+     * 
+     * @return the instance
+     */
+    public static DataComponentObserver getInstance() {
+        return instance;
+    }
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
-	 */
-	public boolean isObserver() {
-		//this is an observer only
-		return true;
-	}
-	
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
-	 */
-	public boolean isHistoryObserver() {
-		//this is also a history observer
-		return true;
-	}
+    /**
+     * Instantiates a new DataComponentObserver.
+     */
+    public DataComponentObserver() {
+        instance = this;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	public boolean isDeltaObserver() {
-		//we are only interested in delta data
-		return true;
-	}
+    public KiemEvent provideEventOfInterest() {
+        // we want to get notified of current step information
+        return (new KiemEvent(KiemEvent.STEP_INFO));
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
-	 */
-	public boolean isProducer() {
-		//we do not produce any data
-		return false;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#notifyStep(long, long)
+     */
+    // in fact the type is checked, instanceof does not work with generics
+    @SuppressWarnings("unchecked")
+    @Override
+    public void notifyEvent(KiemEvent event) {
+        try {
+            if (event.getInfo() instanceof Pair<?, ?>) {
+                Pair<Long, Long> stepInfo = (Pair<Long, Long>) event.getInfo();
+                long currentStep = stepInfo.getFirst();
+                long totalSteps = stepInfo.getSecond();
+                // update the local currentStep and totalSteps variables that are send
+                // in each step() method call
+                this.currentStep = currentStep;
+                this.totalSteps = totalSteps;
+            }
 
-	//-------------------------------------------------------------------------
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
-	 */
-	public void wrapup() throws KiemInitializationException {
-		//set the executing flag to false
-		executing = false;
-	}
-	
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * This method can be used to check whether the execution of the KIELER
-	 * Execution Manager is currently running or stopped.
-	 *  
-	 * @return true, if execution is running
-	 */
-	public boolean isExecuting() {
-		return executing;
-	}
+    public String step(String jSONString) throws KiemExecutionException {
+        JSONObject object = null;
+        try {
+            // try to accumulate/enclose the currenStep information under the
+            // "_KIEMExecutionSteps" JSON key
+            object = new JSONObject(jSONString);
+            String stepsString = currentStep + "/" + totalSteps;
+            if (currentStep == totalSteps)
+                stepsString = currentStep + "";
+            object.accumulate("_KIEMExecutionSteps", stepsString);
+        } catch (Exception e) {
+        }
+        String type = "P"; // present step
+        if (this.isHistoryStep())
+            type = "H"; // history step
+        String inData = type + object.toString();
+        // finally send this as one line with the help of the TCPServer
+        // (this may rise an error)
+        try {
+            DataComponentMaster.tcpServer.println(inData);
+        } catch (Exception e) {
+            new KiemExecutionException("Cannot send data to remote table", false, e);
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+     */
+    public void initialize() throws KiemInitializationException {
+        // set the executing flag to true
+        executing = true;
+        JSONObject object = new JSONObject();
+        String[] interfaceKeys = this.getInterfaceKeys();
+        if (interfaceKeys == null)
+            return;
+        // enclose the interface keys for the remote table unit
+        for (int c = 0; c < interfaceKeys.length; c++) {
+            try {
+                object.accumulate("" + c, interfaceKeys[c]);
+            } catch (Exception e) {
+                throw new KiemInitializationException("Cannot marshall interface keys", true, e);
+            }
+        }
+        DataComponentMaster.tcpServer.println("I" + object.toString());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+     */
+    public boolean isObserver() {
+        // this is an observer only
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
+     */
+    public boolean isHistoryObserver() {
+        // this is also a history observer
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public boolean isDeltaObserver() {
+        // we are only interested in delta data
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
+     */
+    public boolean isProducer() {
+        // we do not produce any data
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+     */
+    public void wrapup() throws KiemInitializationException {
+        // set the executing flag to false
+        executing = false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method can be used to check whether the execution of the KIELER Execution Manager is
+     * currently running or stopped.
+     * 
+     * @return true, if execution is running
+     */
+    public boolean isExecuting() {
+        return executing;
+    }
 
 }

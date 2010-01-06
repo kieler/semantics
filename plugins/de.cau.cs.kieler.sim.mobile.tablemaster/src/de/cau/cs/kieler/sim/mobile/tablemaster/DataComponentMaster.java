@@ -19,7 +19,7 @@ import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * The DataComponentMaster of the mobile table master plug-in implements the
