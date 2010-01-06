@@ -28,7 +28,8 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  src/
-Import-Package: org.eclipse.emf.common.util,
+Import-Package: de.cau.cs.kieler.synccharts,
+ org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.mwe.core,
