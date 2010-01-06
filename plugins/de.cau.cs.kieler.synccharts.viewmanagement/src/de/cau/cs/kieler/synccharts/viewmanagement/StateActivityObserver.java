@@ -38,8 +38,8 @@ import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
