@@ -17,7 +17,7 @@ package de.cau.cs.kieler.xkev.mapping.animations;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 /**

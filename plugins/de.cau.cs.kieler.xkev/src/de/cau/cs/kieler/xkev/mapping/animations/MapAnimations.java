@@ -34,8 +34,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.w3c.dom.svg.SVGDocument;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Animation;
 import de.cau.cs.kieler.xkev.mapping.Colorize;

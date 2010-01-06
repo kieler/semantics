@@ -9,7 +9,7 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Text;

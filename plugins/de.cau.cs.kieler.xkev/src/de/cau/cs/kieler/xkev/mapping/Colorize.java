@@ -8,7 +8,7 @@ package de.cau.cs.kieler.xkev.mapping;
 
 import org.w3c.dom.svg.SVGDocument;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 
 /**

@@ -8,7 +8,7 @@ package de.cau.cs.kieler.xkev.mapping;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * <!-- begin-user-doc -->

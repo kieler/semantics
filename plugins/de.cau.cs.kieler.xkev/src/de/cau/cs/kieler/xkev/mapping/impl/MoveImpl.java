@@ -13,8 +13,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONArray;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;

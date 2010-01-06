@@ -28,7 +28,7 @@ import org.w3c.dom.svg.SVGElement;
 import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * <!-- begin-user-doc -->

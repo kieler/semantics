@@ -6,8 +6,8 @@
  */
 package de.cau.cs.kieler.xkev.mapping.impl;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONArray;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Animation;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
