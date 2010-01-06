@@ -14,8 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class JSONMerger implements the merging functionality of used by the DataPool. It is able to

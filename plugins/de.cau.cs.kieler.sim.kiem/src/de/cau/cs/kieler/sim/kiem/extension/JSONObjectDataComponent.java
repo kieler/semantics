@@ -14,7 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * The Class JSONObjectDataComponent. Implementation for the extension point JSONObjectDataComponent

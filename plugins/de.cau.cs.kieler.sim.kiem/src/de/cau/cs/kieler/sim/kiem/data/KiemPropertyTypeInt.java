@@ -18,7 +18,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for an integer type.
+ * This implements a sample KiemPropertyType for an integer type.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 

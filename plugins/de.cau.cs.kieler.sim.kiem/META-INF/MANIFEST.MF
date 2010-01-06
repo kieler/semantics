@@ -13,15 +13,15 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.ui.views.log;bundle-version="1.0.100",
  org.eclipse.ui.ide,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore,
+ org.json;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.data,
  de.cau.cs.kieler.sim.kiem.extension;uses:="org.eclipse.core.runtime",
- de.cau.cs.kieler.sim.kiem.json,
  de.cau.cs.kieler.sim.kiem.ui,
  de.cau.cs.kieler.sim.kiem.views
-Import-Package: de.cau.cs.kieler.sim.kiem.json,
+Import-Package: org.json,
  org.eclipse.core.resources,
  org.eclipse.emf.common.ui,
  org.eclipse.emf.common.util,

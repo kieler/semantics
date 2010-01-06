@@ -15,14 +15,17 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.List;
+
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class Execution. This is the base class for the whole execution. It creates and manages the
@@ -41,10 +44,10 @@ public class Execution implements Runnable {
 
     /** The Constant TIMEOUT multiplicity. 10x times the aimed step duration. */
     private static final int TIMEOUTMULTIPLICITY = 10;
-    
-    ///** The TIMEOUT for DataComponents. */
-    //private static int TIMEOUT;
-    //currently calculated on the fly, see getTimeout()
+
+    // /** The TIMEOUT for DataComponents. */
+    // private static int TIMEOUT;
+    // currently calculated on the fly, see getTimeout()
 
     /** Delay to wait in paused state in ms. */
     private static final int PAUSE_DEYLAY = 50;
@@ -60,10 +63,11 @@ public class Execution implements Runnable {
 
     /** Defines the number of steps in pause mode. */
     private static final int NO_STEPS = 0;
-    
-    /** The Constant SECOND_WAITTIMEOUT indicates how long to sleep
-     * until changes in aimed step durations are guaranteed to be
-     * processed. */
+
+    /**
+     * The Constant SECOND_WAITTIMEOUT indicates how long to sleep until changes in aimed step
+     * durations are guaranteed to be processed.
+     */
     private static final int SECOND_WAITTIMEOUT = 1000;
 
     /**
@@ -131,11 +135,17 @@ public class Execution implements Runnable {
     /** Threads for producers. */
     private ProducerExecution[] producerExecutionArray;
 
-    // -------------------------------------------------------------------------
-    
     /**
-     * Gets the timeout which is the TIMEOUTMULTIPLICITY x aimedStepDuration but 
-     * minimally a timeout of Execution.SECOND_WAITTIMEOUT.
+     * The event manager to handle notification of DataComponents. It is assembled before the
+     * execution and discarded when an execution finishes.
+     */
+    private EventManager eventManager;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the timeout which is the TIMEOUTMULTIPLICITY x aimedStepDuration but minimally a timeout
+     * of Execution.SECOND_WAITTIMEOUT.
      * 
      * @return the timeout
      */
@@ -149,8 +159,7 @@ public class Execution implements Runnable {
     }
 
     // -------------------------------------------------------------------------
-    
-    
+
     /**
      * Instantiates and starts a new execution (thread).
      * 
@@ -158,13 +167,19 @@ public class Execution implements Runnable {
      *            the current DataComponentExList
      */
     public Execution(final List<DataComponentEx> dataComponentExListParam) {
-        this.aimedStepDuration= KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
+        this.aimedStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
         this.stop = false;
         this.pausedCommand = false;
         this.steps = NO_STEPS; // == paused
         this.stepToPause = -1;
         this.dataComponentExList = dataComponentExListParam;
         this.dataPool = new JSONDataPool();
+        // create and fill the event manager
+        eventManager = new EventManager();
+        for (int c = 0; c < dataComponentExListParam.size(); c++) {
+            DataComponentEx dataComponentEx = dataComponentExListParam.get(c);
+            eventManager.add(dataComponentEx);
+        }
         // start the timeout worker thread
         this.timeout = new TimeoutThread();
         this.timeout.start();
@@ -174,7 +189,8 @@ public class Execution implements Runnable {
         // for each pure producer ... create ProducerExecution Thread
         for (int c = 0; c < dataComponentExListParam.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExListParam.get(c);
-            timeout.timeout(getTimeout(), "isEnabled, isObserver, isProducer", dataComponentEx, this);
+            timeout.timeout(getTimeout(), "isEnabled, isObserver, isProducer", dataComponentEx,
+                    this);
             if (dataComponentEx.isEnabled()) {
                 if (dataComponentEx.isObserverOnly()) {
                     // pure Observer
@@ -193,10 +209,9 @@ public class Execution implements Runnable {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Gets the data pool. Be careful with using the DataPool after starting
-     * the thread!
+     * Gets the data pool. Be careful with using the DataPool after starting the thread!
      * 
      * @return the data pool
      */
@@ -259,9 +274,8 @@ public class Execution implements Runnable {
         int returnValue;
         try {
             returnValue = (int) (this.accumulatedStepDurations / this.stepCounter);
-        }
-        catch(Exception e) {
-            //handle null case
+        } catch (Exception e) {
+            // handle null case
             returnValue = 0;
         }
         return returnValue;
@@ -474,12 +488,14 @@ public class Execution implements Runnable {
                 // notify components
                 for (int c = 0; c < this.dataComponentExList.size(); c++) {
                     DataComponentEx dataComponentEx = dataComponentExList.get(c);
-                    timeout.timeout(getTimeout(), "isEnabled, isHistoryObserver", dataComponentEx, this);
+                    timeout.timeout(getTimeout(), "isEnabled, isHistoryObserver", dataComponentEx,
+                            this);
                     if (dataComponentEx.isEnabled()
                     // HISTORY COMPONENTS ONLY//
                             && dataComponentEx.isHistoryObserver()) {
                         timeout.timeout(getTimeout(), "commandStep", dataComponentEx, this);
-                        dataComponentEx.getDataComponent().commandStep();
+                        eventManager.notify(KiemEvent.CMD_STEP_BACK);
+                        // dataComponentEx.getDataComponent().commandStep();
                     }
                     timeout.abortTimeout();
                 }
@@ -517,7 +533,8 @@ public class Execution implements Runnable {
                     timeout.timeout(getTimeout(), "isEnabled", dataComponentEx, this);
                     if (dataComponentEx.isEnabled()) {
                         timeout.timeout(getTimeout(), "commandStep", dataComponentEx, this);
-                        dataComponentEx.getDataComponent().commandStep();
+                        eventManager.notify(KiemEvent.CMD_STEP);
+                        // dataComponentEx.getDataComponent().commandStep();
                     }
                     timeout.abortTimeout();
                 }
@@ -557,7 +574,8 @@ public class Execution implements Runnable {
                 timeout.timeout(getTimeout(), "isEnabled", dataComponentEx, this);
                 if (dataComponentEx.isEnabled()) {
                     timeout.timeout(getTimeout(), "commandPause", dataComponentEx, this);
-                    dataComponentEx.getDataComponent().commandPause();
+                    eventManager.notify(KiemEvent.CMD_PAUSE);
+                    // dataComponentEx.getDataComponent().commandPause();
                 }
                 timeout.abortTimeout();
             }
@@ -582,7 +600,8 @@ public class Execution implements Runnable {
                 timeout.timeout(getTimeout(), "isEnabled", dataComponentEx, this);
                 if (dataComponentEx.isEnabled()) {
                     timeout.timeout(getTimeout(), "commandRun", dataComponentEx, this);
-                    dataComponentEx.getDataComponent().commandRun();
+                    eventManager.notify(KiemEvent.CMD_RUN);
+                    // dataComponentEx.getDataComponent().commandRun();
                 }
                 timeout.abortTimeout();
             }
@@ -612,7 +631,8 @@ public class Execution implements Runnable {
                 if (dataComponentEx.isEnabled()) {
                     timeout.abortTimeout();
                     timeout.timeout(getTimeout(), "commandStop", dataComponentEx, this);
-                    dataComponentEx.getDataComponent().commandStop();
+                    eventManager.notify(KiemEvent.CMD_STOP);
+                    // dataComponentEx.getDataComponent().commandStop();
                     timeout.abortTimeout();
                 }
                 timeout.abortTimeout();
@@ -944,7 +964,7 @@ public class Execution implements Runnable {
     }
 
     // -------------------------------------------------------------------------
- 
+
     /**
      * {@inheritDoc}
      */
@@ -991,10 +1011,13 @@ public class Execution implements Runnable {
 
                     // --------------------------------------------------
 
-                    // motify about steps
+                    // notify about steps
                     for (int c = 0; c < this.dataComponentExList.size(); c++) {
-                        dataComponentExList.get(c).getDataComponent().notifyStep(this.stepCounter,
-                                this.stepCounterMax);
+                        KiemEvent infoEvent = new KiemEvent(KiemEvent.STEP_INFO,
+                                new Pair<Long, Long>(this.stepCounter, this.stepCounterMax));
+                        eventManager.notify(infoEvent);
+                        // dataComponentExList.get(c).getDataComponent()
+                        // .notifyStep(this.stepCounter,this.stepCounterMax);
                     }
 
                     // update steps in kiem view
@@ -1028,8 +1051,8 @@ public class Execution implements Runnable {
                                 }
                             }
                             timeout.abortTimeout();
-                        } //next pure producer
-                    } //end if not history step
+                        } // next pure producer
+                    } // end if not history step
 
                     // make a step - according to the dataComponentExList order
                     for (int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -1045,13 +1068,14 @@ public class Execution implements Runnable {
 
                         // check whether DataComponent can handle HISTORY STEPS
                         if (this.isHistoryStep()) {
-                            timeout.timeout(getTimeout(), "isHistoryObserver", dataComponentEx, this);
+                            timeout.timeout(getTimeout(), "isHistoryObserver", dataComponentEx,
+                                    this);
                             if (!dataComponentEx.isHistoryObserver()) {
                                 timeout.abortTimeout();
                                 continue;
                             }
-                            timeout.timeout(getTimeout(), "isProducer, isObserver", dataComponentEx,
-                                    this);
+                            timeout.timeout(getTimeout(), "isProducer, isObserver",
+                                    dataComponentEx, this);
                             if (dataComponentEx.isProducerOnly()) {
                                 timeout.abortTimeout();
                                 continue;
@@ -1062,7 +1086,8 @@ public class Execution implements Runnable {
                         // ===========================================//
                         // == C O N S U M E R / P R O D U C E R ==//
                         // ===========================================//
-                        timeout.timeout(getTimeout(), "isProducer, isObserver", dataComponentEx, this);
+                        timeout.timeout(getTimeout(), "isProducer, isObserver", dataComponentEx,
+                                this);
                         if (dataComponentEx.isProducerObserver()) {
                             // System.out.println(c + ") " +dataComponentEx.getName() +
                             // " (Norm Producer) call");
@@ -1186,8 +1211,7 @@ public class Execution implements Runnable {
                         this.weightedAverageStepDuration = this.stepDuration;
                     } else {
                         // other ticks
-                        this.weightedAverageStepDuration = (this.weightedAverageStepDuration 
-                                                            + this.stepDuration) / 2;
+                        this.weightedAverageStepDuration = (this.weightedAverageStepDuration + this.stepDuration) / 2;
                     }
                     this.accumulatedStepDurations += this.stepDuration;
 

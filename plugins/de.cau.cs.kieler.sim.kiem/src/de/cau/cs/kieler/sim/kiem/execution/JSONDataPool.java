@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.LinkedList;
 import java.util.List;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class JSONDataPool. It implements the "brain" of the execution manager and provides the

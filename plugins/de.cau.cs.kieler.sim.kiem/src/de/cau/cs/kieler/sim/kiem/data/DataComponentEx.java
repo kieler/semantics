@@ -20,9 +20,10 @@ import java.util.HashMap;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class DataComponentEx. Is a wrapper for the
@@ -192,7 +193,13 @@ public class DataComponentEx implements Serializable {
     public void setEnabled(final boolean enabledParam) {
         this.enabled = enabledParam;
         // notify the DataComponent
-        this.component.notifyEnabled(enabledParam);
+        if (enabledParam) {
+            this.component.notifyEvent(new KiemEvent(KiemEvent.ACTIVATED));
+        }
+        else {
+            this.component.notifyEvent(new KiemEvent(KiemEvent.DEACTIVATED));
+        }
+        //this.component.notifyEnabled(enabledParam);
     }
 
     // -------------------------------------------------------------------------
@@ -580,148 +587,194 @@ public class DataComponentEx implements Serializable {
 
     // -------------------------------------------------------------------------
 
+//    /**
+//     * Master component enables/disables and implements GUI button step back.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstepBack()
+//     */
+//    public void masterGUIstepBack() {
+//        this.component.masterGUIstepBack();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button step.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstep()
+//     */
+//    public void masterGUIstep() {
+//        this.component.masterGUIstep();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button macro step.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUImacroStep()
+//     */
+//    public void masterGUImacroStep() {
+//        this.component.masterGUImacroStep();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button run.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIrun()
+//     */
+//    public void masterGUIrun() {
+//        this.component.masterGUIrun();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button pause.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIpause()
+//     */
+//    public void masterGUIpause() {
+//        this.component.masterGUIpause();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button stop.
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstop()
+//     */
+//    public void masterGUIstop() {
+//        this.component.masterGUIstop();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button step back.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStepBack()
+//     */
+//    public boolean masterGUIisEnabledStepBack() {
+//        return this.component.masterGUIisEnabledStepBack();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button step.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStep()
+//     */
+//    public boolean masterGUIisEnabledStep() {
+//        return this.component.masterGUIisEnabledStep();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button macro step.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledMacroStep()
+//     */
+//    public boolean masterGUIisEnabledMacroStep() {
+//        return this.component.masterGUIisEnabledMacroStep();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button pause.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledPause()
+//     */
+//    public boolean masterGUIisEnabledPause() {
+//        return this.component.masterGUIisEnabledPause();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button run.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledRun()
+//     */
+//    public boolean masterGUIisEnabledRun() {
+//        return this.component.masterGUIisEnabledRun();
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Master component enables/disables and implements GUI button stop.
+//     * 
+//     * @return true, if button is enabled
+//     * 
+//     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStop()
+//     */
+//    public boolean masterGUIisEnabledStop() {
+//        return this.component.masterGUIisEnabledStop();
+//    }
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Master component enables/disables and implements GUI button step back.
+     * If this is component is a master and implements the GUI it must react to
+     * user button hits.<BR>
+     * <BR>
+     * The command can be either:<BR>
+     * MASTER_CMD_STEP for the step button<BR>
+     * MASTER_CMD_MACROSTEP for the macro step button<BR>
+     * MASTER_CMD_RUN for the run button<BR>
+     * MASTER_CMD_PAUSE for the pause button<BR>
+     * MASTER_CMD_STOP for the stop button<BR>
+     * MASTER_CMD_STEPBACK for the back step button<BR>
+     * <BR>
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstepBack()
+     * @param command
+     *            the command
      */
-    public void masterGUIstepBack() {
-        this.component.masterGUIstepBack();
+    public void masterGUI(final int command) {
+        this.component.masterGUI(command);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Master component enables/disables and implements GUI button step.
+     * If this is component is a master and implements the GUI it must tell KIEM when user buttons
+     * are enabled/disabled. <BR>
+     * <BR>
+     * The command can be either:<BR>
+     * MASTER_CMD_STEP for the step button<BR>
+     * MASTER_CMD_MACROSTEP for the macro step button<BR>
+     * MASTER_CMD_RUN for the run button<BR>
+     * MASTER_CMD_PAUSE for the pause button<BR>
+     * MASTER_CMD_STOP for the stop button<BR>
+     * MASTER_CMD_STEPBACK for the back step button<BR>
+     * <BR>
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstep()
+     * @param command
+     *            the command
+     * 
+     * @return true, if the specific button is enabled
      */
-    public void masterGUIstep() {
-        this.component.masterGUIstep();
+    public boolean masterGUIisEnabled(final int command) {
+        return this.component.masterGUIisEnabled(command);
     }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button macro step.
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUImacroStep()
-     */
-    public void masterGUImacroStep() {
-        this.component.masterGUImacroStep();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button run.
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIrun()
-     */
-    public void masterGUIrun() {
-        this.component.masterGUIrun();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button pause.
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIpause()
-     */
-    public void masterGUIpause() {
-        this.component.masterGUIpause();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button stop.
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstop()
-     */
-    public void masterGUIstop() {
-        this.component.masterGUIstop();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button step back.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStepBack()
-     */
-    public boolean masterGUIisEnabledStepBack() {
-        return this.component.masterGUIisEnabledStepBack();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button step.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStep()
-     */
-    public boolean masterGUIisEnabledStep() {
-        return this.component.masterGUIisEnabledStep();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button macro step.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledMacroStep()
-     */
-    public boolean masterGUIisEnabledMacroStep() {
-        return this.component.masterGUIisEnabledMacroStep();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button pause.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledPause()
-     */
-    public boolean masterGUIisEnabledPause() {
-        return this.component.masterGUIisEnabledPause();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button run.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledRun()
-     */
-    public boolean masterGUIisEnabledRun() {
-        return this.component.masterGUIisEnabledRun();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master component enables/disables and implements GUI button stop.
-     * 
-     * @return true, if button is enabled
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStop()
-     */
-    public boolean masterGUIisEnabledStop() {
-        return this.component.masterGUIisEnabledStop();
-    }
-
+    
     // -------------------------------------------------------------------------
 
     /**

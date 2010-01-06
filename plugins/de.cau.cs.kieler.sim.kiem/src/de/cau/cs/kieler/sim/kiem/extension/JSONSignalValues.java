@@ -14,8 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class JSONSignalValues. This is an implementation of a <B>CONVENTION</B> for representing

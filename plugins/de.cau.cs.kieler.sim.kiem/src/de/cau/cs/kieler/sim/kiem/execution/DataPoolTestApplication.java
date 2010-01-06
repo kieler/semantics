@@ -14,7 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * The Class DataPoolTestApplication. It only exists for experimental use debug and testing of the

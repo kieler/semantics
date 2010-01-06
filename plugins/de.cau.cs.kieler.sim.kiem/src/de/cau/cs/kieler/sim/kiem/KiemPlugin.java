@@ -49,8 +49,8 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * This activator class controls the life cycle of the KiemPlugin. It also provides the access to
@@ -677,8 +677,6 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @return the added dataComponentEx component
      */
     public DataComponentEx addTodataComponentExList(final DataComponent component) {
-        // suggest calling the garbage collector
-        System.gc();
         IConfigurationElement componentConfigEle = component.getConfigurationElement();
         DataComponent componentClone;
         try {

@@ -19,7 +19,7 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * The Class ObserverExecution. This implements the behavior of an observer worker thread that
@@ -62,8 +62,7 @@ public class ObserverExecution implements Runnable {
      * @param parentParam
      *            the parent execution
      */
-    public ObserverExecution(final DataComponent dataComponentParam, 
-                             final Execution parentParam) {
+    public ObserverExecution(final DataComponent dataComponentParam, final Execution parentParam) {
         this.stop = false;
         this.done = true;
         this.data = null;

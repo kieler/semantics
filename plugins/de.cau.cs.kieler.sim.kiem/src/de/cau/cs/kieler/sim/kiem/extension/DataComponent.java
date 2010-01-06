@@ -56,6 +56,24 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      */
     private boolean historyStep;
 
+    /** The Constant to imitate a user run command. */
+    public static final int MASTER_CMD_RUN = 1;
+
+    /** The Constant to imitate a user pause command. */
+    public static final int MASTER_CMD_PAUSE = 2;
+
+    /** The Constant to imitate a user stop command. */
+    public static final int MASTER_CMD_STOP = 3;
+
+    /** The Constant to imitate a user step command. */
+    public static final int MASTER_CMD_STEP = 4;
+
+    /** The Constant to imitate a user macro step command. */
+    public static final int MASTER_CMD_MACROSTEP = 5;
+
+    /** The Constant to imitate a user step command. */
+    public static final int MASTER_CMD_STEPBACK = 6;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -123,7 +141,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
         } else {
             type += "0";
         }
-        return this.getPluginId() + type + propertiesId;
+        return this.getPluginId() + type + propertiesId.hashCode();
     }
 
     // -------------------------------------------------------------------------
@@ -134,7 +152,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * @param propertiesParam
      *            the new KiemProperty[] array
      */
-    public void setProperties(final KiemProperty[] propertiesParam) {
+    public final void setProperties(final KiemProperty[] propertiesParam) {
         this.properties = propertiesParam;
     }
 
@@ -190,7 +208,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the name of the component which is defined in the extension.
+     * Gets the name of the component which is defined in the extension point.
      * 
      * @return the name of the DataComponent
      */
@@ -215,8 +233,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
 
     /**
      * If this DataComponent implements an observer, provide some key's of interest. If you use null
-     * then not filter is being used and the component will get all values.
-     *
+     * then no filter is being used and the component will get all values.
+     * 
      * @return a String array with the keys of interest
      */
     public String[] provideFilterKeys() {
@@ -243,7 +261,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * user decides to run/start the execution the properties are tested (see below) and the
      * component may use there settings.
      * 
-     * @return the KiemProperty[]
+     * @return the KiemProperty[] or null if no properties are provided
      */
     public KiemProperty[] provideProperties() {
         return null;
@@ -252,10 +270,9 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     // -------------------------------------------------------------------------
 
     /**
-     * This method is intended to check if the properties are filled correctly. Here a component may
+     * This method is intended to check if the properties are set correctly. Here a component may
      * check for required and optional properties and their settings. Also an {@link:
-     * KiemPropertyError} can be raised if some property prevents the the execution of this
-     * component.
+     * KiemPropertyError} can be raised if some property prevents the execution of this component.
      * 
      * @param propertiesParam
      *            the properties with the current user settings
@@ -273,12 +290,13 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * Provide (local) interface variable keys. This is an optional method that will provide some
      * interface variable keys that can be used by other DataComponents within and after the
      * initialization phase every DataComponent may receive the union of all those variable keys by
-     * calling the {@link #getInterfaceKeys()} method.
-     * <BR><BR>
-     * <B>DEPRECATED: Use 
-{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()} or 
-{@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()}
- instead!</B>
+     * calling the {@link #getInterfaceKeys()} method. <BR>
+     * <BR>
+     * <B>DEPRECATED: Use
+     * {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()}
+     * or
+     * {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()}
+     * instead!</B>
      * 
      * @return the local interface variable keys
      * @throws KiemInitializationException
@@ -294,13 +312,13 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
 
     /**
      * Sets the global interface variable keys. Is called by the execution manager during the
-     * initialization phase.
-     * <BR><BR>
-     * <B>DEPRECATED: Use 
-{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables
-(de.cau.cs.kieler.sim.kiem.json.JSONObject)} 
-or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)}
- instead!</B>
+     * initialization phase. <BR>
+     * <BR>
+     * <B>DEPRECATED: Use
+     * {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
+     * or
+     * {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)}
+     * instead!</B>
      * 
      * @param globalInterfaceKeysParam
      *            the new global interface variable keys
@@ -313,14 +331,13 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the (global) interface variable keys. Can be used by the DataComponent
-     * itself to retrieve information about global interface keys.
-     * <BR><BR>
-     * <B>DEPRECATED: Use 
-{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()}
- or 
- {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#getInitialVariables()} 
- instead!</B>
+     * Gets the (global) interface variable keys. Can be used by the DataComponent itself to
+     * retrieve information about global interface keys. <BR>
+     * <BR>
+     * <B>DEPRECATED: Use
+     * {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()}
+     * or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#getInitialVariables()}
+     * instead!</B>
      * 
      * @return the global interface variables
      */
@@ -379,8 +396,8 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is delta observer. Delta values means all changed values that are in the present
-     * and were in the past ticks when this component may have been skipped.<BR>
+     * Checks if is delta observer. Delta values are all changed values that are in the present and
+     * were in the past ticks when this component may have been skipped.<BR>
      * If a component wants all (accumulated & updated) values of the present tick, it should return
      * false.
      * 
@@ -393,11 +410,10 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is pause flag. This method can be overridden to force the execution to pause. Be
-     * careful if you override this method - it will force the simulation to pause and hence it
-     * <B>CANNOT</B> proceed until *EVERY* component's isPauseFlag() returns false! Also the step()
-     * function will never get called again! Be careful when implementing side effects in this
-     * method!
+     * This method can be overridden to force the execution to pause. Be careful if you override
+     * this method - it will force the simulation to pause and hence it <B>CANNOT</B> proceed until
+     * *EVERY* component's isPauseFlag() returns false! Also the step() function will never get
+     * called again! Be careful when implementing side effects in this method!
      * 
      * @return true, if is pause flag
      */
@@ -436,62 +452,62 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
     // so deadlock can easily occur if these or another object called
     // from within these methods refer to the execution-thread!!!
     // -------------------------------------------------------------------------
-    /**
-     * Command step. Called just before a step command is executed. ATTENTION: This command method
-     * is called inside the synchronized lock so a deadlock can easily occur if this or another
-     * object called from within this method refers to the execution-thread!
-     */
-    public void commandStep() {
-        // BE CAREFUL WHEN USING THIS (S.A.)//
-    }
+    // /**
+    // * Command step. Called just before a step command is executed. ATTENTION: This command method
+    // * is called inside the synchronized lock so a deadlock can easily occur if this or another
+    // * object called from within this method refers to the execution-thread!
+    // */
+    // public void commandStep() {
+    // // BE CAREFUL WHEN USING THIS (S.A.)//
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Command macro step. Called just before a macro step command is executed.<BR>
-     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-     * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     */
-    public void commandMacroStep() {
-        // BE CAREFUL WHEN USING THIS (S.A.)//
-    }
+    // /**
+    // * Command macro step. Called just before a macro step command is executed.<BR>
+    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+    // * easily occur if this or another object called from within this method refers to the
+    // * execution-thread!
+    // */
+    // public void commandMacroStep() {
+    // // BE CAREFUL WHEN USING THIS (S.A.)//
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Command run. Called just before a run command is executed.<BR>
-     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-     * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     */
-    public void commandRun() {
-        // BE CAREFUL WHEN USING THIS (S.A.)//
-    }
+    // /**
+    // * Command run. Called just before a run command is executed.<BR>
+    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+    // * easily occur if this or another object called from within this method refers to the
+    // * execution-thread!
+    // */
+    // public void commandRun() {
+    // // BE CAREFUL WHEN USING THIS (S.A.)//
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Command pause. Called just before a pause command is executed.<BR>
-     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-     * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     */
-    public void commandPause() {
-        // BE CAREFUL WHEN USING THIS (S.A.)//
-    }
+    // /**
+    // * Command pause. Called just before a pause command is executed.<BR>
+    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+    // * easily occur if this or another object called from within this method refers to the
+    // * execution-thread!
+    // */
+    // public void commandPause() {
+    // // BE CAREFUL WHEN USING THIS (S.A.)//
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Command stop. Called just before a stop command is executed.<BR>
-     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-     * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     */
-    public void commandStop() {
-        // BE CAREFUL WHEN USING THIS (S.A.)//
-    }
+    // /**
+    // * Command stop. Called just before a stop command is executed.<BR>
+    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+    // * easily occur if this or another object called from within this method refers to the
+    // * execution-thread!
+    // */
+    // public void commandStop() {
+    // // BE CAREFUL WHEN USING THIS (S.A.)//
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -536,108 +552,121 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Master step execution. If this is a master it can initiate the execution this method returns
+     /**
+     * Master step execution. If this is a master it can initiate the execution this method
+     returns
      * -1 if the previous step did not completed yet otherwise it will return the last execution
      * time of the full step <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
-     * 
+     *
      * @throws KiemMasterException
-     *             a KiemMasterException
+     * a KiemMasterException
+     * 
+     * <BR><BR><B> DEPRECATED: use masterCommand() method instead! </B>
      */
-    public final void masterStepExecution() throws KiemMasterException {
-        if (this.isMaster()) {
-            if ((kIEMInstance != null)) {
-                kIEMInstance.initExecution();
-            }
-            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
-                kIEMInstance.getExecution().stepExecutionSync();
-                kIEMViewInstance.updateViewAsync();
-                return;
-            }
-        }
-        throw new KiemMasterException(Messages.mErrorKiemMasterException);
-    }
+    @Deprecated
+     public final void masterStepExecution() throws KiemMasterException {
+     if (this.isMaster()) {
+     if ((kIEMInstance != null)) {
+     kIEMInstance.initExecution();
+     }
+     if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+     kIEMInstance.getExecution().stepExecutionSync();
+     kIEMViewInstance.updateViewAsync();
+     return;
+     }
+     }
+     throw new KiemMasterException(Messages.mErrorKiemMasterException);
+     }
 
     // -------------------------------------------------------------------------
 
-    /**
+     /**
      * Master macro step execution. If this is a master it can initiate the execution this method
      * returns -1 if the previous step did not completed yet otherwise it will return the last
      * execution time of the full step. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
-     * 
+     *
      * @throws KiemMasterException
-     *             a KiemMasterException
+     * a KiemMasterException
+     * 
+     * <BR><BR><B> DEPRECATED: use masterCommand() method instead! </B>
      */
-    public final void masterMacroStepExecution() throws KiemMasterException {
-        if (this.isMaster()) {
-            if ((kIEMInstance != null)) {
-                kIEMInstance.initExecution();
-            }
-            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
-                kIEMInstance.getExecution().macroStepExecutionSync();
-                kIEMViewInstance.updateViewAsync();
-                return;
-            }
-        }
-        throw new KiemMasterException(Messages.mErrorKiemMasterException);
-    }
+    @Deprecated
+     public final void masterMacroStepExecution() throws KiemMasterException {
+     if (this.isMaster()) {
+     if ((kIEMInstance != null)) {
+     kIEMInstance.initExecution();
+     }
+     if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+     kIEMInstance.getExecution().macroStepExecutionSync();
+     kIEMViewInstance.updateViewAsync();
+     return;
+     }
+     }
+     throw new KiemMasterException(Messages.mErrorKiemMasterException);
+     }
 
     // -------------------------------------------------------------------------
 
-    /**
+     /**
      * Master stop execution. If this is a master it can stop the execution. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
-     * 
+     *
      * @throws KiemMasterException
-     *             a KiemMasterException
+     * a KiemMasterException
+     * 
+     * <BR><BR><B> DEPRECATED: use masterCommand() method instead! </B>
      */
-    public final void masterStopExecution() throws KiemMasterException {
-        if (this.isMaster()) {
-            if (kIEMInstance != null) {
-                kIEMInstance.initExecution();
-            }
-            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
-                kIEMInstance.getExecution().stopExecutionSync();
-                kIEMInstance.setExecution(null);
-                kIEMViewInstance.updateViewAsync();
-                return;
-            }
-        }
-        throw new KiemMasterException(Messages.mErrorKiemMasterException);
-    }
+    @Deprecated
+     public final void masterStopExecution() throws KiemMasterException {
+     if (this.isMaster()) {
+     if (kIEMInstance != null) {
+     kIEMInstance.initExecution();
+     }
+     if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+     kIEMInstance.getExecution().stopExecutionSync();
+     kIEMInstance.setExecution(null);
+     kIEMViewInstance.updateViewAsync();
+     return;
+     }
+     }
+     throw new KiemMasterException(Messages.mErrorKiemMasterException);
+     }
 
     // -------------------------------------------------------------------------
 
-    /**
+     /**
      * Master pause execution. If this is a master it can pause the execution. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
-     * 
+     *
      * @throws KiemMasterException
-     *             a KiemMasterException
+     * a KiemMasterException
+     * 
+     * <BR><BR><B> DEPRECATED: use masterCommand() method instead! </B>
      */
-    public final void masterPauseExecution() throws KiemMasterException {
-        if (this.isMaster()) {
-            if ((kIEMInstance != null)) {
-                kIEMInstance.initExecution();
-            }
-            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
-                kIEMInstance.getExecution().pauseExecutionSync();
-                kIEMViewInstance.updateViewAsync();
-                return;
-            }
-        }
-        throw new KiemMasterException(Messages.mErrorKiemMasterException);
-    }
+    @Deprecated
+     public final void masterPauseExecution() throws KiemMasterException {
+     if (this.isMaster()) {
+     if ((kIEMInstance != null)) {
+     kIEMInstance.initExecution();
+     }
+     if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+     kIEMInstance.getExecution().pauseExecutionSync();
+     kIEMViewInstance.updateViewAsync();
+     return;
+     }
+     }
+     throw new KiemMasterException(Messages.mErrorKiemMasterException);
+     }
 
     // -------------------------------------------------------------------------
 
@@ -695,27 +724,86 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
 
     // -------------------------------------------------------------------------
 
-    /**
+     /**
      * Master run execution. If this is a master it can run the execution. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
+     *
+     * @throws KiemMasterException
+     * a KiemMasterException
+     * 
+     * <BR><BR><B> DEPRECATED: use masterCommand() method instead! </B>
+     */
+    @Deprecated
+     public final void masterRunExecution() throws KiemMasterException {
+     if (this.isMaster()) {
+     if ((kIEMInstance != null)) {
+     kIEMInstance.initExecution();
+     }
+     if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+     kIEMInstance.getExecution().runExecutionSync();
+     kIEMViewInstance.updateViewAsync();
+     return;
+     }
+     }
+     throw new KiemMasterException(Messages.mErrorKiemMasterException);
+     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * If this is component is a master it can control the execution. <BR>
+     * <BR>
+     * The command can be either:<BR>
+     * MASTER_CMD_STEP to make an execution step<BR>
+     * MASTER_CMD_MACROSTEP to make a macro step<BR>
+     * MASTER_CMD_RUN to run the execution<BR>
+     * MASTER_CMD_PAUSE to pause the execution<BR>
+     * MASTER_CMD_STOP to stop the execution<BR>
+     * MASTER_CMD_STEPBACK to make back step<BR>
+     * <BR>
+     * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
+     * overridden!
+     * 
+     * @param command
+     *            the master command to process
      * 
      * @throws KiemMasterException
      *             a KiemMasterException
      */
-    public final void masterRunExecution() throws KiemMasterException {
-        if (this.isMaster()) {
-            if ((kIEMInstance != null)) {
-                kIEMInstance.initExecution();
-            }
-            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+    public final void masterCommand(final int command) throws KiemMasterException {
+        if (!this.isMaster()) {
+            throw new KiemMasterException(Messages.mErrorKiemMasterException);
+        }
+        if ((kIEMInstance != null)) {
+            kIEMInstance.initExecution();
+        }
+
+        if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+            switch (command) {
+            case DataComponent.MASTER_CMD_STEP:
+                kIEMInstance.getExecution().stepExecutionSync();
+                break;
+            case DataComponent.MASTER_CMD_MACROSTEP:
+                kIEMInstance.getExecution().macroStepExecutionSync();
+                break;
+            case DataComponent.MASTER_CMD_RUN:
                 kIEMInstance.getExecution().runExecutionSync();
-                kIEMViewInstance.updateViewAsync();
-                return;
+                break;
+            case DataComponent.MASTER_CMD_PAUSE:
+                kIEMInstance.getExecution().pauseExecutionSync();
+                break;
+            case DataComponent.MASTER_CMD_STOP:
+                kIEMInstance.getExecution().stopExecutionSync();
+                break;
+            case DataComponent.MASTER_CMD_STEPBACK:
+                kIEMInstance.getExecution().stepBackExecutionSync();
+                break;
             }
         }
-        throw new KiemMasterException(Messages.mErrorKiemMasterException);
+        kIEMViewInstance.updateViewAsync();
+        return;
     }
 
     // -------------------------------------------------------------------------
@@ -789,142 +877,207 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
         this.kIEMViewInstance = kIEMViewInstanceParam;
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
+     // -------------------------------------------------------------------------
+    
+     /**
      * Master implementation of the step back button. This is only called if the component returns
      * true in method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUIstepBack() {
-        // no default implementation
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
+    @Deprecated
+     public void masterGUIstepBack() {
+     // no default implementation
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
      * Master implementation of the step button. This is only called if the component returns true
      * in method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUIstep() {
-        // no default implementation
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementation of the macro step button. This is only called if the component returns
+    @Deprecated
+     public void masterGUIstep() {
+     // no default implementation
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementation of the macro step button. This is only called if the component
+     returns
      * true in method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUImacroStep() {
-        // no default implementation
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementation of the run button. This is only called if the component returns true in
+    @Deprecated
+     public void masterGUImacroStep() {
+     // no default implementation
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementation of the run button. This is only called if the component returns true
+     in
      * method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUIrun() {
-        // no default implementation
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementation of the pause button. This is only called if the component returns true
+    @Deprecated
+     public void masterGUIrun() {
+     // no default implementation
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementation of the pause button. This is only called if the component returns
+     true
      * in method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUIpause() {
-        // no default implementation
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
+    @Deprecated
+     public void masterGUIpause() {
+     // no default implementation
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
      * Master implementation of the stop button. This is only called if the component returns true
      * in method isMasterImplementingGUI.
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
      */
-    public void masterGUIstop() {
+    @Deprecated
+     public void masterGUIstop() {
+     // no default implementation
+     }
+    
+        
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether step back button is enabled.
+     *
+     * @return true, if button is enabled
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledStepBack() {
+     return false;
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether step button is enabled.
+     *
+     * @return true, if button is enabled
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledStep() {
+     return false;
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether macro step button is enabled.
+     *
+     * @return true, if button is enabled
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledMacroStep() {
+     return false;
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether run button is enabled.
+     *
+     * @return true, if button is enabled
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledRun() {
+     return false;
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether pause button is enabled.
+     *
+     * @return true, if button is enabled
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledPause() {
+     return false;
+     }
+    
+     // -------------------------------------------------------------------------
+    
+     /**
+     * Master implementing GUI buttons should return whether stop button is enabled.
+     *
+     * @return true, if button is enabled
+     * 
+     * <BR><BR><B> DEPRECATED: use masterGUI() or masterGUIisEnabled() method instead! </B>
+     */
+    @Deprecated
+     public boolean masterGUIisEnabledStop() {
+     return false;
+     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * If this is component is a master and implements the GUI it must react to user button hits.<BR>
+     * <BR>
+     * The command can be either:<BR>
+     * MASTER_CMD_STEP for the step button<BR>
+     * MASTER_CMD_MACROSTEP for the macro step button<BR>
+     * MASTER_CMD_RUN for the run button<BR>
+     * MASTER_CMD_PAUSE for the pause button<BR>
+     * MASTER_CMD_STOP for the stop button<BR>
+     * MASTER_CMD_STEPBACK for the back step button<BR>
+     * <BR>
+     * 
+     * @param command
+     *            the command
+     */
+    public void masterGUI(final int command) {
         // no default implementation
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Master implementing GUI buttons should return whether step back button is enabled.
+     * If this is component is a master and implements the GUI it must tell KIEM when user buttons
+     * are enabled/disabled. <BR>
+     * <BR>
+     * The command can be either:<BR>
+     * MASTER_CMD_STEP for the step button<BR>
+     * MASTER_CMD_MACROSTEP for the macro step button<BR>
+     * MASTER_CMD_RUN for the run button<BR>
+     * MASTER_CMD_PAUSE for the pause button<BR>
+     * MASTER_CMD_STOP for the stop button<BR>
+     * MASTER_CMD_STEPBACK for the back step button<BR>
+     * <BR>
      * 
-     * @return true, if button is enabled
+     * @param command
+     *            the command
+     * 
+     * @return true, if the specific button is enabled
      */
-    public boolean masterGUIisEnabledStepBack() {
+    public boolean masterGUIisEnabled(final int command) {
         return false;
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Master implementing GUI buttons should return whether step button is enabled.
-     * 
-     * @return true, if button is enabled
-     */
-    public boolean masterGUIisEnabledStep() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementing GUI buttons should return whether macro step button is enabled.
-     * 
-     * @return true, if button is enabled
-     */
-    public boolean masterGUIisEnabledMacroStep() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementing GUI buttons should return whether run button is enabled.
-     * 
-     * @return true, if button is enabled
-     */
-    public boolean masterGUIisEnabledRun() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementing GUI buttons should return whether pause button is enabled.
-     * 
-     * @return true, if button is enabled
-     */
-    public boolean masterGUIisEnabledPause() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Master implementing GUI buttons should return whether stop button is enabled.
-     * 
-     * @return true, if button is enabled
-     */
-    public boolean masterGUIisEnabledStop() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-    //
-    // /* (non-Javadoc)
-    // * @see java.lang.Object#finalize()
-    // */
-    // protected void finalize() throws Throwable {
-    // _DataComponent();
-    // }
-    //
-    // //-------------------------------------------------------------------------
 
     /**
      * _dataComponent is a destructor of the DataComponent that is called by the execution manager
@@ -940,27 +1093,62 @@ or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitial
 
     // -------------------------------------------------------------------------
 
-    /**
+     /**
      * This method is called whenever the user enables or disables the DataComponent in the user
      * interface list.
-     * 
+     *
      * @param enabled
-     *            true, if the DataComponent was enabled, false otherwise
+     * true, if the DataComponent was enabled, false otherwise
+     * <BR><BR><B> DEPRECATED: use notifyEvent() method instead! </B>
      */
-    public void notifyEnabled(final boolean enabled) {
+    @Deprecated
+     public void notifyEnabled(final boolean enabled) {
+     }
+
+    // -------------------------------------------------------------------------
+
+     /**
+     * This method is called during execution, whenever the steps changed.
+     *
+     * @param currentStep
+     * the current step
+     * @param totalSteps
+     * the total steps
+     * <BR><BR><B> DEPRECATED: use notifyEvent() method instead! </B>
+     */
+    @Deprecated
+     public void notifyStep(final long currentStep, final long totalSteps) {
+     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return a KiemEvent type (integer value) that represents a number of events this component
+     * wants to listen to.<BR>
+     * <BR>
+     * NOTE: The provision of event types is only read by KIEM once before the execution starts.
+     * Hence, changes during the execution are not having any effect. In doubt, this method should
+     * return more events than needed. These could dynamically be ignored when temporarily not of
+     * interest.
+     * 
+     * @return the KiemEvent type indicating the events of interest
+     */
+    public KiemEvent provideEventOfInterest() {
+        return new KiemEvent();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * This method is called during execution, whenever the steps changed.
+     * This is the basic notify method that is called by KIEM whenever an event occurs for which
+     * this DataComponent is registered (see {@link #provideEventOfInterest()}).
      * 
-     * @param currentStep
-     *            the current step
-     * @param totalSteps
-     *            the total steps
+     * @param event
+     *            the KiemEvent with additional attached information, depending on the specific
+     *            event
      */
-    public void notifyStep(final long currentStep, final long totalSteps) {
+    public void notifyEvent(final KiemEvent event) {
+        // no default implementation
     }
 
 }
