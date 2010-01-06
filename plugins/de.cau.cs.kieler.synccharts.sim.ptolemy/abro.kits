@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates id="ABRO" label="ABRO">
+    <signals name="A" isInput="true"/>
+    <signals name="B" isInput="true"/>
+    <signals name="R" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <regions>
+      <innerStates id="ABO" label="ABO" isInitial="true">
+        <regions>
+          <innerStates id="WaitAandB" label="WaitAandB" isInitial="true">
+            <regions>
+              <innerStates id="wA" label="wA" isInitial="true">
+                <outgoingTransitions triggersAndEffects="A" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+                  <trigger xsi:type="synccharts:SignalReference" signal="A"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="dA" label="dA" isFinal="true"/>
+            </regions>
+            <regions>
+              <innerStates id="wB" label="wB" isInitial="true">
+                <outgoingTransitions triggersAndEffects="B" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.1">
+                  <trigger xsi:type="synccharts:SignalReference" signal="B"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="dB" label="dB" isFinal="true"/>
+            </regions>
+            <outgoingTransitions triggersAndEffects="/ O" priority="1" type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+              <effects xsi:type="synccharts:Emission" signal="O"/>
+            </outgoingTransitions>
+          </innerStates>
+          <innerStates id="done" label="done" isFinal="true"/>
+        </regions>
+        <outgoingTransitions triggersAndEffects="R" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <trigger xsi:type="synccharts:SignalReference" signal="R"/>
+        </outgoingTransitions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>

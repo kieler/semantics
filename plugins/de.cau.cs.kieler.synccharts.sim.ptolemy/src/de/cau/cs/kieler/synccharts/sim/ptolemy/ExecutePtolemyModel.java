@@ -22,8 +22,8 @@ import org.eclipse.emf.common.util.URI;
 
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONException;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ptolemy.actor.kiel.KielerCombine;
 import ptolemy.actor.kiel.KielerIO;

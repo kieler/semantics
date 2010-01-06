@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <workflow>
-	<property name="source" value="dvdplayer.kixs" />
+	<property name="source" value="abro.kits" />
 	<property name="target" value="src-gen/generated.moml" />
 
 	<!-- set up EMF for standalone execution -->
