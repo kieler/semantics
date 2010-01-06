@@ -90,6 +90,7 @@ import java.util.TreeSet;
 public class JSONObject {
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * JSONObject.NULL is equivalent to the value that JavaScript calls null,
      * whilst Java's null is equivalent to the value that JavaScript calls
      * undefined.
@@ -143,8 +144,10 @@ public class JSONObject {
 
 
     /**
+     * <B>DEPRECATED: Use org.json java plug-in instead!</B><BR>
      * Construct an empty JSONObject.
      */
+    @Deprecated
     public JSONObject() {
         this.map = new HashMap();
     }

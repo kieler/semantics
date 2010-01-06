@@ -47,12 +47,14 @@ SOFTWARE.
 public class CDL {
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Get the next value. The value can be wrapped in quotes. The value can
      * be empty.
      * @param x A JSONTokener of the source text.
      * @return The value string, or null if empty.
      * @throws JSONException if the quoted string is badly formed.
      */
+    @Deprecated
     private static String getValue(JSONTokener x) throws JSONException {
         char c;
         char q;
@@ -89,6 +91,7 @@ public class CDL {
 
     @SuppressWarnings("JavaDoc")
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONArray of strings from a row of comma delimited values.
      * @param x A JSONTokener of the source text.
      * @return A JSONArray of strings.
@@ -119,6 +122,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONObject from a row of comma delimited text, using a
      * parallel JSONArray of strings to provides the names of the elements.
      * @param names A JSONArray of names. This is commonly obtained from the
@@ -135,6 +139,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param string The comma delimited text.
@@ -146,6 +151,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param x The JSONTokener containing the comma delimited text.
@@ -157,6 +163,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONArray of JSONObjects from a comma delimited text string
      * using a supplied JSONArray as the source of element names.
      * @param names A JSONArray of strings.
@@ -170,6 +177,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a JSONArray of JSONObjects from a comma delimited text string
      * using a supplied JSONArray as the source of element names.
      * @param names A JSONArray of strings.
@@ -198,6 +206,7 @@ public class CDL {
 
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a comma delimited text row from a JSONArray. Values containing
      * the comma character will be quoted. Troublesome characters may be 
      * removed.
@@ -235,6 +244,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a comma delimited text from a JSONArray of JSONObjects. The
      * first row will be a list of names obtained by inspecting the first
      * JSONObject.
@@ -254,6 +264,7 @@ public class CDL {
     }
 
     /**
+     * <B>DEPRECATED: Use org.json java plugin instead!</B><BR>
      * Produce a comma delimited text from a JSONArray of JSONObjects using
      * a provided list of names. The list of names is not included in the
      * output.

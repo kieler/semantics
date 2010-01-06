@@ -46,10 +46,12 @@ public class JSONTokener {
 
 
     /**
+     * <B>DEPRECATED: Use org.json java plug-in instead!</B><BR>
      * Construct a JSONTokener from a string.
      *
      * @param reader     A reader.
      */
+    @Deprecated
     public JSONTokener(Reader reader) {
         this.reader = reader.markSupported() ? 
         		reader : new BufferedReader(reader);

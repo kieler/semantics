@@ -10,10 +10,12 @@ package de.cau.cs.kieler.sim.kiem.json;
  */
 public interface JSONString {
 	/**
+	 * <B>DEPRECATED: Use org.json java plug-in instead!</B><BR>
 	 * The <code>toJSONString</code> method allows a class to produce its own JSON 
 	 * serialization. 
 	 * 
 	 * @return A strictly syntactically correct JSON text.
 	 */
+        @Deprecated
 	public String toJSONString();
 }
