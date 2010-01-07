@@ -452,62 +452,72 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // so deadlock can easily occur if these or another object called
     // from within these methods refer to the execution-thread!!!
     // -------------------------------------------------------------------------
-    // /**
-    // * Command step. Called just before a step command is executed. ATTENTION: This command method
-    // * is called inside the synchronized lock so a deadlock can easily occur if this or another
-    // * object called from within this method refers to the execution-thread!
-    // */
-    // public void commandStep() {
-    // // BE CAREFUL WHEN USING THIS (S.A.)//
-    // }
+     /**
+     * Command step. Called just before a step command is executed. ATTENTION: This command method
+     * is called inside the synchronized lock so a deadlock can easily occur if this or another
+     * object called from within this method refers to the execution-thread!
+     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     */
+     @Deprecated
+     public void commandStep() {
+     // BE CAREFUL WHEN USING THIS (S.A.)//
+     }
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Command macro step. Called just before a macro step command is executed.<BR>
-    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-    // * easily occur if this or another object called from within this method refers to the
-    // * execution-thread!
-    // */
-    // public void commandMacroStep() {
-    // // BE CAREFUL WHEN USING THIS (S.A.)//
-    // }
+     /**
+     * Command macro step. Called just before a macro step command is executed.<BR>
+     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+     * easily occur if this or another object called from within this method refers to the
+     * execution-thread!
+     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     */
+     @Deprecated
+     public void commandMacroStep() {
+     // BE CAREFUL WHEN USING THIS (S.A.)//
+     }
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Command run. Called just before a run command is executed.<BR>
-    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-    // * easily occur if this or another object called from within this method refers to the
-    // * execution-thread!
-    // */
-    // public void commandRun() {
-    // // BE CAREFUL WHEN USING THIS (S.A.)//
-    // }
+     /**
+     * Command run. Called just before a run command is executed.<BR>
+     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+     * easily occur if this or another object called from within this method refers to the
+     * execution-thread!
+     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     */
+     @Deprecated
+     public void commandRun() {
+     // BE CAREFUL WHEN USING THIS (S.A.)//
+     }
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Command pause. Called just before a pause command is executed.<BR>
-    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-    // * easily occur if this or another object called from within this method refers to the
-    // * execution-thread!
-    // */
-    // public void commandPause() {
-    // // BE CAREFUL WHEN USING THIS (S.A.)//
-    // }
+     /**
+     * Command pause. Called just before a pause command is executed.<BR>
+     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+     * easily occur if this or another object called from within this method refers to the
+     * execution-thread!
+     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     */
+     @Deprecated
+     public void commandPause() {
+     // BE CAREFUL WHEN USING THIS (S.A.)//
+     }
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Command stop. Called just before a stop command is executed.<BR>
-    // * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
-    // * easily occur if this or another object called from within this method refers to the
-    // * execution-thread!
-    // */
-    // public void commandStop() {
-    // // BE CAREFUL WHEN USING THIS (S.A.)//
-    // }
+     /**
+     * Command stop. Called just before a stop command is executed.<BR>
+     * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
+     * easily occur if this or another object called from within this method refers to the
+     * execution-thread!
+     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     */
+     @Deprecated
+     public void commandStop() {
+     // BE CAREFUL WHEN USING THIS (S.A.)//
+     }
 
     // -------------------------------------------------------------------------
 
