@@ -223,7 +223,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      * 
      */
-    public void resetStatus() throws CommunicationException {
+    public void reset() throws CommunicationException {
         notifyComment("reset");
         sendCmd(RESET_COMMAND);
         sendCmd(TICK_COMMAND); // Initialize

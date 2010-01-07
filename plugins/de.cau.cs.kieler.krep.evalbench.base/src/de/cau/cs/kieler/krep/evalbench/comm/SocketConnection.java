@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -25,7 +24,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 /**
  * Connection that uses sockets from <code>java.net</code>.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public class SocketConnection extends ConnectionProtocol {
 

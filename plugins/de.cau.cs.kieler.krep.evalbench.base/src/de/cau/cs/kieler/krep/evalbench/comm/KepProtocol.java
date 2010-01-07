@@ -379,7 +379,7 @@ public class KepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      * 
      */
-    public void resetStatus() throws CommunicationException {
+    public void reset() throws CommunicationException {
         send(RESET_COMMAND);
         receive(END_REPLY);
     }

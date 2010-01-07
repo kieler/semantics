@@ -92,7 +92,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an invalid reply was received
      */
-    void resetStatus() throws CommunicationException;
+    void reset() throws CommunicationException;
 
     /**
      * Performs a program tick by sending the global input signal status, executing the tick command

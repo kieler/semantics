@@ -25,10 +25,7 @@ import java.util.Stack;
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrInstruction;
@@ -60,24 +57,12 @@ public class KepAssembler implements IAssembler {
 
     private Stack<Integer> watcherList = new Stack<Integer>();
 
-    // private HashMap<String, KepSignal> signals = new HashMap<String,
-    // KepSignal>();
-
-    // HashMap<String, Signal> localSignals = new HashMap<String, Signal>();
-    // private HashMap<String, Register> registers = new HashMap<String,
-    // Register>();
-
     private HashMap<String, Label> labels = new HashMap<String, Label>();
-
-    // private HashMap<String, ThreadID> threads = new HashMap<String,
-    // ThreadID>();
 
     /** index for all signals. */
     private HashMap<String, Integer> signalIndex = new HashMap<String, Integer>();
 
     private String name;
-
-    // private HashMap<String, Integer> labels = new HashMap<String, Integer>();
 
     /**
      * empty assembler, useless until assemble is called.
@@ -103,7 +88,6 @@ public class KepAssembler implements IAssembler {
         Reader p = new InputStreamReader(program);
         boolean error = false;
         String errorMsg;
-        // clear();
 
         try {
             final kepLexer lex = new kepLexer(new ANTLRReaderStream(p));
@@ -111,7 +95,6 @@ public class KepAssembler implements IAssembler {
 
             final kepParser parser = new kepParser(tokens);
 
-            // instructions =
             parser.program();
             instructions = parser.getInstructions();
             inputs = parser.getInputs();
@@ -120,12 +103,9 @@ public class KepAssembler implements IAssembler {
 
             error = parser.getError();
             errorMsg = parser.getErrorMsg();
-           if (error) {
-               throw new ParseException(errorMsg);
-           }
-           //     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMsg, null);
-           //     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-            //}
+            if (error) {
+                throw new ParseException(errorMsg);
+            }
         } catch (final IOException e) {
             throw new ParseException(e.getMessage());
         } catch (RecognitionException e) {
@@ -162,11 +142,6 @@ public class KepAssembler implements IAssembler {
                 pos++;
             }
             this.postProcess();
-            // outputs.add(new Signal("TickWarn", false, null, signalIndex));
-            /*
-             * for (final Instruction i : instructions) { i.setLabel(uniqueLabel.get(i.getLabel()));
-             * i.asmLabel(label2addr); i.asmSignal(signalIndex); }
-             */
         }
     }
 
@@ -174,7 +149,6 @@ public class KepAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public void assemble(final String progName, final String program) throws ParseException {
-        // final StringReader in = new StringReader(program);
         assemble(progName, new ByteArrayInputStream(program.getBytes()));
     }
 
@@ -185,7 +159,6 @@ public class KepAssembler implements IAssembler {
         if (!c.isKEP()) {
             return "wrong processor";
         }
-        // KepConfig k = (KepConfig)c;
         // TODO: implement
         return null;
     }
@@ -260,14 +233,9 @@ public class KepAssembler implements IAssembler {
             return new Watcher(watcherList.size() - 1);
 
         } else {
-            // if (watcher_list.peek()>=endAddr){
             watcherList.push(endAddr);
-            // max_watchers_needed++;
             return new Watcher(watcherList.size() - 1);
         }
-        /*
-         * else { watcher_list.pop(); max_watchers_needed--; return getNewWatcher(endAddr); } }
-         */
     }
 
     private void postProcess() {
@@ -281,10 +249,6 @@ public class KepAssembler implements IAssembler {
                         final AddrSigWatchInstruction aswInstr = (AddrSigWatchInstruction) instr;
                         if (aswInstr.getWatch() == null) {
                             aswInstr.setWatch(getNewWatcher(aswInstr.getAddr().getId()));
-                            /*
-                             * myinst.setSourceCode(myinst .getScource() .appendContent( "," +
-                             * ((AddrSigWatchInstruction) myinst) .getWatch() .getId()));
-                             */
                         }
                     }
                     result.add(instr);

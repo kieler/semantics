@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
+import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
@@ -226,26 +226,31 @@ public class TraceList {
     /**
      * Execute one step of the current trace.
      * 
+     * @param krep
+     *            connection to a processor. It is assumed that the program was already loaded on
+     *            the processor.
+     * 
      * @return when the outputs match the reference output
      * @throws CommunicationException
      *             thrown for any communication errors
      */
-    public boolean executeStep() throws CommunicationException {
+    public boolean executeStep(final ICommunicationProtocol krep) throws CommunicationException {
         if (hasNext()) {
             Tick tick = next();
             if (tick == null) {
-               // Activator.getDefault().getCommonLayer().reset();
+                krep.reset();
                 notifyListeners(false);
                 return true;
             } else {
-                Tick output = null;// Activator.getDefault().getCommonLayer().step(tick);
-                setOutput(output);
+
+                final int ticklen = krep.tick(tick.getInputs().size() + tick.getOutputs().size(),
+                        tick.getInputs(), tick.getOutputs());
+                setOutput(tick);
                 boolean valid = validateCurrent();
 
-                final int rt = output.getRT();
-                min = Math.min(min, rt);
-                max = Math.max(rt, max);
-                avg += rt;
+                min = Math.min(min, ticklen);
+                max = Math.max(ticklen, max);
+                avg += ticklen;
 
                 notifyListeners(true);
                 return valid;
