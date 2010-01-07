@@ -236,6 +236,7 @@ litigation.
       <import plugin="de.cau.cs.kieler.sim.kiem"/>
       <import plugin="org.apache.batik.dom" version="1.6.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.json"/>
    </requires>
 
    <plugin
