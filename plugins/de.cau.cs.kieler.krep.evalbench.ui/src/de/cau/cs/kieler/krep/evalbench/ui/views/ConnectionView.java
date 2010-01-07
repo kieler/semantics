@@ -13,10 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
-import org.eclipse.jface.action.ContributionItem;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
@@ -24,13 +21,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
-import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.CheckConnectionAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
-import de.cau.cs.kieler.krep.evalbench.ui.actions.ConnectAction;
-import de.cau.cs.kieler.krep.evalbench.ui.actions.DisconnectAction;
 
 /**
  * A View for logging of connection messages to targets.
@@ -45,17 +38,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     /** The viewer used to display connection logs. */
     private TextViewer viewer = null;
 
-    /** The load program action. */
-    // private IAction loadProgramAction = null;
-
-    private IPreferenceStore preferenceStore = null;
     private Display display;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
-     */
     @Override
     public void createPartControl(final Composite parent) {
         // create text viewer
@@ -65,23 +49,10 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 
         // create actions
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-        // toolBarManager.add(new ConnectAction());
-        // toolBarManager.add(new DisconnectAction());
         toolBarManager.add(new CheckConnectionAction());
         toolBarManager.add(new ClearAction(viewer));
-        // loadProgramAction = new LoadProgramAction();
-        // toolBarManager.add(loadProgramAction);
-        // toolBarManager.add(new DumpRomAction());
-        // loadProgramAction.setEnabled(false);
-
-        preferenceStore = Activator.getDefault().getPreferenceStore();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-     */
     @Override
     public void setFocus() {
         viewer.getControl().setFocus();
@@ -91,9 +62,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * {@inheritDoc}
      */
     public void dataReceived(final String data) {
-        // if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
-
-        if (viewer !=null && display != null) {
+        if (viewer != null && display != null) {
             display.asyncExec(new Runnable() {
                 public void run() {
                     viewer.append("< " + data + "\n");
@@ -107,16 +76,13 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * 
      */
     public void dataSent(final String data) {
-
-        // if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
-        if (viewer !=null && display != null) {
+        if (viewer != null && display != null) {
             display.asyncExec(new Runnable() {
                 public void run() {
                     viewer.append("> " + data + "\n");
                 }
             });
         }
-        // }
     }
 
     /**
@@ -135,8 +101,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      *            the new state
      */
     public void setActionsEnabled(final boolean enabled) {
-        // loadProgramAction.setEnabled(true);
-        // loadProgramAction.setEnabled(enabled);
     }
 
     /**
@@ -162,14 +126,12 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * @param msg
      */
     public void show(final String msg) {
-        if (viewer !=null && display != null) {
-            if (display != null) {
-                display.asyncExec(new Runnable() {
-                    public void run() {
-                        viewer.append(msg + "\n");
-                    }
-                });
-            }
+        if (viewer != null && display != null) {
+            display.asyncExec(new Runnable() {
+                public void run() {
+                    viewer.append(msg + "\n");
+                }
+            });
         }
     }
 

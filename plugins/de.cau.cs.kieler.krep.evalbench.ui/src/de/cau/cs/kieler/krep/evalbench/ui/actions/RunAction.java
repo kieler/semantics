@@ -18,7 +18,9 @@
 //import org.eclipse.jface.action.IStatusLineManager;
 //import org.eclipse.jface.operation.IRunnableWithProgress;
 //import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.ui.PlatformUI;
 //
+//import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 //import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 //import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 //import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
@@ -26,8 +28,8 @@
 //import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
 //
 ///**
-// * Action that runs the current program. The plugin activator and the common
-// * layer are used to access all relevant data.
+// * Action that runs the current program. The plugin activator and the common layer are used to
+// * access all relevant data.
 // * 
 // * @author ctr, msp
 // */
@@ -50,15 +52,13 @@
 //     * @param manager
 //     *            status line manager used to display action result
 //     * @param traceList
-//     *            trace from which the inputs are read. If this is null,
-//     *            external inputs are assumed
+//     *            trace from which the inputs are read. If this is null, external inputs are assumed
 //     */
 //    public RunAction(final IStatusLineManager manager, final TraceList traceList) {
 //        setId(ACTION_ID);
 //        setText("R&un");
 //        setToolTipText("Run the current program");
-//        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-//                Activator.PLUGIN_ID, ICON_PATH));
+//        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
 //        this.statusLineManager = manager;
 //        this.traces = traceList;
 //    }
@@ -70,34 +70,32 @@
 //     */
 //    @Override
 //    public void run() {
-//        if (traces == null) {
-//            Activator.getDefault().getCommonLayer().continuousRun();
-//            statusLineManager.setMessage(Activator.getDefault().getCommonLayer()
-//                    .getStatusMessage());
-//        } else {
-//            Tools.runWithProgress(new IRunnableWithProgress() {
-//                public void run(final IProgressMonitor monitor) {
-//                    monitor.beginTask("Execute Trace", traces.size()
-//                            - traces.getTablePos());
+//        // Tools.runWithProgress(new IRunnableWithProgress() {
+//        // public void run(final IProgressMonitor monitor) {
+//        // monitor.beginTask("Execute Trace", traces.size() - traces.getTablePos());
 //
-//                    IPreferenceStore preferenceStore = Activator.getDefault()
-//                            .getPreferenceStore();
-//                    boolean ignoreInvalid = preferenceStore
-//                            .getBoolean(VerifyPreferencePage.IGNORE_INVALID);
+//        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+//        boolean ignoreInvalid = preferenceStore.getBoolean(VerifyPreferencePage.IGNORE_INVALID);
 //
-//                    while (traces.hasNext()
-//                            && (ignoreInvalid || traces.isValid())) {
-//                        try {
-//                            traces.executeStep(statusLineManager);
-//                            monitor.worked(1);
-//                        } catch (CommunicationException e) {
-//                            // TODO Auto-generated catch block
-//                            e.printStackTrace();
-//                        }
+//        PlatformUI.getWorkbench().getProgressService().run(false, false,
+//                new IRunnableWithProgress() {
+//                    public void run(final IProgressMonitor monitor) {
+//                        status.setObject(doLayout(editorPart, editPart,
+//                                new KielerProgressMonitor(monitor, MAX_PROGRESS_LEVELS)));
 //                    }
-//                    monitor.done();
-//                }
-//            });
-//        }
+//                });
+//        
+//       // while (traces.hasNext() && (ignoreInvalid || traces.isValid())) {
+//       //     try {
+//                // traces.executeStep(statusLineManager);
+//                // monitor.worked(1);
+//        //    } catch (CommunicationException e) {
+//                // TODO Auto-generated catch block
+//         //       e.printStackTrace();
+//      //      }
+//      //  }
+//        // monitor.done();
 //    }
+//    // });
+//
 //}

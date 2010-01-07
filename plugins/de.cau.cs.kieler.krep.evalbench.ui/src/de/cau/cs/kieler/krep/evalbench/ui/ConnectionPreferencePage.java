@@ -18,8 +18,6 @@ import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.IntegerFieldEditor;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -44,9 +42,6 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage implemen
 
     /** Preference name for the port number. */
     public static final String PORT_NUMBER = "EvalBench.Connection.port_number";
-
-    /** The greatest valid port number. */
-    private static final int MAX_PORT_NUMBER = 65535;
 
     /** Shall we show the connection in the Connection view? */
     public static final String LOG = "EvalBench.Connection.log";
@@ -79,32 +74,8 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage implemen
     @Override
     protected void createFieldEditors() {
         // create field editor for connection type
-       String[][] labels;// = new String[][] { { "JNI", CommonLayer.JNI_CON },
-       //         { "Serial port", CommonLayer.SERIAL_CON }, { "TCP/IP", CommonLayer.TCPIP_CON } };
-       FieldEditor fieldEditor;// = new RadioGroupFieldEditor(CONNECTION_TYPE, "Connection type:", 1,
-      //          labels, getFieldEditorParent());
-      //  addField(fieldEditor);
-
-        // create field editor for serial port name
-        //String[] serialPorts = de.cau.cs.kieler.krep.evalbench.Activator.getDefault().getCommonLayer().getSerialPorts();
-        //labels = new String[serialPorts.length][2];
-        //for (int i = 0; i < serialPorts.length; i++) {
-        //    labels[i] = new String[] { serialPorts[i], serialPorts[i] };
-        //}
-        //fieldEditor = new ComboFieldEditor(SERIAL_PORT_NAME, "Serial port name:", labels,
-        //        getFieldEditorParent());
-        //addField(fieldEditor);
-
-        // create field editor for host name
-        fieldEditor = new StringFieldEditor(HOST_NAME, "Host name:", getFieldEditorParent());
-        addField(fieldEditor);
-
-        // create field editor for port number
-        fieldEditor = new IntegerFieldEditor(PORT_NUMBER, "Port number:", getFieldEditorParent());
-        ((IntegerFieldEditor) fieldEditor).setValidRange(0, MAX_PORT_NUMBER);
-        addField(fieldEditor);
-
-        FileFieldEditor file = new FileFieldEditor(JNI_LOG_FILE, "Communication log File",
+        FieldEditor fieldEditor;// = new RadioGroupFieldEditor(CONNECTION_TYPE, "Connection type:", 1,
+          FileFieldEditor file = new FileFieldEditor(JNI_LOG_FILE, "Communication log File",
                 getFieldEditorParent());
         String[] extensions = { "*.esi", "*.eso", "*" };
         file.setFileExtensions(extensions);

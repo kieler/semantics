@@ -53,22 +53,6 @@
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.krep.evalbench.ui.views.TargetView"
-            icon="icons/krep.gif"
-            id="de.cau.cs.kieler.krep.evalbench.ui.views.target"
-            name="Target">
-      </view>
-      <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.krep.evalbench.ui.views.TraceView"
-            id="de.cau.cs.kieler.krep.evalbench.ui.views.trace"
-            name="Trace"
-            restorable="false">
-      </view>
-      <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.VerifyView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.verify"
             name="Verify"

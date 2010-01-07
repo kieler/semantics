@@ -39,8 +39,9 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
+import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
@@ -65,7 +66,7 @@ public class VerifyAction extends Action {
     private static final String ICON_PATH = "icons/run.gif";
 
     /** The status line manager that can be used to display messages. */
-   // private IStatusLineManager statusLineManager;
+    // private IStatusLineManager statusLineManager;
 
     private TableViewer table;
 
@@ -85,7 +86,7 @@ public class VerifyAction extends Action {
         setToolTipText("Verify all benchmarks");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
         manager.setCancelEnabled(true);
-        //this.statusLineManager = manager;
+        // this.statusLineManager = manager;
         this.table = tTable;
     }
 
@@ -171,18 +172,16 @@ public class VerifyAction extends Action {
                         if (traces == null || !traces.hasNext()) {
                             s[rowComment] = "no trace found";
                         } else {
-                            // TODO: read preferences from Preference store
-                            //Activator.getDefault().getCommonLayer().connect(CommonLayer.JNI_CON,
-                             //ICommunicationProtocol.P_KEP, "", "", 0);
-
-                            //Activator.getDefault().getCommonLayer().reset();
-                            //Activator.getDefault().getCommonLayer().loadProgram(asm, null);
-
-                            //Activator.getDefault().getCommonLayer().reset();
+                            // TODO: user defined preferences
+                            ICommunicationProtocol krep = new KepProtocol(new JNIConnection(
+                                    KepProtocol.P_KEP, "kep.esi"));
+                            krep.reset();
+                            krep.loadProgram(asm, null);
+                            krep.reset();
 
                             boolean valid = true;
                             while (traces.hasNext() && (valid || ignoreInvalid)) {
-                                valid = traces.executeStep();
+                                valid = traces.executeStep(krep);
 
                             }
                             success = valid;
@@ -200,8 +199,8 @@ public class VerifyAction extends Action {
                         s[rowComment] = eCom.getMessage();
                     } catch (ParseException eParse) {
                         s[rowComment] = eParse.getMessage();
-                  //  } catch (LoadException eLoad) {
-                    //    s[rowComment] = eLoad.getMessage();
+                        // } catch (LoadException eLoad) {
+                        // s[rowComment] = eLoad.getMessage();
                     } catch (Exception e) {
                         s[rowComment] = e.getMessage();
                     } catch (Throwable t) {
@@ -284,7 +283,6 @@ public class VerifyAction extends Action {
             res.assemble(file.getName(), new FileInputStream(file));
             return res;
         } catch (FileNotFoundException e1) {
-            // e1.printStackTrace();
             throw new ParseException(e1.getMessage());
         }
     }
