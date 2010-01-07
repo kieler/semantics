@@ -176,39 +176,40 @@ public class StateLayout extends AbstractHintLayout {
         int i = 0;
         for (IFigure childFigure : children) {
             if (!(childFigure instanceof Polyline)) {
-                Dimension preferredSize = childFigure.getPreferredSize();
-                int newWidth = preferredSize.width;
-                int newHeight = preferredSize.height;
+                Dimension size;
                 // empty compartments are not considered
                 if (childFigure instanceof ResizableCompartmentFigure) {
                     ResizableCompartmentFigure compartment =
                         (ResizableCompartmentFigure) childFigure;
                     String compartmentName = getName(compartment);
                     if (compartmentName.equals(REGION_COMP_NAME)) {
-                        if (!containsRegions) {
-                            newWidth = 0;
-                            newHeight = 0;
+                        if (containsRegions) {
+                            size = compartment.getPreferredSize();
+                        } else {
+                            size = new Dimension();
                         }
                         // set the y position of the region separator polyline to the current
                         // calculated total height = y position of region compartment
                         regionSeparatorHeight = totalHeight;
                     } else if (isEmptyCompartment(compartmentName) || !compartment.isExpanded()) {
-                        newWidth = 0;
-                        newHeight = 0;
+                        size = new Dimension();
                         setTitleVisibility(compartment, false);
                     } else {
+                        size = compartment.getContentPane().getPreferredSize(clientArea.width - 2, -1);
                         // make title label visible if the compartment is not a region compartment
                         // and has more than the title label as content
                         setTitleVisibility(compartment, true);
                     }
+                } else {
+                    size = childFigure.getPreferredSize();
                 }
     
                 // take maximum width and sum of heights
-                prefWidths[i] = newWidth;
-                prefHeights[i] = newHeight;
-                totalHeight += newHeight;
-                if (newWidth > totalWidth) {
-                    totalWidth = newWidth;
+                prefWidths[i] = size.width;
+                prefHeights[i] = size.height;
+                totalHeight += size.height;
+                if (size.width > totalWidth) {
+                    totalWidth = size.width;
                 }
             }
             i++;
@@ -267,7 +268,7 @@ public class StateLayout extends AbstractHintLayout {
             i++;
         }
     }
-
+    
     /**
      * Set the visibility of a compartment's title label.
      * 
@@ -393,38 +394,39 @@ public class StateLayout extends AbstractHintLayout {
             if (state.getType() == StateType.CONDITIONAL) {
                 return new Dimension(COND_WIDTH, COND_HEIGHT);
             } else if (checkComplex(state)) {
-                int prefWidth = MIN_WIDTH;
-                int prefHeight = 0;
+                int minWidth = MIN_WIDTH;
+                int minHeight = 0;
                 for (IFigure childFigure : children) {
                     if (childFigure instanceof ShapeCompartmentFigure) {
                         String compartmentName = getName((ShapeCompartmentFigure) childFigure);
-                        if (!compartmentName.equals(REGION_COMP_NAME)) {
+                        if (compartmentName.equals(REGION_COMP_NAME)) {
+                            // add a default minimum size so that the region compartment
+                            // is visible after all
+                            minHeight += StateLayout.MIN_HEIGHT;
+                        } else  {
                             Rectangle childBounds = childFigure.getBounds();
                             // if we have manually set the bounds to zero, ignore
                             // the bounds for minimal size calculations
                             if (childBounds.height > 0 && childBounds.width > 0) {
-                                Dimension preferredSize = childFigure.getPreferredSize();
-                                if (preferredSize.width >= prefWidth) {
+                                Dimension minimumSize = ((ShapeCompartmentFigure) childFigure)
+                                        .getContentPane().getMinimumSize();
+                                if (minimumSize.width >= minWidth) {
                                     // add 1 pixel to avoid scroll bars (this was added
                                     // during layout above)
-                                    prefWidth = preferredSize.width + 1;
+                                    minWidth = minimumSize.width + 2;
                                 }
-                                prefHeight += preferredSize.height;
+                                minHeight += minimumSize.height;
                             }
-                        } else  {
-                            // add a default minimum size so that the region compartment
-                            // is visible after all
-                            prefHeight += StateLayout.MIN_HEIGHT;
                         }
                     } else if (childFigure instanceof WrappingLabel) {
                         Dimension preferredSize = childFigure.getPreferredSize();
-                        if (preferredSize.width >= prefWidth) {
-                            prefWidth = preferredSize.width;
+                        if (preferredSize.width >= minWidth) {
+                            minWidth = preferredSize.width;
                         }
-                        prefHeight += preferredSize.height;
+                        minHeight += preferredSize.height;
                     }
                 }
-                return new Dimension(prefWidth, prefHeight);
+                return new Dimension(minWidth, minHeight);
             } else {
                 for (IFigure childFigure : children) {
                     // set the minimal size of a state with a label

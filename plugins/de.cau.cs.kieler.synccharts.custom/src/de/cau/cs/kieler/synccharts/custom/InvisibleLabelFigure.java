@@ -56,12 +56,12 @@ public class InvisibleLabelFigure extends Shape {
         Dimension prefSize = new Dimension();
         for (Object child : children) {
             if (child instanceof WrappingLabel) {
-                WrappingLabel label = (WrappingLabel) child;
-                int width = label.getPreferredSize().width + WIDTH_GROW;
+                Dimension labelSize = ((WrappingLabel) child).getPreferredSize();
+                int width = labelSize.width + WIDTH_GROW;
                 if (width > prefSize.width) {
                     prefSize.width = width;
                 }
-                int height = label.getPreferredSize().height;
+                int height = labelSize.height;
                 if (height > prefSize.height) {
                     prefSize.height = height;
                 }
