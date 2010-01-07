@@ -20,7 +20,7 @@ Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.data,
  de.cau.cs.kieler.sim.kiem.extension;uses:="org.eclipse.core.runtime",
  de.cau.cs.kieler.sim.kiem.ui,
- de.cau.cs.kieler.sim.kiem.views
+ de.cau.cs.kieler.sim.kiem.ui.views
 Import-Package: org.json,
  org.eclipse.core.resources,
  org.eclipse.emf.common.ui,

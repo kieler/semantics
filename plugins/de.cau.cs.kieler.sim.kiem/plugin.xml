@@ -7,7 +7,7 @@
          point="org.eclipse.ui.views">
       <view
             category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.sim.kiem.views.KiemView"
+            class="de.cau.cs.kieler.sim.kiem.ui.views.KiemView"
             icon="icons/kiemIcon.png"
             id="de.cau.cs.kieler.sim.kiem.view"
             name="Execution Manager"
