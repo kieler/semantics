@@ -47,7 +47,6 @@ import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
 import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationProtocol;
-import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.IConnectionProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
@@ -73,8 +72,6 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 
-
-
 import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
 
 /**
@@ -92,15 +89,18 @@ public final class DataComponent extends JSONObjectDataComponent {
     private AssemblerView viewer = null;
     private ConnectionView krepView = null;
 
-    private final int propertyConnection = 0;
-    private final int propertyPort = 1;
-    private final int propertyHost = 2;
-    private final int propertyCom = 3;
-    private final int propertyLog = 4;
+    private static final int PROP_CONNECTION_TYPE = 0;
+    private static final int PROP_PORT = 1;
+    private static final int PROP_HOST = 2;
+    private static final int PROP_SERIAL_PORT = 3;
+    private static final int PROP_LOG_FILE = 4;
 
-    private final String ID_JNI = "JNI";
-    private final String ID_RS232 = "RS 232";
-    private final String ID_TCPIP = "TCP/IP";
+    /** Identifier to connect via java native interface. */
+    private static final String ID_JNI = "JNI";
+    /** Identifier to connect via the serial port. */
+    private static final String ID_RS232 = "RS 232";
+    /** Identifier to connect via a TCP/IP connection. */
+    private static final String ID_TCPIP = "TCP/IP";
 
     /**
      * {@inheritDoc}
@@ -312,18 +312,18 @@ public final class DataComponent extends JSONObjectDataComponent {
      */
     private IConnectionProtocol connect(final String protocolType)
             throws KiemInitializationException {
-        String type = this.getProperties()[propertyConnection].getValue();
+        String type = this.getProperties()[PROP_CONNECTION_TYPE].getValue();
         try {
             if (type.equals(ID_JNI)) {
-                return new JNIConnection(protocolType);
-
+                String logFile = this.getProperties()[PROP_LOG_FILE].getValue();
+                return new JNIConnection(protocolType, logFile);
             } else if (type.equals(ID_TCPIP)) {
 
-                String device = getProperties()[propertyHost].getValue();
-                int port = Integer.parseInt(getProperties()[propertyPort].getValue());
+                String device = getProperties()[PROP_HOST].getValue();
+                int port = Integer.parseInt(getProperties()[PROP_PORT].getValue());
                 return new SocketConnection(device, port);
             } else if (type.equals(ID_RS232)) {
-                String device = getProperties()[propertyCom].getValue();
+                String device = getProperties()[PROP_SERIAL_PORT].getValue();
                 return new RxtxSerialConnection(device);
             }
         } catch (CommunicationException e) {

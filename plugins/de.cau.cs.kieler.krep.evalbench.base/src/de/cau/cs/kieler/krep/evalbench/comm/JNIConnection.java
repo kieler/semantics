@@ -46,15 +46,21 @@ public class JNIConnection implements IConnectionProtocol {
      * 
      * @param protocol
      *            use KEP or KReP protocol
+     * @param logFile
+     *            Name of the esi file to which the communication is logged or null to disabled
+     *            logging.
      * @throws CommunicationException
      *             thrown for any connection errors, e.g., if the software simulation is not found
      * 
      * 
      */
-    public JNIConnection(final String protocol) throws CommunicationException {
+    public JNIConnection(final String protocol, final String logFile) throws CommunicationException {
         String name = "unknown";
         if (krep != null) {
             krep.terminate();
+        }
+        if (esi != null) {
+            esi = null;
         }
         try {
             if (protocol.equals(ICommunicationProtocol.P_KEP)) {
@@ -65,6 +71,9 @@ public class JNIConnection implements IConnectionProtocol {
                 krep = new KlpWrapper();
             } else {
                 krep = null;
+            }
+            if (logFile != null) {
+                esi = new EsiLogger(logFile);
             }
         } catch (final Throwable t) {
             throw new CommunicationException("Error generating " + name + "\n" + t.getMessage()
@@ -177,13 +186,4 @@ public class JNIConnection implements IConnectionProtocol {
             esi.write(s + "\n");
         }
     }
-
-    /**
-     * @param fileName
-     *            name of the log file
-     */
-    public void setLogFile(final String fileName) {
-        esi = new EsiLogger(fileName);
-    }
-
 }

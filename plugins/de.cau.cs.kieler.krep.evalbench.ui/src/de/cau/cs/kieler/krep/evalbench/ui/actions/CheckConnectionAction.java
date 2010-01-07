@@ -49,6 +49,7 @@ public class CheckConnectionAction extends Action {
      */
     @Override
     public void run() {
+        
         //Activator.getDefault().getCurrentConnection().checkConnection();
     }
 
