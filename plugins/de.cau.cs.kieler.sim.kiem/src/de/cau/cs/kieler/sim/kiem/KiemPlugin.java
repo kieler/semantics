@@ -403,7 +403,13 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // restore KIEM property type first
                     if (properties != null) {
                         for (int ccc = 0; ccc < properties.length; ccc++) {
-                            properties[ccc].setType(dataComponent.getProperties()[ccc].getType());
+                            try {
+                                properties[ccc].setType(dataComponent.getProperties()[ccc].getType());
+                            } catch (Exception e) {
+                                //warnings with unusable properties can
+                                //only occur if this is intended, i.e., the
+                                //component id calculation was modified!
+                            }
                         }
                     }
                     // we found the component ... now restore it
