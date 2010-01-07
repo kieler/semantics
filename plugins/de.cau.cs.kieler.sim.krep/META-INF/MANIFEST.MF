@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide;bundle-version="1.2.0",
  de.cau.cs.kieler.dataflow.codegen;bundle-version="0.0.1",
  de.cau.cs.kieler.krep.compiler;bundle-version="0.1.0",
- de.cau.cs.kieler.krep.evalbench.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.krep.evalbench.ui;bundle-version="0.1.0",
+ org.json;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.core.resources,
