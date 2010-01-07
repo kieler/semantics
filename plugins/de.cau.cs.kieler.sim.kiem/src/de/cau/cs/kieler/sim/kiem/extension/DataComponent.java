@@ -1119,9 +1119,12 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * _dataComponent is a destructor of the DataComponent that is called by the execution manager
      * before the DataComponent instance is removed from the list. If the DataComponent needs to
      * free any resources immediately (e.g., closing socket streams) this can be done here.
+     * <br><br>
+     * <b>DEPRECATED: use AbstractDataComponent.finalize() instead!</b>
      */
     // CHECKSTYLEOFF Name
     // Rationale: Explicit destructors (in C++) use to start with a underline
+    @Deprecated
     public void _DataComponent() {
     }
 
