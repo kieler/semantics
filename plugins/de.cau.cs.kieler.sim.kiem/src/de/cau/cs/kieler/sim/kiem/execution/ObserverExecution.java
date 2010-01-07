@@ -15,7 +15,7 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
@@ -44,7 +44,7 @@ public class ObserverExecution implements Runnable {
     private boolean stop;
 
     /** The data component that is affected. */
-    private DataComponent dataComponent;
+    private AbstractDataComponent dataComponent;
 
     /** The input data for the observer DataComponent. */
     private JSONObject data;
@@ -62,7 +62,7 @@ public class ObserverExecution implements Runnable {
      * @param parentParam
      *            the parent execution
      */
-    public ObserverExecution(final DataComponent dataComponentParam, final Execution parentParam) {
+    public ObserverExecution(final AbstractDataComponent dataComponentParam, final Execution parentParam) {
         this.stop = false;
         this.done = true;
         this.data = null;

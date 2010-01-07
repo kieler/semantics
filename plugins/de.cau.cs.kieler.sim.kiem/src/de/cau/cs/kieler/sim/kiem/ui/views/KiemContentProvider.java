@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 
 /**
  * The Class KiemContentProvider. This provides the content for the tree-table of DataComponentExs.
@@ -37,7 +37,7 @@ public class KiemContentProvider implements ITreeContentProvider {
      */
     @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
-        return ((List<DataComponent>) inputElement).toArray();
+        return ((List<AbstractDataComponent>) inputElement).toArray();
     }
 
     // -------------------------------------------------------------------------

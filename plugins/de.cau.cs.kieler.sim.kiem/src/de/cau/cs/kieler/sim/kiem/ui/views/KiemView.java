@@ -68,7 +68,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
@@ -885,17 +885,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // master is responsible for enabling/disabling
                 // buttons
                 getActionStepBack().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_STEPBACK));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEPBACK));
                 getActionStep().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_STEP));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEP));
                 getActionMacroStep().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_MACROSTEP));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_MACROSTEP));
                 getActionMacroStep().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_RUN));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_RUN));
                 getActionPause().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_PAUSE));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_PAUSE));
                 getActionStop().setEnabled(
-                        currentMaster.masterGUIisEnabled(DataComponent.MASTER_CMD_STOP));
+                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STOP));
                 // getActionStepBack().setEnabled(currentMaster.masterGUIisEnabledStepBack());
                 // getActionStep().setEnabled(currentMaster.masterGUIisEnabledStep());
                 // getActionMacroStep().setEnabled(currentMaster.masterGUIisEnabledMacroStep());
@@ -1008,7 +1008,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 addDialog.setComponentExList(kIEMInstance.getDataComponentExList());
                 addDialog.setComponentList(KiemPlugin.getDefault().getDataComponentList());
                 if (addDialog.open() == 0) {
-                    List<DataComponent> selected = addDialog.getSelectedComponents();
+                    List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
                     if (selected != null) {
                         for (int c = 0; c < selected.size(); c++) {
                             kIEMInstance.addTodataComponentExList(selected.get(c));
@@ -1209,7 +1209,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_STEPBACK);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_STEPBACK);
                     // currentMaster.masterGUIstepBack();
                 } else {
                     // otherwise default implementation
@@ -1381,7 +1381,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_STEP);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_STEP);
                     // currentMaster.masterGUIstep();
                 } else {
                     // otherwise default implementation
@@ -1417,7 +1417,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_MACROSTEP);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_MACROSTEP);
                     // currentMaster.masterGUImacroStep();
                 } else {
                     // otherwise default implementation
@@ -1451,7 +1451,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_RUN);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_RUN);
                     // currentMaster.masterGUIrun();
                 } else {
                     // otherwise default implementation
@@ -1485,7 +1485,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_PAUSE);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_PAUSE);
                     // currentMaster.masterGUIpause();
                 } else {
                     // otherwise default implementation
@@ -1521,7 +1521,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
-                    currentMaster.masterGUI(DataComponent.MASTER_CMD_STOP);
+                    currentMaster.masterGUI(AbstractDataComponent.MASTER_CMD_STOP);
                     // currentMaster.masterGUIstop();
                 } else {
                     long executionTime = 0;

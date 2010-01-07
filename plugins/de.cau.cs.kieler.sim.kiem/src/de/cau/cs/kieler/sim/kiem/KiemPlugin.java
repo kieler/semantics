@@ -45,7 +45,7 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
@@ -89,7 +89,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     private static KiemPlugin plugin;
 
     /** List of available dataProducers and dataObservers. */
-    private List<DataComponent> dataComponentList;
+    private List<AbstractDataComponent> dataComponentList;
 
     /** List of selected dataComponentEx's (modified by KiemView). */
     private List<DataComponentEx> dataComponentExList;
@@ -386,7 +386,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            a temporary (partial) DataComponentExList to restore the full one from
      */
     public void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListParam) {
-        List<DataComponent> dataComponentListTmp = getDataComponentList();
+        List<AbstractDataComponent> dataComponentListTmp = getDataComponentList();
 
         for (int c = 0; c < dataComponentExListParam.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExListParam.get(c);
@@ -396,7 +396,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             boolean componentRestored = false;
 
             for (int cc = 0; cc < dataComponentListTmp.size(); cc++) {
-                DataComponent dataComponent = dataComponentListTmp.get(cc);
+                AbstractDataComponent dataComponent = dataComponentListTmp.get(cc);
                 String vglComponentId = dataComponent.getDataComponentId();
 
                 if (vglComponentId.equals(componentId)) {
@@ -442,7 +442,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @return the DataComponentList
      */
-    public List<DataComponent> getDataComponentList() {
+    public List<AbstractDataComponent> getDataComponentList() {
         if (dataComponentList != null) {
             return dataComponentList;
         }
@@ -455,7 +455,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         IConfigurationElement[] stringComponents = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(Messages.extensionPointIDstringcomponent);
 
-        dataComponentList = new ArrayList<DataComponent>(jsonComponents.length
+        dataComponentList = new ArrayList<AbstractDataComponent>(jsonComponents.length
                 + stringComponents.length);
 
         for (int i = 0; i < jsonComponents.length; i++) {
@@ -677,11 +677,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @return the added dataComponentEx component
      */
-    public DataComponentEx addTodataComponentExList(final DataComponent component) {
+    public DataComponentEx addTodataComponentExList(final AbstractDataComponent component) {
         IConfigurationElement componentConfigEle = component.getConfigurationElement();
-        DataComponent componentClone;
+        AbstractDataComponent componentClone;
         try {
-            componentClone = (DataComponent) componentConfigEle.createExecutableExtension("class");
+            componentClone = (AbstractDataComponent) componentConfigEle.createExecutableExtension("class");
             componentClone.setConfigurationElemenet(componentConfigEle);
 
             DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
@@ -710,11 +710,11 @@ public class KiemPlugin extends AbstractUIPlugin {
     public List<DataComponentEx> getDefaultComponentExList() {
         // suggest calling the garbage collector
         System.gc();
-        List<DataComponent> list = this.getDataComponentList();
+        List<AbstractDataComponent> list = this.getDataComponentList();
         List<DataComponentEx> returnList = new LinkedList<DataComponentEx>();
         // first add initialization components
         for (int c = 0; c < list.size(); c++) {
-            DataComponent dataComponent = (DataComponent) list.get(c);
+            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
             DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
             if ((!dataComponentEx.isProducer()) && !dataComponentEx.isObserver()) {
                 returnList.add(dataComponentEx);
@@ -722,7 +722,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         // then add pure producer
         for (int c = 0; c < list.size(); c++) {
-            DataComponent dataComponent = (DataComponent) list.get(c);
+            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
             DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
             if (dataComponentEx.isProducerOnly()) {
                 returnList.add(dataComponentEx);
@@ -730,7 +730,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         // then add observer & producer
         for (int c = 0; c < list.size(); c++) {
-            DataComponent dataComponent = (DataComponent) list.get(c);
+            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
             DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
             if (dataComponentEx.isProducerObserver()) {
                 returnList.add(dataComponentEx);
@@ -738,7 +738,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         // then add pure observer
         for (int c = 0; c < list.size(); c++) {
-            DataComponent dataComponent = (DataComponent) list.get(c);
+            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
             DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
             if (dataComponentEx.isObserverOnly()) {
                 returnList.add(dataComponentEx);
@@ -799,7 +799,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the Exception if any, or null
      */
-    public void handleComponentError(final DataComponent dataComponent, final Exception exception) {
+    public void handleComponentError(final AbstractDataComponent dataComponent, final Exception exception) {
 
         boolean mustStop = false;
 

@@ -15,7 +15,7 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
@@ -47,7 +47,7 @@ public class ProducerExecution implements Runnable {
     private boolean stop;
 
     /** The data component that is affected. */
-    private DataComponent dataComponent;
+    private AbstractDataComponent dataComponent;
 
     /** The output data of the producer DataComponent. */
     private JSONObject data;
@@ -65,7 +65,7 @@ public class ProducerExecution implements Runnable {
      * @param parentParam
      *            the parent execution
      */
-    public ProducerExecution(final DataComponent dataComponentParam, 
+    public ProducerExecution(final AbstractDataComponent dataComponentParam, 
                              final Execution parentParam) {
         this.stop = false;
         this.done = false;

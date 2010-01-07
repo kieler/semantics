@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 
 /**
  * The Class AddDataComponentDialog.
@@ -64,13 +64,13 @@ public class AddDataComponentDialog extends Dialog {
     private Table table;
 
     /** The list that holds the currently selected DataComponents. */
-    private List<DataComponent> selectedList;
+    private List<AbstractDataComponent> selectedList;
 
     /**
      * The component list should hold all available default DataComponents and is used to update the
      * table.
      */
-    private List<DataComponent> componentList;
+    private List<AbstractDataComponent> componentList;
 
     /**
      * The DataComponentExList. It is used to check for multiple instances. It should hold all
@@ -179,7 +179,7 @@ public class AddDataComponentDialog extends Dialog {
      * @param dataComponents
      *            the new component list
      */
-    public void setComponentList(final List<DataComponent> dataComponents) {
+    public void setComponentList(final List<AbstractDataComponent> dataComponents) {
         this.componentList = dataComponents;
     }
 
@@ -207,7 +207,7 @@ public class AddDataComponentDialog extends Dialog {
      */
     private void updateTable() {
         for (int c = 0; c < componentList.size(); c++) {
-            DataComponent component = componentList.get(c);
+            AbstractDataComponent component = componentList.get(c);
             TableItem item = new TableItem(table, SWT.NULL);
             String type = Messages.mInitializationDataComponent;
             if (component.isObserver() && component.isProducer()) {
@@ -240,7 +240,7 @@ public class AddDataComponentDialog extends Dialog {
      * @return the selected DataComponents for which DataComponentExs has to be created by the
      *         calling instance
      */
-    public List<DataComponent> getSelectedComponents() {
+    public List<AbstractDataComponent> getSelectedComponents() {
         return selectedList;
     }
 
@@ -251,10 +251,10 @@ public class AddDataComponentDialog extends Dialog {
      * the list. The selected list can be obtained by calling {@link #getSelectedComponents()}.
      */
     private void updateSelectedList() {
-        selectedList = new LinkedList<DataComponent>();
+        selectedList = new LinkedList<AbstractDataComponent>();
         TableItem[] selection = table.getSelection();
         for (int c = 0; c < selection.length; c++) {
-            DataComponent dataComponent = (DataComponent) selection[c].getData();
+            AbstractDataComponent dataComponent = (AbstractDataComponent) selection[c].getData();
             // only add if multiple instances are ok
             // or if there are no instances yet!
             if (checkMultipleInstanceOk(dataComponent)) {
@@ -279,7 +279,7 @@ public class AddDataComponentDialog extends Dialog {
      * 
      * @return true, if another instance of this DataComponent is allowed
      */
-    public boolean checkMultipleInstanceOk(final DataComponent component) {
+    public boolean checkMultipleInstanceOk(final AbstractDataComponent component) {
         // nothing to check = no multiple instances possible if empty list
         if (dataComponentExList == null) {
             return true;
@@ -318,7 +318,7 @@ public class AddDataComponentDialog extends Dialog {
                                         DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY));
 
         for (int c = 0; c < table.getItemCount(); c++) {
-            DataComponent dataComponent = (DataComponent) table.getItem(c).getData();
+            AbstractDataComponent dataComponent = (AbstractDataComponent) table.getItem(c).getData();
             // select color
             Color currentColor = colorDisabled;
             if (checkMultipleInstanceOk(dataComponent)) {

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 
 /**
@@ -54,7 +54,7 @@ public class EventManager {
      *            the DataComponentEx
      */
     public void add(final DataComponentEx dataComponentEx) {
-        DataComponent dataComponent = dataComponentEx.getDataComponent();
+        AbstractDataComponent dataComponent = dataComponentEx.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
         for (int event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
@@ -79,7 +79,7 @@ public class EventManager {
      *            the DataComponentEx
      */
     public void remove(final DataComponentEx dataComponentEx) {
-        DataComponent dataComponent = dataComponentEx.getDataComponent();
+        AbstractDataComponent dataComponent = dataComponentEx.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
         for (int event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {

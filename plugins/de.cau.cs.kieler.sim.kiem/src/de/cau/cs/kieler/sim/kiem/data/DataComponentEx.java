@@ -17,7 +17,7 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 /**
  * The Class DataComponentEx. Is a wrapper for the
- * {@link de.cau.cs.kieler.sim.kiem.extension.DataComponent} class. It should enrich the above class
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent} class. It should enrich the above class
  * with information that is only needed for instances in the running execution manager and its view.
  * For example whether a DataComponent instance is enabled or disabled or the current pool index for
  * delta observer DataComponents.
@@ -41,7 +41,7 @@ public class DataComponentEx implements Serializable {
     private static final long serialVersionUID = -4500131140237160894L;
 
     /** The contained DataComponent. */
-    private transient DataComponent component;
+    private transient AbstractDataComponent component;
 
     /** The pool indices for history steps. */
     private transient HashMap<Long, Long> poolIndices;
@@ -82,7 +82,7 @@ public class DataComponentEx implements Serializable {
      * @param componentParam
      *            the contained DataComponent
      */
-    public DataComponentEx(final DataComponent componentParam) {
+    public DataComponentEx(final AbstractDataComponent componentParam) {
         super();
         this.component = componentParam;
         this.enabled = true;
@@ -166,7 +166,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return the contained DataComponent
      */
-    public DataComponent getDataComponent() {
+    public AbstractDataComponent getDataComponent() {
         return component;
     }
 
@@ -313,7 +313,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if it is a producer
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isProducer()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isProducer()
      */
     public boolean isProducer() {
         return this.component.isProducer();
@@ -326,7 +326,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if it is an observer
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isObserver()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isObserver()
      */
     public boolean isObserver() {
         return this.component.isObserver();
@@ -339,7 +339,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return the name
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getName()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#getName()
      */
     public String getName() {
         return this.component.getName();
@@ -353,7 +353,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return the filter keys
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideFilterKeys()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#provideFilterKeys()
      */
     public String[] provideFilterKeys() {
         return this.component.provideFilterKeys();
@@ -370,7 +370,7 @@ public class DataComponentEx implements Serializable {
      * @throws KiemInitializationException
      *             the KIEM initialization exception
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#provideInterfaceKeys()
      */
     @Deprecated
     public String[] provideInterfaceKeys() throws KiemInitializationException {
@@ -418,7 +418,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return the KiemProperties
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getProperties()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#getProperties()
      */
     public KiemProperty[] getProperties() {
         return this.properties;
@@ -431,7 +431,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if DataComponent is a delta observer
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isDeltaObserver()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isDeltaObserver()
      */
     public boolean isDeltaObserver() {
         return this.component.isDeltaObserver();
@@ -444,7 +444,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if DataComponent is a history observer
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isHistoryObserver()
      */
     public boolean isHistoryObserver() {
         return this.component.isHistoryObserver();
@@ -458,7 +458,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if current step is a history step
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryStep()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isHistoryStep()
      */
     public boolean isHistoryStep() {
         return this.component.isHistoryStep();
@@ -472,7 +472,7 @@ public class DataComponentEx implements Serializable {
      * @param historyStep
      *            true, if the step is a history step
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setHistoryStep(boolean)
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#setHistoryStep(boolean)
      */
     public void setHistoryStep(final boolean historyStep) {
         this.component.setHistoryStep(historyStep);
@@ -485,7 +485,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if the DataComponent is a master
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMaster()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isMaster()
      */
     public boolean isMaster() {
         return this.component.isMaster();
@@ -498,7 +498,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if is pause flag
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isPauseFlag()
      */
     public boolean isPauseFlag() {
         return this.component.isPauseFlag();
@@ -511,7 +511,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if checks if is macro step done
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMacroStepDone()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isMacroStepDone()
      */
     public boolean isMacroStepDone() {
         return this.component.isMacroStepDone();
@@ -529,7 +529,7 @@ public class DataComponentEx implements Serializable {
      * @throws KiemPropertyException
      *             an Exception in case of an error
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(KiemProperty[])
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#checkProperties(KiemProperty[])
      */
     public void checkProperties(final KiemProperty[] propertiesParam) throws KiemPropertyException {
         this.component.checkProperties(propertiesParam);
@@ -544,7 +544,7 @@ public class DataComponentEx implements Serializable {
      * @param globalInterfaceKeys
      *            all interface variable keys
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceKeys(String[])
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#setInterfaceKeys(String[])
      */
     @Deprecated
     public void setInterfaceKeys(final String[] globalInterfaceKeys) {
@@ -579,7 +579,7 @@ public class DataComponentEx implements Serializable {
      * 
      * @return true, if is master DataComponent is implementing GUI buttons
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMasterImplementingGUI()
+     * @see de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent#isMasterImplementingGUI()
      */
     public boolean isMasterImplementingGUI() {
         return this.component.isMasterImplementingGUI();
