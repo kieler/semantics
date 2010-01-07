@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * This class implements some constants that define specific events in KIEM. A DataComponent may
  * register itself using the
- * {@link de.cau.cs.kieler.sim.kiem.extension.DataComponent.provideEventOfInterest} method to be a
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.provideEventOfInterest} method to be a
  * listener of some events. The method
- * {@link de.cau.cs.kieler.sim.kiem.extension.DataComponent.notifyEvent} will then be called by KIEM
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.notifyEvent} will then be called by KIEM
  * for the registered events.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de

@@ -23,7 +23,7 @@ import org.json.JSONObject;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public abstract class JSONObjectDataComponent extends DataComponent implements
+public abstract class JSONObjectDataComponent extends AbstractDataComponent implements
         IJSONObjectDataComponent {
 
     /** The global initial variables as JSONObjects. */

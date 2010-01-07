@@ -30,7 +30,7 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public abstract class DataComponent implements IDataComponent, IExecutableExtension {
+public abstract class AbstractDataComponent implements IDataComponent, IExecutableExtension {
 
     /** The name of the DataComponent. */
     private String name;
@@ -81,7 +81,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * method that may be overridden by the component. It sets the properties to null in the default
      * case to indicate that the DataComponent has no properties.
      */
-    public DataComponent() {
+    public AbstractDataComponent() {
         super();
         properties = provideProperties();
     }
@@ -782,22 +782,22 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
 
         if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
             switch (command) {
-            case DataComponent.MASTER_CMD_STEP:
+            case AbstractDataComponent.MASTER_CMD_STEP:
                 kIEMInstance.getExecution().stepExecutionSync();
                 break;
-            case DataComponent.MASTER_CMD_MACROSTEP:
+            case AbstractDataComponent.MASTER_CMD_MACROSTEP:
                 kIEMInstance.getExecution().macroStepExecutionSync();
                 break;
-            case DataComponent.MASTER_CMD_RUN:
+            case AbstractDataComponent.MASTER_CMD_RUN:
                 kIEMInstance.getExecution().runExecutionSync();
                 break;
-            case DataComponent.MASTER_CMD_PAUSE:
+            case AbstractDataComponent.MASTER_CMD_PAUSE:
                 kIEMInstance.getExecution().pauseExecutionSync();
                 break;
-            case DataComponent.MASTER_CMD_STOP:
+            case AbstractDataComponent.MASTER_CMD_STOP:
                 kIEMInstance.getExecution().stopExecutionSync();
                 break;
-            case DataComponent.MASTER_CMD_STEPBACK:
+            case AbstractDataComponent.MASTER_CMD_STEPBACK:
                 kIEMInstance.getExecution().stepBackExecutionSync();
                 break;
             }

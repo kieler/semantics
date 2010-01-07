@@ -21,7 +21,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public abstract class JSONStringDataComponent extends DataComponent implements
+public abstract class JSONStringDataComponent extends AbstractDataComponent implements
         IJSONStringDataComponent {
 
     /** The global initial variables as JSON Strings. */
