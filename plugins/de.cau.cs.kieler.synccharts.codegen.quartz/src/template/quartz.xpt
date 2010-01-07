@@ -3,8 +3,8 @@
 «EXTENSION template::helper»
 
 «DEFINE main FOR Region-»
-«FILE innerStates.first().id + ".qrz"-»
-module «innerStates.first().id»(event 
+«FILE innerStates.first().label + ".qrz"-»
+module «innerStates.first().label»(event 
 «FOREACH innerStates.first().signals AS sig SEPARATOR ", "-»«IF sig.isInput»?«ENDIF-»«IF sig.isOutput»!«ENDIF-»«sig.name»
 «ENDFOREACH-»
 ){
@@ -14,7 +14,7 @@ module «innerStates.first().id»(event
 «ENDDEFINE»
 
 «DEFINE Constelation FOR Region-»
-  {event T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH»;
+  event T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH»;
   emit (goto_«this.innerStates.first().id»);
   loop{
     weak abort{ 
@@ -22,14 +22,13 @@ module «innerStates.first().id»(event
       if (goto_«state.id»){
         event start_«state.id»;
         «EXPAND Star FOR state-»
-        if(!start_«state.label»){
+        if(!start_«state.id»){
           emit (T_«innerStates.first().id»);
         }
       }
     «ENDFOREACH-»
       halt;
-    }when (T_«innerStates.first().id»);
-  }
+    } when (T_«innerStates.first().id»);
   }
 «ENDDEFINE»
 
