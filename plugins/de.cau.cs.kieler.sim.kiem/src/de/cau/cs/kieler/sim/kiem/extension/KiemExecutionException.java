@@ -30,8 +30,17 @@ public class KiemExecutionException extends Exception {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1645050957113020503L;
 
-    /** The must stop indicating that the execution <B>MUST</B> be stopped. */
+    /** The must stop flag indicating that the execution <B>MUST</B> be stopped. */
     private boolean mustStop;
+
+    /** The must pause flag indicating that the execution <B>MUST</B> be paused. */
+    private boolean mustPause;
+
+    /**
+     * The silent flag indicates that the component handles the "error" and KIEM should not display
+     * any error or warning message.
+     */
+    private boolean silent;
 
     /** The cause of this Exception. */
     private Exception cause;
@@ -47,12 +56,38 @@ public class KiemExecutionException extends Exception {
      *            the must stop flag indicating if the execution must stop
      * @param causeParam
      *            the cause of this Exception if any, or null otherwise
+     * @param mustPauseParam
+     *            the must pause flag indicating if the execution must pause
+     * @param silentParam
+     *            the silent param flags that KIEM omits any message dialog
      */
-    public KiemExecutionException(final String message, 
-                                  final boolean mustStopParam, 
-                                  final Exception causeParam) {
+    public KiemExecutionException(final String message, final boolean mustStopParam,
+            final boolean mustPauseParam, final boolean silentParam, final Exception causeParam) {
         super(message);
         this.mustStop = mustStopParam;
+        this.mustPause = mustPauseParam;
+        this.silent = silentParam;
+        this.cause = causeParam;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new KiemExecutionException.
+     * 
+     * @param message
+     *            the message of this Exception to display to the user
+     * @param mustStopParam
+     *            the must stop flag indicating if the execution must stop
+     * @param causeParam
+     *            the cause of this Exception if any, or null otherwise
+     */
+    public KiemExecutionException(final String message, final boolean mustStopParam,
+            final Exception causeParam) {
+        super(message);
+        this.mustStop = mustStopParam;
+        this.mustPause = false;
+        this.silent = false;
         this.cause = causeParam;
     }
 
@@ -78,4 +113,27 @@ public class KiemExecutionException extends Exception {
         return cause;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the execution must pause when this Exception occurs.
+     * 
+     * @return true, if execution must stop
+     */
+    public boolean isMustPause() {
+        return this.mustPause;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if KIEM should omit an error or warning message dialog when this Exception occurs.
+     * 
+     * @return true, if KIEM should omit any message dialog
+     */
+    public boolean isSilent() {
+        return this.silent;
+    }
+
+    // -------------------------------------------------------------------------
 }

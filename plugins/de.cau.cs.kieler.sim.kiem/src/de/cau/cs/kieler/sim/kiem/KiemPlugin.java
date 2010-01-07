@@ -215,7 +215,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (execution != null) {
                     // stop any running execution
                     KiemPlugin.getDefault().execution.stopExecutionSync();
-                    showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID, null);
+                    showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID, null, false);
                     return;
                 }
 
@@ -242,7 +242,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                                 dataComponentExListTemp = (List<DataComponentEx>) object;
                             }
                         } catch (ClassNotFoundException e) {
-                            showError(null, null, e);
+                            showError(null, null, e, false);
                             // e.printStackTrace();
                         }
                         in.close();
@@ -257,7 +257,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                             restoreDataComponentListEx(dataComponentExListTemp);
                         }
                     } catch (IOException e) {
-                        showError(null, null, e);
+                        showError(null, null, e, false);
                         e.printStackTrace();
                     }
                     // update the KiemView table
@@ -428,7 +428,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             if (!componentRestored) {
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        componentId), null, null);
+                        componentId), null, null, false);
             } // end if - failed
 
         } // next c
@@ -480,7 +480,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        jsonComponents[i].getContributor().getName()), null, e);
+                        jsonComponents[i].getContributor().getName()), null, e, false);
             }
         }
         for (int i = 0; i < stringComponents.length; i++) {
@@ -496,7 +496,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        stringComponents[i].getContributor().getName()), null, e);
+                        stringComponents[i].getContributor().getName()), null, e, false);
             }
         }
         return dataComponentList;
@@ -542,11 +542,11 @@ public class KiemPlugin extends AbstractUIPlugin {
         } // next c
         if (countEnabledProducer < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null);
+            this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null, false);
             return false;
         } else if (countEnabledObserver < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null);
+            showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null, false);
             return false;
         }
 
@@ -561,7 +561,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             } catch (Exception e) {
                 this.kIEMViewInstance.setAllEnabled(true);
                 this.showError(null, dataComponentEx.getDataComponent().getConfigurationElement()
-                        .getContributor().getName(), e);
+                        .getContributor().getName(), e, false);
                 return false;
             }
         }
@@ -816,10 +816,14 @@ public class KiemPlugin extends AbstractUIPlugin {
             final Exception exception) {
 
         boolean mustStop = false;
+        boolean mustPause = false;
+        boolean silent = false;
 
         // check if mustStop flag is set
         if (exception instanceof KiemExecutionException) {
             mustStop = ((KiemExecutionException) exception).isMustStop();
+            mustPause = ((KiemExecutionException) exception).isMustPause();
+            silent = ((KiemExecutionException) exception).isSilent();
         } else if (exception instanceof KiemInitializationException) {
             mustStop = ((KiemInitializationException) exception).isMustStop();
         }
@@ -827,13 +831,19 @@ public class KiemPlugin extends AbstractUIPlugin {
         // show error or warning message dialog
         if (mustStop) {
             // first terminate the execution
-            if (KiemPlugin.getDefault().execution != null)
+            if (KiemPlugin.getDefault().execution != null) {
                 KiemPlugin.getDefault().execution.errorTerminate();
+            }
             // then show modal error dialog
-            KiemPlugin.getDefault().showError(null, dataComponent.getPluginId(), exception);
+            KiemPlugin.getDefault().showError(null, dataComponent.getPluginId(), exception, silent);
         } else {
             // show non modal warning dialog
-            KiemPlugin.getDefault().showWarning(null, dataComponent.getPluginId(), exception);
+            KiemPlugin.getDefault().showWarning(null, dataComponent.getPluginId(), exception,
+                    silent);
+            // must pause makes only sense for running executions!
+            if (mustPause) {
+                this.execution.pauseExecutionSync();
+            } // end if
         }
 
     }
@@ -853,9 +863,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            the plug-in id
      * @param exception
      *            the exception
+     * @param silent
+     *            the silent tag indicates that only logging occurs, no message dialog is displayed
      */
     public void showWarning(final String textMessage, final String pluginID,
-            final Exception exception) {
+            final Exception exception, final boolean silent) {
         try {
             String message = "";
 
@@ -899,9 +911,13 @@ public class KiemPlugin extends AbstractUIPlugin {
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
                     .currentTimeMillis());
 
-            // use status manager (log and show)
-            StatusManager.getManager()
-                    .handle(statusAdapter, StatusManager.LOG | StatusManager.SHOW);
+            // use status manager (log and (optionally) show)
+            if (!silent) {
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.LOG | StatusManager.SHOW);
+            } else {
+                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -922,8 +938,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            the plug-in id
      * @param exception
      *            the exception if any, null otherwise
+     * @param silent
+     *            the silent tag indicates that only logging occurs, no message dialog is displayed
      */
-    public void showError(final String textMessage, final String pluginID, final Exception exception) {
+    public void showError(final String textMessage, final String pluginID,
+            final Exception exception, final boolean silent) {
         try {
             String message = "";
 
@@ -968,8 +987,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             // use status manager (log and show)
             // BLOCK = modal window, force the user to act!
-            StatusManager.getManager().handle(statusAdapter,
-                    StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
+            // use status manager (log and (optionally) show)
+            if (!silent) {
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
+            } else {
+                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

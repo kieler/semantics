@@ -551,7 +551,9 @@ public class Execution implements Runnable {
 
     // TODO: implement macro step execution
     /**
-     * Macro step execution sync.
+     * Macro step execution sync. <BR>
+     * <BR>
+     * <B>NOTE: This method has not been implemented yet!</B>
      */
     public void macroStepExecutionSync() {
         this.stepExecutionSync();
@@ -1046,7 +1048,7 @@ public class Execution implements Runnable {
                                 } catch (Exception e) {
                                     if (!stop) {
                                         KiemPlugin.getDefault().showWarning(null,
-                                                KiemPlugin.PLUGIN_ID, e);
+                                                KiemPlugin.PLUGIN_ID, e, false);
                                     }
                                 }
                             }
@@ -1103,7 +1105,7 @@ public class Execution implements Runnable {
                             } catch (Exception e) {
                                 if (!stop) {
                                     KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e);
+                                            e, false);
                                 }
                             }
                             // System.out.println(dataComponentEx.getName() +
@@ -1126,7 +1128,7 @@ public class Execution implements Runnable {
                             } catch (Exception e) {
                                 if (!stop) {
                                     KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e);
+                                            e, false);
                                 }
                             }
                             // call async method - no timeout
@@ -1145,7 +1147,7 @@ public class Execution implements Runnable {
                             } catch (Exception e) {
                                 if (!stop) {
                                     KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(),
-                                            KiemPlugin.PLUGIN_ID, e);
+                                            KiemPlugin.PLUGIN_ID, e, false);
                                 }
                             }
                         } else if ((!this.isHistoryStep()) && dataComponentEx.isProducerOnly()) {
@@ -1167,7 +1169,7 @@ public class Execution implements Runnable {
                             } catch (Exception e) {
                                 if (!stop) {
                                     KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e);
+                                            e, false);
                                 }
                             }
 
@@ -1187,7 +1189,7 @@ public class Execution implements Runnable {
                             } catch (Exception e) {
                                 if (!stop) {
                                     KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e);
+                                            e, false);
                                 }
                             }
 
@@ -1211,7 +1213,8 @@ public class Execution implements Runnable {
                         this.weightedAverageStepDuration = this.stepDuration;
                     } else {
                         // other ticks
-                        this.weightedAverageStepDuration = (this.weightedAverageStepDuration + this.stepDuration) / 2;
+                        this.weightedAverageStepDuration += this.stepDuration;
+                        this.weightedAverageStepDuration /= 2;
                     }
                     this.accumulatedStepDurations += this.stepDuration;
 
@@ -1262,7 +1265,7 @@ public class Execution implements Runnable {
                         Thread.sleep(timeToDelay);
                     } catch (Exception e) {
                         if (!stop) {
-                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e);
+                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
                         }
                     }
                 }
@@ -1287,7 +1290,7 @@ public class Execution implements Runnable {
                     Thread.sleep(PAUSE_DEYLAY);
                 } catch (Exception e) {
                     if (!stop) {
-                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e);
+                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
                     }
                 }
                 // if stop is requested, jump out
@@ -1315,7 +1318,7 @@ public class Execution implements Runnable {
      *            the original Exception
      */
     public void showError(final String textMessage, final String pluginID, final Exception e) {
-        KiemPlugin.getDefault().showError(textMessage, pluginID, e);
+        KiemPlugin.getDefault().showError(textMessage, pluginID, e, false);
     }
 
     // -------------------------------------------------------------------------
@@ -1332,7 +1335,7 @@ public class Execution implements Runnable {
      *            the original Exception
      */
     public void showWarning(final String textMessage, final String pluginID, final Exception e) {
-        KiemPlugin.getDefault().showWarning(textMessage, pluginID, e);
+        KiemPlugin.getDefault().showWarning(textMessage, pluginID, e, false);
     }
 
 }

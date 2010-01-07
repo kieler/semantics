@@ -236,12 +236,12 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * If this DataComponent implements an observer, provide some key's of interest. If you use null
      * then no filter is being used and the component will get all values.<BR>
      * <BR>
-     * As an example one could use the following code if the component is only
-     * interested in values with the (top-)key "state" and "emergency":<BR>
+     * As an example one could use the following code if the component is only interested in values
+     * with the (top-)key "state" and "emergency":<BR>
      * <BR>
      * public String[] provideFilterKeys() {<BR>
-     *    String[] myFilter = {"state","emergency"};<BR>
-     *    return myFilter;<BR>
+     * String[] myFilter = {"state","emergency"};<BR>
+     * return myFilter;<BR>
      * }<BR>
      * 
      * @return a String array with the keys of interest or null for "no filter"
@@ -271,40 +271,40 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * below) and the component may use there settings.<BR>
      * <BR>
      * The following lists a simple example for such properties:<BR>
-     *  @Override <BR>
-     *   public KiemProperty[] provideProperties() { <BR>
+     * 
+     * @Override <BR>
+     *           public KiemProperty[] provideProperties() { <BR>
      *           KiemProperty[] properties = new KiemProperty[7]; <BR>
      *           properties[0] = new KiemProperty( <BR>
-     *                           "state name", <BR>
-     *                           "state"); <BR>
+     *           "state name", <BR>
+     *           "state"); <BR>
      *           properties[1] = new KiemProperty( <BR>
-     *                           "some bool", <BR>
-     *                           true); <BR>
+     *           "some bool", <BR>
+     *           true); <BR>
      *           properties[2] = new KiemProperty( <BR>
-     *                           "an integer", <BR>
-     *                           2); <BR>
+     *           "an integer", <BR>
+     *           2); <BR>
      *           properties[3] = new KiemProperty( <BR>
-     *                           "a file", <BR>
-     *                           new KiemPropertyTypeFile(), <BR>
-     *                           "c:/nothing.txt"); <BR>
+     *           "a file", <BR>
+     *           new KiemPropertyTypeFile(), <BR>
+     *           "c:/nothing.txt"); <BR>
      *           String[] items = {"trace 1","trace 2", "trace 3", "trace 4"}; <BR>
      *           properties[4] = new KiemProperty( <BR>
-     *                           "a choice", <BR>
-     *                           new KiemPropertyTypeChoice(items), <BR>
-     *                           items[2]); <BR>
+     *           "a choice", <BR>
+     *           new KiemPropertyTypeChoice(items), <BR>
+     *           items[2]); <BR>
      *           properties[5] = new KiemProperty( <BR>
-     *                           "workspace file", <BR>
-     *                           new KiemPropertyTypeWorkspaceFile(), <BR>
-     *                           "/nothing.txt"); <BR>
+     *           "workspace file", <BR>
+     *           new KiemPropertyTypeWorkspaceFile(), <BR>
+     *           "/nothing.txt"); <BR>
      *           properties[6] = new KiemProperty( <BR>
-     *                           "editor", <BR>
-     *                           new KiemPropertyTypeEditor(), <BR>
-     *                           ""); <BR>
+     *           "editor", <BR>
+     *           new KiemPropertyTypeEditor(), <BR>
+     *           ""); <BR>
      *           return properties; <BR>
-     *   } <BR>
+     *           } <BR>
      * <BR>
-     * These are built-in types that can always be extended using the KiemProperty
-     * class.
+     *           These are built-in types that can always be extended using the KiemProperty class.
      * 
      * @return the KiemProperty[] or null if no properties are provided
      */
@@ -442,10 +442,32 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is delta observer. Delta values are all changed values that are in the present and
-     * were in the past ticks when this component may have been skipped.<BR>
+     * Checks if component is a delta observer. Delta values are all changed values that exist in the
+     * present tick (and in the past ticks when this component may have been skipped).<BR>
      * If a component wants all (accumulated & updated) values of the present tick, it should return
-     * false.
+     * false.<BR>
+     * <BR>
+     * Example:<BR>
+     * <BR>
+     * Step...........|..1..|..2..|..3..|..4..|..5..|<BR>
+     * -----------------------------------------------------<BR>
+     * Producer.......|..A..|../..|..B..|..C..|..D..|<BR>
+     * -----------------------------------------------------<BR>
+     * Observer.......|.A...|.skip|.skip|.ABC.|.ABCD|<BR>
+     * -----------------------------------------------------<BR>
+     * DeltaObserver..|.A...|.skip|.skip|.BC..|.D...|<BR>
+     * -----------------------------------------------------<BR>
+     * <BR>
+     * The above figure shows an execution of 5 steps with three participating DataComponents. One
+     * producer generates (different) data at steps 1, 3, 4, and 5. It does not produce any data in
+     * step 2. Both observers get skipped in steps 2 and 3 (e. g., because they might be a little
+     * slow). In step 1 both observers get the A data. Because there is no data in the pool, both
+     * inputs (their parameter values) are the same. In steps 2 and 3 both get skipped. Their step()
+     * method is not called in these steps. In step 4 the DeltaObserver gets only the B and the D
+     * data, produced in steps 3 and 4 (these are the delta values to the last time it was not
+     * skipped, i. e., step 1). The other observer gets the whole data of the pool, namely the A, B,
+     * and the C data. In step 5 the recently produced D data are the only ones that arrive at the
+     * DeltaObserver while the other observer gets all ever produced data A, B, C and D.
      * 
      * @return true, if is delta observer
      */
@@ -461,8 +483,11 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * *EVERY* component's isPauseFlag() returns false! Also the step() function will never get
      * called again! Be careful when implementing side effects in this method!
      * 
+     * <BR><BR><B>DEPRECATED: use KiemExecutionException mustPause flag instead!</B>
+     * 
      * @return true, if is pause flag
      */
+    @Deprecated
     public boolean isPauseFlag() {
         return false;
     }
@@ -481,7 +506,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * update again they should also return a false value. <BR>
      * <BR>
      * Also note that this method is ignored for pure Data Observers because there is blocking
-     * impact on the schedule from them.
+     * impact on the schedule from them. <BR>
+     * <BR>
+     * <B>NOTE: This method has not been implemented yet!</B>
      * 
      * @return true, if is macro step is done
      */
@@ -1206,7 +1233,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * following code:<BR>
      * <BR>
      * public KiemEvent provideEventOfInterest() { <BR>
-     *    return new KiemEvent(CMD_STEP+DELETED); <BR>
+     * return new KiemEvent(CMD_STEP+DELETED); <BR>
      * }<BR>
      * <BR>
      * NOTE: The provision of event types is only read by KIEM once before the execution starts.
