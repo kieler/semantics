@@ -1048,7 +1048,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 for (int c = 0; c < selection.size(); c++) {
                     DataComponentEx dataComponentEx = (DataComponentEx) selection.toArray()[c];
                     if (kIEMInstance.getDataComponentExList().contains(dataComponentEx)) {
-                        dataComponentEx.getDataComponent()._DataComponent();
+                        dataComponentEx.getDataComponent().finalize();
                         kIEMInstance.getDataComponentExList().remove(dataComponentEx);
                         setDirty(true);
                         checkForSingleEnabledMaster(false);

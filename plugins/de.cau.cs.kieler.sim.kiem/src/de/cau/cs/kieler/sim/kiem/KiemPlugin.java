@@ -404,11 +404,12 @@ public class KiemPlugin extends AbstractUIPlugin {
                     if (properties != null) {
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
-                                properties[ccc].setType(dataComponent.getProperties()[ccc].getType());
+                                properties[ccc].setType(dataComponent.getProperties()[ccc]
+                                        .getType());
                             } catch (Exception e) {
-                                //warnings with unusable properties can
-                                //only occur if this is intended, i.e., the
-                                //component id calculation was modified!
+                                // warnings with unusable properties can
+                                // only occur if this is intended, i.e., the
+                                // component id calculation was modified!
                             }
                         }
                     }
@@ -450,9 +451,12 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public List<AbstractDataComponent> getDataComponentList() {
         if (dataComponentList != null) {
+            // return a cached version of the list
+            // it is only built the first time
             return dataComponentList;
         }
-        // suggest calling the garbage collector
+        // suggest calling the garbage collector: this may
+        // remove any DataComponent threads still running (but not linked==needed any more)
         System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] jsonComponents = Platform.getExtensionRegistry()
@@ -556,8 +560,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                 }
             } catch (Exception e) {
                 this.kIEMViewInstance.setAllEnabled(true);
-                this.showError(null, dataComponentEx.getDataComponent()
-                        .getConfigurationElement().getContributor().getName(), e);
+                this.showError(null, dataComponentEx.getDataComponent().getConfigurationElement()
+                        .getContributor().getName(), e);
                 return false;
             }
         }
@@ -634,7 +638,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 dataComponentEx.setInitialVariables(globalInitialVariables);
             } // end if enabled
         } // next c
-        
+
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentExList.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExList.get(c);
@@ -659,10 +663,10 @@ public class KiemPlugin extends AbstractUIPlugin {
         try {
             this.execution.getDataPool().putData(globalInitialVariables);
         } catch (JSONException e) {
-            //this should not happen
+            // this should not happen
             e.printStackTrace();
         }
-        
+
         this.executionThread = new Thread(this.execution);
         this.executionThread.start();
 
@@ -687,7 +691,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         IConfigurationElement componentConfigEle = component.getConfigurationElement();
         AbstractDataComponent componentClone;
         try {
-            componentClone = (AbstractDataComponent) componentConfigEle.createExecutableExtension("class");
+            componentClone = (AbstractDataComponent) componentConfigEle
+                    .createExecutableExtension("class");
             componentClone.setConfigurationElemenet(componentConfigEle);
 
             DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
@@ -714,7 +719,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @return the default DataComponentExList
      */
     public List<DataComponentEx> getDefaultComponentExList() {
-        // suggest calling the garbage collector
+        // suggest calling the garbage collector: this may
+        // remove any DataComponent threads still running (but not linked==needed any more)
         System.gc();
         List<AbstractDataComponent> list = this.getDataComponentList();
         List<DataComponentEx> returnList = new LinkedList<DataComponentEx>();
@@ -764,10 +770,11 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         while (this.dataComponentExList.size() > 0) {
             DataComponentEx dataComponentEx = dataComponentExList.get(0);
-            dataComponentEx.getDataComponent()._DataComponent();
+            dataComponentEx.getDataComponent().finalize();
             dataComponentExList.remove(dataComponentEx);
         }
-        // suggest calling the garbage collector
+        // suggest calling the garbage collector: this may
+        // remove any DataComponent threads still running (but not linked==needed any more)
         System.gc();
     }
 
@@ -805,7 +812,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the Exception if any, or null
      */
-    public void handleComponentError(final AbstractDataComponent dataComponent, final Exception exception) {
+    public void handleComponentError(final AbstractDataComponent dataComponent,
+            final Exception exception) {
 
         boolean mustStop = false;
 
@@ -876,8 +884,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
-                status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                        exception);
+                status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
             } else {
                 try {
                     status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
@@ -945,15 +952,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
-                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
-                        exception);
+                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
             } else {
                 try {
-                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
-                            exception.getCause());
+                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception
+                            .getCause());
                 } catch (Exception e) {
-                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
-                            exception);
+                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
                 }
             }
 

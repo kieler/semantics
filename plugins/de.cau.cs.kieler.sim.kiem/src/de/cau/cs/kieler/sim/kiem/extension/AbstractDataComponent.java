@@ -219,9 +219,10 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Overwrite this if this component is explicitly multi instantiable ONLY! note that you have to
-     * consider thread safety here because all instances will be run in a different (and hence
-     * concurrent) thread be aware of this for example if you share a common view etc.
+     * Flag that this component can be run multible times in different threads. Overwrite this if
+     * this component is explicitly multi instantiable ONLY! note that you have to consider thread
+     * safety here because all instances will be run in a different (and hence concurrent) thread be
+     * aware of this for example if you share a common view etc.
      * 
      * @return a boolean indicating that the component is multi threadable
      */
@@ -233,9 +234,17 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
 
     /**
      * If this DataComponent implements an observer, provide some key's of interest. If you use null
-     * then no filter is being used and the component will get all values.
+     * then no filter is being used and the component will get all values.<BR>
+     * <BR>
+     * As an example one could use the following code if the component is only
+     * interested in values with the (top-)key "state" and "emergency":<BR>
+     * <BR>
+     * public String[] provideFilterKeys() {<BR>
+     *    String[] myFilter = {"state","emergency"};<BR>
+     *    return myFilter;<BR>
+     * }<BR>
      * 
-     * @return a String array with the keys of interest
+     * @return a String array with the keys of interest or null for "no filter"
      */
     public String[] provideFilterKeys() {
         return null;
@@ -256,10 +265,46 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Provide properties. The component may create and publicize its properties with this method.
-     * They will be set/modified by the execution manager during the user edits them. Whenever the
-     * user decides to run/start the execution the properties are tested (see below) and the
-     * component may use there settings.
+     * Provide properties for this component. The component may create and publicize its properties
+     * with this method. They will be set/modified by the execution manager during the user edits
+     * them. Whenever the user decides to run/start the execution the properties are tested (see
+     * below) and the component may use there settings.<BR>
+     * <BR>
+     * The following lists a simple example for such properties:<BR>
+     *  @Override <BR>
+     *   public KiemProperty[] provideProperties() { <BR>
+     *           KiemProperty[] properties = new KiemProperty[7]; <BR>
+     *           properties[0] = new KiemProperty( <BR>
+     *                           "state name", <BR>
+     *                           "state"); <BR>
+     *           properties[1] = new KiemProperty( <BR>
+     *                           "some bool", <BR>
+     *                           true); <BR>
+     *           properties[2] = new KiemProperty( <BR>
+     *                           "an integer", <BR>
+     *                           2); <BR>
+     *           properties[3] = new KiemProperty( <BR>
+     *                           "a file", <BR>
+     *                           new KiemPropertyTypeFile(), <BR>
+     *                           "c:/nothing.txt"); <BR>
+     *           String[] items = {"trace 1","trace 2", "trace 3", "trace 4"}; <BR>
+     *           properties[4] = new KiemProperty( <BR>
+     *                           "a choice", <BR>
+     *                           new KiemPropertyTypeChoice(items), <BR>
+     *                           items[2]); <BR>
+     *           properties[5] = new KiemProperty( <BR>
+     *                           "workspace file", <BR>
+     *                           new KiemPropertyTypeWorkspaceFile(), <BR>
+     *                           "/nothing.txt"); <BR>
+     *           properties[6] = new KiemProperty( <BR>
+     *                           "editor", <BR>
+     *                           new KiemPropertyTypeEditor(), <BR>
+     *                           ""); <BR>
+     *           return properties; <BR>
+     *   } <BR>
+     * <BR>
+     * These are built-in types that can always be extended using the KiemProperty
+     * class.
      * 
      * @return the KiemProperty[] or null if no properties are provided
      */
@@ -355,7 +400,8 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Overwrite this if this component can explicitly handle past recorded history values.<BR>
+     * Flags that this component can handle past, already computed history values. Overwrite this if
+     * this component can explicitly handle past recorded history values.<BR>
      * In case the user makes steps back into the history, only observers that return true in this
      * method will get any (recorded) history data. Components that return false (default) will not
      * get any data, while the the user navigates within the recorded tick area.
@@ -452,72 +498,77 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // so deadlock can easily occur if these or another object called
     // from within these methods refer to the execution-thread!!!
     // -------------------------------------------------------------------------
-     /**
+    /**
      * Command step. Called just before a step command is executed. ATTENTION: This command method
      * is called inside the synchronized lock so a deadlock can easily occur if this or another
-     * object called from within this method refers to the execution-thread!
-     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     * object called from within this method refers to the execution-thread! <BR>
+     * <BR>
+     * <B>DEPRECATED: use notifyEvent() instead!</B>
      */
-     @Deprecated
-     public void commandStep() {
-     // BE CAREFUL WHEN USING THIS (S.A.)//
-     }
+    @Deprecated
+    public void commandStep() {
+        // BE CAREFUL WHEN USING THIS (S.A.)//
+    }
 
     // -------------------------------------------------------------------------
 
-     /**
+    /**
      * Command macro step. Called just before a macro step command is executed.<BR>
      * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
      * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     * execution-thread! <BR>
+     * <BR>
+     * <B>DEPRECATED: use notifyEvent() instead!</B>
      */
-     @Deprecated
-     public void commandMacroStep() {
-     // BE CAREFUL WHEN USING THIS (S.A.)//
-     }
+    @Deprecated
+    public void commandMacroStep() {
+        // BE CAREFUL WHEN USING THIS (S.A.)//
+    }
 
     // -------------------------------------------------------------------------
 
-     /**
+    /**
      * Command run. Called just before a run command is executed.<BR>
      * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
      * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     * execution-thread! <BR>
+     * <BR>
+     * <B>DEPRECATED: use notifyEvent() instead!</B>
      */
-     @Deprecated
-     public void commandRun() {
-     // BE CAREFUL WHEN USING THIS (S.A.)//
-     }
+    @Deprecated
+    public void commandRun() {
+        // BE CAREFUL WHEN USING THIS (S.A.)//
+    }
 
     // -------------------------------------------------------------------------
 
-     /**
+    /**
      * Command pause. Called just before a pause command is executed.<BR>
      * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
      * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     * execution-thread! <BR>
+     * <BR>
+     * <B>DEPRECATED: use notifyEvent() instead!</B>
      */
-     @Deprecated
-     public void commandPause() {
-     // BE CAREFUL WHEN USING THIS (S.A.)//
-     }
+    @Deprecated
+    public void commandPause() {
+        // BE CAREFUL WHEN USING THIS (S.A.)//
+    }
 
     // -------------------------------------------------------------------------
 
-     /**
+    /**
      * Command stop. Called just before a stop command is executed.<BR>
      * ATTENTION: This command method is called inside the synchronized lock so a deadlock can
      * easily occur if this or another object called from within this method refers to the
-     * execution-thread!
-     * <BR><BR><B>DEPRECATED: use notifyEvent() instead!</B>
+     * execution-thread! <BR>
+     * <BR>
+     * <B>DEPRECATED: use notifyEvent() instead!</B>
      */
-     @Deprecated
-     public void commandStop() {
-     // BE CAREFUL WHEN USING THIS (S.A.)//
-     }
+    @Deprecated
+    public void commandStop() {
+        // BE CAREFUL WHEN USING THIS (S.A.)//
+    }
 
     // -------------------------------------------------------------------------
 
@@ -688,7 +739,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master set aimed step duration. If this is a master it can set the aimed step duration. <BR>
+     * If this component is a master it can set the aimed step duration. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -717,7 +768,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master get aimed step duration. If this is a master it can get the aimed step duration. <BR>
+     * If this component is a master it can get the aimed step duration. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -742,7 +793,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master run execution. If this is a master it can run the execution. <BR>
+     * If this component is a master it can run the execution. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -772,7 +823,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * If this is component is a master it can control the execution. <BR>
+     * If this is component is a master it can control the execution using this method. <BR>
      * <BR>
      * The command can be either:<BR>
      * MASTER_CMD_STEP to make an execution step<BR>
@@ -828,8 +879,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master is paused. If this is a master it can detect whether the execution is currently
-     * paused. <BR>
+     * If this component is a master it can detect whether the execution is currently paused. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -854,8 +904,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master is running. If this is a master it can detect whether the execution is currently
-     * running. <BR>
+     * If this component is a master it can detect whether the execution is currently running. <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -880,7 +929,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Master is set. Is called from the ExecutionManager only iff isMaster() returns true! <BR>
+     * This method is called from the ExecutionManager only iff isMaster() returns true! <BR>
      * <BR>
      * ATTENTION: At most ONE DataComponent can be a Master! This method <B>SHOULD NOT</B> be
      * overridden!
@@ -1108,16 +1157,12 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * _dataComponent is a destructor of the DataComponent that is called by the execution manager
+     * finalize() is a destructor of the DataComponent that is called by the execution manager
      * before the DataComponent instance is removed from the list. If the DataComponent needs to
      * free any resources immediately (e.g., closing socket streams) this can be done here.
      */
-    // CHECKSTYLEOFF Name
-    // Rationale: Explicit destructors (in C++) use to start with a underline
-    public void _DataComponent() {
+    public void finalize() {
     }
-
-    // CHECKSTYLEON Name
 
     // -------------------------------------------------------------------------
 
@@ -1155,6 +1200,14 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     /**
      * Return a KiemEvent type (integer value) that represents a number of events this component
      * wants to listen to.<BR>
+     * <BR>
+     * A KiemEvent can be a combination of several events. The simplest way to register for two
+     * events that e.g., indicate a step-command and the removal of the component is to have the
+     * following code:<BR>
+     * <BR>
+     * public KiemEvent provideEventOfInterest() { <BR>
+     *    return new KiemEvent(CMD_STEP+DELETED); <BR>
+     * }<BR>
      * <BR>
      * NOTE: The provision of event types is only read by KIEM once before the execution starts.
      * Hence, changes during the execution are not having any effect. In doubt, this method should
