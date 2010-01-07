@@ -49,7 +49,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
+import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
