@@ -89,11 +89,16 @@ public final class DataComponent extends JSONObjectDataComponent {
     private AssemblerView viewer = null;
     private ConnectionView krepView = null;
 
+    /*
+     * number of the properties in the property array. This is established in
+     * provideProperties method and used in the connect method.
+     */
     private static final int PROP_CONNECTION_TYPE = 0;
-    private static final int PROP_PORT = 1;
-    private static final int PROP_HOST = 2;
-    private static final int PROP_SERIAL_PORT = 3;
-    private static final int PROP_LOG_FILE = 4;
+    private static final int PROP_LOG_FILE = 1;
+    private static final int PROP_PORT = 2;
+    private static final int PROP_HOST = 3;
+    /* the SERIAL port property is not always available! */
+    private static final int PROP_SERIAL_PORT = 4;
 
     /** Identifier to connect via java native interface. */
     private static final String ID_JNI = "JNI";
@@ -200,7 +205,11 @@ public final class DataComponent extends JSONObjectDataComponent {
         }
         properties.add(new KiemProperty("Connection", new KiemPropertyTypeChoice(items), items[0]));
 
-        KiemProperty p = new KiemProperty("Port", new KiemPropertyTypeString());
+        KiemProperty p = new KiemProperty("logFile", new KiemPropertyTypeFile());
+        p.setValue("klp.esi");
+        properties.add(p);
+
+        p = new KiemProperty("Port", new KiemPropertyTypeString());
         p.setValue("1234");
         properties.add(p);
 
@@ -212,10 +221,6 @@ public final class DataComponent extends JSONObjectDataComponent {
             p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(serialPorts));
             properties.add(p);
         }
-
-        p = new KiemProperty("logFile", new KiemPropertyTypeFile());
-        p.setValue("klp.esi");
-        properties.add(p);
 
         return properties.toArray(new KiemProperty[properties.size()]);
     }
