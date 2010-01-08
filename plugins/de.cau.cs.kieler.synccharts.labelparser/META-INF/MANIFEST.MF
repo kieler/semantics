@@ -30,4 +30,5 @@ Export-Package: de.cau.cs.kieler.synccharts.labelparser,
  de.cau.cs.kieler.synccharts.labelparser.scoping,
  de.cau.cs.kieler.synccharts.labelparser.services,
  de.cau.cs.kieler.synccharts.labelparser.validation
-Import-Package: org.apache.log4j
+Import-Package: de.cau.cs.kieler.synccharts,
+ org.apache.log4j
