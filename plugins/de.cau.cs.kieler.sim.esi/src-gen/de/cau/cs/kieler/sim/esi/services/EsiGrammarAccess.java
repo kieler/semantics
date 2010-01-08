@@ -62,18 +62,26 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class TraceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "trace");
-		private final Assignment cTicksAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cTicksTickParserRuleCall_0 = (RuleCall)cTicksAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTraceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cTicksAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTicksTickParserRuleCall_1_0 = (RuleCall)cTicksAssignment_1.eContents().get(0);
 		
 		//trace:
-		//  ticks+=tick+;
+		//  {trace} ticks+=tick*;
 		public ParserRule getRule() { return rule; }
 
-		//ticks+=tick+
-		public Assignment getTicksAssignment() { return cTicksAssignment; }
+		//{trace} ticks+=tick*
+		public Group getGroup() { return cGroup; }
+
+		//{trace}
+		public Action getTraceAction_0() { return cTraceAction_0; }
+
+		//ticks+=tick*
+		public Assignment getTicksAssignment_1() { return cTicksAssignment_1; }
 
 		//tick
-		public RuleCall getTicksTickParserRuleCall_0() { return cTicksTickParserRuleCall_0; }
+		public RuleCall getTicksTickParserRuleCall_1_0() { return cTicksTickParserRuleCall_1_0; }
 	}
 
 	public class TickElements extends AbstractParserRuleElementFinder {
@@ -216,7 +224,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//trace:
-	//  ticks+=tick+;
+	//  {trace} ticks+=tick*;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}

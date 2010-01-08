@@ -36,7 +36,7 @@ protected class ThisRootNode extends RootToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Tracelist_Group(this, this, 0, inst);
-			case 1: return new Trace_TicksAssignment(this, this, 1, inst);
+			case 1: return new Trace_Group(this, this, 1, inst);
 			case 2: return new Tick_Group(this, this, 2, inst);
 			case 3: return new Signal_Group(this, this, 3, inst);
 			default: return null;
@@ -94,7 +94,7 @@ protected class Tracelist_TracesAssignment_0 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Trace_TicksAssignment(this, this, 0, inst);
+			case 0: return new Trace_Group(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -228,7 +228,7 @@ protected class Tracelist_TracesAssignment_1_3 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Trace_TicksAssignment(this, this, 0, inst);
+			case 0: return new Trace_Group(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -267,20 +267,76 @@ protected class Tracelist_TracesAssignment_1_3 extends AssignmentToken  {
 /************ begin Rule trace ****************
  *
  * trace:
- *   ticks+=tick+;
+ *   {trace} ticks+=tick*;
  *
  **/
 
-// ticks+=tick+
-protected class Trace_TicksAssignment extends AssignmentToken  {
+// {trace} ticks+=tick*
+protected class Trace_Group extends GroupToken {
 	
-	public Trace_TicksAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Trace_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTraceAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Trace_TicksAssignment_1(parent, this, 0, inst);
+			case 1: return new Trace_TraceAction_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getTraceRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// {trace}
+protected class Trace_TraceAction_0 extends ActionToken  {
+
+	public Trace_TraceAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Action getGrammarElement() {
+		return grammarAccess.getTraceAccess().getTraceAction_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	
+    @Override
+	protected IInstanceDescription tryConsumeVal() {
+		if(!current.isInstanceOf(grammarAccess.getTraceAccess().getTraceAction_0().getType().getClassifier())) return null;
+		if(!current.isConsumed()) return null;
+		return current;
+	}
+}
+
+// ticks+=tick*
+protected class Trace_TicksAssignment_1 extends AssignmentToken  {
+	
+	public Trace_TicksAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTraceAccess().getTicksAssignment();
+		return grammarAccess.getTraceAccess().getTicksAssignment_1();
 	}
 
     @Override
@@ -291,20 +347,15 @@ protected class Trace_TicksAssignment extends AssignmentToken  {
 		}	
 	}	
 		
-    @Override
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getTraceRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("ticks",true)) == null) return null;
+		if((value = current.getConsumable("ticks",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("ticks");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTickRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getTraceAccess().getTicksTickParserRuleCall_0(); 
+				element = grammarAccess.getTraceAccess().getTicksTickParserRuleCall_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -316,11 +367,13 @@ protected class Trace_TicksAssignment extends AssignmentToken  {
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Trace_TicksAssignment(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 1, consumed);
+			case 0: return new Trace_TicksAssignment_1(parent, next, actIndex, consumed);
+			case 1: return new Trace_TraceAction_0(parent, next, actIndex, consumed);
+			default: return null;
 		}	
 	}	
 }
+
 
 /************ end Rule trace ****************/
 

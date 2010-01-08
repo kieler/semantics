@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.sim.esi.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="esi"
+            extensions="esi,eso"
             id="de.cau.cs.kieler.sim.esi.Esi"
             name="Esi Editor">
         </editor>
@@ -117,7 +117,13 @@
            uriExtension="esi">
      </resourceServiceProvider>
   </extension>
-
+<extension
+        point="org.eclipse.xtext.extension_resourceServiceProvider">
+     <resourceServiceProvider
+           class="de.cau.cs.kieler.sim.esi.EsiExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceServiceProvider"
+           uriExtension="eso">
+     </resourceServiceProvider>
+  </extension>
 
 
 

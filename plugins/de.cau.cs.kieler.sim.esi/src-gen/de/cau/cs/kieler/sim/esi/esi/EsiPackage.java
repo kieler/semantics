@@ -41,7 +41,7 @@ public interface EsiPackage extends EPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  String eNS_URI = "";
+  String eNS_URI = "http://www.cau.de/cs/kieler/sim/esi/Esi";
 
   /**
    * The package namespace name.

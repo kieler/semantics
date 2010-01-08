@@ -4,11 +4,11 @@
     <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   </metamodelDeclarations>
   <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="esi">
-    <ePackage href="#/"/>
+    <ePackage href="http://www.cau.de/cs/kieler/sim/esi/Esi#/"/>
   </metamodelDeclarations>
   <rules xsi:type="xtext:ParserRule" name="tracelist">
     <type metamodel="//@metamodelDeclarations.1">
-      <classifier xsi:type="ecore:EClass" href="#//tracelist"/>
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//tracelist"/>
     </type>
     <alternatives xsi:type="xtext:Group">
       <tokens xsi:type="xtext:Assignment" cardinality="?" feature="traces" operator="+=">
@@ -26,15 +26,22 @@
   </rules>
   <rules xsi:type="xtext:ParserRule" name="trace">
     <type metamodel="//@metamodelDeclarations.1">
-      <classifier xsi:type="ecore:EClass" href="#//trace"/>
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//trace"/>
     </type>
-    <alternatives xsi:type="xtext:Assignment" cardinality="+" feature="ticks" operator="+=">
-      <terminal xsi:type="xtext:RuleCall" rule="//@rules.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <tokens xsi:type="xtext:Action">
+        <type metamodel="//@metamodelDeclarations.1">
+          <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//trace"/>
+        </type>
+      </tokens>
+      <tokens xsi:type="xtext:Assignment" cardinality="*" feature="ticks" operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.2"/>
+      </tokens>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="tick">
     <type metamodel="//@metamodelDeclarations.1">
-      <classifier xsi:type="ecore:EClass" href="#//tick"/>
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//tick"/>
     </type>
     <alternatives xsi:type="xtext:Group">
       <tokens xsi:type="xtext:Assignment" cardinality="*" feature="input" operator="+=">
@@ -55,7 +62,7 @@
   </rules>
   <rules xsi:type="xtext:ParserRule" name="signal">
     <type metamodel="//@metamodelDeclarations.1">
-      <classifier xsi:type="ecore:EClass" href="#//signal"/>
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//signal"/>
     </type>
     <alternatives xsi:type="xtext:Group">
       <tokens xsi:type="xtext:Assignment" feature="name" operator="=">

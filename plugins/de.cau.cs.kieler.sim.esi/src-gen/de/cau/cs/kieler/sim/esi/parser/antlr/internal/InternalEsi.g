@@ -167,12 +167,23 @@ ruletrace returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-(
+((
+    { 
+        temp=factory.create(grammarAccess.getTraceAccess().getTraceAction_0().getType().getClassifier());
+        $current = temp; 
+        temp = null;
+        CompositeNode newNode = createCompositeNode(grammarAccess.getTraceAccess().getTraceAction_0(), currentNode.getParent());
+    newNode.getChildren().add(currentNode);
+    moveLookaheadInfo(currentNode, newNode);
+    currentNode = newNode; 
+        associateNodeWithAstElement(currentNode, $current); 
+    }
+)(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_1_0(), currentNode); 
 	    }
-		lv_ticks_0_0=ruletick		{
+		lv_ticks_1_0=ruletick		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTraceRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -181,7 +192,7 @@ ruletrace returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"ticks",
-	        		lv_ticks_0_0, 
+	        		lv_ticks_1_0, 
 	        		"tick", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -191,7 +202,7 @@ ruletrace returns [EObject current=null]
 	    }
 
 )
-)+
+)*)
 ;
 
 

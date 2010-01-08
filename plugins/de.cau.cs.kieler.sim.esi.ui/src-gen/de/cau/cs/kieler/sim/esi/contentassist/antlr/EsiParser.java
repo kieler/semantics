@@ -39,13 +39,14 @@ public class EsiParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getTracelistAccess().getGroup(), "rule__Tracelist__Group__0");
 					put(grammarAccess.getTracelistAccess().getGroup_1(), "rule__Tracelist__Group_1__0");
+					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_1(), "rule__Tick__Group_1__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
 					put(grammarAccess.getSignalAccess().getGroup_1(), "rule__Signal__Group_1__0");
 					put(grammarAccess.getTracelistAccess().getTracesAssignment_0(), "rule__Tracelist__TracesAssignment_0");
 					put(grammarAccess.getTracelistAccess().getTracesAssignment_1_3(), "rule__Tracelist__TracesAssignment_1_3");
-					put(grammarAccess.getTraceAccess().getTicksAssignment(), "rule__Trace__TicksAssignment");
+					put(grammarAccess.getTraceAccess().getTicksAssignment_1(), "rule__Trace__TicksAssignment_1");
 					put(grammarAccess.getTickAccess().getInputAssignment_0(), "rule__Tick__InputAssignment_0");
 					put(grammarAccess.getTickAccess().getOutputAssignment_1_3(), "rule__Tick__OutputAssignment_1_3");
 					put(grammarAccess.getTickAccess().getNAssignment_2(), "rule__Tick__NAssignment_2");

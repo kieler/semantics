@@ -37,14 +37,16 @@ public class EsiStandaloneSetup implements ISetup {
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("")) {
-		EPackage.Registry.INSTANCE.put("", de.cau.cs.kieler.sim.esi.esi.EsiPackage.eINSTANCE);
+	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/sim/esi/Esi")) {
+		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/sim/esi/Esi", de.cau.cs.kieler.sim.esi.esi.EsiPackage.eINSTANCE);
 	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("esi", resourceFactory);
 		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("esi", serviceProvider);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("eso", resourceFactory);
+		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("eso", serviceProvider);
 		
 
 

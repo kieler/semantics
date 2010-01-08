@@ -5,7 +5,7 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "" 
+       uri = "http://www.cau.de/cs/kieler/sim/esi/Esi" 
        class = "de.cau.cs.kieler.sim.esi.esi.EsiPackage"
        genModel = "de/cau/cs/kieler/sim/esi/Esi.genmodel" /> 
 	

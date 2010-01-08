@@ -33,7 +33,7 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
   {
     try
     {
-      EsiFactory theEsiFactory = (EsiFactory)EPackage.Registry.INSTANCE.getEFactory(""); 
+      EsiFactory theEsiFactory = (EsiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.cau.de/cs/kieler/sim/esi/Esi"); 
       if (theEsiFactory != null)
       {
         return theEsiFactory;

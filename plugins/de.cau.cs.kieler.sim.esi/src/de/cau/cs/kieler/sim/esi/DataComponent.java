@@ -19,6 +19,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Iterator;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
@@ -26,16 +29,21 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ISetup;
+import org.eclipse.xtext.parser.IParseResult;
+import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.parsetree.NodeUtil;
-import org.eclipse.xtext.resource.*;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 import org.eclipse.xtext.ui.core.editor.model.IXtextDocument;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.sim.esi.EsiStandaloneSetup;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
@@ -47,11 +55,14 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author ctr Data-component to read traces in esi format
+ * Data-component to read traces in esi format.
+ * 
+ * @author ctr
  */
 public class DataComponent extends JSONObjectDataComponent {
 
@@ -65,13 +76,13 @@ public class DataComponent extends JSONObjectDataComponent {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject JSONobject) throws KiemExecutionException {
+    public JSONObject step(final JSONObject input) throws KiemExecutionException {
         trace trace;
         tick tick;
         JSONObject res = new JSONObject();
         if (tracelist != null) {
             if (!iTick.hasNext() && iTrace.hasNext()) {
-                pos += 8;
+                pos += "! reset".length();
                 trace = iTrace.next();
                 iTick = trace.getTicks().iterator();
             }
@@ -97,7 +108,7 @@ public class DataComponent extends JSONObjectDataComponent {
                 }
             }
         }
-        if (editor != null) {
+       /* if (editor != null) {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
                     editor.resetHighlightRange();
@@ -105,37 +116,24 @@ public class DataComponent extends JSONObjectDataComponent {
                 }
 
             });
-        }
+        }*/
         return res;
     }
 
     // --------------------------------------------------------------------------
     // additional methods
 
+    /** {@inheritDoc} */
     public void initialize() {
-        pos = 8;
-
+        pos = "! reset".length();
     }
 
+    /** {@inheritDoc} */
     public boolean isProducer() {
         return true;
     }
 
-    @Override
-    public boolean isMaster() {
-        return false;
-    }
-
-    @Override
-    public boolean isPauseFlag() {
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
-     */
+    /** {@inheritDoc} */
     public boolean isObserver() {
         return false;
     }
@@ -148,8 +146,8 @@ public class DataComponent extends JSONObjectDataComponent {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
                 for (IEditorReference e : editors) {
-                    IEditorPart editor = e.getEditor(false);
-                    if (editor instanceof XtextEditor) {
+                    IEditorPart ed = e.getEditor(false);
+                    if (ed instanceof XtextEditor) {
                         editorName = e.getTitle() + " (" + e.getId() + ")";
                         break;
                     }
@@ -165,11 +163,7 @@ public class DataComponent extends JSONObjectDataComponent {
         return properties;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
-     */
+    /** {@inheritDoc} */
     public void wrapup() {
         tracelist = null;
         editor = null;
@@ -211,40 +205,41 @@ public class DataComponent extends JSONObjectDataComponent {
             }
 
             if (editor != null) {
-                IXtextDocument t = editor.getDocument();
+                FileEditorInput input = (FileEditorInput) editor.getEditorInput();
+                if (input.exists()) {
+                    IFile file = input.getFile();
+                    in = file.getContents();
 
-                in = new ByteArrayInputStream(t.get().getBytes());
-                // resource=(XtextResource) editor. . .getResource();
+                    // resource=(XtextResource) editor. . .getResource();
+                } else {
+                    throw new KiemInitializationException("Editor input not found", true, null);
+                }
             } else {
                 in = new FileInputStream(getProperties()[0].getValue());
-
             }
 
-            resource.load(in, null);
-            EcoreUtil.resolveAll(resource);
-            // parser.setElementFactory(EsiFactory.eINSTANCE);
-
-            if (resource.getErrors().isEmpty()) {
-                tracelist = (tracelist) resource.getParseResult().getRootASTElement();
-                iTrace = tracelist.getTraces().iterator();
-                iTick = iTrace.next().getTicks().iterator();
-            } else {
-                tracelist = null;
+            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
+            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
+            IParseResult parseResult = parser.parse(in);
+            if (!parseResult.getParseErrors().isEmpty()) {
+                throw new KiemInitializationException("Parse error", true, null);
             }
+            tracelist = (tracelist) parseResult.getRootASTElement();
+            // tracelist = (tracelist) resource.getParseResult().getRootASTElement();
+            iTrace = tracelist.getTraces().iterator();
+            iTick = iTrace.next().getTicks().iterator();
         } catch (FileNotFoundException e) {
             throw new KiemInitializationException("File not found", false, e);
         } catch (Exception e) {
             throw new KiemInitializationException("Unknown error", false, e);
         }
 
-        try {
+       /* try {
             if (tracelist != null) {
                 for (trace trace : tracelist.getTraces()) {
                     for (tick tick : trace.getTicks()) {
                         for (signal s : tick.getInput()) {
-
                             signals.accumulate(s.getName(), JSONSignalValues.newValue("", false));
-
                         }
                         for (signal s : tick.getOutput()) {
                             signals.accumulate(s.getName(), JSONSignalValues.newValue("", false));
@@ -254,7 +249,7 @@ public class DataComponent extends JSONObjectDataComponent {
             }
         } catch (JSONException e) {
             throw new KiemInitializationException("Error building JSON object", false, e);
-        }
+        }*/
         return signals;
     }
 

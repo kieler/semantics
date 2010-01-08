@@ -126,6 +126,9 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             if ( (LA1_0==RULE_ID||(LA1_0>=12 && LA1_0<=13)) ) {
                 alt1=1;
             }
+            else if ( (LA1_0==10) ) {
+                alt1=1;
+            }
             switch (alt1) {
                 case 1 :
                     // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:88:1: (lv_traces_0_0= ruletrace )
@@ -301,21 +304,39 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruletrace
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:164:1: ruletrace returns [EObject current=null] : ( (lv_ticks_0_0= ruletick ) )+ ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:164:1: ruletrace returns [EObject current=null] : ( () ( (lv_ticks_1_0= ruletick ) )* ) ;
     public final EObject ruletrace() throws RecognitionException {
         EObject current = null;
 
-        EObject lv_ticks_0_0 = null;
+        EObject lv_ticks_1_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:169:6: ( ( (lv_ticks_0_0= ruletick ) )+ )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:1: ( (lv_ticks_0_0= ruletick ) )+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:169:6: ( ( () ( (lv_ticks_1_0= ruletick ) )* ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:1: ( () ( (lv_ticks_1_0= ruletick ) )* )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:1: ( (lv_ticks_0_0= ruletick ) )+
-            int cnt3=0;
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:1: ( () ( (lv_ticks_1_0= ruletick ) )* )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:2: () ( (lv_ticks_1_0= ruletick ) )*
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:170:2: ()
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:171:5: 
+            {
+             
+                    temp=factory.create(grammarAccess.getTraceAccess().getTraceAction_0().getType().getClassifier());
+                    current = temp; 
+                    temp = null;
+                    CompositeNode newNode = createCompositeNode(grammarAccess.getTraceAccess().getTraceAction_0(), currentNode.getParent());
+                newNode.getChildren().add(currentNode);
+                moveLookaheadInfo(currentNode, newNode);
+                currentNode = newNode; 
+                    associateNodeWithAstElement(currentNode, current); 
+                
+
+            }
+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:181:2: ( (lv_ticks_1_0= ruletick ) )*
             loop3:
             do {
                 int alt3=2;
@@ -328,16 +349,16 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:171:1: (lv_ticks_0_0= ruletick )
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:182:1: (lv_ticks_1_0= ruletick )
             	    {
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:171:1: (lv_ticks_0_0= ruletick )
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:172:3: lv_ticks_0_0= ruletick
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:182:1: (lv_ticks_1_0= ruletick )
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:183:3: lv_ticks_1_0= ruletick
             	    {
             	     
-            	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_0(), currentNode); 
+            	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruletick_in_ruletrace277);
-            	    lv_ticks_0_0=ruletick();
+            	    pushFollow(FOLLOW_ruletick_in_ruletrace287);
+            	    lv_ticks_1_0=ruletick();
             	    _fsp--;
 
 
@@ -349,7 +370,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             	    	       		add(
             	    	       			current, 
             	    	       			"ticks",
-            	    	        		lv_ticks_0_0, 
+            	    	        		lv_ticks_1_0, 
             	    	        		"tick", 
             	    	        		currentNode);
             	    	        } catch (ValueConverterException vce) {
@@ -365,13 +386,12 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt3 >= 1 ) break loop3;
-                        EarlyExitException eee =
-                            new EarlyExitException(3, input);
-                        throw eee;
+            	    break loop3;
                 }
-                cnt3++;
             } while (true);
+
+
+            }
 
 
             }
@@ -393,7 +413,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuletick
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:202:1: entryRuletick returns [EObject current=null] : iv_ruletick= ruletick EOF ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:213:1: entryRuletick returns [EObject current=null] : iv_ruletick= ruletick EOF ;
     public final EObject entryRuletick() throws RecognitionException {
         EObject current = null;
 
@@ -401,16 +421,16 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:203:2: (iv_ruletick= ruletick EOF )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:204:2: iv_ruletick= ruletick EOF
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:214:2: (iv_ruletick= ruletick EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:215:2: iv_ruletick= ruletick EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTickRule(), currentNode); 
-            pushFollow(FOLLOW_ruletick_in_entryRuletick313);
+            pushFollow(FOLLOW_ruletick_in_entryRuletick324);
             iv_ruletick=ruletick();
             _fsp--;
 
              current =iv_ruletick; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuletick323); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuletick334); 
 
             }
 
@@ -428,7 +448,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruletick
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:211:1: ruletick returns [EObject current=null] : ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) ) ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:222:1: ruletick returns [EObject current=null] : ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) ) ;
     public final EObject ruletick() throws RecognitionException {
         EObject current = null;
 
@@ -441,13 +461,13 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:216:6: ( ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:217:1: ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:227:6: ( ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:228:1: ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:217:1: ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:217:2: ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:228:1: ( ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:228:2: ( (lv_input_0_0= rulesignal ) )* ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )? ( (lv_n_5_0= ';' ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:217:2: ( (lv_input_0_0= rulesignal ) )*
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:228:2: ( (lv_input_0_0= rulesignal ) )*
             loop4:
             do {
                 int alt4=2;
@@ -460,15 +480,15 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:218:1: (lv_input_0_0= rulesignal )
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:229:1: (lv_input_0_0= rulesignal )
             	    {
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:218:1: (lv_input_0_0= rulesignal )
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:219:3: lv_input_0_0= rulesignal
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:229:1: (lv_input_0_0= rulesignal )
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:230:3: lv_input_0_0= rulesignal
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTickAccess().getInputSignalParserRuleCall_0_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_rulesignal_in_ruletick369);
+            	    pushFollow(FOLLOW_rulesignal_in_ruletick380);
             	    lv_input_0_0=rulesignal();
             	    _fsp--;
 
@@ -501,7 +521,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:241:3: ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )?
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:252:3: ( '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )* )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -510,21 +530,21 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             }
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:241:5: '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )*
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:252:5: '%' 'Output' ':' ( (lv_output_4_0= rulesignal ) )*
                     {
-                    match(input,13,FOLLOW_13_in_ruletick381); 
+                    match(input,13,FOLLOW_13_in_ruletick392); 
 
                             createLeafNode(grammarAccess.getTickAccess().getPercentSignKeyword_1_0(), null); 
                         
-                    match(input,14,FOLLOW_14_in_ruletick391); 
+                    match(input,14,FOLLOW_14_in_ruletick402); 
 
                             createLeafNode(grammarAccess.getTickAccess().getOutputKeyword_1_1(), null); 
                         
-                    match(input,15,FOLLOW_15_in_ruletick401); 
+                    match(input,15,FOLLOW_15_in_ruletick412); 
 
                             createLeafNode(grammarAccess.getTickAccess().getColonKeyword_1_2(), null); 
                         
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:253:1: ( (lv_output_4_0= rulesignal ) )*
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:264:1: ( (lv_output_4_0= rulesignal ) )*
                     loop5:
                     do {
                         int alt5=2;
@@ -537,15 +557,15 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:254:1: (lv_output_4_0= rulesignal )
+                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:265:1: (lv_output_4_0= rulesignal )
                     	    {
-                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:254:1: (lv_output_4_0= rulesignal )
-                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:255:3: lv_output_4_0= rulesignal
+                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:265:1: (lv_output_4_0= rulesignal )
+                    	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:266:3: lv_output_4_0= rulesignal
                     	    {
                     	     
                     	    	        currentNode=createCompositeNode(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_1_3_0(), currentNode); 
                     	    	    
-                    	    pushFollow(FOLLOW_rulesignal_in_ruletick422);
+                    	    pushFollow(FOLLOW_rulesignal_in_ruletick433);
                     	    lv_output_4_0=rulesignal();
                     	    _fsp--;
 
@@ -584,14 +604,14 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:277:5: ( (lv_n_5_0= ';' ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:278:1: (lv_n_5_0= ';' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:288:5: ( (lv_n_5_0= ';' ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:289:1: (lv_n_5_0= ';' )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:278:1: (lv_n_5_0= ';' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:279:3: lv_n_5_0= ';'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:289:1: (lv_n_5_0= ';' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:290:3: lv_n_5_0= ';'
             {
             lv_n_5_0=(Token)input.LT(1);
-            match(input,12,FOLLOW_12_in_ruletick443); 
+            match(input,12,FOLLOW_12_in_ruletick454); 
 
                     createLeafNode(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0(), "n"); 
                 
@@ -636,7 +656,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulesignal
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:306:1: entryRulesignal returns [EObject current=null] : iv_rulesignal= rulesignal EOF ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:317:1: entryRulesignal returns [EObject current=null] : iv_rulesignal= rulesignal EOF ;
     public final EObject entryRulesignal() throws RecognitionException {
         EObject current = null;
 
@@ -644,16 +664,16 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:307:2: (iv_rulesignal= rulesignal EOF )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:308:2: iv_rulesignal= rulesignal EOF
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:318:2: (iv_rulesignal= rulesignal EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:319:2: iv_rulesignal= rulesignal EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSignalRule(), currentNode); 
-            pushFollow(FOLLOW_rulesignal_in_entryRulesignal492);
+            pushFollow(FOLLOW_rulesignal_in_entryRulesignal503);
             iv_rulesignal=rulesignal();
             _fsp--;
 
              current =iv_rulesignal; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulesignal502); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulesignal513); 
 
             }
 
@@ -671,7 +691,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulesignal
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:315:1: rulesignal returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? ) ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:326:1: rulesignal returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? ) ;
     public final EObject rulesignal() throws RecognitionException {
         EObject current = null;
 
@@ -682,20 +702,20 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:320:6: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:321:1: ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:331:6: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:332:1: ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:321:1: ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:321:2: ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )?
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:332:1: ( ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )? )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:332:2: ( (lv_name_0_0= RULE_ID ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )?
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:321:2: ( (lv_name_0_0= RULE_ID ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:322:1: (lv_name_0_0= RULE_ID )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:332:2: ( (lv_name_0_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:333:1: (lv_name_0_0= RULE_ID )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:322:1: (lv_name_0_0= RULE_ID )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:323:3: lv_name_0_0= RULE_ID
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:333:1: (lv_name_0_0= RULE_ID )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:334:3: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rulesignal544); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rulesignal555); 
 
             			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_0_0(), "name"); 
             		
@@ -721,7 +741,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:345:2: ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )?
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:356:2: ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -730,16 +750,16 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:345:3: ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')'
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:356:3: ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) ')'
                     {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:345:3: ( (lv_valued_1_0= '(' ) )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:346:1: (lv_valued_1_0= '(' )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:356:3: ( (lv_valued_1_0= '(' ) )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:357:1: (lv_valued_1_0= '(' )
                     {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:346:1: (lv_valued_1_0= '(' )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:347:3: lv_valued_1_0= '('
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:357:1: (lv_valued_1_0= '(' )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:358:3: lv_valued_1_0= '('
                     {
                     lv_valued_1_0=(Token)input.LT(1);
-                    match(input,16,FOLLOW_16_in_rulesignal568); 
+                    match(input,16,FOLLOW_16_in_rulesignal579); 
 
                             createLeafNode(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0(), "valued"); 
                         
@@ -761,14 +781,14 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:366:2: ( (lv_val_2_0= RULE_NUM ) )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:367:1: (lv_val_2_0= RULE_NUM )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:377:2: ( (lv_val_2_0= RULE_NUM ) )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:378:1: (lv_val_2_0= RULE_NUM )
                     {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:367:1: (lv_val_2_0= RULE_NUM )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:368:3: lv_val_2_0= RULE_NUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:378:1: (lv_val_2_0= RULE_NUM )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:379:3: lv_val_2_0= RULE_NUM
                     {
                     lv_val_2_0=(Token)input.LT(1);
-                    match(input,RULE_NUM,FOLLOW_RULE_NUM_in_rulesignal598); 
+                    match(input,RULE_NUM,FOLLOW_RULE_NUM_in_rulesignal609); 
 
                     			createLeafNode(grammarAccess.getSignalAccess().getValNUMTerminalRuleCall_1_1_0(), "val"); 
                     		
@@ -794,7 +814,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,17,FOLLOW_17_in_rulesignal613); 
+                    match(input,17,FOLLOW_17_in_rulesignal624); 
 
                             createLeafNode(grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2(), null); 
                         
@@ -833,24 +853,24 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruletrace_in_ruletracelist131 = new BitSet(new long[]{0x0000000000000400L});
     public static final BitSet FOLLOW_10_in_ruletracelist143 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_ruletracelist153 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruletracelist163 = new BitSet(new long[]{0x0000000000003010L});
+    public static final BitSet FOLLOW_12_in_ruletracelist163 = new BitSet(new long[]{0x0000000000003412L});
     public static final BitSet FOLLOW_ruletrace_in_ruletracelist184 = new BitSet(new long[]{0x0000000000000402L});
     public static final BitSet FOLLOW_ruletrace_in_entryRuletrace222 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletrace232 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruletick_in_ruletrace277 = new BitSet(new long[]{0x0000000000003012L});
-    public static final BitSet FOLLOW_ruletick_in_entryRuletick313 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuletick323 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick369 = new BitSet(new long[]{0x0000000000003010L});
-    public static final BitSet FOLLOW_13_in_ruletick381 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_ruletick391 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_ruletick401 = new BitSet(new long[]{0x0000000000001010L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick422 = new BitSet(new long[]{0x0000000000001010L});
-    public static final BitSet FOLLOW_12_in_ruletick443 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_entryRulesignal492 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulesignal502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulesignal544 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_rulesignal568 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_NUM_in_rulesignal598 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_rulesignal613 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruletick_in_ruletrace287 = new BitSet(new long[]{0x0000000000003012L});
+    public static final BitSet FOLLOW_ruletick_in_entryRuletick324 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuletick334 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick380 = new BitSet(new long[]{0x0000000000003010L});
+    public static final BitSet FOLLOW_13_in_ruletick392 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_ruletick402 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_ruletick412 = new BitSet(new long[]{0x0000000000001010L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick433 = new BitSet(new long[]{0x0000000000001010L});
+    public static final BitSet FOLLOW_12_in_ruletick454 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_entryRulesignal503 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulesignal513 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulesignal555 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_16_in_rulesignal579 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_NUM_in_rulesignal609 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_rulesignal624 = new BitSet(new long[]{0x0000000000000002L});
 
 }
