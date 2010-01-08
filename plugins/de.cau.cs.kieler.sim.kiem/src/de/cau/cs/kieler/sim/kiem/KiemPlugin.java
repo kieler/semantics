@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -187,7 +189,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /** The file editor input to open. */
-    private IEditorInput editorInputToOpen;
+    private IPath fileToOpen;
 
     /**
      * Opens an Execution File (*.execution) and tries to update the dataComponentListEx according
@@ -206,7 +208,23 @@ public class KiemPlugin extends AbstractUIPlugin {
             throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
         }
 
-        this.editorInputToOpen = editorInput;
+        IPath executionFile = ((IFileEditorInput) editorInput).getFile().getFullPath();
+        openFile(executionFile);
+    }
+
+    /**
+     * Opens an Execution File (*.execution) and tries to update the dataComponentListEx according
+     * to this file. If the components or properties loaded do not exist in the environment (e.g.,
+     * the according plug-ins where not loaded) then an error message will bring this to the user's
+     * attention. <BR>
+     * <BR>
+     * This method can be called from another plug-in and is part of the KIEM API.
+     * 
+     * @param executionFile
+     *            the execution file to open
+     */
+    public void openFile(final IPath executionFile) {
+        this.fileToOpen =  executionFile;
 
         Display.getDefault().syncExec(new Runnable() {
             @SuppressWarnings("unchecked")
@@ -226,8 +244,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                     List<DataComponentEx> dataComponentExListTemp = null;
                     // try to load the components into a temporary list
                     try {
-                        String fileString = ((IFileEditorInput) editorInputToOpen).getFile()
-                                .getFullPath().toOSString();
+                        String fileString = fileToOpen.toOSString();
 
                         URI fileURI = URI.createPlatformResourceURI(fileString, true);
                         // resolve relative workspace paths
@@ -268,8 +285,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                     kIEMViewInstance.updateEnabledEnabledDisabledUpDownAddDelete();
                     kIEMViewInstance.updateViewAsync();
                     // update the current file, dirty flag
-                    kIEMViewInstance.setCurrentFile(((IFileEditorInput) editorInputToOpen)
-                            .getFile().getFullPath());
+                    kIEMViewInstance.setCurrentFile(fileToOpen);
                     kIEMViewInstance.setDirty(false);
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
                 }
@@ -277,6 +293,34 @@ public class KiemPlugin extends AbstractUIPlugin {
         });
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks whether the editor state is dirty.
+     * 
+     * @return true, if it is dirty
+     */
+    public boolean isDirty() {
+        return this.kIEMViewInstance.isDirty();
+    }
+    
+    /**
+     * Save the current execution file.
+     * 
+     * @param monitor
+     *            the monitor
+     */
+    public void doSave(final IProgressMonitor monitor) {
+        this.kIEMViewInstance.doSave(monitor);
+    }
+    
+    /**
+     * Save current execution file under a separate name.
+     */
+    public void doSaveAs() {
+        this.kIEMViewInstance.doSaveAs();
+    }
+    
     // -------------------------------------------------------------------------
 
     /**

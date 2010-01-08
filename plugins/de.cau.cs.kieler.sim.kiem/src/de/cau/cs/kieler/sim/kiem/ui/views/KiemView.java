@@ -225,6 +225,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the current file.
+     * 
+     * @return the current file
+     */
+    public IPath getCurrentFile() {
+       return this.currentFile;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Refreshes the text colors of enabled or master components. Disabled DataComponents will get a
      * gray text color, enabled master components are indicated by a blue text color.
      */
