@@ -23,9 +23,9 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
  * interface. The {@link XtendTransformationFramework} contains an implementation for the Xtend
  * framework.
  * 
- * @author Michael Matzen - mim AT informatik.uni-kiel.de
+ * @author mim
  * 
- * @kieler.rating 2009-12-15 proposed yellow
+ * @kieler.rating 2010-01-08 proposed yellow
  * 
  */
 public interface ITransformationFramework {

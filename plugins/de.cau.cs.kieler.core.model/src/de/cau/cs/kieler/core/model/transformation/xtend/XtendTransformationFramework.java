@@ -23,11 +23,12 @@ import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 /**
  * An implementation of the ITransformationFramework interface for the use with the Xtend framework.
  * 
- * @author Michael Matzen - mim AT informatik.uni-kiel.de
+
+ * @author mim
  * 
- * @kieler.rating 2009-11-20 proposed yellow -review by msp,skn: move to ui
- * @kieler.rating 2009-12-15 proposed yellow - new review required
+ * @kieler.rating 2010-01-08 proposed yellow
  */
+
 public class XtendTransformationFramework implements ITransformationFramework {
 
     /** The Xtend facade, used to execute a transformation. **/
