@@ -34,11 +34,14 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
+import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
@@ -143,6 +146,17 @@ public class VerifyAction extends Action {
             data.add(s);
         }
 
+        final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage();
+        ConnectionView c;
+        try {
+            c = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
+                    IWorkbenchPage.VIEW_VISIBLE));
+        } catch (PartInitException e1) {
+            c = null;
+        }
+        final ConnectionView krepView = c;
+
         table.setInput(data.toArray(new String[0][0]));
         runWithProgress(new IRunnableWithProgress() {
             public void run(final IProgressMonitor monitor) {
@@ -167,16 +181,19 @@ public class VerifyAction extends Action {
                         if (traces == null || !traces.hasNext()) {
                             s[rowComment] = "no trace found";
                         } else {
-                            // TODO: user defined preferences
 
                             ICommunicationProtocol krep = new KepProtocol(new JNIConnection(
                                     protocol, logFile));
+                            if (krepView != null) {
+                                krep.addCommunicationListener(krepView);
+                            }
                             krep.reset();
                             krep.loadProgram(asm, null);
                             krep.reset();
 
                             boolean valid = true;
-                            while (traces.hasNext() && (valid || ignoreInvalid)) {
+                            while (traces.hasNext() && (valid || ignoreInvalid)
+                                    && !monitor.isCanceled()) {
                                 valid = traces.executeStep(krep);
 
                             }
@@ -215,10 +232,9 @@ public class VerifyAction extends Action {
                 }
                 monitor.done();
                 IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-               
-                
+
                 String verifyLog = preferenceStore.getString(EvalBenchPreferencePage.VERIFY_LOG);
-                
+
                 if (verifyLog.length() > 0) {
                     BufferedWriter out = null;
                     try {
