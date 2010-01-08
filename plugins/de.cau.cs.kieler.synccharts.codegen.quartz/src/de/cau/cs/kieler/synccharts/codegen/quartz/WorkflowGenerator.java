@@ -43,8 +43,6 @@ public class WorkflowGenerator {
         return out;
     }
 
-   
-
     public WorkflowGenerator() {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
@@ -70,11 +68,12 @@ public class WorkflowGenerator {
         // Meta model
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
-       // outPath =part2location(  uri.path();  //"/home/ctr/";
+        // outPath =part2location( uri.path(); //"/home/ctr/";
 
         // Outlet
         Outlet outlet = new Outlet();
-         outlet.setPath(outPath);
+        outlet.setPath(outPath);
+        outlet.setOverwrite(true);
 
         // Generator
         Generator generator = new Generator();
@@ -98,25 +97,25 @@ public class WorkflowGenerator {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+        int status = IStatus.OK;
         StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
+        if (issues.hasErrors()) {
+            status = IStatus.ERROR;
+        } else if (issues.hasWarnings()) {
+            status = IStatus.WARNING;
+        } else if (issues.hasInfos()) {
+            status = IStatus.INFO;
+        }
         for (MWEDiagnostic s : issues.getIssues()) {
             issue.append(s + "\n");
         }
-        for (MWEDiagnostic s : issues.getErrors()) {
-            issue.append(s + "\n");
-        }
-        for (MWEDiagnostic s : issues.getWarnings()) {
-            issue.append(s + "\n");
-        }
-        for (MWEDiagnostic s : issues.getInfos()) {
-            issue.append(s + "\n");
-        }
         StatusManager.getManager().handle(
-                new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue.toString(), null),
-                StatusManager.LOG);
+                new Status(status, Activator.PLUGIN_ID, issue.toString(), null), StatusManager.LOG);
+    
+ 
     }
 
-    public EObject getModel() {
+    /*public EObject getModel() {
         return myModel;
     }
 
@@ -126,12 +125,5 @@ public class WorkflowGenerator {
 
     public String getOutPath() {
         return outPath;
-    }
-
-    public String getFileName() {
-        String out = "";
-        out = uri.lastSegment().replace("." + uri.fileExtension(), "");
-        return out;
-    }
-
+    }*/
 }

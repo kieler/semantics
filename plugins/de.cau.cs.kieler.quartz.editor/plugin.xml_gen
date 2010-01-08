@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.cau.de/cs/kieler/editor/quartz/Quartz" 
-       class = "de.cau.cs.kieler.editor.quartz.quartz.QuartzPackage"
-       genModel = "de/cau/cs/kieler/editor/quartz/Quartz.genmodel" /> 
+       uri = "http://www.cau.de/cs/kieler/quartz/editor/Quartz" 
+       class = "de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage"
+       genModel = "de/cau/cs/kieler/quartz/editor/Quartz.genmodel" /> 
 	
   </extension>
 

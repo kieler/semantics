@@ -20,12 +20,12 @@ Require-Bundle: org.eclipse.xtext,
  org.antlr.runtime
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.editor.quartz,
- de.cau.cs.kieler.editor.quartz.services,
- de.cau.cs.kieler.editor.quartz.quartz,
- de.cau.cs.kieler.editor.quartz.quartz.impl,
- de.cau.cs.kieler.editor.quartz.quartz.util,
- de.cau.cs.kieler.editor.quartz.parseTreeConstruction,
- de.cau.cs.kieler.editor.quartz.parser.antlr,
- de.cau.cs.kieler.editor.quartz.parser.antlr.internal,
- de.cau.cs.kieler.editor.quartz.validation
+Export-Package: de.cau.cs.kieler.quartz.editor.quartz,
+ de.cau.cs.kieler.quartz.editor.quartz.impl,
+ de.cau.cs.kieler.quartz.editor.quartz.util,
+ de.cau.cs.kieler.quartz.editor.services,
+ de.cau.cs.kieler.quartz.editor,
+ de.cau.cs.kieler.quartz.editor.parser.antlr,
+ de.cau.cs.kieler.quartz.editor.parser.antlr.internal,
+ de.cau.cs.kieler.quartz.editor.validation,
+ de.cau.cs.kieler.quartz.editor.parseTreeConstruction
