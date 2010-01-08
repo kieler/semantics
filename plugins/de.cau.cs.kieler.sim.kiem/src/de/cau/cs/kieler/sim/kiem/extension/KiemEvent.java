@@ -21,10 +21,10 @@ import java.util.List;
 /**
  * This class implements some constants that define specific events in KIEM. A DataComponent may
  * register itself using the
- * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.provideEventOfInterest} method to be a
- * listener of some events. The method
- * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.notifyEvent} will then be called by KIEM
- * for the registered events.
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.provideEventOfInterest} method
+ * to be a listener of some events. The method
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.notifyEvent} will then be called
+ * by KIEM for the registered events.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -75,6 +75,12 @@ public class KiemEvent {
 
     /** The Constant DEACTIVATED event is triggered when the user deactivates the component. */
     public static final int DEACTIVATED = 2048;
+
+    /** The Constant LOAD event is triggered when the user loads a scheduling. */
+    public static final int LOAD = 4096;
+
+    /** The Constant SAVE event is triggered when the user saves a scheduling. */
+    public static final int SAVE = 8192;
 
     // -------------------------------------------------------------------------
 
