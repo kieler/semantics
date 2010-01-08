@@ -54,6 +54,7 @@
             allowMultiple="false"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.VerifyView"
+            icon="icons/logo16.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.verify"
             name="Verify"
             restorable="true">
@@ -74,18 +75,6 @@
             class="de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage"
             id="de.cau.cs.kieler.krep.evalbench.ui.preferences.evalbench"
             name="Evaluation Bench">
-      </page>
-      <page
-            category="de.cau.cs.kieler.krep.evalbench.ui.preferences.evalbench"
-            class="de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage"
-            id="de.cau.cs.kieler.krep.evalbench.ui.preferences.connection"
-            name="Connection">
-      </page>
-      <page
-            category="de.cau.cs.kieler.krep.evalbench.ui.preferences.evalbench"
-            class="de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage"
-            id="de.cau.cs.kieler.krep.evalbench.ui.preferences.verify"
-            name="Verify">
       </page>
    </extension>
 

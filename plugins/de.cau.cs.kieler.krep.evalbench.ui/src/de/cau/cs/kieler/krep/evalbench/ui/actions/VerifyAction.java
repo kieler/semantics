@@ -38,6 +38,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
+import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
@@ -49,7 +50,6 @@ import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
-import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
 
 /**
  * Action that runs the current program. The plugin activator and the common layer are used to
@@ -100,7 +100,7 @@ public class VerifyAction extends Action {
         try {
             // IRunnableContext context =
             PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            PlatformUI.getWorkbench().getProgressService().run(true, false, runnable);
+            PlatformUI.getWorkbench().getProgressService().run(true, true, runnable);
         } catch (InvocationTargetException e) {
             // silently ignore exception
             return;
@@ -110,34 +110,29 @@ public class VerifyAction extends Action {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.Action#run()
-     */
     @Override
     public void run() {
-        // Activator.getDefault().commonLayer.getTargetInfo();
         Tools.tic();
         final Display display = Display.findDisplay(Thread.currentThread());
 
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-        File dir = new File(preferenceStore.getString(VerifyPreferencePage.BENCHMARK_PATH));
-
-        // File dir = new File("/home/ctr/code/benchmarks_wcrt");
+        File dir = new File(preferenceStore.getString(EvalBenchPreferencePage.BENCHMARK_PATH));
 
         final boolean ignoreInvalid = preferenceStore
-                .getBoolean(VerifyPreferencePage.IGNORE_INVALID);
+                .getBoolean(EvalBenchPreferencePage.IGNORE_INVALID);
+        final String logFile = preferenceStore.getString(EvalBenchPreferencePage.VERIFY_LOG);
+        final String protocol = preferenceStore.getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
+        final String regExpr = preferenceStore.getString(EvalBenchPreferencePage.BENCHMARK_FILES);
 
         data = new LinkedList<String[]>();
         final LinkedList<File> files = new LinkedList<File>();
 
-        for (File f : dir.listFiles()) {
-            if (f.isDirectory()
-                    && f.getName().matches(
-                            preferenceStore.getString(VerifyPreferencePage.BENCHMARK_FILES))) {
-                files.add(f);
+        if (dir != null) {
+            for (File f : dir.listFiles()) {
+                if (f.isDirectory() && f.getName().matches(regExpr)) {
+                    files.add(f);
+                }
             }
         }
 
@@ -155,6 +150,7 @@ public class VerifyAction extends Action {
                 final int rowComment = 3;
                 int k = 0;
                 monitor.beginTask("Verify", files.size());
+
                 Iterator<File> i = files.iterator();
                 Iterator<String[]> j = data.iterator();
                 while (i.hasNext() && j.hasNext() && !monitor.isCanceled()) {
@@ -162,7 +158,6 @@ public class VerifyAction extends Action {
                     File f = i.next();
                     String[] s = j.next();
                     try {
-                        // MessageView.print("verify: " + f.getName());
                         monitor.subTask(f.getName());
                         IAssembler asm = parse(f);
 
@@ -173,8 +168,9 @@ public class VerifyAction extends Action {
                             s[rowComment] = "no trace found";
                         } else {
                             // TODO: user defined preferences
+
                             ICommunicationProtocol krep = new KepProtocol(new JNIConnection(
-                                    KepProtocol.P_KEP, "kep.esi"));
+                                    protocol, logFile));
                             krep.reset();
                             krep.loadProgram(asm, null);
                             krep.reset();
@@ -219,12 +215,14 @@ public class VerifyAction extends Action {
                 }
                 monitor.done();
                 IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-
-                String logFile = preferenceStore.getString(VerifyPreferencePage.VERIFY_LOG);
-                if (logFile.length() > 0) {
+               
+                
+                String verifyLog = preferenceStore.getString(EvalBenchPreferencePage.VERIFY_LOG);
+                
+                if (verifyLog.length() > 0) {
                     BufferedWriter out = null;
                     try {
-                        File f = new File(logFile);
+                        File f = new File(verifyLog);
                         out = new BufferedWriter(new FileWriter(f));
                         out.append("verifcation: " + new Date());
                         out.newLine();

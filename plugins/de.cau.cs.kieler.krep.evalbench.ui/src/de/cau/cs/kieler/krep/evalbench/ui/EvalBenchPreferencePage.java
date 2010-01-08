@@ -13,16 +13,21 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui;
 
+import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
-import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 
 /**
  * Preference page for general EvalBench preferences.
@@ -41,11 +46,32 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
     /** Preference name for the external assembler program. */
     public static final String EXTERNAL_ASSEMBLER = "EvalBench.external_assembler";
 
+    /** Log-file for JNI connection. */
+    public static final String LOG_FILE = "EvalBench.Connection.logfile#";
+
+    /** Path to the benchmark for automatic verification. */
+    public static final String BENCHMARK_PATH = "EvalBench.benchmark_path";
+
+    /** Regular expression to express, which files in the Benchmark path are actual benchmarks. */
+    public static final String BENCHMARK_FILES = "Evalbench.benchmark_files";
+
+    /** Shall signal names be case sensitive? */
+    public static final String CASE_SENSITIVE = "Evalbench.case_sensitive";
+
+    /** file to safe verification results. */
+    public static final String VERIFY_LOG = "Evalbench.verify_log";
+
+    /** continue Verification even after a failure occurred. */
+    public static final String IGNORE_INVALID = "Evalbench.ignore_invalid";
+
     /**
      * Sets up the preference page.
      */
     public EvalBenchPreferencePage() {
         super(FieldEditorPreferencePage.GRID);
+        setDescription("This is the preference page for the Communication with a reactive processor. "
+                + "These preferences are only used by the Verify  view, for other executions the preferences are set in the execution manager. "
+                + "This preference page is obsolete as soon as the execution manager is extended by a verification component.");
     }
 
     /**
@@ -61,12 +87,13 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors ()
      */
     @Override
     protected void createFieldEditors() {
-        // create field editor for the default communication protocol
+
+        //Group com = new Group(getFieldEditorParent(), SWT.NONE);
+       // Label com = new Label(getFieldEditorParent(), SWT.NONE);
+        //com.setText("Communication Parameters");
         String[][] labels = new String[][] {
                 { "KIEL Esterel Processor Protocol", ICommunicationProtocol.P_KEP },
                 { "KIEL Reactive Processor Protocol", ICommunicationProtocol.P_KREP } };
@@ -74,12 +101,43 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
                 "Default communication protocol:", 1, labels, getFieldEditorParent());
         addField(fieldEditor);
 
-        // create field editor for the KEP type:
-        labels = new String[][] { { "Esterel KEP", KasmAssembler.S_KEPE },
-                { "VHDL KEP", KasmAssembler.S_KEPV } };
-        fieldEditor = new RadioGroupFieldEditor(KEP_TYPE, "KEP type to use:", 1, labels,
-                getFieldEditorParent());
+        
+        
+        // Connection
+        FileFieldEditor file = new FileFieldEditor(LOG_FILE, "Communication log File", getFieldEditorParent());
+        String[] extensions = { "*.esi", "*.eso", "*" };
+        file.setFileExtensions(extensions);
+        addField(file);
+
+        // Verify
+       // Label verify = new Label(getFieldEditorParent(), SWT.NONE);
+       // verify.setText("Verify");
+        fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path the benchmarks:", getFieldEditorParent());
         addField(fieldEditor);
+
+        fieldEditor = new StringFieldEditor(BENCHMARK_FILES,
+                "Regular expression to describe benchmark directories:", getFieldEditorParent());
+        addField(fieldEditor);
+
+        fieldEditor = new BooleanFieldEditor(CASE_SENSITIVE, "signals are case sensitve", getFieldEditorParent());
+        addField(fieldEditor);
+
+        FileFieldEditor log = new FileFieldEditor(VERIFY_LOG, "log File for verification results",
+                getFieldEditorParent());
+        String[] logExtensions = { "*.log" };
+        log.setFileExtensions(logExtensions);
+        addField(fieldEditor);
+
+        fieldEditor = new BooleanFieldEditor(IGNORE_INVALID,
+                "continue verify run after mismatch as detected", getFieldEditorParent());
+        addField(fieldEditor);
+
+        // create field editor for the KEP type:
+        // labels = new String[][] { { "Esterel KEP", KasmAssembler.S_KEPE },
+        // { "VHDL KEP", KasmAssembler.S_KEPV } };
+        // fieldEditor = new RadioGroupFieldEditor(KEP_TYPE, "KEP type to use:", 1, labels,
+        // getFieldEditorParent());
+        // addField(fieldEditor);
 
         adjustGridLayout();
     }
