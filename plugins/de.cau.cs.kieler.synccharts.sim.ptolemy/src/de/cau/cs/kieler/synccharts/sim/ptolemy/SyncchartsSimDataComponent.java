@@ -508,7 +508,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                         public void run(final IProgressMonitor monitor) {
                             try {
                                 status
-                                        .setObject(Model2ModelTransformation(new KielerProgressMonitor(
+                                        .set(Model2ModelTransformation(new KielerProgressMonitor(
                                                 monitor)));
                             } catch (KiemInitializationException e) {
                                 transformationError = true;
