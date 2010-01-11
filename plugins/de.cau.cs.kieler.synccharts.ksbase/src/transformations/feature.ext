@@ -19,8 +19,7 @@ let source = new State:
 
 //Adds a choice to the given state
 //by adding a conditional with two
-//targets. This won't set any priorities
-//so resulting model may be invalid.
+//targets.
 Void addChoice(State source):
 let choice = new State:
 let opt1 = new State:
@@ -200,6 +199,7 @@ ABORegion.innerStates.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
 reset.setTargetState(ABO) ->
+reset.setType(TransitionType::STRONGABORT) ->
 reset.setTriggersAndEffects("R") ->
 innerRootRegion.innerStates.add(ABO) ->
 root.regions.add(innerRootRegion) ->
