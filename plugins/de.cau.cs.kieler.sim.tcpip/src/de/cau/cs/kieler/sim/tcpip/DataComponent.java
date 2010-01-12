@@ -1,7 +1,12 @@
 package de.cau.cs.kieler.sim.tcpip;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -13,15 +18,16 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
@@ -32,15 +38,31 @@ public class DataComponent extends JSONObjectDataComponent {
     WorkflowGenerator wf = null;
     Process process = null;
 
+    private PrintWriter toSC;
+    private BufferedReader fromSC;
+    private BufferedReader error;
+
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
         try {
             jSONObject.remove("state");
+
             System.out.println("jSONObject: " + jSONObject.toString());
-            client.sndMessage(jSONObject.toString());
-            String receivedMessage = client.rcvMessage();
+
+            toSC.write(jSONObject.toString() + "\n");
+            toSC.flush();
+            while (error.ready()) {
+                System.out.print(error.read());
+            }
+
+            String receivedMessage = fromSC.readLine();
             System.out.println("rcv from server: " + receivedMessage);
+            while (error.ready()) {
+                System.err.print(error.readLine());
+            }
+
             out = new JSONObject(receivedMessage);
+            System.out.println("out is: " + out.toString());
         } catch (IOException e) {
             System.err.println(e.getMessage());
             process.destroy();
@@ -48,7 +70,7 @@ public class DataComponent extends JSONObjectDataComponent {
             e.printStackTrace();
             process.destroy();
         }
-        
+
         try {
             JSONArray stateArray = out.getJSONArray("state");
             String allStates = "";
@@ -64,8 +86,8 @@ public class DataComponent extends JSONObjectDataComponent {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
             process.destroy();
-        } 
-        
+        }
+
         return out;
     }
 
@@ -73,7 +95,7 @@ public class DataComponent extends JSONObjectDataComponent {
         // generate Code from SyncChart
         // true sets the flag for simulation
         wf.invokeWorkflow(true);
-
+        JSONObject out = null;
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
@@ -87,53 +109,42 @@ public class DataComponent extends JSONObjectDataComponent {
 
         String bundleLocation = url.getPath();
 
-        // find free port
-        boolean findNewPort = false;
-        int port = 0;
-        do {
-            Random random = new Random();
-            port = random.nextInt(65535);
-            try {
-                testPort(port);
-                findNewPort = true;
-            } catch (IOException e1) {
-                findNewPort = false;
-            }
-        } while (findNewPort);
+             try {
+            // compile
+            String compiler = (getProperties()[0]).getValue();
+            String compile = compiler + " " + wf.getOutPath() + "sim.c " + wf.getOutPath()
+                    + "sim_data.c " + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
+                    + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
+                    + "simulation -lm -Dexternflags";
 
-        String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
-                + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c " + "-I "
-                + bundleLocation + " " + "-o " + wf.getOutPath() + "simulation -lm";
-        String executable = wf.getOutPath() + "simulation " + port;
-        System.out.println("start: " + executable);
-
-        try {
-            // compile and start the c server
             process = Runtime.getRuntime().exec(compile);
             process.waitFor();
-            process = Runtime.getRuntime().exec(executable);
-            // start client
-            int clientConnectionTrails = 10;
-            // client = new JSONClient(Integer.parseInt(getProperties()[0].getValue()));
-            client = new JSONClient(port);
-            while (clientConnectionTrails > 0) {
-                if (client.getBoundingStatus()) {
-                    // client has connection
-                    clientConnectionTrails = 0;
-                } else {
-                    if (clientConnectionTrails == 1) {
-                        System.out.println("error while trying to connect");
-                    } else {
-                        Thread.sleep(500);
-                    }
-                    clientConnectionTrails--;
+
+            if (process.exitValue() != 0) {
+                StringBuffer b = new StringBuffer();
+                InputStream err = process.getErrorStream();
+
+                while (err.available() > 0) {
+                    b.append(Character.toChars(err.read()));
                 }
+
+                throw new KiemInitializationException("could not compile", true, new Exception(b
+                        .toString()));
             }
+
+            // start compiled sc code
+            String executable = wf.getOutPath() + "simulation ";
+            System.out.println("start: " + executable);
+
+            process = Runtime.getRuntime().exec(executable);
+
+            toSC = new PrintWriter(new OutputStreamWriter(process.getOutputStream()));
+            fromSC = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
             process.destroy();
-            initialize();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
@@ -158,24 +169,31 @@ public class DataComponent extends JSONObjectDataComponent {
         return signals;
     }
 
+    @Override
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty("compiler", "gcc");
+        return properties;
+    }
+
     public void wrapup() throws KiemInitializationException {
-        try {
-            client.close();
-            process.destroy();
-            // delete temp folder
-            File folder = new File(wf.getOutPath());
-            if (folder.getAbsolutePath().contains("tmp")) {
-                boolean folderDeleted = deleteFolder(folder);
-                if (folderDeleted) {
-                    System.out.println("temp folder " + folder + "successfully deleted");
-                } else {
-                    System.err.println("error while deleting temp folder: " + folder);
-                }
+        // try {
+        // client.close();
+        process.destroy();
+        // delete temp folder
+        File folder = new File(wf.getOutPath());
+        if (folder.getAbsolutePath().contains("tmp")) {
+            boolean folderDeleted = deleteFolder(folder);
+            if (folderDeleted) {
+                System.out.println("temp folder " + folder + "successfully deleted");
+            } else {
+                System.err.println("error while deleting temp folder: " + folder);
             }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
     }
 
     @Override
