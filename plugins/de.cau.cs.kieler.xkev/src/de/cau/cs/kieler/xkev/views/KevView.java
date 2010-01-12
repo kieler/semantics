@@ -24,6 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.internal.ViewSite;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.xkev.Activator;
@@ -166,7 +167,8 @@ public class KevView extends ViewPart {
             break;
         }
     }
-
+    
+    
     /**
      * Sets the focus to the KevComposite.
      */

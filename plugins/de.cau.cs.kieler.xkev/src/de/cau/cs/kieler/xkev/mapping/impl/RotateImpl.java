@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGLocatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +36,7 @@ import org.w3c.dom.svg.SVGDocument;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.RotateImpl#getAngle_range <em>Angle range</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.RotateImpl#getPivot <em>Pivot</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.RotateImpl#getAnchor_point <em>Anchor point</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,25 +64,25 @@ public class RotateImpl extends AnimationImpl implements Rotate {
     protected String angle_range = ANGLE_RANGE_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getPivot() <em>Pivot</em>}' attribute.
+     * The default value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPivot()
+     * @see #getAnchor_point()
      * @generated
      * @ordered
      */
-    protected static final String PIVOT_EDEFAULT = null;
+    protected static final String ANCHOR_POINT_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getPivot() <em>Pivot</em>}' attribute.
+     * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPivot()
+     * @see #getAnchor_point()
      * @generated
      * @ordered
      */
-    protected String pivot = PIVOT_EDEFAULT;
-    
+    protected String anchor_point = ANCHOR_POINT_EDEFAULT;
+
     /**
      * A hashmap used for the animation, need to be created only once.
      */
@@ -133,8 +133,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getPivot() {
-        return pivot;
+    public String getAnchor_point() {
+        return anchor_point;
     }
 
     /**
@@ -142,11 +142,11 @@ public class RotateImpl extends AnimationImpl implements Rotate {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPivot(String newPivot) {
-        String oldPivot = pivot;
-        pivot = newPivot;
+    public void setAnchor_point(String newAnchor_point) {
+        String oldAnchor_point = anchor_point;
+        anchor_point = newAnchor_point;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__PIVOT, oldPivot, pivot));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__ANCHOR_POINT, oldAnchor_point, anchor_point));
     }
 
     /**
@@ -159,8 +159,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
         switch (featureID) {
             case MappingPackage.ROTATE__ANGLE_RANGE:
                 return getAngle_range();
-            case MappingPackage.ROTATE__PIVOT:
-                return getPivot();
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                return getAnchor_point();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -176,8 +176,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
             case MappingPackage.ROTATE__ANGLE_RANGE:
                 setAngle_range((String)newValue);
                 return;
-            case MappingPackage.ROTATE__PIVOT:
-                setPivot((String)newValue);
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                setAnchor_point((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -194,8 +194,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
             case MappingPackage.ROTATE__ANGLE_RANGE:
                 setAngle_range(ANGLE_RANGE_EDEFAULT);
                 return;
-            case MappingPackage.ROTATE__PIVOT:
-                setPivot(PIVOT_EDEFAULT);
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                setAnchor_point(ANCHOR_POINT_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -211,8 +211,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
         switch (featureID) {
             case MappingPackage.ROTATE__ANGLE_RANGE:
                 return ANGLE_RANGE_EDEFAULT == null ? angle_range != null : !ANGLE_RANGE_EDEFAULT.equals(angle_range);
-            case MappingPackage.ROTATE__PIVOT:
-                return PIVOT_EDEFAULT == null ? pivot != null : !PIVOT_EDEFAULT.equals(pivot);
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
         }
         return super.eIsSet(featureID);
     }
@@ -229,8 +229,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (angle_range: ");
         result.append(angle_range);
-        result.append(", pivot: ");
-        result.append(pivot);
+        result.append(", anchor_point: ");
+        result.append(anchor_point);
         result.append(')');
         return result.toString();
     }
@@ -246,9 +246,7 @@ public class RotateImpl extends AnimationImpl implements Rotate {
             last = sc.nextFloat();
             
             numberOfRangeValues = Math.abs(first-last);
-            System.out.println("first: "+first+ " last: "+last+ " NumberofRangeValues:"+numberOfRangeValues);
             float x = numberOfRangeValues / numberOfInputValues;
-            System.out.println(x);
             if (first <= last) {
                 for (int i = 0; i < numberOfInputValues; i++) {
                     range.add(Float.toString((x*i)+first));
@@ -258,12 +256,14 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                     range.add(Float.toString(first-(x*i)));
                 }
             }
-        } else if (Pattern.matches("[-]?[\\d]+", value)) {
+        } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
+            //Get a list of comma separted values
+            range = new MapAnimations().attributeParser(value, false);
+        } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
             for (int i = 0; i < numberOfInputValues; i++) {
                 range.add(value);
             }
         } //else we have invalid values for move x_range and y_range
-        System.out.println("Range size:"+ range.size());
         return range;
     }
     
@@ -280,8 +280,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                 String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());            
                 if (jsonValue != null) {
                     float pivotX = 0, pivotY = 0;
-                    if (getPivot() != null && !getPivot().isEmpty()) {
-                        Scanner sc = new Scanner(getPivot()).useDelimiter("[,]");
+                    if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
+                        Scanner sc = new Scanner(getAnchor_point()).useDelimiter("[,]");
                         try {
                             if (sc.hasNext()) {
                                 pivotX = Float.parseFloat(sc.next());
@@ -292,73 +292,36 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                         } catch (NumberFormatException e) {
                             Activator.reportInfoMessage("The rotate animation has wrong values for the pivot element. [SVGElementID: "+getSVGElementID()+"]");
                         }
+                    } else {
+                        //If no anchor_point is specified set the point to origin of the current element
+                        setAnchor_point("0,0");
                     }
-                    System.out.println(pivotX+" "+pivotY);
                     String angle = hashMap.get(jsonValue);
                     if (angle != null) {
                         if (angle.indexOf("$") == 0) {
                             angle = ((JSONObject) getJSONObject()).optString(angle.substring(1));
+                            if (angle == null) {
+                                //Rotation without an valid angle value makes no sense
+                                return;
+                            }
                         }
-                    }
-                    if (elem != null) {
-                        //Now apply the animation
-                        try {
-                           System.out.println("transform: rotate"+angle+","+pivotX+","+pivotY+")");
-                           elem.setAttribute("transform", "rotate("+angle+","+pivotX+","+pivotY+")");
-                        } catch (DOMException e) {
-                            Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
-                        } catch (NumberFormatException e1) {
-                            Activator.reportErrorMessage("Wrong format for pivot element in rotate animation", e1);
+                        if (elem != null) {
+                            //Now apply the animation
+                            try {
+                               //Get the BoundingBox of the element "elem"
+                               SVGLocatable locatable = (SVGLocatable) elem;
+                               elem.setAttribute("transform", "rotate("+angle+","+(locatable.getBBox().getX()+pivotX)+","+(locatable.getBBox().getY()+pivotY)+")");
+                            } catch (DOMException e) {
+                                Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
+                            } catch (NumberFormatException e1) {
+                                Activator.reportErrorMessage("Wrong format for pivot element in rotate animation", e1);
+                            }
                         }
                     }
                 }
             }
         };
         EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue().invokeLater(runnableAnimation);
-        
-        
-//        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-//        float pivotX = 0, pivotY = 0;
-//
-//        if (jsonValue != null) {
-//            //Parsing of the animation special attribute values
-//            if (getPivot() != null && !getPivot().isEmpty()) {
-//                Scanner sc = new Scanner(getPivot()).useDelimiter("[,]");
-//                try {
-//                    if (sc.hasNext()) {
-//                        pivotX = Float.parseFloat(sc.next());
-//                    }
-//                    if (sc.hasNext()) {
-//                        pivotY = Float.parseFloat(sc.next());
-//                    }
-//                } catch (NumberFormatException e) {
-//                    Activator.reportInfoMessage("The rotate animation has wrong values for the pivot element. [SVGElementID: "+svgElementID+"]");
-//                }
-//            }
-//            System.out.println(pivotX+" "+pivotY);
-//            String angle = this.hashMap.get(jsonValue);
-//            if (angle != null) {
-//                if (angle.indexOf("$") == 0) {
-//                    angle = ((JSONObject) jsonObject).optString(angle.substring(1));
-//                }
-//                //Now apply the animation
-//                SVGDocument svgDoc;
-//                svgDoc = mapAnimation.getSVGDocument();
-//                if (svgDoc != null) {
-//                    try {
-//                       Element e = svgDoc.getElementById(svgElementID);
-//                       if (e != null) {
-//                           System.out.println("transform: rotate"+angle+","+pivotX+","+pivotY+")");
-//                           e.setAttribute("transform", "rotate("+angle+","+pivotX+","+pivotY+")");
-//                       }
-//                    } catch (DOMException e) {
-//                        Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
-//                    } catch (NumberFormatException e1) {
-//                        Activator.reportErrorMessage("Wrong format for pivot element in rotate animation", e1);
-//                    }
-//                }
-//            }
-//        }
     }
 
     /* (non-Javadoc)

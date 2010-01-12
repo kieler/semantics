@@ -26,6 +26,11 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -71,17 +76,18 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -211,6 +217,18 @@ public class KevComposite extends Composite implements ISelectionListener {
                     //Here we can receive the updatemanager
                     //updateManager = svgCanvas.getUpdateManager();
                 }
+            });
+            
+            svgCanvas.addMouseListener(new MouseAdapter() {
+                IStatusLineManager slm = Activator.getKevView().getViewSite().getActionBars().getStatusLineManager();
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("Canvas Width: "+svgCanvas.getWidth() +" Canvas Height: "+ svgCanvas.getHeight());
+//                    System.out.println(svgCanvas.getSVGDocument().getRootElement().getBBox().getX());
+//                    slm.setMessage("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XPos: "+ e.getXOnScreen() + " YPos: "+ e.getYOnScreen());
+                    System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XOnScreenPos: "+ e.getXOnScreen() + " YOnScreenPos: "+ e.getYOnScreen());
+                }
+                
+
             });
 
             frame = SWT_AWT.new_Frame(this);

@@ -107,7 +107,7 @@ public interface MappingPackage extends EPackage {
     int SVG_ELEMENT = 1;
 
     /**
-     * The feature id for the '<em><b>RunnableAnimation</b></em>' containment reference list.
+     * The feature id for the '<em><b>Animation</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -134,7 +134,7 @@ public interface MappingPackage extends EPackage {
     int SVG_ELEMENT_FEATURE_COUNT = 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>RunnableAnimation</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl
@@ -171,13 +171,68 @@ public interface MappingPackage extends EPackage {
     int ANIMATION__KEY = 2;
 
     /**
-     * The number of structural features of the '<em>RunnableAnimation</em>' class.
+     * The number of structural features of the '<em>Animation</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
     int ANIMATION_FEATURE_COUNT = 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.OpacityImpl <em>Opacity</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.xkev.mapping.impl.OpacityImpl
+     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getOpacity()
+     * @generated
+     */
+    int OPACITY = 3;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPACITY__INPUT = ANIMATION__INPUT;
+
+    /**
+     * The feature id for the '<em><b>Access ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPACITY__ACCESS_ID = ANIMATION__ACCESS_ID;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPACITY__KEY = ANIMATION__KEY;
+
+    /**
+     * The feature id for the '<em><b>Opacity</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPACITY__OPACITY = ANIMATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Opacity</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPACITY_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl <em>Move Path</em>}' class.
@@ -187,7 +242,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMovePath()
      * @generated
      */
-    int MOVE_PATH = 3;
+    int MOVE_PATH = 4;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -260,7 +315,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getRotate()
      * @generated
      */
-    int ROTATE = 4;
+    int ROTATE = 5;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -299,13 +354,13 @@ public interface MappingPackage extends EPackage {
     int ROTATE__ANGLE_RANGE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Pivot</b></em>' attribute.
+     * The feature id for the '<em><b>Anchor point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ROTATE__PIVOT = ANIMATION_FEATURE_COUNT + 1;
+    int ROTATE__ANCHOR_POINT = ANIMATION_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Rotate</em>' class.
@@ -324,7 +379,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMove()
      * @generated
      */
-    int MOVE = 5;
+    int MOVE = 6;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -388,7 +443,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getColorize()
      * @generated
      */
-    int COLORIZE = 6;
+    int COLORIZE = 7;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -461,7 +516,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getText()
      * @generated
      */
-    int TEXT = 7;
+    int TEXT = 8;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -500,22 +555,13 @@ public interface MappingPackage extends EPackage {
     int TEXT__TEXT_VALUE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Font color</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXT__FONT_COLOR = ANIMATION_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Font size</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT__FONT_SIZE = ANIMATION_FEATURE_COUNT + 2;
+    int TEXT__FONT_SIZE = ANIMATION_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Font family</b></em>' attribute.
@@ -524,16 +570,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT__FONT_FAMILY = ANIMATION_FEATURE_COUNT + 3;
-
-    /**
-     * The feature id for the '<em><b>Font opacity</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXT__FONT_OPACITY = ANIMATION_FEATURE_COUNT + 4;
+    int TEXT__FONT_FAMILY = ANIMATION_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Text</em>' class.
@@ -542,7 +579,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 5;
+    int TEXT_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 3;
 
 
     /**
@@ -588,10 +625,10 @@ public interface MappingPackage extends EPackage {
     EClass getSVGElement();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>RunnableAnimation</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation <em>Animation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>RunnableAnimation</em>'.
+     * @return the meta object for the containment reference list '<em>Animation</em>'.
      * @see de.cau.cs.kieler.xkev.mapping.SVGElement#getAnimation()
      * @see #getSVGElement()
      * @generated
@@ -610,10 +647,10 @@ public interface MappingPackage extends EPackage {
     EAttribute getSVGElement_Id();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>RunnableAnimation</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>RunnableAnimation</em>'.
+     * @return the meta object for class '<em>Animation</em>'.
      * @see de.cau.cs.kieler.xkev.mapping.Animation
      * @generated
      */
@@ -651,6 +688,27 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EAttribute getAnimation_Key();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Opacity <em>Opacity</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Opacity</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Opacity
+     * @generated
+     */
+    EClass getOpacity();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Opacity#getOpacity <em>Opacity</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Opacity</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Opacity#getOpacity()
+     * @see #getOpacity()
+     * @generated
+     */
+    EAttribute getOpacity_Opacity();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.MovePath <em>Move Path</em>}'.
@@ -717,15 +775,15 @@ public interface MappingPackage extends EPackage {
     EAttribute getRotate_Angle_range();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getPivot <em>Pivot</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Pivot</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Rotate#getPivot()
+     * @return the meta object for the attribute '<em>Anchor point</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Rotate#getAnchor_point()
      * @see #getRotate()
      * @generated
      */
-    EAttribute getRotate_Pivot();
+    EAttribute getRotate_Anchor_point();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Move <em>Move</em>}'.
@@ -824,17 +882,6 @@ public interface MappingPackage extends EPackage {
     EAttribute getText_Text_value();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_color <em>Font color</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Font color</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_color()
-     * @see #getText()
-     * @generated
-     */
-    EAttribute getText_Font_color();
-
-    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_size <em>Font size</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -855,17 +902,6 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EAttribute getText_Font_family();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_opacity <em>Font opacity</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Font opacity</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_opacity()
-     * @see #getText()
-     * @generated
-     */
-    EAttribute getText_Font_opacity();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -926,7 +962,7 @@ public interface MappingPackage extends EPackage {
         EClass SVG_ELEMENT = eINSTANCE.getSVGElement();
 
         /**
-         * The meta object literal for the '<em><b>RunnableAnimation</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Animation</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -942,7 +978,7 @@ public interface MappingPackage extends EPackage {
         EAttribute SVG_ELEMENT__ID = eINSTANCE.getSVGElement_Id();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>RunnableAnimation</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl
@@ -974,6 +1010,24 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EAttribute ANIMATION__KEY = eINSTANCE.getAnimation_Key();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.OpacityImpl <em>Opacity</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.xkev.mapping.impl.OpacityImpl
+         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getOpacity()
+         * @generated
+         */
+        EClass OPACITY = eINSTANCE.getOpacity();
+
+        /**
+         * The meta object literal for the '<em><b>Opacity</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPACITY__OPACITY = eINSTANCE.getOpacity_Opacity();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MovePathImpl <em>Move Path</em>}' class.
@@ -1028,12 +1082,12 @@ public interface MappingPackage extends EPackage {
         EAttribute ROTATE__ANGLE_RANGE = eINSTANCE.getRotate_Angle_range();
 
         /**
-         * The meta object literal for the '<em><b>Pivot</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Anchor point</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ROTATE__PIVOT = eINSTANCE.getRotate_Pivot();
+        EAttribute ROTATE__ANCHOR_POINT = eINSTANCE.getRotate_Anchor_point();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -1114,14 +1168,6 @@ public interface MappingPackage extends EPackage {
         EAttribute TEXT__TEXT_VALUE = eINSTANCE.getText_Text_value();
 
         /**
-         * The meta object literal for the '<em><b>Font color</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TEXT__FONT_COLOR = eINSTANCE.getText_Font_color();
-
-        /**
          * The meta object literal for the '<em><b>Font size</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1136,14 +1182,6 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EAttribute TEXT__FONT_FAMILY = eINSTANCE.getText_Font_family();
-
-        /**
-         * The meta object literal for the '<em><b>Font opacity</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TEXT__FONT_OPACITY = eINSTANCE.getText_Font_opacity();
 
     }
 

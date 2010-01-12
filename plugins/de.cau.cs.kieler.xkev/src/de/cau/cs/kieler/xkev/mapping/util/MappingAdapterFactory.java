@@ -84,6 +84,10 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createAnimationAdapter();
             }
             @Override
+            public Adapter caseOpacity(Opacity object) {
+                return createOpacityAdapter();
+            }
+            @Override
             public Adapter caseMovePath(MovePath object) {
                 return createMovePathAdapter();
             }
@@ -152,7 +156,7 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>RunnableAnimation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -162,6 +166,20 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnimationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Opacity <em>Opacity</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.xkev.mapping.Opacity
+     * @generated
+     */
+    public Adapter createOpacityAdapter() {
         return null;
     }
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/MovePathExample.svg">
-  <svgElement id="rect1">
-    <animation xsi:type="mapping:MovePath" input="1..360" path="spirale_top" key="water" anchor_point="0,2" auto_orientation="false" />
+  <svgElement id="rocket1">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="spirale_top" key="water" anchor_point="5,8.75" auto_orientation="false" />
   </svgElement>
-  <svgElement id="rect2">
-    <animation xsi:type="mapping:MovePath" input="1..360" path="spirale_bottom" key="water" anchor_point="0,2" auto_orientation="true" />
+  <svgElement id="rocket2">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="spirale_bottom" key="water" anchor_point="0,5" auto_orientation="true" />
   </svgElement>
-  <svgElement id="rect3">
-    <animation xsi:type="mapping:MovePath" input="1..360" path="path_top" key="water" anchor_point="0,2" auto_orientation="false" />
+  <svgElement id="rocket3">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_top" key="water" anchor_point="5,8.75" auto_orientation="false" />
   </svgElement>
-  <svgElement id="rect4">
-    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="water" anchor_point="0,2" auto_orientation="true" />
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="water" anchor_point="0,5" auto_orientation="true" />
   </svgElement>
   
 </mapping:SVGFile>

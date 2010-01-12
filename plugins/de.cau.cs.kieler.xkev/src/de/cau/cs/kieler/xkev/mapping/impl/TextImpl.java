@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONObject;
+
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Text;
@@ -18,13 +19,11 @@ import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,10 +33,8 @@ import org.w3c.dom.svg.SVGDocument;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl#getText_value <em>Text value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl#getFont_color <em>Font color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl#getFont_size <em>Font size</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl#getFont_family <em>Font family</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl#getFont_opacity <em>Font opacity</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,26 +60,6 @@ public class TextImpl extends AnimationImpl implements Text {
      * @ordered
      */
     protected String text_value = TEXT_VALUE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getFont_color() <em>Font color</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getFont_color()
-     * @generated
-     * @ordered
-     */
-    protected static final String FONT_COLOR_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getFont_color() <em>Font color</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getFont_color()
-     * @generated
-     * @ordered
-     */
-    protected String font_color = FONT_COLOR_EDEFAULT;
 
     /**
      * The default value of the '{@link #getFont_size() <em>Font size</em>}' attribute.
@@ -125,30 +102,10 @@ public class TextImpl extends AnimationImpl implements Text {
     protected String font_family = FONT_FAMILY_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getFont_opacity() <em>Font opacity</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getFont_opacity()
-     * @generated
-     * @ordered
-     */
-    protected static final String FONT_OPACITY_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getFont_opacity() <em>Font opacity</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getFont_opacity()
-     * @generated
-     * @ordered
-     */
-    protected String font_opacity = FONT_OPACITY_EDEFAULT;
-    
-    /**
      * The hashmap for mapping the input values to output
      */
-    private HashMap<String, String> hashMap = null;
-
+    private HashMap<String, HashMap<String, String>> hashMapList = null;
+    
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -187,27 +144,6 @@ public class TextImpl extends AnimationImpl implements Text {
         text_value = newText_value;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TEXT__TEXT_VALUE, oldText_value, text_value));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getFont_color() {
-        return font_color;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setFont_color(String newFont_color) {
-        String oldFont_color = font_color;
-        font_color = newFont_color;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TEXT__FONT_COLOR, oldFont_color, font_color));
     }
 
     /**
@@ -257,40 +193,15 @@ public class TextImpl extends AnimationImpl implements Text {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getFont_opacity() {
-        return font_opacity;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setFont_opacity(String newFont_opacity) {
-        String oldFont_opacity = font_opacity;
-        font_opacity = newFont_opacity;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TEXT__FONT_OPACITY, oldFont_opacity, font_opacity));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case MappingPackage.TEXT__TEXT_VALUE:
                 return getText_value();
-            case MappingPackage.TEXT__FONT_COLOR:
-                return getFont_color();
             case MappingPackage.TEXT__FONT_SIZE:
                 return getFont_size();
             case MappingPackage.TEXT__FONT_FAMILY:
                 return getFont_family();
-            case MappingPackage.TEXT__FONT_OPACITY:
-                return getFont_opacity();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -306,17 +217,11 @@ public class TextImpl extends AnimationImpl implements Text {
             case MappingPackage.TEXT__TEXT_VALUE:
                 setText_value((String)newValue);
                 return;
-            case MappingPackage.TEXT__FONT_COLOR:
-                setFont_color((String)newValue);
-                return;
             case MappingPackage.TEXT__FONT_SIZE:
                 setFont_size((String)newValue);
                 return;
             case MappingPackage.TEXT__FONT_FAMILY:
                 setFont_family((String)newValue);
-                return;
-            case MappingPackage.TEXT__FONT_OPACITY:
-                setFont_opacity((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -333,17 +238,11 @@ public class TextImpl extends AnimationImpl implements Text {
             case MappingPackage.TEXT__TEXT_VALUE:
                 setText_value(TEXT_VALUE_EDEFAULT);
                 return;
-            case MappingPackage.TEXT__FONT_COLOR:
-                setFont_color(FONT_COLOR_EDEFAULT);
-                return;
             case MappingPackage.TEXT__FONT_SIZE:
                 setFont_size(FONT_SIZE_EDEFAULT);
                 return;
             case MappingPackage.TEXT__FONT_FAMILY:
                 setFont_family(FONT_FAMILY_EDEFAULT);
-                return;
-            case MappingPackage.TEXT__FONT_OPACITY:
-                setFont_opacity(FONT_OPACITY_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -359,14 +258,10 @@ public class TextImpl extends AnimationImpl implements Text {
         switch (featureID) {
             case MappingPackage.TEXT__TEXT_VALUE:
                 return TEXT_VALUE_EDEFAULT == null ? text_value != null : !TEXT_VALUE_EDEFAULT.equals(text_value);
-            case MappingPackage.TEXT__FONT_COLOR:
-                return FONT_COLOR_EDEFAULT == null ? font_color != null : !FONT_COLOR_EDEFAULT.equals(font_color);
             case MappingPackage.TEXT__FONT_SIZE:
                 return FONT_SIZE_EDEFAULT == null ? font_size != null : !FONT_SIZE_EDEFAULT.equals(font_size);
             case MappingPackage.TEXT__FONT_FAMILY:
                 return FONT_FAMILY_EDEFAULT == null ? font_family != null : !FONT_FAMILY_EDEFAULT.equals(font_family);
-            case MappingPackage.TEXT__FONT_OPACITY:
-                return FONT_OPACITY_EDEFAULT == null ? font_opacity != null : !FONT_OPACITY_EDEFAULT.equals(font_opacity);
         }
         return super.eIsSet(featureID);
     }
@@ -383,14 +278,10 @@ public class TextImpl extends AnimationImpl implements Text {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (text_value: ");
         result.append(text_value);
-        result.append(", font_color: ");
-        result.append(font_color);
         result.append(", font_size: ");
         result.append(font_size);
         result.append(", font_family: ");
         result.append(font_family);
-        result.append(", font_opacity: ");
-        result.append(font_opacity);
         result.append(')');
         return result.toString();
     }
@@ -402,14 +293,32 @@ public class TextImpl extends AnimationImpl implements Text {
                Element elem = getSVGElement();
                String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
                if (jsonValue != null) {
-                   String textValue = hashMap.get(jsonValue);
+                   String textValue = hashMapList.get("text_value").get(jsonValue);
                    if (textValue != null) {
                        if (textValue.indexOf("$") == 0) {
                            textValue = ((JSONObject) getJSONObject()).optString(textValue.substring(1));
                        }
+                       
+                       String styleAttrib, specialValue;
+                       styleAttrib = elem.getAttribute("style");
+
+                       specialValue = hashMapList.get("font_size").get(jsonValue);
+                       if (specialValue != null && !specialValue.isEmpty()) {
+                           styleAttrib = styleAttrib.replaceAll("font-size:[^;]*[;]?", "");
+                           styleAttrib = "font-size:"+specialValue+";"+styleAttrib;
+                       }
+                       
+                       specialValue = hashMapList.get("font_family").get(jsonValue);
+                       if (specialValue != null && !specialValue.isEmpty()) {
+                           styleAttrib = styleAttrib.replaceAll("font-family:[^;]*[;]?", "");
+                           styleAttrib = "font-family:"+specialValue+";"+styleAttrib;
+                       }
+                       
                        //Now apply the animation
                        if (elem != null) { 
                            try {
+                               //Set the current style values for the element
+                               elem.setAttribute("style", styleAttrib);
                                //We need to read the first child, to get the textcontent of the tag
                                if (elem.getChildNodes() != null) {
                                    elem.getChildNodes().item(0).setNodeValue(textValue);
@@ -459,13 +368,22 @@ public class TextImpl extends AnimationImpl implements Text {
      */
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
+        hashMapList = new HashMap<String, HashMap<String,String>>();
         
-        ArrayList<String> inputArray, textArray;
-        inputArray = mapAnimation.attributeParser(getInput(), true);
-        textArray = mapAnimation.attributeParser(getText_value(), false);
+        ArrayList<String> inputList, outputList;
+        inputList = mapAnimation.attributeParser(getInput(), true);
         
-        //mapping of input list to the text_value list
-        this.hashMap = mapAnimation.mapInputToOutput(inputArray, textArray);
+        //map the text_values
+        outputList = mapAnimation.attributeParser(getText_value(), false);
+        hashMapList.put("text_value", mapAnimation.mapInputToOutput(inputList, outputList));
+        
+        //map the font_size values
+        outputList = mapAnimation.attributeParser(getFont_size(), false);
+        hashMapList.put("font_size", mapAnimation.mapInputToOutput(inputList, outputList));
+        
+        //map the font_family values
+        outputList = mapAnimation.attributeParser(getFont_family(), false);
+        hashMapList.put("font_family", mapAnimation.mapInputToOutput(inputList, outputList));
     }
 
 } //TextImpl

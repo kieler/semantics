@@ -105,6 +105,13 @@ public class MappingSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case MappingPackage.OPACITY: {
+                Opacity opacity = (Opacity)theEObject;
+                T result = caseOpacity(opacity);
+                if (result == null) result = caseAnimation(opacity);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case MappingPackage.MOVE_PATH: {
                 MovePath movePath = (MovePath)theEObject;
                 T result = caseMovePath(movePath);
@@ -175,17 +182,32 @@ public class MappingSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>RunnableAnimation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Animation</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>RunnableAnimation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Animation</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
     public T caseAnimation(Animation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Opacity</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Opacity</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseOpacity(Opacity object) {
         return null;
     }
 

@@ -16,7 +16,7 @@ package de.cau.cs.kieler.xkev.mapping;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Rotate#getAngle_range <em>Angle range</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.Rotate#getPivot <em>Pivot</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.xkev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,29 +52,29 @@ public interface Rotate extends Animation {
     void setAngle_range(String value);
 
     /**
-     * Returns the value of the '<em><b>Pivot</b></em>' attribute.
+     * Returns the value of the '<em><b>Anchor point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Pivot</em>' attribute isn't clear,
+     * If the meaning of the '<em>Anchor point</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Pivot</em>' attribute.
-     * @see #setPivot(String)
-     * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getRotate_Pivot()
+     * @return the value of the '<em>Anchor point</em>' attribute.
+     * @see #setAnchor_point(String)
+     * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getRotate_Anchor_point()
      * @model
      * @generated
      */
-    String getPivot();
+    String getAnchor_point();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getPivot <em>Pivot</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.xkev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Pivot</em>' attribute.
-     * @see #getPivot()
+     * @param value the new value of the '<em>Anchor point</em>' attribute.
+     * @see #getAnchor_point()
      * @generated
      */
-    void setPivot(String value);
+    void setAnchor_point(String value);
 
 } // Rotate

@@ -8,13 +8,11 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
@@ -23,14 +21,12 @@ import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGLocatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -256,9 +252,9 @@ public class MoveImpl extends AnimationImpl implements Move {
             last = sc.nextFloat();
             
             numberOfRangeValues = Math.abs(first-last);
-            System.out.println("first: "+first+ " last: "+last+ " NumberofRangeValues:"+numberOfRangeValues);
+//            System.out.println("first: "+first+ " last: "+last+ " NumberofRangeValues:"+numberOfRangeValues);
             float x = numberOfRangeValues / numberOfInputValues;
-            System.out.println(x);
+//            System.out.println(x);
             if (first <= last) {
                 for (int i = 0; i < numberOfInputValues; i++) {
                     range.add(Float.toString((x*i)+first));
@@ -268,12 +264,15 @@ public class MoveImpl extends AnimationImpl implements Move {
                     range.add(Float.toString(first-(x*i)));
                 }
             }
-        } else if (Pattern.matches("[-]?[\\d]+", value)) {
+        } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
+            //Get a list of comma separted values
+            range = new MapAnimations().attributeParser(value, false); 
+        } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
             for (int i = 0; i < numberOfInputValues; i++) {
                 range.add(value);
             }
         } //else we have invalid values for move x_range and y_range
-        System.out.println("Range size:"+ range.size());
+//        System.out.println("Range size:"+ range.size());
         return range;
     }
     
@@ -294,12 +293,35 @@ public class MoveImpl extends AnimationImpl implements Move {
                     //Now apply the animation
                     if (elem != null) {
                         try {
-                            if (hashMapXRange.get(jsonValue) != null) {
-                                elem.setAttribute("x", hashMapXRange.get(jsonValue));
+                            //BoundingBox is always the same. so get the x,y position of the upperleft corner
+                            SVGLocatable locatable = (SVGLocatable) elem;
+                            String xValue, yValue;
+                            xValue = hashMapXRange.get(jsonValue);
+                            yValue = hashMapYRange.get(jsonValue);
+                            
+                            if (xValue == null) {
+                                xValue = "0";
+                                if (yValue == null) {
+                                    return;
+                                }
+                            } else {
+                                xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
                             }
-                            if (hashMapYRange.get(jsonValue) != null) {
-                                elem.setAttribute("y",hashMapYRange.get(jsonValue));
+                                
+                            if (yValue == null) {
+                                yValue = "0";
+                                if (xValue == null) {
+                                    return;
+                                }
+                            } else {
+                                yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
                             }
+                            //Only transform if we have at least one value != null
+//                            String attrib = elem.getAttribute("transform");
+                            //Delete all old translate values ohterwise they were concatenated
+//                            attrib = attrib.replaceAll("translate\\([-]?\\d+([.]\\d+)?[,][-]?\\d+([.]\\d+)?\\)", "");
+//                            attrib.trim();
+                            elem.setAttribute("transform", "translate("+xValue+","+yValue+")");
                         } catch (DOMException e1) {
                             Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e1);
                         }
@@ -310,6 +332,7 @@ public class MoveImpl extends AnimationImpl implements Move {
             }
         };
         EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue().invokeLater(runnableAnimation);
+        
 //        
 //        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
 //
@@ -336,7 +359,7 @@ public class MoveImpl extends AnimationImpl implements Move {
 //            }
 //        }
     }
-
+    
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.xkev.mapping.Animation#initialize()
      */

@@ -7,13 +7,12 @@
 package de.cau.cs.kieler.xkev.mapping.impl;
 
 import java.awt.Point;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
+
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.MovePath;
@@ -24,14 +23,13 @@ import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
 import org.apache.batik.dom.svg.SVGOMPathElement;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
-
+import org.w3c.dom.svg.SVGLocatable;
 import org.w3c.dom.svg.SVGPoint;
 
 
@@ -309,11 +307,12 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                 setAuto_orientation("true");
             }
         }
+        //Initialize the anchorpoint
+        anchorPoint = new Point();
         
         if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
             if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchor_point())) {
                 String[] anchorPointValues = getAnchor_point().split(",");
-                this.anchorPoint = new Point();
                 anchorPoint.setLocation(Float.parseFloat(anchorPointValues[0]),Float.parseFloat(anchorPointValues[1]));
             }
         }
@@ -367,39 +366,18 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             yPos = new ArrayList<String>();
             angle = new ArrayList<String>();
 
-            float newXPos, newYPos;
-            if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
-                if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchor_point())) {
-                    String[] anchorPointValues = getAnchor_point().split(",");
-                    newXPos = Float.parseFloat(anchorPointValues[0]);
-                    newYPos = Float.parseFloat(anchorPointValues[1]);
-                    for (int i = 0; i < inputArray.size(); i++) {
-                        p = path.getPointAtLength(i*stepLength);
-                        xPos.add(Float.toString(p.getX()-newXPos));
-                        yPos.add(Float.toString(p.getY()-newYPos));
-                        if (i > 0) {
-                            angle.add(computeAngle(p, p_old));
-                        } else {
-                            angle.add("0");
-                        }
-                        p_old = p;
-                    }
+            for (int i = 0; i < inputArray.size(); i++) {
+                p = path.getPointAtLength(i*stepLength);
+                xPos.add(Float.toString(p.getX()));
+                yPos.add(Float.toString(p.getY()));
+                if (i > 0) {
+                    angle.add(computeAngle(p, p_old));
                 } else {
-                    Activator.reportErrorMessage("The anchor_point value has a wrong format at SVGElementID: "+svgElementID);
+                    angle.add("0");
                 }
-            } else {            
-                for (int i = 0; i < inputArray.size(); i++) {
-                    p = path.getPointAtLength(i*stepLength);
-                    xPos.add(Float.toString(p.getX()));
-                    yPos.add(Float.toString(p.getY()));
-                    if (i > 0) {
-                        angle.add(computeAngle(p, p_old));
-                    } else {
-                        angle.add("0");
-                    }
-                    p_old = p;
-                }
+                p_old = p;
             }
+
             hashMapList.put("xPos",mapAnimation.mapInputToOutput(inputArray, xPos));
             hashMapList.put("yPos",mapAnimation.mapInputToOutput(inputArray, yPos));
             hashMapList.put("angle",mapAnimation.mapInputToOutput(inputArray, angle));
@@ -421,21 +399,38 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                                 yValue = hashMapList.get("yPos").get(jsonValue);
                                 angleValue = hashMapList.get("angle").get(jsonValue);
 
-                                if (xValue != null && !xValue.isEmpty()) {
-                                    elem.setAttribute("x", xValue);
+//                                System.out.println("xValue: "+xValue+" yValue: "+yValue);
+
+                                //BoundingBox is always the same. so get the x,y position of the upperleft corner
+                                SVGLocatable locatable = (SVGLocatable) elem;
+                                
+                                if (xValue == null) {
+                                    xValue = "0";
+                                    if (yValue == null) {
+                                        return;
+                                    }
+                                } else {
+                                    xValue = Double.toString(Float.parseFloat(xValue) - locatable.getBBox().getX() - anchorPoint.getX());
                                 }
-                                if (yValue != null && !yValue.isEmpty()) {
-                                    elem.setAttribute("y", yValue);
+                                    
+                                if (yValue == null) {
+                                    yValue = "0";
+                                    if (xValue == null) {
+                                        return;
+                                    }
+                                } else {
+                                    yValue = Double.toString(Float.parseFloat(yValue) - locatable.getBBox().getY() - anchorPoint.getY());
                                 }
-                                //get-Anchorpoint
+                                
+                                String attrib = "translate("+xValue+","+yValue+")";
+                                elem.setAttribute("transform", attrib);
+//                                System.out.println(elem.getAttribute("transform"));
+//                                System.out.println(elem.getAttribute("id")+": "+xValue+", "+yValue+" BBox: "+locatable.getBBox().getX()+ " "+locatable.getBBox().getY()+" Anchorpoint:"+anchorPoint.getX()+", "+anchorPoint.getY()+ "BBox-Width-Height: "+locatable.getBBox().getWidth()+ ", "+locatable.getBBox().getHeight());
+
                                 if (angleValue != null && !angleValue.isEmpty() && xValue != null && !xValue.isEmpty() && yValue != null && !yValue.isEmpty()) {
                                     if (getAuto_orientation().equals("true")) {
-//                                        AffineTransform at = AffineTransform.getRotateInstance(Float.parseFloat(angleValue), Double.parseDouble(xValue), Double.parseDouble(yValue));
-//                                        Point2D pOld, pNew; 
-//                                        pOld = new Point2D.Double(Double.parseDouble(xValue), Double.parseDouble(yValue));
-//                                        pNew = at.transform(pOld, null);
-                                        elem.setAttribute("transform", "rotate("+angleValue+","+ (Double.parseDouble(xValue) + anchorPoint.getX()) +","+ (Double.parseDouble(yValue) + anchorPoint.getY()) +")");
-                                    } 
+                                        elem.setAttribute("transform", attrib+"rotate("+angleValue+","+ (locatable.getBBox().getX() + anchorPoint.getX()) +","+ (locatable.getBBox().getY() + anchorPoint.getY()) +")");
+                                    }
                                 }
                             }
                         } catch (DOMException e1) {

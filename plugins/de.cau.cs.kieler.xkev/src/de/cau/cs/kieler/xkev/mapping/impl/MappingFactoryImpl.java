@@ -62,6 +62,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
         switch (eClass.getClassifierID()) {
             case MappingPackage.SVG_FILE: return createSVGFile();
             case MappingPackage.SVG_ELEMENT: return createSVGElement();
+            case MappingPackage.OPACITY: return createOpacity();
             case MappingPackage.MOVE_PATH: return createMovePath();
             case MappingPackage.ROTATE: return createRotate();
             case MappingPackage.MOVE: return createMove();
@@ -90,6 +91,16 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
     public SVGElement createSVGElement() {
         SVGElementImpl svgElement = new SVGElementImpl();
         return svgElement;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Opacity createOpacity() {
+        OpacityImpl opacity = new OpacityImpl();
+        return opacity;
     }
 
     /**

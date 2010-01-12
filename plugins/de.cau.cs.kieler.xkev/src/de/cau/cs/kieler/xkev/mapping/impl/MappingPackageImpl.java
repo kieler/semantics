@@ -12,6 +12,7 @@ import de.cau.cs.kieler.xkev.mapping.MappingFactory;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
 import de.cau.cs.kieler.xkev.mapping.MovePath;
+import de.cau.cs.kieler.xkev.mapping.Opacity;
 import de.cau.cs.kieler.xkev.mapping.Rotate;
 import de.cau.cs.kieler.xkev.mapping.SVGElement;
 import de.cau.cs.kieler.xkev.mapping.SVGFile;
@@ -52,6 +53,13 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     private EClass animationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass opacityEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -244,6 +252,24 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getOpacity() {
+        return opacityEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getOpacity_Opacity() {
+        return (EAttribute)opacityEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getMovePath() {
         return movePathEClass;
     }
@@ -298,7 +324,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getRotate_Pivot() {
+    public EAttribute getRotate_Anchor_point() {
         return (EAttribute)rotateEClass.getEStructuralFeatures().get(1);
     }
 
@@ -388,7 +414,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getText_Font_color() {
+    public EAttribute getText_Font_size() {
         return (EAttribute)textEClass.getEStructuralFeatures().get(1);
     }
 
@@ -397,26 +423,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getText_Font_size() {
-        return (EAttribute)textEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getText_Font_family() {
-        return (EAttribute)textEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getText_Font_opacity() {
-        return (EAttribute)textEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)textEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -460,6 +468,9 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEAttribute(animationEClass, ANIMATION__ACCESS_ID);
         createEAttribute(animationEClass, ANIMATION__KEY);
 
+        opacityEClass = createEClass(OPACITY);
+        createEAttribute(opacityEClass, OPACITY__OPACITY);
+
         movePathEClass = createEClass(MOVE_PATH);
         createEAttribute(movePathEClass, MOVE_PATH__PATH);
         createEAttribute(movePathEClass, MOVE_PATH__ANCHOR_POINT);
@@ -467,7 +478,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         rotateEClass = createEClass(ROTATE);
         createEAttribute(rotateEClass, ROTATE__ANGLE_RANGE);
-        createEAttribute(rotateEClass, ROTATE__PIVOT);
+        createEAttribute(rotateEClass, ROTATE__ANCHOR_POINT);
 
         moveEClass = createEClass(MOVE);
         createEAttribute(moveEClass, MOVE__XRANGE);
@@ -480,10 +491,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         textEClass = createEClass(TEXT);
         createEAttribute(textEClass, TEXT__TEXT_VALUE);
-        createEAttribute(textEClass, TEXT__FONT_COLOR);
         createEAttribute(textEClass, TEXT__FONT_SIZE);
         createEAttribute(textEClass, TEXT__FONT_FAMILY);
-        createEAttribute(textEClass, TEXT__FONT_OPACITY);
     }
 
     /**
@@ -514,6 +523,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        opacityEClass.getESuperTypes().add(this.getAnimation());
         movePathEClass.getESuperTypes().add(this.getAnimation());
         rotateEClass.getESuperTypes().add(this.getAnimation());
         moveEClass.getESuperTypes().add(this.getAnimation());
@@ -529,7 +539,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getSVGElement_Animation(), this.getAnimation(), null, "animation", null, 1, -1, SVGElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSVGElement_Id(), ecorePackage.getEString(), "id", null, 1, 1, SVGElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(animationEClass, Animation.class, "RunnableAnimation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(animationEClass, Animation.class, "Animation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getAnimation_Input(), ecorePackage.getEString(), "input", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAnimation_AccessID(), ecorePackage.getEString(), "accessID", "", 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAnimation_Key(), ecorePackage.getEString(), "key", "", 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -544,6 +554,9 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         addEOperation(animationEClass, null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+        initEClass(opacityEClass, Opacity.class, "Opacity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getOpacity_Opacity(), ecorePackage.getEString(), "opacity", null, 0, 1, Opacity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(movePathEClass, MovePath.class, "MovePath", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMovePath_Path(), ecorePackage.getEString(), "path", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMovePath_Anchor_point(), ecorePackage.getEString(), "anchor_point", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -551,7 +564,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         initEClass(rotateEClass, Rotate.class, "Rotate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getRotate_Angle_range(), ecorePackage.getEString(), "angle_range", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getRotate_Pivot(), ecorePackage.getEString(), "pivot", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRotate_Anchor_point(), ecorePackage.getEString(), "anchor_point", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(moveEClass, Move.class, "Move", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMove_X_range(), ecorePackage.getEString(), "x_range", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -564,10 +577,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getText_Text_value(), ecorePackage.getEString(), "text_value", null, 1, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getText_Font_color(), ecorePackage.getEString(), "font_color", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getText_Font_size(), ecorePackage.getEString(), "font_size", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getText_Font_family(), ecorePackage.getEString(), "font_family", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getText_Font_opacity(), ecorePackage.getEString(), "font_opacity", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

@@ -8,7 +8,6 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
@@ -22,8 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGElement;
 
 import de.cau.cs.kieler.xkev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
@@ -454,7 +451,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
                                 if (styleAttribute.contains("fill:")) {
                                     styleAttribute = styleAttribute.replaceFirst("fill:[^;]+", "fill:"+hashValue);                                
                                 } else {
-                                    styleAttribute += ";fill"+hashValue;
+                                    styleAttribute += ";fill:"+hashValue;
                                 }
     
                             }
@@ -570,6 +567,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         this.hashMapList.put("stroke_color",mapAnimation.mapInputToOutput(inputList, outputList));
         outputList = mapAnimation.attributeParser(getStroke_width(), false);
         this.hashMapList.put("stroke_width",mapAnimation.mapInputToOutput(inputList, outputList));
+
     }
 
 //    if (jsonValue != null) {

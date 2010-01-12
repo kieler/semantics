@@ -44,6 +44,15 @@ public interface MappingFactory extends EFactory {
     SVGElement createSVGElement();
 
     /**
+     * Returns a new object of class '<em>Opacity</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Opacity</em>'.
+     * @generated
+     */
+    Opacity createOpacity();
+
+    /**
      * Returns a new object of class '<em>Move Path</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
