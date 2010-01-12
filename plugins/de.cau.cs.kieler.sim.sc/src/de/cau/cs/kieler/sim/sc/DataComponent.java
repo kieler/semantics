@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sim.tcpip;
+package de.cau.cs.kieler.sim.sc;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tcpip
-Bundle-SymbolicName: de.cau.cs.kieler.sim.tcpip;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.sim.sc;singleton:=true
 Bundle-Version: 0.0.1
-Bundle-Activator: de.cau.cs.kieler.sim.tcpip.Activator
+Bundle-Activator: de.cau.cs.kieler.sim.sc.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",

@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sim.tcpip;
+package de.cau.cs.kieler.sim.sc;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
