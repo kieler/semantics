@@ -68,10 +68,13 @@ public class VerifyAction extends Action {
     /** Relative path to the icon to use for this action. */
     private static final String ICON_PATH = "icons/run.gif";
 
-    /** The status line manager that can be used to display messages. */
-    // private IStatusLineManager statusLineManager;
-
     private TableViewer table;
+
+    private final static int ROW_STATUS = 1;
+    private final static int ROW_RT = 2;
+    private final static int ROW_WCRT = 3;
+    private final static int ROW_TICKS = 4;
+    private final static int ROM_COMMENT = 5;
 
     private LinkedList<String[]> data = new LinkedList<String[]>();
 
@@ -115,7 +118,7 @@ public class VerifyAction extends Action {
 
     @Override
     public void run() {
-        Tools.tic();
+        // Tools.tic();
         final Display display = Display.findDisplay(Thread.currentThread());
 
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
@@ -142,7 +145,7 @@ public class VerifyAction extends Action {
         Collections.sort(files);
 
         for (File f : files) {
-            String[] s = { f.getName(), "", "", "" };
+            String[] s = { f.getName(), "", "", "", "", "" };
             data.add(s);
         }
 
@@ -160,8 +163,6 @@ public class VerifyAction extends Action {
         table.setInput(data.toArray(new String[0][0]));
         runWithProgress(new IRunnableWithProgress() {
             public void run(final IProgressMonitor monitor) {
-                final int rowWCRT = 2;
-                final int rowComment = 3;
                 int k = 0;
                 monitor.beginTask("Verify", files.size());
 
@@ -179,7 +180,7 @@ public class VerifyAction extends Action {
                                 + f.getName());
                         // Execute Trace
                         if (traces == null || !traces.hasNext()) {
-                            s[rowComment] = "no trace found";
+                            s[ROM_COMMENT] = "no trace found";
                         } else {
 
                             ICommunicationProtocol krep = new KepProtocol(new JNIConnection(
@@ -192,32 +193,37 @@ public class VerifyAction extends Action {
                             krep.reset();
 
                             boolean valid = true;
+                            int steps = 0;
                             while (traces.hasNext() && (valid || ignoreInvalid)
                                     && !monitor.isCanceled()) {
                                 valid = traces.executeStep(krep);
-
+                                steps++;
+                            }
+                            if (monitor.isCanceled()) {
+                                s[ROM_COMMENT] = "canceled";
                             }
                             success = valid;
-                            s[rowWCRT] = traces.getWCRT();
-
+                            s[ROW_RT] = traces.getWCRT();
+                            s[ROW_WCRT] = String.valueOf(asm.getTickLen());
+                            s[ROW_TICKS] = String.valueOf(steps);
                             if (!success) {
-                                s[rowComment] = "traces differ";
+                                s[ROM_COMMENT] = "traces differ";
                             }
                         }
 
-                        s[1] = success ? "true" : "false";
+                        s[ROW_STATUS] = success ? "true" : "false";
 
                         monitor.worked(1);
                     } catch (CommunicationException eCom) {
-                        s[rowComment] = eCom.getMessage();
+                        s[ROM_COMMENT] = eCom.getMessage();
                     } catch (ParseException eParse) {
-                        s[rowComment] = eParse.getMessage();
+                        s[ROM_COMMENT] = eParse.getMessage();
                         // } catch (LoadException eLoad) {
                         // s[rowComment] = eLoad.getMessage();
                     } catch (Exception e) {
-                        s[rowComment] = e.getMessage();
+                        s[ROM_COMMENT] = e.getMessage();
                     } catch (Throwable t) {
-                        s[rowComment] = t.getMessage();
+                        s[ROM_COMMENT] = t.getMessage();
                     }
 
                     display.asyncExec(new Runnable() {

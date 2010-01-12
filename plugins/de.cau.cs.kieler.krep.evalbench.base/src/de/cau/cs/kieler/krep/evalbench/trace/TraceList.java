@@ -49,10 +49,6 @@ public class TraceList {
 
     private int size = 0;
 
-    private int avg = 0;
-    private int min = Integer.MAX_VALUE;
-    private int max = 0;
-
     private static LinkedList<ITraceListener> listeners = new LinkedList<ITraceListener>();
 
     /**
@@ -141,9 +137,6 @@ public class TraceList {
         notifyListeners(true);
         iterator = traces.listIterator();
         current = null;
-        min = Integer.MAX_VALUE;
-        max = 0;
-        avg = 0;
     }
 
     /**
@@ -246,11 +239,12 @@ public class TraceList {
                 final int ticklen = krep.tick(tick.getInputs().size() + tick.getOutputs().size(),
                         tick.getInputs(), tick.getOutputs());
                 setOutput(tick);
+                tick.setRT(ticklen);
                 boolean valid = validateCurrent();
 
-                min = Math.min(min, ticklen);
+               /* min = Math.min(min, ticklen);
                 max = Math.max(ticklen, max);
-                avg += ticklen;
+                avg += ticklen;*/
 
                 notifyListeners(true);
                 return valid;

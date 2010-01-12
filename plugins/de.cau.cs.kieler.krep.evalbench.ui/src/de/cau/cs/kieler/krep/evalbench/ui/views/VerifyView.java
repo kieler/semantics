@@ -36,10 +36,10 @@ public class VerifyView extends ViewPart {
     public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.verify";
 
     /** Column identifiers for the embedded table. */
-    public static final String[] COLUMN_NAMES = { "file", "status", "wcrt", "remark" };
+    public static final String[] COLUMN_NAMES = { "module", "status", "reaction time", "wcrt", "ticks", "remark" };
 
-    private static final int[] COLUMN_WIDTH = { 150, 50, 150, 250 };
-
+    private static final int[] COLUMN_WIDTH = { 150, 50, 100, 50, 50, 250 };
+    
     /** Table viewer where inputs are listed. */
     private TableViewer viewer = null;
     private Table table = null;
@@ -47,33 +47,16 @@ public class VerifyView extends ViewPart {
     /** The reset action. */
     private IAction verifyAction = null;
 
-    
-    private static final int ROW_CAUSE = 3;
-
     @Override
     public void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.NONE);
-        TableColumn column1 = new TableColumn(table, SWT.NONE, 0);
-        column1.setText("file");
-        column1.setToolTipText("Tested Benchmark");
-        column1.setWidth(COLUMN_WIDTH[0]);
-
-        TableColumn column2 = new TableColumn(table, SWT.NONE, 1);
-        column2.setText("status");
-        column2.setToolTipText("Is trace valid?");
-        column2.setWidth(COLUMN_WIDTH[1]);
-
-        TableColumn column3 = new TableColumn(table, SWT.NONE, 2);
-        column3.setText("WCRT");
-        column3.setToolTipText("Worst case reaction time");
-        column3.setWidth(COLUMN_WIDTH[2]);
-
-        TableColumn column4 = new TableColumn(table, SWT.NONE, ROW_CAUSE);
-        column4.setText("remark");
-        column4.setToolTipText("Why did it fail?");
-        column4.setWidth(COLUMN_WIDTH[ROW_CAUSE]);
-
+        for(int i=0; i< COLUMN_NAMES.length; i++){
+            TableColumn column = new TableColumn(table, SWT.NONE, i);
+            column.setText(COLUMN_NAMES[i]);
+            column.setWidth(COLUMN_WIDTH[i]);
+        }
+ 
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 

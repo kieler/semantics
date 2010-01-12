@@ -13,7 +13,7 @@ public class Activator extends AbstractUIPlugin {
     /** The viewer to show the current program. */
     private AssemblerView viewer = null;
 
-    /** The plug-in ID*/
+    /** The plug-in ID */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.krep.evalbench.ui";
 
     // The shared instance

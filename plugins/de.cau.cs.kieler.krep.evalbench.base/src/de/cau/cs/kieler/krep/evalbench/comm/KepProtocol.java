@@ -104,6 +104,9 @@ public class KepProtocol extends CommunicationProtocol {
     /** Length of information items for target information. */
     private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2 };
 
+    /** currently loaded assembler */
+    private IAssembler asm = null;
+
     /**
      * Constructs a new instance of the KEP protocol.
      * 
@@ -341,6 +344,7 @@ public class KepProtocol extends CommunicationProtocol {
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException {
         final int loadTimeout = 50;
+        asm = program;
         notifyComment("Load program");
         String[] prog = program.getObj(null);
         send(LOAD_COMMAND);
@@ -362,7 +366,7 @@ public class KepProtocol extends CommunicationProtocol {
             // wait for possible error reply
             String reply = getConnection().hark(1);
             if (reply.length() > 0) {
-                notifyReceive(reply);                  
+                notifyReceive(reply);
             }
             if (reply.length() == 1 && reply.charAt(0) == END_REPLY) {
                 return false;
@@ -403,8 +407,8 @@ public class KepProtocol extends CommunicationProtocol {
         notifyComment("tick");
         LinkedList<Signal> valuedInputs = new LinkedList<Signal>();
         send(INPUT_COMMAND);
-        // int n = inputs.size() + outputs.size();
-        int n = maxSignals;
+        int n = asm.getInputs().size() + asm.getOutputs().size();
+        // int n = maxSignals;
         char[] inputStatus = new char[(n + BYTE_LEN - 1) / BYTE_LEN];
         Iterator<Signal> iterator = inputs.iterator();
         while (iterator.hasNext()) {

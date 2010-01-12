@@ -90,14 +90,14 @@ public final class DataComponent extends JSONObjectDataComponent {
     private ConnectionView krepView = null;
 
     /*
-     * number of the properties in the property array. This is established in
-     * provideProperties method and used in the connect method.
+     * number of the properties in the property array. This is established in provideProperties
+     * method and used in the connect method.
      */
     private static final int PROP_CONNECTION_TYPE = 0;
     private static final int PROP_LOG_FILE = 1;
     private static final int PROP_PORT = 2;
     private static final int PROP_HOST = 3;
-    /* the SERIAL port property is not always available! */
+    /* Should be the last, since the SERIAL port property is not always available! */
     private static final int PROP_SERIAL_PORT = 4;
 
     /** Identifier to connect via java native interface. */
@@ -107,6 +107,11 @@ public final class DataComponent extends JSONObjectDataComponent {
     /** Identifier to connect via a TCP/IP connection. */
     private static final String ID_TCPIP = "TCP/IP";
 
+    @Override
+    public String getDataComponentId() {
+        return "krep";
+    }
+    
     /**
      * {@inheritDoc}
      */
