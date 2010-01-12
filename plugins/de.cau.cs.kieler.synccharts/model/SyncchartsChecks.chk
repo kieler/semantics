@@ -54,10 +54,6 @@ context State if(outgoingTransitions.size > 1)
     (outgoingTransitions.select(t|t.type == TransitionType::NORMALTERMINATION).size<=1 );
     
 context State if(outgoingTransitions.size > 1) 
-    ERROR "Priorities of outgoing transitions need to be distinct!" :
-    (outgoingTransitions.forAll(t| outgoingTransitions.forAll(s| (s.priority != t.priority) || s == t)));
-    
-context State if(outgoingTransitions.size > 1) 
   WARNING "At least one of the transitions will never be taken." :
     (outgoingTransitions.select(t|t.trigger == null).size <= 1);
 
@@ -91,6 +87,11 @@ context Region if ((parentState.parentRegion.parentState != null) &&
 	ERROR "A hierarchical state with an outgoing normal termination \n"
 		+ "has to contain at least one final state in every parallel region." :
 	(innerStates.select(s|s.isFinal).size > 0);
+
+// Root Region
+context Region if (parentState == null)
+	ERROR "There should be exactly one root State which represents the whole SyncChart." :
+	(innerStates.size == 1);
 
 // ================================================================================================
 // Signals
@@ -128,7 +129,15 @@ context Transition ERROR "Delays have to be at least 1!" :
 context Transition if (type == TransitionType::NORMALTERMINATION)
    	ERROR "Normal termination may not have a trigger!" :
    	(trigger == null);   
-   
+
+context Transition if (type == TransitionType::NORMALTERMINATION)
+	ERROR "Simple states may not have a normal termination transition" :
+	(sourceState.regions.size!=0);
+
+context Transition if(sourceState.outgoingTransitions.size > 1) 
+    ERROR "Priorities of outgoing transitions need to be distinct!" :
+    (sourceState.outgoingTransitions.forAll(t| (priority != t.priority || this == t)));
+
 // ================================================================================================
 // Expressions
 // FIXME: Problem is that checks done in a strange context are not displayed in the model as markers, 
