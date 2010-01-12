@@ -235,11 +235,11 @@ public abstract class MonitoredOperation {
                     false, true, new IRunnableWithProgress() {
                 public void run(final IProgressMonitor uiMonitor) {
                     ProgressMonitorWrapper monitorWrapper = new ProgressMonitorWrapper(display);
+                    preUIexec();
                     monitor.set(monitorWrapper);
                     synchronized (monitor) {
                         monitor.notify();
                     }
-                    preUIexec();
                     try {
                         while (status.get() == null) {
                             display.sleep();
