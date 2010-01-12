@@ -28,6 +28,10 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
+ * An operation that can be tracked with a progress bar. This operation can be called
+ * from any thread, UI or non-UI, and adds only very little overhead for progress
+ * tracking compared to the usual synchronous tracking of the workbench progress service.
+ * Just implement {@link #execute(IProgressMonitor)} and call {@link #runMonitored()}.
  *
  * @author msp
  */
