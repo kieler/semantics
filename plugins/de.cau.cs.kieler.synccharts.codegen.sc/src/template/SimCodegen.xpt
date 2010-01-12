@@ -32,16 +32,13 @@ int tick(int isInit){
 
 			TICKSTART(isInit, «EXPAND computeMainTreadPriority-»);
 			////////////////
-			// Debug is «computeThreadPriorities(this.innerStates.first())»
+			// order is «computeThreadPriorities(this.innerStates.first())»
 «ENDDEFINE»
 
 «DEFINE computeMainTreadPriority FOR Region-»2«ENDDEFINE»
 
 «DEFINE start FOR Region-»
-	«EXPAND CodegenMisc::debug FOR this»
-	«REM»
 	«EXPAND CodegenState::state FOR getInitialState(innerStates.regions.first())-»
-	«ENDREM»
 «ENDDEFINE»
 
 «DEFINE finish FOR Region-»

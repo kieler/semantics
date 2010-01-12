@@ -32,6 +32,6 @@ State getInitialState(Region region):
 	region.innerStates.select(s|s.isInitial).first()
 ;
 
-List computeThreadPriorities(State state) :
+cached List computeThreadPriorities(State state) :
 	JAVA template.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
