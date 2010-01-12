@@ -85,7 +85,7 @@ public class WorkflowGenerator {
         if (sim) {
             outPath = System.getProperty("java.io.tmpdir") + "/" + randomString() + "/";
             // for debugging un-comment the following line and replace "tam"
-            outPath = "/home/tam/scdebug/";
+         //   outPath = "/home/tam/scdebug/";
         }
         
 

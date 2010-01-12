@@ -32,7 +32,7 @@
   <metaModelPackage value="dataflow.DataflowPackage"/>  
     </metaModel> -->
     <expand
-	  value="template::codegen::main FOR model" />
+	  value="template::SimCodegen::main FOR model" />
     <outlet path="${src-gen}" />
   </component>
 </workflow>
