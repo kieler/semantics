@@ -18,6 +18,14 @@
            name="Esi Reader">
      </content>
   </extension>
+  <extension
+        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+     <content
+           class="de.cau.cs.kieler.sim.esi.EsoComponent"
+           id="de.cau.cs.kieler.sim.esi.verify"
+           name="Esi comperator">
+     </content>
+  </extension>
 
 
 
