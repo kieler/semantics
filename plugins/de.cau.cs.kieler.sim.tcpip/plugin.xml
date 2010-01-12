@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.sim.tcpip.DataComponent"
             id="de.cau.cs.kieler.sim.tcpip.content3"
-            name="de.cau.cs.kieler.sim.tcpip.content3">
+            name="SC simulation">
       </content>
    </extension>
 

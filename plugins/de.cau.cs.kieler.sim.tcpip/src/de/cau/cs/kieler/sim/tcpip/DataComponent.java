@@ -12,7 +12,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -95,7 +94,6 @@ public class DataComponent extends JSONObjectDataComponent {
         // generate Code from SyncChart
         // true sets the flag for simulation
         wf.invokeWorkflow(true);
-        JSONObject out = null;
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
@@ -109,14 +107,14 @@ public class DataComponent extends JSONObjectDataComponent {
 
         String bundleLocation = url.getPath();
 
-             try {
+        try {
             // compile
             String compiler = (getProperties()[0]).getValue();
             String compile = compiler + " " + wf.getOutPath() + "sim.c " + wf.getOutPath()
                     + "sim_data.c " + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
                     + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
                     + "simulation -lm -Dexternflags";
-
+System.out.println(compile);
             process = Runtime.getRuntime().exec(compile);
             process.waitFor();
 
