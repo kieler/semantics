@@ -1,15 +1,15 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
- * An implementation of an unweighted, directed graph using an adjacency matrix for encoding the set
- * of edges.
- * 
- * @author <a href="mailto:npr@informatik.uni-kiel.de">Nick Pr&uuml;hs</a>
- * @version 1.3, 06/23/09
+ * An implementation of an unweighted, directed graph using an adjacency matrix or an adjacency list
+ * for encoding the set of edges.
  */
 public class Graph {
     /**
-     * The value of the adjacency matrix that indicates no edge being present.
+     * Two types of edges for special use. Default should be STRONG_EDGE.
      */
     public static final int NO_EDGE = 0;
     public static final int STRONG_EDGE = 1;
@@ -26,21 +26,38 @@ public class Graph {
     int numberOfEdges;
 
     /**
+     * A boolean to differ between list and matrix
+     */
+    boolean list;
+
+    /**
      * The adjacency matrix encoding the set of edges of this graph.
      */
     int[][] adjacencyMatrix;
 
     /**
+     * The adjacency list encoding the set of edges of this graph.
+     */
+    ArrayList<ArrayList<Integer>> adjacencyList;
+
+    /**
      * Constructs a new unweighted, directed graph with <code>n</code> vertices and no edges. Use
-     * <code>addEdge(int, int)</code> in order to add edges.
+     * <code>addEdge(int, int, int)</code> in order to add edges.
      * 
      * @param n
      *            the number of vertices of the new graph
+     * @param isList
+     *            specifies if the graph is represented in a list or a matrix. If isList is true the
+     *            representation is a list.
+     * 
      * @exception IllegalArgumentException
      *                if <code>n</code> is less than zero
      * @see #addEdge(int, int)
      */
-    public Graph(int n) throws IllegalArgumentException {
+    public Graph(int n, boolean isList) throws IllegalArgumentException {
+
+        // adjacency list or adjacency matrix?
+        list = isList;
 
         // check the passed number of vertices
         if (n < 1) {
@@ -55,13 +72,21 @@ public class Graph {
         // initially there are no edges
         numberOfEdges = 0;
 
-        adjacencyMatrix = new int[n][n];
+        if (list) {
+            adjacencyList = new ArrayList<ArrayList<Integer>>();
+            for (int i = 0; i < numberOfVertices; i++) {
+                adjacencyList.add(new ArrayList<Integer>());
+            }
+        } else {
+            adjacencyMatrix = new int[n][n];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                adjacencyMatrix[i][j] = NO_EDGE;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    adjacencyMatrix[i][j] = NO_EDGE;
+                }
             }
         }
+
     }
 
     /**
@@ -86,6 +111,10 @@ public class Graph {
      *            the index of the vertex the new edge starts at
      * @param j
      *            the index of the vertex the new edge points to
+     * 
+     * @param edgeType
+     *            the type of an edge (STRONG_EDGE, WEAK_EDGE or NO_EDGE)
+     * 
      * @exception IllegalArgumentException
      *                if <code>i</code> or <code>j</code> are not between 0 and the number of
      *                vertices of this graph
@@ -102,12 +131,19 @@ public class Graph {
          * update the number of edges if there has been no edge between the passed vertices yet,
          * only
          */
-        if (adjacencyMatrix[i][j] == NO_EDGE) {
-            numberOfEdges++;
-        }
 
-        // add Edges in both directions, but only count one
-        adjacencyMatrix[i][j] = edgeType;
+        // add Edge
+        if (list) {
+            if (!adjacencyList.get(i).contains(j)) {
+                numberOfEdges++;
+            }
+            adjacencyList.get(i).add(j);
+        } else {
+            if (adjacencyMatrix[i][j] == NO_EDGE) {
+                numberOfEdges++;
+            }
+            adjacencyMatrix[i][j] = edgeType;
+        }
     }
 
     /**
@@ -151,7 +187,11 @@ public class Graph {
             throw new IllegalArgumentException(errorMessage);
         }
 
-        return (!(adjacencyMatrix[i][j] == NO_EDGE));
+        if (list) {
+            return (adjacencyList.get(i).contains(j));
+        } else {
+            return (!(adjacencyMatrix[i][j] == NO_EDGE));
+        }
     }
 
     /**
@@ -174,33 +214,82 @@ public class Graph {
             throw new IllegalArgumentException(errorMessage);
         }
         int result = 0;
-        for (int index = 0; index < numberOfVertices; index++) {
-            if (hasEdge(i, index)) {
-                result++;
+        if (list) {
+            result = adjacencyList.get(i).size();
+        } else {
+            for (int index = 0; index < numberOfVertices; index++) {
+                if (hasEdge(i, index)) {
+                    result++;
+                }
             }
         }
         return result;
     }
 
+    /**
+     * Prints the Graph in a simple way to the console.
+     */
     public void print() {
-        for (int i = 0; i < numberOfVertices; i++) {
-            for (int j = 0; j < numberOfVertices; j++) {
-                System.out.print(adjacencyMatrix[i][j] + "\t");
+        if (list) {
+            for (int i = 0; i < numberOfVertices; i++) {
+                System.out.println(adjacencyList.get(i));
             }
-            System.out.println("");
+        } else {
+            for (int i = 0; i < numberOfVertices; i++) {
+                for (int j = 0; j < numberOfVertices; j++) {
+                    System.out.print(adjacencyMatrix[i][j] + "\t");
+                }
+                System.out.println("");
+            }
         }
     }
 
-    public int[] successorList() {
+    /**
+     * returns an integer array with a list of predecessor vertices
+     * (just implemented for adjacency lists)
+     * 
+     * @return an integer array with a list of predecessor vertices.
+     */
+    private int[] predecessorList() {
         int[] result = new int[numberOfVertices];
         for (int i = 0; i < numberOfVertices; i++) {
-            int successor = 0;
+            int count = 0;
             for (int j = 0; j < numberOfVertices; j++) {
-                if (adjacencyMatrix[j][i] != 0) {
-                    successor++;
+                if (adjacencyList.get(j).contains(i)) {
+                    count++;
                 }
             }
-            result[i] = successor;
+            result[i] = count;
+        }
+
+        return result;
+    }
+
+    
+    /**
+     * returns a linked list with the topological sort of the graph
+     * (just implemented for adjacency lists)
+     * 
+     * @return a linked list with the topological sort of the graph
+     */
+    public LinkedList<Integer> topologicalSort() {
+        LinkedList<Integer> result = new LinkedList<Integer>();
+        int[] predecessorList = predecessorList();
+        // one loop for each node
+        for (int i = 0; i < numberOfVertices; i++) {
+            int source = -1;
+            // find source node
+            for (int j = 0; j < numberOfVertices; j++) {
+                if (predecessorList[j] == 0) {
+                    source = j;
+                }
+            }
+            predecessorList[source] = -1;
+            // remove all predecessor dependencies of source
+            for (int j : adjacencyList.get(source)) {
+                predecessorList[j]--;
+            }
+            result.add(source);
         }
         return result;
     }
