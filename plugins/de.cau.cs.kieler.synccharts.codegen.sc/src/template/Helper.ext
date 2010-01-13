@@ -22,16 +22,27 @@ String getURI(State state):
 	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.State)
 ;
 	
-// funktioniert noch nicht richtig
-int getForkNumber(State s):
-	s.parentRegion == null ? 0 :
-	getForkNumber(s.parentRegion.parentState) + 1
+State getRootState(State s):
+	s.parentRegion.parentState == null ? s :
+	getRootState(s.parentRegion.parentState)
 ;
 
 State getInitialState(Region region):
 	region.innerStates.select(s|s.isInitial).first()
 ;
 
-cached List computeThreadPriorities(State state) :
+cached List computeThreadPriorities(State rootState):
 	JAVA template.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
+;
+
+cached int computeMainTreadPriority(State rootState):
+	computeThreadPriorities(rootState).size + 1
+;
+
+int computeChangePriority(State state):
+	JAVA template.Helper.computeChangePriority(de.cau.cs.kieler.synccharts.State)
+;
+
+int computeThreadPriority(State state):
+	(computeMainTreadPriority(getRootState(state)) - 1) - (computeThreadPriorities(getRootState(state)).indexOf(state.id))
 ;

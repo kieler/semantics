@@ -30,12 +30,8 @@ extern void JSONstate(char*);
 	«EXPAND CodegenMisc::generateReset-»
 int tick(int isInit){
 
-			TICKSTART(isInit, «EXPAND computeMainTreadPriority-»);
-			////////////////
-			// order is «computeThreadPriorities(this.innerStates.first())»
+			TICKSTART(isInit, «computeMainTreadPriority(this.innerStates.first())-»);
 «ENDDEFINE»
-
-«DEFINE computeMainTreadPriority FOR Region-»2«ENDDEFINE»
 
 «DEFINE start FOR Region-»
 	«EXPAND CodegenState::state FOR getInitialState(innerStates.regions.first())-»

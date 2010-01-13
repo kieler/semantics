@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,7 +112,7 @@ public class DataComponent extends JSONObjectDataComponent {
                     + "sim_data.c " + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
                     + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
                     + "simulation -lm -Dexternflags";
-System.out.println(compile);
+            System.out.println(compile);
             process = Runtime.getRuntime().exec(compile);
             process.waitFor();
 
@@ -188,10 +186,6 @@ System.out.println(compile);
                 System.err.println("error while deleting temp folder: " + folder);
             }
         }
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
     }
 
     @Override
@@ -219,22 +213,6 @@ System.out.println(compile);
             tmp.add(signalList.get(i).getName());
         }
         out = tmp.toArray(new String[tmp.size()]);
-        return out;
-    }
-
-    public boolean testPort(int port) throws IOException {
-        boolean out = false;
-        Socket socket = null;
-        try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress("localhost", port), 1000);
-
-        } finally {
-            if (socket != null) {
-                socket.close();
-                out = true;
-            }
-        }
         return out;
     }
 

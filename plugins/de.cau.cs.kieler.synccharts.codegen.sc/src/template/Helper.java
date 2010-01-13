@@ -15,8 +15,10 @@ public class Helper {
     private static ArrayList<String> dependencyList = new ArrayList<String>();
     private static ArrayList<String> threadListSorted = new ArrayList<String>();
     private static ArrayList<String> realThreadList = new ArrayList<String>();
+    private static ArrayList<String> childThreadList = new ArrayList<String>();
     private static final int NORMAL_EDGE = 1;
     private static final int WEAK_EDGE = -1;
+    private static final int MAX_PRIO = 64;
 
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(State state) {
@@ -42,13 +44,13 @@ public class Helper {
 
             String realState = "";
             // add just the real states to the list
-            if (!state.getRegions().isEmpty()){
+            if (!state.getRegions().isEmpty()) {
                 if (strongAbort) {
-                    realState = state.getId() + "_strong";
+                    realState = state.getId() + "@@strong";
                 } else {
-                    realState = state.getId() + "_weak";
+                    realState = state.getId() + "@@weak";
                 }
-                
+
                 if (!realThreadList.contains(realState)) {
                     realThreadList.add(realState);
                 }
@@ -58,11 +60,11 @@ public class Helper {
 
             if (state.getParentRegion().getParentState().getParentRegion().getParentState() != null) {
                 if (!state.getRegions().isEmpty()) {
-                    dependencyList.add(childState + "_weak<" + parentState + "_weak");
-                    dependencyList.add(parentState + "_strong<" + childState + "_strong");
+                    dependencyList.add(childState + "@@weak<" + parentState + "@@weak");
+                    dependencyList.add(parentState + "@@strong<" + childState + "@@strong");
                 } else {
-                    dependencyList.add(childState + "<" + parentState + "_weak");
-                    dependencyList.add(parentState + "_strong<" + childState);
+                    dependencyList.add(childState + "<" + parentState + "@@weak");
+                    dependencyList.add(parentState + "@@strong<" + childState);
                 }
             }
         }
@@ -83,7 +85,6 @@ public class Helper {
     }
 
     private static void fillSortedThreadList() {
-        threadListSorted.clear();
         // Build a unsorted list of all threads.
         LinkedList<String> threadListUnsorted = new LinkedList<String>();
         for (String s : dependencyList) {
@@ -124,10 +125,45 @@ public class Helper {
         for (int i = 0; i < threadListTopologicalSorted.size(); i++) {
             int threadInt = threadListTopologicalSorted.get(i);
             String thread = threadListUnsorted.get(threadInt);
-            if (realThreadList.contains(thread)){
-                threadListSorted.add(thread.split("_")[0]);
+            if (realThreadList.contains(thread)) {
+                threadListSorted.add(thread.split("@@")[0]);
             }
         }
+    }
+
+    public final static int computeChangePriority(State state) {
+        childThreadList.clear();
+        listAllChildThreads(state);
+        LinkedList<Integer> intList = new LinkedList<Integer>();
+        int mainThreadPriority = threadListSorted.size() + 1;
+        for (String s : childThreadList) {
+            if (threadListSorted.contains(s)){
+                intList.add(mainThreadPriority - 1 - threadListSorted.indexOf(s));
+            }
+        }
+        return getMax(intList);
+    }
+    
+    private static int getMax(LinkedList<Integer> intList){
+        int out = MAX_PRIO;
+        for (int minInt : intList) {
+            if (minInt < out){
+                out = minInt;
+            }
+        }
+        return out - 1;
+    }
+
+    private static List<String> listAllChildThreads(State state) {
+        for (Region r : state.getRegions()) {
+            for (State s : r.getInnerStates()) {
+                childThreadList.add(s.getId());
+                if (!s.getRegions().isEmpty()) {
+                    listAllChildThreads(s);
+                }
+            }
+        }
+        return childThreadList;
     }
 
     public final static List<String> computeThreadPriorities(State state) {

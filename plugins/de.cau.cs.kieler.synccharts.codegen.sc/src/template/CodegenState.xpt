@@ -14,9 +14,17 @@
 «ENDIF-»
 «IF this.outgoingTransitions.isEmpty-»
 			«EXPAND CodegenMisc::callJSONState-»
+	«IF this.isFinal-»
+			TERM;
+	«ELSE-»
 			// this should be HALT; but for simulation:
 			PAUSE;
+		«IF !(this.regions.isEmpty)-»
+			GOTO(«this.id»_main);
+		«ELSE-»
 			GOTO(«this.id»);
+		«ENDIF-»
+	«ENDIF-»
 «ELSE-»
 		«FOREACH sortTransitionPrios(this) AS outTrans-»
 			«IF ((Transition)outTrans).isImmediate-»
@@ -47,6 +55,6 @@
 
 «DEFINE generateForkOneRegion FOR State-»
 «this.id»:
-			FORK(«getInitialState(this.regions.first()).id-», «getForkNumber(this)-»);
+			FORK(«getInitialState(this.regions.first()).id-», «computeThreadPriority(getInitialState(this.regions.first()))»);
 			FORKE(«this.id»_main);
 «ENDDEFINE»

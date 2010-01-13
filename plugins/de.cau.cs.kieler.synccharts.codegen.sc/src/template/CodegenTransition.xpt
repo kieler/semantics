@@ -11,11 +11,19 @@
 					«EXPAND complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
+			«IF this.type == TransitionType::NORMALTERMINATION-»
+			JOIN;
+			«ENDIF-»
 			«EXPAND transitionEffects FOR this-»
 		«ENDIF-»
+	«ELSE»
+		«EXPAND transitionWithoutTriggersAndEffects FOR this»
 	«ENDIF-»
 	«IF this.type == TransitionType::STRONGABORT-»
 	«ENDIF-»
+	«IF (this.sourceState.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT) && this.sourceState.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT))-»
+		«EXPAND computePrio FOR this-»
+	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
@@ -32,10 +40,24 @@
 	«FOREACH this.effects AS effect-»
 			EMIT(«((Emission)effect).signal.name-»);
 	«ENDFOREACH-»
+	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
+«ENDDEFINE»
+
+«DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
 	«IF !(this.sourceState.regions.isEmpty)-»
 			ABORT;
 	«ENDIF-»
 	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
 			GOTO(«this.targetState.id»);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE computePrio FOR Transition-»
+	«IF !(this.sourceState.regions.isEmpty)-»
+		«IF this.type == TransitionType::WEAKABORT-»
+			PRIO(«computeThreadPriority(this.sourceState)»);
+		«ELSEIF this.type == TransitionType::STRONGABORT-»
+			PRIO(«computeChangePriority(this.sourceState)»);
+		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»

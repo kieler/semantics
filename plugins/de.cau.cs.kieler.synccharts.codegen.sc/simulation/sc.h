@@ -464,7 +464,7 @@ _L_DISPATCH: dispatch();
   _pid = _cid;								\
   while ((_ppid = _parent[_pid]) != _TickEnd)	{			\
     _descs[_ppid] |= _descs[_pid];					\
-    _pid = _ppid;							\
+    _pid = _ppid;						\
   }									\
   dispatch_
 
