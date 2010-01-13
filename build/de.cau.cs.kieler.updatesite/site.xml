@@ -45,6 +45,9 @@
    <feature url="features/de.cau.cs.kieler.xkev_0.1.0.qualifier.jar" id="de.cau.cs.kieler.xkev" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.quartz_0.1.0.qualifier.jar" id="de.cau.cs.kieler.quartz" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
