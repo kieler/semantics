@@ -109,6 +109,10 @@
 			class="de.cau.cs.kieler.sim.esi.EsiExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="esi">
 		</parser>
+  <parser
+        class="de.cau.cs.kieler.sim.esi.EsiExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+        type="eso">
+  </parser>
 	</extension>
 	<extension
         point="org.eclipse.xtext.extension_resourceServiceProvider">
