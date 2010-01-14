@@ -21,11 +21,11 @@ import de.cau.cs.kieler.synccharts.labelparser.formatting.ActionLabelValueConver
  */
 public class KitsRuntimeModule extends
 		de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
-	// influence linking for target state creation
-	@Override
-	public java.lang.Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
-		return de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource.class;
-	};
+//	// influence linking for target state creation
+//	@Override
+//	public java.lang.Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+//		return de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource.class;
+//	};
 
 	/*
 	 * binds the fragment provider. it is used for the Glue code

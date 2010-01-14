@@ -5,13 +5,11 @@ package de.cau.cs.kieler.synccharts.dsl.scoping;
 
 import java.util.ArrayList;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.Scopes;
-import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
-import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.synccharts.Action;
@@ -51,19 +49,19 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		State sourceState = (State) context.eContainer();
 		Region parentRegion = sourceState.getParentRegion();
 
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 
 		for (State innerState : parentRegion.getInnerStates()) {
 			// if the inner state has a label then show its label in the content
 			// assist
 			if (innerState.getLabel() != null) {
-				IScopedElement elem = ScopedElement.create(innerState
+				IEObjectDescription elem = EObjectDescription.create(innerState
 						.getLabel(), innerState);
 				scopeElems.add(elem);
 			}
 			// else if the inner state has an id then add it using its id
 			if (innerState.getId() != null) {
-				IScopedElement elem = ScopedElement.create(innerState.getId(),
+				IEObjectDescription elem = EObjectDescription.create(innerState.getId(),
 						innerState);
 				scopeElems.add(elem);
 			}
@@ -83,7 +81,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
 
 	IScope scope_Emission_signal(Emission context, EReference reference) {
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		// this is my transition
 		Action a = context.getParentEAction();
 		if (a instanceof Transition) {
@@ -93,7 +91,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 			// has the parent state declared any signals?
 			if (t.getSourceState().getSignals() != null) {
 				for (Signal sig : t.getSourceState().getSignals()) {
-					IScopedElement elem = ScopedElement.create(sig.getName(),
+					IEObjectDescription elem = EObjectDescription.create(sig.getName(),
 							sig);
 					System.out.println("=================================");
 					System.out.println("ADDED: " + sig.getName());
@@ -109,7 +107,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 				System.out.println("FOUND SIGNALS");
 				System.out.println("=================================");
 				for (Signal sig : r.getSignals()) {
-					IScopedElement elem = ScopedElement.create(sig.getName(),
+					IEObjectDescription elem = EObjectDescription.create(sig.getName(),
 							sig);
 					System.out.println("Signal " + sig.getName());
 					System.out.println("=================================");
@@ -152,7 +150,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 			if (parentState != null) {
 				if (parentState.getSignals() != null) {
 					for (Signal sig : parentState.getSignals()) {
-						IScopedElement elem = ScopedElement.create(sig
+						IEObjectDescription elem = EObjectDescription.create(sig
 								.getName(), sig);
 						System.out.println("=================================");
 						System.out.println("ADDED: " + sig.getName());
@@ -168,7 +166,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 				System.out.println("FOUND SIGNALS");
 				System.out.println("=================================");
 				for (Signal sig : r.getSignals()) {
-					IScopedElement elem = ScopedElement.create(sig.getName(),
+					IEObjectDescription elem = EObjectDescription.create(sig.getName(),
 							sig);
 					System.out.println("Signal " + sig.getName());
 					System.out.println("=================================");
@@ -204,7 +202,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	IScope scope_SignalReference_signal(SignalReference context,
 			EReference reference) {
 
-		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
 		// this is my transition
 		Action a = context.getParentExpression().getParentAction();
 		// Action a = context.getParentAction();
@@ -215,7 +213,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 			// has the parent state declared any signals?
 			if (t.getSourceState().getSignals() != null) {
 				for (Signal sig : t.getSourceState().getSignals()) {
-					IScopedElement elem = ScopedElement.create(sig.getName(),
+					IEObjectDescription elem = EObjectDescription.create(sig.getName(),
 							sig);
 					System.out.println("=================================");
 					System.out.println("ADDED: " + sig.getName());
@@ -231,7 +229,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 				System.out.println("FOUND SIGNALS");
 				System.out.println("=================================");
 				for (Signal sig : r.getSignals()) {
-					IScopedElement elem = ScopedElement.create(sig.getName(),
+					IEObjectDescription elem = EObjectDescription.create(sig.getName(),
 							sig);
 					System.out.println("Signal " + sig.getName());
 					System.out.println("=================================");
@@ -258,15 +256,15 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	}
 
 	// help function to gather all signals in a region
-	private ArrayList<IScopedElement> gatherSignals(Region r,
-			ArrayList<IScopedElement> scopedElems) {
+	private ArrayList<IEObjectDescription> gatherSignals(Region r,
+			ArrayList<IEObjectDescription> scopedElems) {
 		// if you are here, there exists a parent state to your region so
 		// extract it:
 		State parentState = r.getParentState();
 		// has the parent state declared any signals?
 		if (parentState.getSignals() != null) {
 			for (Signal sig : parentState.getSignals()) {
-				IScopedElement elem = ScopedElement.create(sig.getName(), sig);
+				IEObjectDescription elem = EObjectDescription.create(sig.getName(), sig);
 				System.out.println("=================================");
 				System.out.println("ADDED: " + sig.getName());
 				System.out.println("=================================");
@@ -282,7 +280,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 					System.out.println("FOUND SIGNALS");
 					System.out.println("=================================");
 					for (Signal sig : outerRegions.getSignals()) {
-						IScopedElement elem = ScopedElement.create(sig
+						IEObjectDescription elem = EObjectDescription.create(sig
 								.getName(), sig);
 						scopedElems.add(elem);
 						System.out.println("Signal " + sig.getName());
@@ -295,7 +293,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		}
 		if (!parentState.getParentRegion().getSignals().isEmpty()) {
 			for (Signal sig : parentState.getParentRegion().getSignals()) {
-				IScopedElement elem = ScopedElement.create(sig.getName(), sig);
+				IEObjectDescription elem = EObjectDescription.create(sig.getName(), sig);
 				scopedElems.add(elem);
 				System.out.println("=================================");
 				System.out.println("ADDED: " + sig.getName());
@@ -334,11 +332,11 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	// class ExternalScope implements IScope {
 	//
 	// EObject parent;
-	// List<IScopedElement> scopedElements;
+	// List<IEObjectDescription> scopedElements;
 	//
 	// public ExternalScope(EObject parent) {
 	// this.parent = parent;
-	// this.scopedElements = new ArrayList<IScopedElement>();
+	// this.scopedElements = new ArrayList<IEObjectDescription>();
 	// // State scopedState = parentState;
 	// // while(scopedState != null){
 	// if (this.parent != null && this.parent instanceof Region) {
@@ -369,13 +367,13 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	// *
 	// * @see org.eclipse.xtext.scoping.IScope#getAllContents()
 	// */
-	// public Iterable<IScopedElement> getAllContents() {
-	// List<IScopedElement> elements = new ArrayList<IScopedElement>();
+	// public Iterable<IEObjectDescription> getAllContents() {
+	// List<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
 	// elements.addAll(scopedElements);
 	// IScope outerScope = this.getOuterScope();
 	// while (!outerScope.equals(IScope.NULLSCOPE)) {
 	// elements
-	// .addAll((Collection<? extends IScopedElement>) outerScope
+	// .addAll((Collection<? extends IEObjectDescription>) outerScope
 	// .getContents());
 	// outerScope = outerScope.getOuterScope();
 	// }
@@ -387,7 +385,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	// *
 	// * @see org.eclipse.xtext.scoping.IScope#getContents()
 	// */
-	// public Iterable<IScopedElement> getContents() {
+	// public Iterable<IEObjectDescription> getContents() {
 	// return scopedElements;
 	// }
 	//
@@ -407,7 +405,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	// return IScope.NULLSCOPE;
 	// }
 	//
-	// class ExternalScopedElement implements IScopedElement {
+	// class ExternalScopedElement implements IEObjectDescription {
 	//
 	// EObject object;
 	// String name;
@@ -423,7 +421,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 // * (non-Javadoc)
 // *
 // * @see
-// * org.eclipse.xtext.scoping.IScopedElement#additionalInformation()
+// * org.eclipse.xtext.scoping.IEObjectDescription#additionalInformation()
 // */
 // public Object additionalInformation() {
 // return null;
@@ -432,7 +430,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 // /*
 // * (non-Javadoc)
 // *
-// * @see org.eclipse.xtext.scoping.IScopedElement#element()
+// * @see org.eclipse.xtext.scoping.IEObjectDescription#element()
 // */
 // public EObject element() {
 // return object;
@@ -441,7 +439,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 // /*
 // * (non-Javadoc)
 // *
-// * @see org.eclipse.xtext.scoping.IScopedElement#name()
+// * @see org.eclipse.xtext.scoping.IEObjectDescription#name()
 // */
 // public String name() {
 // return name;

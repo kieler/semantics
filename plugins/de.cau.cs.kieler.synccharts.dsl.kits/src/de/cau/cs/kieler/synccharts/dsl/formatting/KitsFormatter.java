@@ -26,7 +26,8 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 		de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
 		// regions
 		config.setLinewrap().after(f.getRegionRule());
-//		config.setLinewrap().after(f.getRegionAccess().getIdAssignment_2());
+
+		// config.setLinewrap().after(f.getRegionAccess().getIdAssignment_2());
 		config.setLinewrap().after(
 				f.getStateAccess().getVerticalLineVerticalLineKeyword_13_2_0());
 		config.setLinewrap().before(
@@ -44,6 +45,7 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 				.getRightCurlyBracketKeyword_13_3());
 		config.setIndentation(f.getRegionAccess().getInnerStatesAssignment_4(),
 				f.getRegionAccess().getInnerStatesAssignment_4());
+
 		// indent init --- id
 		// config.setIndentation(f.getStateAccess().getIsInitialAssignment_1(),
 		// f
@@ -76,6 +78,12 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 		config.setLinewrap().before(
 				f.getTransitionTypeAccess()
 						.getWEAKABORTEnumLiteralDeclaration_0());
+		config
+				.setLinewrap()
+				.before(
+						f
+								.getTransitionTypeAccess()
+								.getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0());
 		config.setLinewrap().before(
 				f.getTransitionTypeAccess().getSTRONGABORTOKeyword_1_0());
 		config
