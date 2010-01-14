@@ -14,7 +14,9 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.model.transformation;
 
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
+import java.net.URL;
+import java.util.List;
+
 
 /**
  * Interface for executing a transformation with a framework.
@@ -31,6 +33,12 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 public interface ITransformationFramework {
 
     /**
+     * Returns the default file extension for this framework without the leading dot.
+     * @return A string representing the file extension
+     */
+    String getFileExtension();
+    
+    /**
      * Executes a transformation with the parameters set with the initalizeTransformation method.
      */
     void executeTransformation();
@@ -42,12 +50,19 @@ public interface ITransformationFramework {
      *            The transformation file name
      * @param operation
      *            The operation to execute
-     * @param metaModel
-     *            The EMF metamodel
+     * @param basePackage
+     *            The class name of the editors EPackage
      * @param parameter
      *            The parameters for the transformation
      * @return False if an error occurred.
      */
-    boolean initializeTransformation(String fileName, String operation, EmfMetaModel metaModel,
+    boolean initializeTransformation(String fileName, String operation, String basePackage,
             Object... parameter);
+
+    /**
+     * Parses a transformation file and returns the existing in-place transformations.
+     * @param fileName a URL to the transformation file
+     * @return a list of abstract transformations.
+     */
+    List<AbstractTransformation> parseInPlaceTransformations(final URL fileName);
 }
