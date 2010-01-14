@@ -408,7 +408,6 @@ public class KepProtocol extends CommunicationProtocol {
         LinkedList<Signal> valuedInputs = new LinkedList<Signal>();
         send(INPUT_COMMAND);
         int n = asm.getInputs().size() + asm.getOutputs().size();
-        // int n = maxSignals;
         char[] inputStatus = new char[(n + BYTE_LEN - 1) / BYTE_LEN];
         Iterator<Signal> iterator = inputs.iterator();
         while (iterator.hasNext()) {
@@ -453,17 +452,21 @@ public class KepProtocol extends CommunicationProtocol {
         reply = receive(END_REPLY);
         char[] outputStatus = parseSeq(reply.substring(0, reply.length() - 1));
         LinkedList<Signal> valuedOutputs = new LinkedList<Signal>();
-        iterator = outputs.iterator();
+        iterator = asm.getOutputs().iterator();
         while (iterator.hasNext()) {
             Signal s = iterator.next();
             int index = s.getIndex() - 1;
             int b = index / BYTE_LEN;
             if (b < outputStatus.length) {
-                s.setPresent(((outputStatus[b] >> (index % BYTE_LEN)) & 1) == 1);
+                if (((outputStatus[b] >> (index % BYTE_LEN)) & 1) == 1) {
+                    s.setPresent(true);
+                    outputs.add(s);
+                }
             }
             if (s.isValued()) {
                 valuedOutputs.add(s);
             }
+
         }
 
         // receive values of valued output signals

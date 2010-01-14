@@ -236,15 +236,18 @@ public class TraceList {
                 return true;
             } else {
 
+                Tick output = new Tick();
+          
+                
                 final int ticklen = krep.tick(tick.getInputs().size() + tick.getOutputs().size(),
-                        tick.getInputs(), tick.getOutputs());
-                setOutput(tick);
+                        tick.getInputs(), output.getOutputs());
+                setOutput(output);
                 tick.setRT(ticklen);
                 boolean valid = validateCurrent();
 
-               /* min = Math.min(min, ticklen);
-                max = Math.max(ticklen, max);
-                avg += ticklen;*/
+                /*
+                 * min = Math.min(min, ticklen); max = Math.max(ticklen, max); avg += ticklen;
+                 */
 
                 notifyListeners(true);
                 return valid;
@@ -277,14 +280,17 @@ public class TraceList {
         for (final Trace trace : traces) {
             for (final Tick tick : trace.ticks) {
                 final int i = tick.getRT();
-                if (i < minRT) {
-                    minRT = i;
+                if (i >= 0) {
+                    // ignore ticks that were not executed
+                    if (i < minRT) {
+                        minRT = i;
+                    }
+                    if (i > maxRT) {
+                        maxRT = i;
+                    }
+                    n++;
+                    sum += i;
                 }
-                if (i > maxRT) {
-                    maxRT = i;
-                }
-                n++;
-                sum += i;
             }
         }
         if (n > 0) {

@@ -34,7 +34,7 @@ public class Tick {
 
     private LinkedList<Signal> savedOutputs = new LinkedList<Signal>();
 
-    private int rt = 0;
+    private int rt = -1;
 
     /**
      * generate empty tick.

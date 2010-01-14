@@ -207,7 +207,7 @@ public class VerifyAction extends Action {
                             s[ROW_WCRT] = String.valueOf(asm.getTickLen());
                             s[ROW_TICKS] = String.valueOf(steps);
                             if (!success) {
-                                s[ROM_COMMENT] = "traces differ";
+                                s[ROM_COMMENT] = "traces differ (" + (steps-1) + ")";
                             }
                         }
 

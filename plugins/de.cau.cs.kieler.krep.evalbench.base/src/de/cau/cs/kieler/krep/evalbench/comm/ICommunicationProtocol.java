@@ -99,11 +99,11 @@ public interface ICommunicationProtocol {
      * and reading the global output signal status.
      * 
      * @param maxSignals
-     *            number of signals in the current program. This is need
+     *            number of signals in the current program. 
      * @param inputs
      *            input signals
      * @param outputs
-     *            output signals
+     *            An empty list of output signals, the actual outputs are added by the tick function.
      * @return number of instruction cycles to compute the tick
      * @throws CommunicationException
      *             when an invalid reply was received
