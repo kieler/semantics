@@ -21,24 +21,28 @@ end module
 «ENDDEFINE»
 
 «DEFINE Constelation FOR Region-»
+«IF canTerminate()»trap done in «ENDIF»
   signal T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH» in
     emit goto_«this.innerStates.first().id»;
     loop
       weak abort 
         «FOREACH this.innerStates.sortStates() AS state-»
         present goto_«state.id» then
-          signal start_«state.id» in
-            «EXPAND Star FOR state-»
+        «IF state.canBeTransient()»signal start_«state.id» in«ENDIF»
+            «EXPAND Star FOR state-»           
+         «IF state.canBeTransient()»
             present start_«state.id» else
               emit T_«innerStates.first().id»;
-            end present
+            end present   
           end signal
+          «ENDIF»
         end present;
         «ENDFOREACH-»
         halt;
       when T_«innerStates.first().id»;
     end loop;
-  end signal
+  end signal;
+«IF canTerminate()»end trap«ENDIF»
 «ENDDEFINE»
 
 «DEFINE Star FOR synccharts::State-»
@@ -48,14 +52,16 @@ end module
    «IF trans.type==TransitionType::STRONGABORT-»«IF trans.isImmediate»immediate «ENDIF-»abort«ENDIF-»
  «ENDFOREACH»
  «IF this.regions.isEmpty-»
-    halt;
+   «IF this.isFinal»exit done;«ELSE»halt;«ENDIF»
  «ELSE-»
+ [
    «FOREACH this.regions AS region SEPARATOR "||"-»
    «EXPAND Constelation FOR region»
    «ENDFOREACH-»
-   
+   ]; 
   «IF this.hasNT()-»
   «FOREACH getNT().effects AS eff-»«EXPAND Effect FOR eff»«ENDFOREACH-»
+  emit goto_«getNT().targetState.id»;
   «ENDIF-»
  «ENDIF» 
  «FOREACH sortTransitionPrios() AS trans-»

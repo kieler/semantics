@@ -14,3 +14,10 @@ List[State] sortStates (List[State] states):
      
 List[Signal] locals(State s):
   s.signals.select(e | !e.isInput && !e.isOutput);
+  
+Boolean canTerminate(Region r):
+  !r.innerStates.select(e|e.isFinal).isEmpty;
+
+Boolean canBeTransient(State s):
+  !s.outgoingTransitions.select(e|e.isImmediate || e.type==TransitionType::NORMALTERMINATION).isEmpty;
+
