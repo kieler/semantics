@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * tracking compared to the usual synchronous tracking of the workbench progress service.
  * Just implement {@link #execute(IProgressMonitor)} and call {@link #runMonitored()}.
  *
+ * @kieler.rating 2010-01-14 proposed yellow msp
  * @author msp
  */
 public abstract class MonitoredOperation {
@@ -166,7 +167,7 @@ public abstract class MonitoredOperation {
         final Maybe<IStatus> status = new Maybe<IStatus>();
         
         if (isUiThread) {
-            Thread thread = new Thread() {
+            Thread thread = new Thread("Monitored Operation") {
                 public void run() {
                     runOperation(display, monitor, status);
                 }
@@ -283,8 +284,8 @@ public abstract class MonitoredOperation {
             postUIexec(status.get());
         } catch (InvocationTargetException exception) {
             if (monitor.get() == null) {
-                monitor.set(new NullProgressMonitor());
                 synchronized (monitor) {
+                    monitor.set(new NullProgressMonitor());
                     monitor.notify();
                 }
             }
