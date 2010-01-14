@@ -80,7 +80,7 @@ public abstract class MonitoredOperation {
         }
         public void internalWorked(final double work) {
             synchronized (commands) {
-                commands.addLast(new Command(CommandType.INTERNAL_WORKED, null, (int)work));
+                commands.addLast(new Command(CommandType.INTERNAL_WORKED, null, (int) work));
             }
             display.wake();
         }
@@ -205,20 +205,23 @@ public abstract class MonitoredOperation {
      */
     private void runOperation(final Display display, final Maybe<IProgressMonitor> monitor,
             final Maybe<IStatus> status) {
-        synchronized (monitor) {
-            while (monitor.get() == null) {
-                try {
-                    monitor.wait();
-                } catch (InterruptedException exception) {
-                    // ignore exception
+        try {
+            synchronized (monitor) {
+                while (monitor.get() == null) {
+                    try {
+                        monitor.wait();
+                    } catch (InterruptedException exception) {
+                        // ignore exception
+                    }
                 }
             }
+            status.set(execute(monitor.get()));
+        } finally {
+            if (status.get() == null) {
+                status.set(Status.OK_STATUS);
+            }
+            display.wake();
         }
-        status.set(execute(monitor.get()));
-        if (status.get() == null) {
-            status.set(Status.OK_STATUS);
-        }
-        display.wake();
     }
     
     /**
@@ -231,51 +234,53 @@ public abstract class MonitoredOperation {
     private void runUiHandler(final Display display, final Maybe<IProgressMonitor> monitor,
             final Maybe<IStatus> status) {
         try {
+            preUIexec();
             PlatformUI.getWorkbench().getProgressService().run(
                     false, true, new IRunnableWithProgress() {
                 public void run(final IProgressMonitor uiMonitor) {
                     ProgressMonitorWrapper monitorWrapper = new ProgressMonitorWrapper(display);
-                    preUIexec();
-                    monitor.set(monitorWrapper);
                     synchronized (monitor) {
+                        monitor.set(monitorWrapper);
                         monitor.notify();
                     }
-                    try {
-                        while (status.get() == null) {
+                    while (status.get() == null) {
+                        boolean hasMoreToDispatch = false;
+                        do {
+                            hasMoreToDispatch = display.readAndDispatch();
+                            monitorWrapper.canceled = uiMonitor.isCanceled();
+                        } while (hasMoreToDispatch && status.get() == null);
+                        if (status.get() == null) {
                             display.sleep();
-                            while (!monitorWrapper.commands.isEmpty() && status.get() == null) {
-                                ProgressMonitorWrapper.Command command;
-                                synchronized (monitorWrapper.commands) {
-                                    command = monitorWrapper.commands.removeFirst();
-                                }
-                                switch (command.type) {
-                                case BEGIN_TASK:
-                                    uiMonitor.beginTask(command.name, command.work);
-                                    break;
-                                case SET_TASK_NAME:
-                                    uiMonitor.setTaskName(command.name);
-                                    break;
-                                case SUB_TASK:
-                                    uiMonitor.subTask(command.name);
-                                    break;
-                                case WORKED:
-                                    uiMonitor.worked(command.work);
-                                    break;
-                                case INTERNAL_WORKED:
-                                    uiMonitor.internalWorked(command.work);
-                                case DONE:
-                                    uiMonitor.done();
-                                    return;
-                                }
-                                display.readAndDispatch();
-                                monitorWrapper.canceled = uiMonitor.isCanceled();
+                        }
+                        while (!monitorWrapper.commands.isEmpty() && status.get() == null) {
+                            ProgressMonitorWrapper.Command command;
+                            synchronized (monitorWrapper.commands) {
+                                command = monitorWrapper.commands.removeFirst();
+                            }
+                            switch (command.type) {
+                            case BEGIN_TASK:
+                                uiMonitor.beginTask(command.name, command.work);
+                                break;
+                            case SET_TASK_NAME:
+                                uiMonitor.setTaskName(command.name);
+                                break;
+                            case SUB_TASK:
+                                uiMonitor.subTask(command.name);
+                                break;
+                            case WORKED:
+                                uiMonitor.worked(command.work);
+                                break;
+                            case INTERNAL_WORKED:
+                                uiMonitor.internalWorked(command.work);
+                            case DONE:
+                                uiMonitor.done();
+                                return;
                             }
                         }
-                    } finally {
-                        postUIexec(status.get());
                     }
                 }
             });
+            postUIexec(status.get());
         } catch (InvocationTargetException exception) {
             if (monitor.get() == null) {
                 monitor.set(new NullProgressMonitor());
