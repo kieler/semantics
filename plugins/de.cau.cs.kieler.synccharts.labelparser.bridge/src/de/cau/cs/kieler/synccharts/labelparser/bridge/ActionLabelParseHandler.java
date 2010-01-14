@@ -60,7 +60,7 @@ public class ActionLabelParseHandler extends AbstractHandler {
             myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID,
                     "Parsing and re-serialization of action strings done.");
         } catch (NullPointerException e) {
-            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No SyncChart Editor open. ",
+            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No SyncChart Editor open. This is a seldom occuring exception that we could not yet reproduce. Please report the stack trace to the KIELER developer team.",
                     e);
         } catch (ClassCastException e) {
             myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
