@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.sc.feature"
+      id="de.cau.cs.kieler.sc"
       label="SyncCharts in C"
       version="0.1.0.qualifier"
       provider-name="Christian-Albrechts Universität zu Kiel">
