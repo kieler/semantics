@@ -12,3 +12,5 @@ Transition getNT(State s):
 List[State] sortStates (List[State] states):
   JAVA de.cau.cs.kieler.synccharts.codegen.quartz.Helper.sortStates(java.util.List);
      
+List[Signal] locals(State s):
+  s.signals.select(e | !e.isInput && !e.isOutput);

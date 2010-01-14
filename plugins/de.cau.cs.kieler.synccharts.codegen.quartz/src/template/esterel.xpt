@@ -1,0 +1,84 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+«FILE innerStates.first().label + ".strl"-»
+module «innerStates.first().label» : 
+«FOREACH innerStates.first().signals AS sig -»«IF sig.isInput»input «sig.name»;«ENDIF-»«IF sig.isOutput»output «sig.name»;«ENDIF-» 
+«ENDFOREACH-»
+«IF !innerStates.first().locals().isEmpty»
+signal
+ «FOREACH innerStates.first().locals() AS sig  SEPARATOR ","-»«sig.name»«ENDFOREACH»
+in
+«ENDIF»
+  «FOREACH innerStates.first().regions AS region»«EXPAND Constelation FOR region»«ENDFOREACH-»
+«IF !innerStates.first().locals().isEmpty»
+end signal
+«ENDIF»
+end module
+«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE Constelation FOR Region-»
+  signal T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH» in
+    emit goto_«this.innerStates.first().id»;
+    loop
+      weak abort 
+        «FOREACH this.innerStates.sortStates() AS state-»
+        present goto_«state.id» then
+          signal start_«state.id» in
+            «EXPAND Star FOR state-»
+            present start_«state.id» else
+              emit T_«innerStates.first().id»;
+            end present
+          end signal
+        end present;
+        «ENDFOREACH-»
+        halt;
+      when T_«innerStates.first().id»;
+    end loop;
+  end signal
+«ENDDEFINE»
+
+«DEFINE Star FOR synccharts::State-»
+ % «id»
+ «FOREACH this.outgoingTransitions AS trans»
+   «IF trans.type==TransitionType::WEAKABORT-»weak «IF trans.isImmediate»immediate «ENDIF-»abort«ENDIF-»
+   «IF trans.type==TransitionType::STRONGABORT-»«IF trans.isImmediate»immediate «ENDIF-»abort«ENDIF-»
+ «ENDFOREACH»
+ «IF this.regions.isEmpty-»
+    halt;
+ «ELSE-»
+   «FOREACH this.regions AS region SEPARATOR "||"-»
+   «EXPAND Constelation FOR region»
+   «ENDFOREACH-»
+   
+  «IF this.hasNT()-»
+  «FOREACH getNT().effects AS eff-»«EXPAND Effect FOR eff»«ENDFOREACH-»
+  «ENDIF-»
+ «ENDIF» 
+ «FOREACH sortTransitionPrios() AS trans-»
+  «IF trans.type!=TransitionType::NORMALTERMINATION-»
+  when «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF»; 
+  emit goto_«trans.targetState.id»;
+  «FOREACH trans.effects AS eff-»
+    «EXPAND Effect FOR eff»
+  «ENDFOREACH-»
+  «ENDIF-»
+  «ENDFOREACH-»  
+«ENDDEFINE»
+
+
+«DEFINE Effect FOR Emission»emit «this.signal.name»;«ENDDEFINE»
+
+«DEFINE Effect FOR Effect»//effects«ENDDEFINE»
+
+
+«DEFINE Trigger FOR Expression»//TODO  expression«ENDDEFINE»
+
+«DEFINE Trigger FOR Value»«this.toString()»«ENDDEFINE»
+
+«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+
+«DEFINE Trigger FOR ComplexExpression»//TODO complex expression«ENDDEFINE» 

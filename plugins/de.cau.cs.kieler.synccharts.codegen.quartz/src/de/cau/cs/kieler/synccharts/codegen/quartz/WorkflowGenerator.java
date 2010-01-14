@@ -82,10 +82,20 @@ public class WorkflowGenerator {
 
         generator.setExpand("template::quartz::main FOR model");
 
+        Generator esterelGenerator = new Generator();
+        esterelGenerator.addMetaModel(metaModel);
+        esterelGenerator.addOutlet(outlet);
+
+        esterelGenerator.setExpand("template::esterel::main FOR model");
+
+        
         Workflow workflow = new Workflow();
+        
+        
 
         workflow.addComponent(emfReader);
         workflow.addComponent(generator);
+        workflow.addComponent(esterelGenerator);
 
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
         Issues issues = new IssuesImpl();
@@ -114,16 +124,4 @@ public class WorkflowGenerator {
     
  
     }
-
-    /*public EObject getModel() {
-        return myModel;
-    }
-
-    public URI getURI() {
-        return uri;
-    }
-
-    public String getOutPath() {
-        return outPath;
-    }*/
 }
