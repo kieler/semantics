@@ -33,7 +33,7 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.common.editor.outline.ITreeProvider> bindITreeProvider() {
+	public Class<? extends org.eclipse.xtext.ui.common.editor.outline.IOutlineTreeProvider> bindIOutlineTreeProvider() {
 		return org.eclipse.xtext.ui.common.editor.outline.transformer.TransformingTreeProvider.class;
 	}
 
@@ -50,6 +50,11 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
 	public Class<? extends org.eclipse.xtext.ui.core.editor.syntaxcoloring.IHighlightingHelper> bindIHighlightingHelper() {
 		return org.eclipse.xtext.ui.common.editor.syntaxcoloring.HighlightingHelper.class;
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+	public Class<? extends org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider> bindDelegatingStyledCellLabelProvider$IStyledLabelProvider() {
+		return org.eclipse.xtext.ui.core.DefaultLabelProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
@@ -108,23 +113,18 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.core.editor.validation.IXtextResourceChecker> bindIXtextResourceChecker() {
-		return org.eclipse.xtext.ui.core.editor.validation.DefaultXtextResourceChecker.class;
+	public Class<? extends org.eclipse.xtext.resource.IExternalContentSupport.IExternalContentProvider> bindIExternalContentSupport$IExternalContentProvider() {
+		return org.eclipse.xtext.ui.core.editor.IDirtyStateManager.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends com.google.inject.Provider<org.eclipse.xtext.index.IXtextIndex>> provideIXtextIndex() {
-		return org.eclipse.xtext.ui.core.index.IndexProvider.class;
+	public com.google.inject.Provider<org.eclipse.xtext.ui.core.editor.IDirtyStateManager> provideIDirtyStateManager() {
+		return new org.eclipse.xtext.ui.core.editor.DirtyStateManagerProvider();
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.core.builder.ILanguageBuilder> bindILanguageBuilder() {
-		return org.eclipse.xtext.ui.core.builder.impl.SimpleProjectLanguageBuilder.class;
-	}
-
-	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.core.editor.model.XtextDocumentProvider> bindXtextDocumentProvider() {
-		return org.eclipse.xtext.ui.core.editor.model.ResourceAwareXtextDocumentProvider.class;
+	public com.google.inject.Provider<org.eclipse.xtext.ui.core.notification.IStateChangeEventBroker> provideIStateChangeEventBroker() {
+		return new org.eclipse.xtext.ui.core.notification.StateChangeEventBrokerProvider();
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
