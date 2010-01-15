@@ -30,18 +30,17 @@ public final class ContentAdapterKSbasEBridge implements ITransformationEventLis
 
     /** Singleton instance. **/
     public static final ContentAdapterKSbasEBridge INSTANCE = new ContentAdapterKSbasEBridge();
-    
-    
+
     private ContentAdapterKSbasEBridge() {
     }
-    
+
     /**
      * Registers the transformation listener.
      */
     public void registerListener() {
-        System.out.println("bridge intialized");
         TransformationUIManager.INSTANCE.addTransformationListener(this);
     }
+
     /**
      * Set content provider to 'record' state for the transformation.
      * 
@@ -53,7 +52,7 @@ public final class ContentAdapterKSbasEBridge implements ITransformationEventLis
     }
 
     /**
-     * Disable recording of content adapter and 
+     * Reactivate content adapter.
      * 
      * @param args
      *            unused parameters
