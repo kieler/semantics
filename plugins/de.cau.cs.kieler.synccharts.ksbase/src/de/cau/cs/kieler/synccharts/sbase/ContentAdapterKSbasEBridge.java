@@ -21,7 +21,8 @@ import de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter;
 
 /**
  * Bridge between KSBasE and the Synccharts content adapter. This class is used to avoid conflicts
- * between a transformation and the validation.
+ * where a transformation has executed completely before the content adapter processes model
+ * changes.
  * 
  * @author mim
  * 
