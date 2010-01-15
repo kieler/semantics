@@ -60,4 +60,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_family" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MoveTo" eSuperTypes="#//Animation"/>
 </ecore:EPackage>
