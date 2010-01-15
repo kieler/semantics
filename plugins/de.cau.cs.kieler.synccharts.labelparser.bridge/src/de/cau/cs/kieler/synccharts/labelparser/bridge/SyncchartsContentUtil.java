@@ -112,7 +112,7 @@ public final class SyncchartsContentUtil {
         // if multiple transitions have same priority, set the current prio to a
         // new value
         boolean changePrio = false;
-        int newPrio = 0;
+        int newPrio = 1; // prios should start with 1
         for (Transition transition2 : transitions) {
             int otherPrio = transition2.getPriority();
             // search a new unique prio

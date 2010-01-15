@@ -261,7 +261,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 Transition transition2 = transitions.get(i);
                 this.setEnabled(false); // disable the content adapter
                 // temporarily
-                transition2.setPriority(i);
+                transition2.setPriority(i + 1); // prios should start with 1
                 this.setEnabled(true);
             }
         }
@@ -325,14 +325,12 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             Transition transition2 = orderedTransitions.get(i);
             this.setEnabled(false); // disable the content adapter
             // temporarily
-            transition2.setPriority(i);
+            transition2.setPriority(i + 1); // prios should start with 1
             this.setEnabled(true);
         }
     }
 
     private void handleState(final Notification notification, final State state) {
-        // oba
-        if (state.getId() == null) {
             // if state label has changed
             if (notification.getFeature() != null
                     && notification.getFeature().equals(
@@ -356,7 +354,6 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 }
             }
         }
-    }
 
     private void handleValuedObject(final Notification notification, final ValuedObject notifier)
             throws KielerModelException, IOException {
