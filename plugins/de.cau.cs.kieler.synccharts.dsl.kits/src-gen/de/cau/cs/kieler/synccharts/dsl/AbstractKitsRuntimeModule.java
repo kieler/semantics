@@ -24,7 +24,7 @@ public abstract class AbstractKitsRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "de/cau/cs/kieler/synccharts/dsl/Kits.properties");
+		bindProperties(binder, "/de/cau/cs/kieler/synccharts/dsl/Kits.properties");
 	}
 	
 	

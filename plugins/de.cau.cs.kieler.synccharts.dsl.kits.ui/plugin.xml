@@ -208,16 +208,16 @@
          </command>  
          </menuContribution>
     </extension>
-    	<extension  
+   <!-- 
+   <extension  
          point="org.eclipse.xtext.ui.core.languageBuilder">
       <languageBuilder
             class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.core.builder.ILanguageBuilder">
       </languageBuilder>
    </extension>
-
-<!-- adding resource factories -->
-
-	<extension 
+    -->
+    <!-- adding resource factories -->
+    	<extension 
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser 
 			class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.resource.XtextResourceFactory"
