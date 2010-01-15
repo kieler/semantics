@@ -34,26 +34,22 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Region returns sync::Region:
 		//  {sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-		//  State+; 
+		//  State+;  
 		//
+		//// IO Declarations --- come before state declarations #2009-11-26
+		//// There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
+		//// Inner states --- a region has to have at least one state#2009-11-26
 		//    
-		//
-		//
-		//     
-		//  
-		//  
-		// 
-		// // GMF does not like empty models so avoid them:
-		//   // IO Declarations --- come before state declarations #2009-11-26
-		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-		//   // Inner states --- a region has to have at least one state#2009-11-26
+		//// GMF does not like empty models so avoid them:
 		public ParserRule getRule() { return rule; }
 
 		//{sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-		//State+
+		//State+ 
+		//// GMF does not like empty models so avoid them:
 		public Group getGroup() { return cGroup; }
 
-		//{sync::Region}
+		//{sync::Region} 
+		//// GMF does not like empty models so avoid them:
 		public Action getRegionAction_0() { return cRegionAction_0; }
 
 		//"region"?
@@ -140,66 +136,61 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//  "}")? outgoingTransitions+=Transition*; 
-		// // GMF does not like empty models so avoid them:
-		//   // IO Declarations --- come before state declarations #2009-11-26
-		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-		//   // Inner states --- a region has to have at least one state#2009-11-26
+		//  
 		//    
-		//   
-		//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-		//     
+		//    // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+		//        
+		//       
 		//  // State_Group_1_1
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-		////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-		////    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-		////    |((isInitial?='init') (isFinal?='final'))
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-		////    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-		////    |((isFinal?='final') (isInitial?='init')) 'state'
-		////    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-		////    |((isFinal?='final') (isInitial?='init'))
-		////    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-		////    |(isInitial?='init') (type=StateType) 'state'
-		////    |(isInitial?='init') (type=StateType) id=FullStateID
-		////    |(isInitial?='init') 'state' id=FullStateID
-		////    |(isInitial?='init') (type=StateType)
-		////    |(isInitial?='init') 'state'// State_Group_1_21
-		////    |(isInitial?='init') id=FullStateID
-		////    |(isInitial?='init')
-		////    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-		////    |(isFinal?='final') (type=StateType) 'state'
-		////    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-		////    |(isFinal?='final') 'state' id=FullStateID
-		////    |(isFinal?='final') (type=StateType)
-		////    |(isFinal?='final') 'state' id=FullStateID
-		////    |(isFinal?='final') id=FullStateID
-		////    |(isFinal?='final')// State_Group_1_31
-		////    |(type=StateType) 'state' id=FullStateID
-		////    |(type=StateType) 'state'
-		////    |(type=StateType) id=FullStateID
-		////    |(type=StateType)
-		////    |'state' id=FullStateID// State_Group_1_36
-		////    |'state'
-		////    |id=FullStateID)// State_Group_1_38 
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
+		//   //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
+		//   //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
+		//   //    |((isInitial?='init') (isFinal?='final'))
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
+		//   //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
+		//   //    |((isFinal?='final') (isInitial?='init')) 'state'
+		//   //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
+		//   //    |((isFinal?='final') (isInitial?='init'))
+		//   //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
+		//   //    |(isInitial?='init') (type=StateType) 'state'
+		//   //    |(isInitial?='init') (type=StateType) id=FullStateID
+		//   //    |(isInitial?='init') 'state' id=FullStateID
+		//   //    |(isInitial?='init') (type=StateType)
+		//   //    |(isInitial?='init') 'state'// State_Group_1_21
+		//   //    |(isInitial?='init') id=FullStateID
+		//   //    |(isInitial?='init')
+		//   //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
+		//   //    |(isFinal?='final') (type=StateType) 'state'
+		//   //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
+		//   //    |(isFinal?='final') 'state' id=FullStateID
+		//   //    |(isFinal?='final') (type=StateType)
+		//   //    |(isFinal?='final') 'state' id=FullStateID
+		//   //    |(isFinal?='final') id=FullStateID
+		//   //    |(isFinal?='final')// State_Group_1_31
+		//   //    |(type=StateType) 'state' id=FullStateID
+		//   //    |(type=StateType) 'state'
+		//   //    |(type=StateType) id=FullStateID
+		//   //    |(type=StateType)
+		//   //    |'state' id=FullStateID// State_Group_1_36
+		//   //    |'state'
+		//   //    |id=FullStateID)// State_Group_1_38 
 		//   //change the datatype of label (from FullStateID) to STRING 
 		//   //to prevent wrong parsing in this case: 
 		//   //init A
 		//   //final B
 		//   //A --> B;
-		//    //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-		//   
-		//   
-		//  // order of actions has been fixed ---conform to thinkccharts#2009-11-26
-		//   
-		//    
+		//   //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+		//   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
 		//    
 		//     
-		//    // kein effect, kein delay, kein immediate
+		//     
+		//     
+		//      // kein effect, kein delay, kein immediate
 		public ParserRule getRule() { return rule; }
 
 		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
@@ -207,66 +198,63 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//"suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//"}")? outgoingTransitions+=Transition* 
-		//   
-		//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-		//     
+		//    // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+		//        
+		//       
 		//  // State_Group_1_1
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-		////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-		////    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-		////    |((isInitial?='init') (isFinal?='final'))
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-		////    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-		////    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-		////    |((isFinal?='final') (isInitial?='init')) 'state'
-		////    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-		////    |((isFinal?='final') (isInitial?='init'))
-		////    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-		////    |(isInitial?='init') (type=StateType) 'state'
-		////    |(isInitial?='init') (type=StateType) id=FullStateID
-		////    |(isInitial?='init') 'state' id=FullStateID
-		////    |(isInitial?='init') (type=StateType)
-		////    |(isInitial?='init') 'state'// State_Group_1_21
-		////    |(isInitial?='init') id=FullStateID
-		////    |(isInitial?='init')
-		////    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-		////    |(isFinal?='final') (type=StateType) 'state'
-		////    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-		////    |(isFinal?='final') 'state' id=FullStateID
-		////    |(isFinal?='final') (type=StateType)
-		////    |(isFinal?='final') 'state' id=FullStateID
-		////    |(isFinal?='final') id=FullStateID
-		////    |(isFinal?='final')// State_Group_1_31
-		////    |(type=StateType) 'state' id=FullStateID
-		////    |(type=StateType) 'state'
-		////    |(type=StateType) id=FullStateID
-		////    |(type=StateType)
-		////    |'state' id=FullStateID// State_Group_1_36
-		////    |'state'
-		////    |id=FullStateID)// State_Group_1_38 
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
+		//   //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
+		//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
+		//   //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
+		//   //    |((isInitial?='init') (isFinal?='final'))
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
+		//   //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
+		//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
+		//   //    |((isFinal?='final') (isInitial?='init')) 'state'
+		//   //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
+		//   //    |((isFinal?='final') (isInitial?='init'))
+		//   //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
+		//   //    |(isInitial?='init') (type=StateType) 'state'
+		//   //    |(isInitial?='init') (type=StateType) id=FullStateID
+		//   //    |(isInitial?='init') 'state' id=FullStateID
+		//   //    |(isInitial?='init') (type=StateType)
+		//   //    |(isInitial?='init') 'state'// State_Group_1_21
+		//   //    |(isInitial?='init') id=FullStateID
+		//   //    |(isInitial?='init')
+		//   //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
+		//   //    |(isFinal?='final') (type=StateType) 'state'
+		//   //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
+		//   //    |(isFinal?='final') 'state' id=FullStateID
+		//   //    |(isFinal?='final') (type=StateType)
+		//   //    |(isFinal?='final') 'state' id=FullStateID
+		//   //    |(isFinal?='final') id=FullStateID
+		//   //    |(isFinal?='final')// State_Group_1_31
+		//   //    |(type=StateType) 'state' id=FullStateID
+		//   //    |(type=StateType) 'state'
+		//   //    |(type=StateType) id=FullStateID
+		//   //    |(type=StateType)
+		//   //    |'state' id=FullStateID// State_Group_1_36
+		//   //    |'state'
+		//   //    |id=FullStateID)// State_Group_1_38 
 		//   //change the datatype of label (from FullStateID) to STRING 
 		//   //to prevent wrong parsing in this case: 
 		//   //init A
 		//   //final B
 		//   //A --> B;
-		//    //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-		//   
-		//   
-		//  // order of actions has been fixed ---conform to thinkccharts#2009-11-26
-		//   
-		//    
+		//   //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+		//   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
 		//    
 		//     
-		//    // kein effect, kein delay, kein immediate
+		//     
+		//     
+		//      // kein effect, kein delay, kein immediate
 		public Group getGroup() { return cGroup; }
 
 		//{sync::State} 
-		//   
-		//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26
+		//    // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26
 		public Action getStateAction_0() { return cStateAction_0; }
 
 		//isInitial?="init"?
@@ -440,14 +428,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//  (ID "@")? ID; 
 		//
 		//
-		//       
-		////========================================================================================
+		//        //========================================================================================
 		////===  									    ACTIONS  					               ===
 		////========================================================================================
 		////Action returns sync::Action:
 		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
-		//
-		//
 		////========================================================================================
 		////===  									    TRANSITION 					               ===
 		////========================================================================================
@@ -504,34 +489,22 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Transition returns sync::Transition:
 		//  type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
 		//  "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
-		//  ","?)*)?))? isHistory?=" history"? ";";  
-		////========================================================================================
+		//  ","?)*)?))? isHistory?=" history"? ";";   //========================================================================================
 		////===  									    ACTIONS  					               ===
 		////========================================================================================
 		////Action returns sync::Action:
 		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
-		//
-		//
 		////========================================================================================
 		////===  									    TRANSITION 					               ===
 		////========================================================================================
 		//
 		//
 		//    
-		//     
-		//  
-		//          
-		//             
-		//   
-		//     
-		// 
-		//
-		//
-		//
-		//
-		//
+		//           
+		//         
+		//           
 		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//   //|({sync::State} name=FullStateID)
+		////|({sync::State} name=FullStateID)
 		////  |
 		////  (TransitionState))
 		////TargetState returns sync::Transition:
@@ -647,14 +620,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TransitionState returns sync::State:
 		//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
-		//  FullStateID; 
-		//
-		//
-		//
-		//
-		//
+		//  FullStateID;  
 		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//   //|({sync::State} name=FullStateID)
+		////|({sync::State} name=FullStateID)
 		////  |
 		////  (TransitionState))
 		////TargetState returns sync::Transition:
@@ -662,9 +630,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////	//(isInitial?='init')? (isFinal?='final')
 		////;
 		//
+		//
 		//    
 		//            
-		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		//    //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -686,8 +655,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
 		////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
 		////  FullStateID|'state'|id=FullStateID); 
-		//  
-		// //========================================================================================
+		////========================================================================================
 		////===  									    VAR,SIG  					               ===
 		////========================================================================================
 		////
@@ -735,8 +703,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVariableParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//ValuedObject returns sync::ValuedObject:
-		//  Signal|Variable; 
-		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		//  Signal|Variable;   //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -758,15 +725,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
 		////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
 		////  FullStateID|'state'|id=FullStateID); 
-		//  
-		// //========================================================================================
+		////========================================================================================
 		////===  									    VAR,SIG  					               ===
 		////========================================================================================
 		////
 		public ParserRule getRule() { return rule; }
 
-		//Signal|Variable 
-		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		//Signal|Variable   //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -788,8 +753,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
 		////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
 		////  FullStateID|'state'|id=FullStateID); 
-		//  
-		// //========================================================================================
+		////========================================================================================
 		////===  									    VAR,SIG  					               ===
 		////========================================================================================
 		////
@@ -894,20 +858,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//  combineOperator=CombineOperator|hostCombineOperator=STRING)))?; 
 		//
 		//    
-		//   
-		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     
-		//  //default signal type is PURE
+		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//     //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public ParserRule getRule() { return rule; }
 
 		//isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
 		//VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
 		//combineOperator=CombineOperator|hostCombineOperator=STRING)))? 
-		//   
-		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     
-		//  //default signal type is PURE
+		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//     //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public Group getGroup() { return cGroup; }
 
@@ -923,15 +883,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"output"
 		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
 
-		//name=QualifiedName  
-		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     
-		//  //default signal type is PURE
+		//name=QualifiedName   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//     //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//QualifiedName   
-		//  //default signal type is PURE
+		//QualifiedName   //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public RuleCall getNameQualifiedNameParserRuleCall_2_0() { return cNameQualifiedNameParserRuleCall_2_0; }
 
@@ -2827,19 +2784,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Region returns sync::Region:
 	//  {sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-	//  State+; 
+	//  State+;  
 	//
+	//// IO Declarations --- come before state declarations #2009-11-26
+	//// There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
+	//// Inner states --- a region has to have at least one state#2009-11-26
 	//    
-	//
-	//
-	//     
-	//  
-	//  
-	// 
-	// // GMF does not like empty models so avoid them:
-	//   // IO Declarations --- come before state declarations #2009-11-26
-	//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-	//   // Inner states --- a region has to have at least one state#2009-11-26
+	//// GMF does not like empty models so avoid them:
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -2854,66 +2805,61 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 	//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 	//  "}")? outgoingTransitions+=Transition*; 
-	// // GMF does not like empty models so avoid them:
-	//   // IO Declarations --- come before state declarations #2009-11-26
-	//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-	//   // Inner states --- a region has to have at least one state#2009-11-26
+	//  
 	//    
-	//   
-	//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-	//     
+	//    // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+	//        
+	//       
 	//  // State_Group_1_1
-	////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-	////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-	////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-	////    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-	////    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-	////    |((isInitial?='init') (isFinal?='final'))
-	////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-	////    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-	////    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-	////    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-	////    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-	////    |((isFinal?='final') (isInitial?='init')) 'state'
-	////    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-	////    |((isFinal?='final') (isInitial?='init'))
-	////    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-	////    |(isInitial?='init') (type=StateType) 'state'
-	////    |(isInitial?='init') (type=StateType) id=FullStateID
-	////    |(isInitial?='init') 'state' id=FullStateID
-	////    |(isInitial?='init') (type=StateType)
-	////    |(isInitial?='init') 'state'// State_Group_1_21
-	////    |(isInitial?='init') id=FullStateID
-	////    |(isInitial?='init')
-	////    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-	////    |(isFinal?='final') (type=StateType) 'state'
-	////    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-	////    |(isFinal?='final') 'state' id=FullStateID
-	////    |(isFinal?='final') (type=StateType)
-	////    |(isFinal?='final') 'state' id=FullStateID
-	////    |(isFinal?='final') id=FullStateID
-	////    |(isFinal?='final')// State_Group_1_31
-	////    |(type=StateType) 'state' id=FullStateID
-	////    |(type=StateType) 'state'
-	////    |(type=StateType) id=FullStateID
-	////    |(type=StateType)
-	////    |'state' id=FullStateID// State_Group_1_36
-	////    |'state'
-	////    |id=FullStateID)// State_Group_1_38 
+	//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
+	//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
+	//   //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
+	//   //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
+	//   //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
+	//   //    |((isInitial?='init') (isFinal?='final'))
+	//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
+	//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
+	//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
+	//   //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
+	//   //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
+	//   //    |((isFinal?='final') (isInitial?='init')) 'state'
+	//   //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
+	//   //    |((isFinal?='final') (isInitial?='init'))
+	//   //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
+	//   //    |(isInitial?='init') (type=StateType) 'state'
+	//   //    |(isInitial?='init') (type=StateType) id=FullStateID
+	//   //    |(isInitial?='init') 'state' id=FullStateID
+	//   //    |(isInitial?='init') (type=StateType)
+	//   //    |(isInitial?='init') 'state'// State_Group_1_21
+	//   //    |(isInitial?='init') id=FullStateID
+	//   //    |(isInitial?='init')
+	//   //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
+	//   //    |(isFinal?='final') (type=StateType) 'state'
+	//   //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
+	//   //    |(isFinal?='final') 'state' id=FullStateID
+	//   //    |(isFinal?='final') (type=StateType)
+	//   //    |(isFinal?='final') 'state' id=FullStateID
+	//   //    |(isFinal?='final') id=FullStateID
+	//   //    |(isFinal?='final')// State_Group_1_31
+	//   //    |(type=StateType) 'state' id=FullStateID
+	//   //    |(type=StateType) 'state'
+	//   //    |(type=StateType) id=FullStateID
+	//   //    |(type=StateType)
+	//   //    |'state' id=FullStateID// State_Group_1_36
+	//   //    |'state'
+	//   //    |id=FullStateID)// State_Group_1_38 
 	//   //change the datatype of label (from FullStateID) to STRING 
 	//   //to prevent wrong parsing in this case: 
 	//   //init A
 	//   //final B
 	//   //A --> B;
-	//    //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-	//   
-	//   
-	//  // order of actions has been fixed ---conform to thinkccharts#2009-11-26
-	//   
-	//    
+	//   //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+	//   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
 	//    
 	//     
-	//    // kein effect, kein delay, kein immediate
+	//     
+	//     
+	//      // kein effect, kein delay, kein immediate
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -2936,14 +2882,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  (ID "@")? ID; 
 	//
 	//
-	//       
-	////========================================================================================
+	//        //========================================================================================
 	////===  									    ACTIONS  					               ===
 	////========================================================================================
 	////Action returns sync::Action:
 	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
-	//
-	//
 	////========================================================================================
 	////===  									    TRANSITION 					               ===
 	////========================================================================================
@@ -2958,34 +2901,22 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//Transition returns sync::Transition:
 	//  type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
 	//  "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
-	//  ","?)*)?))? isHistory?=" history"? ";";  
-	////========================================================================================
+	//  ","?)*)?))? isHistory?=" history"? ";";   //========================================================================================
 	////===  									    ACTIONS  					               ===
 	////========================================================================================
 	////Action returns sync::Action:
 	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
-	//
-	//
 	////========================================================================================
 	////===  									    TRANSITION 					               ===
 	////========================================================================================
 	//
 	//
 	//    
-	//     
-	//  
-	//          
-	//             
-	//   
-	//     
-	// 
-	//
-	//
-	//
-	//
-	//
+	//           
+	//         
+	//           
 	////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	//   //|({sync::State} name=FullStateID)
+	////|({sync::State} name=FullStateID)
 	////  |
 	////  (TransitionState))
 	////TargetState returns sync::Transition:
@@ -3002,14 +2933,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TransitionState returns sync::State:
 	//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
-	//  FullStateID; 
-	//
-	//
-	//
-	//
-	//
+	//  FullStateID;  
 	////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	//   //|({sync::State} name=FullStateID)
+	////|({sync::State} name=FullStateID)
 	////  |
 	////  (TransitionState))
 	////TargetState returns sync::Transition:
@@ -3017,9 +2943,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////	//(isInitial?='init')? (isFinal?='final')
 	////;
 	//
+	//
 	//    
 	//            
-	////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+	//    //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 	////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 	////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 	////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -3041,8 +2968,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
 	////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
 	////  FullStateID|'state'|id=FullStateID); 
-	//  
-	// //========================================================================================
+	////========================================================================================
 	////===  									    VAR,SIG  					               ===
 	////========================================================================================
 	////
@@ -3055,8 +2981,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValuedObject returns sync::ValuedObject:
-	//  Signal|Variable; 
-	////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+	//  Signal|Variable;   //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 	////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 	////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 	////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -3078,8 +3003,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
 	////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
 	////  FullStateID|'state'|id=FullStateID); 
-	//  
-	// //========================================================================================
+	////========================================================================================
 	////===  									    VAR,SIG  					               ===
 	////========================================================================================
 	////
@@ -3107,10 +3031,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  combineOperator=CombineOperator|hostCombineOperator=STRING)))?; 
 	//
 	//    
-	//   
-	//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-	//     
-	//  //default signal type is PURE
+	//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+	//     //default signal type is PURE
 	//   // after the initial value, either the type or the combine type has to come
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
