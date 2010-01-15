@@ -24,153 +24,164 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
     /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static MappingFactory init() {
-        try {
-            MappingFactory theMappingFactory = (MappingFactory)EPackage.Registry.INSTANCE.getEFactory("http://de.cau.cs.kieler.xkev.mapping/1.0"); 
-            if (theMappingFactory != null) {
-                return theMappingFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new MappingFactoryImpl();
-    }
+		try {
+			MappingFactory theMappingFactory = (MappingFactory)EPackage.Registry.INSTANCE.getEFactory("http://de.cau.cs.kieler.xkev.mapping/1.0"); 
+			if (theMappingFactory != null) {
+				return theMappingFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new MappingFactoryImpl();
+	}
 
     /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MappingFactoryImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-            case MappingPackage.SVG_FILE: return createSVGFile();
-            case MappingPackage.SVG_ELEMENT: return createSVGElement();
-            case MappingPackage.OPACITY: return createOpacity();
-            case MappingPackage.MOVE_PATH: return createMovePath();
-            case MappingPackage.ROTATE: return createRotate();
-            case MappingPackage.MOVE: return createMove();
-            case MappingPackage.COLORIZE: return createColorize();
-            case MappingPackage.TEXT: return createText();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case MappingPackage.SVG_FILE: return createSVGFile();
+			case MappingPackage.SVG_ELEMENT: return createSVGElement();
+			case MappingPackage.OPACITY: return createOpacity();
+			case MappingPackage.MOVE_PATH: return createMovePath();
+			case MappingPackage.ROTATE: return createRotate();
+			case MappingPackage.MOVE: return createMove();
+			case MappingPackage.COLORIZE: return createColorize();
+			case MappingPackage.TEXT: return createText();
+			case MappingPackage.MOVE_TO: return createMoveTo();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SVGFile createSVGFile() {
-        SVGFileImpl svgFile = new SVGFileImpl();
-        return svgFile;
-    }
+		SVGFileImpl svgFile = new SVGFileImpl();
+		return svgFile;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SVGElement createSVGElement() {
-        SVGElementImpl svgElement = new SVGElementImpl();
-        return svgElement;
-    }
+		SVGElementImpl svgElement = new SVGElementImpl();
+		return svgElement;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Opacity createOpacity() {
-        OpacityImpl opacity = new OpacityImpl();
-        return opacity;
-    }
+		OpacityImpl opacity = new OpacityImpl();
+		return opacity;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MovePath createMovePath() {
-        MovePathImpl movePath = new MovePathImpl();
-        return movePath;
-    }
+		MovePathImpl movePath = new MovePathImpl();
+		return movePath;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Rotate createRotate() {
-        RotateImpl rotate = new RotateImpl();
-        return rotate;
-    }
+		RotateImpl rotate = new RotateImpl();
+		return rotate;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Move createMove() {
-        MoveImpl move = new MoveImpl();
-        return move;
-    }
+		MoveImpl move = new MoveImpl();
+		return move;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Colorize createColorize() {
-        ColorizeImpl colorize = new ColorizeImpl();
-        return colorize;
-    }
+		ColorizeImpl colorize = new ColorizeImpl();
+		return colorize;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Text createText() {
-        TextImpl text = new TextImpl();
-        return text;
-    }
+		TextImpl text = new TextImpl();
+		return text;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MoveTo createMoveTo() {
+		MoveToImpl moveTo = new MoveToImpl();
+		return moveTo;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public MappingPackage getMappingPackage() {
-        return (MappingPackage)getEPackage();
-    }
+		return (MappingPackage)getEPackage();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
+	 * @deprecated
+	 * @generated
+	 */
     @Deprecated
     public static MappingPackage getPackage() {
-        return MappingPackage.eINSTANCE;
-    }
+		return MappingPackage.eINSTANCE;
+	}
 
 } //MappingFactoryImpl

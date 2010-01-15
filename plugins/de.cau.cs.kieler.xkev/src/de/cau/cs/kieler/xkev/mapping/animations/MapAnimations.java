@@ -327,6 +327,7 @@ public class MapAnimations {
             Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
             while (svgElementIDIterator.hasNext()) {
                 String svgElementID = svgElementIDIterator.next();
+                System.out.println("SVG: "+svgElementID);
                 // Get all animations for each SVG element
                 Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
 

@@ -44,63 +44,63 @@ import org.json.JSONObject;
  */
 public class ColorizeImpl extends AnimationImpl implements Colorize {
     /**
-     * The default value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFill_color()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFill_color()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String FILL_COLOR_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getFill_color() <em>Fill color</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFill_color()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFill_color()
+	 * @generated
+	 * @ordered
+	 */
     protected String fill_color = FILL_COLOR_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStroke_color()
-     * @generated
-     * @ordered
-     */
+	 * @see #getStroke_color()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String STROKE_COLOR_EDEFAULT = "";
 
     /**
-     * The cached value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStroke_color()
-     * @generated
-     * @ordered
-     */
+	 * @see #getStroke_color()
+	 * @generated
+	 * @ordered
+	 */
     protected String stroke_color = STROKE_COLOR_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStroke_width()
-     * @generated
-     * @ordered
-     */
+	 * @see #getStroke_width()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String STROKE_WIDTH_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getStroke_width()
-     * @generated
-     * @ordered
-     */
+	 * @see #getStroke_width()
+	 * @generated
+	 * @ordered
+	 */
     protected String stroke_width = STROKE_WIDTH_EDEFAULT;
 
     /**
@@ -109,86 +109,86 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     private HashMap<String, HashMap<String, String>> hashMapList = null;
     
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ColorizeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return MappingPackage.Literals.COLORIZE;
-    }
+		return MappingPackage.Literals.COLORIZE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getFill_color() {
-        return fill_color;
-    }
+		return fill_color;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setFill_color(String newFill_color) {
-        String oldFill_color = fill_color;
-        fill_color = newFill_color;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__FILL_COLOR, oldFill_color, fill_color));
-    }
+		String oldFill_color = fill_color;
+		fill_color = newFill_color;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__FILL_COLOR, oldFill_color, fill_color));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getStroke_color() {
-        return stroke_color;
-    }
+		return stroke_color;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setStroke_color(String newStroke_color) {
-        String oldStroke_color = stroke_color;
-        stroke_color = newStroke_color;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_COLOR, oldStroke_color, stroke_color));
-    }
+		String oldStroke_color = stroke_color;
+		stroke_color = newStroke_color;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_COLOR, oldStroke_color, stroke_color));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getStroke_width() {
-        return stroke_width;
-    }
+		return stroke_width;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setStroke_width(String newStroke_width) {
-        String oldStroke_width = stroke_width;
-        stroke_width = newStroke_width;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_WIDTH, oldStroke_width, stroke_width));
-    }
+		String oldStroke_width = stroke_width;
+		stroke_width = newStroke_width;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_WIDTH, oldStroke_width, stroke_width));
+	}
 
     /**
      * Does some checks an runs the colorizeAnimation()-method, if the checks were successful.
@@ -322,102 +322,102 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     }
 */
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case MappingPackage.COLORIZE__FILL_COLOR:
-                return getFill_color();
-            case MappingPackage.COLORIZE__STROKE_COLOR:
-                return getStroke_color();
-            case MappingPackage.COLORIZE__STROKE_WIDTH:
-                return getStroke_width();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case MappingPackage.COLORIZE__FILL_COLOR:
+				return getFill_color();
+			case MappingPackage.COLORIZE__STROKE_COLOR:
+				return getStroke_color();
+			case MappingPackage.COLORIZE__STROKE_WIDTH:
+				return getStroke_width();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case MappingPackage.COLORIZE__FILL_COLOR:
-                setFill_color((String)newValue);
-                return;
-            case MappingPackage.COLORIZE__STROKE_COLOR:
-                setStroke_color((String)newValue);
-                return;
-            case MappingPackage.COLORIZE__STROKE_WIDTH:
-                setStroke_width((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case MappingPackage.COLORIZE__FILL_COLOR:
+				setFill_color((String)newValue);
+				return;
+			case MappingPackage.COLORIZE__STROKE_COLOR:
+				setStroke_color((String)newValue);
+				return;
+			case MappingPackage.COLORIZE__STROKE_WIDTH:
+				setStroke_width((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case MappingPackage.COLORIZE__FILL_COLOR:
-                setFill_color(FILL_COLOR_EDEFAULT);
-                return;
-            case MappingPackage.COLORIZE__STROKE_COLOR:
-                setStroke_color(STROKE_COLOR_EDEFAULT);
-                return;
-            case MappingPackage.COLORIZE__STROKE_WIDTH:
-                setStroke_width(STROKE_WIDTH_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case MappingPackage.COLORIZE__FILL_COLOR:
+				setFill_color(FILL_COLOR_EDEFAULT);
+				return;
+			case MappingPackage.COLORIZE__STROKE_COLOR:
+				setStroke_color(STROKE_COLOR_EDEFAULT);
+				return;
+			case MappingPackage.COLORIZE__STROKE_WIDTH:
+				setStroke_width(STROKE_WIDTH_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case MappingPackage.COLORIZE__FILL_COLOR:
-                return FILL_COLOR_EDEFAULT == null ? fill_color != null : !FILL_COLOR_EDEFAULT.equals(fill_color);
-            case MappingPackage.COLORIZE__STROKE_COLOR:
-                return STROKE_COLOR_EDEFAULT == null ? stroke_color != null : !STROKE_COLOR_EDEFAULT.equals(stroke_color);
-            case MappingPackage.COLORIZE__STROKE_WIDTH:
-                return STROKE_WIDTH_EDEFAULT == null ? stroke_width != null : !STROKE_WIDTH_EDEFAULT.equals(stroke_width);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case MappingPackage.COLORIZE__FILL_COLOR:
+				return FILL_COLOR_EDEFAULT == null ? fill_color != null : !FILL_COLOR_EDEFAULT.equals(fill_color);
+			case MappingPackage.COLORIZE__STROKE_COLOR:
+				return STROKE_COLOR_EDEFAULT == null ? stroke_color != null : !STROKE_COLOR_EDEFAULT.equals(stroke_color);
+			case MappingPackage.COLORIZE__STROKE_WIDTH:
+				return STROKE_WIDTH_EDEFAULT == null ? stroke_width != null : !STROKE_WIDTH_EDEFAULT.equals(stroke_width);
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (fill_color: ");
-        result.append(fill_color);
-        result.append(", stroke_color: ");
-        result.append(stroke_color);
-        result.append(", stroke_width: ");
-        result.append(stroke_width);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (fill_color: ");
+		result.append(fill_color);
+		result.append(", stroke_color: ");
+		result.append(stroke_color);
+		result.append(", stroke_width: ");
+		result.append(stroke_width);
+		result.append(')');
+		return result.toString();
+	}
     
     /**
      * Applies the animation and replaces the current style-tag with an new fill value.

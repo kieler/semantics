@@ -42,7 +42,7 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
         try {
-           JSONobject.put("water", Integer.toString(counter));
+           JSONobject.put("leg", Integer.toString(counter));
            if (counter <= 50) {
                JSONobject.put("text", Double.toString((50-counter)*10.5));
            } else {
@@ -94,7 +94,6 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
         counter = 0;
-
     }
 
     // @Override
