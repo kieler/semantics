@@ -31,8 +31,10 @@ public class FeatureValueCondition implements ICondition {
     /**
      * Creates a feature condition.
      * 
-     * @param thefeature a structural feature
-     * @param thevalue the expected value of the feature
+     * @param thefeature
+     *            a structural feature
+     * @param thevalue
+     *            the expected value of the feature
      */
     public FeatureValueCondition(final EStructuralFeature thefeature, final Object thevalue) {
         feature = thefeature;
@@ -43,9 +45,13 @@ public class FeatureValueCondition implements ICondition {
      * {@inheritDoc}
      */
     public boolean evaluate(final Object object) {
-        if (object instanceof EObject) {
-            EObject modelElement = (EObject) object;
-            return value.equals(modelElement.eGet(feature));
+        try {
+            if (object instanceof EObject) {
+                EObject modelElement = (EObject) object;
+                return value.equals(modelElement.eGet(feature));
+            }
+        } catch (Exception e) {
+            /* nothing. If an exception occurs, simply go on and return false.*/
         }
         return false;
     }
