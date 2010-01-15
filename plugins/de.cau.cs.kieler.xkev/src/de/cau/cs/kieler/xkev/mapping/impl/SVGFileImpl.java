@@ -42,185 +42,185 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SVGFileImpl extends EObjectImpl implements SVGFile {
     /**
-	 * The default value of the '{@link #getFilename() <em>Filename</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getFilename() <em>Filename</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFilename()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFilename()
+     * @generated
+     * @ordered
+     */
     protected static final String FILENAME_EDEFAULT = "";
 
     /**
-	 * The cached value of the '{@link #getFilename() <em>Filename</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFilename() <em>Filename</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFilename()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFilename()
+     * @generated
+     * @ordered
+     */
     protected String filename = FILENAME_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getSvgElement() <em>Svg Element</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSvgElement() <em>Svg Element</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getSvgElement()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getSvgElement()
+     * @generated
+     * @ordered
+     */
     protected EList<SVGElement> svgElement;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SVGFileImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.SVG_FILE;
-	}
+        return MappingPackage.Literals.SVG_FILE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getFilename() {
-		return filename;
-	}
+        return filename;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setFilename(String newFilename) {
-		String oldFilename = filename;
-		filename = newFilename;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.SVG_FILE__FILENAME, oldFilename, filename));
-	}
+        String oldFilename = filename;
+        filename = newFilename;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.SVG_FILE__FILENAME, oldFilename, filename));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<SVGElement> getSvgElement() {
-		if (svgElement == null) {
-			svgElement = new EObjectContainmentEList<SVGElement>(SVGElement.class, this, MappingPackage.SVG_FILE__SVG_ELEMENT);
-		}
-		return svgElement;
-	}
+        if (svgElement == null) {
+            svgElement = new EObjectContainmentEList<SVGElement>(SVGElement.class, this, MappingPackage.SVG_FILE__SVG_ELEMENT);
+        }
+        return svgElement;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case MappingPackage.SVG_FILE__SVG_ELEMENT:
-				return ((InternalEList<?>)getSvgElement()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_FILE__SVG_ELEMENT:
+                return ((InternalEList<?>)getSvgElement()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.SVG_FILE__FILENAME:
-				return getFilename();
-			case MappingPackage.SVG_FILE__SVG_ELEMENT:
-				return getSvgElement();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_FILE__FILENAME:
+                return getFilename();
+            case MappingPackage.SVG_FILE__SVG_ELEMENT:
+                return getSvgElement();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.SVG_FILE__FILENAME:
-				setFilename((String)newValue);
-				return;
-			case MappingPackage.SVG_FILE__SVG_ELEMENT:
-				getSvgElement().clear();
-				getSvgElement().addAll((Collection<? extends SVGElement>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_FILE__FILENAME:
+                setFilename((String)newValue);
+                return;
+            case MappingPackage.SVG_FILE__SVG_ELEMENT:
+                getSvgElement().clear();
+                getSvgElement().addAll((Collection<? extends SVGElement>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.SVG_FILE__FILENAME:
-				setFilename(FILENAME_EDEFAULT);
-				return;
-			case MappingPackage.SVG_FILE__SVG_ELEMENT:
-				getSvgElement().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_FILE__FILENAME:
+                setFilename(FILENAME_EDEFAULT);
+                return;
+            case MappingPackage.SVG_FILE__SVG_ELEMENT:
+                getSvgElement().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.SVG_FILE__FILENAME:
-				return FILENAME_EDEFAULT == null ? filename != null : !FILENAME_EDEFAULT.equals(filename);
-			case MappingPackage.SVG_FILE__SVG_ELEMENT:
-				return svgElement != null && !svgElement.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_FILE__FILENAME:
+                return FILENAME_EDEFAULT == null ? filename != null : !FILENAME_EDEFAULT.equals(filename);
+            case MappingPackage.SVG_FILE__SVG_ELEMENT:
+                return svgElement != null && !svgElement.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (filename: ");
-		result.append(filename);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (filename: ");
+        result.append(filename);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SVGFileImpl

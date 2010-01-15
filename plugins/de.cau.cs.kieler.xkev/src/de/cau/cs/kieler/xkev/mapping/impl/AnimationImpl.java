@@ -36,239 +36,239 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public abstract class AnimationImpl extends EObjectImpl implements Animation {
     /**
-	 * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getInput()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInput()
+     * @generated
+     * @ordered
+     */
     protected static final String INPUT_EDEFAULT = null;
     /**
-	 * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getInput()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInput()
+     * @generated
+     * @ordered
+     */
     protected String input = INPUT_EDEFAULT;
     /**
-	 * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAccessID()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAccessID()
+     * @generated
+     * @ordered
+     */
     protected static final String ACCESS_ID_EDEFAULT = "";
     /**
-	 * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAccessID()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAccessID()
+     * @generated
+     * @ordered
+     */
     protected String accessID = ACCESS_ID_EDEFAULT;
     /**
-	 * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getKey()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getKey()
+     * @generated
+     * @ordered
+     */
     protected static final String KEY_EDEFAULT = "";
     /**
-	 * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getKey()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getKey()
+     * @generated
+     * @ordered
+     */
     protected String key = KEY_EDEFAULT;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AnimationImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.ANIMATION;
-	}
+        return MappingPackage.Literals.ANIMATION;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getInput() {
-		return input;
-	}
+        return input;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setInput(String newInput) {
-		String oldInput = input;
-		input = newInput;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__INPUT, oldInput, input));
-	}
+        String oldInput = input;
+        input = newInput;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__INPUT, oldInput, input));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getAccessID() {
-		return accessID;
-	}
+        return accessID;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setAccessID(String newAccessID) {
-		String oldAccessID = accessID;
-		accessID = newAccessID;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__ACCESS_ID, oldAccessID, accessID));
-	}
+        String oldAccessID = accessID;
+        accessID = newAccessID;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__ACCESS_ID, oldAccessID, accessID));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getKey() {
-		return key;
-	}
+        return key;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setKey(String newKey) {
-		String oldKey = key;
-		key = newKey;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__KEY, oldKey, key));
-	}
+        String oldKey = key;
+        key = newKey;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__KEY, oldKey, key));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.ANIMATION__INPUT:
-				return getInput();
-			case MappingPackage.ANIMATION__ACCESS_ID:
-				return getAccessID();
-			case MappingPackage.ANIMATION__KEY:
-				return getKey();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.ANIMATION__INPUT:
+                return getInput();
+            case MappingPackage.ANIMATION__ACCESS_ID:
+                return getAccessID();
+            case MappingPackage.ANIMATION__KEY:
+                return getKey();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.ANIMATION__INPUT:
-				setInput((String)newValue);
-				return;
-			case MappingPackage.ANIMATION__ACCESS_ID:
-				setAccessID((String)newValue);
-				return;
-			case MappingPackage.ANIMATION__KEY:
-				setKey((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.ANIMATION__INPUT:
+                setInput((String)newValue);
+                return;
+            case MappingPackage.ANIMATION__ACCESS_ID:
+                setAccessID((String)newValue);
+                return;
+            case MappingPackage.ANIMATION__KEY:
+                setKey((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.ANIMATION__INPUT:
-				setInput(INPUT_EDEFAULT);
-				return;
-			case MappingPackage.ANIMATION__ACCESS_ID:
-				setAccessID(ACCESS_ID_EDEFAULT);
-				return;
-			case MappingPackage.ANIMATION__KEY:
-				setKey(KEY_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.ANIMATION__INPUT:
+                setInput(INPUT_EDEFAULT);
+                return;
+            case MappingPackage.ANIMATION__ACCESS_ID:
+                setAccessID(ACCESS_ID_EDEFAULT);
+                return;
+            case MappingPackage.ANIMATION__KEY:
+                setKey(KEY_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.ANIMATION__INPUT:
-				return INPUT_EDEFAULT == null ? input != null : !INPUT_EDEFAULT.equals(input);
-			case MappingPackage.ANIMATION__ACCESS_ID:
-				return ACCESS_ID_EDEFAULT == null ? accessID != null : !ACCESS_ID_EDEFAULT.equals(accessID);
-			case MappingPackage.ANIMATION__KEY:
-				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.ANIMATION__INPUT:
+                return INPUT_EDEFAULT == null ? input != null : !INPUT_EDEFAULT.equals(input);
+            case MappingPackage.ANIMATION__ACCESS_ID:
+                return ACCESS_ID_EDEFAULT == null ? accessID != null : !ACCESS_ID_EDEFAULT.equals(accessID);
+            case MappingPackage.ANIMATION__KEY:
+                return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (input: ");
-		result.append(input);
-		result.append(", accessID: ");
-		result.append(accessID);
-		result.append(", key: ");
-		result.append(key);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (input: ");
+        result.append(input);
+        result.append(", accessID: ");
+        result.append(accessID);
+        result.append(", key: ");
+        result.append(key);
+        result.append(')');
+        return result.toString();
+    }
 
     /**
      * <!-- begin-user-doc -->
@@ -313,26 +313,26 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
     }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void apply(Object jsonObject, String svgElementID) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void initialize() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
 
 
 } //AnimationImpl

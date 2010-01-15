@@ -43,23 +43,23 @@ import org.w3c.dom.svg.SVGLocatable;
  */
 public class OpacityImpl extends AnimationImpl implements Opacity {
     /**
-	 * The default value of the '{@link #getOpacity() <em>Opacity</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getOpacity() <em>Opacity</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getOpacity()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOpacity()
+     * @generated
+     * @ordered
+     */
     protected static final String OPACITY_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getOpacity() <em>Opacity</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOpacity() <em>Opacity</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getOpacity()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOpacity()
+     * @generated
+     * @ordered
+     */
     protected String opacity = OPACITY_EDEFAULT;
 
     
@@ -69,118 +69,118 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     private HashMap<String, String> hashMapOpacityRange = null;
     
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected OpacityImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.OPACITY;
-	}
+        return MappingPackage.Literals.OPACITY;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getOpacity() {
-		return opacity;
-	}
+        return opacity;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setOpacity(String newOpacity) {
-		String oldOpacity = opacity;
-		opacity = newOpacity;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.OPACITY__OPACITY, oldOpacity, opacity));
-	}
+        String oldOpacity = opacity;
+        opacity = newOpacity;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.OPACITY__OPACITY, oldOpacity, opacity));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.OPACITY__OPACITY:
-				return getOpacity();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.OPACITY__OPACITY:
+                return getOpacity();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.OPACITY__OPACITY:
-				setOpacity((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.OPACITY__OPACITY:
+                setOpacity((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.OPACITY__OPACITY:
-				setOpacity(OPACITY_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.OPACITY__OPACITY:
+                setOpacity(OPACITY_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.OPACITY__OPACITY:
-				return OPACITY_EDEFAULT == null ? opacity != null : !OPACITY_EDEFAULT.equals(opacity);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.OPACITY__OPACITY:
+                return OPACITY_EDEFAULT == null ? opacity != null : !OPACITY_EDEFAULT.equals(opacity);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (opacity: ");
-		result.append(opacity);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (opacity: ");
+        result.append(opacity);
+        result.append(')');
+        return result.toString();
+    }
     
     
     
@@ -231,6 +231,9 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
                 if (jsonValue != null) {
                     //Now apply the animation
+                    if (jsonValue.indexOf("$") == 0) {
+                        jsonValue = ((JSONObject) getJSONObject()).optString(jsonValue.substring(1));
+                    }
                     if (elem != null) {
                         try {
                             String opacityValue = hashMapOpacityRange.get(jsonValue);
@@ -259,6 +262,11 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
 
+        //Initialize values if necessary
+        if (getOpacity() == null) {
+            setOpacity("");
+        }
+        
         ArrayList<String> inputArray, opacityRange;
         inputArray = mapAnimation.attributeParser(getInput(), true);
         opacityRange = computeRange(getOpacity(), inputArray.size());

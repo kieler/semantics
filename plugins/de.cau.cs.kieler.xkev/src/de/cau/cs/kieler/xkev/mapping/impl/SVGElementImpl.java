@@ -42,185 +42,185 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SVGElementImpl extends EObjectImpl implements SVGElement {
     /**
-	 * The cached value of the '{@link #getAnimation() <em>Animation</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAnimation() <em>Animation</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAnimation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnimation()
+     * @generated
+     * @ordered
+     */
     protected EList<Animation> animation;
 
     /**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
     protected static final String ID_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
     protected String id = ID_EDEFAULT;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SVGElementImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.SVG_ELEMENT;
-	}
+        return MappingPackage.Literals.SVG_ELEMENT;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Animation> getAnimation() {
-		if (animation == null) {
-			animation = new EObjectContainmentEList<Animation>(Animation.class, this, MappingPackage.SVG_ELEMENT__ANIMATION);
-		}
-		return animation;
-	}
+        if (animation == null) {
+            animation = new EObjectContainmentEList<Animation>(Animation.class, this, MappingPackage.SVG_ELEMENT__ANIMATION);
+        }
+        return animation;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.SVG_ELEMENT__ID, oldId, id));
-	}
+        String oldId = id;
+        id = newId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.SVG_ELEMENT__ID, oldId, id));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case MappingPackage.SVG_ELEMENT__ANIMATION:
-				return ((InternalEList<?>)getAnimation()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_ELEMENT__ANIMATION:
+                return ((InternalEList<?>)getAnimation()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.SVG_ELEMENT__ANIMATION:
-				return getAnimation();
-			case MappingPackage.SVG_ELEMENT__ID:
-				return getId();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_ELEMENT__ANIMATION:
+                return getAnimation();
+            case MappingPackage.SVG_ELEMENT__ID:
+                return getId();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.SVG_ELEMENT__ANIMATION:
-				getAnimation().clear();
-				getAnimation().addAll((Collection<? extends Animation>)newValue);
-				return;
-			case MappingPackage.SVG_ELEMENT__ID:
-				setId((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_ELEMENT__ANIMATION:
+                getAnimation().clear();
+                getAnimation().addAll((Collection<? extends Animation>)newValue);
+                return;
+            case MappingPackage.SVG_ELEMENT__ID:
+                setId((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.SVG_ELEMENT__ANIMATION:
-				getAnimation().clear();
-				return;
-			case MappingPackage.SVG_ELEMENT__ID:
-				setId(ID_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_ELEMENT__ANIMATION:
+                getAnimation().clear();
+                return;
+            case MappingPackage.SVG_ELEMENT__ID:
+                setId(ID_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.SVG_ELEMENT__ANIMATION:
-				return animation != null && !animation.isEmpty();
-			case MappingPackage.SVG_ELEMENT__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.SVG_ELEMENT__ANIMATION:
+                return animation != null && !animation.isEmpty();
+            case MappingPackage.SVG_ELEMENT__ID:
+                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (id: ");
+        result.append(id);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SVGElementImpl

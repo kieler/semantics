@@ -18,101 +18,101 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface MappingFactory extends EFactory {
     /**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     MappingFactory eINSTANCE = de.cau.cs.kieler.xkev.mapping.impl.MappingFactoryImpl.init();
 
     /**
-	 * Returns a new object of class '<em>SVG File</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>SVG File</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>SVG File</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>SVG File</em>'.
+     * @generated
+     */
     SVGFile createSVGFile();
 
     /**
-	 * Returns a new object of class '<em>SVG Element</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>SVG Element</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>SVG Element</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>SVG Element</em>'.
+     * @generated
+     */
     SVGElement createSVGElement();
 
     /**
-	 * Returns a new object of class '<em>Opacity</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Opacity</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Opacity</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Opacity</em>'.
+     * @generated
+     */
     Opacity createOpacity();
 
     /**
-	 * Returns a new object of class '<em>Move Path</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Move Path</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Move Path</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Move Path</em>'.
+     * @generated
+     */
     MovePath createMovePath();
 
     /**
-	 * Returns a new object of class '<em>Rotate</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Rotate</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Rotate</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Rotate</em>'.
+     * @generated
+     */
     Rotate createRotate();
 
     /**
-	 * Returns a new object of class '<em>Move</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Move</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Move</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Move</em>'.
+     * @generated
+     */
     Move createMove();
 
     /**
-	 * Returns a new object of class '<em>Colorize</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Colorize</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Colorize</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Colorize</em>'.
+     * @generated
+     */
     Colorize createColorize();
 
     /**
-	 * Returns a new object of class '<em>Text</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Text</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Text</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Text</em>'.
+     * @generated
+     */
     Text createText();
 
     /**
-	 * Returns a new object of class '<em>Move To</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Move To</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Move To</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Move To</em>'.
+     * @generated
+     */
 	MoveTo createMoveTo();
 
 				/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
+     * @return the package supported by this factory.
+     * @generated
+     */
     MappingPackage getMappingPackage();
 
 } //MappingFactory

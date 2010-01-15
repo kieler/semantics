@@ -44,43 +44,43 @@ import org.w3c.dom.svg.SVGLocatable;
  */
 public class MoveImpl extends AnimationImpl implements Move {
     /**
-	 * The default value of the '{@link #getX_range() <em>Xrange</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getX_range() <em>Xrange</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getX_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getX_range()
+     * @generated
+     * @ordered
+     */
     protected static final String XRANGE_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getX_range() <em>Xrange</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getX_range() <em>Xrange</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getX_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getX_range()
+     * @generated
+     * @ordered
+     */
     protected String x_range = XRANGE_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getY_range() <em>Yrange</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getY_range() <em>Yrange</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getY_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getY_range()
+     * @generated
+     * @ordered
+     */
     protected static final String YRANGE_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getY_range() <em>Yrange</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getY_range() <em>Yrange</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getY_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getY_range()
+     * @generated
+     * @ordered
+     */
     protected String y_range = YRANGE_EDEFAULT;
 
     /**
@@ -95,151 +95,151 @@ public class MoveImpl extends AnimationImpl implements Move {
     
     
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected MoveImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.MOVE;
-	}
+        return MappingPackage.Literals.MOVE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getX_range() {
-		return x_range;
-	}
+        return x_range;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setX_range(String newX_range) {
-		String oldX_range = x_range;
-		x_range = newX_range;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE, oldX_range, x_range));
-	}
+        String oldX_range = x_range;
+        x_range = newX_range;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE, oldX_range, x_range));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getY_range() {
-		return y_range;
-	}
+        return y_range;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setY_range(String newY_range) {
-		String oldY_range = y_range;
-		y_range = newY_range;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
-	}
+        String oldY_range = y_range;
+        y_range = newY_range;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.MOVE__XRANGE:
-				return getX_range();
-			case MappingPackage.MOVE__YRANGE:
-				return getY_range();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                return getX_range();
+            case MappingPackage.MOVE__YRANGE:
+                return getY_range();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.MOVE__XRANGE:
-				setX_range((String)newValue);
-				return;
-			case MappingPackage.MOVE__YRANGE:
-				setY_range((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                setX_range((String)newValue);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.MOVE__XRANGE:
-				setX_range(XRANGE_EDEFAULT);
-				return;
-			case MappingPackage.MOVE__YRANGE:
-				setY_range(YRANGE_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                setX_range(XRANGE_EDEFAULT);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range(YRANGE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.MOVE__XRANGE:
-				return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
-			case MappingPackage.MOVE__YRANGE:
-				return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
+            case MappingPackage.MOVE__YRANGE:
+                return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (x_range: ");
-		result.append(x_range);
-		result.append(", y_range: ");
-		result.append(y_range);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (x_range: ");
+        result.append(x_range);
+        result.append(", y_range: ");
+        result.append(y_range);
+        result.append(')');
+        return result.toString();
+    }
     
     //Computes the range values
     private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
@@ -291,6 +291,9 @@ public class MoveImpl extends AnimationImpl implements Move {
                 String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
                 if (jsonValue != null) {
                     //Now apply the animation
+                    if (jsonValue.indexOf("$") == 0) {
+                        jsonValue = ((JSONObject) getJSONObject()).optString(jsonValue.substring(1));
+                    }
                     if (elem != null) {
                         try {
                             //BoundingBox is always the same. so get the x,y position of the upperleft corner
@@ -366,8 +369,18 @@ public class MoveImpl extends AnimationImpl implements Move {
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
 
+        //If the attribute is null, set the default value to the empty string
+        if (getX_range() == null) {
+            setX_range("");
+        }
+        
+        if (getY_range() == null) {
+            setY_range("");
+        }
+
         ArrayList<String> inputArray, xRange, yRange;
         inputArray = mapAnimation.attributeParser(getInput(), true);
+        
         xRange = computeRange(getX_range(), inputArray.size());
         yRange = computeRange(getY_range(), inputArray.size());
         

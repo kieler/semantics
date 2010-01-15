@@ -3,12 +3,12 @@
   <svgElement id="water">
     <animation xsi:type="mapping:Move" input="0..28" x_range="" y_range="71..350"/>
     <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="blue, red, yellow, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
-    <animation xsi:type="mapping:Move" input="29..58" x_range="" y_range="350..71"/>
+    <animation xsi:type="mapping:Move" input="29..56" y_range="350..71" />
     <animation xsi:type="mapping:Colorize" input="on,off" fill_color="#626262, red" key="color"/>
   </svgElement>
   <svgElement id="text">
     <animation xsi:type="mapping:Text" input="0,3,8,12,45,56" key="water" text_value="Leer, voller als eben, 100.0945, noch mehr, heiß, kalt" font_size="12,10,35,40,32,12,12,12" font_family="Arial,Verdana, Times New Roman,Verdana,Verdana, Courier" />
-    <animation xsi:type="mapping:Colorize" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow" key="water"/>
+    <animation xsi:type="mapping:Colorize" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
   </svgElement>
   
 </mapping:SVGFile>

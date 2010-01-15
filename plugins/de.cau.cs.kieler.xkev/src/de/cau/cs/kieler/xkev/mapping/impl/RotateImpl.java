@@ -44,43 +44,43 @@ import org.w3c.dom.svg.SVGLocatable;
  */
 public class RotateImpl extends AnimationImpl implements Rotate {
     /**
-	 * The default value of the '{@link #getAngle_range() <em>Angle range</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAngle_range() <em>Angle range</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAngle_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAngle_range()
+     * @generated
+     * @ordered
+     */
     protected static final String ANGLE_RANGE_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getAngle_range() <em>Angle range</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAngle_range() <em>Angle range</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAngle_range()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAngle_range()
+     * @generated
+     * @ordered
+     */
     protected String angle_range = ANGLE_RANGE_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAnchor_point()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnchor_point()
+     * @generated
+     * @ordered
+     */
     protected static final String ANCHOR_POINT_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAnchor_point()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnchor_point()
+     * @generated
+     * @ordered
+     */
     protected String anchor_point = ANCHOR_POINT_EDEFAULT;
 
     /**
@@ -89,151 +89,151 @@ public class RotateImpl extends AnimationImpl implements Rotate {
     private HashMap<String, String> hashMap = null;
     
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected RotateImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.ROTATE;
-	}
+        return MappingPackage.Literals.ROTATE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getAngle_range() {
-		return angle_range;
-	}
+        return angle_range;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setAngle_range(String newAngle_range) {
-		String oldAngle_range = angle_range;
-		angle_range = newAngle_range;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__ANGLE_RANGE, oldAngle_range, angle_range));
-	}
+        String oldAngle_range = angle_range;
+        angle_range = newAngle_range;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__ANGLE_RANGE, oldAngle_range, angle_range));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getAnchor_point() {
-		return anchor_point;
-	}
+        return anchor_point;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setAnchor_point(String newAnchor_point) {
-		String oldAnchor_point = anchor_point;
-		anchor_point = newAnchor_point;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__ANCHOR_POINT, oldAnchor_point, anchor_point));
-	}
+        String oldAnchor_point = anchor_point;
+        anchor_point = newAnchor_point;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ROTATE__ANCHOR_POINT, oldAnchor_point, anchor_point));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.ROTATE__ANGLE_RANGE:
-				return getAngle_range();
-			case MappingPackage.ROTATE__ANCHOR_POINT:
-				return getAnchor_point();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.ROTATE__ANGLE_RANGE:
+                return getAngle_range();
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                return getAnchor_point();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.ROTATE__ANGLE_RANGE:
-				setAngle_range((String)newValue);
-				return;
-			case MappingPackage.ROTATE__ANCHOR_POINT:
-				setAnchor_point((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.ROTATE__ANGLE_RANGE:
+                setAngle_range((String)newValue);
+                return;
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                setAnchor_point((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.ROTATE__ANGLE_RANGE:
-				setAngle_range(ANGLE_RANGE_EDEFAULT);
-				return;
-			case MappingPackage.ROTATE__ANCHOR_POINT:
-				setAnchor_point(ANCHOR_POINT_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.ROTATE__ANGLE_RANGE:
+                setAngle_range(ANGLE_RANGE_EDEFAULT);
+                return;
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                setAnchor_point(ANCHOR_POINT_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.ROTATE__ANGLE_RANGE:
-				return ANGLE_RANGE_EDEFAULT == null ? angle_range != null : !ANGLE_RANGE_EDEFAULT.equals(angle_range);
-			case MappingPackage.ROTATE__ANCHOR_POINT:
-				return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.ROTATE__ANGLE_RANGE:
+                return ANGLE_RANGE_EDEFAULT == null ? angle_range != null : !ANGLE_RANGE_EDEFAULT.equals(angle_range);
+            case MappingPackage.ROTATE__ANCHOR_POINT:
+                return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (angle_range: ");
-		result.append(angle_range);
-		result.append(", anchor_point: ");
-		result.append(anchor_point);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (angle_range: ");
+        result.append(angle_range);
+        result.append(", anchor_point: ");
+        result.append(anchor_point);
+        result.append(')');
+        return result.toString();
+    }
 
     //Computes the range values
     private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
@@ -279,6 +279,9 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                 Element elem = getSVGElement();
                 String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());            
                 if (jsonValue != null) {
+                    if (jsonValue.indexOf("$") == 0) {
+                        jsonValue = ((JSONObject) getJSONObject()).optString(jsonValue.substring(1));
+                    }
                     float pivotX = 0, pivotY = 0;
                     if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
                         Scanner sc = new Scanner(getAnchor_point()).useDelimiter("[,]");
@@ -329,6 +332,14 @@ public class RotateImpl extends AnimationImpl implements Rotate {
      */
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
+
+        //Initialize values if necessary
+        if (getAnchor_point() == null) {
+            setAnchor_point("");
+        }
+        if (getAngle_range() == null) {
+            setAngle_range("");
+        }
         
         ArrayList<String> inputArray, angleRange;
         inputArray = mapAnimation.attributeParser(getInput(), true);

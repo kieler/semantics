@@ -43,23 +43,23 @@ import org.w3c.dom.svg.SVGLocatable;
 public class MoveToImpl extends AnimationImpl implements MoveTo {
     
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected MoveToImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.MOVE_TO;
-	}
+        return MappingPackage.Literals.MOVE_TO;
+    }
 
 
     //Computes the range values

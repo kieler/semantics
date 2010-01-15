@@ -50,63 +50,63 @@ import org.w3c.dom.svg.SVGPoint;
  */
 public class MovePathImpl extends AnimationImpl implements MovePath {
     /**
-	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getPath()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getPath()
+     * @generated
+     * @ordered
+     */
     protected static final String PATH_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getPath()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getPath()
+     * @generated
+     * @ordered
+     */
     protected String path = PATH_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAnchor_point()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnchor_point()
+     * @generated
+     * @ordered
+     */
     protected static final String ANCHOR_POINT_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAnchor_point()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnchor_point()
+     * @generated
+     * @ordered
+     */
     protected String anchor_point = ANCHOR_POINT_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAuto_orientation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAuto_orientation()
+     * @generated
+     * @ordered
+     */
     protected static final String AUTO_ORIENTATION_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getAuto_orientation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAuto_orientation()
+     * @generated
+     * @ordered
+     */
     protected String auto_orientation = AUTO_ORIENTATION_EDEFAULT;
 
     private HashMap<String, HashMap<String, String>> hashMapList = null;
@@ -114,190 +114,202 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected MovePathImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return MappingPackage.Literals.MOVE_PATH;
-	}
+        return MappingPackage.Literals.MOVE_PATH;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getPath() {
-		return path;
-	}
+        return path;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setPath(String newPath) {
-		String oldPath = path;
-		path = newPath;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__PATH, oldPath, path));
-	}
+        String oldPath = path;
+        path = newPath;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__PATH, oldPath, path));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getAnchor_point() {
-		return anchor_point;
-	}
+        return anchor_point;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setAnchor_point(String newAnchor_point) {
-		String oldAnchor_point = anchor_point;
-		anchor_point = newAnchor_point;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchor_point, anchor_point));
-	}
+        String oldAnchor_point = anchor_point;
+        anchor_point = newAnchor_point;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchor_point, anchor_point));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getAuto_orientation() {
-		return auto_orientation;
-	}
+        return auto_orientation;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setAuto_orientation(String newAuto_orientation) {
-		String oldAuto_orientation = auto_orientation;
-		auto_orientation = newAuto_orientation;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAuto_orientation, auto_orientation));
-	}
+        String oldAuto_orientation = auto_orientation;
+        auto_orientation = newAuto_orientation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAuto_orientation, auto_orientation));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case MappingPackage.MOVE_PATH__PATH:
-				return getPath();
-			case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-				return getAnchor_point();
-			case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-				return getAuto_orientation();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE_PATH__PATH:
+                return getPath();
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                return getAnchor_point();
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                return getAuto_orientation();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case MappingPackage.MOVE_PATH__PATH:
-				setPath((String)newValue);
-				return;
-			case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-				setAnchor_point((String)newValue);
-				return;
-			case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-				setAuto_orientation((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE_PATH__PATH:
+                setPath((String)newValue);
+                return;
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                setAnchor_point((String)newValue);
+                return;
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                setAuto_orientation((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case MappingPackage.MOVE_PATH__PATH:
-				setPath(PATH_EDEFAULT);
-				return;
-			case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-				setAnchor_point(ANCHOR_POINT_EDEFAULT);
-				return;
-			case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-				setAuto_orientation(AUTO_ORIENTATION_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE_PATH__PATH:
+                setPath(PATH_EDEFAULT);
+                return;
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                setAnchor_point(ANCHOR_POINT_EDEFAULT);
+                return;
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                setAuto_orientation(AUTO_ORIENTATION_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case MappingPackage.MOVE_PATH__PATH:
-				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
-			case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-				return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
-			case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-				return AUTO_ORIENTATION_EDEFAULT == null ? auto_orientation != null : !AUTO_ORIENTATION_EDEFAULT.equals(auto_orientation);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case MappingPackage.MOVE_PATH__PATH:
+                return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                return AUTO_ORIENTATION_EDEFAULT == null ? auto_orientation != null : !AUTO_ORIENTATION_EDEFAULT.equals(auto_orientation);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (path: ");
-		result.append(path);
-		result.append(", anchor_point: ");
-		result.append(anchor_point);
-		result.append(", auto_orientation: ");
-		result.append(auto_orientation);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (path: ");
+        result.append(path);
+        result.append(", anchor_point: ");
+        result.append(anchor_point);
+        result.append(", auto_orientation: ");
+        result.append(auto_orientation);
+        result.append(')');
+        return result.toString();
+    }
 
 
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.xkev.mapping.Animation#initialize()
      */
     public void initialize() {
+        //Initialize values if necessary
+        if (getPath() == null) {
+            setPath("");
+        }
+        if (getAuto_orientation() == null) {
+            setAuto_orientation("");
+        }
+        if (getAnchor_point() == null) {
+            setAnchor_point("");
+        }
+        
+        
         //Set auto_orientation per default to false
         if (getAuto_orientation() == null || !getAuto_orientation().equalsIgnoreCase("true")) {
             setAuto_orientation("false");
