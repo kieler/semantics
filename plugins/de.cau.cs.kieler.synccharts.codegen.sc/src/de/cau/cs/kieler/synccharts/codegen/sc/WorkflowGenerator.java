@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
+import java.io.File;
 import java.util.Random;
 
 import org.eclipse.core.runtime.IStatus;
@@ -83,11 +84,11 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
-            outPath = System.getProperty("java.io.tmpdir") + "/" + randomString() + "/";
-            // for debugging un-comment the following line and replace "tam"
-            outPath = "/home/tam/scdebug/";
+            outPath = System.getProperty("java.io.tmpdir") + File.pathSeparator + randomString()
+                    + File.pathSeparator;
+            // for debugging un-comment the following line
+            outPath = "." + File.pathSeparator + "scDebug" + File.pathSeparator;
         }
-        
 
         // Outlet
         Outlet outlet = new Outlet();
