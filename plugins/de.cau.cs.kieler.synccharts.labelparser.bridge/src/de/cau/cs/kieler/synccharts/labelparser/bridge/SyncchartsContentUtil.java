@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 
 /**
  * Static helper methods for Synccharts.
@@ -53,9 +54,10 @@ public final class SyncchartsContentUtil {
     private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
     /**
-     * Determine a new unique ID for a given State. Will search sibling states (states within the
-     * same Region) and compare their IDs. Will return the next ID with the "Sn" where n is the next
-     * free integer number available, e.g. S0, S1, S2...
+     * Determine a new unique ID for a given State. Will search sibling states
+     * (states within the same Region) and compare their IDs. Will return the
+     * next ID with the "Sn" where n is the next free integer number available,
+     * e.g. S0, S1, S2...
      * 
      * @param state
      *            given State
@@ -96,9 +98,43 @@ public final class SyncchartsContentUtil {
     }
 
     /**
-     * Add a problem marker to a given EObject to indicate problems graphically in the diagram. Will
-     * silently fail at any errors, e.g. if there is no graphical editor open corresponding to the
-     * object.
+     * Get a new unique priority to a given Transition. That is the current
+     * priority will be changed if there is a conflict with any sibling
+     * Transition. Set it to the max priority of all siblings plus one.
+     * 
+     * @param transition
+     *            the input Transition whose prio will be changed
+     * @return a new unique priority
+     */
+    public static int getUniquePrio(final Transition transition) {
+        int currentPrio = transition.getPriority();
+        EList<Transition> transitions = transition.getSourceState().getOutgoingTransitions();
+        // if multiple transitions have same priority, set the current prio to a
+        // new value
+        boolean changePrio = false;
+        int newPrio = 0;
+        for (Transition transition2 : transitions) {
+            int otherPrio = transition2.getPriority();
+            // search a new unique prio
+            if (otherPrio >= newPrio) {
+                newPrio = otherPrio + 1;
+            }
+            // check if there actually is a prio conflict
+            if (otherPrio == currentPrio && transition != transition2) {
+                changePrio = true;
+            }
+        }
+        if (changePrio) {
+            return newPrio;
+        } else {
+            return currentPrio;
+        }
+    }
+
+    /**
+     * Add a problem marker to a given EObject to indicate problems graphically
+     * in the diagram. Will silently fail at any errors, e.g. if there is no
+     * graphical editor open corresponding to the object.
      * 
      * @param msg
      *            String message of the marker
@@ -135,9 +171,9 @@ public final class SyncchartsContentUtil {
     }
 
     /**
-     * Remove all custom problem markers from a given EObject to indicate problems graphically in
-     * the diagram. Will silently fail at any errors, e.g. if there is no graphical editor open
-     * corresponding to the object.
+     * Remove all custom problem markers from a given EObject to indicate
+     * problems graphically in the diagram. Will silently fail at any errors,
+     * e.g. if there is no graphical editor open corresponding to the object.
      * 
      * @param target
      *            target object
@@ -163,8 +199,9 @@ public final class SyncchartsContentUtil {
      *            the semantic object
      * @return the corresponding EditPart
      * 
-     *         TODO: search of transition edit parts iterates all edit parts and will take linear
-     *         time. You should improve this, by maybe build a local cache hash map
+     *         TODO: search of transition edit parts iterates all edit parts and
+     *         will take linear time. You should improve this, by maybe build a
+     *         local cache hash map
      */
 
     public static EditPart getEditPart(final EObject eObject) {
@@ -219,5 +256,4 @@ public final class SyncchartsContentUtil {
         }
         return null;
     }
-
 }
