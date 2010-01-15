@@ -26,6 +26,16 @@
       </content>
    </extension>
    <extension
+         id="de.cau.cs.kieler.xkev.extension.DataObserverBackhoe"
+         name="Example (Backhoe)"
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.Backhoe"
+            id="ede.cau.cs.kieler.xkev.extension.DataObserverBackhoe"
+            name="XKEV Backhoe Visualization">
+      </content>
+   </extension>
+   <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_04"
