@@ -27,21 +27,21 @@ public class Backhoe extends JSONObjectDataComponent implements
 	private int stick = 0;
 	private int bucket = 0;
 	
-	private static final int legsMAX = 22; 
+	private static final int legsMAX = 50; 
 	private static final int legsMIN = 0;
 	private static final int legsDEF = 0;
 
-	private static final int boomMAX = 45; 
-	private static final int boomMIN = -70;
-	private static final int boomDEF = -70;
+	private static final int boomMAX = 100;
+	private static final int boomMIN = 0;
+	private static final int boomDEF = 100;
 
-	private static final int stickMAX = 122; 
-	private static final int stickMIN = 10;
-	private static final int stickDEF = 122;
+	private static final int stickMAX = 100;
+	private static final int stickMIN = 0;
+	private static final int stickDEF = 100;
 
-	private static final int bucketMAX = 122; 
-	private static final int bucketMIN = 10;
-	private static final int bucketDEF = 122;
+	private static final int bucketMAX = 100;
+	private static final int bucketMIN = 0;
+	private static final int bucketDEF = 0;
 	
 	private static final double boomWIDTH = 177.37;
 	private static final double boomHEIGHT = 62.48;
@@ -138,10 +138,15 @@ public class Backhoe extends JSONObjectDataComponent implements
         	coordinatesBucket.accumulate("y", diffBucketY);
         	coordinatesBucket.accumulate("r", boom+stick+bucket);
 
-        	jSONObject.put("legs", coordinatesLegs);
-        	jSONObject.put("boom", coordinatesBoom);
-        	jSONObject.put("stick", coordinatesStick);
-        	jSONObject.put("bucket", coordinatesBucket);
+//        	jSONObject.put("legs", coordinatesLegs);
+//        	jSONObject.put("boom", coordinatesBoom);
+//        	jSONObject.put("stick", coordinatesStick);
+//        	jSONObject.put("bucket", coordinatesBucket);
+        	
+        	jSONObject.put("legs", legs);
+        	jSONObject.put("boom", boom);
+        	jSONObject.put("stick", stick);
+        	jSONObject.put("bucket", bucket);
             
             mapAnimation.doAnimations(jSONObject);
             

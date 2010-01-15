@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/backhoe.svg">
-  <svgElement id="legs">
-    <animation xsi:type="mapping:MoveTo"/>
-  </svgElement>
   <svgElement id="boom">
-    <animation xsi:type="mapping:MoveTo"/>
+    <animation xsi:type="mapping:Rotate" input="0..100" angle_range="0..-70" key="boom" anchor_point="0,58"  />
   </svgElement>
   <svgElement id="stick">
-    <animation xsi:type="mapping:MoveTo"/>
+    <animation xsi:type="mapping:Rotate" input="0..100" angle_range="0..120" key="stick" anchor_point="20,25"  />
   </svgElement>
   <svgElement id="bucket">
-    <animation xsi:type="mapping:MoveTo"/>
+    <animation xsi:type="mapping:Rotate" input="0..100" angle_range="0..75" key="bucket" anchor_point="0,36"  />
+  </svgElement>
+  <svgElement id="legs">
+    <animation xsi:type="mapping:MovePath" input="0..50" path="path_legs_down" key="legs" anchor_point="6,47" auto_orientation="false" />
+    <animation xsi:type="mapping:MovePath" input="50..100" path="path_legs_up" key="legs" anchor_point="6,47" auto_orientation="false" />
   </svgElement>
   <svgElement id="alarm">
     <animation xsi:type="mapping:Colorize" input="on" fill_color="#FF0000"/>
