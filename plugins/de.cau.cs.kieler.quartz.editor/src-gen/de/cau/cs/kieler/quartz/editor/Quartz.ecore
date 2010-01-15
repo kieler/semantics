@@ -43,19 +43,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="Name" eSuperTypes="#//QName">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="QName" eSuperTypes="#//InOutName #//UtyExpr #//Generic">
+  <eClassifiers xsi:type="ecore:EClass" name="QName" eSuperTypes="#//InOutName #//UtyExpr #//Generic #//NamedStmt">
     <eStructuralFeatures xsi:type="ecore:EReference" name="t6" eType="#//UtyExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="t5" eType="#//UtyExpr"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t24" eType="#//AtomicStmt"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" eType="#//OptUtyExprList"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stmt" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ts" eType="#//dUtyExprs"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t10" eType="#//AtomicStmt"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t08" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t10" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t24" eType="#//Stmt" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="QNameList" eSuperTypes="#//ControlList #//AssumeList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//QName"
@@ -145,8 +143,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UtyExpr" eSuperTypes="#//UtyAction #//dUtyExpr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//dUtyExprs"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="t7" eType="#//UtyExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//QName"
@@ -164,39 +160,48 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stmt" upperBound="-1" eType="#//Stmt"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t15" eType="#//Stmt" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t15" eType="#//AtomicStmt"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="dUtyExpr" eSuperTypes="#//dUtyExprs #//AtomicStmt">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t07" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t13" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t14" eType="#//Stmt" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t13" eType="#//AtomicStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t14" eType="#//AtomicStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t07" eType="#//AtomicStmt"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="dUtyExprs"/>
   <eClassifiers xsi:type="ecore:EClass" name="Generic" eSuperTypes="#//UtyExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t" eType="#//Stmt" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t23" eType="#//Stmt" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t23" eType="#//AtomicStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t" eType="#//AtomicStmt"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocStmt" eSuperTypes="#//AtomicStmt">
     <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
         eType="#//InterfaceList" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stmt" eType="#//SeqStmt"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stmt" eType="#//Stmt" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SeqStmt">
     <eStructuralFeatures xsi:type="ecore:EReference" name="s" upperBound="-1" eType="#//AtomicStmt"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Stmt" eSuperTypes="#//AtomicStmt">
+  <eClassifiers xsi:type="ecore:EClass" name="Stmt">
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//SeqStmt"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="right" upperBound="-1"
         eType="#//SeqStmt" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AtomicStmt">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//dUtyExprs"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t03" eType="#//Stmt" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t03" eType="#//AtomicStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t16" eType="#//AtomicStmt"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="t06" eType="#//dUtyExprs"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t16" eType="#//Stmt" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AtomicStmt"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedStmt" eSuperTypes="#//AtomicStmt"/>
 </ecore:EPackage>

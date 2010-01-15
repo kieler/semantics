@@ -439,13 +439,40 @@ public interface QuartzPackage extends EPackage
   int QNAME__NAMES = IN_OUT_NAME__NAMES;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int QNAME__T07 = IN_OUT_NAME_FEATURE_COUNT + 0;
+  int QNAME__EXPR = IN_OUT_NAME_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T03 = IN_OUT_NAME_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T16 = IN_OUT_NAME_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T06 = IN_OUT_NAME_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -454,7 +481,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T13 = IN_OUT_NAME_FEATURE_COUNT + 1;
+  int QNAME__T13 = IN_OUT_NAME_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>T14</b></em>' containment reference.
@@ -463,7 +490,16 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T14 = IN_OUT_NAME_FEATURE_COUNT + 2;
+  int QNAME__T14 = IN_OUT_NAME_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T07 = IN_OUT_NAME_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
@@ -472,16 +508,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__OP = IN_OUT_NAME_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__EXPR = IN_OUT_NAME_FEATURE_COUNT + 4;
+  int QNAME__OP = IN_OUT_NAME_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>T7</b></em>' containment reference.
@@ -490,7 +517,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T7 = IN_OUT_NAME_FEATURE_COUNT + 5;
+  int QNAME__T7 = IN_OUT_NAME_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -499,7 +526,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__NAME = IN_OUT_NAME_FEATURE_COUNT + 6;
+  int QNAME__NAME = IN_OUT_NAME_FEATURE_COUNT + 9;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -508,7 +535,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__TYPE = IN_OUT_NAME_FEATURE_COUNT + 7;
+  int QNAME__TYPE = IN_OUT_NAME_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>T2</b></em>' containment reference.
@@ -517,7 +544,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T2 = IN_OUT_NAME_FEATURE_COUNT + 8;
+  int QNAME__T2 = IN_OUT_NAME_FEATURE_COUNT + 11;
 
   /**
    * The feature id for the '<em><b>T4</b></em>' containment reference.
@@ -526,16 +553,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T4 = IN_OUT_NAME_FEATURE_COUNT + 9;
-
-  /**
-   * The feature id for the '<em><b>T</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__T = IN_OUT_NAME_FEATURE_COUNT + 10;
+  int QNAME__T4 = IN_OUT_NAME_FEATURE_COUNT + 12;
 
   /**
    * The feature id for the '<em><b>T23</b></em>' containment reference.
@@ -544,7 +562,16 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T23 = IN_OUT_NAME_FEATURE_COUNT + 11;
+  int QNAME__T23 = IN_OUT_NAME_FEATURE_COUNT + 13;
+
+  /**
+   * The feature id for the '<em><b>T</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T = IN_OUT_NAME_FEATURE_COUNT + 14;
 
   /**
    * The feature id for the '<em><b>T6</b></em>' containment reference.
@@ -553,7 +580,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T6 = IN_OUT_NAME_FEATURE_COUNT + 12;
+  int QNAME__T6 = IN_OUT_NAME_FEATURE_COUNT + 15;
 
   /**
    * The feature id for the '<em><b>T5</b></em>' containment reference.
@@ -562,52 +589,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T5 = IN_OUT_NAME_FEATURE_COUNT + 13;
-
-  /**
-   * The feature id for the '<em><b>Exprs</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__EXPRS = IN_OUT_NAME_FEATURE_COUNT + 14;
-
-  /**
-   * The feature id for the '<em><b>Stmt</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__STMT = IN_OUT_NAME_FEATURE_COUNT + 15;
-
-  /**
-   * The feature id for the '<em><b>Ts</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__TS = IN_OUT_NAME_FEATURE_COUNT + 16;
-
-  /**
-   * The feature id for the '<em><b>T08</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__T08 = IN_OUT_NAME_FEATURE_COUNT + 17;
-
-  /**
-   * The feature id for the '<em><b>T10</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QNAME__T10 = IN_OUT_NAME_FEATURE_COUNT + 18;
+  int QNAME__T5 = IN_OUT_NAME_FEATURE_COUNT + 16;
 
   /**
    * The feature id for the '<em><b>T24</b></em>' containment reference.
@@ -616,7 +598,25 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QNAME__T24 = IN_OUT_NAME_FEATURE_COUNT + 19;
+  int QNAME__T24 = IN_OUT_NAME_FEATURE_COUNT + 17;
+
+  /**
+   * The feature id for the '<em><b>Exprs</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__EXPRS = IN_OUT_NAME_FEATURE_COUNT + 18;
+
+  /**
+   * The feature id for the '<em><b>T10</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QNAME__T10 = IN_OUT_NAME_FEATURE_COUNT + 19;
 
   /**
    * The number of structural features of the '<em>QName</em>' class.
@@ -647,13 +647,40 @@ public interface QuartzPackage extends EPackage
   int NAME__NAMES = QNAME__NAMES;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAME__T07 = QNAME__T07;
+  int NAME__EXPR = QNAME__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T03 = QNAME__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T16 = QNAME__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T06 = QNAME__T06;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -674,6 +701,15 @@ public interface QuartzPackage extends EPackage
   int NAME__T14 = QNAME__T14;
 
   /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T07 = QNAME__T07;
+
+  /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -681,15 +717,6 @@ public interface QuartzPackage extends EPackage
    * @ordered
    */
   int NAME__OP = QNAME__OP;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__EXPR = QNAME__EXPR;
 
   /**
    * The feature id for the '<em><b>T7</b></em>' containment reference.
@@ -737,15 +764,6 @@ public interface QuartzPackage extends EPackage
   int NAME__T4 = QNAME__T4;
 
   /**
-   * The feature id for the '<em><b>T</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__T = QNAME__T;
-
-  /**
    * The feature id for the '<em><b>T23</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -753,6 +771,15 @@ public interface QuartzPackage extends EPackage
    * @ordered
    */
   int NAME__T23 = QNAME__T23;
+
+  /**
+   * The feature id for the '<em><b>T</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T = QNAME__T;
 
   /**
    * The feature id for the '<em><b>T6</b></em>' containment reference.
@@ -773,6 +800,15 @@ public interface QuartzPackage extends EPackage
   int NAME__T5 = QNAME__T5;
 
   /**
+   * The feature id for the '<em><b>T24</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME__T24 = QNAME__T24;
+
+  /**
    * The feature id for the '<em><b>Exprs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -782,33 +818,6 @@ public interface QuartzPackage extends EPackage
   int NAME__EXPRS = QNAME__EXPRS;
 
   /**
-   * The feature id for the '<em><b>Stmt</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__STMT = QNAME__STMT;
-
-  /**
-   * The feature id for the '<em><b>Ts</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__TS = QNAME__TS;
-
-  /**
-   * The feature id for the '<em><b>T08</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__T08 = QNAME__T08;
-
-  /**
    * The feature id for the '<em><b>T10</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -816,15 +825,6 @@ public interface QuartzPackage extends EPackage
    * @ordered
    */
   int NAME__T10 = QNAME__T10;
-
-  /**
-   * The feature id for the '<em><b>T24</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAME__T24 = QNAME__T24;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1271,13 +1271,49 @@ public interface QuartzPackage extends EPackage
   int ATOMIC_STMT = 35;
 
   /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATOMIC_STMT__EXPR = 0;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATOMIC_STMT__T03 = 1;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATOMIC_STMT__T16 = 2;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATOMIC_STMT__T06 = 3;
+
+  /**
    * The number of structural features of the '<em>Atomic Stmt</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATOMIC_STMT_FEATURE_COUNT = 0;
+  int ATOMIC_STMT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyActionImpl <em>Uty Action</em>}' class.
@@ -1288,6 +1324,42 @@ public interface QuartzPackage extends EPackage
    * @generated
    */
   int UTY_ACTION = 27;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_ACTION__EXPR = ATOMIC_STMT__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_ACTION__T03 = ATOMIC_STMT__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_ACTION__T16 = ATOMIC_STMT__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_ACTION__T06 = ATOMIC_STMT__T06;
 
   /**
    * The number of structural features of the '<em>Uty Action</em>' class.
@@ -1309,13 +1381,40 @@ public interface QuartzPackage extends EPackage
   int UTY_EXPR = 26;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T07 = UTY_ACTION_FEATURE_COUNT + 0;
+  int UTY_EXPR__EXPR = UTY_ACTION__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_EXPR__T03 = UTY_ACTION__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_EXPR__T16 = UTY_ACTION__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_EXPR__T06 = UTY_ACTION__T06;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -1324,7 +1423,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T13 = UTY_ACTION_FEATURE_COUNT + 1;
+  int UTY_EXPR__T13 = UTY_ACTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>T14</b></em>' containment reference.
@@ -1333,7 +1432,16 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T14 = UTY_ACTION_FEATURE_COUNT + 2;
+  int UTY_EXPR__T14 = UTY_ACTION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UTY_EXPR__T07 = UTY_ACTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
@@ -1345,22 +1453,13 @@ public interface QuartzPackage extends EPackage
   int UTY_EXPR__OP = UTY_ACTION_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int UTY_EXPR__EXPR = UTY_ACTION_FEATURE_COUNT + 4;
-
-  /**
    * The feature id for the '<em><b>T7</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T7 = UTY_ACTION_FEATURE_COUNT + 5;
+  int UTY_EXPR__T7 = UTY_ACTION_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -1369,7 +1468,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__NAME = UTY_ACTION_FEATURE_COUNT + 6;
+  int UTY_EXPR__NAME = UTY_ACTION_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -1378,7 +1477,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__TYPE = UTY_ACTION_FEATURE_COUNT + 7;
+  int UTY_EXPR__TYPE = UTY_ACTION_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>T2</b></em>' containment reference.
@@ -1387,7 +1486,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T2 = UTY_ACTION_FEATURE_COUNT + 8;
+  int UTY_EXPR__T2 = UTY_ACTION_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>T4</b></em>' containment reference.
@@ -1396,7 +1495,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR__T4 = UTY_ACTION_FEATURE_COUNT + 9;
+  int UTY_EXPR__T4 = UTY_ACTION_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>Uty Expr</em>' class.
@@ -1405,7 +1504,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UTY_EXPR_FEATURE_COUNT = UTY_ACTION_FEATURE_COUNT + 10;
+  int UTY_EXPR_FEATURE_COUNT = UTY_ACTION_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.FixpointEqListImpl <em>Fixpoint Eq List</em>}' class.
@@ -1418,13 +1517,40 @@ public interface QuartzPackage extends EPackage
   int FIXPOINT_EQ_LIST = 22;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIXPOINT_EQ_LIST__T07 = UTY_EXPR__T07;
+  int FIXPOINT_EQ_LIST__EXPR = UTY_EXPR__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIXPOINT_EQ_LIST__T03 = UTY_EXPR__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIXPOINT_EQ_LIST__T16 = UTY_EXPR__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIXPOINT_EQ_LIST__T06 = UTY_EXPR__T06;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -1445,6 +1571,15 @@ public interface QuartzPackage extends EPackage
   int FIXPOINT_EQ_LIST__T14 = UTY_EXPR__T14;
 
   /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIXPOINT_EQ_LIST__T07 = UTY_EXPR__T07;
+
+  /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1452,15 +1587,6 @@ public interface QuartzPackage extends EPackage
    * @ordered
    */
   int FIXPOINT_EQ_LIST__OP = UTY_EXPR__OP;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FIXPOINT_EQ_LIST__EXPR = UTY_EXPR__EXPR;
 
   /**
    * The feature id for the '<em><b>T7</b></em>' containment reference.
@@ -1620,6 +1746,42 @@ public interface QuartzPackage extends EPackage
   int CASE_LIST = 28;
 
   /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CASE_LIST__EXPR = ATOMIC_STMT__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CASE_LIST__T03 = ATOMIC_STMT__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CASE_LIST__T16 = ATOMIC_STMT__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CASE_LIST__T06 = ATOMIC_STMT__T06;
+
+  /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1685,13 +1847,40 @@ public interface QuartzPackage extends EPackage
   int DUTY_EXPR = 29;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DUTY_EXPR__T07 = DUTY_EXPRS_FEATURE_COUNT + 0;
+  int DUTY_EXPR__EXPR = DUTY_EXPRS_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DUTY_EXPR__T03 = DUTY_EXPRS_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DUTY_EXPR__T16 = DUTY_EXPRS_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DUTY_EXPR__T06 = DUTY_EXPRS_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -1700,7 +1889,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DUTY_EXPR__T13 = DUTY_EXPRS_FEATURE_COUNT + 1;
+  int DUTY_EXPR__T13 = DUTY_EXPRS_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>T14</b></em>' containment reference.
@@ -1709,7 +1898,16 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DUTY_EXPR__T14 = DUTY_EXPRS_FEATURE_COUNT + 2;
+  int DUTY_EXPR__T14 = DUTY_EXPRS_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DUTY_EXPR__T07 = DUTY_EXPRS_FEATURE_COUNT + 6;
 
   /**
    * The number of structural features of the '<em>dUty Expr</em>' class.
@@ -1718,7 +1916,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DUTY_EXPR_FEATURE_COUNT = DUTY_EXPRS_FEATURE_COUNT + 3;
+  int DUTY_EXPR_FEATURE_COUNT = DUTY_EXPRS_FEATURE_COUNT + 7;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.GenericImpl <em>Generic</em>}' class.
@@ -1731,13 +1929,40 @@ public interface QuartzPackage extends EPackage
   int GENERIC = 31;
 
   /**
-   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GENERIC__T07 = UTY_EXPR__T07;
+  int GENERIC__EXPR = UTY_EXPR__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC__T03 = UTY_EXPR__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC__T16 = UTY_EXPR__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC__T06 = UTY_EXPR__T06;
 
   /**
    * The feature id for the '<em><b>T13</b></em>' containment reference.
@@ -1758,6 +1983,15 @@ public interface QuartzPackage extends EPackage
   int GENERIC__T14 = UTY_EXPR__T14;
 
   /**
+   * The feature id for the '<em><b>T07</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC__T07 = UTY_EXPR__T07;
+
+  /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1765,15 +1999,6 @@ public interface QuartzPackage extends EPackage
    * @ordered
    */
   int GENERIC__OP = UTY_EXPR__OP;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GENERIC__EXPR = UTY_EXPR__EXPR;
 
   /**
    * The feature id for the '<em><b>T7</b></em>' containment reference.
@@ -1821,22 +2046,22 @@ public interface QuartzPackage extends EPackage
   int GENERIC__T4 = UTY_EXPR__T4;
 
   /**
-   * The feature id for the '<em><b>T</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GENERIC__T = UTY_EXPR_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>T23</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GENERIC__T23 = UTY_EXPR_FEATURE_COUNT + 1;
+  int GENERIC__T23 = UTY_EXPR_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>T</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC__T = UTY_EXPR_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Generic</em>' class.
@@ -1856,6 +2081,42 @@ public interface QuartzPackage extends EPackage
    * @generated
    */
   int LOC_STMT = 32;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOC_STMT__EXPR = ATOMIC_STMT__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOC_STMT__T03 = ATOMIC_STMT__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOC_STMT__T16 = ATOMIC_STMT__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOC_STMT__T06 = ATOMIC_STMT__T06;
 
   /**
    * The feature id for the '<em><b>Locals</b></em>' containment reference list.
@@ -1929,7 +2190,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STMT__LEFT = ATOMIC_STMT_FEATURE_COUNT + 0;
+  int STMT__LEFT = 0;
 
   /**
    * The feature id for the '<em><b>Right</b></em>' containment reference list.
@@ -1938,43 +2199,7 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STMT__RIGHT = ATOMIC_STMT_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STMT__EXPR = ATOMIC_STMT_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>T03</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STMT__T03 = ATOMIC_STMT_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>T06</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STMT__T06 = ATOMIC_STMT_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>T16</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STMT__T16 = ATOMIC_STMT_FEATURE_COUNT + 5;
+  int STMT__RIGHT = 1;
 
   /**
    * The number of structural features of the '<em>Stmt</em>' class.
@@ -1983,7 +2208,62 @@ public interface QuartzPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STMT_FEATURE_COUNT = ATOMIC_STMT_FEATURE_COUNT + 6;
+  int STMT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.NamedStmtImpl <em>Named Stmt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.quartz.editor.quartz.impl.NamedStmtImpl
+   * @see de.cau.cs.kieler.quartz.editor.quartz.impl.QuartzPackageImpl#getNamedStmt()
+   * @generated
+   */
+  int NAMED_STMT = 36;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_STMT__EXPR = ATOMIC_STMT__EXPR;
+
+  /**
+   * The feature id for the '<em><b>T03</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_STMT__T03 = ATOMIC_STMT__T03;
+
+  /**
+   * The feature id for the '<em><b>T16</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_STMT__T16 = ATOMIC_STMT__T16;
+
+  /**
+   * The feature id for the '<em><b>T06</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_STMT__T06 = ATOMIC_STMT__T06;
+
+  /**
+   * The number of structural features of the '<em>Named Stmt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_STMT_FEATURE_COUNT = ATOMIC_STMT_FEATURE_COUNT + 0;
 
 
   /**
@@ -2264,6 +2544,17 @@ public interface QuartzPackage extends EPackage
   EReference getQName_T5();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getT24 <em>T24</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T24</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.QName#getT24()
+   * @see #getQName()
+   * @generated
+   */
+  EReference getQName_T24();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getExprs <em>Exprs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2275,39 +2566,6 @@ public interface QuartzPackage extends EPackage
   EReference getQName_Exprs();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getStmt <em>Stmt</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Stmt</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QName#getStmt()
-   * @see #getQName()
-   * @generated
-   */
-  EReference getQName_Stmt();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getTs <em>Ts</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Ts</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QName#getTs()
-   * @see #getQName()
-   * @generated
-   */
-  EReference getQName_Ts();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getT08 <em>T08</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T08</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QName#getT08()
-   * @see #getQName()
-   * @generated
-   */
-  EReference getQName_T08();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getT10 <em>T10</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2317,17 +2575,6 @@ public interface QuartzPackage extends EPackage
    * @generated
    */
   EReference getQName_T10();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.QName#getT24 <em>T24</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T24</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QName#getT24()
-   * @see #getQName()
-   * @generated
-   */
-  EReference getQName_T24();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.quartz.editor.quartz.QNameList <em>QName List</em>}'.
@@ -2829,17 +3076,6 @@ public interface QuartzPackage extends EPackage
   EAttribute getUtyExpr_Op();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getExpr()
-   * @see #getUtyExpr()
-   * @generated
-   */
-  EReference getUtyExpr_Expr();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getT7 <em>T7</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2958,17 +3194,6 @@ public interface QuartzPackage extends EPackage
   EClass getdUtyExpr();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr#getT07 <em>T07</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T07</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr#getT07()
-   * @see #getdUtyExpr()
-   * @generated
-   */
-  EReference getdUtyExpr_T07();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr#getT13 <em>T13</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2991,6 +3216,17 @@ public interface QuartzPackage extends EPackage
   EReference getdUtyExpr_T14();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr#getT07 <em>T07</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T07</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr#getT07()
+   * @see #getdUtyExpr()
+   * @generated
+   */
+  EReference getdUtyExpr_T07();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.quartz.editor.quartz.dUtyExprs <em>dUty Exprs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3011,17 +3247,6 @@ public interface QuartzPackage extends EPackage
   EClass getGeneric();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Generic#getT <em>T</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.Generic#getT()
-   * @see #getGeneric()
-   * @generated
-   */
-  EReference getGeneric_T();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Generic#getT23 <em>T23</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3031,6 +3256,17 @@ public interface QuartzPackage extends EPackage
    * @generated
    */
   EReference getGeneric_T23();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Generic#getT <em>T</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.Generic#getT()
+   * @see #getGeneric()
+   * @generated
+   */
+  EReference getGeneric_T();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.quartz.editor.quartz.LocStmt <em>Loc Stmt</em>}'.
@@ -3118,50 +3354,6 @@ public interface QuartzPackage extends EPackage
   EReference getStmt_Right();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Stmt#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.Stmt#getExpr()
-   * @see #getStmt()
-   * @generated
-   */
-  EReference getStmt_Expr();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT03 <em>T03</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T03</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT03()
-   * @see #getStmt()
-   * @generated
-   */
-  EReference getStmt_T03();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT06 <em>T06</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T06</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT06()
-   * @see #getStmt()
-   * @generated
-   */
-  EReference getStmt_T06();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT16 <em>T16</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>T16</em>'.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.Stmt#getT16()
-   * @see #getStmt()
-   * @generated
-   */
-  EReference getStmt_T16();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt <em>Atomic Stmt</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3170,6 +3362,60 @@ public interface QuartzPackage extends EPackage
    * @generated
    */
   EClass getAtomicStmt();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getExpr <em>Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expr</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getExpr()
+   * @see #getAtomicStmt()
+   * @generated
+   */
+  EReference getAtomicStmt_Expr();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT03 <em>T03</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T03</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT03()
+   * @see #getAtomicStmt()
+   * @generated
+   */
+  EReference getAtomicStmt_T03();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT16 <em>T16</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T16</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT16()
+   * @see #getAtomicStmt()
+   * @generated
+   */
+  EReference getAtomicStmt_T16();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT06 <em>T06</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T06</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT06()
+   * @see #getAtomicStmt()
+   * @generated
+   */
+  EReference getAtomicStmt_T06();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.quartz.editor.quartz.NamedStmt <em>Named Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Named Stmt</em>'.
+   * @see de.cau.cs.kieler.quartz.editor.quartz.NamedStmt
+   * @generated
+   */
+  EClass getNamedStmt();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -3421,6 +3667,14 @@ public interface QuartzPackage extends EPackage
     EReference QNAME__T5 = eINSTANCE.getQName_T5();
 
     /**
+     * The meta object literal for the '<em><b>T24</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference QNAME__T24 = eINSTANCE.getQName_T24();
+
+    /**
      * The meta object literal for the '<em><b>Exprs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3429,44 +3683,12 @@ public interface QuartzPackage extends EPackage
     EReference QNAME__EXPRS = eINSTANCE.getQName_Exprs();
 
     /**
-     * The meta object literal for the '<em><b>Stmt</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference QNAME__STMT = eINSTANCE.getQName_Stmt();
-
-    /**
-     * The meta object literal for the '<em><b>Ts</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference QNAME__TS = eINSTANCE.getQName_Ts();
-
-    /**
-     * The meta object literal for the '<em><b>T08</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference QNAME__T08 = eINSTANCE.getQName_T08();
-
-    /**
      * The meta object literal for the '<em><b>T10</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference QNAME__T10 = eINSTANCE.getQName_T10();
-
-    /**
-     * The meta object literal for the '<em><b>T24</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference QNAME__T24 = eINSTANCE.getQName_T24();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameListImpl <em>QName List</em>}' class.
@@ -3881,14 +4103,6 @@ public interface QuartzPackage extends EPackage
     EAttribute UTY_EXPR__OP = eINSTANCE.getUtyExpr_Op();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference UTY_EXPR__EXPR = eINSTANCE.getUtyExpr_Expr();
-
-    /**
      * The meta object literal for the '<em><b>T7</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3983,14 +4197,6 @@ public interface QuartzPackage extends EPackage
     EClass DUTY_EXPR = eINSTANCE.getdUtyExpr();
 
     /**
-     * The meta object literal for the '<em><b>T07</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DUTY_EXPR__T07 = eINSTANCE.getdUtyExpr_T07();
-
-    /**
      * The meta object literal for the '<em><b>T13</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4005,6 +4211,14 @@ public interface QuartzPackage extends EPackage
      * @generated
      */
     EReference DUTY_EXPR__T14 = eINSTANCE.getdUtyExpr_T14();
+
+    /**
+     * The meta object literal for the '<em><b>T07</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DUTY_EXPR__T07 = eINSTANCE.getdUtyExpr_T07();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.dUtyExprsImpl <em>dUty Exprs</em>}' class.
@@ -4027,20 +4241,20 @@ public interface QuartzPackage extends EPackage
     EClass GENERIC = eINSTANCE.getGeneric();
 
     /**
-     * The meta object literal for the '<em><b>T</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference GENERIC__T = eINSTANCE.getGeneric_T();
-
-    /**
      * The meta object literal for the '<em><b>T23</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference GENERIC__T23 = eINSTANCE.getGeneric_T23();
+
+    /**
+     * The meta object literal for the '<em><b>T</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference GENERIC__T = eINSTANCE.getGeneric_T();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.LocStmtImpl <em>Loc Stmt</em>}' class.
@@ -4113,38 +4327,6 @@ public interface QuartzPackage extends EPackage
     EReference STMT__RIGHT = eINSTANCE.getStmt_Right();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STMT__EXPR = eINSTANCE.getStmt_Expr();
-
-    /**
-     * The meta object literal for the '<em><b>T03</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STMT__T03 = eINSTANCE.getStmt_T03();
-
-    /**
-     * The meta object literal for the '<em><b>T06</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STMT__T06 = eINSTANCE.getStmt_T06();
-
-    /**
-     * The meta object literal for the '<em><b>T16</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STMT__T16 = eINSTANCE.getStmt_T16();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.AtomicStmtImpl <em>Atomic Stmt</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4153,6 +4335,48 @@ public interface QuartzPackage extends EPackage
      * @generated
      */
     EClass ATOMIC_STMT = eINSTANCE.getAtomicStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATOMIC_STMT__EXPR = eINSTANCE.getAtomicStmt_Expr();
+
+    /**
+     * The meta object literal for the '<em><b>T03</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATOMIC_STMT__T03 = eINSTANCE.getAtomicStmt_T03();
+
+    /**
+     * The meta object literal for the '<em><b>T16</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATOMIC_STMT__T16 = eINSTANCE.getAtomicStmt_T16();
+
+    /**
+     * The meta object literal for the '<em><b>T06</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATOMIC_STMT__T06 = eINSTANCE.getAtomicStmt_T06();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.quartz.editor.quartz.impl.NamedStmtImpl <em>Named Stmt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.quartz.editor.quartz.impl.NamedStmtImpl
+     * @see de.cau.cs.kieler.quartz.editor.quartz.impl.QuartzPackageImpl#getNamedStmt()
+     * @generated
+     */
+    EClass NAMED_STMT = eINSTANCE.getNamedStmt();
 
   }
 

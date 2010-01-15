@@ -41,8 +41,8 @@ public class QuartzFormatter extends AbstractDeclarativeFormatter {
                 c.setNoSpace().after(keyword);
             }
         }
-        c.setIndentation(f.getAtomicStmtAccess().getLeftCurlyBracketKeyword_23_0(), f.getAtomicStmtAccess()
-                .getRightCurlyBracketKeyword_23_2());
+        c.setIndentation(f.getLocStmtAccess().getLeftCurlyBracketKeyword_0(), f.getLocStmtAccess().getRightCurlyBracketKeyword_3()
+                );
         c.setLinewrap(2).before(f.getML_COMMENTRule());
         c.setLinewrap().before(f.getSL_COMMENTRule());
 

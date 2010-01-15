@@ -350,6 +350,15 @@ public interface QuartzFactory extends EFactory
   AtomicStmt createAtomicStmt();
 
   /**
+   * Returns a new object of class '<em>Named Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Named Stmt</em>'.
+   * @generated
+   */
+  NamedStmt createNamedStmt();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -5,10 +5,10 @@
  */
 package de.cau.cs.kieler.quartz.editor.quartz.impl;
 
+import de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.QName;
 import de.cau.cs.kieler.quartz.editor.quartz.QType;
 import de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage;
-import de.cau.cs.kieler.quartz.editor.quartz.Stmt;
 import de.cau.cs.kieler.quartz.editor.quartz.UtyExpr;
 import de.cau.cs.kieler.quartz.editor.quartz.dUtyExpr;
 import de.cau.cs.kieler.quartz.editor.quartz.dUtyExprs;
@@ -28,11 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getT07 <em>T07</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getT13 <em>T13</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getT14 <em>T14</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getT07 <em>T07</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getOp <em>Op</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getT7 <em>T7</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.UtyExprImpl#getType <em>Type</em>}</li>
@@ -46,16 +45,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class UtyExprImpl extends UtyActionImpl implements UtyExpr
 {
   /**
-   * The cached value of the '{@link #getT07() <em>T07</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getT07()
-   * @generated
-   * @ordered
-   */
-  protected Stmt t07;
-
-  /**
    * The cached value of the '{@link #getT13() <em>T13</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -63,7 +52,7 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * @generated
    * @ordered
    */
-  protected Stmt t13;
+  protected AtomicStmt t13;
 
   /**
    * The cached value of the '{@link #getT14() <em>T14</em>}' containment reference.
@@ -73,7 +62,17 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * @generated
    * @ordered
    */
-  protected Stmt t14;
+  protected AtomicStmt t14;
+
+  /**
+   * The cached value of the '{@link #getT07() <em>T07</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getT07()
+   * @generated
+   * @ordered
+   */
+  protected AtomicStmt t07;
 
   /**
    * The default value of the '{@link #getOp() <em>Op</em>}' attribute.
@@ -94,16 +93,6 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * @ordered
    */
   protected String op = OP_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpr()
-   * @generated
-   * @ordered
-   */
-  protected dUtyExprs expr;
 
   /**
    * The cached value of the '{@link #getT7() <em>T7</em>}' containment reference.
@@ -181,55 +170,7 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public Stmt getT07()
-  {
-    return t07;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetT07(Stmt newT07, NotificationChain msgs)
-  {
-    Stmt oldT07 = t07;
-    t07 = newT07;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__T07, oldT07, newT07);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setT07(Stmt newT07)
-  {
-    if (newT07 != t07)
-    {
-      NotificationChain msgs = null;
-      if (t07 != null)
-        msgs = ((InternalEObject)t07).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__T07, null, msgs);
-      if (newT07 != null)
-        msgs = ((InternalEObject)newT07).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__T07, null, msgs);
-      msgs = basicSetT07(newT07, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__T07, newT07, newT07));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Stmt getT13()
+  public AtomicStmt getT13()
   {
     return t13;
   }
@@ -239,9 +180,9 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetT13(Stmt newT13, NotificationChain msgs)
+  public NotificationChain basicSetT13(AtomicStmt newT13, NotificationChain msgs)
   {
-    Stmt oldT13 = t13;
+    AtomicStmt oldT13 = t13;
     t13 = newT13;
     if (eNotificationRequired())
     {
@@ -256,7 +197,7 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setT13(Stmt newT13)
+  public void setT13(AtomicStmt newT13)
   {
     if (newT13 != t13)
     {
@@ -277,7 +218,7 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public Stmt getT14()
+  public AtomicStmt getT14()
   {
     return t14;
   }
@@ -287,9 +228,9 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetT14(Stmt newT14, NotificationChain msgs)
+  public NotificationChain basicSetT14(AtomicStmt newT14, NotificationChain msgs)
   {
-    Stmt oldT14 = t14;
+    AtomicStmt oldT14 = t14;
     t14 = newT14;
     if (eNotificationRequired())
     {
@@ -304,7 +245,7 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setT14(Stmt newT14)
+  public void setT14(AtomicStmt newT14)
   {
     if (newT14 != t14)
     {
@@ -318,6 +259,54 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__T14, newT14, newT14));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AtomicStmt getT07()
+  {
+    return t07;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetT07(AtomicStmt newT07, NotificationChain msgs)
+  {
+    AtomicStmt oldT07 = t07;
+    t07 = newT07;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__T07, oldT07, newT07);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setT07(AtomicStmt newT07)
+  {
+    if (newT07 != t07)
+    {
+      NotificationChain msgs = null;
+      if (t07 != null)
+        msgs = ((InternalEObject)t07).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__T07, null, msgs);
+      if (newT07 != null)
+        msgs = ((InternalEObject)newT07).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__T07, null, msgs);
+      msgs = basicSetT07(newT07, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__T07, newT07, newT07));
   }
 
   /**
@@ -341,54 +330,6 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
     op = newOp;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__OP, oldOp, op));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public dUtyExprs getExpr()
-  {
-    return expr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpr(dUtyExprs newExpr, NotificationChain msgs)
-  {
-    dUtyExprs oldExpr = expr;
-    expr = newExpr;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__EXPR, oldExpr, newExpr);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpr(dUtyExprs newExpr)
-  {
-    if (newExpr != expr)
-    {
-      NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.UTY_EXPR__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.UTY_EXPR__EXPR, newExpr, newExpr));
   }
 
   /**
@@ -641,14 +582,12 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
   {
     switch (featureID)
     {
-      case QuartzPackage.UTY_EXPR__T07:
-        return basicSetT07(null, msgs);
       case QuartzPackage.UTY_EXPR__T13:
         return basicSetT13(null, msgs);
       case QuartzPackage.UTY_EXPR__T14:
         return basicSetT14(null, msgs);
-      case QuartzPackage.UTY_EXPR__EXPR:
-        return basicSetExpr(null, msgs);
+      case QuartzPackage.UTY_EXPR__T07:
+        return basicSetT07(null, msgs);
       case QuartzPackage.UTY_EXPR__T7:
         return basicSetT7(null, msgs);
       case QuartzPackage.UTY_EXPR__NAME:
@@ -673,16 +612,14 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
   {
     switch (featureID)
     {
-      case QuartzPackage.UTY_EXPR__T07:
-        return getT07();
       case QuartzPackage.UTY_EXPR__T13:
         return getT13();
       case QuartzPackage.UTY_EXPR__T14:
         return getT14();
+      case QuartzPackage.UTY_EXPR__T07:
+        return getT07();
       case QuartzPackage.UTY_EXPR__OP:
         return getOp();
-      case QuartzPackage.UTY_EXPR__EXPR:
-        return getExpr();
       case QuartzPackage.UTY_EXPR__T7:
         return getT7();
       case QuartzPackage.UTY_EXPR__NAME:
@@ -707,20 +644,17 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
   {
     switch (featureID)
     {
-      case QuartzPackage.UTY_EXPR__T07:
-        setT07((Stmt)newValue);
-        return;
       case QuartzPackage.UTY_EXPR__T13:
-        setT13((Stmt)newValue);
+        setT13((AtomicStmt)newValue);
         return;
       case QuartzPackage.UTY_EXPR__T14:
-        setT14((Stmt)newValue);
+        setT14((AtomicStmt)newValue);
+        return;
+      case QuartzPackage.UTY_EXPR__T07:
+        setT07((AtomicStmt)newValue);
         return;
       case QuartzPackage.UTY_EXPR__OP:
         setOp((String)newValue);
-        return;
-      case QuartzPackage.UTY_EXPR__EXPR:
-        setExpr((dUtyExprs)newValue);
         return;
       case QuartzPackage.UTY_EXPR__T7:
         setT7((UtyExpr)newValue);
@@ -751,20 +685,17 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
   {
     switch (featureID)
     {
-      case QuartzPackage.UTY_EXPR__T07:
-        setT07((Stmt)null);
-        return;
       case QuartzPackage.UTY_EXPR__T13:
-        setT13((Stmt)null);
+        setT13((AtomicStmt)null);
         return;
       case QuartzPackage.UTY_EXPR__T14:
-        setT14((Stmt)null);
+        setT14((AtomicStmt)null);
+        return;
+      case QuartzPackage.UTY_EXPR__T07:
+        setT07((AtomicStmt)null);
         return;
       case QuartzPackage.UTY_EXPR__OP:
         setOp(OP_EDEFAULT);
-        return;
-      case QuartzPackage.UTY_EXPR__EXPR:
-        setExpr((dUtyExprs)null);
         return;
       case QuartzPackage.UTY_EXPR__T7:
         setT7((UtyExpr)null);
@@ -795,16 +726,14 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
   {
     switch (featureID)
     {
-      case QuartzPackage.UTY_EXPR__T07:
-        return t07 != null;
       case QuartzPackage.UTY_EXPR__T13:
         return t13 != null;
       case QuartzPackage.UTY_EXPR__T14:
         return t14 != null;
+      case QuartzPackage.UTY_EXPR__T07:
+        return t07 != null;
       case QuartzPackage.UTY_EXPR__OP:
         return OP_EDEFAULT == null ? op != null : !OP_EDEFAULT.equals(op);
-      case QuartzPackage.UTY_EXPR__EXPR:
-        return expr != null;
       case QuartzPackage.UTY_EXPR__T7:
         return t7 != null;
       case QuartzPackage.UTY_EXPR__NAME:
@@ -838,9 +767,9 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
     {
       switch (derivedFeatureID)
       {
-        case QuartzPackage.UTY_EXPR__T07: return QuartzPackage.DUTY_EXPR__T07;
         case QuartzPackage.UTY_EXPR__T13: return QuartzPackage.DUTY_EXPR__T13;
         case QuartzPackage.UTY_EXPR__T14: return QuartzPackage.DUTY_EXPR__T14;
+        case QuartzPackage.UTY_EXPR__T07: return QuartzPackage.DUTY_EXPR__T07;
         default: return -1;
       }
     }
@@ -866,9 +795,9 @@ public class UtyExprImpl extends UtyActionImpl implements UtyExpr
     {
       switch (baseFeatureID)
       {
-        case QuartzPackage.DUTY_EXPR__T07: return QuartzPackage.UTY_EXPR__T07;
         case QuartzPackage.DUTY_EXPR__T13: return QuartzPackage.UTY_EXPR__T13;
         case QuartzPackage.DUTY_EXPR__T14: return QuartzPackage.UTY_EXPR__T14;
+        case QuartzPackage.DUTY_EXPR__T07: return QuartzPackage.UTY_EXPR__T07;
         default: return -1;
       }
     }

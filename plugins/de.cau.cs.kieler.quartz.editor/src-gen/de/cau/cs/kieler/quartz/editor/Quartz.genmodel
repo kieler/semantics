@@ -41,12 +41,9 @@
     <genClasses ecoreClass="Quartz.ecore#//QName">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t6"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t5"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/exprs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/stmt"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/ts"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t08"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t10"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t24"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/exprs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QName/t10"/>
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//QNameList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QNameList/name"/>
@@ -108,7 +105,6 @@
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//UtyExpr">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Quartz.ecore#//UtyExpr/op"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//UtyExpr/expr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//UtyExpr/t7"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//UtyExpr/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//UtyExpr/type"/>
@@ -122,14 +118,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//case_list/t15"/>
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//dUtyExpr">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//dUtyExpr/t07"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//dUtyExpr/t13"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//dUtyExpr/t14"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//dUtyExpr/t07"/>
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//dUtyExprs"/>
     <genClasses ecoreClass="Quartz.ecore#//Generic">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Generic/t"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Generic/t23"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Generic/t"/>
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//LocStmt">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//LocStmt/locals"/>
@@ -141,11 +137,13 @@
     <genClasses ecoreClass="Quartz.ecore#//Stmt">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/right"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/t03"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/t06"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//Stmt/t16"/>
     </genClasses>
-    <genClasses ecoreClass="Quartz.ecore#//AtomicStmt"/>
+    <genClasses ecoreClass="Quartz.ecore#//AtomicStmt">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t03"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t16"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t06"/>
+    </genClasses>
+    <genClasses ecoreClass="Quartz.ecore#//NamedStmt"/>
   </genPackages>
 </genmodel:GenModel>

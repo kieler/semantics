@@ -51,12 +51,12 @@ public interface LocStmt extends AtomicStmt
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Stmt</em>' containment reference.
-   * @see #setStmt(SeqStmt)
+   * @see #setStmt(Stmt)
    * @see de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage#getLocStmt_Stmt()
    * @model containment="true"
    * @generated
    */
-  SeqStmt getStmt();
+  Stmt getStmt();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.quartz.editor.quartz.LocStmt#getStmt <em>Stmt</em>}' containment reference.
@@ -66,6 +66,6 @@ public interface LocStmt extends AtomicStmt
    * @see #getStmt()
    * @generated
    */
-  void setStmt(SeqStmt value);
+  void setStmt(Stmt value);
 
 } // LocStmt

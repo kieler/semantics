@@ -8,7 +8,7 @@ package de.cau.cs.kieler.quartz.editor.quartz.impl;
 import de.cau.cs.kieler.quartz.editor.quartz.InterfaceList;
 import de.cau.cs.kieler.quartz.editor.quartz.LocStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage;
-import de.cau.cs.kieler.quartz.editor.quartz.SeqStmt;
+import de.cau.cs.kieler.quartz.editor.quartz.Stmt;
 
 import java.util.Collection;
 
@@ -59,7 +59,7 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
    * @generated
    * @ordered
    */
-  protected SeqStmt stmt;
+  protected Stmt stmt;
 
   /**
    * <!-- begin-user-doc -->
@@ -101,7 +101,7 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
    * <!-- end-user-doc -->
    * @generated
    */
-  public SeqStmt getStmt()
+  public Stmt getStmt()
   {
     return stmt;
   }
@@ -111,9 +111,9 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetStmt(SeqStmt newStmt, NotificationChain msgs)
+  public NotificationChain basicSetStmt(Stmt newStmt, NotificationChain msgs)
   {
-    SeqStmt oldStmt = stmt;
+    Stmt oldStmt = stmt;
     stmt = newStmt;
     if (eNotificationRequired())
     {
@@ -128,7 +128,7 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setStmt(SeqStmt newStmt)
+  public void setStmt(Stmt newStmt)
   {
     if (newStmt != stmt)
     {
@@ -196,7 +196,7 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
         getLocals().addAll((Collection<? extends InterfaceList>)newValue);
         return;
       case QuartzPackage.LOC_STMT__STMT:
-        setStmt((SeqStmt)newValue);
+        setStmt((Stmt)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -216,7 +216,7 @@ public class LocStmtImpl extends AtomicStmtImpl implements LocStmt
         getLocals().clear();
         return;
       case QuartzPackage.LOC_STMT__STMT:
-        setStmt((SeqStmt)null);
+        setStmt((Stmt)null);
         return;
     }
     super.eUnset(featureID);

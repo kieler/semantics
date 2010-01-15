@@ -21,6 +21,7 @@ import de.cau.cs.kieler.quartz.editor.quartz.InterfaceList;
 import de.cau.cs.kieler.quartz.editor.quartz.LocStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.MacroDef;
 import de.cau.cs.kieler.quartz.editor.quartz.Name;
+import de.cau.cs.kieler.quartz.editor.quartz.NamedStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList;
 import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExpr;
 import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExprList;
@@ -310,6 +311,13 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * @generated
    */
   private EClass atomicStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass namedStmtEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -639,7 +647,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getQName_Exprs()
+  public EReference getQName_T24()
   {
     return (EReference)qNameEClass.getEStructuralFeatures().get(2);
   }
@@ -649,7 +657,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getQName_Stmt()
+  public EReference getQName_Exprs()
   {
     return (EReference)qNameEClass.getEStructuralFeatures().get(3);
   }
@@ -659,39 +667,9 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getQName_Ts()
-  {
-    return (EReference)qNameEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getQName_T08()
-  {
-    return (EReference)qNameEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getQName_T10()
   {
-    return (EReference)qNameEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getQName_T24()
-  {
-    return (EReference)qNameEClass.getEStructuralFeatures().get(7);
+    return (EReference)qNameEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1169,7 +1147,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUtyExpr_Expr()
+  public EReference getUtyExpr_T7()
   {
     return (EReference)utyExprEClass.getEStructuralFeatures().get(1);
   }
@@ -1179,7 +1157,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUtyExpr_T7()
+  public EReference getUtyExpr_Name()
   {
     return (EReference)utyExprEClass.getEStructuralFeatures().get(2);
   }
@@ -1189,7 +1167,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUtyExpr_Name()
+  public EReference getUtyExpr_Type()
   {
     return (EReference)utyExprEClass.getEStructuralFeatures().get(3);
   }
@@ -1199,7 +1177,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUtyExpr_Type()
+  public EReference getUtyExpr_T2()
   {
     return (EReference)utyExprEClass.getEStructuralFeatures().get(4);
   }
@@ -1209,19 +1187,9 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUtyExpr_T2()
-  {
-    return (EReference)utyExprEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getUtyExpr_T4()
   {
-    return (EReference)utyExprEClass.getEStructuralFeatures().get(6);
+    return (EReference)utyExprEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1289,7 +1257,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getdUtyExpr_T07()
+  public EReference getdUtyExpr_T13()
   {
     return (EReference)dUtyExprEClass.getEStructuralFeatures().get(0);
   }
@@ -1299,7 +1267,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getdUtyExpr_T13()
+  public EReference getdUtyExpr_T14()
   {
     return (EReference)dUtyExprEClass.getEStructuralFeatures().get(1);
   }
@@ -1309,7 +1277,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getdUtyExpr_T14()
+  public EReference getdUtyExpr_T07()
   {
     return (EReference)dUtyExprEClass.getEStructuralFeatures().get(2);
   }
@@ -1339,7 +1307,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getGeneric_T()
+  public EReference getGeneric_T23()
   {
     return (EReference)genericEClass.getEStructuralFeatures().get(0);
   }
@@ -1349,7 +1317,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getGeneric_T23()
+  public EReference getGeneric_T()
   {
     return (EReference)genericEClass.getEStructuralFeatures().get(1);
   }
@@ -1439,49 +1407,59 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStmt_Expr()
-  {
-    return (EReference)stmtEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStmt_T03()
-  {
-    return (EReference)stmtEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStmt_T06()
-  {
-    return (EReference)stmtEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStmt_T16()
-  {
-    return (EReference)stmtEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAtomicStmt()
   {
     return atomicStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAtomicStmt_Expr()
+  {
+    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAtomicStmt_T03()
+  {
+    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAtomicStmt_T16()
+  {
+    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAtomicStmt_T06()
+  {
+    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNamedStmt()
+  {
+    return namedStmtEClass;
   }
 
   /**
@@ -1548,12 +1526,9 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     qNameEClass = createEClass(QNAME);
     createEReference(qNameEClass, QNAME__T6);
     createEReference(qNameEClass, QNAME__T5);
-    createEReference(qNameEClass, QNAME__EXPRS);
-    createEReference(qNameEClass, QNAME__STMT);
-    createEReference(qNameEClass, QNAME__TS);
-    createEReference(qNameEClass, QNAME__T08);
-    createEReference(qNameEClass, QNAME__T10);
     createEReference(qNameEClass, QNAME__T24);
+    createEReference(qNameEClass, QNAME__EXPRS);
+    createEReference(qNameEClass, QNAME__T10);
 
     qNameListEClass = createEClass(QNAME_LIST);
     createEReference(qNameListEClass, QNAME_LIST__NAME);
@@ -1619,7 +1594,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
 
     utyExprEClass = createEClass(UTY_EXPR);
     createEAttribute(utyExprEClass, UTY_EXPR__OP);
-    createEReference(utyExprEClass, UTY_EXPR__EXPR);
     createEReference(utyExprEClass, UTY_EXPR__T7);
     createEReference(utyExprEClass, UTY_EXPR__NAME);
     createEReference(utyExprEClass, UTY_EXPR__TYPE);
@@ -1634,15 +1608,15 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     createEReference(case_listEClass, CASE_LIST__T15);
 
     dUtyExprEClass = createEClass(DUTY_EXPR);
-    createEReference(dUtyExprEClass, DUTY_EXPR__T07);
     createEReference(dUtyExprEClass, DUTY_EXPR__T13);
     createEReference(dUtyExprEClass, DUTY_EXPR__T14);
+    createEReference(dUtyExprEClass, DUTY_EXPR__T07);
 
     dUtyExprsEClass = createEClass(DUTY_EXPRS);
 
     genericEClass = createEClass(GENERIC);
-    createEReference(genericEClass, GENERIC__T);
     createEReference(genericEClass, GENERIC__T23);
+    createEReference(genericEClass, GENERIC__T);
 
     locStmtEClass = createEClass(LOC_STMT);
     createEReference(locStmtEClass, LOC_STMT__LOCALS);
@@ -1654,12 +1628,14 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     stmtEClass = createEClass(STMT);
     createEReference(stmtEClass, STMT__LEFT);
     createEReference(stmtEClass, STMT__RIGHT);
-    createEReference(stmtEClass, STMT__EXPR);
-    createEReference(stmtEClass, STMT__T03);
-    createEReference(stmtEClass, STMT__T06);
-    createEReference(stmtEClass, STMT__T16);
 
     atomicStmtEClass = createEClass(ATOMIC_STMT);
+    createEReference(atomicStmtEClass, ATOMIC_STMT__EXPR);
+    createEReference(atomicStmtEClass, ATOMIC_STMT__T03);
+    createEReference(atomicStmtEClass, ATOMIC_STMT__T16);
+    createEReference(atomicStmtEClass, ATOMIC_STMT__T06);
+
+    namedStmtEClass = createEClass(NAMED_STMT);
   }
 
   /**
@@ -1697,6 +1673,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     qNameEClass.getESuperTypes().add(this.getInOutName());
     qNameEClass.getESuperTypes().add(this.getUtyExpr());
     qNameEClass.getESuperTypes().add(this.getGeneric());
+    qNameEClass.getESuperTypes().add(this.getNamedStmt());
     qNameListEClass.getESuperTypes().add(this.getControlList());
     qNameListEClass.getESuperTypes().add(this.getAssumeList());
     inOutNameEClass.getESuperTypes().add(this.getInOutNameList());
@@ -1711,7 +1688,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     dUtyExprEClass.getESuperTypes().add(this.getAtomicStmt());
     genericEClass.getESuperTypes().add(this.getUtyExpr());
     locStmtEClass.getESuperTypes().add(this.getAtomicStmt());
-    stmtEClass.getESuperTypes().add(this.getAtomicStmt());
+    namedStmtEClass.getESuperTypes().add(this.getAtomicStmt());
 
     // Initialize classes and features; add operations and parameters
     initEClass(qrzFileEClass, QrzFile.class, "QrzFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1748,12 +1725,9 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     initEClass(qNameEClass, QName.class, "QName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getQName_T6(), this.getUtyExpr(), null, "t6", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQName_T5(), this.getUtyExpr(), null, "t5", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQName_T24(), this.getAtomicStmt(), null, "t24", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQName_Exprs(), this.getOptUtyExprList(), null, "exprs", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQName_Stmt(), this.getStmt(), null, "stmt", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQName_Ts(), this.getdUtyExprs(), null, "ts", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQName_T08(), this.getStmt(), null, "t08", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQName_T10(), this.getStmt(), null, "t10", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQName_T24(), this.getStmt(), null, "t24", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQName_T10(), this.getAtomicStmt(), null, "t10", null, 0, 1, QName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(qNameListEClass, QNameList.class, "QNameList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getQNameList_Name(), this.getQName(), null, "name", null, 0, 1, QNameList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1819,7 +1793,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
 
     initEClass(utyExprEClass, UtyExpr.class, "UtyExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUtyExpr_Op(), ecorePackage.getEString(), "op", null, 0, 1, UtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUtyExpr_Expr(), this.getdUtyExprs(), null, "expr", null, 0, 1, UtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUtyExpr_T7(), this.getUtyExpr(), null, "t7", null, 0, 1, UtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUtyExpr_Name(), this.getQName(), null, "name", null, 0, 1, UtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUtyExpr_Type(), this.getQType(), null, "type", null, 0, 1, UtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1831,22 +1804,22 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     initEClass(case_listEClass, case_list.class, "case_list", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getcase_list_Exp(), this.getdUtyExpr(), null, "exp", null, 0, -1, case_list.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getcase_list_Stmt(), this.getStmt(), null, "stmt", null, 0, -1, case_list.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getcase_list_T15(), this.getStmt(), null, "t15", null, 0, 1, case_list.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getcase_list_T15(), this.getAtomicStmt(), null, "t15", null, 0, 1, case_list.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dUtyExprEClass, dUtyExpr.class, "dUtyExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getdUtyExpr_T07(), this.getStmt(), null, "t07", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getdUtyExpr_T13(), this.getStmt(), null, "t13", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getdUtyExpr_T14(), this.getStmt(), null, "t14", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getdUtyExpr_T13(), this.getAtomicStmt(), null, "t13", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getdUtyExpr_T14(), this.getAtomicStmt(), null, "t14", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getdUtyExpr_T07(), this.getAtomicStmt(), null, "t07", null, 0, 1, dUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dUtyExprsEClass, dUtyExprs.class, "dUtyExprs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(genericEClass, Generic.class, "Generic", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getGeneric_T(), this.getStmt(), null, "t", null, 0, 1, Generic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getGeneric_T23(), this.getStmt(), null, "t23", null, 0, 1, Generic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGeneric_T23(), this.getAtomicStmt(), null, "t23", null, 0, 1, Generic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGeneric_T(), this.getAtomicStmt(), null, "t", null, 0, 1, Generic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(locStmtEClass, LocStmt.class, "LocStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocStmt_Locals(), this.getInterfaceList(), null, "locals", null, 0, -1, LocStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocStmt_Stmt(), this.getSeqStmt(), null, "stmt", null, 0, 1, LocStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocStmt_Stmt(), this.getStmt(), null, "stmt", null, 0, 1, LocStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(seqStmtEClass, SeqStmt.class, "SeqStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSeqStmt_S(), this.getAtomicStmt(), null, "s", null, 0, -1, SeqStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1854,12 +1827,14 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     initEClass(stmtEClass, Stmt.class, "Stmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStmt_Left(), this.getSeqStmt(), null, "left", null, 0, 1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStmt_Right(), this.getSeqStmt(), null, "right", null, 0, -1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStmt_Expr(), this.getdUtyExprs(), null, "expr", null, 0, 1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStmt_T03(), this.getStmt(), null, "t03", null, 0, 1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStmt_T06(), this.getdUtyExprs(), null, "t06", null, 0, 1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStmt_T16(), this.getStmt(), null, "t16", null, 0, 1, Stmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(atomicStmtEClass, AtomicStmt.class, "AtomicStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAtomicStmt_Expr(), this.getdUtyExprs(), null, "expr", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAtomicStmt_T03(), this.getAtomicStmt(), null, "t03", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAtomicStmt_T16(), this.getAtomicStmt(), null, "t16", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAtomicStmt_T06(), this.getdUtyExprs(), null, "t06", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(namedStmtEClass, NamedStmt.class, "NamedStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

@@ -264,21 +264,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIntfAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cIntfInterfaceListParserRuleCall_3_0 = (RuleCall)cIntfAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cLeftCurlyBracketKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cStmtAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cStmtLocStmtParserRuleCall_5_1_0 = (RuleCall)cStmtAssignment_5_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final Assignment cStmtAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cStmtLocStmtParserRuleCall_5_0 = (RuleCall)cStmtAssignment_5.eContents().get(0);
 		private final Assignment cObsAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cObsObservedSpecListParserRuleCall_6_0 = (RuleCall)cObsAssignment_6.eContents().get(0);
 		
 		//QModule:
-		//  "module" name=Name "(" intf=InterfaceList ")" ("{" stmt=LocStmt "}")? obs+=
-		//  ObservedSpecList*;
+		//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt? obs+=ObservedSpecList*;
 		public ParserRule getRule() { return rule; }
 
-		//"module" name=Name "(" intf=InterfaceList ")" ("{" stmt=LocStmt "}")? obs+=
-		//ObservedSpecList*
+		//"module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt? obs+=ObservedSpecList*
 		public Group getGroup() { return cGroup; }
 
 		//"module"
@@ -302,20 +297,11 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 
-		//("{" stmt=LocStmt "}")?
-		public Group getGroup_5() { return cGroup_5; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_5_0() { return cLeftCurlyBracketKeyword_5_0; }
-
-		//stmt=LocStmt
-		public Assignment getStmtAssignment_5_1() { return cStmtAssignment_5_1; }
+		//stmt=LocStmt?
+		public Assignment getStmtAssignment_5() { return cStmtAssignment_5; }
 
 		//LocStmt
-		public RuleCall getStmtLocStmtParserRuleCall_5_1_0() { return cStmtLocStmtParserRuleCall_5_1_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
+		public RuleCall getStmtLocStmtParserRuleCall_5_0() { return cStmtLocStmtParserRuleCall_5_0; }
 
 		//obs+=ObservedSpecList*
 		public Assignment getObsAssignment_6() { return cObsAssignment_6; }
@@ -1529,172 +1515,88 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExprAssignment_35_2 = (Assignment)cGroup_35.eContents().get(2);
 		private final RuleCall cExprUtyExprParserRuleCall_35_2_0 = (RuleCall)cExprAssignment_35_2.eContents().get(0);
 		private final Group cGroup_36 = (Group)cAlternatives.eContents().get(36);
-		private final Keyword cLeftSquareBracketKeyword_36_0 = (Keyword)cGroup_36.eContents().get(0);
+		private final Keyword cXKeyword_36_0 = (Keyword)cGroup_36.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_36_1 = (RuleCall)cGroup_36.eContents().get(1);
-		private final Keyword cSUKeyword_36_2 = (Keyword)cGroup_36.eContents().get(2);
-		private final Assignment cExprAssignment_36_3 = (Assignment)cGroup_36.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_36_3_0 = (RuleCall)cExprAssignment_36_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_36_4 = (Keyword)cGroup_36.eContents().get(4);
 		private final Group cGroup_37 = (Group)cAlternatives.eContents().get(37);
-		private final Keyword cLeftSquareBracketKeyword_37_0 = (Keyword)cGroup_37.eContents().get(0);
+		private final Keyword cGKeyword_37_0 = (Keyword)cGroup_37.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_37_1 = (RuleCall)cGroup_37.eContents().get(1);
-		private final Keyword cSBKeyword_37_2 = (Keyword)cGroup_37.eContents().get(2);
-		private final Assignment cExprAssignment_37_3 = (Assignment)cGroup_37.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_37_3_0 = (RuleCall)cExprAssignment_37_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_37_4 = (Keyword)cGroup_37.eContents().get(4);
 		private final Group cGroup_38 = (Group)cAlternatives.eContents().get(38);
-		private final Keyword cLeftSquareBracketKeyword_38_0 = (Keyword)cGroup_38.eContents().get(0);
+		private final Keyword cFKeyword_38_0 = (Keyword)cGroup_38.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_38_1 = (RuleCall)cGroup_38.eContents().get(1);
-		private final Keyword cSWKeyword_38_2 = (Keyword)cGroup_38.eContents().get(2);
-		private final Assignment cExprAssignment_38_3 = (Assignment)cGroup_38.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_38_3_0 = (RuleCall)cExprAssignment_38_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_38_4 = (Keyword)cGroup_38.eContents().get(4);
 		private final Group cGroup_39 = (Group)cAlternatives.eContents().get(39);
-		private final Keyword cLeftSquareBracketKeyword_39_0 = (Keyword)cGroup_39.eContents().get(0);
+		private final Keyword cPAKeyword_39_0 = (Keyword)cGroup_39.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_39_1 = (RuleCall)cGroup_39.eContents().get(1);
-		private final Keyword cWUKeyword_39_2 = (Keyword)cGroup_39.eContents().get(2);
-		private final Assignment cExprAssignment_39_3 = (Assignment)cGroup_39.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_39_3_0 = (RuleCall)cExprAssignment_39_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_39_4 = (Keyword)cGroup_39.eContents().get(4);
 		private final Group cGroup_40 = (Group)cAlternatives.eContents().get(40);
-		private final Keyword cLeftSquareBracketKeyword_40_0 = (Keyword)cGroup_40.eContents().get(0);
+		private final Keyword cPFKeyword_40_0 = (Keyword)cGroup_40.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_40_1 = (RuleCall)cGroup_40.eContents().get(1);
-		private final Keyword cWBKeyword_40_2 = (Keyword)cGroup_40.eContents().get(2);
-		private final Assignment cExprAssignment_40_3 = (Assignment)cGroup_40.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_40_3_0 = (RuleCall)cExprAssignment_40_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_40_4 = (Keyword)cGroup_40.eContents().get(4);
 		private final Group cGroup_41 = (Group)cAlternatives.eContents().get(41);
-		private final Keyword cLeftSquareBracketKeyword_41_0 = (Keyword)cGroup_41.eContents().get(0);
+		private final Keyword cPSXKeyword_41_0 = (Keyword)cGroup_41.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_41_1 = (RuleCall)cGroup_41.eContents().get(1);
-		private final Keyword cWWKeyword_41_2 = (Keyword)cGroup_41.eContents().get(2);
-		private final Assignment cExprAssignment_41_3 = (Assignment)cGroup_41.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_41_3_0 = (RuleCall)cExprAssignment_41_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_41_4 = (Keyword)cGroup_41.eContents().get(4);
 		private final Group cGroup_42 = (Group)cAlternatives.eContents().get(42);
-		private final Keyword cLeftSquareBracketKeyword_42_0 = (Keyword)cGroup_42.eContents().get(0);
+		private final Keyword cPMXKeyword_42_0 = (Keyword)cGroup_42.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_42_1 = (RuleCall)cGroup_42.eContents().get(1);
-		private final Keyword cPSUKeyword_42_2 = (Keyword)cGroup_42.eContents().get(2);
-		private final Assignment cExprAssignment_42_3 = (Assignment)cGroup_42.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_42_3_0 = (RuleCall)cExprAssignment_42_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_42_4 = (Keyword)cGroup_42.eContents().get(4);
 		private final Group cGroup_43 = (Group)cAlternatives.eContents().get(43);
-		private final Keyword cLeftSquareBracketKeyword_43_0 = (Keyword)cGroup_43.eContents().get(0);
+		private final Keyword cEKeyword_43_0 = (Keyword)cGroup_43.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_43_1 = (RuleCall)cGroup_43.eContents().get(1);
-		private final Keyword cPSBKeyword_43_2 = (Keyword)cGroup_43.eContents().get(2);
-		private final Assignment cExprAssignment_43_3 = (Assignment)cGroup_43.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_43_3_0 = (RuleCall)cExprAssignment_43_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_43_4 = (Keyword)cGroup_43.eContents().get(4);
 		private final Group cGroup_44 = (Group)cAlternatives.eContents().get(44);
-		private final Keyword cLeftSquareBracketKeyword_44_0 = (Keyword)cGroup_44.eContents().get(0);
+		private final Keyword cAKeyword_44_0 = (Keyword)cGroup_44.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_44_1 = (RuleCall)cGroup_44.eContents().get(1);
-		private final Keyword cPSWKeyword_44_2 = (Keyword)cGroup_44.eContents().get(2);
-		private final Assignment cExprAssignment_44_3 = (Assignment)cGroup_44.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_44_3_0 = (RuleCall)cExprAssignment_44_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_44_4 = (Keyword)cGroup_44.eContents().get(4);
 		private final Group cGroup_45 = (Group)cAlternatives.eContents().get(45);
-		private final Keyword cLeftSquareBracketKeyword_45_0 = (Keyword)cGroup_45.eContents().get(0);
+		private final Keyword cLeftSquareBracketRightSquareBracketKeyword_45_0 = (Keyword)cGroup_45.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_45_1 = (RuleCall)cGroup_45.eContents().get(1);
-		private final Keyword cPMUKeyword_45_2 = (Keyword)cGroup_45.eContents().get(2);
-		private final Assignment cExprAssignment_45_3 = (Assignment)cGroup_45.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_45_3_0 = (RuleCall)cExprAssignment_45_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_45_4 = (Keyword)cGroup_45.eContents().get(4);
 		private final Group cGroup_46 = (Group)cAlternatives.eContents().get(46);
-		private final Keyword cLeftSquareBracketKeyword_46_0 = (Keyword)cGroup_46.eContents().get(0);
+		private final Keyword cLessThanSignGreaterThanSignKeyword_46_0 = (Keyword)cGroup_46.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_46_1 = (RuleCall)cGroup_46.eContents().get(1);
-		private final Keyword cPMBKeyword_46_2 = (Keyword)cGroup_46.eContents().get(2);
-		private final Assignment cExprAssignment_46_3 = (Assignment)cGroup_46.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_46_3_0 = (RuleCall)cExprAssignment_46_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_46_4 = (Keyword)cGroup_46.eContents().get(4);
 		private final Group cGroup_47 = (Group)cAlternatives.eContents().get(47);
-		private final Keyword cLeftSquareBracketKeyword_47_0 = (Keyword)cGroup_47.eContents().get(0);
+		private final Keyword cLeftSquareBracketColonRightSquareBracketKeyword_47_0 = (Keyword)cGroup_47.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_47_1 = (RuleCall)cGroup_47.eContents().get(1);
-		private final Keyword cPMWKeyword_47_2 = (Keyword)cGroup_47.eContents().get(2);
-		private final Assignment cExprAssignment_47_3 = (Assignment)cGroup_47.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_47_3_0 = (RuleCall)cExprAssignment_47_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_47_4 = (Keyword)cGroup_47.eContents().get(4);
 		private final Group cGroup_48 = (Group)cAlternatives.eContents().get(48);
-		private final Keyword cXKeyword_48_0 = (Keyword)cGroup_48.eContents().get(0);
+		private final Keyword cLessThanSignColonGreaterThanSignKeyword_48_0 = (Keyword)cGroup_48.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_48_1 = (RuleCall)cGroup_48.eContents().get(1);
 		private final Group cGroup_49 = (Group)cAlternatives.eContents().get(49);
-		private final Keyword cGKeyword_49_0 = (Keyword)cGroup_49.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_49_1 = (RuleCall)cGroup_49.eContents().get(1);
+		private final Keyword cMuKeyword_49_0 = (Keyword)cGroup_49.eContents().get(0);
+		private final Assignment cNameAssignment_49_1 = (Assignment)cGroup_49.eContents().get(1);
+		private final RuleCall cNameQNameParserRuleCall_49_1_0 = (RuleCall)cNameAssignment_49_1.eContents().get(0);
+		private final Keyword cFullStopKeyword_49_2 = (Keyword)cGroup_49.eContents().get(2);
+		private final Assignment cExprAssignment_49_3 = (Assignment)cGroup_49.eContents().get(3);
+		private final RuleCall cExprUtyExprParserRuleCall_49_3_0 = (RuleCall)cExprAssignment_49_3.eContents().get(0);
 		private final Group cGroup_50 = (Group)cAlternatives.eContents().get(50);
-		private final Keyword cFKeyword_50_0 = (Keyword)cGroup_50.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_50_1 = (RuleCall)cGroup_50.eContents().get(1);
+		private final Keyword cNuKeyword_50_0 = (Keyword)cGroup_50.eContents().get(0);
+		private final Assignment cNameAssignment_50_1 = (Assignment)cGroup_50.eContents().get(1);
+		private final RuleCall cNameQNameParserRuleCall_50_1_0 = (RuleCall)cNameAssignment_50_1.eContents().get(0);
+		private final Keyword cFullStopKeyword_50_2 = (Keyword)cGroup_50.eContents().get(2);
+		private final Assignment cExprAssignment_50_3 = (Assignment)cGroup_50.eContents().get(3);
+		private final RuleCall cExprUtyExprParserRuleCall_50_3_0 = (RuleCall)cExprAssignment_50_3.eContents().get(0);
 		private final Group cGroup_51 = (Group)cAlternatives.eContents().get(51);
-		private final Keyword cPAKeyword_51_0 = (Keyword)cGroup_51.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_51_1 = (RuleCall)cGroup_51.eContents().get(1);
+		private final Keyword cFixpointsKeyword_51_0 = (Keyword)cGroup_51.eContents().get(0);
+		private final RuleCall cFixpointEqListParserRuleCall_51_1 = (RuleCall)cGroup_51.eContents().get(1);
+		private final Keyword cInKeyword_51_2 = (Keyword)cGroup_51.eContents().get(2);
+		private final Assignment cExpr2Assignment_51_3 = (Assignment)cGroup_51.eContents().get(3);
+		private final RuleCall cExpr2UtyExprParserRuleCall_51_3_0 = (RuleCall)cExpr2Assignment_51_3.eContents().get(0);
 		private final Group cGroup_52 = (Group)cAlternatives.eContents().get(52);
-		private final Keyword cPFKeyword_52_0 = (Keyword)cGroup_52.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_52_1 = (RuleCall)cGroup_52.eContents().get(1);
+		private final Keyword cForallKeyword_52_0 = (Keyword)cGroup_52.eContents().get(0);
+		private final Assignment cNameAssignment_52_1 = (Assignment)cGroup_52.eContents().get(1);
+		private final RuleCall cNameQNameParserRuleCall_52_1_0 = (RuleCall)cNameAssignment_52_1.eContents().get(0);
+		private final Keyword cColonKeyword_52_2 = (Keyword)cGroup_52.eContents().get(2);
+		private final Assignment cTypeAssignment_52_3 = (Assignment)cGroup_52.eContents().get(3);
+		private final RuleCall cTypeQTypeParserRuleCall_52_3_0 = (RuleCall)cTypeAssignment_52_3.eContents().get(0);
+		private final Keyword cFullStopKeyword_52_4 = (Keyword)cGroup_52.eContents().get(4);
+		private final Assignment cExprAssignment_52_5 = (Assignment)cGroup_52.eContents().get(5);
+		private final RuleCall cExprUtyExprParserRuleCall_52_5_0 = (RuleCall)cExprAssignment_52_5.eContents().get(0);
 		private final Group cGroup_53 = (Group)cAlternatives.eContents().get(53);
-		private final Keyword cPSXKeyword_53_0 = (Keyword)cGroup_53.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_53_1 = (RuleCall)cGroup_53.eContents().get(1);
+		private final Keyword cExistsKeyword_53_0 = (Keyword)cGroup_53.eContents().get(0);
+		private final Assignment cNameAssignment_53_1 = (Assignment)cGroup_53.eContents().get(1);
+		private final RuleCall cNameQNameParserRuleCall_53_1_0 = (RuleCall)cNameAssignment_53_1.eContents().get(0);
+		private final Keyword cColonKeyword_53_2 = (Keyword)cGroup_53.eContents().get(2);
+		private final Assignment cTypeAssignment_53_3 = (Assignment)cGroup_53.eContents().get(3);
+		private final RuleCall cTypeQTypeParserRuleCall_53_3_0 = (RuleCall)cTypeAssignment_53_3.eContents().get(0);
+		private final Keyword cFullStopKeyword_53_4 = (Keyword)cGroup_53.eContents().get(4);
+		private final Assignment cExprAssignment_53_5 = (Assignment)cGroup_53.eContents().get(5);
+		private final RuleCall cExprUtyExprParserRuleCall_53_5_0 = (RuleCall)cExprAssignment_53_5.eContents().get(0);
 		private final Group cGroup_54 = (Group)cAlternatives.eContents().get(54);
-		private final Keyword cPMXKeyword_54_0 = (Keyword)cGroup_54.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_54_0 = (Keyword)cGroup_54.eContents().get(0);
 		private final RuleCall cUtyExprParserRuleCall_54_1 = (RuleCall)cGroup_54.eContents().get(1);
-		private final Group cGroup_55 = (Group)cAlternatives.eContents().get(55);
-		private final Keyword cEKeyword_55_0 = (Keyword)cGroup_55.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_55_1 = (RuleCall)cGroup_55.eContents().get(1);
-		private final Group cGroup_56 = (Group)cAlternatives.eContents().get(56);
-		private final Keyword cAKeyword_56_0 = (Keyword)cGroup_56.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_56_1 = (RuleCall)cGroup_56.eContents().get(1);
-		private final Group cGroup_57 = (Group)cAlternatives.eContents().get(57);
-		private final Keyword cLeftSquareBracketRightSquareBracketKeyword_57_0 = (Keyword)cGroup_57.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_57_1 = (RuleCall)cGroup_57.eContents().get(1);
-		private final Group cGroup_58 = (Group)cAlternatives.eContents().get(58);
-		private final Keyword cLessThanSignGreaterThanSignKeyword_58_0 = (Keyword)cGroup_58.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_58_1 = (RuleCall)cGroup_58.eContents().get(1);
-		private final Group cGroup_59 = (Group)cAlternatives.eContents().get(59);
-		private final Keyword cLeftSquareBracketColonRightSquareBracketKeyword_59_0 = (Keyword)cGroup_59.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_59_1 = (RuleCall)cGroup_59.eContents().get(1);
-		private final Group cGroup_60 = (Group)cAlternatives.eContents().get(60);
-		private final Keyword cLessThanSignColonGreaterThanSignKeyword_60_0 = (Keyword)cGroup_60.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_60_1 = (RuleCall)cGroup_60.eContents().get(1);
-		private final Group cGroup_61 = (Group)cAlternatives.eContents().get(61);
-		private final Keyword cMuKeyword_61_0 = (Keyword)cGroup_61.eContents().get(0);
-		private final Assignment cNameAssignment_61_1 = (Assignment)cGroup_61.eContents().get(1);
-		private final RuleCall cNameQNameParserRuleCall_61_1_0 = (RuleCall)cNameAssignment_61_1.eContents().get(0);
-		private final Keyword cFullStopKeyword_61_2 = (Keyword)cGroup_61.eContents().get(2);
-		private final Assignment cExprAssignment_61_3 = (Assignment)cGroup_61.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_61_3_0 = (RuleCall)cExprAssignment_61_3.eContents().get(0);
-		private final Group cGroup_62 = (Group)cAlternatives.eContents().get(62);
-		private final Keyword cNuKeyword_62_0 = (Keyword)cGroup_62.eContents().get(0);
-		private final Assignment cNameAssignment_62_1 = (Assignment)cGroup_62.eContents().get(1);
-		private final RuleCall cNameQNameParserRuleCall_62_1_0 = (RuleCall)cNameAssignment_62_1.eContents().get(0);
-		private final Keyword cFullStopKeyword_62_2 = (Keyword)cGroup_62.eContents().get(2);
-		private final Assignment cExprAssignment_62_3 = (Assignment)cGroup_62.eContents().get(3);
-		private final RuleCall cExprUtyExprParserRuleCall_62_3_0 = (RuleCall)cExprAssignment_62_3.eContents().get(0);
-		private final Group cGroup_63 = (Group)cAlternatives.eContents().get(63);
-		private final Keyword cFixpointsKeyword_63_0 = (Keyword)cGroup_63.eContents().get(0);
-		private final RuleCall cFixpointEqListParserRuleCall_63_1 = (RuleCall)cGroup_63.eContents().get(1);
-		private final Keyword cInKeyword_63_2 = (Keyword)cGroup_63.eContents().get(2);
-		private final Assignment cExpr2Assignment_63_3 = (Assignment)cGroup_63.eContents().get(3);
-		private final RuleCall cExpr2UtyExprParserRuleCall_63_3_0 = (RuleCall)cExpr2Assignment_63_3.eContents().get(0);
-		private final Group cGroup_64 = (Group)cAlternatives.eContents().get(64);
-		private final Keyword cForallKeyword_64_0 = (Keyword)cGroup_64.eContents().get(0);
-		private final Assignment cNameAssignment_64_1 = (Assignment)cGroup_64.eContents().get(1);
-		private final RuleCall cNameQNameParserRuleCall_64_1_0 = (RuleCall)cNameAssignment_64_1.eContents().get(0);
-		private final Keyword cColonKeyword_64_2 = (Keyword)cGroup_64.eContents().get(2);
-		private final Assignment cTypeAssignment_64_3 = (Assignment)cGroup_64.eContents().get(3);
-		private final RuleCall cTypeQTypeParserRuleCall_64_3_0 = (RuleCall)cTypeAssignment_64_3.eContents().get(0);
-		private final Keyword cFullStopKeyword_64_4 = (Keyword)cGroup_64.eContents().get(4);
-		private final Assignment cExprAssignment_64_5 = (Assignment)cGroup_64.eContents().get(5);
-		private final RuleCall cExprUtyExprParserRuleCall_64_5_0 = (RuleCall)cExprAssignment_64_5.eContents().get(0);
-		private final Group cGroup_65 = (Group)cAlternatives.eContents().get(65);
-		private final Keyword cExistsKeyword_65_0 = (Keyword)cGroup_65.eContents().get(0);
-		private final Assignment cNameAssignment_65_1 = (Assignment)cGroup_65.eContents().get(1);
-		private final RuleCall cNameQNameParserRuleCall_65_1_0 = (RuleCall)cNameAssignment_65_1.eContents().get(0);
-		private final Keyword cColonKeyword_65_2 = (Keyword)cGroup_65.eContents().get(2);
-		private final Assignment cTypeAssignment_65_3 = (Assignment)cGroup_65.eContents().get(3);
-		private final RuleCall cTypeQTypeParserRuleCall_65_3_0 = (RuleCall)cTypeAssignment_65_3.eContents().get(0);
-		private final Keyword cFullStopKeyword_65_4 = (Keyword)cGroup_65.eContents().get(4);
-		private final Assignment cExprAssignment_65_5 = (Assignment)cGroup_65.eContents().get(5);
-		private final RuleCall cExprUtyExprParserRuleCall_65_5_0 = (RuleCall)cExprAssignment_65_5.eContents().get(0);
-		private final Group cGroup_66 = (Group)cAlternatives.eContents().get(66);
-		private final Keyword cLeftParenthesisKeyword_66_0 = (Keyword)cGroup_66.eContents().get(0);
-		private final RuleCall cUtyExprParserRuleCall_66_1 = (RuleCall)cGroup_66.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_66_2 = (Keyword)cGroup_66.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_54_2 = (Keyword)cGroup_54.eContents().get(2);
 		
 		//UtyExpr:
 		//  "instant"|"inside"|"terminate"|"true"|"false"|BVCONST|OCTCONST|HEXCONST|NATCONST
@@ -1705,17 +1607,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//  "bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
 		//  UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
 		//  "," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-		//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"[" UtyExpr "SU" expr=UtyExpr "]"|"["
-		//  UtyExpr "SB" expr=UtyExpr "]"|"[" UtyExpr "SW" expr=UtyExpr "]"|"[" UtyExpr "WU" expr=
-		//  UtyExpr "]"|"[" UtyExpr "WB" expr=UtyExpr "]"|"[" UtyExpr "WW" expr=UtyExpr "]"|"["
-		//  UtyExpr "PSU" expr=UtyExpr "]"|"[" UtyExpr "PSB" expr=UtyExpr "]"|"[" UtyExpr "PSW" expr=
-		//  UtyExpr "]"|"[" UtyExpr "PMU" expr=UtyExpr "]"|"[" UtyExpr "PMB" expr=UtyExpr "]"|"["
-		//  UtyExpr "PMW" expr=UtyExpr "]"|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|"PA" UtyExpr|"PF"
-		//  UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]" UtyExpr|"<>" UtyExpr|
-		//  "[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu" name=QName "." expr=
-		//  UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall" name=QName ":" type=
-		//  QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=UtyExpr|"(" UtyExpr
-		//  ")"; 
+		//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
+		//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
+		//  UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
+		//  name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
+		//  name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
+		//  UtyExpr|"(" UtyExpr ")"; 
 		//
 		//    
 		//            
@@ -1762,6 +1659,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public ParserRule getRule() { return rule; }
 
 		//"instant"|"inside"|"terminate"|"true"|"false"|BVCONST|OCTCONST|HEXCONST|NATCONST
@@ -1772,17 +1698,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//"bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
 		//UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
 		//"," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-		//Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"[" UtyExpr "SU" expr=UtyExpr "]"|"["
-		//UtyExpr "SB" expr=UtyExpr "]"|"[" UtyExpr "SW" expr=UtyExpr "]"|"[" UtyExpr "WU" expr=
-		//UtyExpr "]"|"[" UtyExpr "WB" expr=UtyExpr "]"|"[" UtyExpr "WW" expr=UtyExpr "]"|"["
-		//UtyExpr "PSU" expr=UtyExpr "]"|"[" UtyExpr "PSB" expr=UtyExpr "]"|"[" UtyExpr "PSW" expr=
-		//UtyExpr "]"|"[" UtyExpr "PMU" expr=UtyExpr "]"|"[" UtyExpr "PMB" expr=UtyExpr "]"|"["
-		//UtyExpr "PMW" expr=UtyExpr "]"|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|"PA" UtyExpr|"PF"
-		//UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]" UtyExpr|"<>" UtyExpr|
-		//"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu" name=QName "." expr=
-		//UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall" name=QName ":" type=
-		//QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=UtyExpr|"(" UtyExpr
-		//")" 
+		//Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
+		//"PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
+		//UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
+		//name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
+		//name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
+		//UtyExpr|"(" UtyExpr ")" 
 		//
 		//    
 		//            
@@ -1829,6 +1750,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"instant"
@@ -1914,6 +1864,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_11() { return cGroup_11; }
 
 		//op=NOT
@@ -1995,6 +1974,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_12() { return cGroup_12; }
 
 		//"+"
@@ -2048,6 +2056,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_13() { return cGroup_13; }
 
 		//"-"
@@ -2101,6 +2138,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_14() { return cGroup_14; }
 
 		//"abs"
@@ -2160,6 +2226,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_15() { return cGroup_15; }
 
 		//"sat"
@@ -2231,6 +2326,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_16() { return cGroup_16; }
 
 		//"der"
@@ -2295,6 +2419,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_17() { return cGroup_17; }
 
 		//"reverse"
@@ -2354,6 +2507,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_18() { return cGroup_18; }
 
 		//"{"
@@ -2424,6 +2606,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_19() { return cGroup_19; }
 
 		//"next"
@@ -2483,6 +2694,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_20() { return cGroup_20; }
 
 		//"nat2bv"
@@ -2542,6 +2782,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_21() { return cGroup_21; }
 
 		//"int2bv"
@@ -2601,6 +2870,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_22() { return cGroup_22; }
 
 		//"arr2bv"
@@ -2660,6 +2958,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_23() { return cGroup_23; }
 
 		//"tup2bv"
@@ -2719,6 +3046,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_24() { return cGroup_24; }
 
 		//"bv2nat"
@@ -2778,6 +3134,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_25() { return cGroup_25; }
 
 		//"bv2int"
@@ -2837,6 +3222,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_26() { return cGroup_26; }
 
 		//"nat2real"
@@ -2896,6 +3310,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_27() { return cGroup_27; }
 
 		//"int2real"
@@ -2955,6 +3398,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_28() { return cGroup_28; }
 
 		//"sin"
@@ -3014,6 +3486,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_29() { return cGroup_29; }
 
 		//"cos"
@@ -3073,6 +3574,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_30() { return cGroup_30; }
 
 		//"exp"
@@ -3141,6 +3671,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_31() { return cGroup_31; }
 
 		//"log"
@@ -3209,6 +3768,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_32() { return cGroup_32; }
 
 		//"sizeOf"
@@ -3268,6 +3856,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_33() { return cGroup_33; }
 
 		//"forall"
@@ -3327,6 +3944,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_34() { return cGroup_34; }
 
 		//"exists"
@@ -3386,6 +4032,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Group getGroup_35() { return cGroup_35; }
 
 		//"sum"
@@ -3394,791 +4069,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//Generic
 		public RuleCall getGenericParserRuleCall_35_1() { return cGenericParserRuleCall_35_1; }
 
-		//expr=UtyExpr
+		//expr=UtyExpr   
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public Assignment getExprAssignment_35_2() { return cExprAssignment_35_2; }
 
-		//UtyExpr
+		//UtyExpr 
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 		public RuleCall getExprUtyExprParserRuleCall_35_2_0() { return cExprUtyExprParserRuleCall_35_2_0; }
-
-		//"[" UtyExpr "SU" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_36() { return cGroup_36; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_36_0() { return cLeftSquareBracketKeyword_36_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_36_1() { return cUtyExprParserRuleCall_36_1; }
-
-		//"SU"
-		public Keyword getSUKeyword_36_2() { return cSUKeyword_36_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_36_3() { return cExprAssignment_36_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_36_3_0() { return cExprUtyExprParserRuleCall_36_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_36_4() { return cRightSquareBracketKeyword_36_4; }
-
-		//"[" UtyExpr "SB" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_37() { return cGroup_37; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_37_0() { return cLeftSquareBracketKeyword_37_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_37_1() { return cUtyExprParserRuleCall_37_1; }
-
-		//"SB"
-		public Keyword getSBKeyword_37_2() { return cSBKeyword_37_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_37_3() { return cExprAssignment_37_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_37_3_0() { return cExprUtyExprParserRuleCall_37_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_37_4() { return cRightSquareBracketKeyword_37_4; }
-
-		//"[" UtyExpr "SW" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_38() { return cGroup_38; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_38_0() { return cLeftSquareBracketKeyword_38_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_38_1() { return cUtyExprParserRuleCall_38_1; }
-
-		//"SW"
-		public Keyword getSWKeyword_38_2() { return cSWKeyword_38_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_38_3() { return cExprAssignment_38_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_38_3_0() { return cExprUtyExprParserRuleCall_38_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_38_4() { return cRightSquareBracketKeyword_38_4; }
-
-		//"[" UtyExpr "WU" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_39() { return cGroup_39; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_39_0() { return cLeftSquareBracketKeyword_39_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_39_1() { return cUtyExprParserRuleCall_39_1; }
-
-		//"WU"
-		public Keyword getWUKeyword_39_2() { return cWUKeyword_39_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_39_3() { return cExprAssignment_39_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_39_3_0() { return cExprUtyExprParserRuleCall_39_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_39_4() { return cRightSquareBracketKeyword_39_4; }
-
-		//"[" UtyExpr "WB" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_40() { return cGroup_40; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_40_0() { return cLeftSquareBracketKeyword_40_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_40_1() { return cUtyExprParserRuleCall_40_1; }
-
-		//"WB"
-		public Keyword getWBKeyword_40_2() { return cWBKeyword_40_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_40_3() { return cExprAssignment_40_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_40_3_0() { return cExprUtyExprParserRuleCall_40_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_40_4() { return cRightSquareBracketKeyword_40_4; }
-
-		//"[" UtyExpr "WW" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_41() { return cGroup_41; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_41_0() { return cLeftSquareBracketKeyword_41_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_41_1() { return cUtyExprParserRuleCall_41_1; }
-
-		//"WW"
-		public Keyword getWWKeyword_41_2() { return cWWKeyword_41_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_41_3() { return cExprAssignment_41_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_41_3_0() { return cExprUtyExprParserRuleCall_41_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_41_4() { return cRightSquareBracketKeyword_41_4; }
-
-		//"[" UtyExpr "PSU" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_42() { return cGroup_42; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_42_0() { return cLeftSquareBracketKeyword_42_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_42_1() { return cUtyExprParserRuleCall_42_1; }
-
-		//"PSU"
-		public Keyword getPSUKeyword_42_2() { return cPSUKeyword_42_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_42_3() { return cExprAssignment_42_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_42_3_0() { return cExprUtyExprParserRuleCall_42_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_42_4() { return cRightSquareBracketKeyword_42_4; }
-
-		//"[" UtyExpr "PSB" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_43() { return cGroup_43; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_43_0() { return cLeftSquareBracketKeyword_43_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_43_1() { return cUtyExprParserRuleCall_43_1; }
-
-		//"PSB"
-		public Keyword getPSBKeyword_43_2() { return cPSBKeyword_43_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_43_3() { return cExprAssignment_43_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_43_3_0() { return cExprUtyExprParserRuleCall_43_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_43_4() { return cRightSquareBracketKeyword_43_4; }
-
-		//"[" UtyExpr "PSW" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_44() { return cGroup_44; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_44_0() { return cLeftSquareBracketKeyword_44_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_44_1() { return cUtyExprParserRuleCall_44_1; }
-
-		//"PSW"
-		public Keyword getPSWKeyword_44_2() { return cPSWKeyword_44_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_44_3() { return cExprAssignment_44_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_44_3_0() { return cExprUtyExprParserRuleCall_44_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_44_4() { return cRightSquareBracketKeyword_44_4; }
-
-		//"[" UtyExpr "PMU" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_45() { return cGroup_45; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_45_0() { return cLeftSquareBracketKeyword_45_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_45_1() { return cUtyExprParserRuleCall_45_1; }
-
-		//"PMU"
-		public Keyword getPMUKeyword_45_2() { return cPMUKeyword_45_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_45_3() { return cExprAssignment_45_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_45_3_0() { return cExprUtyExprParserRuleCall_45_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_45_4() { return cRightSquareBracketKeyword_45_4; }
-
-		//"[" UtyExpr "PMB" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_46() { return cGroup_46; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_46_0() { return cLeftSquareBracketKeyword_46_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_46_1() { return cUtyExprParserRuleCall_46_1; }
-
-		//"PMB"
-		public Keyword getPMBKeyword_46_2() { return cPMBKeyword_46_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_46_3() { return cExprAssignment_46_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_46_3_0() { return cExprUtyExprParserRuleCall_46_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_46_4() { return cRightSquareBracketKeyword_46_4; }
-
-		//"[" UtyExpr "PMW" expr=UtyExpr "]"   
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_47() { return cGroup_47; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_47_0() { return cLeftSquareBracketKeyword_47_0; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_47_1() { return cUtyExprParserRuleCall_47_1; }
-
-		//"PMW"
-		public Keyword getPMWKeyword_47_2() { return cPMWKeyword_47_2; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_47_3() { return cExprAssignment_47_3; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_47_3_0() { return cExprUtyExprParserRuleCall_47_3_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_47_4() { return cRightSquareBracketKeyword_47_4; }
 
 		//"X" UtyExpr   
 		//            
@@ -4225,13 +4144,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_48() { return cGroup_48; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_36() { return cGroup_36; }
 
 		//"X"
-		public Keyword getXKeyword_48_0() { return cXKeyword_48_0; }
+		public Keyword getXKeyword_36_0() { return cXKeyword_36_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_48_1() { return cUtyExprParserRuleCall_48_1; }
+		public RuleCall getUtyExprParserRuleCall_36_1() { return cUtyExprParserRuleCall_36_1; }
 
 		//"G" UtyExpr   
 		//            
@@ -4278,13 +4226,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_49() { return cGroup_49; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_37() { return cGroup_37; }
 
 		//"G"
-		public Keyword getGKeyword_49_0() { return cGKeyword_49_0; }
+		public Keyword getGKeyword_37_0() { return cGKeyword_37_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_49_1() { return cUtyExprParserRuleCall_49_1; }
+		public RuleCall getUtyExprParserRuleCall_37_1() { return cUtyExprParserRuleCall_37_1; }
 
 		//"F" UtyExpr   
 		//            
@@ -4331,13 +4308,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_50() { return cGroup_50; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_38() { return cGroup_38; }
 
 		//"F"
-		public Keyword getFKeyword_50_0() { return cFKeyword_50_0; }
+		public Keyword getFKeyword_38_0() { return cFKeyword_38_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_50_1() { return cUtyExprParserRuleCall_50_1; }
+		public RuleCall getUtyExprParserRuleCall_38_1() { return cUtyExprParserRuleCall_38_1; }
 
 		//"PA" UtyExpr   
 		//            
@@ -4384,13 +4390,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_51() { return cGroup_51; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_39() { return cGroup_39; }
 
 		//"PA"
-		public Keyword getPAKeyword_51_0() { return cPAKeyword_51_0; }
+		public Keyword getPAKeyword_39_0() { return cPAKeyword_39_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_51_1() { return cUtyExprParserRuleCall_51_1; }
+		public RuleCall getUtyExprParserRuleCall_39_1() { return cUtyExprParserRuleCall_39_1; }
 
 		//"PF" UtyExpr   
 		//            
@@ -4437,13 +4472,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_52() { return cGroup_52; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_40() { return cGroup_40; }
 
 		//"PF"
-		public Keyword getPFKeyword_52_0() { return cPFKeyword_52_0; }
+		public Keyword getPFKeyword_40_0() { return cPFKeyword_40_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_52_1() { return cUtyExprParserRuleCall_52_1; }
+		public RuleCall getUtyExprParserRuleCall_40_1() { return cUtyExprParserRuleCall_40_1; }
 
 		//"PSX" UtyExpr   
 		//            
@@ -4490,13 +4554,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_53() { return cGroup_53; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_41() { return cGroup_41; }
 
 		//"PSX"
-		public Keyword getPSXKeyword_53_0() { return cPSXKeyword_53_0; }
+		public Keyword getPSXKeyword_41_0() { return cPSXKeyword_41_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_53_1() { return cUtyExprParserRuleCall_53_1; }
+		public RuleCall getUtyExprParserRuleCall_41_1() { return cUtyExprParserRuleCall_41_1; }
 
 		//"PMX" UtyExpr   
 		//            
@@ -4543,13 +4636,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_54() { return cGroup_54; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_42() { return cGroup_42; }
 
 		//"PMX"
-		public Keyword getPMXKeyword_54_0() { return cPMXKeyword_54_0; }
+		public Keyword getPMXKeyword_42_0() { return cPMXKeyword_42_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_54_1() { return cUtyExprParserRuleCall_54_1; }
+		public RuleCall getUtyExprParserRuleCall_42_1() { return cUtyExprParserRuleCall_42_1; }
 
 		//"E" UtyExpr   
 		//            
@@ -4596,13 +4718,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_55() { return cGroup_55; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_43() { return cGroup_43; }
 
 		//"E"
-		public Keyword getEKeyword_55_0() { return cEKeyword_55_0; }
+		public Keyword getEKeyword_43_0() { return cEKeyword_43_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_55_1() { return cUtyExprParserRuleCall_55_1; }
+		public RuleCall getUtyExprParserRuleCall_43_1() { return cUtyExprParserRuleCall_43_1; }
 
 		//"A" UtyExpr   
 		//            
@@ -4649,13 +4800,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_56() { return cGroup_56; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_44() { return cGroup_44; }
 
 		//"A"
-		public Keyword getAKeyword_56_0() { return cAKeyword_56_0; }
+		public Keyword getAKeyword_44_0() { return cAKeyword_44_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_56_1() { return cUtyExprParserRuleCall_56_1; }
+		public RuleCall getUtyExprParserRuleCall_44_1() { return cUtyExprParserRuleCall_44_1; }
 
 		//"[]" UtyExpr   
 		//            
@@ -4702,13 +4882,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_57() { return cGroup_57; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_45() { return cGroup_45; }
 
 		//"[]"
-		public Keyword getLeftSquareBracketRightSquareBracketKeyword_57_0() { return cLeftSquareBracketRightSquareBracketKeyword_57_0; }
+		public Keyword getLeftSquareBracketRightSquareBracketKeyword_45_0() { return cLeftSquareBracketRightSquareBracketKeyword_45_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_57_1() { return cUtyExprParserRuleCall_57_1; }
+		public RuleCall getUtyExprParserRuleCall_45_1() { return cUtyExprParserRuleCall_45_1; }
 
 		//"<>" UtyExpr   
 		//            
@@ -4755,13 +4964,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_58() { return cGroup_58; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_46() { return cGroup_46; }
 
 		//"<>"
-		public Keyword getLessThanSignGreaterThanSignKeyword_58_0() { return cLessThanSignGreaterThanSignKeyword_58_0; }
+		public Keyword getLessThanSignGreaterThanSignKeyword_46_0() { return cLessThanSignGreaterThanSignKeyword_46_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_58_1() { return cUtyExprParserRuleCall_58_1; }
+		public RuleCall getUtyExprParserRuleCall_46_1() { return cUtyExprParserRuleCall_46_1; }
 
 		//"[:]" UtyExpr   
 		//            
@@ -4808,13 +5046,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_59() { return cGroup_59; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_47() { return cGroup_47; }
 
 		//"[:]"
-		public Keyword getLeftSquareBracketColonRightSquareBracketKeyword_59_0() { return cLeftSquareBracketColonRightSquareBracketKeyword_59_0; }
+		public Keyword getLeftSquareBracketColonRightSquareBracketKeyword_47_0() { return cLeftSquareBracketColonRightSquareBracketKeyword_47_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_59_1() { return cUtyExprParserRuleCall_59_1; }
+		public RuleCall getUtyExprParserRuleCall_47_1() { return cUtyExprParserRuleCall_47_1; }
 
 		//"<:>" UtyExpr   
 		//            
@@ -4861,13 +5128,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_60() { return cGroup_60; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_48() { return cGroup_48; }
 
 		//"<:>"
-		public Keyword getLessThanSignColonGreaterThanSignKeyword_60_0() { return cLessThanSignColonGreaterThanSignKeyword_60_0; }
+		public Keyword getLessThanSignColonGreaterThanSignKeyword_48_0() { return cLessThanSignColonGreaterThanSignKeyword_48_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_60_1() { return cUtyExprParserRuleCall_60_1; }
+		public RuleCall getUtyExprParserRuleCall_48_1() { return cUtyExprParserRuleCall_48_1; }
 
 		//"mu" name=QName "." expr=UtyExpr   
 		//            
@@ -4914,25 +5210,54 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_61() { return cGroup_61; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_49() { return cGroup_49; }
 
 		//"mu"
-		public Keyword getMuKeyword_61_0() { return cMuKeyword_61_0; }
+		public Keyword getMuKeyword_49_0() { return cMuKeyword_49_0; }
 
 		//name=QName
-		public Assignment getNameAssignment_61_1() { return cNameAssignment_61_1; }
+		public Assignment getNameAssignment_49_1() { return cNameAssignment_49_1; }
 
 		//QName
-		public RuleCall getNameQNameParserRuleCall_61_1_0() { return cNameQNameParserRuleCall_61_1_0; }
+		public RuleCall getNameQNameParserRuleCall_49_1_0() { return cNameQNameParserRuleCall_49_1_0; }
 
 		//"."
-		public Keyword getFullStopKeyword_61_2() { return cFullStopKeyword_61_2; }
+		public Keyword getFullStopKeyword_49_2() { return cFullStopKeyword_49_2; }
 
 		//expr=UtyExpr
-		public Assignment getExprAssignment_61_3() { return cExprAssignment_61_3; }
+		public Assignment getExprAssignment_49_3() { return cExprAssignment_49_3; }
 
 		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_61_3_0() { return cExprUtyExprParserRuleCall_61_3_0; }
+		public RuleCall getExprUtyExprParserRuleCall_49_3_0() { return cExprUtyExprParserRuleCall_49_3_0; }
 
 		//"nu" name=QName "." expr=UtyExpr   
 		//            
@@ -4979,25 +5304,54 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_62() { return cGroup_62; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_50() { return cGroup_50; }
 
 		//"nu"
-		public Keyword getNuKeyword_62_0() { return cNuKeyword_62_0; }
+		public Keyword getNuKeyword_50_0() { return cNuKeyword_50_0; }
 
 		//name=QName
-		public Assignment getNameAssignment_62_1() { return cNameAssignment_62_1; }
+		public Assignment getNameAssignment_50_1() { return cNameAssignment_50_1; }
 
 		//QName
-		public RuleCall getNameQNameParserRuleCall_62_1_0() { return cNameQNameParserRuleCall_62_1_0; }
+		public RuleCall getNameQNameParserRuleCall_50_1_0() { return cNameQNameParserRuleCall_50_1_0; }
 
 		//"."
-		public Keyword getFullStopKeyword_62_2() { return cFullStopKeyword_62_2; }
+		public Keyword getFullStopKeyword_50_2() { return cFullStopKeyword_50_2; }
 
 		//expr=UtyExpr
-		public Assignment getExprAssignment_62_3() { return cExprAssignment_62_3; }
+		public Assignment getExprAssignment_50_3() { return cExprAssignment_50_3; }
 
 		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_62_3_0() { return cExprUtyExprParserRuleCall_62_3_0; }
+		public RuleCall getExprUtyExprParserRuleCall_50_3_0() { return cExprUtyExprParserRuleCall_50_3_0; }
 
 		//"fixpoints" FixpointEqList "in" expr2=UtyExpr   
 		//            
@@ -5044,22 +5398,51 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_63() { return cGroup_63; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_51() { return cGroup_51; }
 
 		//"fixpoints"
-		public Keyword getFixpointsKeyword_63_0() { return cFixpointsKeyword_63_0; }
+		public Keyword getFixpointsKeyword_51_0() { return cFixpointsKeyword_51_0; }
 
 		//FixpointEqList
-		public RuleCall getFixpointEqListParserRuleCall_63_1() { return cFixpointEqListParserRuleCall_63_1; }
+		public RuleCall getFixpointEqListParserRuleCall_51_1() { return cFixpointEqListParserRuleCall_51_1; }
 
 		//"in"
-		public Keyword getInKeyword_63_2() { return cInKeyword_63_2; }
+		public Keyword getInKeyword_51_2() { return cInKeyword_51_2; }
 
 		//expr2=UtyExpr
-		public Assignment getExpr2Assignment_63_3() { return cExpr2Assignment_63_3; }
+		public Assignment getExpr2Assignment_51_3() { return cExpr2Assignment_51_3; }
 
 		//UtyExpr
-		public RuleCall getExpr2UtyExprParserRuleCall_63_3_0() { return cExpr2UtyExprParserRuleCall_63_3_0; }
+		public RuleCall getExpr2UtyExprParserRuleCall_51_3_0() { return cExpr2UtyExprParserRuleCall_51_3_0; }
 
 		//"forall" name=QName ":" type=QType "." expr=UtyExpr   
 		//            
@@ -5106,34 +5489,63 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_64() { return cGroup_64; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_52() { return cGroup_52; }
 
 		//"forall"
-		public Keyword getForallKeyword_64_0() { return cForallKeyword_64_0; }
+		public Keyword getForallKeyword_52_0() { return cForallKeyword_52_0; }
 
 		//name=QName
-		public Assignment getNameAssignment_64_1() { return cNameAssignment_64_1; }
+		public Assignment getNameAssignment_52_1() { return cNameAssignment_52_1; }
 
 		//QName
-		public RuleCall getNameQNameParserRuleCall_64_1_0() { return cNameQNameParserRuleCall_64_1_0; }
+		public RuleCall getNameQNameParserRuleCall_52_1_0() { return cNameQNameParserRuleCall_52_1_0; }
 
 		//":"
-		public Keyword getColonKeyword_64_2() { return cColonKeyword_64_2; }
+		public Keyword getColonKeyword_52_2() { return cColonKeyword_52_2; }
 
 		//type=QType
-		public Assignment getTypeAssignment_64_3() { return cTypeAssignment_64_3; }
+		public Assignment getTypeAssignment_52_3() { return cTypeAssignment_52_3; }
 
 		//QType
-		public RuleCall getTypeQTypeParserRuleCall_64_3_0() { return cTypeQTypeParserRuleCall_64_3_0; }
+		public RuleCall getTypeQTypeParserRuleCall_52_3_0() { return cTypeQTypeParserRuleCall_52_3_0; }
 
 		//"."
-		public Keyword getFullStopKeyword_64_4() { return cFullStopKeyword_64_4; }
+		public Keyword getFullStopKeyword_52_4() { return cFullStopKeyword_52_4; }
 
 		//expr=UtyExpr
-		public Assignment getExprAssignment_64_5() { return cExprAssignment_64_5; }
+		public Assignment getExprAssignment_52_5() { return cExprAssignment_52_5; }
 
 		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_64_5_0() { return cExprUtyExprParserRuleCall_64_5_0; }
+		public RuleCall getExprUtyExprParserRuleCall_52_5_0() { return cExprUtyExprParserRuleCall_52_5_0; }
 
 		//"exists" name=QName ":" type=QType "." expr=UtyExpr   
 		//            
@@ -5180,34 +5592,63 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_65() { return cGroup_65; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_53() { return cGroup_53; }
 
 		//"exists"
-		public Keyword getExistsKeyword_65_0() { return cExistsKeyword_65_0; }
+		public Keyword getExistsKeyword_53_0() { return cExistsKeyword_53_0; }
 
 		//name=QName
-		public Assignment getNameAssignment_65_1() { return cNameAssignment_65_1; }
+		public Assignment getNameAssignment_53_1() { return cNameAssignment_53_1; }
 
 		//QName
-		public RuleCall getNameQNameParserRuleCall_65_1_0() { return cNameQNameParserRuleCall_65_1_0; }
+		public RuleCall getNameQNameParserRuleCall_53_1_0() { return cNameQNameParserRuleCall_53_1_0; }
 
 		//":"
-		public Keyword getColonKeyword_65_2() { return cColonKeyword_65_2; }
+		public Keyword getColonKeyword_53_2() { return cColonKeyword_53_2; }
 
 		//type=QType
-		public Assignment getTypeAssignment_65_3() { return cTypeAssignment_65_3; }
+		public Assignment getTypeAssignment_53_3() { return cTypeAssignment_53_3; }
 
 		//QType
-		public RuleCall getTypeQTypeParserRuleCall_65_3_0() { return cTypeQTypeParserRuleCall_65_3_0; }
+		public RuleCall getTypeQTypeParserRuleCall_53_3_0() { return cTypeQTypeParserRuleCall_53_3_0; }
 
 		//"."
-		public Keyword getFullStopKeyword_65_4() { return cFullStopKeyword_65_4; }
+		public Keyword getFullStopKeyword_53_4() { return cFullStopKeyword_53_4; }
 
 		//expr=UtyExpr
-		public Assignment getExprAssignment_65_5() { return cExprAssignment_65_5; }
+		public Assignment getExprAssignment_53_5() { return cExprAssignment_53_5; }
 
 		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_65_5_0() { return cExprUtyExprParserRuleCall_65_5_0; }
+		public RuleCall getExprUtyExprParserRuleCall_53_5_0() { return cExprUtyExprParserRuleCall_53_5_0; }
 
 		//"(" UtyExpr ")"   
 		//            
@@ -5254,16 +5695,45 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		public Group getGroup_66() { return cGroup_66; }
+		//                   
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                  
+		//                      
+		//                      
+		//                  
+		//                
+		//                
+		//                
+		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		public Group getGroup_54() { return cGroup_54; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_66_0() { return cLeftParenthesisKeyword_66_0; }
+		public Keyword getLeftParenthesisKeyword_54_0() { return cLeftParenthesisKeyword_54_0; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_66_1() { return cUtyExprParserRuleCall_66_1; }
+		public RuleCall getUtyExprParserRuleCall_54_1() { return cUtyExprParserRuleCall_54_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_66_2() { return cRightParenthesisKeyword_66_2; }
+		public Keyword getRightParenthesisKeyword_54_2() { return cRightParenthesisKeyword_54_2; }
 	}
 
 	public class UtyActionElements extends AbstractParserRuleElementFinder {
@@ -5271,108 +5741,42 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Keyword cEmitKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_0_2 = (RuleCall)cGroup_0.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
+		private final Keyword cNextKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final RuleCall cUtyExprParserRuleCall_0_3 = (RuleCall)cGroup_0.eContents().get(3);
+		private final Keyword cRightParenthesisKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cEmitKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cNextKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final RuleCall cUtyExprParserRuleCall_1_3 = (RuleCall)cGroup_1.eContents().get(3);
-		private final Keyword cRightParenthesisKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Keyword cNextKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final RuleCall cUtyExprParserRuleCall_1_2 = (RuleCall)cGroup_1.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Assignment cT2Assignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
+		private final RuleCall cT2UtyExprParserRuleCall_1_5_0 = (RuleCall)cT2Assignment_1_5.eContents().get(0);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cNextKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cDerKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
 		private final RuleCall cUtyExprParserRuleCall_2_2 = (RuleCall)cGroup_2.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
-		private final Keyword cEqualsSignKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
-		private final Assignment cT2Assignment_2_5 = (Assignment)cGroup_2.eContents().get(5);
-		private final RuleCall cT2UtyExprParserRuleCall_2_5_0 = (RuleCall)cT2Assignment_2_5.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
+		private final Assignment cT4Assignment_2_5 = (Assignment)cGroup_2.eContents().get(5);
+		private final RuleCall cT4UtyExprParserRuleCall_2_5_0 = (RuleCall)cT4Assignment_2_5.eContents().get(0);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Keyword cDerKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cAssumeKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
 		private final RuleCall cUtyExprParserRuleCall_3_2 = (RuleCall)cGroup_3.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
-		private final Keyword cLessThanSignHyphenMinusKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
-		private final Assignment cT4Assignment_3_5 = (Assignment)cGroup_3.eContents().get(5);
-		private final RuleCall cT4UtyExprParserRuleCall_3_5_0 = (RuleCall)cT4Assignment_3_5.eContents().get(0);
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final Keyword cAssumeKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cAssertKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
 		private final RuleCall cUtyExprParserRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
-		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final Keyword cAssertKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_5_2 = (RuleCall)cGroup_5.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
-		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
-		private final Keyword cReleaseKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_6_2 = (RuleCall)cGroup_6.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
-		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
-		private final Keyword cConstrainSKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_7_2 = (RuleCall)cGroup_7.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
-		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
-		private final Keyword cConstrainMKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_8_2 = (RuleCall)cGroup_8.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_8_3 = (Keyword)cGroup_8.eContents().get(3);
-		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
-		private final Keyword cConstrainEKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_9_1 = (Keyword)cGroup_9.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_9_2 = (RuleCall)cGroup_9.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_9_3 = (Keyword)cGroup_9.eContents().get(3);
-		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
-		private final Keyword cConstrainSMKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_10_2 = (RuleCall)cGroup_10.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_10_3 = (Keyword)cGroup_10.eContents().get(3);
-		private final Group cGroup_11 = (Group)cAlternatives.eContents().get(11);
-		private final Keyword cConstrainSEKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_11_1 = (Keyword)cGroup_11.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_11_2 = (RuleCall)cGroup_11.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_11_3 = (Keyword)cGroup_11.eContents().get(3);
-		private final Group cGroup_12 = (Group)cAlternatives.eContents().get(12);
-		private final Keyword cConstrainMEKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_12_2 = (RuleCall)cGroup_12.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_12_3 = (Keyword)cGroup_12.eContents().get(3);
-		private final Group cGroup_13 = (Group)cAlternatives.eContents().get(13);
-		private final Keyword cConstrainSMEKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
-		private final RuleCall cUtyExprParserRuleCall_13_2 = (RuleCall)cGroup_13.eContents().get(2);
-		private final Keyword cRightParenthesisKeyword_13_3 = (Keyword)cGroup_13.eContents().get(3);
-		private final Group cGroup_14 = (Group)cAlternatives.eContents().get(14);
-		private final RuleCall cQNameParserRuleCall_14_0 = (RuleCall)cGroup_14.eContents().get(0);
-		private final Keyword cColonKeyword_14_1 = (Keyword)cGroup_14.eContents().get(1);
-		private final Keyword cAssumeKeyword_14_2 = (Keyword)cGroup_14.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_14_3 = (Keyword)cGroup_14.eContents().get(3);
-		private final Assignment cExprAssignment_14_4 = (Assignment)cGroup_14.eContents().get(4);
-		private final RuleCall cExprUtyExprParserRuleCall_14_4_0 = (RuleCall)cExprAssignment_14_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_14_5 = (Keyword)cGroup_14.eContents().get(5);
-		private final Group cGroup_15 = (Group)cAlternatives.eContents().get(15);
-		private final RuleCall cQNameParserRuleCall_15_0 = (RuleCall)cGroup_15.eContents().get(0);
-		private final Keyword cColonKeyword_15_1 = (Keyword)cGroup_15.eContents().get(1);
-		private final Keyword cAssertKeyword_15_2 = (Keyword)cGroup_15.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_15_3 = (Keyword)cGroup_15.eContents().get(3);
-		private final Assignment cExprAssignment_15_4 = (Assignment)cGroup_15.eContents().get(4);
-		private final RuleCall cExprUtyExprParserRuleCall_15_4_0 = (RuleCall)cExprAssignment_15_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_15_5 = (Keyword)cGroup_15.eContents().get(5);
 		
 		//UtyAction:
-		//  "emit" "(" UtyExpr ")"|"emit" "next" "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|
-		//  "der" "(" UtyExpr ")" "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"|
-		//  "release" "(" UtyExpr ")"|"constrainS" "(" UtyExpr ")"|"constrainM" "(" UtyExpr ")"|
-		//  "constrainE" "(" UtyExpr ")"|"constrainSM" "(" UtyExpr ")"|"constrainSE" "(" UtyExpr ")"|
-		//  "constrainME" "(" UtyExpr ")"|"constrainSME" "(" UtyExpr ")"|QName ":" "assume" "(" expr=
-		//  UtyExpr ")"|QName ":" "assert" "(" expr=UtyExpr ")"; 
+		//  "emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
+		//  "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"; 
 		//
-		//          
-		//                      
+		//            
 		//            //| UtyExpr "=" t1=UtyExpr
 		//                         
 		//            //| UtyExpr "<-" t3=UtyExpr
@@ -5380,17 +5784,22 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//                    
 		//                    
 		//            //| RELEASECAN "(" UtyExpr ")"
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
 		public ParserRule getRule() { return rule; }
 
-		//"emit" "(" UtyExpr ")"|"emit" "next" "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|
-		//"der" "(" UtyExpr ")" "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"|
-		//"release" "(" UtyExpr ")"|"constrainS" "(" UtyExpr ")"|"constrainM" "(" UtyExpr ")"|
-		//"constrainE" "(" UtyExpr ")"|"constrainSM" "(" UtyExpr ")"|"constrainSE" "(" UtyExpr ")"|
-		//"constrainME" "(" UtyExpr ")"|"constrainSME" "(" UtyExpr ")"|QName ":" "assume" "(" expr=
-		//UtyExpr ")"|QName ":" "assert" "(" expr=UtyExpr ")" 
+		//"emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
+		//"<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")" 
 		//
-		//          
-		//                      
+		//            
 		//            //| UtyExpr "=" t1=UtyExpr
 		//                         
 		//            //| UtyExpr "<-" t3=UtyExpr
@@ -5398,52 +5807,39 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//                    
 		//                    
 		//            //| RELEASECAN "(" UtyExpr ")"
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"emit" "(" UtyExpr ")"
+		//"emit" "next"? "(" UtyExpr ")"           
+		//            //| UtyExpr "=" t1=UtyExpr
 		public Group getGroup_0() { return cGroup_0; }
 
 		//"emit"
 		public Keyword getEmitKeyword_0_0() { return cEmitKeyword_0_0; }
 
-		//"("
-		public Keyword getLeftParenthesisKeyword_0_1() { return cLeftParenthesisKeyword_0_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_0_2() { return cUtyExprParserRuleCall_0_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_0_3() { return cRightParenthesisKeyword_0_3; }
-
-		//"emit" "next" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"emit"
-		public Keyword getEmitKeyword_1_0() { return cEmitKeyword_1_0; }
-
-		//"next"
-		public Keyword getNextKeyword_1_1() { return cNextKeyword_1_1; }
+		//"next"?
+		public Keyword getNextKeyword_0_1() { return cNextKeyword_0_1; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_1_2() { return cLeftParenthesisKeyword_1_2; }
+		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
 
 		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_1_3() { return cUtyExprParserRuleCall_1_3; }
+		public RuleCall getUtyExprParserRuleCall_0_3() { return cUtyExprParserRuleCall_0_3; }
 
 		//")"   
 		//            //| UtyExpr "=" t1=UtyExpr
-		public Keyword getRightParenthesisKeyword_1_4() { return cRightParenthesisKeyword_1_4; }
+		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
 
-		//"next" "(" UtyExpr ")" "=" t2=UtyExpr         
-		//                      
+		//"next" "(" UtyExpr ")" "=" t2=UtyExpr           
 		//            //| UtyExpr "=" t1=UtyExpr
 		//                         
 		//            //| UtyExpr "<-" t3=UtyExpr
@@ -5451,10 +5847,63 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//                    
 		//                    
 		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_2() { return cGroup_2; }
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		public Group getGroup_1() { return cGroup_1; }
 
 		//"next"
-		public Keyword getNextKeyword_2_0() { return cNextKeyword_2_0; }
+		public Keyword getNextKeyword_1_0() { return cNextKeyword_1_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_1() { return cLeftParenthesisKeyword_1_1; }
+
+		//UtyExpr
+		public RuleCall getUtyExprParserRuleCall_1_2() { return cUtyExprParserRuleCall_1_2; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_3() { return cRightParenthesisKeyword_1_3; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_1_4() { return cEqualsSignKeyword_1_4; }
+
+		//t2=UtyExpr   
+		//            //| UtyExpr "<-" t3=UtyExpr
+		public Assignment getT2Assignment_1_5() { return cT2Assignment_1_5; }
+
+		//UtyExpr 
+		//            //| UtyExpr "<-" t3=UtyExpr
+		public RuleCall getT2UtyExprParserRuleCall_1_5_0() { return cT2UtyExprParserRuleCall_1_5_0; }
+
+		//"der" "(" UtyExpr ")" "<-" t4=UtyExpr           
+		//            //| UtyExpr "=" t1=UtyExpr
+		//                         
+		//            //| UtyExpr "<-" t3=UtyExpr
+		//                         
+		//                    
+		//                    
+		//            //| RELEASECAN "(" UtyExpr ")"
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"der"
+		public Keyword getDerKeyword_2_0() { return cDerKeyword_2_0; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_1() { return cLeftParenthesisKeyword_2_1; }
@@ -5465,19 +5914,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 
-		//"="
-		public Keyword getEqualsSignKeyword_2_4() { return cEqualsSignKeyword_2_4; }
+		//"<-"
+		public Keyword getLessThanSignHyphenMinusKeyword_2_4() { return cLessThanSignHyphenMinusKeyword_2_4; }
 
-		//t2=UtyExpr   
-		//            //| UtyExpr "<-" t3=UtyExpr
-		public Assignment getT2Assignment_2_5() { return cT2Assignment_2_5; }
+		//t4=UtyExpr
+		public Assignment getT4Assignment_2_5() { return cT4Assignment_2_5; }
 
-		//UtyExpr 
-		//            //| UtyExpr "<-" t3=UtyExpr
-		public RuleCall getT2UtyExprParserRuleCall_2_5_0() { return cT2UtyExprParserRuleCall_2_5_0; }
+		//UtyExpr
+		public RuleCall getT4UtyExprParserRuleCall_2_5_0() { return cT4UtyExprParserRuleCall_2_5_0; }
 
-		//"der" "(" UtyExpr ")" "<-" t4=UtyExpr         
-		//                      
+		//"assume" "(" UtyExpr ")"           
 		//            //| UtyExpr "=" t1=UtyExpr
 		//                         
 		//            //| UtyExpr "<-" t3=UtyExpr
@@ -5485,10 +5931,20 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//                    
 		//                    
 		//            //| RELEASECAN "(" UtyExpr ")"
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"der"
-		public Keyword getDerKeyword_3_0() { return cDerKeyword_3_0; }
+		//"assume"
+		public Keyword getAssumeKeyword_3_0() { return cAssumeKeyword_3_0; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_3_1() { return cLeftParenthesisKeyword_3_1; }
@@ -5499,17 +5955,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 
-		//"<-"
-		public Keyword getLessThanSignHyphenMinusKeyword_3_4() { return cLessThanSignHyphenMinusKeyword_3_4; }
-
-		//t4=UtyExpr
-		public Assignment getT4Assignment_3_5() { return cT4Assignment_3_5; }
-
-		//UtyExpr
-		public RuleCall getT4UtyExprParserRuleCall_3_5_0() { return cT4UtyExprParserRuleCall_3_5_0; }
-
-		//"assume" "(" UtyExpr ")"         
-		//                      
+		//"assert" "(" UtyExpr ")"           
 		//            //| UtyExpr "=" t1=UtyExpr
 		//                         
 		//            //| UtyExpr "<-" t3=UtyExpr
@@ -5517,10 +5963,20 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//                    
 		//                    
 		//            //| RELEASECAN "(" UtyExpr ")"
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"assume"
-		public Keyword getAssumeKeyword_4_0() { return cAssumeKeyword_4_0; }
+		//"assert"
+		public Keyword getAssertKeyword_4_0() { return cAssertKeyword_4_0; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_4_1() { return cLeftParenthesisKeyword_4_1; }
@@ -5528,280 +5984,19 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getUtyExprParserRuleCall_4_2() { return cUtyExprParserRuleCall_4_2; }
 
-		//")"
-		public Keyword getRightParenthesisKeyword_4_3() { return cRightParenthesisKeyword_4_3; }
-
-		//"assert" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_5() { return cGroup_5; }
-
-		//"assert"
-		public Keyword getAssertKeyword_5_0() { return cAssertKeyword_5_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_5_1() { return cLeftParenthesisKeyword_5_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_5_2() { return cUtyExprParserRuleCall_5_2; }
-
 		//")"   
 		//            //| RELEASECAN "(" UtyExpr ")"
-		public Keyword getRightParenthesisKeyword_5_3() { return cRightParenthesisKeyword_5_3; }
-
-		//"release" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"release"
-		public Keyword getReleaseKeyword_6_0() { return cReleaseKeyword_6_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_6_1() { return cLeftParenthesisKeyword_6_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_6_2() { return cUtyExprParserRuleCall_6_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_6_3() { return cRightParenthesisKeyword_6_3; }
-
-		//"constrainS" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_7() { return cGroup_7; }
-
-		//"constrainS"
-		public Keyword getConstrainSKeyword_7_0() { return cConstrainSKeyword_7_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_7_1() { return cLeftParenthesisKeyword_7_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_7_2() { return cUtyExprParserRuleCall_7_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_7_3() { return cRightParenthesisKeyword_7_3; }
-
-		//"constrainM" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_8() { return cGroup_8; }
-
-		//"constrainM"
-		public Keyword getConstrainMKeyword_8_0() { return cConstrainMKeyword_8_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_8_1() { return cLeftParenthesisKeyword_8_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_8_2() { return cUtyExprParserRuleCall_8_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_8_3() { return cRightParenthesisKeyword_8_3; }
-
-		//"constrainE" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_9() { return cGroup_9; }
-
-		//"constrainE"
-		public Keyword getConstrainEKeyword_9_0() { return cConstrainEKeyword_9_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_9_1() { return cLeftParenthesisKeyword_9_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_9_2() { return cUtyExprParserRuleCall_9_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_9_3() { return cRightParenthesisKeyword_9_3; }
-
-		//"constrainSM" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_10() { return cGroup_10; }
-
-		//"constrainSM"
-		public Keyword getConstrainSMKeyword_10_0() { return cConstrainSMKeyword_10_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_10_1() { return cLeftParenthesisKeyword_10_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_10_2() { return cUtyExprParserRuleCall_10_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_10_3() { return cRightParenthesisKeyword_10_3; }
-
-		//"constrainSE" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_11() { return cGroup_11; }
-
-		//"constrainSE"
-		public Keyword getConstrainSEKeyword_11_0() { return cConstrainSEKeyword_11_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_11_1() { return cLeftParenthesisKeyword_11_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_11_2() { return cUtyExprParserRuleCall_11_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_11_3() { return cRightParenthesisKeyword_11_3; }
-
-		//"constrainME" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_12() { return cGroup_12; }
-
-		//"constrainME"
-		public Keyword getConstrainMEKeyword_12_0() { return cConstrainMEKeyword_12_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_12_1() { return cLeftParenthesisKeyword_12_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_12_2() { return cUtyExprParserRuleCall_12_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_12_3() { return cRightParenthesisKeyword_12_3; }
-
-		//"constrainSME" "(" UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_13() { return cGroup_13; }
-
-		//"constrainSME"
-		public Keyword getConstrainSMEKeyword_13_0() { return cConstrainSMEKeyword_13_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_13_1() { return cLeftParenthesisKeyword_13_1; }
-
-		//UtyExpr
-		public RuleCall getUtyExprParserRuleCall_13_2() { return cUtyExprParserRuleCall_13_2; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_13_3() { return cRightParenthesisKeyword_13_3; }
-
-		//QName ":" "assume" "(" expr=UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_14() { return cGroup_14; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_14_0() { return cQNameParserRuleCall_14_0; }
-
-		//":"
-		public Keyword getColonKeyword_14_1() { return cColonKeyword_14_1; }
-
-		//"assume"
-		public Keyword getAssumeKeyword_14_2() { return cAssumeKeyword_14_2; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_14_3() { return cLeftParenthesisKeyword_14_3; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_14_4() { return cExprAssignment_14_4; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_14_4_0() { return cExprUtyExprParserRuleCall_14_4_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_14_5() { return cRightParenthesisKeyword_14_5; }
-
-		//QName ":" "assert" "(" expr=UtyExpr ")"         
-		//                      
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		public Group getGroup_15() { return cGroup_15; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_15_0() { return cQNameParserRuleCall_15_0; }
-
-		//":"
-		public Keyword getColonKeyword_15_1() { return cColonKeyword_15_1; }
-
-		//"assert"
-		public Keyword getAssertKeyword_15_2() { return cAssertKeyword_15_2; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_15_3() { return cLeftParenthesisKeyword_15_3; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_15_4() { return cExprAssignment_15_4; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_15_4_0() { return cExprUtyExprParserRuleCall_15_4_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_15_5() { return cRightParenthesisKeyword_15_5; }
+		//           / *  | "release" "(" UtyExpr ")"
+		//            | "constrainS" "(" UtyExpr ")"
+		//            | "constrainM" "(" UtyExpr ")"
+		//            | "constrainE" "(" UtyExpr ")"
+		//            | "constrainSM" "(" UtyExpr ")"
+		//            | "constrainSE" "(" UtyExpr ")"
+		//            | "constrainME" "(" UtyExpr ")"
+		//            | "constrainSME" "(" UtyExpr ")"* /
+		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		public Keyword getRightParenthesisKeyword_4_3() { return cRightParenthesisKeyword_4_3; }
 	}
 
 	public class Case_listElements extends AbstractParserRuleElementFinder {
@@ -5931,37 +6126,45 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	public class LocStmtElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocStmt");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Assignment cLocalsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cLocalsInterfaceListParserRuleCall_0_0_0 = (RuleCall)cLocalsAssignment_0_0.eContents().get(0);
-		private final Keyword cSemicolonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cStmtAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStmtSeqStmtParserRuleCall_1_0 = (RuleCall)cStmtAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cLocalsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cLocalsInterfaceListParserRuleCall_1_0_0 = (RuleCall)cLocalsAssignment_1_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cStmtAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStmtStmtParserRuleCall_2_0 = (RuleCall)cStmtAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//LocStmt:
-		//  (locals+=InterfaceList ";")* stmt=SeqStmt;
+		//  "{" (locals+=InterfaceList ";")* stmt=Stmt "}";
 		public ParserRule getRule() { return rule; }
 
-		//(locals+=InterfaceList ";")* stmt=SeqStmt
+		//"{" (locals+=InterfaceList ";")* stmt=Stmt "}"
 		public Group getGroup() { return cGroup; }
 
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
+
 		//(locals+=InterfaceList ";")*
-		public Group getGroup_0() { return cGroup_0; }
+		public Group getGroup_1() { return cGroup_1; }
 
 		//locals+=InterfaceList
-		public Assignment getLocalsAssignment_0_0() { return cLocalsAssignment_0_0; }
+		public Assignment getLocalsAssignment_1_0() { return cLocalsAssignment_1_0; }
 
 		//InterfaceList
-		public RuleCall getLocalsInterfaceListParserRuleCall_0_0_0() { return cLocalsInterfaceListParserRuleCall_0_0_0; }
+		public RuleCall getLocalsInterfaceListParserRuleCall_1_0_0() { return cLocalsInterfaceListParserRuleCall_1_0_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_0_1() { return cSemicolonKeyword_0_1; }
+		public Keyword getSemicolonKeyword_1_1() { return cSemicolonKeyword_1_1; }
 
-		//stmt=SeqStmt
-		public Assignment getStmtAssignment_1() { return cStmtAssignment_1; }
+		//stmt=Stmt
+		public Assignment getStmtAssignment_2() { return cStmtAssignment_2; }
 
-		//SeqStmt
-		public RuleCall getStmtSeqStmtParserRuleCall_1_0() { return cStmtSeqStmtParserRuleCall_1_0; }
+		//Stmt
+		public RuleCall getStmtStmtParserRuleCall_2_0() { return cStmtStmtParserRuleCall_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class SeqStmtElements extends AbstractParserRuleElementFinder {
@@ -6049,262 +6252,110 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final RuleCall cUtyActionParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cGroup_2.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_2_0_0 = (RuleCall)cGroup_2_0.eContents().get(0);
-		private final Keyword cColonKeyword_2_0_1 = (Keyword)cGroup_2_0.eContents().get(1);
-		private final Keyword cPauseKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Keyword cSemicolonKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final RuleCall cNamedStmtParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Group cGroup_3_0 = (Group)cGroup_3.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_3_0_0 = (RuleCall)cGroup_3_0.eContents().get(0);
-		private final Keyword cColonKeyword_3_0_1 = (Keyword)cGroup_3_0.eContents().get(1);
-		private final Keyword cHaltKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
-		private final Keyword cSemicolonKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Keyword cWeakKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cImmediateKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Keyword cAbortKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final RuleCall cAtomicStmtParserRuleCall_3_3 = (RuleCall)cGroup_3.eContents().get(3);
+		private final Keyword cWhenKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
+		private final Assignment cExprAssignment_3_5 = (Assignment)cGroup_3.eContents().get(5);
+		private final RuleCall cExprDUtyExprsParserRuleCall_3_5_0 = (RuleCall)cExprAssignment_3_5.eContents().get(0);
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final RuleCall cQNameParserRuleCall_4_0 = (RuleCall)cGroup_4.eContents().get(0);
-		private final Keyword cColonKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cNameAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cNameQNameParserRuleCall_4_2_0 = (RuleCall)cNameAssignment_4_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
-		private final Assignment cExprsAssignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
-		private final RuleCall cExprsOptUtyExprListParserRuleCall_4_4_0 = (RuleCall)cExprsAssignment_4_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4_5 = (Keyword)cGroup_4.eContents().get(5);
-		private final Keyword cSemicolonKeyword_4_6 = (Keyword)cGroup_4.eContents().get(6);
+		private final Keyword cImmediateKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
+		private final Keyword cDuringKeyword_4_1_0 = (Keyword)cAlternatives_4_1.eContents().get(0);
+		private final Keyword cFinalKeyword_4_1_1 = (Keyword)cAlternatives_4_1.eContents().get(1);
+		private final RuleCall cAtomicStmtParserRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
+		private final Keyword cDoKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Assignment cT03Assignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
+		private final RuleCall cT03AtomicStmtParserRuleCall_4_4_0 = (RuleCall)cT03Assignment_4_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final RuleCall cQNameParserRuleCall_5_0 = (RuleCall)cGroup_5.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cExprsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cExprsOptUtyExprListParserRuleCall_5_2_0 = (RuleCall)cExprsAssignment_5_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
-		private final Keyword cSemicolonKeyword_5_4 = (Keyword)cGroup_5.eContents().get(4);
+		private final Keyword cAbstractKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final RuleCall cAtomicStmtParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
-		private final Group cGroup_6_0 = (Group)cGroup_6.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_6_0_0 = (RuleCall)cGroup_6_0.eContents().get(0);
-		private final Keyword cColonKeyword_6_0_1 = (Keyword)cGroup_6_0.eContents().get(1);
-		private final Keyword cImmediateKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Keyword cAwaitKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
-		private final Assignment cExprAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
-		private final RuleCall cExprDUtyExprsParserRuleCall_6_3_0 = (RuleCall)cExprAssignment_6_3.eContents().get(0);
+		private final Keyword cCaseKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final RuleCall cCase_listParserRuleCall_6_1 = (RuleCall)cGroup_6.eContents().get(1);
+		private final Keyword cDefaultKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Assignment cT15Assignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
+		private final RuleCall cT15AtomicStmtParserRuleCall_6_3_0 = (RuleCall)cT15Assignment_6_3.eContents().get(0);
 		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
-		private final Group cGroup_7_0 = (Group)cGroup_7.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_7_0_0 = (RuleCall)cGroup_7_0.eContents().get(0);
-		private final Keyword cColonKeyword_7_0_1 = (Keyword)cGroup_7_0.eContents().get(1);
-		private final Keyword cWeakKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
-		private final Keyword cImmediateKeyword_7_2 = (Keyword)cGroup_7.eContents().get(2);
-		private final Keyword cSuspendKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
-		private final Assignment cStmtAssignment_7_4 = (Assignment)cGroup_7.eContents().get(4);
-		private final RuleCall cStmtStmtParserRuleCall_7_4_0 = (RuleCall)cStmtAssignment_7_4.eContents().get(0);
-		private final Keyword cWhenKeyword_7_5 = (Keyword)cGroup_7.eContents().get(5);
-		private final Assignment cTsAssignment_7_6 = (Assignment)cGroup_7.eContents().get(6);
-		private final RuleCall cTsDUtyExprsParserRuleCall_7_6_0 = (RuleCall)cTsAssignment_7_6.eContents().get(0);
+		private final Keyword cChooseKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final RuleCall cAtomicStmtParserRuleCall_7_1 = (RuleCall)cGroup_7.eContents().get(1);
+		private final Keyword cElseKeyword_7_2 = (Keyword)cGroup_7.eContents().get(2);
+		private final Assignment cT16Assignment_7_3 = (Assignment)cGroup_7.eContents().get(3);
+		private final RuleCall cT16AtomicStmtParserRuleCall_7_3_0 = (RuleCall)cT16Assignment_7_3.eContents().get(0);
 		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
-		private final Keyword cWeakKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Keyword cImmediateKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
-		private final Keyword cAbortKeyword_8_2 = (Keyword)cGroup_8.eContents().get(2);
-		private final RuleCall cStmtParserRuleCall_8_3 = (RuleCall)cGroup_8.eContents().get(3);
-		private final Keyword cWhenKeyword_8_4 = (Keyword)cGroup_8.eContents().get(4);
-		private final Assignment cExprAssignment_8_5 = (Assignment)cGroup_8.eContents().get(5);
-		private final RuleCall cExprDUtyExprsParserRuleCall_8_5_0 = (RuleCall)cExprAssignment_8_5.eContents().get(0);
+		private final Keyword cChooseKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final RuleCall cGenericParserRuleCall_8_1 = (RuleCall)cGroup_8.eContents().get(1);
+		private final Assignment cT23Assignment_8_2 = (Assignment)cGroup_8.eContents().get(2);
+		private final RuleCall cT23AtomicStmtParserRuleCall_8_2_0 = (RuleCall)cT23Assignment_8_2.eContents().get(0);
 		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
-		private final Keyword cImmediateKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Alternatives cAlternatives_9_1 = (Alternatives)cGroup_9.eContents().get(1);
-		private final Keyword cDuringKeyword_9_1_0 = (Keyword)cAlternatives_9_1.eContents().get(0);
-		private final Keyword cFinalKeyword_9_1_1 = (Keyword)cAlternatives_9_1.eContents().get(1);
-		private final RuleCall cStmtParserRuleCall_9_2 = (RuleCall)cGroup_9.eContents().get(2);
-		private final Keyword cDoKeyword_9_3 = (Keyword)cGroup_9.eContents().get(3);
-		private final Assignment cT03Assignment_9_4 = (Assignment)cGroup_9.eContents().get(4);
-		private final RuleCall cT03StmtParserRuleCall_9_4_0 = (RuleCall)cT03Assignment_9_4.eContents().get(0);
+		private final Keyword cDoKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final RuleCall cAtomicStmtParserRuleCall_9_1 = (RuleCall)cGroup_9.eContents().get(1);
+		private final Keyword cWhileKeyword_9_2 = (Keyword)cGroup_9.eContents().get(2);
+		private final Assignment cT06Assignment_9_3 = (Assignment)cGroup_9.eContents().get(3);
+		private final RuleCall cT06DUtyExprsParserRuleCall_9_3_0 = (RuleCall)cT06Assignment_9_3.eContents().get(0);
 		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
-		private final Keyword cDoKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final RuleCall cStmtParserRuleCall_10_1 = (RuleCall)cGroup_10.eContents().get(1);
-		private final Keyword cWhileKeyword_10_2 = (Keyword)cGroup_10.eContents().get(2);
-		private final Assignment cT06Assignment_10_3 = (Assignment)cGroup_10.eContents().get(3);
-		private final RuleCall cT06DUtyExprsParserRuleCall_10_3_0 = (RuleCall)cT06Assignment_10_3.eContents().get(0);
+		private final Keyword cForKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final RuleCall cGenericParserRuleCall_10_1 = (RuleCall)cGroup_10.eContents().get(1);
+		private final Group cGroup_10_2 = (Group)cGroup_10.eContents().get(2);
+		private final Keyword cDoKeyword_10_2_0 = (Keyword)cGroup_10_2.eContents().get(0);
+		private final Alternatives cAlternatives_10_2_1 = (Alternatives)cGroup_10_2.eContents().get(1);
+		private final Keyword cVerticalLineVerticalLineKeyword_10_2_1_0 = (Keyword)cAlternatives_10_2_1.eContents().get(0);
+		private final Keyword cAmpersandAmpersandKeyword_10_2_1_1 = (Keyword)cAlternatives_10_2_1.eContents().get(1);
+		private final Keyword cVerticalLineVerticalLineVerticalLineKeyword_10_2_1_2 = (Keyword)cAlternatives_10_2_1.eContents().get(2);
+		private final Keyword cAmpersandAmpersandAmpersandKeyword_10_2_1_3 = (Keyword)cAlternatives_10_2_1.eContents().get(3);
+		private final RuleCall cORParserRuleCall_10_2_1_4 = (RuleCall)cAlternatives_10_2_1.eContents().get(4);
+		private final RuleCall cANDParserRuleCall_10_2_1_5 = (RuleCall)cAlternatives_10_2_1.eContents().get(5);
+		private final Assignment cTAssignment_10_3 = (Assignment)cGroup_10.eContents().get(3);
+		private final RuleCall cTAtomicStmtParserRuleCall_10_3_0 = (RuleCall)cTAssignment_10_3.eContents().get(0);
 		private final Group cGroup_11 = (Group)cAlternatives.eContents().get(11);
-		private final Keyword cWhileKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Keyword cIfKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
 		private final RuleCall cDUtyExprParserRuleCall_11_1 = (RuleCall)cGroup_11.eContents().get(1);
-		private final Assignment cT07Assignment_11_2 = (Assignment)cGroup_11.eContents().get(2);
-		private final RuleCall cT07StmtParserRuleCall_11_2_0 = (RuleCall)cT07Assignment_11_2.eContents().get(0);
+		private final Assignment cT13Assignment_11_2 = (Assignment)cGroup_11.eContents().get(2);
+		private final RuleCall cT13AtomicStmtParserRuleCall_11_2_0 = (RuleCall)cT13Assignment_11_2.eContents().get(0);
+		private final Group cGroup_11_3 = (Group)cGroup_11.eContents().get(3);
+		private final Keyword cElseKeyword_11_3_0 = (Keyword)cGroup_11_3.eContents().get(0);
+		private final Assignment cT14Assignment_11_3_1 = (Assignment)cGroup_11_3.eContents().get(1);
+		private final RuleCall cT14AtomicStmtParserRuleCall_11_3_1_0 = (RuleCall)cT14Assignment_11_3_1.eContents().get(0);
 		private final Group cGroup_12 = (Group)cAlternatives.eContents().get(12);
-		private final Keyword cLoopKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
-		private final RuleCall cStmtParserRuleCall_12_1 = (RuleCall)cGroup_12.eContents().get(1);
+		private final Keyword cLetKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
+		private final RuleCall cQNameParserRuleCall_12_2 = (RuleCall)cGroup_12.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_12_3 = (Keyword)cGroup_12.eContents().get(3);
+		private final Assignment cExprAssignment_12_4 = (Assignment)cGroup_12.eContents().get(4);
+		private final RuleCall cExprUtyExprParserRuleCall_12_4_0 = (RuleCall)cExprAssignment_12_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_12_5 = (Keyword)cGroup_12.eContents().get(5);
+		private final Assignment cT24Assignment_12_6 = (Assignment)cGroup_12.eContents().get(6);
+		private final RuleCall cT24AtomicStmtParserRuleCall_12_6_0 = (RuleCall)cT24Assignment_12_6.eContents().get(0);
 		private final Group cGroup_13 = (Group)cAlternatives.eContents().get(13);
-		private final Group cGroup_13_0 = (Group)cGroup_13.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_13_0_0 = (RuleCall)cGroup_13_0.eContents().get(0);
-		private final Keyword cColonKeyword_13_0_1 = (Keyword)cGroup_13_0.eContents().get(1);
-		private final Keyword cEachKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
-		private final Assignment cExprAssignment_13_2 = (Assignment)cGroup_13.eContents().get(2);
-		private final RuleCall cExprDUtyExprParserRuleCall_13_2_0 = (RuleCall)cExprAssignment_13_2.eContents().get(0);
-		private final Assignment cT08Assignment_13_3 = (Assignment)cGroup_13.eContents().get(3);
-		private final RuleCall cT08StmtParserRuleCall_13_3_0 = (RuleCall)cT08Assignment_13_3.eContents().get(0);
+		private final Keyword cLoopKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final RuleCall cAtomicStmtParserRuleCall_13_1 = (RuleCall)cGroup_13.eContents().get(1);
 		private final Group cGroup_14 = (Group)cAlternatives.eContents().get(14);
-		private final Group cGroup_14_0 = (Group)cGroup_14.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_14_0_0 = (RuleCall)cGroup_14_0.eContents().get(0);
-		private final Keyword cColonKeyword_14_0_1 = (Keyword)cGroup_14_0.eContents().get(1);
-		private final Keyword cImmediateKeyword_14_1 = (Keyword)cGroup_14.eContents().get(1);
-		private final Keyword cAlwaysKeyword_14_2 = (Keyword)cGroup_14.eContents().get(2);
-		private final Assignment cStmtAssignment_14_3 = (Assignment)cGroup_14.eContents().get(3);
-		private final RuleCall cStmtStmtParserRuleCall_14_3_0 = (RuleCall)cStmtAssignment_14_3.eContents().get(0);
-		private final Group cGroup_15 = (Group)cAlternatives.eContents().get(15);
-		private final Group cGroup_15_0 = (Group)cGroup_15.eContents().get(0);
-		private final RuleCall cQNameParserRuleCall_15_0_0 = (RuleCall)cGroup_15_0.eContents().get(0);
-		private final Keyword cCommaKeyword_15_0_1 = (Keyword)cGroup_15_0.eContents().get(1);
-		private final Assignment cNameAssignment_15_0_2 = (Assignment)cGroup_15_0.eContents().get(2);
-		private final RuleCall cNameQNameParserRuleCall_15_0_2_0 = (RuleCall)cNameAssignment_15_0_2.eContents().get(0);
-		private final Keyword cColonKeyword_15_0_3 = (Keyword)cGroup_15_0.eContents().get(3);
-		private final Keyword cEveryKeyword_15_1 = (Keyword)cGroup_15.eContents().get(1);
-		private final Assignment cExprAssignment_15_2 = (Assignment)cGroup_15.eContents().get(2);
-		private final RuleCall cExprDUtyExprParserRuleCall_15_2_0 = (RuleCall)cExprAssignment_15_2.eContents().get(0);
-		private final Assignment cT10Assignment_15_3 = (Assignment)cGroup_15.eContents().get(3);
-		private final RuleCall cT10StmtParserRuleCall_15_3_0 = (RuleCall)cT10Assignment_15_3.eContents().get(0);
-		private final Group cGroup_16 = (Group)cAlternatives.eContents().get(16);
-		private final Keyword cIfKeyword_16_0 = (Keyword)cGroup_16.eContents().get(0);
-		private final RuleCall cDUtyExprParserRuleCall_16_1 = (RuleCall)cGroup_16.eContents().get(1);
-		private final Assignment cT13Assignment_16_2 = (Assignment)cGroup_16.eContents().get(2);
-		private final RuleCall cT13StmtParserRuleCall_16_2_0 = (RuleCall)cT13Assignment_16_2.eContents().get(0);
-		private final Group cGroup_16_3 = (Group)cGroup_16.eContents().get(3);
-		private final Keyword cElseKeyword_16_3_0 = (Keyword)cGroup_16_3.eContents().get(0);
-		private final Assignment cT14Assignment_16_3_1 = (Assignment)cGroup_16_3.eContents().get(1);
-		private final RuleCall cT14StmtParserRuleCall_16_3_1_0 = (RuleCall)cT14Assignment_16_3_1.eContents().get(0);
-		private final Group cGroup_17 = (Group)cAlternatives.eContents().get(17);
-		private final Keyword cCaseKeyword_17_0 = (Keyword)cGroup_17.eContents().get(0);
-		private final RuleCall cCase_listParserRuleCall_17_1 = (RuleCall)cGroup_17.eContents().get(1);
-		private final Keyword cDefaultKeyword_17_2 = (Keyword)cGroup_17.eContents().get(2);
-		private final Assignment cT15Assignment_17_3 = (Assignment)cGroup_17.eContents().get(3);
-		private final RuleCall cT15StmtParserRuleCall_17_3_0 = (RuleCall)cT15Assignment_17_3.eContents().get(0);
-		private final Group cGroup_18 = (Group)cAlternatives.eContents().get(18);
-		private final Keyword cChooseKeyword_18_0 = (Keyword)cGroup_18.eContents().get(0);
-		private final RuleCall cStmtParserRuleCall_18_1 = (RuleCall)cGroup_18.eContents().get(1);
-		private final Keyword cElseKeyword_18_2 = (Keyword)cGroup_18.eContents().get(2);
-		private final Assignment cT16Assignment_18_3 = (Assignment)cGroup_18.eContents().get(3);
-		private final RuleCall cT16StmtParserRuleCall_18_3_0 = (RuleCall)cT16Assignment_18_3.eContents().get(0);
-		private final Group cGroup_19 = (Group)cAlternatives.eContents().get(19);
-		private final Keyword cForKeyword_19_0 = (Keyword)cGroup_19.eContents().get(0);
-		private final RuleCall cGenericParserRuleCall_19_1 = (RuleCall)cGroup_19.eContents().get(1);
-		private final Group cGroup_19_2 = (Group)cGroup_19.eContents().get(2);
-		private final Keyword cDoKeyword_19_2_0 = (Keyword)cGroup_19_2.eContents().get(0);
-		private final Alternatives cAlternatives_19_2_1 = (Alternatives)cGroup_19_2.eContents().get(1);
-		private final Keyword cVerticalLineVerticalLineKeyword_19_2_1_0 = (Keyword)cAlternatives_19_2_1.eContents().get(0);
-		private final Keyword cAmpersandAmpersandKeyword_19_2_1_1 = (Keyword)cAlternatives_19_2_1.eContents().get(1);
-		private final Keyword cVerticalLineVerticalLineVerticalLineKeyword_19_2_1_2 = (Keyword)cAlternatives_19_2_1.eContents().get(2);
-		private final Keyword cAmpersandAmpersandAmpersandKeyword_19_2_1_3 = (Keyword)cAlternatives_19_2_1.eContents().get(3);
-		private final RuleCall cORParserRuleCall_19_2_1_4 = (RuleCall)cAlternatives_19_2_1.eContents().get(4);
-		private final RuleCall cANDParserRuleCall_19_2_1_5 = (RuleCall)cAlternatives_19_2_1.eContents().get(5);
-		private final Assignment cTAssignment_19_3 = (Assignment)cGroup_19.eContents().get(3);
-		private final RuleCall cTStmtParserRuleCall_19_3_0 = (RuleCall)cTAssignment_19_3.eContents().get(0);
-		private final Group cGroup_20 = (Group)cAlternatives.eContents().get(20);
-		private final Keyword cChooseKeyword_20_0 = (Keyword)cGroup_20.eContents().get(0);
-		private final RuleCall cGenericParserRuleCall_20_1 = (RuleCall)cGroup_20.eContents().get(1);
-		private final Assignment cT23Assignment_20_2 = (Assignment)cGroup_20.eContents().get(2);
-		private final RuleCall cT23StmtParserRuleCall_20_2_0 = (RuleCall)cT23Assignment_20_2.eContents().get(0);
-		private final Group cGroup_21 = (Group)cAlternatives.eContents().get(21);
-		private final Keyword cAbstractKeyword_21_0 = (Keyword)cGroup_21.eContents().get(0);
-		private final RuleCall cStmtParserRuleCall_21_1 = (RuleCall)cGroup_21.eContents().get(1);
-		private final Group cGroup_22 = (Group)cAlternatives.eContents().get(22);
-		private final Keyword cLetKeyword_22_0 = (Keyword)cGroup_22.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_22_1 = (Keyword)cGroup_22.eContents().get(1);
-		private final RuleCall cQNameParserRuleCall_22_2 = (RuleCall)cGroup_22.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_22_3 = (Keyword)cGroup_22.eContents().get(3);
-		private final Assignment cExprAssignment_22_4 = (Assignment)cGroup_22.eContents().get(4);
-		private final RuleCall cExprUtyExprParserRuleCall_22_4_0 = (RuleCall)cExprAssignment_22_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_22_5 = (Keyword)cGroup_22.eContents().get(5);
-		private final Assignment cT24Assignment_22_6 = (Assignment)cGroup_22.eContents().get(6);
-		private final RuleCall cT24StmtParserRuleCall_22_6_0 = (RuleCall)cT24Assignment_22_6.eContents().get(0);
-		private final Group cGroup_23 = (Group)cAlternatives.eContents().get(23);
-		private final Keyword cLeftCurlyBracketKeyword_23_0 = (Keyword)cGroup_23.eContents().get(0);
-		private final RuleCall cLocStmtParserRuleCall_23_1 = (RuleCall)cGroup_23.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_23_2 = (Keyword)cGroup_23.eContents().get(2);
+		private final Keyword cWhileKeyword_14_0 = (Keyword)cGroup_14.eContents().get(0);
+		private final RuleCall cDUtyExprParserRuleCall_14_1 = (RuleCall)cGroup_14.eContents().get(1);
+		private final Assignment cT07Assignment_14_2 = (Assignment)cGroup_14.eContents().get(2);
+		private final RuleCall cT07AtomicStmtParserRuleCall_14_2_0 = (RuleCall)cT07Assignment_14_2.eContents().get(0);
+		private final RuleCall cLocStmtParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
 		
 		//AtomicStmt:
-		//  "nothing" ";"|UtyAction ";"|(QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":"
-		//  name=QName "(" exprs=OptUtyExprList ")" ";"|QName "(" exprs=OptUtyExprList ")" ";"|(
-		//  QName ":")? "immediate"? "await" expr=dUtyExprs|(QName ":")? "weak"? "immediate"?
-		//  "suspend" stmt=Stmt "when" ts=dUtyExprs|"weak"? "immediate"? "abort" Stmt "when" expr=
-		//  dUtyExprs|"immediate"? ("during"|"final") Stmt "do" t03=Stmt|"do" Stmt "while" t06=
-		//  dUtyExprs|"while" dUtyExpr t07=Stmt|"loop" Stmt|(QName ":")? "each" expr=dUtyExpr t08=
-		//  Stmt|(QName ":")? "immediate"? "always" stmt=Stmt|(QName "," name=QName ":")? "every"
-		//  expr=dUtyExpr t10=Stmt|"if" dUtyExpr t13=Stmt ("else" t14=Stmt)?|"case" case_list
-		//  "default" t15=Stmt|"choose" Stmt "else" t16=Stmt|"for" Generic ("do" ("||"|"&&"|"|||"|
-		//  "&&&"|OR|AND))? t=Stmt|"choose" Generic t23=Stmt|"abstract" Stmt|"let" "(" QName "="
-		//  expr=UtyExpr ")" t24=Stmt|"{" LocStmt "}"; 
-		//
-		//    
-		//         
-		//             
-		//             
-		//                   
-		//               
-		//               
-		//                     
-		//                 
-		//                   
-		//             
-		//           
-		//         
-		//               
-		//               
-		//                   
-		//               
-		//             
-		//             
-		//                                     
-		//           
-		//         
-		//                   
-		//           
-		//       
-		//       // tokens
-		//         / *--------- comments and whitespaces --------------------- * / 
-		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-		//                              Token lexbuf}* /
-		//      / * ---- boolean operators ------- * /
+		//  "nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+		//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
+		//  "abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" AtomicStmt
+		//  "else" t16=AtomicStmt|"choose" Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=
+		//  dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if"
+		//  dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?|"let" "(" QName "=" expr=UtyExpr ")" t24
+		//  =AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt;
 		public ParserRule getRule() { return rule; }
 
-		//"nothing" ";"|UtyAction ";"|(QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":"
-		//name=QName "(" exprs=OptUtyExprList ")" ";"|QName "(" exprs=OptUtyExprList ")" ";"|(
-		//QName ":")? "immediate"? "await" expr=dUtyExprs|(QName ":")? "weak"? "immediate"?
-		//"suspend" stmt=Stmt "when" ts=dUtyExprs|"weak"? "immediate"? "abort" Stmt "when" expr=
-		//dUtyExprs|"immediate"? ("during"|"final") Stmt "do" t03=Stmt|"do" Stmt "while" t06=
-		//dUtyExprs|"while" dUtyExpr t07=Stmt|"loop" Stmt|(QName ":")? "each" expr=dUtyExpr t08=
-		//Stmt|(QName ":")? "immediate"? "always" stmt=Stmt|(QName "," name=QName ":")? "every"
-		//expr=dUtyExpr t10=Stmt|"if" dUtyExpr t13=Stmt ("else" t14=Stmt)?|"case" case_list
-		//"default" t15=Stmt|"choose" Stmt "else" t16=Stmt|"for" Generic ("do" ("||"|"&&"|"|||"|
-		//"&&&"|OR|AND))? t=Stmt|"choose" Generic t23=Stmt|"abstract" Stmt|"let" "(" QName "="
-		//expr=UtyExpr ")" t24=Stmt|"{" LocStmt "}" 
-		//
-		//    
-		//         
-		//             
-		//             
-		//                   
-		//               
-		//               
-		//                     
-		//                 
-		//                   
-		//             
-		//           
-		//         
-		//               
-		//               
-		//                   
-		//               
-		//             
-		//             
-		//                                     
-		//           
-		//         
-		//                   
-		//           
-		//       
-		//       // tokens
-		//         / *--------- comments and whitespaces --------------------- * / 
-		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-		//                              Token lexbuf}* /
-		//      / * ---- boolean operators ------- * /
+		//"nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+		//expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
+		//"abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" AtomicStmt
+		//"else" t16=AtomicStmt|"choose" Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=
+		//dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if"
+		//dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?|"let" "(" QName "=" expr=UtyExpr ")" t24
+		//=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"nothing" ";"
@@ -6325,503 +6376,478 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//";"
 		public Keyword getSemicolonKeyword_1_1() { return cSemicolonKeyword_1_1; }
 
-		//(QName ":")? "pause" ";"
-		public Group getGroup_2() { return cGroup_2; }
+		//NamedStmt
+		public RuleCall getNamedStmtParserRuleCall_2() { return cNamedStmtParserRuleCall_2; }
 
-		//(QName ":")?
-		public Group getGroup_2_0() { return cGroup_2_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_2_0_0() { return cQNameParserRuleCall_2_0_0; }
-
-		//":"
-		public Keyword getColonKeyword_2_0_1() { return cColonKeyword_2_0_1; }
-
-		//"pause"
-		public Keyword getPauseKeyword_2_1() { return cPauseKeyword_2_1; }
-
-		//";"
-		public Keyword getSemicolonKeyword_2_2() { return cSemicolonKeyword_2_2; }
-
-		//(QName ":")? "halt" ";"
+		//"weak"? "immediate"? "abort" AtomicStmt "when" expr=dUtyExprs
 		public Group getGroup_3() { return cGroup_3; }
 
+		//"weak"?
+		public Keyword getWeakKeyword_3_0() { return cWeakKeyword_3_0; }
+
+		//"immediate"?
+		public Keyword getImmediateKeyword_3_1() { return cImmediateKeyword_3_1; }
+
+		//"abort"
+		public Keyword getAbortKeyword_3_2() { return cAbortKeyword_3_2; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_3_3() { return cAtomicStmtParserRuleCall_3_3; }
+
+		//"when"
+		public Keyword getWhenKeyword_3_4() { return cWhenKeyword_3_4; }
+
+		//expr=dUtyExprs
+		public Assignment getExprAssignment_3_5() { return cExprAssignment_3_5; }
+
+		//dUtyExprs
+		public RuleCall getExprDUtyExprsParserRuleCall_3_5_0() { return cExprDUtyExprsParserRuleCall_3_5_0; }
+
+		//"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"immediate"?
+		public Keyword getImmediateKeyword_4_0() { return cImmediateKeyword_4_0; }
+
+		//"during"|"final"
+		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
+
+		//"during"
+		public Keyword getDuringKeyword_4_1_0() { return cDuringKeyword_4_1_0; }
+
+		//"final"
+		public Keyword getFinalKeyword_4_1_1() { return cFinalKeyword_4_1_1; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_4_2() { return cAtomicStmtParserRuleCall_4_2; }
+
+		//"do"
+		public Keyword getDoKeyword_4_3() { return cDoKeyword_4_3; }
+
+		//t03=AtomicStmt
+		public Assignment getT03Assignment_4_4() { return cT03Assignment_4_4; }
+
+		//AtomicStmt
+		public RuleCall getT03AtomicStmtParserRuleCall_4_4_0() { return cT03AtomicStmtParserRuleCall_4_4_0; }
+
+		//"abstract" AtomicStmt
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"abstract"
+		public Keyword getAbstractKeyword_5_0() { return cAbstractKeyword_5_0; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_5_1() { return cAtomicStmtParserRuleCall_5_1; }
+
+		//"case" case_list "default" t15=AtomicStmt
+		public Group getGroup_6() { return cGroup_6; }
+
+		//"case"
+		public Keyword getCaseKeyword_6_0() { return cCaseKeyword_6_0; }
+
+		//case_list
+		public RuleCall getCase_listParserRuleCall_6_1() { return cCase_listParserRuleCall_6_1; }
+
+		//"default"
+		public Keyword getDefaultKeyword_6_2() { return cDefaultKeyword_6_2; }
+
+		//t15=AtomicStmt
+		public Assignment getT15Assignment_6_3() { return cT15Assignment_6_3; }
+
+		//AtomicStmt
+		public RuleCall getT15AtomicStmtParserRuleCall_6_3_0() { return cT15AtomicStmtParserRuleCall_6_3_0; }
+
+		//"choose" AtomicStmt "else" t16=AtomicStmt
+		public Group getGroup_7() { return cGroup_7; }
+
+		//"choose"
+		public Keyword getChooseKeyword_7_0() { return cChooseKeyword_7_0; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_7_1() { return cAtomicStmtParserRuleCall_7_1; }
+
+		//"else"
+		public Keyword getElseKeyword_7_2() { return cElseKeyword_7_2; }
+
+		//t16=AtomicStmt
+		public Assignment getT16Assignment_7_3() { return cT16Assignment_7_3; }
+
+		//AtomicStmt
+		public RuleCall getT16AtomicStmtParserRuleCall_7_3_0() { return cT16AtomicStmtParserRuleCall_7_3_0; }
+
+		//"choose" Generic t23=AtomicStmt
+		public Group getGroup_8() { return cGroup_8; }
+
+		//"choose"
+		public Keyword getChooseKeyword_8_0() { return cChooseKeyword_8_0; }
+
+		//Generic
+		public RuleCall getGenericParserRuleCall_8_1() { return cGenericParserRuleCall_8_1; }
+
+		//t23=AtomicStmt
+		public Assignment getT23Assignment_8_2() { return cT23Assignment_8_2; }
+
+		//AtomicStmt
+		public RuleCall getT23AtomicStmtParserRuleCall_8_2_0() { return cT23AtomicStmtParserRuleCall_8_2_0; }
+
+		//"do" AtomicStmt "while" t06=dUtyExprs
+		public Group getGroup_9() { return cGroup_9; }
+
+		//"do"
+		public Keyword getDoKeyword_9_0() { return cDoKeyword_9_0; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_9_1() { return cAtomicStmtParserRuleCall_9_1; }
+
+		//"while"
+		public Keyword getWhileKeyword_9_2() { return cWhileKeyword_9_2; }
+
+		//t06=dUtyExprs
+		public Assignment getT06Assignment_9_3() { return cT06Assignment_9_3; }
+
+		//dUtyExprs
+		public RuleCall getT06DUtyExprsParserRuleCall_9_3_0() { return cT06DUtyExprsParserRuleCall_9_3_0; }
+
+		//"for" Generic ("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt
+		public Group getGroup_10() { return cGroup_10; }
+
+		//"for"
+		public Keyword getForKeyword_10_0() { return cForKeyword_10_0; }
+
+		//Generic
+		public RuleCall getGenericParserRuleCall_10_1() { return cGenericParserRuleCall_10_1; }
+
+		//("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))?
+		public Group getGroup_10_2() { return cGroup_10_2; }
+
+		//"do"
+		public Keyword getDoKeyword_10_2_0() { return cDoKeyword_10_2_0; }
+
+		//"||"|"&&"|"|||"|"&&&"|OR|AND
+		public Alternatives getAlternatives_10_2_1() { return cAlternatives_10_2_1; }
+
+		//"||"
+		public Keyword getVerticalLineVerticalLineKeyword_10_2_1_0() { return cVerticalLineVerticalLineKeyword_10_2_1_0; }
+
+		//"&&"
+		public Keyword getAmpersandAmpersandKeyword_10_2_1_1() { return cAmpersandAmpersandKeyword_10_2_1_1; }
+
+		//"|||"
+		public Keyword getVerticalLineVerticalLineVerticalLineKeyword_10_2_1_2() { return cVerticalLineVerticalLineVerticalLineKeyword_10_2_1_2; }
+
+		//"&&&"
+		public Keyword getAmpersandAmpersandAmpersandKeyword_10_2_1_3() { return cAmpersandAmpersandAmpersandKeyword_10_2_1_3; }
+
+		//OR
+		public RuleCall getORParserRuleCall_10_2_1_4() { return cORParserRuleCall_10_2_1_4; }
+
+		//AND
+		public RuleCall getANDParserRuleCall_10_2_1_5() { return cANDParserRuleCall_10_2_1_5; }
+
+		//t=AtomicStmt
+		public Assignment getTAssignment_10_3() { return cTAssignment_10_3; }
+
+		//AtomicStmt
+		public RuleCall getTAtomicStmtParserRuleCall_10_3_0() { return cTAtomicStmtParserRuleCall_10_3_0; }
+
+		//"if" dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?
+		public Group getGroup_11() { return cGroup_11; }
+
+		//"if"
+		public Keyword getIfKeyword_11_0() { return cIfKeyword_11_0; }
+
+		//dUtyExpr
+		public RuleCall getDUtyExprParserRuleCall_11_1() { return cDUtyExprParserRuleCall_11_1; }
+
+		//t13=AtomicStmt
+		public Assignment getT13Assignment_11_2() { return cT13Assignment_11_2; }
+
+		//AtomicStmt
+		public RuleCall getT13AtomicStmtParserRuleCall_11_2_0() { return cT13AtomicStmtParserRuleCall_11_2_0; }
+
+		//("else" t14=AtomicStmt)?
+		public Group getGroup_11_3() { return cGroup_11_3; }
+
+		//"else"
+		public Keyword getElseKeyword_11_3_0() { return cElseKeyword_11_3_0; }
+
+		//t14=AtomicStmt
+		public Assignment getT14Assignment_11_3_1() { return cT14Assignment_11_3_1; }
+
+		//AtomicStmt
+		public RuleCall getT14AtomicStmtParserRuleCall_11_3_1_0() { return cT14AtomicStmtParserRuleCall_11_3_1_0; }
+
+		//"let" "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt
+		public Group getGroup_12() { return cGroup_12; }
+
+		//"let"
+		public Keyword getLetKeyword_12_0() { return cLetKeyword_12_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_12_1() { return cLeftParenthesisKeyword_12_1; }
+
+		//QName
+		public RuleCall getQNameParserRuleCall_12_2() { return cQNameParserRuleCall_12_2; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_12_3() { return cEqualsSignKeyword_12_3; }
+
+		//expr=UtyExpr
+		public Assignment getExprAssignment_12_4() { return cExprAssignment_12_4; }
+
+		//UtyExpr
+		public RuleCall getExprUtyExprParserRuleCall_12_4_0() { return cExprUtyExprParserRuleCall_12_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_12_5() { return cRightParenthesisKeyword_12_5; }
+
+		//t24=AtomicStmt
+		public Assignment getT24Assignment_12_6() { return cT24Assignment_12_6; }
+
+		//AtomicStmt
+		public RuleCall getT24AtomicStmtParserRuleCall_12_6_0() { return cT24AtomicStmtParserRuleCall_12_6_0; }
+
+		//"loop" AtomicStmt
+		public Group getGroup_13() { return cGroup_13; }
+
+		//"loop"
+		public Keyword getLoopKeyword_13_0() { return cLoopKeyword_13_0; }
+
+		//AtomicStmt
+		public RuleCall getAtomicStmtParserRuleCall_13_1() { return cAtomicStmtParserRuleCall_13_1; }
+
+		//"while" dUtyExpr t07=AtomicStmt
+		public Group getGroup_14() { return cGroup_14; }
+
+		//"while"
+		public Keyword getWhileKeyword_14_0() { return cWhileKeyword_14_0; }
+
+		//dUtyExpr
+		public RuleCall getDUtyExprParserRuleCall_14_1() { return cDUtyExprParserRuleCall_14_1; }
+
+		//t07=AtomicStmt
+		public Assignment getT07Assignment_14_2() { return cT07Assignment_14_2; }
+
+		//AtomicStmt
+		public RuleCall getT07AtomicStmtParserRuleCall_14_2_0() { return cT07AtomicStmtParserRuleCall_14_2_0; }
+
+		//LocStmt
+		public RuleCall getLocStmtParserRuleCall_15() { return cLocStmtParserRuleCall_15; }
+	}
+
+	public class NamedStmtElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NamedStmt");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final RuleCall cQNameParserRuleCall_0_0_0 = (RuleCall)cGroup_0_0.eContents().get(0);
+		private final Keyword cColonKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
+		private final Keyword cPauseKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final RuleCall cQNameParserRuleCall_1_0_0 = (RuleCall)cGroup_1_0.eContents().get(0);
+		private final Keyword cColonKeyword_1_0_1 = (Keyword)cGroup_1_0.eContents().get(1);
+		private final Keyword cHaltKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cSemicolonKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final RuleCall cQNameParserRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final Keyword cColonKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cNameAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cNameQNameParserRuleCall_2_2_0 = (RuleCall)cNameAssignment_2_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Assignment cExprsAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
+		private final RuleCall cExprsOptUtyExprListParserRuleCall_2_4_0 = (RuleCall)cExprsAssignment_2_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_5 = (Keyword)cGroup_2.eContents().get(5);
+		private final Keyword cSemicolonKeyword_2_6 = (Keyword)cGroup_2.eContents().get(6);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cGroup_3.eContents().get(0);
+		private final RuleCall cQNameParserRuleCall_3_0_0 = (RuleCall)cGroup_3_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_0_1 = (Keyword)cGroup_3_0.eContents().get(1);
+		private final Assignment cNameAssignment_3_0_2 = (Assignment)cGroup_3_0.eContents().get(2);
+		private final RuleCall cNameQNameParserRuleCall_3_0_2_0 = (RuleCall)cNameAssignment_3_0_2.eContents().get(0);
+		private final Keyword cColonKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
+		private final Keyword cEveryKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cExprAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cExprDUtyExprParserRuleCall_3_2_0 = (RuleCall)cExprAssignment_3_2.eContents().get(0);
+		private final Assignment cT10Assignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
+		private final RuleCall cT10AtomicStmtParserRuleCall_3_3_0 = (RuleCall)cT10Assignment_3_3.eContents().get(0);
+		
+		//NamedStmt:
+		//  (QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
+		//  OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt; 
+		//     
+		//       
+		//
+		//            
+		//             
+		//                   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		//                    
+		//         // tokens
+		//         / *--------- comments and whitespaces --------------------- * / 
+		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
+		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
+		//                              Token lexbuf}* /
+		//      / * ---- boolean operators ------- * /
+		public ParserRule getRule() { return rule; }
+
+		//(QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
+		//OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt 
+		//     
+		//       
+		//
+		//            
+		//             
+		//                   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		//                    
+		//         // tokens
+		//         / *--------- comments and whitespaces --------------------- * / 
+		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
+		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
+		//                              Token lexbuf}* /
+		//      / * ---- boolean operators ------- * /
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//(QName ":")? "pause" ";"
+		public Group getGroup_0() { return cGroup_0; }
+
 		//(QName ":")?
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//QName
+		public RuleCall getQNameParserRuleCall_0_0_0() { return cQNameParserRuleCall_0_0_0; }
+
+		//":"
+		public Keyword getColonKeyword_0_0_1() { return cColonKeyword_0_0_1; }
+
+		//"pause"
+		public Keyword getPauseKeyword_0_1() { return cPauseKeyword_0_1; }
+
+		//";"
+		public Keyword getSemicolonKeyword_0_2() { return cSemicolonKeyword_0_2; }
+
+		//(QName ":")? "halt" ";" 
+		//            
+		//             
+		//                   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		public Group getGroup_1() { return cGroup_1; }
+
+		//(QName ":")?
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//QName
+		public RuleCall getQNameParserRuleCall_1_0_0() { return cQNameParserRuleCall_1_0_0; }
+
+		//":"
+		public Keyword getColonKeyword_1_0_1() { return cColonKeyword_1_0_1; }
+
+		//"halt"
+		public Keyword getHaltKeyword_1_1() { return cHaltKeyword_1_1; }
+
+		//";"
+		public Keyword getSemicolonKeyword_1_2() { return cSemicolonKeyword_1_2; }
+
+		//QName ":" name=QName "(" exprs=OptUtyExprList ")" ";" 
+		//            
+		//             
+		//                   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		public Group getGroup_2() { return cGroup_2; }
+
+		//QName
+		public RuleCall getQNameParserRuleCall_2_0() { return cQNameParserRuleCall_2_0; }
+
+		//":"
+		public Keyword getColonKeyword_2_1() { return cColonKeyword_2_1; }
+
+		//name=QName
+		public Assignment getNameAssignment_2_2() { return cNameAssignment_2_2; }
+
+		//QName
+		public RuleCall getNameQNameParserRuleCall_2_2_0() { return cNameQNameParserRuleCall_2_2_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_3() { return cLeftParenthesisKeyword_2_3; }
+
+		//exprs=OptUtyExprList
+		public Assignment getExprsAssignment_2_4() { return cExprsAssignment_2_4; }
+
+		//OptUtyExprList
+		public RuleCall getExprsOptUtyExprListParserRuleCall_2_4_0() { return cExprsOptUtyExprListParserRuleCall_2_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_5() { return cRightParenthesisKeyword_2_5; }
+
+		//";"   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		public Keyword getSemicolonKeyword_2_6() { return cSemicolonKeyword_2_6; }
+
+		//(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt 
+		//            
+		//             
+		//                   
+		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		public Group getGroup_3() { return cGroup_3; }
+
+		//(QName "," name=QName ":")?
 		public Group getGroup_3_0() { return cGroup_3_0; }
 
 		//QName
 		public RuleCall getQNameParserRuleCall_3_0_0() { return cQNameParserRuleCall_3_0_0; }
 
-		//":"
-		public Keyword getColonKeyword_3_0_1() { return cColonKeyword_3_0_1; }
-
-		//"halt"
-		public Keyword getHaltKeyword_3_1() { return cHaltKeyword_3_1; }
-
-		//";"
-		public Keyword getSemicolonKeyword_3_2() { return cSemicolonKeyword_3_2; }
-
-		//QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"
-		public Group getGroup_4() { return cGroup_4; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_4_0() { return cQNameParserRuleCall_4_0; }
-
-		//":"
-		public Keyword getColonKeyword_4_1() { return cColonKeyword_4_1; }
-
-		//name=QName
-		public Assignment getNameAssignment_4_2() { return cNameAssignment_4_2; }
-
-		//QName
-		public RuleCall getNameQNameParserRuleCall_4_2_0() { return cNameQNameParserRuleCall_4_2_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_4_3() { return cLeftParenthesisKeyword_4_3; }
-
-		//exprs=OptUtyExprList
-		public Assignment getExprsAssignment_4_4() { return cExprsAssignment_4_4; }
-
-		//OptUtyExprList
-		public RuleCall getExprsOptUtyExprListParserRuleCall_4_4_0() { return cExprsOptUtyExprListParserRuleCall_4_4_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_4_5() { return cRightParenthesisKeyword_4_5; }
-
-		//";"
-		public Keyword getSemicolonKeyword_4_6() { return cSemicolonKeyword_4_6; }
-
-		//QName "(" exprs=OptUtyExprList ")" ";"
-		public Group getGroup_5() { return cGroup_5; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_5_0() { return cQNameParserRuleCall_5_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_5_1() { return cLeftParenthesisKeyword_5_1; }
-
-		//exprs=OptUtyExprList
-		public Assignment getExprsAssignment_5_2() { return cExprsAssignment_5_2; }
-
-		//OptUtyExprList
-		public RuleCall getExprsOptUtyExprListParserRuleCall_5_2_0() { return cExprsOptUtyExprListParserRuleCall_5_2_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_5_3() { return cRightParenthesisKeyword_5_3; }
-
-		//";"
-		public Keyword getSemicolonKeyword_5_4() { return cSemicolonKeyword_5_4; }
-
-		//(QName ":")? "immediate"? "await" expr=dUtyExprs
-		public Group getGroup_6() { return cGroup_6; }
-
-		//(QName ":")?
-		public Group getGroup_6_0() { return cGroup_6_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_6_0_0() { return cQNameParserRuleCall_6_0_0; }
-
-		//":"
-		public Keyword getColonKeyword_6_0_1() { return cColonKeyword_6_0_1; }
-
-		//"immediate"?
-		public Keyword getImmediateKeyword_6_1() { return cImmediateKeyword_6_1; }
-
-		//"await"
-		public Keyword getAwaitKeyword_6_2() { return cAwaitKeyword_6_2; }
-
-		//expr=dUtyExprs
-		public Assignment getExprAssignment_6_3() { return cExprAssignment_6_3; }
-
-		//dUtyExprs
-		public RuleCall getExprDUtyExprsParserRuleCall_6_3_0() { return cExprDUtyExprsParserRuleCall_6_3_0; }
-
-		//(QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-		public Group getGroup_7() { return cGroup_7; }
-
-		//(QName ":")?
-		public Group getGroup_7_0() { return cGroup_7_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_7_0_0() { return cQNameParserRuleCall_7_0_0; }
-
-		//":"
-		public Keyword getColonKeyword_7_0_1() { return cColonKeyword_7_0_1; }
-
-		//"weak"?
-		public Keyword getWeakKeyword_7_1() { return cWeakKeyword_7_1; }
-
-		//"immediate"?
-		public Keyword getImmediateKeyword_7_2() { return cImmediateKeyword_7_2; }
-
-		//"suspend"
-		public Keyword getSuspendKeyword_7_3() { return cSuspendKeyword_7_3; }
-
-		//stmt=Stmt
-		public Assignment getStmtAssignment_7_4() { return cStmtAssignment_7_4; }
-
-		//Stmt
-		public RuleCall getStmtStmtParserRuleCall_7_4_0() { return cStmtStmtParserRuleCall_7_4_0; }
-
-		//"when"
-		public Keyword getWhenKeyword_7_5() { return cWhenKeyword_7_5; }
-
-		//ts=dUtyExprs
-		public Assignment getTsAssignment_7_6() { return cTsAssignment_7_6; }
-
-		//dUtyExprs
-		public RuleCall getTsDUtyExprsParserRuleCall_7_6_0() { return cTsDUtyExprsParserRuleCall_7_6_0; }
-
-		//"weak"? "immediate"? "abort" Stmt "when" expr=dUtyExprs
-		public Group getGroup_8() { return cGroup_8; }
-
-		//"weak"?
-		public Keyword getWeakKeyword_8_0() { return cWeakKeyword_8_0; }
-
-		//"immediate"?
-		public Keyword getImmediateKeyword_8_1() { return cImmediateKeyword_8_1; }
-
-		//"abort"
-		public Keyword getAbortKeyword_8_2() { return cAbortKeyword_8_2; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_8_3() { return cStmtParserRuleCall_8_3; }
-
-		//"when"
-		public Keyword getWhenKeyword_8_4() { return cWhenKeyword_8_4; }
-
-		//expr=dUtyExprs
-		public Assignment getExprAssignment_8_5() { return cExprAssignment_8_5; }
-
-		//dUtyExprs
-		public RuleCall getExprDUtyExprsParserRuleCall_8_5_0() { return cExprDUtyExprsParserRuleCall_8_5_0; }
-
-		//"immediate"? ("during"|"final") Stmt "do" t03=Stmt
-		public Group getGroup_9() { return cGroup_9; }
-
-		//"immediate"?
-		public Keyword getImmediateKeyword_9_0() { return cImmediateKeyword_9_0; }
-
-		//"during"|"final"
-		public Alternatives getAlternatives_9_1() { return cAlternatives_9_1; }
-
-		//"during"
-		public Keyword getDuringKeyword_9_1_0() { return cDuringKeyword_9_1_0; }
-
-		//"final"
-		public Keyword getFinalKeyword_9_1_1() { return cFinalKeyword_9_1_1; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_9_2() { return cStmtParserRuleCall_9_2; }
-
-		//"do"
-		public Keyword getDoKeyword_9_3() { return cDoKeyword_9_3; }
-
-		//t03=Stmt
-		public Assignment getT03Assignment_9_4() { return cT03Assignment_9_4; }
-
-		//Stmt
-		public RuleCall getT03StmtParserRuleCall_9_4_0() { return cT03StmtParserRuleCall_9_4_0; }
-
-		//"do" Stmt "while" t06=dUtyExprs
-		public Group getGroup_10() { return cGroup_10; }
-
-		//"do"
-		public Keyword getDoKeyword_10_0() { return cDoKeyword_10_0; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_10_1() { return cStmtParserRuleCall_10_1; }
-
-		//"while"
-		public Keyword getWhileKeyword_10_2() { return cWhileKeyword_10_2; }
-
-		//t06=dUtyExprs
-		public Assignment getT06Assignment_10_3() { return cT06Assignment_10_3; }
-
-		//dUtyExprs
-		public RuleCall getT06DUtyExprsParserRuleCall_10_3_0() { return cT06DUtyExprsParserRuleCall_10_3_0; }
-
-		//"while" dUtyExpr t07=Stmt
-		public Group getGroup_11() { return cGroup_11; }
-
-		//"while"
-		public Keyword getWhileKeyword_11_0() { return cWhileKeyword_11_0; }
-
-		//dUtyExpr
-		public RuleCall getDUtyExprParserRuleCall_11_1() { return cDUtyExprParserRuleCall_11_1; }
-
-		//t07=Stmt
-		public Assignment getT07Assignment_11_2() { return cT07Assignment_11_2; }
-
-		//Stmt
-		public RuleCall getT07StmtParserRuleCall_11_2_0() { return cT07StmtParserRuleCall_11_2_0; }
-
-		//"loop" Stmt
-		public Group getGroup_12() { return cGroup_12; }
-
-		//"loop"
-		public Keyword getLoopKeyword_12_0() { return cLoopKeyword_12_0; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_12_1() { return cStmtParserRuleCall_12_1; }
-
-		//(QName ":")? "each" expr=dUtyExpr t08=Stmt
-		public Group getGroup_13() { return cGroup_13; }
-
-		//(QName ":")?
-		public Group getGroup_13_0() { return cGroup_13_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_13_0_0() { return cQNameParserRuleCall_13_0_0; }
-
-		//":"
-		public Keyword getColonKeyword_13_0_1() { return cColonKeyword_13_0_1; }
-
-		//"each"
-		public Keyword getEachKeyword_13_1() { return cEachKeyword_13_1; }
-
-		//expr=dUtyExpr
-		public Assignment getExprAssignment_13_2() { return cExprAssignment_13_2; }
-
-		//dUtyExpr
-		public RuleCall getExprDUtyExprParserRuleCall_13_2_0() { return cExprDUtyExprParserRuleCall_13_2_0; }
-
-		//t08=Stmt
-		public Assignment getT08Assignment_13_3() { return cT08Assignment_13_3; }
-
-		//Stmt
-		public RuleCall getT08StmtParserRuleCall_13_3_0() { return cT08StmtParserRuleCall_13_3_0; }
-
-		//(QName ":")? "immediate"? "always" stmt=Stmt
-		public Group getGroup_14() { return cGroup_14; }
-
-		//(QName ":")?
-		public Group getGroup_14_0() { return cGroup_14_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_14_0_0() { return cQNameParserRuleCall_14_0_0; }
-
-		//":"
-		public Keyword getColonKeyword_14_0_1() { return cColonKeyword_14_0_1; }
-
-		//"immediate"?
-		public Keyword getImmediateKeyword_14_1() { return cImmediateKeyword_14_1; }
-
-		//"always"
-		public Keyword getAlwaysKeyword_14_2() { return cAlwaysKeyword_14_2; }
-
-		//stmt=Stmt
-		public Assignment getStmtAssignment_14_3() { return cStmtAssignment_14_3; }
-
-		//Stmt
-		public RuleCall getStmtStmtParserRuleCall_14_3_0() { return cStmtStmtParserRuleCall_14_3_0; }
-
-		//(QName "," name=QName ":")? "every" expr=dUtyExpr t10=Stmt
-		public Group getGroup_15() { return cGroup_15; }
-
-		//(QName "," name=QName ":")?
-		public Group getGroup_15_0() { return cGroup_15_0; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_15_0_0() { return cQNameParserRuleCall_15_0_0; }
-
 		//","
-		public Keyword getCommaKeyword_15_0_1() { return cCommaKeyword_15_0_1; }
+		public Keyword getCommaKeyword_3_0_1() { return cCommaKeyword_3_0_1; }
 
 		//name=QName
-		public Assignment getNameAssignment_15_0_2() { return cNameAssignment_15_0_2; }
+		public Assignment getNameAssignment_3_0_2() { return cNameAssignment_3_0_2; }
 
 		//QName
-		public RuleCall getNameQNameParserRuleCall_15_0_2_0() { return cNameQNameParserRuleCall_15_0_2_0; }
+		public RuleCall getNameQNameParserRuleCall_3_0_2_0() { return cNameQNameParserRuleCall_3_0_2_0; }
 
 		//":"
-		public Keyword getColonKeyword_15_0_3() { return cColonKeyword_15_0_3; }
+		public Keyword getColonKeyword_3_0_3() { return cColonKeyword_3_0_3; }
 
 		//"every"
-		public Keyword getEveryKeyword_15_1() { return cEveryKeyword_15_1; }
+		public Keyword getEveryKeyword_3_1() { return cEveryKeyword_3_1; }
 
 		//expr=dUtyExpr
-		public Assignment getExprAssignment_15_2() { return cExprAssignment_15_2; }
+		public Assignment getExprAssignment_3_2() { return cExprAssignment_3_2; }
 
 		//dUtyExpr
-		public RuleCall getExprDUtyExprParserRuleCall_15_2_0() { return cExprDUtyExprParserRuleCall_15_2_0; }
+		public RuleCall getExprDUtyExprParserRuleCall_3_2_0() { return cExprDUtyExprParserRuleCall_3_2_0; }
 
-		//t10=Stmt
-		public Assignment getT10Assignment_15_3() { return cT10Assignment_15_3; }
+		//t10=AtomicStmt
+		public Assignment getT10Assignment_3_3() { return cT10Assignment_3_3; }
 
-		//Stmt
-		public RuleCall getT10StmtParserRuleCall_15_3_0() { return cT10StmtParserRuleCall_15_3_0; }
-
-		//"if" dUtyExpr t13=Stmt ("else" t14=Stmt)?
-		public Group getGroup_16() { return cGroup_16; }
-
-		//"if"
-		public Keyword getIfKeyword_16_0() { return cIfKeyword_16_0; }
-
-		//dUtyExpr
-		public RuleCall getDUtyExprParserRuleCall_16_1() { return cDUtyExprParserRuleCall_16_1; }
-
-		//t13=Stmt
-		public Assignment getT13Assignment_16_2() { return cT13Assignment_16_2; }
-
-		//Stmt
-		public RuleCall getT13StmtParserRuleCall_16_2_0() { return cT13StmtParserRuleCall_16_2_0; }
-
-		//("else" t14=Stmt)?
-		public Group getGroup_16_3() { return cGroup_16_3; }
-
-		//"else"
-		public Keyword getElseKeyword_16_3_0() { return cElseKeyword_16_3_0; }
-
-		//t14=Stmt
-		public Assignment getT14Assignment_16_3_1() { return cT14Assignment_16_3_1; }
-
-		//Stmt
-		public RuleCall getT14StmtParserRuleCall_16_3_1_0() { return cT14StmtParserRuleCall_16_3_1_0; }
-
-		//"case" case_list "default" t15=Stmt
-		public Group getGroup_17() { return cGroup_17; }
-
-		//"case"
-		public Keyword getCaseKeyword_17_0() { return cCaseKeyword_17_0; }
-
-		//case_list
-		public RuleCall getCase_listParserRuleCall_17_1() { return cCase_listParserRuleCall_17_1; }
-
-		//"default"
-		public Keyword getDefaultKeyword_17_2() { return cDefaultKeyword_17_2; }
-
-		//t15=Stmt
-		public Assignment getT15Assignment_17_3() { return cT15Assignment_17_3; }
-
-		//Stmt
-		public RuleCall getT15StmtParserRuleCall_17_3_0() { return cT15StmtParserRuleCall_17_3_0; }
-
-		//"choose" Stmt "else" t16=Stmt
-		public Group getGroup_18() { return cGroup_18; }
-
-		//"choose"
-		public Keyword getChooseKeyword_18_0() { return cChooseKeyword_18_0; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_18_1() { return cStmtParserRuleCall_18_1; }
-
-		//"else"
-		public Keyword getElseKeyword_18_2() { return cElseKeyword_18_2; }
-
-		//t16=Stmt
-		public Assignment getT16Assignment_18_3() { return cT16Assignment_18_3; }
-
-		//Stmt
-		public RuleCall getT16StmtParserRuleCall_18_3_0() { return cT16StmtParserRuleCall_18_3_0; }
-
-		//"for" Generic ("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=Stmt
-		public Group getGroup_19() { return cGroup_19; }
-
-		//"for"
-		public Keyword getForKeyword_19_0() { return cForKeyword_19_0; }
-
-		//Generic
-		public RuleCall getGenericParserRuleCall_19_1() { return cGenericParserRuleCall_19_1; }
-
-		//("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))?
-		public Group getGroup_19_2() { return cGroup_19_2; }
-
-		//"do"
-		public Keyword getDoKeyword_19_2_0() { return cDoKeyword_19_2_0; }
-
-		//"||"|"&&"|"|||"|"&&&"|OR|AND
-		public Alternatives getAlternatives_19_2_1() { return cAlternatives_19_2_1; }
-
-		//"||"
-		public Keyword getVerticalLineVerticalLineKeyword_19_2_1_0() { return cVerticalLineVerticalLineKeyword_19_2_1_0; }
-
-		//"&&"
-		public Keyword getAmpersandAmpersandKeyword_19_2_1_1() { return cAmpersandAmpersandKeyword_19_2_1_1; }
-
-		//"|||"
-		public Keyword getVerticalLineVerticalLineVerticalLineKeyword_19_2_1_2() { return cVerticalLineVerticalLineVerticalLineKeyword_19_2_1_2; }
-
-		//"&&&"
-		public Keyword getAmpersandAmpersandAmpersandKeyword_19_2_1_3() { return cAmpersandAmpersandAmpersandKeyword_19_2_1_3; }
-
-		//OR
-		public RuleCall getORParserRuleCall_19_2_1_4() { return cORParserRuleCall_19_2_1_4; }
-
-		//AND
-		public RuleCall getANDParserRuleCall_19_2_1_5() { return cANDParserRuleCall_19_2_1_5; }
-
-		//t=Stmt
-		public Assignment getTAssignment_19_3() { return cTAssignment_19_3; }
-
-		//Stmt
-		public RuleCall getTStmtParserRuleCall_19_3_0() { return cTStmtParserRuleCall_19_3_0; }
-
-		//"choose" Generic t23=Stmt
-		public Group getGroup_20() { return cGroup_20; }
-
-		//"choose"
-		public Keyword getChooseKeyword_20_0() { return cChooseKeyword_20_0; }
-
-		//Generic
-		public RuleCall getGenericParserRuleCall_20_1() { return cGenericParserRuleCall_20_1; }
-
-		//t23=Stmt
-		public Assignment getT23Assignment_20_2() { return cT23Assignment_20_2; }
-
-		//Stmt
-		public RuleCall getT23StmtParserRuleCall_20_2_0() { return cT23StmtParserRuleCall_20_2_0; }
-
-		//"abstract" Stmt
-		public Group getGroup_21() { return cGroup_21; }
-
-		//"abstract"
-		public Keyword getAbstractKeyword_21_0() { return cAbstractKeyword_21_0; }
-
-		//Stmt
-		public RuleCall getStmtParserRuleCall_21_1() { return cStmtParserRuleCall_21_1; }
-
-		//"let" "(" QName "=" expr=UtyExpr ")" t24=Stmt
-		public Group getGroup_22() { return cGroup_22; }
-
-		//"let"
-		public Keyword getLetKeyword_22_0() { return cLetKeyword_22_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_22_1() { return cLeftParenthesisKeyword_22_1; }
-
-		//QName
-		public RuleCall getQNameParserRuleCall_22_2() { return cQNameParserRuleCall_22_2; }
-
-		//"="
-		public Keyword getEqualsSignKeyword_22_3() { return cEqualsSignKeyword_22_3; }
-
-		//expr=UtyExpr
-		public Assignment getExprAssignment_22_4() { return cExprAssignment_22_4; }
-
-		//UtyExpr
-		public RuleCall getExprUtyExprParserRuleCall_22_4_0() { return cExprUtyExprParserRuleCall_22_4_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_22_5() { return cRightParenthesisKeyword_22_5; }
-
-		//t24=Stmt
-		public Assignment getT24Assignment_22_6() { return cT24Assignment_22_6; }
-
-		//Stmt
-		public RuleCall getT24StmtParserRuleCall_22_6_0() { return cT24StmtParserRuleCall_22_6_0; }
-
-		//"{" LocStmt "}"
-		public Group getGroup_23() { return cGroup_23; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_23_0() { return cLeftCurlyBracketKeyword_23_0; }
-
-		//LocStmt
-		public RuleCall getLocStmtParserRuleCall_23_1() { return cLocStmtParserRuleCall_23_1; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_23_2() { return cRightCurlyBracketKeyword_23_2; }
+		//AtomicStmt
+		public RuleCall getT10AtomicStmtParserRuleCall_3_3_0() { return cT10AtomicStmtParserRuleCall_3_3_0; }
 	}
 
 	public class NOTElements extends AbstractParserRuleElementFinder {
@@ -6832,8 +6858,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//NOT returns ecore::EString:
 		//  "!"|"not"; 
-		//       
-		//       // tokens
+		//         // tokens
 		//         / *--------- comments and whitespaces --------------------- * / 
 		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
 		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
@@ -6842,8 +6867,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//"!"|"not" 
-		//       
-		//       // tokens
+		//         // tokens
 		//         / *--------- comments and whitespaces --------------------- * / 
 		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
 		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
@@ -6997,6 +7021,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	private SeqStmtElements pSeqStmt;
 	private StmtElements pStmt;
 	private AtomicStmtElements pAtomicStmt;
+	private NamedStmtElements pNamedStmt;
 	private NOTElements pNOT;
 	private ANDElements pAND;
 	private XORElements pXOR;
@@ -7078,8 +7103,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QModule:
-	//  "module" name=Name "(" intf=InterfaceList ")" ("{" stmt=LocStmt "}")? obs+=
-	//  ObservedSpecList*;
+	//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt? obs+=ObservedSpecList*;
 	public QModuleElements getQModuleAccess() {
 		return (pQModule != null) ? pQModule : (pQModule = new QModuleElements());
 	}
@@ -7335,17 +7359,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	//  "bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
 	//  UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
 	//  "," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-	//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"[" UtyExpr "SU" expr=UtyExpr "]"|"["
-	//  UtyExpr "SB" expr=UtyExpr "]"|"[" UtyExpr "SW" expr=UtyExpr "]"|"[" UtyExpr "WU" expr=
-	//  UtyExpr "]"|"[" UtyExpr "WB" expr=UtyExpr "]"|"[" UtyExpr "WW" expr=UtyExpr "]"|"["
-	//  UtyExpr "PSU" expr=UtyExpr "]"|"[" UtyExpr "PSB" expr=UtyExpr "]"|"[" UtyExpr "PSW" expr=
-	//  UtyExpr "]"|"[" UtyExpr "PMU" expr=UtyExpr "]"|"[" UtyExpr "PMB" expr=UtyExpr "]"|"["
-	//  UtyExpr "PMW" expr=UtyExpr "]"|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|"PA" UtyExpr|"PF"
-	//  UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]" UtyExpr|"<>" UtyExpr|
-	//  "[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu" name=QName "." expr=
-	//  UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall" name=QName ":" type=
-	//  QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=UtyExpr|"(" UtyExpr
-	//  ")"; 
+	//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
+	//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
+	//  UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
+	//  name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
+	//  name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
+	//  UtyExpr|"(" UtyExpr ")"; 
 	//
 	//    
 	//            
@@ -7392,6 +7411,35 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 	//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 	//           //| QName "(" OptUtyExprList ")"
+	//                   
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                  
+	//                      
+	//                      
+	//                  
+	//                
+	//                
+	//                
+	// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+	//          | "[" UtyExpr "SB" expr=UtyExpr "]"
+	//          | "[" UtyExpr "SW" expr=UtyExpr "]"
+	//          | "[" UtyExpr "WU" expr=UtyExpr "]"
+	//          | "[" UtyExpr "WB" expr=UtyExpr "]"
+	//          | "[" UtyExpr "WW" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
+	//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
 	public UtyExprElements getUtyExprAccess() {
 		return (pUtyExpr != null) ? pUtyExpr : (pUtyExpr = new UtyExprElements());
 	}
@@ -7401,15 +7449,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UtyAction:
-	//  "emit" "(" UtyExpr ")"|"emit" "next" "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|
-	//  "der" "(" UtyExpr ")" "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"|
-	//  "release" "(" UtyExpr ")"|"constrainS" "(" UtyExpr ")"|"constrainM" "(" UtyExpr ")"|
-	//  "constrainE" "(" UtyExpr ")"|"constrainSM" "(" UtyExpr ")"|"constrainSE" "(" UtyExpr ")"|
-	//  "constrainME" "(" UtyExpr ")"|"constrainSME" "(" UtyExpr ")"|QName ":" "assume" "(" expr=
-	//  UtyExpr ")"|QName ":" "assert" "(" expr=UtyExpr ")"; 
+	//  "emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
+	//  "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"; 
 	//
-	//          
-	//                      
+	//            
 	//            //| UtyExpr "=" t1=UtyExpr
 	//                         
 	//            //| UtyExpr "<-" t3=UtyExpr
@@ -7417,6 +7460,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	//                    
 	//                    
 	//            //| RELEASECAN "(" UtyExpr ")"
+	//           / *  | "release" "(" UtyExpr ")"
+	//            | "constrainS" "(" UtyExpr ")"
+	//            | "constrainM" "(" UtyExpr ")"
+	//            | "constrainE" "(" UtyExpr ")"
+	//            | "constrainSM" "(" UtyExpr ")"
+	//            | "constrainSE" "(" UtyExpr ")"
+	//            | "constrainME" "(" UtyExpr ")"
+	//            | "constrainSME" "(" UtyExpr ")"* /
+	//            //| QName ":" "assume" "(" expr=UtyExpr ")"
+	//            // | QName ":" "assert" "(" expr=UtyExpr ")"
 	public UtyActionElements getUtyActionAccess() {
 		return (pUtyAction != null) ? pUtyAction : (pUtyAction = new UtyActionElements());
 	}
@@ -7466,7 +7519,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LocStmt:
-	//  (locals+=InterfaceList ";")* stmt=SeqStmt;
+	//  "{" (locals+=InterfaceList ";")* stmt=Stmt "}";
 	public LocStmtElements getLocStmtAccess() {
 		return (pLocStmt != null) ? pLocStmt : (pLocStmt = new LocStmtElements());
 	}
@@ -7496,49 +7549,13 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicStmt:
-	//  "nothing" ";"|UtyAction ";"|(QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":"
-	//  name=QName "(" exprs=OptUtyExprList ")" ";"|QName "(" exprs=OptUtyExprList ")" ";"|(
-	//  QName ":")? "immediate"? "await" expr=dUtyExprs|(QName ":")? "weak"? "immediate"?
-	//  "suspend" stmt=Stmt "when" ts=dUtyExprs|"weak"? "immediate"? "abort" Stmt "when" expr=
-	//  dUtyExprs|"immediate"? ("during"|"final") Stmt "do" t03=Stmt|"do" Stmt "while" t06=
-	//  dUtyExprs|"while" dUtyExpr t07=Stmt|"loop" Stmt|(QName ":")? "each" expr=dUtyExpr t08=
-	//  Stmt|(QName ":")? "immediate"? "always" stmt=Stmt|(QName "," name=QName ":")? "every"
-	//  expr=dUtyExpr t10=Stmt|"if" dUtyExpr t13=Stmt ("else" t14=Stmt)?|"case" case_list
-	//  "default" t15=Stmt|"choose" Stmt "else" t16=Stmt|"for" Generic ("do" ("||"|"&&"|"|||"|
-	//  "&&&"|OR|AND))? t=Stmt|"choose" Generic t23=Stmt|"abstract" Stmt|"let" "(" QName "="
-	//  expr=UtyExpr ")" t24=Stmt|"{" LocStmt "}"; 
-	//
-	//    
-	//         
-	//             
-	//             
-	//                   
-	//               
-	//               
-	//                     
-	//                 
-	//                   
-	//             
-	//           
-	//         
-	//               
-	//               
-	//                   
-	//               
-	//             
-	//             
-	//                                     
-	//           
-	//         
-	//                   
-	//           
-	//       
-	//       // tokens
-	//         / *--------- comments and whitespaces --------------------- * / 
-	//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-	//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-	//                              Token lexbuf}* /
-	//      / * ---- boolean operators ------- * /
+	//  "nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+	//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
+	//  "abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" AtomicStmt
+	//  "else" t16=AtomicStmt|"choose" Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=
+	//  dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if"
+	//  dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?|"let" "(" QName "=" expr=UtyExpr ")" t24
+	//  =AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt;
 	public AtomicStmtElements getAtomicStmtAccess() {
 		return (pAtomicStmt != null) ? pAtomicStmt : (pAtomicStmt = new AtomicStmtElements());
 	}
@@ -7547,10 +7564,38 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicStmtAccess().getRule();
 	}
 
+	//NamedStmt:
+	//  (QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
+	//  OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt; 
+	//     
+	//       
+	//
+	//            
+	//             
+	//                   
+	//    // | QName "(" exprs=OptUtyExprList ")" ";"
+	//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+	//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+	//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+	//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+	//                    
+	//         // tokens
+	//         / *--------- comments and whitespaces --------------------- * / 
+	//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
+	//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
+	//                              Token lexbuf}* /
+	//      / * ---- boolean operators ------- * /
+	public NamedStmtElements getNamedStmtAccess() {
+		return (pNamedStmt != null) ? pNamedStmt : (pNamedStmt = new NamedStmtElements());
+	}
+	
+	public ParserRule getNamedStmtRule() {
+		return getNamedStmtAccess().getRule();
+	}
+
 	//NOT returns ecore::EString:
 	//  "!"|"not"; 
-	//       
-	//       // tokens
+	//         // tokens
 	//         / *--------- comments and whitespaces --------------------- * / 
 	//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
 	//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;

@@ -5,6 +5,7 @@
  */
 package de.cau.cs.kieler.quartz.editor.quartz.impl;
 
+import de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage;
 import de.cau.cs.kieler.quartz.editor.quartz.Stmt;
 import de.cau.cs.kieler.quartz.editor.quartz.case_list;
@@ -70,7 +71,7 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
    * @generated
    * @ordered
    */
-  protected Stmt t15;
+  protected AtomicStmt t15;
 
   /**
    * <!-- begin-user-doc -->
@@ -126,7 +127,7 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
    * <!-- end-user-doc -->
    * @generated
    */
-  public Stmt getT15()
+  public AtomicStmt getT15()
   {
     return t15;
   }
@@ -136,9 +137,9 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetT15(Stmt newT15, NotificationChain msgs)
+  public NotificationChain basicSetT15(AtomicStmt newT15, NotificationChain msgs)
   {
-    Stmt oldT15 = t15;
+    AtomicStmt oldT15 = t15;
     t15 = newT15;
     if (eNotificationRequired())
     {
@@ -153,7 +154,7 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setT15(Stmt newT15)
+  public void setT15(AtomicStmt newT15)
   {
     if (newT15 != t15)
     {
@@ -229,7 +230,7 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
         getStmt().addAll((Collection<? extends Stmt>)newValue);
         return;
       case QuartzPackage.CASE_LIST__T15:
-        setT15((Stmt)newValue);
+        setT15((AtomicStmt)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -252,7 +253,7 @@ public class case_listImpl extends AtomicStmtImpl implements case_list
         getStmt().clear();
         return;
       case QuartzPackage.CASE_LIST__T15:
-        setT15((Stmt)null);
+        setT15((AtomicStmt)null);
         return;
     }
     super.eUnset(featureID);

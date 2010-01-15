@@ -15,7 +15,6 @@ package de.cau.cs.kieler.quartz.editor.quartz;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getOp <em>Op</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getT7 <em>T7</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getType <em>Type</em>}</li>
@@ -55,32 +54,6 @@ public interface UtyExpr extends UtyAction, dUtyExpr
    * @generated
    */
   void setOp(String value);
-
-  /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(dUtyExprs)
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage#getUtyExpr_Expr()
-   * @model containment="true"
-   * @generated
-   */
-  dUtyExprs getExpr();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.quartz.editor.quartz.UtyExpr#getExpr <em>Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
-   * @generated
-   */
-  void setExpr(dUtyExprs value);
 
   /**
    * Returns the value of the '<em><b>T7</b></em>' containment reference.

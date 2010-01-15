@@ -154,6 +154,7 @@ public class QuartzSwitch<T>
         if (result == null) result = caseQName(name);
         if (result == null) result = caseInOutName(name);
         if (result == null) result = caseGeneric(name);
+        if (result == null) result = caseNamedStmt(name);
         if (result == null) result = caseInOutNameList(name);
         if (result == null) result = caseUtyExpr(name);
         if (result == null) result = caseUtyAction(name);
@@ -169,6 +170,7 @@ public class QuartzSwitch<T>
         T result = caseQName(qName);
         if (result == null) result = caseInOutName(qName);
         if (result == null) result = caseGeneric(qName);
+        if (result == null) result = caseNamedStmt(qName);
         if (result == null) result = caseInOutNameList(qName);
         if (result == null) result = caseUtyExpr(qName);
         if (result == null) result = caseUtyAction(qName);
@@ -381,7 +383,6 @@ public class QuartzSwitch<T>
       {
         Stmt stmt = (Stmt)theEObject;
         T result = caseStmt(stmt);
-        if (result == null) result = caseAtomicStmt(stmt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -389,6 +390,14 @@ public class QuartzSwitch<T>
       {
         AtomicStmt atomicStmt = (AtomicStmt)theEObject;
         T result = caseAtomicStmt(atomicStmt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QuartzPackage.NAMED_STMT:
+      {
+        NamedStmt namedStmt = (NamedStmt)theEObject;
+        T result = caseNamedStmt(namedStmt);
+        if (result == null) result = caseAtomicStmt(namedStmt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -968,6 +977,22 @@ public class QuartzSwitch<T>
    * @generated
    */
   public T caseAtomicStmt(AtomicStmt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Stmt</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedStmt(NamedStmt object)
   {
     return null;
   }

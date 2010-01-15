@@ -15,7 +15,7 @@ generate quartz "http://www.cau.de/cs/kieler/quartz/editor/Quartz"
 MacroDef: "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"
         | "macro" name=QName "(" ")" "=" expr=UtyExpr ";";
 
-QModule : "module" name=Name "(" intf=InterfaceList ")" ("{" stmt=LocStmt "}")? obs+=ObservedSpecList*;
+QModule : "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt? obs+=ObservedSpecList*;
 
 ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
@@ -145,7 +145,7 @@ UtyExpr : "instant"
           | "forall" Generic expr=UtyExpr
           | "exists" Generic expr=UtyExpr
           | "sum" Generic expr=UtyExpr
-          | "[" UtyExpr "SU" expr=UtyExpr "]"
+ /*         | "[" UtyExpr "SU" expr=UtyExpr "]"
           | "[" UtyExpr "SB" expr=UtyExpr "]"
           | "[" UtyExpr "SW" expr=UtyExpr "]"
           | "[" UtyExpr "WU" expr=UtyExpr "]"
@@ -156,7 +156,7 @@ UtyExpr : "instant"
           | "[" UtyExpr "PSW" expr=UtyExpr "]"
           | "[" UtyExpr "PMU" expr=UtyExpr "]"
           | "[" UtyExpr "PMB" expr=UtyExpr "]"
-          | "[" UtyExpr "PMW" expr=UtyExpr "]"
+          | "[" UtyExpr "PMW" expr=UtyExpr "]"*/
           | "X" UtyExpr
           | "G" UtyExpr
           | "F" UtyExpr
@@ -178,8 +178,7 @@ UtyExpr : "instant"
           | "(" UtyExpr ")"
 ;
 
-UtyAction : "emit" "(" UtyExpr ")"
-            | "emit" "next" "(" UtyExpr ")"
+UtyAction : "emit" "next"? "(" UtyExpr ")"
             //| UtyExpr "=" t1=UtyExpr
             | "next" "(" UtyExpr ")" "=" t2=UtyExpr
             //| UtyExpr "<-" t3=UtyExpr
@@ -187,57 +186,61 @@ UtyAction : "emit" "(" UtyExpr ")"
             | "assume" "(" UtyExpr ")"
             | "assert" "(" UtyExpr ")"
             //| RELEASECAN "(" UtyExpr ")"
-            | "release" "(" UtyExpr ")"
+          /*  | "release" "(" UtyExpr ")"
             | "constrainS" "(" UtyExpr ")"
             | "constrainM" "(" UtyExpr ")"
             | "constrainE" "(" UtyExpr ")"
             | "constrainSM" "(" UtyExpr ")"
             | "constrainSE" "(" UtyExpr ")"
             | "constrainME" "(" UtyExpr ")"
-            | "constrainSME" "(" UtyExpr ")"
-            | QName ":" "assume" "(" expr=UtyExpr ")"
-            | QName ":" "assert" "(" expr=UtyExpr ")";
+            | "constrainSME" "(" UtyExpr ")"*/
+            //| QName ":" "assume" "(" expr=UtyExpr ")"
+           // | QName ":" "assert" "(" expr=UtyExpr ")"
+           ;
 
 case_list : (exp+=dUtyExpr "do" stmt+=Stmt)*;
 
-  dUtyExpr : "(" UtyExpr ")";
+dUtyExpr : "(" UtyExpr ")";
 
-  dUtyExprs : dUtyExpr ";";
+dUtyExprs : dUtyExpr ";";
 
 Generic : "(" QName "=" t6=UtyExpr ".." t5=UtyExpr ")";
 
-LocStmt : (locals+=InterfaceList ";")* stmt=SeqStmt;
+LocStmt : "{" (locals+=InterfaceList ";")* stmt=Stmt "}" ;
 
 SeqStmt : (s+=AtomicStmt)+;
 
 Stmt : left=SeqStmt (("||" | "|||" | OR | "&&" | "&&&" | AND) right+=SeqStmt)*;
 
 AtomicStmt: "nothing" ";"
-     | UtyAction ";"
-     | (QName ":")? "pause" ";"
+    | UtyAction ";"
+    | NamedStmt 
+    | "weak"? "immediate"? "abort" AtomicStmt "when" expr=dUtyExprs
+    | "immediate"? ("during" | "final") AtomicStmt "do" t03=AtomicStmt
+    | "abstract" AtomicStmt
+    | "case" case_list "default" t15=AtomicStmt
+    | "choose" AtomicStmt "else" t16=AtomicStmt
+    | "choose" Generic t23=AtomicStmt
+    | "do" AtomicStmt "while" t06=dUtyExprs
+    | "for" Generic ("do" ("||" | "&&" | "|||" | "&&&" | OR | AND) )? t=AtomicStmt
+    | "if" dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?
+    | "let" "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt
+    | "loop" AtomicStmt
+    | "while" dUtyExpr t07=AtomicStmt
+    | LocStmt;
+     
+       
+NamedStmt:
+      (QName ":")? "pause" ";"
      | (QName ":")? "halt" ";"
      | QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"
-     | QName "(" exprs=OptUtyExprList ")" ";"
-     | (QName ":")? "immediate"? "await" expr=dUtyExprs
-     | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-     | "weak"? "immediate"? "abort" Stmt "when" expr=dUtyExprs
-     | "immediate"? ("during" | "final") Stmt "do" t03=Stmt
-     | "do" Stmt "while" t06=dUtyExprs
-     | "while" dUtyExpr t07=Stmt
-     | "loop" Stmt
-     | (QName ":")? "each" expr=dUtyExpr t08=Stmt
-     | (QName ":")? "immediate"? "always" stmt=Stmt
-     | (QName "," name=QName ":")? "every" expr=dUtyExpr t10=Stmt
-     | "if" dUtyExpr t13=Stmt ("else" t14=Stmt)?
-     | "case" case_list "default" t15=Stmt
-     | "choose" Stmt "else" t16=Stmt
-     | "for" Generic ("do" ("||" | "&&" | "|||" | "&&&" | OR | AND) )? t=Stmt
-     | "choose" Generic t23=Stmt
-     | "abstract" Stmt
-     | "let" "(" QName "=" expr=UtyExpr ")" t24=Stmt
-     | "{" LocStmt "}";
-       
-       // tokens
+    // | QName "(" exprs=OptUtyExprList ")" ";"
+    // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+   //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+   //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+   //  | (QName ":")? "immediate"? "always" stmt=Stmt
+     | (QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt;
+         // tokens
         /*--------- comments and whitespaces --------------------- */
       /*      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
       | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;

@@ -103,6 +103,7 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
       case QuartzPackage.SEQ_STMT: return createSeqStmt();
       case QuartzPackage.STMT: return createStmt();
       case QuartzPackage.ATOMIC_STMT: return createAtomicStmt();
+      case QuartzPackage.NAMED_STMT: return createNamedStmt();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -502,6 +503,17 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
   {
     AtomicStmtImpl atomicStmt = new AtomicStmtImpl();
     return atomicStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NamedStmt createNamedStmt()
+  {
+    NamedStmtImpl namedStmt = new NamedStmtImpl();
+    return namedStmt;
   }
 
   /**

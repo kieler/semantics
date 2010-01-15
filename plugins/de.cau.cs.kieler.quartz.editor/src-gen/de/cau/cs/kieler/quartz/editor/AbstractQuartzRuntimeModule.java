@@ -24,7 +24,7 @@ public abstract class AbstractQuartzRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "/de/cau/cs/kieler/quartz/editor/Quartz.properties");
+		bindProperties(binder, "de/cau/cs/kieler/quartz/editor/Quartz.properties");
 	}
 	
 	

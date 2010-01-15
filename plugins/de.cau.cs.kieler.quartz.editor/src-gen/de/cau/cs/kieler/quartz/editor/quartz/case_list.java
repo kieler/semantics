@@ -68,12 +68,12 @@ public interface case_list extends AtomicStmt
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>T15</em>' containment reference.
-   * @see #setT15(Stmt)
+   * @see #setT15(AtomicStmt)
    * @see de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage#getcase_list_T15()
    * @model containment="true"
    * @generated
    */
-  Stmt getT15();
+  AtomicStmt getT15();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.quartz.editor.quartz.case_list#getT15 <em>T15</em>}' containment reference.
@@ -83,6 +83,6 @@ public interface case_list extends AtomicStmt
    * @see #getT15()
    * @generated
    */
-  void setT15(Stmt value);
+  void setT15(AtomicStmt value);
 
 } // case_list
