@@ -22,6 +22,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.xkev.mapping;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util,de.cau.cs.kieler.sim.kiem.json",
+ de.cau.cs.kieler.xkev.mapping.impl,
  de.cau.cs.kieler.xkev.mapping.util;
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.common.notify.impl,
