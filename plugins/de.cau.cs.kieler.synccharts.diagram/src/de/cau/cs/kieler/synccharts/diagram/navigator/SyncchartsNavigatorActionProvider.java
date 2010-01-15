@@ -121,7 +121,8 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
                 }
                 if (selectedElement instanceof Diagram) {
                     Diagram diagram = (Diagram) selectedElement;
-                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(diagram))) {
+                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                            .getModelID(diagram))) {
                         myDiagram = diagram;
                     }
                 }

@@ -49,7 +49,8 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      * @generated
      */
     public List getTypesForPopupBar(IAdaptable host) {
-        IGraphicalEditPart editPart = (IGraphicalEditPart) host.getAdapter(IGraphicalEditPart.class);
+        IGraphicalEditPart editPart = (IGraphicalEditPart) host
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart instanceof StateSignalEditPart) {
             ArrayList types = new ArrayList(1);
             types.add(SyncchartsElementTypes.Signal_3003);
@@ -221,7 +222,8 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
         if (types.isEmpty()) {
             return null;
         }
-        IGraphicalEditPart editPart = (IGraphicalEditPart) host.getAdapter(IGraphicalEditPart.class);
+        IGraphicalEditPart editPart = (IGraphicalEditPart) host
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart == null) {
             return null;
         }
@@ -252,8 +254,8 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     protected EObject selectElement(EObject[] elements) {
         Shell shell = Display.getCurrent().getActiveShell();
-        ILabelProvider labelProvider = new AdapterFactoryLabelProvider(SyncchartsDiagramEditorPlugin
-                .getInstance().getItemProvidersAdapterFactory());
+        ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
         dialog.setMessage(Messages.SyncchartsModelingAssistantProviderMessage);
         dialog.setTitle(Messages.SyncchartsModelingAssistantProviderTitle);

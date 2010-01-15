@@ -246,7 +246,8 @@ public class SignalEditPart extends ShapeNodeEditPart {
      * @generated
      */
     public EditPart getPrimaryChildEditPart() {
-        return getChildBySemanticHint(SyncchartsVisualIDRegistry.getType(SignalNameEditPart.VISUAL_ID));
+        return getChildBySemanticHint(SyncchartsVisualIDRegistry
+                .getType(SignalNameEditPart.VISUAL_ID));
     }
 
     /**

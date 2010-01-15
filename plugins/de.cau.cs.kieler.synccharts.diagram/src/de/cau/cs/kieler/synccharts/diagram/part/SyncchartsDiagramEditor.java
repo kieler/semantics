@@ -102,7 +102,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         if (type == IShowInTargetList.class) {
             return new IShowInTargetList() {
                 public String[] getShowInTargetIds() {
-                    return new String[] {ProjectExplorer.VIEW_ID};
+                    return new String[] { ProjectExplorer.VIEW_ID };
                 }
             };
         }
@@ -170,7 +170,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         Shell shell = getSite().getShell();
         IEditorInput input = getEditorInput();
         SaveAsDialog dialog = new SaveAsDialog(shell);
-        IFile original = input instanceof IFileEditorInput ? ((IFileEditorInput) input).getFile() : null;
+        IFile original = input instanceof IFileEditorInput ? ((IFileEditorInput) input).getFile()
+                : null;
         if (original != null) {
             dialog.setOriginalFile(original);
         }
@@ -203,7 +204,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         IFile file = workspaceRoot.getFile(filePath);
         final IEditorInput newInput = new FileEditorInput(file);
         // Check if the editor is already open
-        IEditorMatchingStrategy matchingStrategy = getEditorDescriptor().getEditorMatchingStrategy();
+        IEditorMatchingStrategy matchingStrategy = getEditorDescriptor()
+                .getEditorMatchingStrategy();
         IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getEditorReferences();
         for (int i = 0; i < editorRefs.length; i++) {

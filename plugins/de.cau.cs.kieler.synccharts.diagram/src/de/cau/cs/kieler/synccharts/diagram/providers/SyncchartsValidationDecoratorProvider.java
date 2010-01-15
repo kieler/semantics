@@ -98,7 +98,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
         if (!(operation instanceof CreateDecoratorsOperation)) {
             return false;
         }
-        IDecoratorTarget decoratorTarget = ((CreateDecoratorsOperation) operation).getDecoratorTarget();
+        IDecoratorTarget decoratorTarget = ((CreateDecoratorsOperation) operation)
+                .getDecoratorTarget();
         View view = (View) decoratorTarget.getAdapter(View.class);
         return view != null
                 && RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(view));
@@ -134,7 +135,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
                         }
                     });
                 } catch (Exception e) {
-                    SyncchartsDiagramEditorPlugin.getInstance().logError("Decorator refresh failure", e); //$NON-NLS-1$
+                    SyncchartsDiagramEditorPlugin.getInstance().logError(
+                            "Decorator refresh failure", e); //$NON-NLS-1$
                 }
             }
         });
@@ -237,8 +239,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
             // add decoration
             if (editPart instanceof org.eclipse.gef.GraphicalEditPart) {
                 if (view instanceof Edge) {
-                    setDecoration(getDecoratorTarget().addConnectionDecoration(getImage(severity), 50,
-                            true));
+                    setDecoration(getDecoratorTarget().addConnectionDecoration(getImage(severity),
+                            50, true));
                 } else {
                     int margin = -1;
                     if (editPart instanceof org.eclipse.gef.GraphicalEditPart) {
@@ -375,8 +377,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider impl
          * @generated
          */
         public void handleMarkerAdded(IMarker marker) {
-            if (marker
-                    .getAttribute(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID, null) != null) {
+            if (marker.getAttribute(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
+                    null) != null) {
                 handleMarkerChanged(marker);
             }
         }

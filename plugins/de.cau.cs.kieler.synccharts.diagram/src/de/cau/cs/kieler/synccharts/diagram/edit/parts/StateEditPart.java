@@ -121,7 +121,8 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateLabelEditPart) {
-            ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape().getFigureStateNameFigure());
+            ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureStateNameFigure());
             return true;
         }
         return false;
@@ -254,7 +255,8 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     public EditPart getPrimaryChildEditPart() {
-        return getChildBySemanticHint(SyncchartsVisualIDRegistry.getType(StateLabelEditPart.VISUAL_ID));
+        return getChildBySemanticHint(SyncchartsVisualIDRegistry
+                .getType(StateLabelEditPart.VISUAL_ID));
     }
 
     /**

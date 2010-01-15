@@ -60,8 +60,8 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
      * @generated
      */
     public SyncchartsDomainNavigatorContentProvider() {
-        myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(SyncchartsDiagramEditorPlugin
-                .getInstance().getItemProvidersAdapterFactory());
+        myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
@@ -86,8 +86,8 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
                     }
 
                     public boolean handleResourceChanged(final Resource resource) {
-                        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it
-                                .hasNext();) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }
@@ -98,8 +98,8 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
                     }
 
                     public boolean handleResourceDeleted(Resource resource) {
-                        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it
-                                .hasNext();) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }
@@ -110,8 +110,8 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
                     }
 
                     public boolean handleResourceMoved(Resource resource, final URI newURI) {
-                        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it
-                                .hasNext();) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }

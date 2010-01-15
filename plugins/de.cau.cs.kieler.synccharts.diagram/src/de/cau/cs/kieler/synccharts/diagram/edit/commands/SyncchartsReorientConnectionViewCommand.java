@@ -23,7 +23,8 @@ public class SyncchartsReorientConnectionViewCommand extends AbstractTransaction
     /**
      * @generated
      */
-    public SyncchartsReorientConnectionViewCommand(TransactionalEditingDomain editingDomain, String label) {
+    public SyncchartsReorientConnectionViewCommand(TransactionalEditingDomain editingDomain,
+            String label) {
         super(editingDomain, label, null);
     }
 

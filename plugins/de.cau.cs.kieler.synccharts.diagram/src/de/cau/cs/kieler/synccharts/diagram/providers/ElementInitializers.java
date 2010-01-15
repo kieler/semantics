@@ -22,11 +22,12 @@ public class ElementInitializers {
                     "self.sourceState.outgoingTransitions->size()",
                     SyncchartsPackage.eINSTANCE.getTransition()).evaluate(instance);
 
-            value_1 = SyncchartsAbstractExpression
-                    .performCast(value_1, EcorePackage.eINSTANCE.getEInt());
+            value_1 = SyncchartsAbstractExpression.performCast(value_1, EcorePackage.eINSTANCE
+                    .getEInt());
             instance.setPriority(((Integer) value_1).intValue());
         } catch (RuntimeException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError("Element initialization failed", e); //$NON-NLS-1$						
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Element initialization failed", e); //$NON-NLS-1$						
         }
     }
 

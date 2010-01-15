@@ -324,7 +324,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
                 .hasNext();) {
             final SyncchartsLinkDescriptor nextLinkDescriptor = (SyncchartsLinkDescriptor) linkDescriptorsIterator
                     .next();
-            EditPart sourceEditPart = getEditPart(nextLinkDescriptor.getSource(), domain2NotationMap);
+            EditPart sourceEditPart = getEditPart(nextLinkDescriptor.getSource(),
+                    domain2NotationMap);
             EditPart targetEditPart = getEditPart(nextLinkDescriptor.getDestination(),
                     domain2NotationMap);
             if (sourceEditPart == null || targetEditPart == null) {
@@ -332,8 +333,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
             }
             CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
                     nextLinkDescriptor.getSemanticAdapter(), String.valueOf(nextLinkDescriptor
-                            .getVisualID()), ViewUtil.APPEND, false, ((IGraphicalEditPart) getHost())
-                            .getDiagramPreferencesHint());
+                            .getVisualID()), ViewUtil.APPEND, false,
+                    ((IGraphicalEditPart) getHost()).getDiagramPreferencesHint());
             CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(descriptor);
             ccr.setType(RequestConstants.REQ_CONNECTION_START);
             ccr.setSourceEditPart(sourceEditPart);

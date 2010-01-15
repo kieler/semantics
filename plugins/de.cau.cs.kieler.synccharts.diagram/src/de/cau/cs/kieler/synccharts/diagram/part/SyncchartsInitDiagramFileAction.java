@@ -83,8 +83,10 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
                     Messages.InitDiagramFile_ResourceErrorDialogMessage);
             return;
         }
-        Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI, diagramRoot, editingDomain);
-        wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle, RegionEditPart.MODEL_ID));
+        Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI, diagramRoot,
+                editingDomain);
+        wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
+                RegionEditPart.MODEL_ID));
         SyncchartsDiagramEditorUtil.runWizard(getShell(), wizard, "InitDiagramFile"); //$NON-NLS-1$
     }
 }

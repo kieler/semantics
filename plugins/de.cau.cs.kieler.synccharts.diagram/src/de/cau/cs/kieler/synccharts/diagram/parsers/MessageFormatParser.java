@@ -110,8 +110,8 @@ public class MessageFormatParser extends AbstractParser {
      */
     protected MessageFormat getEditorProcessor() {
         if (editorProcessor == null) {
-            editorProcessor = new MessageFormat(getEditorPattern() == null ? getDefaultEditablePattern()
-                    : getEditorPattern());
+            editorProcessor = new MessageFormat(
+                    getEditorPattern() == null ? getDefaultEditablePattern() : getEditorPattern());
         }
         return editorProcessor;
     }
@@ -148,8 +148,8 @@ public class MessageFormatParser extends AbstractParser {
      */
     protected MessageFormat getEditProcessor() {
         if (editProcessor == null) {
-            editProcessor = new MessageFormat(getEditPattern() == null ? getDefaultEditablePattern()
-                    : getEditPattern());
+            editProcessor = new MessageFormat(
+                    getEditPattern() == null ? getDefaultEditablePattern() : getEditPattern());
         }
         return editProcessor;
     }
@@ -170,9 +170,10 @@ public class MessageFormatParser extends AbstractParser {
         ParsePosition pos = new ParsePosition(0);
         Object[] values = getEditProcessor().parse(editString, pos);
         if (values == null) {
-            return new ParserEditStatus(SyncchartsDiagramEditorPlugin.ID, IParserEditStatus.UNEDITABLE,
-                    NLS.bind(Messages.MessageFormatParser_InvalidInputError, new Integer(pos
-                            .getErrorIndex())));
+            return new ParserEditStatus(SyncchartsDiagramEditorPlugin.ID,
+                    IParserEditStatus.UNEDITABLE, NLS.bind(
+                            Messages.MessageFormatParser_InvalidInputError, new Integer(pos
+                                    .getErrorIndex())));
         }
         return validateNewValues(values);
     }
@@ -190,8 +191,8 @@ public class MessageFormatParser extends AbstractParser {
      */
     public String getPrintString(IAdaptable adapter, int flags) {
         EObject element = (EObject) adapter.getAdapter(EObject.class);
-        return getViewProcessor().format(getValues(element), new StringBuffer(), new FieldPosition(0))
-                .toString();
+        return getViewProcessor().format(getValues(element), new StringBuffer(),
+                new FieldPosition(0)).toString();
     }
 
 }

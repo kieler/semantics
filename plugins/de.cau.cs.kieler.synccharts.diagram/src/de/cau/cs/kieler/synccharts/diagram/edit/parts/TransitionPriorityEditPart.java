@@ -102,7 +102,8 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new LabelDirectEditPolicy());
-        installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new SyncchartsTextSelectionEditPolicy());
+        installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
+                new SyncchartsTextSelectionEditPolicy());
         installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new NonResizableLabelEditPolicy() {
 
             protected List createSelectionHandles() {
@@ -263,15 +264,16 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
                     final EObject element = getParserElement();
                     final IParser parser = getParser();
                     try {
-                        IParserEditStatus valid = (IParserEditStatus) getEditingDomain().runExclusive(
-                                new RunnableWithResult.Impl() {
+                        IParserEditStatus valid = (IParserEditStatus) getEditingDomain()
+                                .runExclusive(new RunnableWithResult.Impl() {
 
                                     public void run() {
-                                        setResult(parser.isValidEditString(new EObjectAdapter(element),
-                                                (String) value));
+                                        setResult(parser.isValidEditString(new EObjectAdapter(
+                                                element), (String) value));
                                     }
                                 });
-                        return valid.getCode() == ParserEditStatus.EDITABLE ? null : valid.getMessage();
+                        return valid.getCode() == ParserEditStatus.EDITABLE ? null : valid
+                                .getMessage();
                     } catch (InterruptedException ie) {
                         ie.printStackTrace();
                     }
@@ -448,9 +450,9 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
                 NotationPackage.eINSTANCE.getFontStyle());
         if (style != null) {
-            FontData fontData = new FontData(style.getFontName(), style.getFontHeight(),
-                    (style.isBold() ? SWT.BOLD : SWT.NORMAL)
-                            | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+            FontData fontData = new FontData(style.getFontName(), style.getFontHeight(), (style
+                    .isBold() ? SWT.BOLD : SWT.NORMAL)
+                    | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
             setFont(fontData);
         }
     }
@@ -468,7 +470,8 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
     protected void addSemanticListeners() {
         if (getParser() instanceof ISemanticParser) {
             EObject element = resolveSemanticElement();
-            parserElements = ((ISemanticParser) getParser()).getSemanticElementsBeingParsed(element);
+            parserElements = ((ISemanticParser) getParser())
+                    .getSemanticElementsBeingParsed(element);
             for (int i = 0; i < parserElements.size(); i++) {
                 addListenerFilter("SemanticModel" + i, this, (EObject) parserElements.get(i)); //$NON-NLS-1$
             }

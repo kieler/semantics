@@ -109,8 +109,8 @@ public class SyncchartsOCLFactory {
             try {
                 initExtentMap(context);
                 Object result = oclQuery.evaluate(context);
-                return (result != oclInstance.getEnvironment().getOCLStandardLibrary().getOclInvalid()) ? result
-                        : null;
+                return (result != oclInstance.getEnvironment().getOCLStandardLibrary()
+                        .getOclInvalid()) ? result : null;
             } finally {
                 evalEnv.clear();
                 oclQuery.getExtentMap().clear();
@@ -135,7 +135,8 @@ public class SyncchartsOCLFactory {
 
                     public Object visitOperationCallExp(OperationCallExp oc) {
                         if (!usesAllInstances) {
-                            usesAllInstances = PredefinedType.ALL_INSTANCES == oc.getOperationCode();
+                            usesAllInstances = PredefinedType.ALL_INSTANCES == oc
+                                    .getOperationCode();
                             if (usesAllInstances) {
                                 queryToInit.getExtentMap().putAll(
                                         oclInstance.getEvaluationEnvironment().createExtentMap(
