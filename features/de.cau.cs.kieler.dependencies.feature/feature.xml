@@ -162,6 +162,10 @@
          id="org.eclipse.emf.codegen"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecore.editor"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.jdt.core"
          download-size="0"
