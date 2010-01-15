@@ -44,9 +44,9 @@ T46 : '(' ;
 T47 : ')' ;
 T48 : '=' ;
 T49 : 'module' ;
-T50 : '{' ;
-T51 : '}' ;
-T52 : 'satisfies' ;
+T50 : 'satisfies' ;
+T51 : '{' ;
+T52 : '}' ;
 T53 : ',' ;
 T54 : '[' ;
 T55 : ']' ;
@@ -82,94 +82,70 @@ T84 : 'sizeOf' ;
 T85 : 'forall' ;
 T86 : 'exists' ;
 T87 : 'sum' ;
-T88 : 'SU' ;
-T89 : 'SB' ;
-T90 : 'SW' ;
-T91 : 'WU' ;
-T92 : 'WB' ;
-T93 : 'WW' ;
-T94 : 'PSU' ;
-T95 : 'PSB' ;
-T96 : 'PSW' ;
-T97 : 'PMU' ;
-T98 : 'PMB' ;
-T99 : 'PMW' ;
-T100 : 'X' ;
-T101 : 'G' ;
-T102 : 'F' ;
-T103 : 'PA' ;
-T104 : 'PF' ;
-T105 : 'PSX' ;
-T106 : 'PMX' ;
-T107 : 'E' ;
-T108 : 'A' ;
-T109 : '[]' ;
-T110 : '<>' ;
-T111 : '[:]' ;
-T112 : '<:>' ;
-T113 : 'fixpoints' ;
-T114 : 'in' ;
-T115 : 'emit' ;
-T116 : '<-' ;
-T117 : 'release' ;
-T118 : 'constrainS' ;
-T119 : 'constrainM' ;
-T120 : 'constrainE' ;
-T121 : 'constrainSM' ;
-T122 : 'constrainSE' ;
-T123 : 'constrainME' ;
-T124 : 'constrainSME' ;
-T125 : 'do' ;
-T126 : '..' ;
-T127 : 'nothing' ;
-T128 : 'pause' ;
-T129 : 'halt' ;
-T130 : 'immediate' ;
-T131 : 'await' ;
-T132 : 'weak' ;
-T133 : 'suspend' ;
-T134 : 'when' ;
-T135 : 'abort' ;
-T136 : 'while' ;
-T137 : 'loop' ;
-T138 : 'each' ;
-T139 : 'always' ;
-T140 : 'every' ;
-T141 : 'if' ;
-T142 : 'else' ;
-T143 : 'case' ;
-T144 : 'default' ;
-T145 : 'choose' ;
-T146 : 'for' ;
-T147 : 'abstract' ;
-T148 : 'let' ;
-T149 : '.*' ;
+T88 : 'X' ;
+T89 : 'G' ;
+T90 : 'F' ;
+T91 : 'PA' ;
+T92 : 'PF' ;
+T93 : 'PSX' ;
+T94 : 'PMX' ;
+T95 : 'E' ;
+T96 : 'A' ;
+T97 : '[]' ;
+T98 : '<>' ;
+T99 : '[:]' ;
+T100 : '<:>' ;
+T101 : 'fixpoints' ;
+T102 : 'in' ;
+T103 : 'emit' ;
+T104 : '<-' ;
+T105 : 'do' ;
+T106 : '..' ;
+T107 : 'nothing' ;
+T108 : 'weak' ;
+T109 : 'immediate' ;
+T110 : 'abort' ;
+T111 : 'when' ;
+T112 : 'abstract' ;
+T113 : 'case' ;
+T114 : 'default' ;
+T115 : 'choose' ;
+T116 : 'else' ;
+T117 : 'while' ;
+T118 : 'for' ;
+T119 : 'if' ;
+T120 : 'let' ;
+T121 : 'loop' ;
+T122 : 'pause' ;
+T123 : 'halt' ;
+T124 : 'every' ;
+T125 : '.*' ;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15973
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12510
 RULE_BVCONST : '0b';
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15975
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12512
 RULE_OCTCONST : '0o' ('0'..'7')+;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15977
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12514
 RULE_HEXCONST : '0x' ('0'..'9'|'A'..'F')+;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15979
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12516
 RULE_NATCONST : ('0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15981
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12518
 RULE_REALCONST : ('+'|'-')? ('0'..'9')+ '.' ('0'..'9')+ ('e' ('+'|'-')? ('0'..'9')+)?;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15983
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12520
 RULE_ID : ('a'..'z'|'A'..'Z') ('_'? ('a'..'z'|'A'..'Z'|'0'..'9'))*;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15985
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12522
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15987
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12524
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 15989
+// $ANTLR src "../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/contentassist/antlr/internal/InternalQuartz.g" 12526
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
 
