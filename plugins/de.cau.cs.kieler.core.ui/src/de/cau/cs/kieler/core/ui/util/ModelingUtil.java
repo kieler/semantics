@@ -40,17 +40,18 @@ public final class ModelingUtil {
     }
 
     /**
-     * Find an GEF EditPart that corresponds to an semantic model EObject. EObjects are used to
-     * address objects that are exchanged between the plugins of the View Management as well as
-     * other plugins. EObjects provide the ability for semantical addressing of other objects such
-     * as children of an object or similar cases.
+     * Find an GEF EditPart that corresponds to an semantic model EObject.
+     * EObjects are used to address objects that are exchanged between the
+     * plugins of the View Management as well as other plugins. EObjects provide
+     * the ability for semantical addressing of other objects such as children
+     * of an object or similar cases.
      * 
      * @author haf
      * @param eObject
      *            the semantic object
      * @param rootEditPart
-     *            the root EditPart so start the search. May be null, then the current active editor
-     *            is used
+     *            the root EditPart so start the search. May be null, then the
+     *            current active editor is used
      * @return the corresponding EditPart
      * 
      */
@@ -86,12 +87,16 @@ public final class ModelingUtil {
                     EObject model = ((View) ((EditPart) object).getModel()).getElement();
                     if (model == eObject) {
                         // search the most valid parent
-                        // this is necessary because inner EditParts may also reference the same
+                        // this is necessary because inner EditParts may also
+                        // reference the same
                         // model, e.g.
-                        // TransitionTriggerAndEffectsEditPart has TransitionImpl as model element
+                        // TransitionTriggerAndEffectsEditPart has
+                        // TransitionImpl as model element
                         // however, the parent
-                        // TransitionEditPart also has TransitionImpl as model element
-                        // so there are multiple EditParts that have the same EObject. Here we will
+                        // TransitionEditPart also has TransitionImpl as model
+                        // element
+                        // so there are multiple EditParts that have the same
+                        // EObject. Here we will
                         // return only the outermost parent EditPart
                         while (editPart.getParent() != null) {
                             EditPart parentPart = editPart.getParent();
@@ -104,7 +109,8 @@ public final class ModelingUtil {
                                 }
                             } else {
                                 break;
-                            } // a Root diagram edit part has no real view, so we will stop
+                            } // a Root diagram edit part has no real view, so
+                            // we will stop
                             // searching there
                         }
                         // cachedEditParts2.put(eObject, editPart);
@@ -121,7 +127,8 @@ public final class ModelingUtil {
     }
 
     /**
-     * Finds an editpart given a starting editpart and an EObject. Won't find connections.
+     * Finds an editpart given a starting editpart and an EObject. Won't find
+     * connections.
      * 
      * @author haf
      **/
@@ -152,8 +159,8 @@ public final class ModelingUtil {
     }
 
     /**
-     * Get all objects that are direct or indirect children of the given root EObject if they are of
-     * the specified type.
+     * Get all objects that are direct or indirect children of the given root
+     * EObject if they are of the specified type.
      * 
      * @author haf
      * @param eObjectClass
@@ -171,8 +178,8 @@ public final class ModelingUtil {
     }
 
     /**
-     * Get all objects that are direct or indirect parents of the given root EObject if they are of
-     * the given type.
+     * Get all objects that are direct or indirect parents of the given root
+     * EObject if they are of the given type.
      * 
      * @author haf
      * @param eObjectClass
@@ -194,8 +201,9 @@ public final class ModelingUtil {
     }
 
     /**
-     * Get all objects that are direct or indirect children of the given root EObject corresponding
-     * to the given EditPart if they are of the specified type.
+     * Get all objects that are direct or indirect children of the given root
+     * EObject corresponding to the given EditPart if they are of the specified
+     * type.
      * 
      * @author haf
      * 
@@ -215,9 +223,10 @@ public final class ModelingUtil {
     }
 
     /**
-     * Convert an Iterator to a Collection. Useful if some method returns only an iterator but some
-     * other method takes a Collection as input to iterate over that collection. However, it has
-     * linear runtime and many such transformations should be avoided.
+     * Convert an Iterator to a Collection. Useful if some method returns only
+     * an iterator but some other method takes a Collection as input to iterate
+     * over that collection. However, it has linear runtime and many such
+     * transformations should be avoided.
      * 
      * @author haf
      * @param <T>
