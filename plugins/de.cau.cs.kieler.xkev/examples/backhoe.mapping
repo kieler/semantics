@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/backhoe.svg">
+  <svgElement id="legs">
+    <animation xsi:type="mapping:MoveTo"/>
+  </svgElement>
+  <svgElement id="boom">
+    <animation xsi:type="mapping:MoveTo"/>
+  </svgElement>
+  <svgElement id="stick">
+    <animation xsi:type="mapping:MoveTo"/>
+  </svgElement>
+  <svgElement id="bucket">
+    <animation xsi:type="mapping:MoveTo"/>
+  </svgElement>
+  <svgElement id="alarm">
+    <animation xsi:type="mapping:Colorize" input="on" fill_color="#FF0000"/>
+    <animation xsi:type="mapping:Colorize" input="off" fill_color="#626262"/>
+  </svgElement>
+  <svgElement id="done">
+    <animation xsi:type="mapping:Colorize" input="on" fill_color="#00FF0C"/>
+    <animation xsi:type="mapping:Colorize" input="off" fill_color="#626262"/>
+  </svgElement>
+  <svgElement id="cancelled">
+    <animation xsi:type="mapping:Colorize" input="on" fill_color="#00FF0C"/>
+    <animation xsi:type="mapping:Colorize" input="off" fill_color="#626262"/>
+  </svgElement>
+</mapping:SVGFile>
