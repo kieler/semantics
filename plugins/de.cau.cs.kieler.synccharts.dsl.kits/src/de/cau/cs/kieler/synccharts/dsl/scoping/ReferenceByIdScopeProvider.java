@@ -1,8 +1,8 @@
 package de.cau.cs.kieler.synccharts.dsl.scoping;
 
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
+import org.eclipse.xtext.scoping.impl.SimpleLocalScopeProvider;
 
-public class ReferenceByIdScopeProvider extends DefaultGlobalScopeProvider {
+public class ReferenceByIdScopeProvider extends SimpleLocalScopeProvider {
 
 	// protected IScope createScope(Resource resource, EClass type) {
 	//
