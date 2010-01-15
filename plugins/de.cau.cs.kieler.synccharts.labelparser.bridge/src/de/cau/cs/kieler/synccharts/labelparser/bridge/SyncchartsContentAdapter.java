@@ -50,13 +50,21 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     /**
      * Singleton Pattern: Only one notifier object should be used.
      */
-    static final SyncchartsContentAdapter INSTANCE = new SyncchartsContentAdapter();
+    public static final SyncchartsContentAdapter INSTANCE = new SyncchartsContentAdapter();
 
     /**
      * true if the content adapter should do something. Used to temporarily
      * deactivate the processing.
      */
     private boolean enabled = true;
+    /** true if the content adapter should record the notifications. */
+    private boolean recording = false;
+
+    /**
+     * A List where the adapter records notifications while it is temporarily
+     * deactivated.
+     */
+    private List<Notification> recordedNotifications = new ArrayList<Notification>();
 
     private ActionLabelProcessorWrapper actionLabelProcessor = new ActionLabelProcessorWrapper();
 
@@ -82,9 +90,11 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
 
     /**
      * Enable or disable the content adapter. May be used to temporarily disable
-     * the content adaption, e.g. for batch processing. Make sure to re-enable
-     * if you just disabled temporarily, e.g. make sure even when exceptions
-     * happen, the adapter is re-enabled.
+     * the content adaption completely. Make sure to re-enable if you just
+     * disabled temporarily, e.g. make sure even when exceptions happen, the
+     * adapter is re-enabled. While disabled, also no recordings will be taken.
+     * 
+     * @see SyncchartsContentAdapter#setRecording(boolean)
      * 
      * @param enable
      *            true if the content adapter should be enabled, false
@@ -105,6 +115,38 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     }
 
     /**
+     * Set the content adapter into a recording state. This means it will only
+     * record listened notifications and not handle them at that moment. When
+     * recording is deactivated, the recorded notifications will get processed
+     * all in a bunch automatically. Can be used to deactivate the content
+     * adapter temporarily and make multiple changes to the model which will
+     * then later be processed in batch.
+     * 
+     * @param enable
+     *            true if start recording, false if stop recording and process
+     *            all recorded notifications
+     */
+    public void setRecording(final boolean enable) {
+        this.recording = enable;
+
+        if (!this.recording) {
+            for (Notification notification : recordedNotifications) {
+                this.notifyChanged(notification);
+            }
+        }
+    }
+
+    /**
+     * Return true iff the content adapter is only recording Notifications but
+     * not immediately handling them.
+     * 
+     * @return true iff recording
+     */
+    public boolean isRecording() {
+        return recording;
+    }
+
+    /**
      * React on Notifications of a SyncCharts model and either parse Action
      * labels or serialize them. If the TriggersAndEffects String attribute of
      * an Action has changed, it gets parsed again to build the correct trigger
@@ -119,49 +161,54 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     public void notifyChanged(final Notification notification) {
         if (this.enabled) { // only do something if we are not temporarily
             // disabled
-            try {
-                Object notifier = notification.getNotifier();
+            if (this.recording) {
+                recordedNotifications.add(notification);
+            } else {
+                try {
+                    Object notifier = notification.getNotifier();
 
-                if (notifier instanceof Transition) {
-                    handleTransition(notification, (Transition) notifier);
-                }
-                // fallthrough: A transition is also an Action
-                if (notifier instanceof Action) {
-                    handleAction(notification, (Action) notifier);
-                } else if (notifier instanceof ValuedObject) {
-                    handleValuedObject(notification, (ValuedObject) notifier);
-                } else if (notifier instanceof State) {
-                    handleState(notification, (State) notifier);
-                }
+                    if (notifier instanceof Transition) {
+                        handleTransition(notification, (Transition) notifier);
+                    }
+                    // fallthrough: A transition is also an Action
+                    if (notifier instanceof Action) {
+                        handleAction(notification, (Action) notifier);
+                    } else if (notifier instanceof ValuedObject) {
+                        handleValuedObject(notification, (ValuedObject) notifier);
+                    } else if (notifier instanceof State) {
+                        handleState(notification, (State) notifier);
+                    }
 
-                // remove all existing problem markers
-                if (notifier instanceof EObject) {
-                    SyncchartsContentUtil.clearMarker((EObject) notifier);
-                }
-            } catch (Exception e) {
-                /*
-                 * Try to handle the exception by placing a problem Marker in the diagram. If this fails
-                 * somehow, propagate the error to the next level.
-                 */
-                if (e instanceof KielerModelException) {
-                    Object modelObject = ((KielerModelException) e).getModelObject();
-                    if (modelObject instanceof EObject) {
-                        try {
-                            SyncchartsContentUtil.addMarker(e.getMessage(), (EObject) modelObject);
-                            return;
-                        } catch (KielerException e1) {
-                            /* nothing, will go on in next case */
+                    // remove all existing problem markers
+                    if (notifier instanceof EObject) {
+                        SyncchartsContentUtil.clearMarker((EObject) notifier);
+                    }
+                } catch (Exception e) {
+                    /*
+                     * Try to handle the exception by placing a problem Marker in the diagram. If this fails
+                     * somehow, propagate the error to the next level.
+                     */
+                    if (e instanceof KielerModelException) {
+                        Object modelObject = ((KielerModelException) e).getModelObject();
+                        if (modelObject instanceof EObject) {
+                            try {
+                                SyncchartsContentUtil.addMarker(e.getMessage(),
+                                        (EObject) modelObject);
+                                return;
+                            } catch (KielerException e1) {
+                                /* nothing, will go on in next case */
+                            }
                         }
                     }
+                    /*
+                     * Handle the error the classic way by using a popup of the Status Manager.
+                     */
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Exception during SyncChart model post-processing: "
+                                    + e.getClass().getName(), e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                 }
-                /*
-                 * Handle the error the classic way by using a popup of the Status Manager.
-                 */
-                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                        "Exception during SyncChart model post-processing: "
-                                + e.getClass().getName(), e);
-                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-                StatusManager.getManager().handle(myStatus, StatusManager.LOG);
             }
         }
     }
@@ -191,7 +238,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 handleTransitionNew(transition);
                 // now fix the prios at the new source state
                 handleStateFixPriorities((State) notification.getNewValue());
-            } else {           // new transition created
+            } else { // new transition created
                 handleTransitionNew(transition);
                 handleStateFixPriorities(transition.getSourceState());
             }
