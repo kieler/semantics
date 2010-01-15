@@ -47,6 +47,8 @@ public class Activator extends AbstractUIPlugin {
      */
     public void start(final BundleContext context) throws Exception {
         super.start(context);
+        System.out.println("synccharts.ksbase started");
+        ContentAdapterKSbasEBridge.INSTANCE.registerListener();
         Activator.setDefault(this);
     }
 
