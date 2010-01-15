@@ -183,9 +183,15 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                     if (notifier instanceof EObject) {
                         SyncchartsContentUtil.clearMarker((EObject) notifier);
                     }
+                } catch (IllegalStateException ise) {
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Exception during SyncChart model post-processing: "
+                                    + ise.getClass().getName(), ise);
+                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                 } catch (Exception e) {
                     /*
-                     * Try to handle the exception by placing a problem Marker in the diagram. If this fails
+                     * Try to handle the exception by placing a problem Marker in the diagram. 
+                     * If this fails
                      * somehow, propagate the error to the next level.
                      */
                     if (e instanceof KielerModelException) {
@@ -331,29 +337,28 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     }
 
     private void handleState(final Notification notification, final State state) {
-            // if state label has changed
-            if (notification.getFeature() != null
-                    && notification.getFeature().equals(
-                            SyncchartsPackage.eINSTANCE.getState_Label())) {
-                // if state has no label, create a new unique ID
-                if (state.getLabel() == null || state.getLabel().trim().equals("")) {
-                    state.setId(SyncchartsContentUtil.getNewId(state));
-                } else { // otherwise take label as ID
-                    String newId = state.getLabel();
-                    newId = newId.replaceAll("\\s", "_"); // replace all
-                    // whitespace
-                    // with underscores
-                    state.setId(newId);
-                }
-            } else if (notification.getFeature() != null
-                    && notification.getFeature().equals(
-                            SyncchartsPackage.eINSTANCE.getState_ParentRegion())) {
-                // if new state is created, only the parent region is set
-                if (state.getLabel() == null || state.getLabel().trim().equals("")) {
-                    state.setId(SyncchartsContentUtil.getNewId(state));
-                }
+        // if state label has changed
+        if (notification.getFeature() != null
+                && notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Label())) {
+            // if state has no label, create a new unique ID
+            if (state.getLabel() == null || state.getLabel().trim().equals("")) {
+                state.setId(SyncchartsContentUtil.getNewId(state));
+            } else { // otherwise take label as ID
+                String newId = state.getLabel();
+                newId = newId.replaceAll("\\s", "_"); // replace all
+                // whitespace
+                // with underscores
+                state.setId(newId);
+            }
+        } else if (notification.getFeature() != null
+                && notification.getFeature().equals(
+                        SyncchartsPackage.eINSTANCE.getState_ParentRegion())) {
+            // if new state is created, only the parent region is set
+            if (state.getLabel() == null || state.getLabel().trim().equals("")) {
+                state.setId(SyncchartsContentUtil.getNewId(state));
             }
         }
+    }
 
     private void handleValuedObject(final Notification notification, final ValuedObject notifier)
             throws KielerModelException, IOException {
