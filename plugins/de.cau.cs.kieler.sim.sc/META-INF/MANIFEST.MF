@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tcpip
+Bundle-Name: SynchCharts simulation
 Bundle-SymbolicName: de.cau.cs.kieler.sim.sc;singleton:=true
-Bundle-Version: 0.0.1
+Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.sc.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -17,3 +17,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.codegen.sc,
  org.json
+Bundle-Vendor: Christian-Albrechts-University of Kiel
