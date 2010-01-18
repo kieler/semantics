@@ -1635,14 +1635,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * 
      * @return the aimed step duration text field
      */
-    private AimedStepDurationTextField getAimedStepDurationTextField() {
+    public AimedStepDurationTextField getAimedStepDurationTextField() {
         if (aimedStepDurationTextField != null) {
             return aimedStepDurationTextField;
         }
         aimedStepDurationTextField = new AimedStepDurationTextField(kIEMInstance);
         return aimedStepDurationTextField;
     }
-
+    
     // -------------------------------------------------------------------------
 
     /**

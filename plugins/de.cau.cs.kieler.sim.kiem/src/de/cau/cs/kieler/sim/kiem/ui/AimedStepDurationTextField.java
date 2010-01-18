@@ -115,9 +115,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
         // per default enable it
         this.textfield.setEnabled(this.enabled);
         textfield.setToolTipText(Messages.mDurationTextFieldHint);
-        // reserve some amount of space and declare default value
-        textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT
-                + Messages.mDurationTextFieldSuffix + Messages.mDurationTextFieldReserveSpace);
+        this.update();
         // add some listeners
         textfield.addKeyListener(this);
         textfield.addFocusListener(this);
@@ -185,6 +183,16 @@ public class AimedStepDurationTextField extends ControlContribution implements K
         }
     }
 
+    // -------------------------------------------------------------------------
+    
+    @Override
+    public void update() {
+        // reserve some amount of space and declare default value
+        textfield.setText(KiemPlugin.getDefault().getAimedStepDuration()
+                + Messages.mDurationTextFieldSuffix + Messages.mDurationTextFieldReserveSpace);
+        super.update();
+    }
+    
     // -------------------------------------------------------------------------
 
     /**

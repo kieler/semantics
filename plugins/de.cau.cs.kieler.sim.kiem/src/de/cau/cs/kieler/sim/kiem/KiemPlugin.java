@@ -303,6 +303,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                     kIEMViewInstance.setCurrentFile(executionFile);
                     kIEMViewInstance.setDirty(false);
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
+                    kIEMViewInstance.getAimedStepDurationTextField().update();
                     if (loadSuccessful) {
                         notifyEventListeners(executionFile, KiemEvent.LOAD);
                     }
