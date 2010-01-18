@@ -30,6 +30,20 @@
                id="de.cau.cs.kieler"
                label="KIELER"
                mnemonic="K">
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.command.removeMarkers"
+                  id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+                  label="Remove Problem Markers"
+                  mnemonic="r"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.command.zoom"
+                  label="Zoom to Fit"
+                  mnemonic="z"
+                  style="push"
+                  tooltip="Zoom the current diagram such that all contents fit into the current view.">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -61,6 +75,13 @@
             description="Zoom so that the content fits the whole canvas"
             id="de.cau.cs.kieler.core.ui.command.zoom"
             name="Zoom to fit">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler"
+            description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
+            id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+            name="Remove Problem Markers">
       </command>
    </extension>
    <extension
@@ -193,7 +214,7 @@
       <key
             commandId="de.cau.cs.kieler.core.ui.command.zoom"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+K Z">
+            sequence="M1+M3+F">
       </key>
    </extension>
    <extension
