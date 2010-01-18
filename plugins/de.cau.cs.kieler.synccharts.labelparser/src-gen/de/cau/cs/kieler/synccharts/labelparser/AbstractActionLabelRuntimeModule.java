@@ -24,7 +24,7 @@ public abstract class AbstractActionLabelRuntimeModule extends DefaultRuntimeMod
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "/de/cau/cs/kieler/synccharts/labelparser/ActionLabel.properties");
+		bindProperties(binder, "de/cau/cs/kieler/synccharts/labelparser/ActionLabel.properties");
 	}
 	
 	
