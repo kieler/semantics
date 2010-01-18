@@ -345,6 +345,10 @@
             id="de.cau.cs.kieler.synccharts.diagram">
       </binding>
       <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart"
+            id="de.cau.cs.kieler.synccharts.diagram">
+      </binding>
+      <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart"
             id="de.cau.cs.kieler.synccharts.region">
       </binding>
