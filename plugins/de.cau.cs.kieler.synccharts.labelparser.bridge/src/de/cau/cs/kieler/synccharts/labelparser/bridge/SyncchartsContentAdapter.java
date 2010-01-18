@@ -27,6 +27,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -79,6 +81,8 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     /**
      * Initialization, register a new instance of this class as an Adapter to
      * the EMF EFactory for the metamodel of http://kieler.cs.cau.de/synccharts.
+     * Note that the metamodel factory itself is customized such that it will
+     * add the content adapter to any new model element.
      */
     public static void init() {
         EFactory syncchartsFactory = EPackage.Registry.INSTANCE
@@ -120,7 +124,9 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
      * recording is deactivated, the recorded notifications will get processed
      * all in a bunch automatically. Can be used to deactivate the content
      * adapter temporarily and make multiple changes to the model which will
-     * then later be processed in batch.
+     * then later be processed in batch. When recording is set to false, all
+     * recorede notifications get processed in an exclusive access of the 
+     * notifiers editing domain to get the right transaction mode.
      * 
      * @param enable
      *            true if start recording, false if stop recording and process
@@ -130,8 +136,24 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
         this.recording = enable;
 
         if (!this.recording) {
-            for (Notification notification : recordedNotifications) {
-                this.notifyChanged(notification);
+            for (Notification n : recordedNotifications) {
+                final Notification notification = n;
+                Object notifier = notification.getNotifier();
+                // execute the handling in the editing domain to get the right transaction mode
+                // otherwise it might throw illegal state transaction exceptions
+                TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(notifier);
+                try {
+                    domain.runExclusive(new Runnable() {
+                        public void run() {
+                            notifyChanged(notification);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Exception during SyncChart model post-processing: "
+                                    + e.getClass().getName(), e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                }
             }
         }
     }
