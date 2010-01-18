@@ -125,7 +125,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
      * all in a bunch automatically. Can be used to deactivate the content
      * adapter temporarily and make multiple changes to the model which will
      * then later be processed in batch. When recording is set to false, all
-     * recorede notifications get processed in an exclusive access of the 
+     * recorede notifications get processed in an exclusive access of the
      * notifiers editing domain to get the right transaction mode.
      * 
      * @param enable
@@ -139,20 +139,29 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             for (Notification n : recordedNotifications) {
                 final Notification notification = n;
                 Object notifier = notification.getNotifier();
-                // execute the handling in the editing domain to get the right transaction mode
+                // execute the handling in the editing domain to get the right
+                // transaction mode
                 // otherwise it might throw illegal state transaction exceptions
                 TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(notifier);
-                try {
-                    domain.runExclusive(new Runnable() {
-                        public void run() {
-                            notifyChanged(notification);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Exception during SyncChart model post-processing: "
-                                    + e.getClass().getName(), e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                if (domain != null) {
+                    try {
+                        domain.runExclusive(new Runnable() {
+                            public void run() {
+                                notifyChanged(notification);
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                                "Exception during SyncChart model post-processing: "
+                                        + e.getClass().getName(), e);
+                        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                    }
+                } else {
+                    // there is no editing domain (yet) for the element, so just execute
+                    // the changes without a transaction. A missing editing
+                    // domain can happen if an element is freshly created and does not belong
+                    // to any resource yet.
+                    notifyChanged(notification);
                 }
             }
         }
