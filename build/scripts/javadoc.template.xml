@@ -35,9 +35,9 @@ ${feature.classpath}
 	    		 maxmemory="1024m"
 	    		 version="true">
 	    		<fileset dir="${doc.basedir}" includes="${doc.includes}" excludes="${doc.excludes}" />
-	    		<!-- tag name="generated" description="Generated Code" / -->
-	    		<!-- tag name="ordered" / -->
-	    		<!-- tag name="model" / -->
+                <!-- 2 tag definition for purpose of reducing warnings only -->
+	    		<tag name="Pt.ProposedRating" />
+	    		<tag name="Pt.AcceptedRating" />
 	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet"    path="${basedir}/../../${javadocTagletJobName}/lastSuccessful/archive/de.cau.cs.kieler.taglets/taglets.jar" />
 	    		<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../${javadocTagletJobName}/lastSuccessful/archive/de.cau.cs.kieler.taglets/taglets.jar" />
 	    		<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../${javadocTagletJobName}/lastSuccessful/archive/de.cau.cs.kieler.taglets/taglets.jar" />
@@ -62,7 +62,7 @@ ${feature.classpath}
 	    		 packagenames="de.cau.cs.kieler.*"
 	    		 classpathref="doc.classpath"
 	    		 maxmemory="1024m">
-	    		<fileset dir="${basedir}/plugins" includes="**/*.java" excludes="${doc.excludes}" />
+	    		<fileset dir="${doc.basedir}" includes="${doc.includes}" excludes="${doc.excludes}" />
 	    	</javadoc>
 	    </else>
 	    </if>
