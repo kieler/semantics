@@ -17,15 +17,33 @@ package de.cau.cs.kieler.sim.kiem.extension;
 /**
  * Classes implementing this interface can listen to
  * events happening anywhere in KIEM.
+ * <BR><BR>
+ * When an event successfully completes somewhere inside
+ * the KIEM plugin, the plugin may choose to notify the listeners
+ * of this event.
+ * <BR><BR>
+ * Currently only file based events like load and save are
+ * supported. These work in such a way that the event has the
+ * bits for KiemEvent.SAVE or KiemEvent.LOAD in event.getEvents()
+ * set to 1. The event.getInfo() will contain the location of the
+ * file in question as an Object of type IPath.
+ * <BR><BR>
+ * {@see de.cau.cs.kieler.sim.kiem.extension.KiemEvent}
  * 
  * @author soh
  *
  */
 public interface IKiemEventListener {
 
-    
     /**
-     * Something happened somewhere.
+     * This method is called by the plugin when some
+     * event happens that might be interesting for listeners.
+     * <BR><BR>
+     * Currently only file based events like load and save are
+     * supported. These work in such a way that the event has the
+     * bits for KiemEvent.SAVE or KiemEvent.LOAD in event.getEvents()
+     * set to 1. The event.getInfo() will contain the location of the
+     * file in question as an Object of type IPath.
      * 
      * @param event The event that was dispatched.
      */

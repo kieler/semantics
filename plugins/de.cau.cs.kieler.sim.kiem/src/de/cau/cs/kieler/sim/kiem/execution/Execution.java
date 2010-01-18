@@ -423,8 +423,8 @@ public class Execution implements Runnable {
     /**
      * Run execution to the specific, user defined step number and pause. If this is a step number
      * in the future then run the execution until the stepCounter has reached this number. If this
-     * is a step number back in the history, then just jump to it. If this is a step number forward
-     * in the history, then also run to it.
+     * is a step number back in the history, then just jump to it. If this is a step number
+     * somewhere later in the history, then also run to it.
      * 
      * @param step
      *            the step to jump/run to
@@ -1265,7 +1265,8 @@ public class Execution implements Runnable {
                         Thread.sleep(timeToDelay);
                     } catch (Exception e) {
                         if (!stop) {
-                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
+                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e,
+                                    false);
                         }
                     }
                 }

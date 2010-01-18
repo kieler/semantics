@@ -6,7 +6,19 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.eventListener" name="de.cau.cs.kieler.sim.kiem.eventListener"/>
       </appInfo>
       <documentation>
-         
+         &lt;BR&gt;
+Classes implementing this interface can listen to
+events happening anywhere in KIEM.
+&lt;BR&gt;&lt;BR&gt;
+When an event successfully completes somewhere inside
+the KIEM plugin, the plugin may choose to notify the listeners
+of this event.
+&lt;BR&gt;&lt;BR&gt;
+Currently only file based events like load and save are
+supported. These work in such a way that the event has the
+bits for KiemEvent.SAVE or KiemEvent.LOAD in event.getEvents()
+set to 1. The event.getInfo() will contain the location of the
+file in question as an Object of type IPath.
       </documentation>
    </annotation>
 
@@ -46,34 +58,74 @@
 
    <element name="content">
       <complexType>
-         <attribute name="class" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The implementing class for the Event Listener.
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.sim.kiem.interfaces.IKiemEventListener"/>
-               </appInfo>
-            </annotation>
-         </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+                  An identifier for the extension.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+                  A name for the extension.
                </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for the Event Listener.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.extension.IKiemEventListener"/>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.1.0
+      </documentation>
+   </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;BR&gt;
+This simple example shows how to listen to load and save
+events and print out the location of the file in question.
+&lt;BR&gt;&lt;BR&gt;
+&lt;table width=&quot;100%&quot; border=&quot;1&quot; cellpadding=&quot;5&quot; bgcolor=&quot;#CCCCCC&quot;&gt;
+  &lt;tr&gt; 
+    &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;
+public class FileEventListener implements IKiemEventListener {
+&lt;BR&gt;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;public void eventDispatched(final KiemEvent event) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; if ((event.getEvents() &amp; KiemEvent.LOAD) != 0) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; IPath path = (IPath) event.getInfo();&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; String location = path.toOSString();&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; System.out.println(&quot;File loaded: &quot; + location);&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; if ((event.getEvents() &amp; KiemEvent.SAVE) != 0) {&lt;BR&gt;      
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; IPath path = (IPath) event.getInfo();&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; String location = path.toOSString();&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; System.out.println(&quot;File saved: &quot; + location);&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+
+      &lt;/font&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>

@@ -188,7 +188,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
             dlg.setOverwrite(true);
             String fn = dlg.open();
             if (fn != null) {
-                return dlg.getFilterPath().toString() + System.getProperty("file.separator")
+                return dlg. getFilterPath().toString() + System.getProperty("file.separator")
                         + dlg.getFileName().toString();
             }
             return null;

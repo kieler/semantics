@@ -6,7 +6,25 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.configurationProvider" name="de.cau.cs.kieler.sim.kiem.configurationProvider"/>
       </appInfo>
       <documentation>
-         
+         &lt;BR&gt;
+Plugins on this extension point can provide configuration
+information for KIEM. For example change the aimed step duration
+and be notified if the user changes it in one of the components.
+&lt;BR&gt;&lt;BR&gt;
+Whenever the value of a configuration element is needed by the plugin
+it will start to ask all configuration providers for a value through
+the changeProperty(propertyId) method. Providers that do not wish
+to provide a value or can&apos;t provide one should throw an Exception.
+The plugin will take the value from the first provider that does
+not throw an Exception. All other providers will be ignored.
+&lt;BR&gt;&lt;BR&gt;
+When a property is changed through the user interface the plugin
+will inform all providers of the change through a (key, value) pair.
+&lt;BR&gt;&lt;BR&gt;
+The extension point only supports String values as that is the format
+that is easiest to store in the PreferenceScope. This implementation
+might later be changed to support general Objects that must at least
+implement the Serializable interface.
       </documentation>
    </annotation>
 
@@ -46,34 +64,81 @@
 
    <element name="content">
       <complexType>
-         <attribute name="class" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The implementing class for the Configuration Provider.
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.sim.kiem.interfaces.IConfigurationProvider"/>
-               </appInfo>
-            </annotation>
-         </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+                  An identifier for the extension.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+                  The name of the extension.
                </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for the Configuration Provider.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.extension.ConfigurationProvider"/>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.1.0
+      </documentation>
+   </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;BR&gt;
+This simple example shows how to provide a place to save the aimed
+step duration for the main KIEM plugin using the extension point.
+&lt;BR&gt;&lt;BR&gt;
+&lt;table width=&quot;100%&quot; border=&quot;1&quot; cellpadding=&quot;5&quot; bgcolor=&quot;#CCCCCC&quot;&gt;
+  &lt;tr&gt; 
+    &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;
+public class ExampleConfigurationProvider implements IKiemConfigurationProvider {
+&lt;BR&gt;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;private String stepDuration = null;&lt;BR&gt;
+&lt;BR&gt;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;public String changeProperty(final String propertyId)&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;throws KiemPropertyException {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;String result = null;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;if (propertyId.equals(KiemPlugin.AIMED_STEP_DURATION_ID)) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;result = stepDuration;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;if (result == null) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;throw new KiemPropertyException(&quot;Property &quot; + propertyId + &quot; not found.&quot;);&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return result;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;&lt;BR&gt;
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;public void propertyChanged(final String propertyId, final String value) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;if (propertyId.equals(KiemPlugin.AIMED_STEP_DURATION_ID)) {&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;stepDuration = value;&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
+}&lt;BR&gt;
+      &lt;/font&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>

@@ -76,10 +76,17 @@ public class KiemEvent {
     /** The Constant DEACTIVATED event is triggered when the user deactivates the component. */
     public static final int DEACTIVATED = 2048;
 
-    /** The Constant LOAD event is triggered when the user loads a scheduling. */
+
+    /** 
+     * The Constant LOAD event is triggered when the user loads a scheduling. 
+     * The info in this case is the location of the file as an IPath object.
+     */
     public static final int LOAD = 4096;
 
-    /** The Constant SAVE event is triggered when the user saves a scheduling. */
+    /** 
+     * The Constant SAVE event is triggered when the user saves a scheduling.
+     * The info in this case is the location of the file as an IPath object.
+     */
     public static final int SAVE = 8192;
 
     // -------------------------------------------------------------------------

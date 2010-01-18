@@ -62,7 +62,8 @@ public class ObserverExecution implements Runnable {
      * @param parentParam
      *            the parent execution
      */
-    public ObserverExecution(final AbstractDataComponent dataComponentParam, final Execution parentParam) {
+    public ObserverExecution(final AbstractDataComponent dataComponentParam,
+            final Execution parentParam) {
         this.stop = false;
         this.done = true;
         this.data = null;

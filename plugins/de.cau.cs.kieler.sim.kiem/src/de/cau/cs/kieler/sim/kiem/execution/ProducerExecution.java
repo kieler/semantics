@@ -65,8 +65,8 @@ public class ProducerExecution implements Runnable {
      * @param parentParam
      *            the parent execution
      */
-    public ProducerExecution(final AbstractDataComponent dataComponentParam, 
-                             final Execution parentParam) {
+    public ProducerExecution(final AbstractDataComponent dataComponentParam,
+            final Execution parentParam) {
         this.stop = false;
         this.done = false;
         this.data = null;

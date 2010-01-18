@@ -14,10 +14,34 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
+
 /**
  * Components implementing this interface can provide configuration
  * information for KIEM. For example change the aimed step duration
  * and be notified if the user changes it in one of the components.
+ * <BR><BR>
+ * Whenever the value of a configuration element is needed by the plugin
+ * it will start to ask all configuration providers for a value through
+ * the changeProperty(propertyId) method. Providers that do not wish
+ * to provide a value or can't provide one should throw an Exception.
+ * The plugin will take the value from the first provider that does
+ * not throw an Exception. All other providers will be ignored.
+ * <BR><BR>
+ * When a property is changed through the user interface the plugin
+ * will inform all providers of the change through a (key, value) pair.
+ * <BR><BR>
+ * The extension point only supports String values as that is the format
+ * that is easiest to store in the PreferenceScope. This implementation
+ * might later be changed to support general Objects that must at least
+ * implement the Serializable interface.
+ * <BR><BR>
+ * For a list of supported properties see:
+ * {@see de.cau.cs.kieler.sim.kiem.KiemPlugin}
+ * <BR><BR>
+ * For an implementation example see:
+ * {@see de.cau.cs.kieler.sim.kiem.KiemPlugin#getAimedStepDuration()}
+ * {@see de.cau.cs.kieler.sim.kiem.KiemPlugin#setAimedStepDuration(int)}
  * 
  * @author soh
  *
@@ -26,12 +50,16 @@ public interface IKiemConfigurationProvider {
 
     /**
      * Ask the component to give a new value for the property
-     * specified by the id.
+     * specified by the id. If multiple components are registered
+     * on this extension point only the first value that was
+     * successfully retrieved will be used. All other providers
+     * will not be asked.
      * 
      * @param propertyId the id of the property to change.
      * @return the new value of the property.
+     * @throws KiemPropertyException if the propertyId was not found.
      */
-    Object changeProperty(String propertyId);
+    String changeProperty(String propertyId) throws KiemPropertyException;
     
     /**
      * Notify the listener that the user changed the property
@@ -40,5 +68,5 @@ public interface IKiemConfigurationProvider {
      * @param propertyId the id of the property.
      * @param value the new value of the property.
      */
-    void propertyChanged(String propertyId, Object value);
+    void propertyChanged(String propertyId, String value);
 }

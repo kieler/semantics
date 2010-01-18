@@ -17,19 +17,29 @@ package de.cau.cs.kieler.sim.kiem.extension;
 import org.eclipse.jface.action.ControlContribution;
 
 /**
- * Classes implementing this interface may be asked to contribute
- * to the toolbar in the KIEM view.
- * 
+ * Classes implementing this interface may be asked if they want
+ * to contribute controls to the toolbar inside the KIEM View.
+ * <BR><BR>
+ * The plugin will add the components from left to right in the order
+ * that the contributors are stored in the extension registry. KIEM's 
+ * own controls will be added after the contributed components have
+ * been added.
+ * <BR><BR>
  * @author soh
  *
  */
 public interface IKiemToolbarContributor {
 
     /**
-     * Asks the class to give a list of control contributions
-     * for the toolbar.
-     * 
-     * @param info may hold some information, usually null
+     * The plugin will add the components from left to right in the order
+     * that the contributors are stored in the extension registry. KIEM's 
+     * own controls will be added after the contributed components have
+     * been added.
+     * <BR><BR>
+     * The array should contain the components in the order that they
+     * are supposed to be added, null values will be ignored.
+     * <BR><BR>
+     * @param info may hold some information.
      * @return the list of controls that should be contributed.
      */
     ControlContribution[] provideToolbarContributions(Object info);

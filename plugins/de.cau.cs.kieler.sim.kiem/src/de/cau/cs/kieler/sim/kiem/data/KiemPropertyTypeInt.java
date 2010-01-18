@@ -59,7 +59,7 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
         try {
             property.setValue("" + Integer.valueOf((String) value));
         } catch (Exception e) {
-            e.printStackTrace();
+            //TODO:...
         }
     }
 

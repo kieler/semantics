@@ -42,9 +42,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -69,6 +73,8 @@ import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.IKiemToolbarContributor;
+import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
@@ -79,7 +85,7 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * The Class KiemView is only instantiated once when the view part is registered in the Eclipse IDE.
  * It holds the DataComponent table list view and buttons to control the execution.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {
 
@@ -469,6 +475,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         IToolBarManager manager = bars.getToolBarManager();
         // first remove all entries
         manager.removeAll();
+        
+        //call soh's extension point
+        addExternalContributions(manager);
 
         manager.add(getActionUp());
         manager.add(getActionDown());
@@ -513,6 +522,42 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         bars.updateActionBars();
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Add components contributed by other plugins through the
+     * ToolBarContributor extension point.
+     * 
+     * author soh
+     * 
+     * @param manager
+     *            the manager where to add the components
+     */
+    private void addExternalContributions(final IToolBarManager manager) {
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.toolbarContributor");
+
+        for (IConfigurationElement element : contributors) {
+            try {
+                IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
+                        .createExecutableExtension("class"));
+
+                ControlContribution[] contributions = contributor
+                        .provideToolbarContributions(null);
+
+                for (ControlContribution contribution : contributions) {
+                    if (contribution != null) {
+                        manager.add(contribution);
+                    }
+                }
+            } catch (CoreException e0) {
+                // TODO Auto-generated catch block
+                e0.printStackTrace();
+            }
+        }
+    }
+    
     // -------------------------------------------------------------------------
 
     // /**
@@ -1713,7 +1758,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
             out.close();
             outputStream.close();
-
+            KiemPlugin.getDefault().notifyEventListeners(currentFile,
+                    KiemEvent.SAVE);
         } catch (IOException e) {
             // TODO: error behavior
             e.printStackTrace();

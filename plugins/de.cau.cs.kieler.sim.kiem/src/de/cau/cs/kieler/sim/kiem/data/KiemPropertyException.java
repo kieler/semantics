@@ -20,11 +20,9 @@ package de.cau.cs.kieler.sim.kiem.data;
  * and will prevent any execution.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * 
  */
 public class KiemPropertyException extends Exception {
 
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1023528743545009469L;
 
     // -------------------------------------------------------------------------

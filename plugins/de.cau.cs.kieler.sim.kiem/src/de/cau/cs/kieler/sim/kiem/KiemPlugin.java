@@ -24,7 +24,6 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -43,11 +42,15 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
+import de.cau.cs.kieler.sim.kiem.extension.IKiemConfigurationProvider;
+import de.cau.cs.kieler.sim.kiem.extension.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
@@ -61,7 +64,7 @@ import org.json.JSONObject;
  * execution thread it allows to access the KiemView for updating or refreshing the table or the
  * step information text field.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
  * 
  */
 public class KiemPlugin extends AbstractUIPlugin {
@@ -87,6 +90,12 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
 
+    /** The identifier for the aimed step duration. */
+    public static final String AIMED_STEP_DURATION_ID = "AIMED_STEP_DURATION";
+
+    /** The identifier for the timeout. */
+    public static final String TIMEOUT_ID = "TIMEOUT";
+    
     /** The shared instance. */
     private static KiemPlugin plugin;
 
@@ -188,9 +197,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    /** The file editor input to open. */
-    private IPath fileToOpen;
-
     /**
      * Opens an Execution File (*.execution) and tries to update the dataComponentListEx according
      * to this file. If the components or properties loaded do not exist in the environment (e.g.,
@@ -209,7 +215,13 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
         IPath executionFile = ((IFileEditorInput) editorInput).getFile().getFullPath();
-        openFile(executionFile);
+        try {
+            openFile(executionFile);
+        } catch (IOException e0) {
+            // TODO Auto-generated catch block
+            // most likely can't happen
+            e0.printStackTrace();
+        }
     }
 
     /**
@@ -222,9 +234,17 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param executionFile
      *            the execution file to open
+     * @throws IOException
+     *             if the file was not found
      */
-    public void openFile(final IPath executionFile) {
-        this.fileToOpen =  executionFile;
+    public void openFile(final IPath executionFile) throws IOException {
+
+        String fileString = executionFile.toOSString();
+
+        URI fileURI = URI.createPlatformResourceURI(fileString, true);
+        // resolve relative workspace paths
+        URIConverter uriConverter = new ExtensibleURIConverterImpl();
+        final InputStream inputStream = uriConverter.createInputStream(fileURI);
 
         Display.getDefault().syncExec(new Runnable() {
             @SuppressWarnings("unchecked")
@@ -238,19 +258,13 @@ public class KiemPlugin extends AbstractUIPlugin {
                 }
 
                 if (kIEMViewInstance.promptToSaveOnClose() == ISaveablePart2.NO) {
+                    boolean loadSuccessful = false;
                     // safely clear (w/ calling DataComponent destructors)
                     clearDataComponentExList();
                     // temporary list only
                     List<DataComponentEx> dataComponentExListTemp = null;
                     // try to load the components into a temporary list
                     try {
-                        String fileString = fileToOpen.toOSString();
-
-                        URI fileURI = URI.createPlatformResourceURI(fileString, true);
-                        // resolve relative workspace paths
-                        URIConverter uriConverter = new ExtensibleURIConverterImpl();
-                        InputStream inputStream = uriConverter.createInputStream(fileURI);
-
                         ObjectInputStream in = new ObjectInputStream(inputStream);
                         Object object;
                         try {
@@ -273,6 +287,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                         if (dataComponentExListTemp != null) {
                             restoreDataComponentListEx(dataComponentExListTemp);
                         }
+                        loadSuccessful = true;
                     } catch (IOException e) {
                         showError(null, null, e, false);
                         e.printStackTrace();
@@ -285,42 +300,160 @@ public class KiemPlugin extends AbstractUIPlugin {
                     kIEMViewInstance.updateEnabledEnabledDisabledUpDownAddDelete();
                     kIEMViewInstance.updateViewAsync();
                     // update the current file, dirty flag
-                    kIEMViewInstance.setCurrentFile(fileToOpen);
+                    kIEMViewInstance.setCurrentFile(executionFile);
                     kIEMViewInstance.setDirty(false);
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
+                    if (loadSuccessful) {
+                        notifyEventListeners(executionFile, KiemEvent.LOAD);
+                    }
                 }
             }
         });
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Checks whether the editor state is dirty.
+     * Notify all event listeners that something happened.
      * 
-     * @return true, if it is dirty
-     */
-    public boolean isDirty() {
-        return this.kIEMViewInstance.isDirty();
-    }
-    
-    /**
-     * Save the current execution file.
+     * author: soh
      * 
-     * @param monitor
-     *            the monitor
+     * @param info
+     *            the info for the event
+     * @param eventNumber
+     *            the number of the event, found in KiemEvent
      */
-    public void doSave(final IProgressMonitor monitor) {
-        this.kIEMViewInstance.doSave(monitor);
+    public void notifyEventListeners(final Object info, final int eventNumber) {
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.eventListener");
+
+        KiemEvent event = new KiemEvent(eventNumber, info);
+
+        for (IConfigurationElement element : contributors) {
+            try {
+                IKiemEventListener contributor = (IKiemEventListener) (element
+                        .createExecutableExtension("class"));
+                contributor.eventDispatched(event);
+            } catch (CoreException e0) {
+                // class attribute not found, throw exception and
+                // proceed with next listener
+                e0.printStackTrace();
+            }
+        }
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Save current execution file under a separate name.
+     * Notify all configuration providers that a property in the currently loaded configuration has
+     * changed.
+     * 
+     * author: soh
+     * 
+     * @param propertyId
+     *            the id of the property.
+     * @param value
+     *            the value of the property.
      */
-    public void doSaveAs() {
-        this.kIEMViewInstance.doSaveAs();
+    public void notifyConfigurationProviders(final String propertyId, final String value) {
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.configurationProvider");
+
+        for (IConfigurationElement element : contributors) {
+            try {
+                IKiemConfigurationProvider contributor = (IKiemConfigurationProvider) (element
+                        .createExecutableExtension("class"));
+
+                contributor.propertyChanged(propertyId, value);
+            } catch (CoreException e0) {
+                // class attribute not found, throw exception and
+                // proceed with next listener
+                e0.printStackTrace();
+            }
+        }
     }
-    
+
+    /**
+     * Get a new property value from one of the configuration providers. Will get the first value of
+     * any provider that doesn't throw an exception when the request is made.
+     * 
+     * author: soh
+     * 
+     * @param propertyId
+     *            the id of the property to look for
+     * @return the new value of the property
+     */
+    public String getPropertyValueFromProviders(final String propertyId) {
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.configurationProvider");
+
+        String result = null;
+        for (IConfigurationElement element : contributors) {
+            try {
+                IKiemConfigurationProvider contributor = (IKiemConfigurationProvider) (element
+                        .createExecutableExtension("class"));
+
+                result = contributor.changeProperty(propertyId);
+                break;
+            } catch (CoreException e0) {
+                // class attribute not found, throw exception and
+                // proceed with next listener
+                e0.printStackTrace();
+            } catch (KiemPropertyException e0) {
+                // property not found, skip to next contributor
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a new property value from one of the configuration providers. Will get the first value of
+     * any provider that doesn't throw an exception when the request is made.
+     * 
+     * author: soh
+     * 
+     * @param propertyId
+     *            the id of the property to look for
+     * @return the new value of the property
+     */
+    public Integer getIntegerValueFromProviders(final String propertyId) {
+        Integer result = null;
+        String value = getPropertyValueFromProviders(propertyId);
+        if (value != null) {
+            try {
+                result = Integer.parseInt(value);
+            } catch (NumberFormatException e0) {
+                // do nothing
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get a new property value from one of the configuration providers. Will get the first value of
+     * any provider that doesn't throw an exception when the request is made.
+     * 
+     * author: soh
+     * 
+     * @param propertyId
+     *            the id of the property to look for
+     * @return the new value of the property
+     */
+    public Boolean getBooleanValueFromProviders(final String propertyId) {
+        Boolean result = null;
+        String value = getPropertyValueFromProviders(propertyId);
+        if (value != null) {
+            try {
+                result = Boolean.parseBoolean(value);
+            } catch (RuntimeException e0) {
+                // do nothing
+            }
+        }
+        return result;
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -360,6 +493,17 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the KiemView instance.
+     * 
+     * @return the KiemView instance
+     */
+    public KiemView getKIEMViewInstance() {
+        return this.kIEMViewInstance;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Sets the KIEM view instance. This method is called by the constructor of the Class
      * {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemView} so that this plug-in (or the execution
      * thread) is able to trigger updates on the view.
@@ -376,10 +520,17 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * Gets the currently set aimed step duration.
      * 
+     * author: soh
+     * 
      * @return the aimed step duration
      */
     public int getAimedStepDuration() {
-        return this.aimedStepDuration;
+        int result = this.aimedStepDuration;
+        Integer value = getIntegerValueFromProviders(AIMED_STEP_DURATION_ID);
+        if (value != null) {
+            result = value;
+        }
+        return result;
     }
 
     // -------------------------------------------------------------------------
@@ -387,6 +538,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * Sets the aimed step duration. This method sets the aimed step duration and also passes-on the
      * value to the execution thread if that exists.
+     * 
+     * author: soh
      * 
      * @param aimedStepDurationi
      *            the new aimed step duration
@@ -397,6 +550,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (execution != null) {
             this.execution.setAimedStepDuration(aimedStepDuration);
         }
+
+        notifyConfigurationProviders(AIMED_STEP_DURATION_ID, aimedStepDurationi + "");
     }
 
     // -------------------------------------------------------------------------
@@ -429,7 +584,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param dataComponentExListParam
      *            a temporary (partial) DataComponentExList to restore the full one from
      */
-    public void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListParam) {
+    private void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListParam) {
         List<AbstractDataComponent> dataComponentListTmp = getDataComponentList();
 
         for (int c = 0; c < dataComponentExListParam.size(); c++) {
@@ -570,7 +725,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
         this.kIEMViewInstance.setAllEnabled(false);
-        // count all (enabled) data producer and Observer
+        // count all (enabled) data producer and observer
         int countEnabledProducer = 0;
         int countEnabledObserver = 0;
         for (int c = 0; c < dataComponentExList.size(); c++) {
