@@ -275,10 +275,10 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 handleTransitionNew(transition);
                 // now fix the prios at the new source state
                 handleStateFixPriorities((State) notification.getNewValue());
-            } else { // new transition created
+            } /*else { // new transition created
                 handleTransitionNew(transition);
                 handleStateFixPriorities(transition.getSourceState());
-            }
+            }*/
         }
     }
 
@@ -437,10 +437,12 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                         .equals(notification.getOldStringValue()))
                 && (notifier).eContainer() != null) {
             // action.setTriggersAndEffects(notification.getNewStringValue());
+            this.setEnabled(false);
             actionLabelProcessor.processAction(notifier, ActionLabelProcessorWrapper.PARSE);
             // serialize the action again so that the user
             // gets feedback on what the machine thinks the label looks like
             actionLabelProcessor.processAction(notifier, ActionLabelProcessorWrapper.SERIALIZE);
+            this.setEnabled(true);
         }
     }
 }
