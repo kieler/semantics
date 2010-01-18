@@ -512,7 +512,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
      * @generated
      */
     private View getFontStyleOwnerView() {
-        return getPrimaryView();
+        return (View) getModel();
     }
 
     /**

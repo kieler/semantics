@@ -8,6 +8,9 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticEditPolicy;
@@ -148,6 +151,8 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
             fFigureTransitionPriorityFigure = new WrappingLabel();
             fFigureTransitionPriorityFigure.setText("");
 
+            fFigureTransitionPriorityFigure.setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
+
             this.add(fFigureTransitionPriorityFigure);
 
         }
@@ -186,5 +191,11 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
         }
 
     }
+
+    /**
+     * @generated
+     */
+    static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(Display.getCurrent(), "Sans",
+            7, SWT.NORMAL);
 
 }
