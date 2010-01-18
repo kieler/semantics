@@ -7,8 +7,6 @@
     <property name="baseLocation"          location="${system.baseLocation}" />
     <property name="baseDeltaPackLocation" location="${system.baseDeltaPackLocation}" />
     <property name="eclipseLocation"       location="${system.eclipseLocation}" />
-    <property name="updateSiteCategoryDescriptorJobName"          location="${system.updateSiteCategoryDescriptorJobName}" />
-    <property name="javadocTagletJobName"  location="${system.javadocTagletJobName}" />
     <property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
     <property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
     <property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
@@ -19,8 +17,10 @@
     <property name="build.basedir"         location="${system.WORKSPACE}" />
     <property name="findbugs.classes"      location="${system.WORKSPACE}/update-site/plugins" />
 
-    <property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
-    <property name="job.name"                     value="${system.JOB_NAME}" />
+    <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
+    <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
+    <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
+    <property name="job.name"                            value="${system.JOB_NAME}" />
 
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="plugin"              value=" "/>
