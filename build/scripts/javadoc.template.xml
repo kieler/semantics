@@ -1,11 +1,15 @@
 	<target name="doc" unless="no.doc" 
 	    description="generate javadoc (configured by ${scriptdir}/build.xml)">
+		<property name="doc.includes" value="plugins/**/*.java" />
 		<property name="doc.excludes" value=" " />
+		<property name="doc.basedir"  value="${basedir}" />
+		<!-- the above definition allows to overwrite theese properties;
+		     this is needed in overall javadoc generation,
+		     the default value is used in features' javadoc generation -->
 		
 		<path id="doc.classpath"> 
 ${feature.classpath}
-            
-            <fileset dir="${basedir}" includes="${docLibs.includes}" excludes="${doclibs.excludes}" />
+			<fileset dir="${doc.basedir}" includes="${doc.libIncludes}" excludes="${doc.libExcludes}" />
 		</path> 
 
         <if>
@@ -30,7 +34,7 @@ ${feature.classpath}
 	    		 use="true"
 	    		 maxmemory="1024m"
 	    		 version="true">
-	    		<fileset dir="${basedir}/plugins" includes="**/*.java" excludes="${doc.excludes}" />
+	    		<fileset dir="${doc.basedir}" includes="${doc.includes}" excludes="${doc.excludes}" />
 	    		<!-- tag name="generated" description="Generated Code" / -->
 	    		<!-- tag name="ordered" / -->
 	    		<!-- tag name="model" / -->

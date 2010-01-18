@@ -20,8 +20,8 @@
     <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
     <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
-    <property name="docLibs.includes"                    value="${system.docLibs.includes}" />
-    <property name="docLibs.excludes"                    value="${system.docLibs.excludes}" />
+    <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
+    <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
     <property name="job.name"                            value="${system.JOB_NAME}" />
 
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
@@ -154,10 +154,10 @@
                 <!-- path to classes, jars to be examined by findbugs -->
             <arg value="-Ddoc.excludes=${doc.excludes}" />
                 <!-- comma separated path patterns excluded at javadoc generation -->
-            <arg value="-DdocLibs.includes=${docLibs.includes}" />
-                <!-- comma separated path patterns excluded at javadoc generation -->
-            <arg value="-DdocLibs.excludes=${docLibs.excludes}" />
-                <!-- comma separated path patterns excluded at javadoc generation -->
+            <arg value="-Ddoc.libIncludes=${doc.libIncludes}" />
+                <!-- comma separated lib path patterns included at javadoc generation -->
+            <arg value="-Ddoc.libExcludes=${doc.libExcludes}" />
+                <!-- comma separated lib path patterns excluded at javadoc generation -->
             <arg value="-Ddocdir=${docdir}" />
                 <!-- destination folder for javadoc artifacts -->
             <arg value="-Ddoclet=${doclet}" />
@@ -497,12 +497,14 @@
     
     <target name="doc" description="target for overall javadoc generation">
         <property name="basedir"      value="${system.WORKSPACE}" />
+        <property name="doc.basedir"  value="${basedir}/../../" />
+        <property name="doc.includes" value="*/workspace/plugins/**/*.java" />
         <property name="doc.packages" value="${scriptdir}/../package-lists" />
 
         <!-- first, we need to gather the classpath path entries from plugin's generated build files -->
         <loadfile property="feature.classpath">
             <concat>
-                <fileset dir="${basedir}/../../">
+                <fileset dir="${doc.basedir}">
                     <include name="*/workspace/plugins/*/build.xml" />
                 </fileset>
                 <filterchain>
@@ -522,12 +524,12 @@
                     </tokenfilter>
                 </filterchain>
                 <!-- footer filtering="no">
-                        &lt;fileset dir=&quot;${basedir}/../../&quot;
+                        &lt;fileset dir=&quot;${doc.basedir}&quot;
                             includes=&quot;**/plugins/**/*.jar&quot;
                             excludes=&quot;**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*&quot;  /&gt;
                 </footer-->
                 <!-- plain text equals the following:
-                     fileset dir="${basedir}/../../" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*" /
+                     fileset dir="${doc.basedir}" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*" /
                      it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution
                      but not to include stuff of RCA and release builds! -->
             </concat>
@@ -540,10 +542,10 @@
             </header>
             <fileset file="${scriptdir}/javadoc.template.xml" />
             <filterchain>
-                <tokenfilter>
+                <!-- tokenfilter>
                     <replacestring from="dir=&quot;$${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
                     <replacestring from="includes=&quot;**/*.java&quot;"      to="includes=&quot;*/workspace/plugins/**/*.java&quot;" />
-                </tokenfilter>
+                </tokenfilter -->
                 <expandproperties />
             </filterchain>
             <footer filtering="no" trimleading="yes">
