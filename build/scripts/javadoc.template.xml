@@ -5,7 +5,7 @@
 		<path id="doc.classpath"> 
 ${feature.classpath}
             
-            <fileset dir="${basedir}" includes="${doc.includes}" />
+            <fileset dir="${basedir}" includes="${docLibs.includes}" excludes="${doclibs.excludes}" />
 		</path> 
 
         <if>

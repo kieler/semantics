@@ -20,6 +20,8 @@
     <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
     <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
+    <property name="docLibs.includes"                    value="${system.docLibs.includes}" />
+    <property name="docLibs.excludes"                    value="${system.docLibs.excludes}" />
     <property name="job.name"                            value="${system.JOB_NAME}" />
 
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
@@ -151,6 +153,10 @@
             <arg value="-Dfindbugs.classes=${findbugs.classes}" />
                 <!-- path to classes, jars to be examined by findbugs -->
             <arg value="-Ddoc.excludes=${doc.excludes}" />
+                <!-- comma separated path patterns excluded at javadoc generation -->
+            <arg value="-DdocLibs.includes=${docLibs.includes}" />
+                <!-- comma separated path patterns excluded at javadoc generation -->
+            <arg value="-DdocLibs.excludes=${docLibs.excludes}" />
                 <!-- comma separated path patterns excluded at javadoc generation -->
             <arg value="-Ddocdir=${docdir}" />
                 <!-- destination folder for javadoc artifacts -->
@@ -285,10 +291,10 @@
                     <!-- separate enclosing tags to realize NOR function
                          (multiple repexp conditions will be ANDed) -->
                 </filterchain>
-                <footer filtering="no">
+                <!-- footer filtering="no">
                         &lt;fileset dir=&quot;${basedir}&quot;
                             includes=&quot;plugins/**/*.jar&quot; /&gt;
-                </footer>
+                </footer -->
                 <!-- plain text equals the following:
                      fileset dir="${basedir}" includes="plugins/**/*.jar" /
                      it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution -->
@@ -515,11 +521,11 @@
                         <replacestring from="path=&quot;../../" to="path=&quot;" />
                     </tokenfilter>
                 </filterchain>
-                <footer filtering="no">
+                <!-- footer filtering="no">
                         &lt;fileset dir=&quot;${basedir}/../../&quot;
                             includes=&quot;**/plugins/**/*.jar&quot;
                             excludes=&quot;**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*&quot;  /&gt;
-                </footer>
+                </footer-->
                 <!-- plain text equals the following:
                      fileset dir="${basedir}/../../" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*" /
                      it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution
