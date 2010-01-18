@@ -102,9 +102,27 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
+               icon="icons/obj16/Signal.gif"
+               label="Add Signal"
+               mnemonic="S"
+               style="push"
+               tooltip="Add a signal to the selected state, either input, output or a local signal.">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+               </reference>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                  value="Signal">
+            </parameter>
+         </command>
          <menu
                id="customAddMenu"
-               label="Add"
+               label="Add Action/Suspension"
                mnemonic="A">
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addEntryAction"
@@ -161,24 +179,6 @@
                </parameter>
             </command>
             <command
-                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
-                  icon="icons/obj16/Signal.gif"
-                  label="Signal"
-                  mnemonic="S"
-                  style="push"
-                  tooltip="A signal that is local to the contents of the state">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
-                  </reference>
-               </visibleWhen>
-               <parameter
-                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
-                     value="Signal">
-               </parameter>
-            </command>
-            <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSuspensionTrigger"
                   icon="icons/obj16/Suspension.gif"
                   label="Suspension Trigger"
@@ -198,38 +198,47 @@
             </command>
          </menu>
         
-         <command
-               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
-               icon="icons/obj16/Region.gif"
-               label="Add Region"
-               mnemonic="R"
-               style="push"
-               tooltip="Add a region to the state, which is executed in parallel to other regions">
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
-               </reference>
-            </visibleWhen>
-            <parameter
-                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
-                  value="Region">
-            </parameter>
-         </command>
-         <command
-               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
-               icon="icons/obj16/State.gif"
-               label="Add State"
-               mnemonic="S"
-               style="push"
-               tooltip="Add a state to the selected region">
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
-               </reference>
-            </visibleWhen>
-         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <menu
+               id="compatSyncchartsEditing"
+               label="Compatibility SyncChart Edit Operations"
+               mnemonic="C"
+               tooltip="Edit Operations for SyncCharts that are only required if structure-based editing is not available">
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
+                  icon="icons/obj16/Region.gif"
+                  label="Add Region"
+                  mnemonic="R"
+                  style="push"
+                  tooltip="Add a region to the state, which is executed in parallel to other regions">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="Region">
+               </parameter>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
+                  icon="icons/obj16/State.gif"
+                  label="Add State"
+                  mnemonic="S"
+                  style="push"
+                  tooltip="Add a state to the selected region">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </menu>
       </menuContribution>
    </extension>
    <extension
