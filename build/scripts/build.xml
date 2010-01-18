@@ -127,6 +127,10 @@
             <arg value="-DbuildProperties=${scriptdir}/build.properties" />
                 <!-- the property configuration file
                      examined by build.xml, one of the PDE build scripts -->
+            <arg value="-DupdateSiteCategoryDescriptorJobName=${updateSiteCategoryDescriptorJobName}" />
+                <!-- name of the dedicated import (svn checkout) job -->
+            <arg value="-DjavadocTagletJobName=${javadocTagletJobName}" />
+                <!-- name of the dedicated import (svn checkout) job -->
             <arg value="-Dplugin=${plugin}" />
                 <!-- the plugin whose bin parts should be gathered (after building the feature) -->
             <arg value="-Dfeature=${feature}" />
@@ -173,7 +177,7 @@
     </target>
 
     <target name="init">
-        <property name="p2.category.site" value="file:${basedir}/../../ImportUpdatesiteCategoryDescriptors/workspace/de.cau.cs.kieler.updatesite/site.xml" />
+        <property name="p2.category.site" value="file:${basedir}/../../${updateSiteCategoryDescriptorJobName}/workspace/de.cau.cs.kieler.updatesite/site.xml" />
         <property name="p2.gathering"  value="true" />
         <property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
             <!-- property name="configs"       value="${feature.configs}" / -->

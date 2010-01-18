@@ -34,10 +34,10 @@ ${feature.classpath}
 	    		<!-- tag name="generated" description="Generated Code" / -->
 	    		<!-- tag name="ordered" / -->
 	    		<!-- tag name="model" / -->
-	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet"    path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-	    		<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-	    		<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-	    		<taglet name="de.cau.cs.kieler.taglets.OrderedTaglet"   path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet"    path="${basedir}/../../${javadocTagletJobName}/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../${javadocTagletJobName}/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../${javadocTagletJobName}/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.OrderedTaglet"   path="${basedir}/../../${javadocTagletJobName}/workspace/de.cau.cs.kieler.taglets/tags.jar" />
 	    		<link offline="true" packagelistLoc="${doc.packages}/java"                        href="http://java.sun.com/javase/6/docs/api" />
 	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.platform"        href="http://help.eclipse.org/galileo/topic/org.eclipse.platform.doc.isv/reference/api" />
 	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.draw2d"          href="http://help.eclipse.org/galileo/topic/org.eclipse.draw2d.doc.isv/reference/api/" />
