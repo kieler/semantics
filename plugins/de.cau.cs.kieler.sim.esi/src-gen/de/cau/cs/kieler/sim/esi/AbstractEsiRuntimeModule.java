@@ -24,7 +24,7 @@ public abstract class AbstractEsiRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "/de/cau/cs/kieler/sim/esi/Esi.properties");
+		bindProperties(binder, "de/cau/cs/kieler/sim/esi/Esi.properties");
 	}
 	
 	
