@@ -24,7 +24,7 @@ public abstract class AbstractEsterelRuntimeModule extends DefaultRuntimeModule 
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "/de/cau/cs/kieler/esterel/Esterel.properties");
+		bindProperties(binder, "de/cau/cs/kieler/esterel/Esterel.properties");
 	}
 	
 	
