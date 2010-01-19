@@ -21,14 +21,13 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 
 /**
- * A simple class to invoke the process of generating SC-Code
+ * A simple class to invoke the process of generating SC-Code.
  *
  * @author tam
  *
  */
 public class SCGenerator extends AbstractHandler implements IHandler {
 
-    /** Test */
     private WorkflowGenerator wf = new WorkflowGenerator();
 
     public Object execute(ExecutionEvent event) throws ExecutionException {

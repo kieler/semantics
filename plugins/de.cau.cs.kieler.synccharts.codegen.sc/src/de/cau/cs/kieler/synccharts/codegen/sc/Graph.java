@@ -245,8 +245,8 @@ public class Graph {
     }
 
     /**
-     * returns an integer array with a list of predecessor vertices
-     * (just implemented for adjacency lists)
+     * returns an integer array with a list of predecessor vertices (just implemented for adjacency
+     * lists)
      * 
      * @return an integer array with a list of predecessor vertices.
      */
@@ -265,10 +265,9 @@ public class Graph {
         return result;
     }
 
-    
     /**
-     * returns a linked list with the topological sort of the graph
-     * (just implemented for adjacency lists)
+     * returns a linked list with the topological sort of the graph (just implemented for adjacency
+     * lists)
      * 
      * @return a linked list with the topological sort of the graph
      */
@@ -282,14 +281,17 @@ public class Graph {
             for (int j = 0; j < numberOfVertices; j++) {
                 if (predecessorList[j] == 0) {
                     source = j;
+                    break;
                 }
             }
-            predecessorList[source] = -1;
-            // remove all predecessor dependencies of source
-            for (int j : adjacencyList.get(source)) {
-                predecessorList[j]--;
+            if (source >= 0) {
+                predecessorList[source] = -1;
+                // remove all predecessor dependencies of source
+                for (int j : adjacencyList.get(source)) {
+                    predecessorList[j]--;
+                }
+                result.add(source);
             }
-            result.add(source);
         }
         return result;
     }

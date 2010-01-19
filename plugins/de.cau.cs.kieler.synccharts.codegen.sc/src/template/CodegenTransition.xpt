@@ -48,6 +48,8 @@
 			ABORT;
 	«ENDIF-»
 	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
+			// static PRIO
+			PRIO(«computeThreadPriority(this.targetState)»);
 			GOTO(«this.targetState.id»);
 	«ENDIF-»
 «ENDDEFINE»

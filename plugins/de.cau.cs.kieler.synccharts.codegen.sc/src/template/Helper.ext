@@ -36,13 +36,17 @@ cached List computeThreadPriorities(State rootState):
 ;
 
 cached int computeMainTreadPriority(State rootState):
-	computeThreadPriorities(rootState).size + 1
+	computeThreadPriority(getInitialState(rootState))
 ;
 
 int computeChangePriority(State state):
 	JAVA template.Helper.computeChangePriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+State getInitialState(State state):
+	state.regions.first().innerStates.select(s|s.isInitial).first()
+;
+
 int computeThreadPriority(State state):
-	(computeMainTreadPriority(getRootState(state)) - 1) - (computeThreadPriorities(getRootState(state)).indexOf(state.id))
+	(computeThreadPriorities(getRootState(state)).indexOf(state.id)) + 1
 ;

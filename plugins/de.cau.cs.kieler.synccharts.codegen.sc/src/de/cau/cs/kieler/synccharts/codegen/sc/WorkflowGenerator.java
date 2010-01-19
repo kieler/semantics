@@ -84,10 +84,11 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
-            outPath = System.getProperty("java.io.tmpdir") + File.pathSeparator + randomString()
-                    + File.pathSeparator;
+            outPath = System.getProperty("java.io.tmpdir") + File.separator + randomString()
+                    + File.separator;
             // for debugging un-comment the following line
-            outPath = "." + File.pathSeparator + "scDebug" + File.pathSeparator;
+            //outPath = "/home/tam/scdebug/";
+            outPath = "." + File.separator + "scDebug" + File.separator;
         }
 
         // Outlet
