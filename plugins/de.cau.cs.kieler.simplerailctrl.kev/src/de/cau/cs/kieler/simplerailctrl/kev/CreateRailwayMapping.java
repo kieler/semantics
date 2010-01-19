@@ -46,12 +46,13 @@ public class CreateRailwayMapping {
     private static final String svgFilename = "railway.svg";
     private static final String mapFilename = "railway.mapping";
     private static final String path = "/Users/haf/shared/kieler/trunk/plugins/de.cau.cs.kieler.simplerailctrl.kev/images/";
-
+    private static final String resourcePath = "resource:images/";
+    
     public static void main(String[] args) {
         try {
             MappingFactory mapFactory = MappingFactory.eINSTANCE;
             SVGFile svgFile = mapFactory.createSVGFile();
-            svgFile.setFilename(svgFilename);
+            svgFile.setFilename(resourcePath+svgFilename);
 
             JSVGCanvas canvas = new JSVGCanvas();
             canvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);

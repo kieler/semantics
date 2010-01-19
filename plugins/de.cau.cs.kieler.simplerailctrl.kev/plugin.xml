@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.simplerailctrl.kev.TestDataProducer"
+            id="de.cau.cs.kieler.simplerailctrl.kev.testProducer"
+            name="Railway KEV Test Data Producer">
+      </content>
+   </extension>
 
 </plugin>
