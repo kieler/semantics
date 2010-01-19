@@ -679,7 +679,7 @@ public class Execution implements Runnable {
             }
         }
         // wrapup components
-        wrapupComponents();
+        wrapupComponents(false);
 
         // stop timeout thread
         this.timeout.terminate();
@@ -765,6 +765,8 @@ public class Execution implements Runnable {
      * the call of this method should only happen during the development of a new component.
      */
     public void errorTerminate() {
+        // wrapup components
+        wrapupComponents(true);
         // stop this execution thread immediately
         this.steps = NO_STEPS;
         this.stop = true;
@@ -800,9 +802,14 @@ public class Execution implements Runnable {
     // -------------------------------------------------------------------------
 
     /**
-     * Wrap-up components after execution was stopped.
+     * Wrap-up components after execution was stopped. The quietmode should only
+     * be used if the wrapupComponents is called by the handleComponentError
+     * to not get any recusive call!
+     * 
+     * @param quietmode
+     *            the quietmode ommits any errors
      */
-    public synchronized void wrapupComponents() {
+    public synchronized void wrapupComponents(final boolean quietmode) {
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
             if (dataComponentWrapper.isEnabled()) {
@@ -811,8 +818,10 @@ public class Execution implements Runnable {
                     dataComponentWrapper.getDataComponent().wrapup();
                 } catch (KiemInitializationException e) {
                     timeout.abortTimeout();
-                    KiemPlugin.getDefault().handleComponentError(
-                            dataComponentWrapper.getDataComponent(), e);
+                    if (!quietmode) {
+                        KiemPlugin.getDefault().handleComponentError(
+                                dataComponentWrapper.getDataComponent(), e);
+                    }
                 }
                 timeout.abortTimeout();
             }

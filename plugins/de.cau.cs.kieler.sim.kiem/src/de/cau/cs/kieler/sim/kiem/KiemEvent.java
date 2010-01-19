@@ -94,6 +94,12 @@ public class KiemEvent {
      */
     public static final double KIEMPROPERTY_CHANGE = 16384;
 
+    /** The Constant ERROR_STOP event is triggered when an error leads to the execution stop. */
+    public static final double ERROR_STOP = 32768;
+
+    /** The Constant ERROR_STOP event is triggered when an error leads to the execution pause. */
+    public static final double ERROR_PAUSE = 65536;
+
     // -------------------------------------------------------------------------
 
     /**

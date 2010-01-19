@@ -1020,6 +1020,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         // show error or warning message dialog
         if (mustStop) {
+            // notify components
+            this.getEventManager().notify(new KiemEvent(KiemEvent.ERROR_STOP));
+            
             // first terminate the execution
             if (KiemPlugin.getDefault().execution != null) {
                 KiemPlugin.getDefault().execution.errorTerminate();
@@ -1032,6 +1035,9 @@ public class KiemPlugin extends AbstractUIPlugin {
                     silent);
             // must pause makes only sense for running executions!
             if (mustPause) {
+                // notify components
+                this.getEventManager().notify(new KiemEvent(KiemEvent.ERROR_PAUSE));
+                // pause execution
                 this.execution.pauseExecutionSync();
             } // end if
         }
