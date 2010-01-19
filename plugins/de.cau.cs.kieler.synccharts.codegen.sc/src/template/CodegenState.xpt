@@ -38,7 +38,7 @@
 				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 			«ENDIF-»
 		«ENDFOREACH-»
-	«IF !(this.outgoingTransitions.exists(t|t.trigger == null))-»
+	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
 		«IF !(this.regions.isEmpty)-»
 			GOTO(«this.id»_main);
 		«ELSE-»
