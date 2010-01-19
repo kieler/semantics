@@ -26,9 +26,9 @@ import org.w3c.dom.svg.SVGAnimateMotionElement;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPathElement;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;

@@ -17,11 +17,11 @@ package de.cau.cs.kieler.xkev.extension.dataobserver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 //import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
