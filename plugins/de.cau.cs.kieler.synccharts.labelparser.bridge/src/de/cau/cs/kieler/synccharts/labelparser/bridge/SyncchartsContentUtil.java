@@ -108,6 +108,9 @@ public final class SyncchartsContentUtil {
      */
     public static int getUniquePrio(final Transition transition) {
         int currentPrio = transition.getPriority();
+        if (currentPrio == 0) {
+            currentPrio = 1; // Prios should start at 1
+        }
         EList<Transition> transitions = transition.getSourceState().getOutgoingTransitions();
         // if multiple transitions have same priority, set the current prio to a
         // new value
