@@ -130,9 +130,6 @@ public class KiemPlugin extends AbstractUIPlugin {
         execution = null;
         aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
         kIEMViewInstance = null;
-
-        // create and fill the event manager
-        eventManager = new EventManager();
     }
 
     // -------------------------------------------------------------------------
@@ -141,6 +138,10 @@ public class KiemPlugin extends AbstractUIPlugin {
      * Update event manager's DataComponentWrapper list.
      */
     public void updateEventManager() {
+        if (eventManager == null) {
+            // create and fill the event manager
+            eventManager = new EventManager();
+        }
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = this.dataComponentWrapperList.get(c);
             eventManager.add(dataComponentWrapper);
