@@ -194,7 +194,7 @@ public class AddDataComponentDialog extends Dialog {
      * @param dataComponentWrapperListParam
      *            the new component list
      */
-    public void setComponentExList(final List<DataComponentWrapper> dataComponentWrapperListParam) {
+    public void setComponentWrapperList(final List<DataComponentWrapper> dataComponentWrapperListParam) {
         this.dataComponentWrapperList = dataComponentWrapperListParam;
     }
 
@@ -208,6 +208,10 @@ public class AddDataComponentDialog extends Dialog {
     private void updateTable() {
         for (int c = 0; c < componentList.size(); c++) {
             AbstractDataComponent component = componentList.get(c);
+            if (component.isInvisible()) {
+                // ignore invisible components
+                continue;
+            }
             TableItem item = new TableItem(table, SWT.NULL);
             String type = Messages.mInitializationDataComponent;
             if (component.isObserver() && component.isProducer()) {

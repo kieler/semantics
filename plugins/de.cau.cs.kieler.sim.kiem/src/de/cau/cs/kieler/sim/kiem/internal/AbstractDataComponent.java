@@ -236,6 +236,19 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * If the component doesn't want to appear in the scheduling list, it
+     * may set this flag to true. This implies that the specific
+     * component then cannot be added or removed.
+     * 
+     * @return true, if is invisible
+     */
+    public boolean isInvisible() {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * If this DataComponent implements an observer, provide some key's of interest. If you use null

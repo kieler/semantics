@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.ui.views;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -24,8 +25,9 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * The Class KiemContentProvider. This provides the content for the tree-table of DataComponentWrappers.
- * It decides based on the type (DataComponentWrapper or KiemProperty) what content has to be provided.
+ * The Class KiemContentProvider. This provides the content for the tree-table of
+ * DataComponentWrappers. It decides based on the type (DataComponentWrapper or KiemProperty) what
+ * content has to be provided.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -37,7 +39,14 @@ public class KiemContentProvider implements ITreeContentProvider {
      */
     @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
-        return ((List<AbstractDataComponent>) inputElement).toArray();
+        // build list with all visible components
+        LinkedList<DataComponentWrapper> tempList = new LinkedList<DataComponentWrapper>();
+        for (DataComponentWrapper dataComponentWrapper : ((List<DataComponentWrapper>) inputElement)) {
+            if (!dataComponentWrapper.getDataComponent().isInvisible()) {
+                tempList.add(dataComponentWrapper);
+            }
+        }
+        return (tempList.toArray());
     }
 
     // -------------------------------------------------------------------------
@@ -72,16 +81,16 @@ public class KiemContentProvider implements ITreeContentProvider {
     /**
      * {@inheritDoc}
      */
-   public Object getParent(final Object element) {
+    public Object getParent(final Object element) {
         return null;
     }
 
     // -------------------------------------------------------------------------
 
-   /**
-    * {@inheritDoc}
-    */
-   public boolean hasChildren(final Object element) {
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasChildren(final Object element) {
         // if property -> no children
         if (element instanceof KiemProperty) {
             return false;
@@ -89,6 +98,10 @@ public class KiemContentProvider implements ITreeContentProvider {
 
         // if component -> count properties
         DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
+        if (dataComponentWrapper.getDataComponent().isInvisible()) {
+            // if component is invisible -> nothing
+            return false;
+        }
         if (dataComponentWrapper.getProperties() == null) {
             return false;
         }

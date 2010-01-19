@@ -254,6 +254,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
             DataComponentWrapper dataComponentWrapper = kIEMInstance.getDataComponentWrapperList()
                     .get(c);
+            if (dataComponentWrapper.getDataComponent().isInvisible()) {
+                // ignore invisible components
+                continue;
+            }
             // select color
             Color currentColor = colorDisabled;
             if (dataComponentWrapper.isEnabled()) {
@@ -1063,7 +1067,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 AddDataComponentDialog addDialog = new AddDataComponentDialog(viewer.getControl()
                         .getShell());
-                addDialog.setComponentExList(kIEMInstance.getDataComponentWrapperList());
+                addDialog.setComponentWrapperList(kIEMInstance.getDataComponentWrapperList());
                 addDialog.setComponentList(KiemPlugin.getDefault().getDataComponentList());
                 if (addDialog.open() == 0) {
                     List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
