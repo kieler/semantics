@@ -760,7 +760,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             for (int c = 0; c < selections.size(); c++) {
                 if (selections.toArray()[c] instanceof DataComponentWrapper) {
                     dataComponentWrapper = (DataComponentWrapper) selections.toArray()[c];
-                    int index = kIEMInstance.getDataComponentWrapperList().indexOf(dataComponentWrapper);
+                    int index = kIEMInstance.getDataComponentWrapperList().indexOf(
+                            dataComponentWrapper);
                     if ((listIndexMostTop == -1) || (index < listIndexMostTop)) {
                         listIndexMostTop = index;
                     }
@@ -1703,7 +1704,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public void checkForSingleEnabledMaster(final boolean silent,
             final DataComponentWrapper dataComponentWrapper) {
         currentMaster = null;
-        if (dataComponentWrapper != null && dataComponentWrapper.isMaster() && dataComponentWrapper.isEnabled()) {
+        if (dataComponentWrapper != null && dataComponentWrapper.isMaster()
+                && dataComponentWrapper.isEnabled()) {
             // preset NEW selection
             currentMaster = dataComponentWrapper;
         }
@@ -1765,9 +1767,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
             out.close();
             outputStream.close();
-            
+
             if (KiemPlugin.getDefault().getEventManager() != null) {
-                    KiemPlugin.getDefault().getEventManager().notify(new KiemEvent(KiemEvent.SAVE, currentFile));
+                KiemPlugin.getDefault().getEventManager().notify(
+                        new KiemEvent(KiemEvent.SAVE, currentFile));
             }
         } catch (IOException e) {
             // TODO: error behavior

@@ -535,7 +535,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (execution != null) {
             this.execution.setAimedStepDuration(aimedStepDuration);
         }
-
+        this.getKIEMViewInstance().updateViewAsync();
         notifyConfigurationProviders(AIMED_STEP_DURATION_ID, aimedStepDurationi + "");
     }
 
