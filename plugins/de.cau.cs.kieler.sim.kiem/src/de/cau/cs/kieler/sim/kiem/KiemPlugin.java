@@ -40,19 +40,14 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
-import de.cau.cs.kieler.sim.kiem.extension.IKiemConfigurationProvider;
-import de.cau.cs.kieler.sim.kiem.extension.IKiemEventListener;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 import org.json.JSONException;
@@ -95,15 +90,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /** The identifier for the timeout. */
     public static final String TIMEOUT_ID = "TIMEOUT";
-    
+
     /** The shared instance. */
     private static KiemPlugin plugin;
 
     /** List of available dataProducers and dataObservers. */
     private List<AbstractDataComponent> dataComponentList;
 
-    /** List of selected dataComponentEx's (modified by KiemView). */
-    private List<DataComponentEx> dataComponentExList;
+    /** List of selected dataComponentWrapper's (modified by KiemView). */
+    private List<DataComponentWrapper> dataComponentWrapperList;
 
     /** Execution object. */
     private Execution execution;
@@ -120,15 +115,15 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor if the KIEM plug-in. A default DataComponentExList is created. It contains
-     * all DataComponents in the default order ({@link #getDefaultComponentExList()}). The execution
-     * is null by default. The KIEMViewInstance is set, in the constructor of the.
+     * The constructor if the KIEM plug-in. A default DataComponentWrapperList is created. It
+     * contains all DataComponents in the default order ({@link #getDefaultComponentWrapperList()}).
+     * The execution is null by default. The KIEMViewInstance is set, in the constructor of the.
      * 
      * @see de.cau.cs.kieler.sim.kiem.ui.views.KiemView
      */
     public KiemPlugin() {
         dataComponentList = this.getDataComponentList();
-        dataComponentExList = getDefaultComponentExList();
+        dataComponentWrapperList = getDefaultComponentWrapperList();
         execution = null;
         aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
         kIEMViewInstance = null;
@@ -198,10 +193,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Opens an Execution File (*.execution) and tries to update the dataComponentListEx according
-     * to this file. If the components or properties loaded do not exist in the environment (e.g.,
-     * the according plug-ins where not loaded) then an error message will bring this to the user's
-     * attention. <BR>
+     * Opens an Execution File (*.execution) and tries to update the dataComponentWrapperList
+     * according to this file. If the components or properties loaded do not exist in the
+     * environment (e.g., the according plug-ins where not loaded) then an error message will bring
+     * this to the user's attention. <BR>
      * <BR>
      * This method is called from the KiemProxyEditor that acts as a proxy for passing the
      * editoInput from the Workbench to the KiemView.
@@ -225,10 +220,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Opens an Execution File (*.execution) and tries to update the dataComponentListEx according
-     * to this file. If the components or properties loaded do not exist in the environment (e.g.,
-     * the according plug-ins where not loaded) then an error message will bring this to the user's
-     * attention. <BR>
+     * Opens an Execution File (*.execution) and tries to update the dataComponentWrapperList
+     * according to this file. If the components or properties loaded do not exist in the
+     * environment (e.g., the according plug-ins where not loaded) then an error message will bring
+     * this to the user's attention. <BR>
      * <BR>
      * This method can be called from another plug-in and is part of the KIEM API.
      * 
@@ -260,9 +255,9 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (kIEMViewInstance.promptToSaveOnClose() == ISaveablePart2.NO) {
                     boolean loadSuccessful = false;
                     // safely clear (w/ calling DataComponent destructors)
-                    clearDataComponentExList();
+                    clearDataComponentWrapperList();
                     // temporary list only
-                    List<DataComponentEx> dataComponentExListTemp = null;
+                    List<DataComponentWrapper> dataComponentWrapperListTemp = null;
                     // try to load the components into a temporary list
                     try {
                         ObjectInputStream in = new ObjectInputStream(inputStream);
@@ -270,7 +265,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                         try {
                             object = in.readObject();
                             if (object instanceof List<?>) {
-                                dataComponentExListTemp = (List<DataComponentEx>) object;
+                                dataComponentWrapperListTemp = (List<DataComponentWrapper>) object;
                             }
                         } catch (ClassNotFoundException e) {
                             showError(null, null, e, false);
@@ -280,12 +275,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 
                         inputStream.close();
 
-                        // restore (full) DataComponentExList from
+                        // restore (full) DataComponentWrapperList from
                         // temporary list, this for example contains
                         // no component because these are transient
                         // and not serializable
-                        if (dataComponentExListTemp != null) {
-                            restoreDataComponentListEx(dataComponentExListTemp);
+                        if (dataComponentWrapperListTemp != null) {
+                            restoreDataComponentWrapperList(dataComponentWrapperListTemp);
                         }
                         loadSuccessful = true;
                     } catch (IOException e) {
@@ -582,16 +577,17 @@ public class KiemPlugin extends AbstractUIPlugin {
      * Tries to restore the data component list. If an item was not found it will be deleted and an
      * error message is shown.
      * 
-     * @param dataComponentExListParam
-     *            a temporary (partial) DataComponentExList to restore the full one from
+     * @param dataComponentWrapperListParam
+     *            a temporary (partial) DataComponentWrapperList to restore the full one from
      */
-    private void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListParam) {
+    private void restoreDataComponentWrapperList(
+            final List<DataComponentWrapper> dataComponentWrapperListParam) {
         List<AbstractDataComponent> dataComponentListTmp = getDataComponentList();
 
-        for (int c = 0; c < dataComponentExListParam.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExListParam.get(c);
-            String componentId = dataComponentEx.getComponentId();
-            KiemProperty[] properties = dataComponentEx.getProperties();
+        for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam.get(c);
+            String componentId = dataComponentWrapper.getComponentId();
+            KiemProperty[] properties = dataComponentWrapper.getProperties();
 
             boolean componentRestored = false;
 
@@ -614,12 +610,12 @@ public class KiemPlugin extends AbstractUIPlugin {
                         }
                     }
                     // we found the component ... now restore it
-                    DataComponentEx addedDataComponentEx = this
-                            .addTodataComponentExList(dataComponent);
+                    DataComponentWrapper addedDataComponentWrapper = this
+                            .addTodataComponentWrapperList(dataComponent);
                     // set the loaded properties
-                    addedDataComponentEx.setProperties(properties);
+                    addedDataComponentWrapper.setProperties(properties);
                     // set enabled disabled
-                    addedDataComponentEx.setEnabled(dataComponentEx.isEnabled());
+                    addedDataComponentWrapper.setEnabled(dataComponentWrapper.isEnabled());
                     // everything restored correctly
                     componentRestored = true;
                     break;
@@ -639,8 +635,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * This initializes the DataComponentList with all registered and loaded plug-ins that extend
      * the following two extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
      * If a DataComponent is registered but cannot be instantiated because of an error this will
      * result in a warning only so that all other fully functional DataComponents are still loaded.
      * This method remembers its list thru the whole life-cycle of this plug-in and always returns
@@ -729,13 +725,13 @@ public class KiemPlugin extends AbstractUIPlugin {
         // count all (enabled) data producer and observer
         int countEnabledProducer = 0;
         int countEnabledObserver = 0;
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
-                if (dataComponentEx.isProducer()) {
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
+                if (dataComponentWrapper.isProducer()) {
                     countEnabledProducer++;
                 }
-                if (dataComponentEx.isObserver()) {
+                if (dataComponentWrapper.isObserver()) {
                     countEnabledObserver++;
                 }
             } // end if enabled
@@ -751,17 +747,17 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
         // now check if properties are OK hence no KiemPropertyError is thrown
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            KiemProperty[] properties = dataComponentEx.getProperties();
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            KiemProperty[] properties = dataComponentWrapper.getProperties();
             try {
-                if (dataComponentEx.isEnabled()) {
-                    dataComponentEx.checkProperties(properties);
+                if (dataComponentWrapper.isEnabled()) {
+                    dataComponentWrapper.checkProperties(properties);
                 }
             } catch (Exception e) {
                 this.kIEMViewInstance.setAllEnabled(true);
-                this.showError(null, dataComponentEx.getDataComponent().getConfigurationElement()
-                        .getContributor().getName(), e, false);
+                this.showError(null, dataComponentWrapper.getDataComponent()
+                        .getConfigurationElement().getContributor().getName(), e, false);
                 return false;
             }
         }
@@ -777,11 +773,11 @@ public class KiemPlugin extends AbstractUIPlugin {
         // get all InterfaceKeys from (enabled) data producer
         // and combine them into globalInterfaceKeys
         List<String> globalInterfaceKeys = new LinkedList<String>();
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
                 try {
-                    String[] localInterfaceKeys = dataComponentEx.provideInterfaceKeys();
+                    String[] localInterfaceKeys = dataComponentWrapper.provideInterfaceKeys();
                     if (localInterfaceKeys != null) {
                         for (int cc = 0; cc < localInterfaceKeys.length; cc++) {
                             String localInterfaceVariable = localInterfaceKeys[cc];
@@ -791,17 +787,17 @@ public class KiemPlugin extends AbstractUIPlugin {
                 } catch (Exception e) {
                     this.kIEMViewInstance.setAllEnabled(true);
                     KiemPlugin.getDefault().handleComponentError(
-                            dataComponentEx.getDataComponent(), e);
+                            dataComponentWrapper.getDataComponent(), e);
                     return false;
                 }
             } // if enabled
         } // next c
 
         // distribute union of InterfaceKeys to all enabled components
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
-                dataComponentEx.setInterfaceKeys((String[]) globalInterfaceKeys
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
+                dataComponentWrapper.setInterfaceKeys((String[]) globalInterfaceKeys
                         .toArray(new String[0]));
             } // end if enabled
         } // next c
@@ -811,11 +807,12 @@ public class KiemPlugin extends AbstractUIPlugin {
         // get all InitialValues from (enabled) data producer
         // and combine them into globalInitialVariables
         JSONObject globalInitialVariables = new JSONObject();
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
                 try {
-                    JSONObject localInitialVariables = dataComponentEx.provideInitialVariables();
+                    JSONObject localInitialVariables = dataComponentWrapper
+                            .provideInitialVariables();
                     if (localInitialVariables != null) {
                         JSONMerger jsonMerger = new JSONMerger();
                         JSONObject merged = jsonMerger.mergeObjects(globalInitialVariables,
@@ -825,38 +822,38 @@ public class KiemPlugin extends AbstractUIPlugin {
                 } catch (Exception e) {
                     this.kIEMViewInstance.setAllEnabled(true);
                     KiemPlugin.getDefault().handleComponentError(
-                            dataComponentEx.getDataComponent(), e);
+                            dataComponentWrapper.getDataComponent(), e);
                     return false;
                 }
             } // if enabled
         } // next c
 
         // distribute union of globalInitialVariables to all enabled components
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
-                dataComponentEx.setInitialVariables(globalInitialVariables);
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
+                dataComponentWrapper.setInitialVariables(globalInitialVariables);
             } // end if enabled
         } // next c
 
         // initialize all (enabled) data producer and Observer
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (dataComponentEx.isEnabled()) {
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (dataComponentWrapper.isEnabled()) {
                 try {
-                    dataComponentEx.getDataComponent().initialize();
+                    dataComponentWrapper.getDataComponent().initialize();
                 } catch (Exception e) {
                     this.kIEMViewInstance.setAllEnabled(true);
                     e.printStackTrace();
                     KiemPlugin.getDefault().handleComponentError(
-                            dataComponentEx.getDataComponent(), e);
+                            dataComponentWrapper.getDataComponent(), e);
                     return false;
                 }
             } // end if enabled
         } // next c
 
         // now create and run the execution thread
-        this.execution = new Execution(dataComponentExList);
+        this.execution = new Execution(dataComponentWrapperList);
         // take the last set delay
         this.execution.setAimedStepDuration(this.getAimedStepDuration());
         // initialize the dataPool with this data
@@ -877,17 +874,17 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Add a DataComponent instance to the {@link #dataComponentExList}. This will clone the
-     * DataComponent and add an executable extension. It then creates a new DataComponentEx instance
-     * that encapsulates the just created DataComponent (and offers additional information and
-     * methods). The latter will be added then to the DataComponentList.
+     * Add a DataComponent instance to the {@link #dataComponentWrapperList}. This will clone the
+     * DataComponent and add an executable extension. It then creates a new DataComponentWrapper
+     * instance that encapsulates the just created DataComponent (and offers additional information
+     * and methods). The latter will be added then to the DataComponentList.
      * 
      * @param component
      *            the component
      * 
-     * @return the added dataComponentEx component
+     * @return the added dataComponentWrapper component
      */
-    public DataComponentEx addTodataComponentExList(final AbstractDataComponent component) {
+    public DataComponentWrapper addTodataComponentWrapperList(final AbstractDataComponent component) {
         IConfigurationElement componentConfigEle = component.getConfigurationElement();
         AbstractDataComponent componentClone;
         try {
@@ -895,9 +892,9 @@ public class KiemPlugin extends AbstractUIPlugin {
                     .createExecutableExtension("class");
             componentClone.setConfigurationElemenet(componentConfigEle);
 
-            DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
-            this.dataComponentExList.add(dataComponentEx);
-            return dataComponentEx;
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(componentClone);
+            this.dataComponentWrapperList.add(dataComponentWrapper);
+            return dataComponentWrapper;
         } catch (CoreException e) {
             e.printStackTrace();
         }
@@ -907,53 +904,53 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the default ComponentExList. This will contain all registered DataComponents that
-     * extend one the following extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
+     * Returns the default ComponentWrapperList. This will contain all registered DataComponents
+     * that extend one the following extension points:<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
      * They will be ordered in the "natural" way, meaning that the (pure) data producers are
      * scheduled before the data observer & producers which are themselves scheduled before the
      * (pure) data observers. Although DataComponents may be multiple instantiable, by default,
      * there will be exactly one instance per DataComponent in the list.
      * 
-     * @return the default DataComponentExList
+     * @return the default DataComponentWrapperList
      */
-    public List<DataComponentEx> getDefaultComponentExList() {
+    public List<DataComponentWrapper> getDefaultComponentWrapperList() {
         // suggest calling the garbage collector: this may
         // remove any DataComponent threads still running (but not linked==needed any more)
         System.gc();
         List<AbstractDataComponent> list = this.getDataComponentList();
-        List<DataComponentEx> returnList = new LinkedList<DataComponentEx>();
+        List<DataComponentWrapper> returnList = new LinkedList<DataComponentWrapper>();
         // first add initialization components
         for (int c = 0; c < list.size(); c++) {
             AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
-            if ((!dataComponentEx.isProducer()) && !dataComponentEx.isObserver()) {
-                returnList.add(dataComponentEx);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            if ((!dataComponentWrapper.isProducer()) && !dataComponentWrapper.isObserver()) {
+                returnList.add(dataComponentWrapper);
             }
         }
         // then add pure producer
         for (int c = 0; c < list.size(); c++) {
             AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
-            if (dataComponentEx.isProducerOnly()) {
-                returnList.add(dataComponentEx);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            if (dataComponentWrapper.isProducerOnly()) {
+                returnList.add(dataComponentWrapper);
             }
         }
         // then add observer & producer
         for (int c = 0; c < list.size(); c++) {
             AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
-            if (dataComponentEx.isProducerObserver()) {
-                returnList.add(dataComponentEx);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            if (dataComponentWrapper.isProducerObserver()) {
+                returnList.add(dataComponentWrapper);
             }
         }
         // then add pure observer
         for (int c = 0; c < list.size(); c++) {
             AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentEx dataComponentEx = new DataComponentEx(dataComponent);
-            if (dataComponentEx.isObserverOnly()) {
-                returnList.add(dataComponentEx);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            if (dataComponentWrapper.isObserverOnly()) {
+                returnList.add(dataComponentWrapper);
             }
         }
         return returnList;
@@ -962,16 +959,16 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Safely clear DataComponentExList and call DataComponent destructors.
+     * Safely clear DataComponentWrapperList and call DataComponent destructors.
      */
-    public void clearDataComponentExList() {
-        if (this.dataComponentExList == null) {
+    public void clearDataComponentWrapperList() {
+        if (this.dataComponentWrapperList == null) {
             return;
         }
-        while (this.dataComponentExList.size() > 0) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(0);
-            dataComponentEx.getDataComponent().finalize();
-            dataComponentExList.remove(dataComponentEx);
+        while (this.dataComponentWrapperList.size() > 0) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(0);
+            dataComponentWrapper.getDataComponent().finalize();
+            dataComponentWrapperList.remove(dataComponentWrapper);
         }
         // suggest calling the garbage collector: this may
         // remove any DataComponent threads still running (but not linked==needed any more)
@@ -981,17 +978,17 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the current DataComponentEx-List that is held by the KIEM plug-in directly. Any
+     * Returns the current DataComponentWrapper-List that is held by the KIEM plug-in directly. Any
      * modification on this list is persistent in this one and only plug-in instance. The
-     * DataComponentExList holds a list of DataComponents, selected from all registered (and loaded)
-     * plug-ins that extend the following extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
+     * DataComponentWrapperList holds a list of DataComponents, selected from all registered (and
+     * loaded) plug-ins that extend the following extension points:<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
      * 
-     * @return the DataComponentExList
+     * @return the DataComponentWrapperList
      */
-    public List<DataComponentEx> getDataComponentExList() {
-        return this.dataComponentExList;
+    public List<DataComponentWrapper> getDataComponentWrapperList() {
+        return this.dataComponentWrapperList;
     }
 
     // -------------------------------------------------------------------------
