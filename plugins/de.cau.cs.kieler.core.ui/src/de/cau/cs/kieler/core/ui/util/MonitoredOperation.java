@@ -183,18 +183,20 @@ public abstract class MonitoredOperation {
             runOperation(display, monitor, status);
         }
         
-        int handlingStyle = StatusManager.NONE;
-        switch (status.get().getSeverity()) {
-        case IStatus.ERROR:
-            handlingStyle = StatusManager.SHOW | StatusManager.LOG;
-            break;
-        case IStatus.WARNING:
-        case IStatus.INFO:
-            handlingStyle = StatusManager.LOG;
-            break;
+        if (status.get() != null) {
+            int handlingStyle = StatusManager.NONE;
+            switch (status.get().getSeverity()) {
+            case IStatus.ERROR:
+                handlingStyle = StatusManager.SHOW | StatusManager.LOG;
+                break;
+            case IStatus.WARNING:
+            case IStatus.INFO:
+                handlingStyle = StatusManager.LOG;
+                break;
+            }
+            StatusManager.getManager().handle(status.get(), handlingStyle);
+            lastStatus = status.get();
         }
-        StatusManager.getManager().handle(status.get(), handlingStyle);
-        lastStatus = status.get();
     }
     
     /**
