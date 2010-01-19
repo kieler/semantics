@@ -229,6 +229,7 @@
              and no NEW files are available. This will happen in case of building the updatesite entry only.
              (to identify javadoc warnings a local project javadoc will be created
              and linked in hudson during each build) -->
+        <mkdir dir="${basedir}/doc/" />
         <touch>
             <fileset dir="${basedir}/doc/" />
         </touch>
