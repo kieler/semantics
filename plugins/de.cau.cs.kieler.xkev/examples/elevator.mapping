@@ -17,13 +17,26 @@
     <animation xsi:type="mapping:Colorize" input="true" fill_color="#FF0000"/>
   </svgElement>
   
+    <svgElement id="button_alarm">
+    <animation xsi:type="mapping:Colorize" input="true" fill_color="#00FFFF"/>
+  </svgElement>
+  
+      <svgElement id="button_up">
+    <animation xsi:type="mapping:Colorize" input="true" fill_color="#00FFFF"/>
+  </svgElement>
+  
+      <svgElement id="button_down">
+    <animation xsi:type="mapping:Colorize" input="true" fill_color="#00FFFF"/>
+  </svgElement>
+  
     <svgElement id="door_left">
     <animation xsi:type="mapping:Colorize" input="true" fill_color="#FFFFFF"/>
   </svgElement>
   
-    
     <svgElement id="door_right">
     <animation xsi:type="mapping:Colorize" input="true" fill_color="#FFFFFF"/>
   </svgElement>
+  
+  
   
 </mapping:SVGFile>
