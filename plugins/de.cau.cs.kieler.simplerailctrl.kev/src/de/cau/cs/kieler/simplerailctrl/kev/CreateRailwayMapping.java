@@ -8,18 +8,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.JSVGComponent;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
@@ -54,6 +52,17 @@ public class CreateRailwayMapping {
             SVGFile svgFile = mapFactory.createSVGFile();
             svgFile.setFilename(resourcePath+svgFilename);
 
+            
+            try {
+                String parser = XMLResourceDescriptor.getXMLParserClassName();
+                SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+                Document doc = f.createDocument("file://" + path + svgFilename);
+                System.out.println(doc.getClass().getName());
+            } catch (IOException ex) {
+               ex.printStackTrace();
+            }
+
+            
             JSVGCanvas canvas = new JSVGCanvas();
             canvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
             canvas.setDoubleBufferedRendering(true);
@@ -62,7 +71,7 @@ public class CreateRailwayMapping {
             canvas.setURI(svgURL.toString());
             Thread.sleep(5000);
             SVGDocument imageDoc = canvas.getSVGDocument();
-
+            
             System.out.println(imageDoc);
 
             NodeList children = imageDoc.getChildNodes();
