@@ -20,7 +20,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="de.cau.cs.kieler.sim.kiem.KiemProxyEditor"
+            class="de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor"
             default="true"
             extensions="execution"
             icon="icons/kiemIcon.png"
