@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 
 /**
  * The Class TimeoutThread. It is used to handle timeouts of methods implemented by DataComponents
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
  * <BR>
  * There are two possibilities to stop or deactivate the timeout when the component finished in
  * time:<BR>
- * 1. set another new timeout by calling {@link #timeout(int, String, DataComponentEx, Execution)}
+ * 1. set another new timeout by calling {@link #timeout(int, String, DataComponentWrapper, Execution)}
  * again.<BR>
  * 2. reset the timeout by calling {@link #abortTimeout()}.<BR>
  * <BR>
@@ -70,8 +70,8 @@ public class TimeoutThread extends Thread {
      */
     private String jobDescription;
 
-    /** The DataComponentEx which is observed by this timeout. */
-    private DataComponentEx dataComponentEx;
+    /** The DataComponentWrapper which is observed by this timeout. */
+    private DataComponentWrapper dataComponentWrapper;
 
     /** The terminate. Indicates that this thread should terminate. */
     private boolean terminate;
@@ -90,20 +90,20 @@ public class TimeoutThread extends Thread {
 
     /**
      * Activate as a new timeout. The jobDescription should hold information about the called
-     * methods of the DataComponentEx.
+     * methods of the DataComponentWrapper.
      * 
      * @param timeoutParam
      *            the timeout in ms
      * @param jobDescriptionParam
      *            the job description
-     * @param dataComponentExParam
-     *            the affected DataComponentEx
+     * @param dataComponentWrapperParam
+     *            the affected DataComponentWrapper
      * @param executionParam
      *            a link to the execution
      */
     public synchronized void timeout(final int timeoutParam, 
                                      final String jobDescriptionParam,
-                                     final DataComponentEx dataComponentExParam, 
+                                     final DataComponentWrapper dataComponentWrapperParam, 
                                      final Execution executionParam) {
         this.timeout = timeoutParam;
         // ensure timeout is reasonable! (not too small)
@@ -113,7 +113,7 @@ public class TimeoutThread extends Thread {
         this.execution = executionParam;
         this.abort = false;
         this.jobDescription = jobDescriptionParam;
-        this.dataComponentEx = dataComponentExParam;
+        this.dataComponentWrapper = dataComponentWrapperParam;
         this.active = true;
         stopTime = System.currentTimeMillis() + this.timeout;
         this.notifyAll();
@@ -123,7 +123,7 @@ public class TimeoutThread extends Thread {
 
     /**
      * Abort a timeout. This aborts the current timeout. Another way to abort a timeout is to simply
-     * set a new one by calling the method {@link #timeout(int, String, DataComponentEx, Execution)}
+     * set a new one by calling the method {@link #timeout(int, String, DataComponentWrapper, Execution)}
      * .
      */
     public void abortTimeout() {
@@ -184,7 +184,7 @@ public class TimeoutThread extends Thread {
                     // timeout is triggered
                     this.execution.showError(Messages.mErrorTimeoutExecution.replace(
                             "%JOBDESCRIPTION", this.jobDescription).replace("%COMPONENTNAME",
-                            dataComponentEx.getName()), KiemPlugin.PLUGIN_ID, null);
+                            dataComponentWrapper.getName()), KiemPlugin.PLUGIN_ID, null);
                     this.execution.errorTerminate();
                     // this also stops this thread
                     return;

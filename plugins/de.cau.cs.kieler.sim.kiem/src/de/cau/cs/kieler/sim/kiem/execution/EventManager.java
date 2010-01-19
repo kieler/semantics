@@ -17,9 +17,9 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 
 /**
  * The event manager holds several listener-lists for each available event. These listeners can be
@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
 public class EventManager {
 
     /** The lists for each (used) event one. */
-    private HashMap<Integer, LinkedList<DataComponentEx>> lists;
+    private HashMap<Integer, LinkedList<DataComponentWrapper>> lists;
 
     // ------------------------------------------------------------------------
 
@@ -41,45 +41,46 @@ public class EventManager {
     public EventManager() {
         // create a new list hashmap for easy access to a list for a specific
         // event type
-        lists = new HashMap<Integer, LinkedList<DataComponentEx>>();
+        lists = new HashMap<Integer, LinkedList<DataComponentWrapper>>();
     }
 
     // ------------------------------------------------------------------------
 
     /**
-     * Adds the DataComponentEx to one or more event lists. Event lists are only instantiated if
-     * they are needed, i.e., at least one component registers for an event.
+     * Adds the DataComponentWrapper to one or more event lists. Event lists are only instantiated
+     * if they are needed, i.e., at least one component registers for an event.
      * 
-     * @param dataComponentEx
-     *            the DataComponentEx
+     * @param dataComponentWrapper
+     *            the data component wrapper
      */
-    public void add(final DataComponentEx dataComponentEx) {
-        AbstractDataComponent dataComponent = dataComponentEx.getDataComponent();
+    public void add(final DataComponentWrapper dataComponentWrapper) {
+        AbstractDataComponent dataComponent = dataComponentWrapper.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
         for (int event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
                 // create new event list
-                LinkedList<DataComponentEx> eventList = new LinkedList<DataComponentEx>();
+                LinkedList<DataComponentWrapper> eventList = new LinkedList<DataComponentWrapper>();
                 lists.put(event, eventList);
             }
             // retrieve the list of DataComponents that registered for this event
-            LinkedList<DataComponentEx> eventList = (LinkedList<DataComponentEx>) lists.get(event);
-            // add the new DataComponentEx to this list
-            eventList.add(dataComponentEx);
+            LinkedList<DataComponentWrapper> eventList = (LinkedList<DataComponentWrapper>) lists
+                    .get(event);
+            // add the new DataComponentWrapper to this list
+            eventList.add(dataComponentWrapper);
         }
     }
 
     // ------------------------------------------------------------------------
 
     /**
-     * Removes the DataComponentEx from all event list it has registered. Will remove event lists if
-     * they do not contain any DataComponents any more.
+     * Removes the DataComponentWrapper from all event list it has registered. Will remove event
+     * lists if they do not contain any DataComponents any more.
      * 
-     * @param dataComponentEx
-     *            the DataComponentEx
+     * @param dataComponentWrapper
+     *            the data component wrapper
      */
-    public void remove(final DataComponentEx dataComponentEx) {
-        AbstractDataComponent dataComponent = dataComponentEx.getDataComponent();
+    public void remove(final DataComponentWrapper dataComponentWrapper) {
+        AbstractDataComponent dataComponent = dataComponentWrapper.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
         for (int event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
@@ -88,10 +89,11 @@ public class EventManager {
                 continue;
             }
             // retrieve the list of DataComponents that registered for this event
-            LinkedList<DataComponentEx> eventList = (LinkedList<DataComponentEx>) lists.get(event);
-            if (eventList.contains(dataComponentEx)) {
-                // remove the new DataComponentEx to this list
-                eventList.remove(dataComponentEx);
+            LinkedList<DataComponentWrapper> eventList = (LinkedList<DataComponentWrapper>) lists
+                    .get(event);
+            if (eventList.contains(dataComponentWrapper)) {
+                // remove the new DataComponentWrapper to this list
+                eventList.remove(dataComponentWrapper);
                 // check if list is now empty
                 if (eventList.size() == 0) {
                     lists.remove(event);
@@ -122,7 +124,7 @@ public class EventManager {
      *            the event containing optional additional information
      */
     public void notify(final KiemEvent events) {
-        LinkedList<DataComponentEx> doneList = new LinkedList<DataComponentEx>();
+        LinkedList<DataComponentWrapper> doneList = new LinkedList<DataComponentWrapper>();
 
         // for all notification events
         for (int event : events.getEventsAsList()) {
@@ -132,14 +134,15 @@ public class EventManager {
                 continue;
             }
             // retrieve the list of DataComponents that registered for this event
-            LinkedList<DataComponentEx> eventList = (LinkedList<DataComponentEx>) lists.get(event);
+            LinkedList<DataComponentWrapper> eventList = (LinkedList<DataComponentWrapper>) lists
+                    .get(event);
 
             // notify all dataComponents
-            for (DataComponentEx dataComponentEx : eventList) {
-                if (!doneList.contains(dataComponentEx)) {
-                    dataComponentEx.getDataComponent().notifyEvent(events);
+            for (DataComponentWrapper dataComponentWrapper : eventList) {
+                if (!doneList.contains(dataComponentWrapper)) {
+                    dataComponentWrapper.getDataComponent().notifyEvent(events);
                     // prevent double invocations for multiple events at the same time
-                    doneList.add(dataComponentEx);
+                    doneList.add(dataComponentWrapper);
                 }
             }
         }
