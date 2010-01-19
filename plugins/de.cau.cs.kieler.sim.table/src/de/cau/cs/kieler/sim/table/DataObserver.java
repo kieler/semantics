@@ -21,8 +21,8 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
 import de.cau.cs.kieler.sim.kiem.IJSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.JSONStringDataComponent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
