@@ -31,8 +31,8 @@ import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.synccharts.Region;
 
 /**
- * A command handler that looks for an SyncCharts graphical GMF editor and parses all action labels
- * again and then serializes all again.
+ * A command handler that looks for an SyncCharts graphical GMF editor and
+ * parses all action labels again and then serializes all again.
  * 
  * @author haf
  */
@@ -60,8 +60,10 @@ public class ActionLabelParseHandler extends AbstractHandler {
             myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID,
                     "Parsing and re-serialization of action strings done.");
         } catch (NullPointerException e) {
-            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No SyncChart Editor open. This is a seldom occuring exception that we could not yet reproduce. Please report the stack trace to the KIELER developer team.",
-                    e);
+            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "No SyncChart Editor open. This is a seldom occuring "
+                            + "exception that we could not yet reproduce. Please report "
+                            + "the stack trace to the KIELER developer team.", e);
         } catch (ClassCastException e) {
             myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Not a SyncChart Editor open. ", e);

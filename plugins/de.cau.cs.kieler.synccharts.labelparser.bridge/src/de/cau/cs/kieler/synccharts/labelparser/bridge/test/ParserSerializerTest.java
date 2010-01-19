@@ -38,15 +38,17 @@ import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
  * 
  * @author haf
  * 
+ * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
+ * 
  */
 public class ParserSerializerTest {
 
-    Region rootRegion;
-    Transition transition;
+    private Region rootRegion;
+    private Transition transition;
 
-    Injector injector;
+    private Injector injector;
     // SerializerUtil serializerUtil;
-    IAntlrParser parser;
+    private IAntlrParser parser;
 
     private static final int A = 65;
     private static final int Z = 90;

@@ -45,9 +45,9 @@ public class ActionLabelProcessorWrapper {
     static final boolean PARSE = true;
     static final boolean SERIALIZE = false;
 
-    Injector injector;
+    private Injector injector;
     // SerializerUtil serializerUtil;
-    IAntlrParser parser;
+    private IAntlrParser parser;
 
     /**
      * Default Constructor initializes parsers and serializers.
@@ -140,7 +140,7 @@ public class ActionLabelProcessorWrapper {
         ActionLabelProcessCommand cmd = parser.new ActionLabelProcessCommand(parent, parse, parser);
         CommandStack stack = domain.getCommandStack();
         stack.execute(cmd);
-        if (cmd.error && cmd.exception != null) {
+        if (cmd.isError() && cmd.getException() != null) {
             throw cmd.exception;
         }
     }
@@ -186,9 +186,9 @@ public class ActionLabelProcessorWrapper {
      */
     private class ActionLabelProcessCommand extends AbstractCommand {
 
-        ActionLabelProcessorWrapper parser;
-        EObject parent;
-        boolean parse;
+        private ActionLabelProcessorWrapper parser;
+        private EObject parent;
+        private boolean parse;
 
         public ActionLabelProcessCommand(final EObject theParent, final boolean isParse,
                 final ActionLabelProcessorWrapper theParser) {
@@ -197,8 +197,16 @@ public class ActionLabelProcessorWrapper {
             this.parser = theParser;
         }
 
-        public boolean error = false;
-        public Exception exception;
+        private boolean error = false;
+        private Exception exception;
+
+        public boolean isError() {
+            return error;
+        }
+
+        public Exception getException() {
+            return exception;
+        }
 
         public void execute() {
             try {

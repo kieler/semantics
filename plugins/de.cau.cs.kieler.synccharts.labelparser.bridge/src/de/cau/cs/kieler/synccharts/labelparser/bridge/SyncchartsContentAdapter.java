@@ -45,8 +45,10 @@ import de.cau.cs.kieler.synccharts.ValuedObject;
  * A content adapter for SyncCharts EMF models that listens to model changes and
  * triggers appropriate changes like parsing of Action labels and handling of
  * state labels and IDs.
- * 
+ *  
  * @author haf
+ * 
+ * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
  */
 public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
 

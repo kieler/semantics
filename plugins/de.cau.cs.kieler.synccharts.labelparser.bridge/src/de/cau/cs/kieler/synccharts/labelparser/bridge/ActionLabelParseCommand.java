@@ -53,13 +53,14 @@ import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
  * 
  * @author haf
  * 
+ * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
  */
 public class ActionLabelParseCommand extends AbstractTransactionalCommand {
 
-    String newString;
-    Injector injector;
+    private String newString;
+    private Injector injector;
 
-    EObject element;
+    private EObject element;
 
     /**
      * @param theElement
