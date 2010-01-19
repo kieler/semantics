@@ -78,8 +78,8 @@ import org.eclipse.emf.common.util.URI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
