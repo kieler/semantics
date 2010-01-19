@@ -17,6 +17,8 @@ package de.cau.cs.kieler.sim.kiem.internal;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -387,8 +389,8 @@ public class DataComponentWrapper implements Serializable {
      * @throws KiemInitializationException
      *             the KIEM initialization exception
      * 
-     * @see de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent#provideInitialVariables()
-     * @see de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent#provideInitialVariables()
+     * @see de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#provideInitialVariables()
+     * @see de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#provideInitialVariables()
      */
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject initialVariables = null;
@@ -559,8 +561,8 @@ public class DataComponentWrapper implements Serializable {
      * @param globalInitialVariables
      *            all interface variable keys
      * 
-     * @see de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent#setInitialVariables(JSONObject)
-     * @see de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent#setInitialVariables(String)
+     * @see de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables(JSONObject)
+     * @see de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)
      */
     public void setInitialVariables(final JSONObject globalInitialVariables) {
         if (isJSON()) {

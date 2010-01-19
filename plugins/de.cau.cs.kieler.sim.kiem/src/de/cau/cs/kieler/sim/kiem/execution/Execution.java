@@ -17,13 +17,13 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import java.util.List;
 
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
-import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent;
 
 import org.json.JSONException;
 import org.json.JSONObject;

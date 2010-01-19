@@ -343,9 +343,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * calling the {@link #getInterfaceKeys()} method. <BR>
      * <BR>
      * <B>DEPRECATED: Use
-     * {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent#provideInitialVariables()}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#provideInitialVariables()}
      * or
-     * {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent#provideInitialVariables()}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#provideInitialVariables()}
      * instead!</B>
      * 
      * @return the local interface variable keys
@@ -365,9 +365,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * initialization phase. <BR>
      * <BR>
      * <B>DEPRECATED: Use
-     * {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent#setInitialVariables (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
      * or
-     * {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent#setInitialVariables(String)}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)}
      * instead!</B>
      * 
      * @param globalInterfaceKeysParam
@@ -386,7 +386,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * <BR>
      * <B>DEPRECATED: Use
      * {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()}
-     * or {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent#getInitialVariables()}
+     * or {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#getInitialVariables()}
      * instead!</B>
      * 
      * @return the global interface variables

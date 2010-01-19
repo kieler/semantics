@@ -12,11 +12,9 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sim.kiem.internal;
+package de.cau.cs.kieler.sim.kiem;
 
-import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.IJSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 
 /**
  * The Class JSONStringDataComponent. Implementation for the extension point JSONObjectDataComponent

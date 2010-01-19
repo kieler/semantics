@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sim.kiem.internal;
+package de.cau.cs.kieler.sim.kiem;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -44,8 +44,6 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
-import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
@@ -635,8 +633,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * This initializes the DataComponentList with all registered and loaded plug-ins that extend
      * the following two extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
      * If a DataComponent is registered but cannot be instantiated because of an error this will
      * result in a warning only so that all other fully functional DataComponents are still loaded.
      * This method remembers its list thru the whole life-cycle of this plug-in and always returns
@@ -906,8 +904,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * Returns the default ComponentWrapperList. This will contain all registered DataComponents
      * that extend one the following extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
      * They will be ordered in the "natural" way, meaning that the (pure) data producers are
      * scheduled before the data observer & producers which are themselves scheduled before the
      * (pure) data observers. Although DataComponents may be multiple instantiable, by default,
@@ -982,8 +980,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * modification on this list is persistent in this one and only plug-in instance. The
      * DataComponentWrapperList holds a list of DataComponents, selected from all registered (and
      * loaded) plug-ins that extend the following extension points:<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent}<BR>
-     * - {@link de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
+     * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
      * 
      * @return the DataComponentWrapperList
      */
