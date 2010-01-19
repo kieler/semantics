@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sim.kiem.KiemEvent;
 public class EventManager {
 
     /** The lists for each (used) event one. */
-    private HashMap<Integer, LinkedList<DataComponentWrapper>> lists;
+    private HashMap<Double, LinkedList<DataComponentWrapper>> lists;
 
     // ------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ public class EventManager {
     public EventManager() {
         // create a new list hashmap for easy access to a list for a specific
         // event type
-        lists = new HashMap<Integer, LinkedList<DataComponentWrapper>>();
+        lists = new HashMap<Double, LinkedList<DataComponentWrapper>>();
     }
 
     // ------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class EventManager {
     public void add(final DataComponentWrapper dataComponentWrapper) {
         AbstractDataComponent dataComponent = dataComponentWrapper.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
-        for (int event : events.getEventsAsList()) {
+        for (double event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
                 // create new event list
                 LinkedList<DataComponentWrapper> eventList = new LinkedList<DataComponentWrapper>();
@@ -80,7 +80,7 @@ public class EventManager {
     public void remove(final DataComponentWrapper dataComponentWrapper) {
         AbstractDataComponent dataComponent = dataComponentWrapper.getDataComponent();
         KiemEvent events = dataComponent.provideEventOfInterest();
-        for (int event : events.getEventsAsList()) {
+        for (double event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
                 // this should not happen because a component should
                 // be registered first
@@ -109,7 +109,7 @@ public class EventManager {
      * @param event
      *            the event as an KiemEvent (integer) constant
      */
-    public void notify(final int event) {
+    public void notify(final double event) {
         notify(new KiemEvent(event));
     }
 
@@ -125,7 +125,7 @@ public class EventManager {
         LinkedList<DataComponentWrapper> doneList = new LinkedList<DataComponentWrapper>();
 
         // for all notification events
-        for (int event : events.getEventsAsList()) {
+        for (double event : events.getEventsAsList()) {
             if (!lists.containsKey(event)) {
                 // if no DataComponent registered for this event, no one needs to
                 // be notified --> simply return!

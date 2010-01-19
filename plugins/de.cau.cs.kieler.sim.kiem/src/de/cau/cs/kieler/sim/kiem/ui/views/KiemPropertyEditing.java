@@ -20,6 +20,8 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType;
 
@@ -150,7 +152,6 @@ public class KiemPropertyEditing extends EditingSupport {
     @Override
     protected void setValue(final Object element, final Object value) {
         try {
-
             // set the value using the getValue() method of the KiemPropertyType
             KiemProperty property = (KiemProperty) element;
             String oldValue = "" + property.getValue();
@@ -160,6 +161,8 @@ public class KiemPropertyEditing extends EditingSupport {
             getViewer().update(element, null);
             if (valueChanged) {
                 parent.setDirty(true);
+                KiemPlugin.getDefault().getEventManager().notify(
+                        new KiemEvent(KiemEvent.KIEMPROPERTY_CHANGE));
             }
         } catch (Exception e) {
             e.printStackTrace();

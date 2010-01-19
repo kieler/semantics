@@ -31,63 +31,68 @@ import java.util.List;
  */
 public class KiemEvent {
 
-    private int event;
+    private double event;
     private Object info;
 
     /**
      * The Constant NONE event represents the default NULL event and means this component does not
      * want to be notified for any event.
      */
-    public static final int NONE = 0;
+    public static final double NONE = 0;
 
     /** The Constant STEP event is triggered before a step is about to occur. */
-    public static final int STEP_INFO = 1;
+    public static final double STEP_INFO = 1;
 
     /** The Constant CMD_STEP event is triggered when the user hits the step button. */
-    public static final int CMD_STEP = 2;
+    public static final double CMD_STEP = 2;
 
     /** The Constant CMD_STEP event is triggered when the user hits the step button. */
-    public static final int CMD_STEP_BACK = 4;
+    public static final double CMD_STEP_BACK = 4;
 
     /** The Constant CMD_STEP event is triggered when the user hits the step button. */
-    public static final int CMD_STEP_MACRO = 8;
+    public static final double CMD_STEP_MACRO = 8;
 
     /** The Constant CMD_RUN event is triggered when the user hits the run button. */
-    public static final int CMD_RUN = 16;
+    public static final double CMD_RUN = 16;
 
     /** The Constant CMD_PAUSE event is triggered when the user hits the pause button. */
-    public static final int CMD_PAUSE = 32;
+    public static final double CMD_PAUSE = 32;
 
     /** The Constant CMD_STOP event is triggered when user hits the stop button. */
-    public static final int CMD_STOP = 64;
+    public static final double CMD_STOP = 64;
 
     /** The Constant ADDED event is triggered when the user adds a component (instance). */
-    public static final int ADDED = 128;
+    public static final double ADDED = 128;
 
     /** The Constant DELETED event is triggered when the user deletes a component (instance). */
-    public static final int DELETED = 256;
+    public static final double DELETED = 256;
 
     /** The Constant SCHEDULED event is triggered when the user changes the scheduling order. */
-    public static final int SCHEDULED = 512;
+    public static final double SCHEDULED = 512;
 
     /** The Constant ACTIVATED event is triggered when the user activates the component. */
-    public static final int ACTIVATED = 1024;
+    public static final double ACTIVATED = 1024;
 
     /** The Constant DEACTIVATED event is triggered when the user deactivates the component. */
-    public static final int DEACTIVATED = 2048;
+    public static final double DEACTIVATED = 2048;
 
-
-    /** 
-     * The Constant LOAD event is triggered when the user loads a scheduling. 
-     * The info in this case is the location of the file as an IPath object.
+    /**
+     * The Constant LOAD event is triggered when the user loads a scheduling. The info in this case
+     * is the location of the file as an IPath object.
      */
-    public static final int LOAD = 4096;
+    public static final double LOAD = 4096;
 
-    /** 
-     * The Constant SAVE event is triggered when the user saves a scheduling.
-     * The info in this case is the location of the file as an IPath object.
+    /**
+     * The Constant SAVE event is triggered when the user saves a scheduling. The info in this case
+     * is the location of the file as an IPath object.
      */
-    public static final int SAVE = 8192;
+    public static final double SAVE = 8192;
+
+    /**
+     * The Constant KIEMPROPERTY_CHANGE event is triggered when the user changes/edited a property
+     * value in table.
+     */
+    public static final double KIEMPROPERTY_CHANGE = 16384;
 
     // -------------------------------------------------------------------------
 
@@ -99,7 +104,7 @@ public class KiemEvent {
      * @param infoParam
      *            the (optional) info parameter
      */
-    public KiemEvent(final int eventParam, final Object infoParam) {
+    public KiemEvent(final double eventParam, final Object infoParam) {
         this.event = eventParam;
         this.info = infoParam;
     }
@@ -112,7 +117,7 @@ public class KiemEvent {
      * @param eventParam
      *            the event of interest
      */
-    public KiemEvent(final int eventParam) {
+    public KiemEvent(final double eventParam) {
         this.event = eventParam;
         this.info = null;
     }
@@ -134,7 +139,7 @@ public class KiemEvent {
      * 
      * @return the events
      */
-    public int getEvents() {
+    public double getEvents() {
         return this.event;
     }
 
@@ -148,7 +153,7 @@ public class KiemEvent {
      * 
      * @return true, if is event
      */
-    public boolean isEvent(final int eventParam) {
+    public boolean isEvent(final double eventParam) {
         return ((this.event % eventParam) == 0);
     }
 
@@ -160,7 +165,7 @@ public class KiemEvent {
      * @param eventParam
      *            the new event
      */
-    public void setEvent(final int eventParam) {
+    public void setEvent(final double eventParam) {
         this.event = eventParam;
     }
 
@@ -172,7 +177,7 @@ public class KiemEvent {
      * @param eventParam
      *            the event param
      */
-    public void addEvent(final int eventParam) {
+    public void addEvent(final double eventParam) {
         this.event += eventParam;
     }
 
@@ -216,15 +221,15 @@ public class KiemEvent {
      * 
      * @return all events as a list
      */
-    public List<Integer> getEventsAsList() {
-        LinkedList<Integer> returnList = new LinkedList<Integer>();
+    public List<Double> getEventsAsList() {
+        LinkedList<Double> returnList = new LinkedList<Double>();
 
         Field[] flds = KiemEvent.class.getDeclaredFields();
         for (Field f : flds) {
             if (f.isEnumConstant()) {
                 try {
                     System.out.println(f.getName());
-                    returnList.add(f.getInt(f));
+                    returnList.add(f.getDouble(f));
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
