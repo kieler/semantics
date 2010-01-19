@@ -143,18 +143,32 @@ public class Execution implements Runnable {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the timeout which is the TIMEOUTMULTIPLICITY x aimedStepDuration but minimally a timeout
-     * of Execution.SECOND_WAITTIMEOUT.
+     * Tries to get the Timeout from the plugins content providers.
+     * <BR><BR>
+     * If that fails the timeout is the TIMEOUTMULTIPLICITY x aimedStepDuration 
+     * but minimally a timeout of Execution.SECOND_WAITTIMEOUT. In this
+     * case the plugins content providers are notified of the default timeout
+     * value.
+     * 
+     * author: soh
      * 
      * @return the timeout
      */
     private int getTimeout() {
-        int aimedStepDurationTmp = KiemPlugin.getDefault().getAimedStepDuration();
-        int returnValue = Execution.TIMEOUTMULTIPLICITY * aimedStepDurationTmp;
-        if (returnValue < Execution.SECOND_WAITTIMEOUT) {
-            returnValue = Execution.SECOND_WAITTIMEOUT;
+        Integer providedTimeout = KiemPlugin.getDefault()
+        .getIntegerValueFromProviders(KiemPlugin.TIMEOUT_ID);
+        if (providedTimeout != null) {
+            return providedTimeout;
+        } else {
+            int aimedStepDurationTmp = KiemPlugin.getDefault().getAimedStepDuration();
+            int returnValue = Execution.TIMEOUTMULTIPLICITY * aimedStepDurationTmp;
+            if (returnValue < Execution.SECOND_WAITTIMEOUT) {
+                returnValue = Execution.SECOND_WAITTIMEOUT;
+            }
+            KiemPlugin.getDefault().notifyConfigurationProviders(
+                    KiemPlugin.TIMEOUT_ID, returnValue + "");
+            return (returnValue);
         }
-        return (returnValue);
     }
 
     // -------------------------------------------------------------------------
