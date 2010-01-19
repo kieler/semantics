@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
@@ -301,6 +302,9 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 transition2.setPriority(i + 1); // prios should start with 1
                 this.setEnabled(true);
             }
+            // order the list of transitions also according to priority. This way
+            // the serialization will also save it in prio order e.g. in XMI or in KITS.
+            ECollections.sort(state.getOutgoingTransitions(), new TransitionPrioComparator());
         }
     }
 
@@ -365,6 +369,9 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             transition2.setPriority(i + 1); // prios should start with 1
             this.setEnabled(true);
         }
+        // order the list of transitions also according to priority. This way
+        // the serialization will also save it in prio order e.g. in XMI or in KITS.
+        ECollections.sort(transitions, new TransitionPrioComparator());
     }
 
     private void handleState(final Notification notification, final State state) {
