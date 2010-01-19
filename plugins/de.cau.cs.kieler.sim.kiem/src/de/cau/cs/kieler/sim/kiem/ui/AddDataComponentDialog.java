@@ -34,8 +34,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 import de.cau.cs.kieler.sim.kiem.Messages;
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 
 /**
  * The Class AddDataComponentDialog.
@@ -73,11 +73,11 @@ public class AddDataComponentDialog extends Dialog {
     private List<AbstractDataComponent> componentList;
 
     /**
-     * The DataComponentExList. It is used to check for multiple instances. It should hold all
-     * DataComponentEx's that are in the original list of the KiemView to check if another instance
+     * The DataComponentWrapperList. It is used to check for multiple instances. It should hold all
+     * DataComponentWrapper's that are in the original list of the KiemView to check if another instance
      * of a DataComponent can safely be added.
      */
-    private List<DataComponentEx> dataComponentExList;
+    private List<DataComponentWrapper> dataComponentWrapperList;
 
     // -------------------------------------------------------------------------
 
@@ -187,15 +187,15 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
      * Sets the DataComponentEsList. It is used to check for multiple instances. It should hold all
-     * DataComponentEx's that are in the original list of the KiemView to check if another instance
+     * DataComponentWrapper's that are in the original list of the KiemView to check if another instance
      * of a DataComponent can safely be added. <BR>
      * This should be provided by the calling instance.
      * 
-     * @param dataComponentExListParam
+     * @param dataComponentWrapperListParam
      *            the new component list
      */
-    public void setComponentExList(final List<DataComponentEx> dataComponentExListParam) {
-        this.dataComponentExList = dataComponentExListParam;
+    public void setComponentExList(final List<DataComponentWrapper> dataComponentWrapperListParam) {
+        this.dataComponentWrapperList = dataComponentWrapperListParam;
     }
 
     // -------------------------------------------------------------------------
@@ -237,7 +237,7 @@ public class AddDataComponentDialog extends Dialog {
      * Gets the selected components. This is normally called after the user has selected and chosen
      * DataComponents and already closed the dialog.
      * 
-     * @return the selected DataComponents for which DataComponentExs has to be created by the
+     * @return the selected DataComponents for which DataComponentWrappers has to be created by the
      *         calling instance
      */
     public List<AbstractDataComponent> getSelectedComponents() {
@@ -270,7 +270,7 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
      * Check if multiple instances of a DataComponent are okay and if not check if there already is
-     * another instance in the original DataComponentExList. If the latter is the case then return
+     * another instance in the original DataComponentWrapperList. If the latter is the case then return
      * false. In any other case it is okay to add another instance of this DataComponent so this
      * method returns true.
      * 
@@ -281,19 +281,19 @@ public class AddDataComponentDialog extends Dialog {
      */
     public boolean checkMultipleInstanceOk(final AbstractDataComponent component) {
         // nothing to check = no multiple instances possible if empty list
-        if (dataComponentExList == null) {
+        if (dataComponentWrapperList == null) {
             return true;
         }
         // now check for the same component
-        for (int c = 0; c < dataComponentExList.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExList.get(c);
-            if (!dataComponentEx.getDataComponent().isMultiInstantiable()) {
+        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            if (!dataComponentWrapper.getDataComponent().isMultiInstantiable()) {
                 // now we have a NOT multiple instantiable component in the list
                 // check if this is our component, if yes return false!
                 if (component.getClass().getName().equals(
-                        (dataComponentEx.getDataComponent()).getClass().getName())) {
+                        (dataComponentWrapper.getDataComponent()).getClass().getName())) {
                     // class equal
-                    if (component.getName().equals(dataComponentEx.getDataComponent().getName())) {
+                    if (component.getName().equals(dataComponentWrapper.getDataComponent().getName())) {
                         // name equal
                         return false;
                     }
@@ -308,7 +308,7 @@ public class AddDataComponentDialog extends Dialog {
     /**
      * Refreshes the enabled/disabled text colors of the DataComponent selection list. In case a
      * DataComponent is <B>NOT</B> multiple instantiable and there already is one instance in the
-     * original DataComponentExList (of the KiemView) then we indicate this by a grayed
+     * original DataComponentWrapperList (of the KiemView) then we indicate this by a grayed
      * colorDisabled.
      */
     public void refreshEnabledDisabledTextColors() {

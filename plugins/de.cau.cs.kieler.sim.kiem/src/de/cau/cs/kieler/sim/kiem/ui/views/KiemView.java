@@ -68,13 +68,13 @@ import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.widgets.Menu;
 
+import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.IKiemToolbarContributor;
-import de.cau.cs.kieler.sim.kiem.extension.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
@@ -89,7 +89,7 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {
 
-    /** The viewer table of DataComponentExs. */
+    /** The viewer table of DataComponentWrappers. */
     private KiemTableViewer viewer;
 
     /** The action to add a DataComponent. */
@@ -141,7 +141,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private StepTextField stepTextField;
 
     /** The current master DataComponent if any. */
-    private DataComponentEx currentMaster;
+    private DataComponentWrapper currentMaster;
 
     /** The KIEM instance to e.g., access the execution. */
     private KiemPlugin kIEMInstance;
@@ -236,7 +236,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @return the current file
      */
     public IPath getCurrentFile() {
-       return this.currentFile;
+        return this.currentFile;
     }
 
     // -------------------------------------------------------------------------
@@ -251,13 +251,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY,
                 DISABLED_COLOR_GRAY));
         Color colorMaster = new Color(null, new RGB(0, 0, MASTER_COLOR_BLUE));
-        for (int c = 0; c < kIEMInstance.getDataComponentExList().size(); c++) {
-            DataComponentEx dataComponentEx = kIEMInstance.getDataComponentExList().get(c);
+        for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
+            DataComponentWrapper dataComponentWrapper = kIEMInstance.getDataComponentWrapperList()
+                    .get(c);
             // select color
             Color currentColor = colorDisabled;
-            if (dataComponentEx.isEnabled()) {
+            if (dataComponentWrapper.isEnabled()) {
                 currentColor = colorEnabled;
-                if (dataComponentEx.isMaster()) {
+                if (dataComponentWrapper.isMaster()) {
                     currentColor = colorMaster;
                 }
             }
@@ -286,7 +287,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         createColumns(viewer);
         viewer.setContentProvider(new KiemContentProvider());
         viewer.setLabelProvider(new KiemLabelProvider(this));
-        viewer.setInput(kIEMInstance.getDataComponentExList());
+        viewer.setInput(kIEMInstance.getDataComponentWrapperList());
 
         // buildLocalToolBar(); // is done in checkForSingleEnabledMaster
         hookContextMenu();
@@ -392,18 +393,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private void hookTreeAction() {
         viewer.addTreeListener(new ITreeViewerListener() {
             public void treeCollapsed(final TreeExpansionEvent event) {
-                if (event.getElement() instanceof DataComponentEx) {
+                if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are collapsed
-                    ((DataComponentEx) event.getElement()).setUnfolded(false);
+                    ((DataComponentWrapper) event.getElement()).setUnfolded(false);
                     updateColumnsCollapsed();
                 }
                 updateView(false);
             }
 
             public void treeExpanded(final TreeExpansionEvent event) {
-                if (event.getElement() instanceof DataComponentEx) {
+                if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are expanded
-                    ((DataComponentEx) event.getElement()).setUnfolded(true);
+                    ((DataComponentWrapper) event.getElement()).setUnfolded(true);
                     updateColumnsCollapsed();
                 }
                 updateView(false);
@@ -475,8 +476,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         IToolBarManager manager = bars.getToolBarManager();
         // first remove all entries
         manager.removeAll();
-        
-        //call soh's extension point
+
+        // call soh's extension point
         addExternalContributions(manager);
 
         manager.add(getActionUp());
@@ -525,8 +526,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Add components contributed by other plugins through the
-     * ToolBarContributor extension point.
+     * Add components contributed by other plugins through the ToolBarContributor extension point.
      * 
      * author soh
      * 
@@ -535,16 +535,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(
-                        "de.cau.cs.kieler.sim.kiem.toolbarContributor");
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.toolbarContributor");
 
         for (IConfigurationElement element : contributors) {
             try {
                 IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
                         .createExecutableExtension("class"));
 
-                ControlContribution[] contributions = contributor
-                        .provideToolbarContributions(null);
+                ControlContribution[] contributions = contributor.provideToolbarContributions(null);
 
                 for (ControlContribution contribution : contributions) {
                     if (contribution != null) {
@@ -557,7 +555,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         }
     }
-    
+
     // -------------------------------------------------------------------------
 
     // /**
@@ -736,7 +734,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 getActionDown().setEnabled(false);
             }
         } else {
-            DataComponentEx dataComponentEx = (DataComponentEx) ((org.eclipse.jface.viewers.StructuredSelection) viewer
+            DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) ((org.eclipse.jface.viewers.StructuredSelection) viewer
                     .getSelection()).getFirstElement();
             if (!getActionEnableDisable().isEnabled()) {
                 getActionEnableDisable().setEnabled(true);
@@ -744,7 +742,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             if (!getActionDelete().isEnabled()) {
                 getActionDelete().setEnabled(true);
             }
-            if (dataComponentEx.isEnabled()) {
+            if (dataComponentWrapper.isEnabled()) {
                 // currently enabled
                 actionEnableDisable.setText(Messages.mActionDisable);
                 actionEnableDisable.setToolTipText(Messages.mActionHintDisable);
@@ -760,9 +758,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             int listIndexMostTop = -1;
             int listIndexMostBottom = -1;
             for (int c = 0; c < selections.size(); c++) {
-                if (selections.toArray()[c] instanceof DataComponentEx) {
-                    dataComponentEx = (DataComponentEx) selections.toArray()[c];
-                    int index = kIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
+                if (selections.toArray()[c] instanceof DataComponentWrapper) {
+                    dataComponentWrapper = (DataComponentWrapper) selections.toArray()[c];
+                    int index = kIEMInstance.getDataComponentWrapperList().indexOf(dataComponentWrapper);
                     if ((listIndexMostTop == -1) || (index < listIndexMostTop)) {
                         listIndexMostTop = index;
                     }
@@ -781,7 +779,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     getActionUp().setEnabled(true);
                 }
             }
-            if (listIndexMostBottom >= kIEMInstance.getDataComponentExList().size() - 1) {
+            if (listIndexMostBottom >= kIEMInstance.getDataComponentWrapperList().size() - 1) {
                 // currently bottom
                 if (getActionDown().isEnabled()) {
                     getActionDown().setEnabled(false);
@@ -886,9 +884,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             Object obj = ((IStructuredSelection) selection).getFirstElement();
             if (obj != null) {
                 if ((obj instanceof KiemProperty)
-                        || ((obj instanceof DataComponentEx)
-                                && (((DataComponentEx) obj).getProperties() != null)
-                                && (((DataComponentEx) obj).getProperties().length > 0) && (((DataComponentEx) obj)
+                        || ((obj instanceof DataComponentWrapper)
+                                && (((DataComponentWrapper) obj).getProperties() != null)
+                                && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
                                 .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false);
@@ -940,12 +938,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             } else {
                 // master is responsible for enabling/disabling
                 // buttons
-                getActionStepBack().setEnabled(
-                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEPBACK));
+                getActionStepBack()
+                        .setEnabled(
+                                currentMaster
+                                        .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEPBACK));
                 getActionStep().setEnabled(
                         currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEP));
                 getActionMacroStep().setEnabled(
-                        currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_MACROSTEP));
+                        currentMaster
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_MACROSTEP));
                 getActionMacroStep().setEnabled(
                         currentMaster.masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_RUN));
                 getActionPause().setEnabled(
@@ -1048,7 +1049,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Gets the action add. It calls the AddDataComponentDialog to let the user select a
      * DataComponent to add. This will be added (and hence instantiated) by calling the
-     * {@link de.cau.cs.kieler.sim.kiem.KiemPlugin#addTodataComponentExList} method of the KIEM
+     * {@link de.cau.cs.kieler.sim.kiem.KiemPlugin#addTodataComponentWrapperList} method of the KIEM
      * plug-in.
      * 
      * @return the action add
@@ -1061,13 +1062,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 AddDataComponentDialog addDialog = new AddDataComponentDialog(viewer.getControl()
                         .getShell());
-                addDialog.setComponentExList(kIEMInstance.getDataComponentExList());
+                addDialog.setComponentExList(kIEMInstance.getDataComponentWrapperList());
                 addDialog.setComponentList(KiemPlugin.getDefault().getDataComponentList());
                 if (addDialog.open() == 0) {
                     List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
                     if (selected != null) {
                         for (int c = 0; c < selected.size(); c++) {
-                            kIEMInstance.addTodataComponentExList(selected.get(c));
+                            kIEMInstance.addTodataComponentWrapperList(selected.get(c));
                         }
                         setDirty(true);
                         checkForSingleEnabledMaster(false);
@@ -1085,7 +1086,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action delete. Deletes all selected DataComponentExs from the DataComponentExList.
+     * Gets the action delete. Deletes all selected DataComponentWrappers from the
+     * DataComponentWrapperList.
      * 
      * @return the action delete
      */
@@ -1102,10 +1104,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 IStructuredSelection selection = (org.eclipse.jface.viewers.StructuredSelection) viewer
                         .getSelection();
                 for (int c = 0; c < selection.size(); c++) {
-                    DataComponentEx dataComponentEx = (DataComponentEx) selection.toArray()[c];
-                    if (kIEMInstance.getDataComponentExList().contains(dataComponentEx)) {
-                        dataComponentEx.getDataComponent().finalize();
-                        kIEMInstance.getDataComponentExList().remove(dataComponentEx);
+                    DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selection
+                            .toArray()[c];
+                    if (kIEMInstance.getDataComponentWrapperList().contains(dataComponentWrapper)) {
+                        dataComponentWrapper.getDataComponent().finalize();
+                        kIEMInstance.getDataComponentWrapperList().remove(dataComponentWrapper);
                         setDirty(true);
                         checkForSingleEnabledMaster(false);
                         // call garbage collector
@@ -1124,7 +1127,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action enable disable. Enables or disables all selected DataComponentExs.
+     * Gets the action enable disable. Enables or disables all selected DataComponentWrappers.
      * 
      * @return the action enable disable
      */
@@ -1140,18 +1143,19 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 }
                 // this may not always be applicable e.g., if a property is selected
                 try {
-                    DataComponentEx firstDataComponentEx = (DataComponentEx) ((org.eclipse.jface.viewers.StructuredSelection) viewer
+                    DataComponentWrapper firstDataComponentWrapper = (DataComponentWrapper) ((org.eclipse.jface.viewers.StructuredSelection) viewer
                             .getSelection()).getFirstElement();
-                    boolean enabledDisabled = !firstDataComponentEx.isEnabled();
+                    boolean enabledDisabled = !firstDataComponentWrapper.isEnabled();
 
                     IStructuredSelection selection = (org.eclipse.jface.viewers.StructuredSelection) viewer
                             .getSelection();
                     for (int c = 0; c < selection.size(); c++) {
-                        DataComponentEx dataComponentEx = (DataComponentEx) selection.toArray()[c];
-                        dataComponentEx.setEnabled(enabledDisabled);
+                        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selection
+                                .toArray()[c];
+                        dataComponentWrapper.setEnabled(enabledDisabled);
                         setDirty(true);
                     }
-                    checkForSingleEnabledMaster(false, firstDataComponentEx);
+                    checkForSingleEnabledMaster(false, firstDataComponentWrapper);
                     updateView(true);
                 } catch (Exception e) {
                     // if wrong component (property), do not enable == ignore command
@@ -1166,8 +1170,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action up. Schedules all selected DataComponentExs before their current position (if
-     * possible).
+     * Gets the action up. Schedules all selected DataComponentWrappers before their current
+     * position (if possible).
      * 
      * @return the action up
      */
@@ -1181,14 +1185,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         .getSelection();
                 // go thru list from up to down!
                 for (int c = 0; c < selections.size(); c++) {
-                    if (selections.toArray()[c] instanceof DataComponentEx) {
-                        DataComponentEx dataComponentEx = (DataComponentEx) selections.toArray()[c];
-                        int listIndex = kIEMInstance.getDataComponentExList().indexOf(
-                                dataComponentEx);
+                    if (selections.toArray()[c] instanceof DataComponentWrapper) {
+                        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selections
+                                .toArray()[c];
+                        int listIndex = kIEMInstance.getDataComponentWrapperList().indexOf(
+                                dataComponentWrapper);
                         if (listIndex > 0) {
-                            kIEMInstance.getDataComponentExList().remove(listIndex);
-                            kIEMInstance.getDataComponentExList().add(listIndex - 1,
-                                    dataComponentEx);
+                            kIEMInstance.getDataComponentWrapperList().remove(listIndex);
+                            kIEMInstance.getDataComponentWrapperList().add(listIndex - 1,
+                                    dataComponentWrapper);
                             setDirty(true);
                         }
                     } // end if DataComponent (not property)
@@ -1208,8 +1213,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action down. Schedules all selected DataComponentExs behind their current positions
-     * (if possible).
+     * Gets the action down. Schedules all selected DataComponentWrappers behind their current
+     * positions (if possible).
      * 
      * @return the action down
      */
@@ -1223,14 +1228,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         .getSelection();
                 // go thru list from down to up!
                 for (int c = selections.size() - 1; c >= 0; c--) {
-                    if (selections.toArray()[c] instanceof DataComponentEx) {
-                        DataComponentEx dataComponentEx = (DataComponentEx) selections.toArray()[c];
-                        int listIndex = kIEMInstance.getDataComponentExList().indexOf(
-                                dataComponentEx);
-                        if (listIndex < kIEMInstance.getDataComponentExList().size() - 1) {
-                            kIEMInstance.getDataComponentExList().remove(listIndex);
-                            kIEMInstance.getDataComponentExList().add(listIndex + 1,
-                                    dataComponentEx);
+                    if (selections.toArray()[c] instanceof DataComponentWrapper) {
+                        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selections
+                                .toArray()[c];
+                        int listIndex = kIEMInstance.getDataComponentWrapperList().indexOf(
+                                dataComponentWrapper);
+                        if (listIndex < kIEMInstance.getDataComponentWrapperList().size() - 1) {
+                            kIEMInstance.getDataComponentWrapperList().remove(listIndex);
+                            kIEMInstance.getDataComponentWrapperList().add(listIndex + 1,
+                                    dataComponentWrapper);
                             setDirty(true);
                         }
                     } // if DataComponent (not Property)
@@ -1642,7 +1648,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         aimedStepDurationTextField = new AimedStepDurationTextField(kIEMInstance);
         return aimedStepDurationTextField;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -1672,7 +1678,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * Check for single enabled master. This is just a wrapper for the method
-     * {@link #checkForSingleEnabledMaster(boolean, DataComponentEx)}.
+     * {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
      * 
      * @param silent
      *            if true, the warning dialog will be suppressed
@@ -1685,25 +1691,26 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Check the current selection (enabled DataComponentExs) for a just a single enabled master. If
-     * any second enabled master is found it will be disabled and the user is notified with a
-     * warning dialog - depending on the silent-flag.
+     * Check the current selection (enabled DataComponentWrappers) for a just a single enabled
+     * master. If any second enabled master is found it will be disabled and the user is notified
+     * with a warning dialog - depending on the silent-flag.
      * 
      * @param silent
      *            if true, the warning dialog will be suppressed
-     * @param dataComponentEx
-     *            the DataComponentEx that is allowed to be the master or null
+     * @param dataComponentWrapper
+     *            the DataComponentWrapper that is allowed to be the master or null
      */
     public void checkForSingleEnabledMaster(final boolean silent,
-            final DataComponentEx dataComponentEx) {
+            final DataComponentWrapper dataComponentWrapper) {
         currentMaster = null;
-        if (dataComponentEx != null && dataComponentEx.isMaster() && dataComponentEx.isEnabled()) {
+        if (dataComponentWrapper != null && dataComponentWrapper.isMaster() && dataComponentWrapper.isEnabled()) {
             // preset NEW selection
-            currentMaster = dataComponentEx;
+            currentMaster = dataComponentWrapper;
         }
 
-        for (int c = 0; c < kIEMInstance.getDataComponentExList().size(); c++) {
-            DataComponentEx dataComponentTemp = kIEMInstance.getDataComponentExList().get(c);
+        for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
+            DataComponentWrapper dataComponentTemp = kIEMInstance.getDataComponentWrapperList()
+                    .get(c);
             dataComponentTemp.getDataComponent().masterSetKIEMInstances(null, null);
 
             if (dataComponentTemp.isMaster() && dataComponentTemp.isEnabled()
@@ -1754,12 +1761,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             OutputStream outputStream = uriConverter.createOutputStream(fileURI);
             ObjectOutputStream out = new ObjectOutputStream(outputStream);
 
-            out.writeObject(KiemPlugin.getDefault().getDataComponentExList());
+            out.writeObject(KiemPlugin.getDefault().getDataComponentWrapperList());
 
             out.close();
             outputStream.close();
-            KiemPlugin.getDefault().notifyEventListeners(currentFile,
-                    KiemEvent.SAVE);
+            KiemPlugin.getDefault().notifyEventListeners(currentFile, KiemEvent.SAVE);
         } catch (IOException e) {
             // TODO: error behavior
             e.printStackTrace();

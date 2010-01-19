@@ -20,12 +20,12 @@ import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.SWT;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 
 /**
- * The Class KiemComponentEditing. It handles the editing support for DataComponentExs in the
- * DataComponentExs table of the KiemView. It basically only allows the modification of the enabled
- * tag of a DataComponentEx.
+ * The Class KiemComponentEditing. It handles the editing support for DataComponentWrappers in the
+ * DataComponentWrappers table of the KiemView. It basically only allows the modification of the enabled
+ * tag of a DataComponentWrapper.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -111,16 +111,16 @@ public class KiemComponentEditing extends EditingSupport {
      */
     @Override
     protected Object getValue(final Object element) {
-        if (!(element instanceof DataComponentEx)) {
+        if (!(element instanceof DataComponentWrapper)) {
             return null;
         }
-        DataComponentEx dataComponentEx = (DataComponentEx) element;
+        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
 
         switch (this.columnIndex) {
         case 2:
             // only for the third column, return whether the component is
             // enabled
-            return dataComponentEx.isEnabled();
+            return dataComponentWrapper.isEnabled();
         default:
             break;
         }
@@ -136,13 +136,13 @@ public class KiemComponentEditing extends EditingSupport {
      */
     @Override
     protected void setValue(final Object element, final Object value) {
-        if (!(element instanceof DataComponentEx)) {
+        if (!(element instanceof DataComponentWrapper)) {
             return;
         }
-        DataComponentEx dataComponentEx = (DataComponentEx) element;
+        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
         switch (this.columnIndex) {
         case 2:
-            dataComponentEx.setEnabled((Boolean) value);
+            dataComponentWrapper.setEnabled((Boolean) value);
             break;
         default:
             break;
@@ -153,7 +153,7 @@ public class KiemComponentEditing extends EditingSupport {
         parent.setDirty(true);
         // check for a single enabled master, because we could just have
         // enabled a master where there may be already an enabled one
-        parent.checkForSingleEnabledMaster(false, dataComponentEx);
+        parent.checkForSingleEnabledMaster(false, dataComponentWrapper);
     }
 
 }

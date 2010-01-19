@@ -19,13 +19,13 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * The Class KiemContentProvider. This provides the content for the tree-table of DataComponentExs.
- * It decides based on the type (DataComponentEx or KiemProperty) what content has to be provided.
+ * The Class KiemContentProvider. This provides the content for the tree-table of DataComponentWrappers.
+ * It decides based on the type (DataComponentWrapper or KiemProperty) what content has to be provided.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -63,8 +63,8 @@ public class KiemContentProvider implements ITreeContentProvider {
      */
     public Object[] getChildren(final Object parentElement) {
         // only if component
-        DataComponentEx dataComponentEx = (DataComponentEx) parentElement;
-        return dataComponentEx.getProperties();
+        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) parentElement;
+        return dataComponentWrapper.getProperties();
     }
 
     // -------------------------------------------------------------------------
@@ -88,11 +88,11 @@ public class KiemContentProvider implements ITreeContentProvider {
         }
 
         // if component -> count properties
-        DataComponentEx dataComponentEx = (DataComponentEx) element;
-        if (dataComponentEx.getProperties() == null) {
+        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
+        if (dataComponentWrapper.getProperties() == null) {
             return false;
         }
-        return (dataComponentEx.getProperties().length > 0);
+        return (dataComponentWrapper.getProperties().length > 0);
     }
 
 }

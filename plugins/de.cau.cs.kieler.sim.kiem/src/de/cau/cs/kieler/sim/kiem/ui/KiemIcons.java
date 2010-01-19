@@ -20,7 +20,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * The Class KiemIcons. It provides all basic plug-in icons except the ones that are used by the
- * {@link de.cau.cs.kieler.sim.kiem.data.KiemPropertyType}s and are declared directly by those
+ * {@link de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType}s and are declared directly by those
  * types.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de

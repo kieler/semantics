@@ -19,12 +19,12 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import de.cau.cs.kieler.sim.kiem.Messages;
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 
 /**
- * The Class KiemLabelProvider provides the labels for the table of DataComponentExs in the
+ * The Class KiemLabelProvider provides the labels for the table of DataComponentWrappers in the
  * KiemView.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
@@ -83,29 +83,29 @@ public class KiemLabelProvider implements ITableLabelProvider {
         }
 
         // if component
-        DataComponentEx dataComponentEx = (DataComponentEx) element;
+        DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
         if (columnIndex == COLUMN_0) {
-            if (dataComponentEx.isProducerObserver()) {
+            if (dataComponentWrapper.isProducerObserver()) {
                 // producer
-                if (dataComponentEx.isEnabled()) {
+                if (dataComponentWrapper.isEnabled()) {
                     // enabled
                     return KiemIcons.PRODUCEROBSERVER_ENABLED;
                 } else {
                     // disabled
                     return KiemIcons.PRODUCEROBSERVER_DISABLED;
                 }
-            } else if (dataComponentEx.isProducer()) {
+            } else if (dataComponentWrapper.isProducer()) {
                 // producer
-                if (dataComponentEx.isEnabled()) {
+                if (dataComponentWrapper.isEnabled()) {
                     // enabled
                     return KiemIcons.PRODUCER_ENABLED;
                 } else {
                     // disabled
                     return KiemIcons.PRODUCER_DISABLED;
                 }
-            } else if (dataComponentEx.isObserver()) {
+            } else if (dataComponentWrapper.isObserver()) {
                 // Observer
-                if (dataComponentEx.isEnabled()) {
+                if (dataComponentWrapper.isEnabled()) {
                     // enabled
                     return KiemIcons.OBSERVER_ENABLED;
                 } else {
@@ -114,7 +114,7 @@ public class KiemLabelProvider implements ITableLabelProvider {
                 }
             } else {
                 // Observer
-                if (dataComponentEx.isEnabled()) {
+                if (dataComponentWrapper.isEnabled()) {
                     // enabled
                     return KiemIcons.INITCOMPONENT_ENABLED;
                 } else {
@@ -123,7 +123,7 @@ public class KiemLabelProvider implements ITableLabelProvider {
                 }
             }
         } else if (columnIndex == COLUMN_2) {
-            if (dataComponentEx.isEnabled()) {
+            if (dataComponentWrapper.isEnabled()) {
                 // enabled
                 if (parent.getKIEMInstance().getExecution() == null) {
                     return KiemIcons.CHECKED;
@@ -139,9 +139,9 @@ public class KiemLabelProvider implements ITableLabelProvider {
                 }
             }
         } else if (columnIndex == COLUMN_4) {
-            if (dataComponentEx.isMaster()) {
+            if (dataComponentWrapper.isMaster()) {
                 // enabled
-                if (dataComponentEx.isEnabled()) {
+                if (dataComponentWrapper.isEnabled()) {
                     return KiemIcons.CHECKEDPLAIN_MASTER;
                 } else {
                     return KiemIcons.CHECKEDPLAIN_DISABLED;
@@ -179,21 +179,21 @@ public class KiemLabelProvider implements ITableLabelProvider {
                 throw new RuntimeException("columnIndex out of bounds (6)");
             }
         } else {
-            DataComponentEx dataComponentEx = (DataComponentEx) element;
+            DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;
             switch (columnIndex) {
             case COLUMN_0: // NAME_COLUMN or KEY_COLUMN
-                return dataComponentEx.getName();
+                return dataComponentWrapper.getName();
             case COLUMN_1: // VALUE_COLUMN
                 return "";
             case COLUMN_2: // ENABLED_COLUMN
                 return "";
             case COLUMN_3: // TYPE_COLUMN
                 String type = "";
-                if (dataComponentEx.isProducerObserver()) {
+                if (dataComponentWrapper.isProducerObserver()) {
                     type = Messages.mObserverProducerDataComponent;
-                } else if (dataComponentEx.isProducer()) {
+                } else if (dataComponentWrapper.isProducer()) {
                     type = Messages.mProducerDataComponent;
-                } else if (dataComponentEx.isObserver()) {
+                } else if (dataComponentWrapper.isObserver()) {
                     type = Messages.mObserverDataComponent;
                 } else {
                     type = Messages.mInitializationDataComponent;

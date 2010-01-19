@@ -20,12 +20,12 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyType;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType;
 
 /**
  * The Class KiemPropertyEditing. It handles the editing support for KiemProperties in the
- * DataComponentExs table of the KiemView.
+ * DataComponentWrappers table of the KiemView.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -42,7 +42,7 @@ public class KiemPropertyEditing extends EditingSupport {
 
     /**
      * Instantiates a new KiemPropertyEditing for the tree. KiemProperty values are in the second
-     * column (index 1) of the tree-table of DataComponentExs where the first column (index 0) holds
+     * column (index 1) of the tree-table of DataComponentWrappers where the first column (index 0) holds
      * the KiemProperty key. Hence editing support for KiemProperties is only available for the
      * first, the value column. Otherwise an error is generated.
      * 
