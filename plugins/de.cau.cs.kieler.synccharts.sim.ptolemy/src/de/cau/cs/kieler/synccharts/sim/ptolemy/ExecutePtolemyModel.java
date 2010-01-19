@@ -20,8 +20,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +46,7 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser; //import ptolemy.actor.kiel.*;
 import ptolemy.data.expr.Parameter;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
 
 //import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
 
@@ -170,7 +171,24 @@ public class ExecutePtolemyModel {
         }
         return returnArray;
     }
+    
+    // -------------------------------------------------------------------------
 
+    public String[] getModelOutputAbsentSignals() {
+        int count = 0;
+        for (int c = 0; c < this.modelOutputList.size(); c++) {
+            if (!this.modelOutputList.get(c).present)
+                count++;
+        }
+        String[] returnArray = new String[count];
+        count = 0;
+        for (int c = 0; c < this.modelOutputList.size(); c++) {
+            if (!this.modelOutputList.get(c).present) {
+                returnArray[count++] = this.modelOutputList.get(c).signalName;
+            }
+        }
+        return returnArray;
+    }
     // -------------------------------------------------------------------------
 
     /**

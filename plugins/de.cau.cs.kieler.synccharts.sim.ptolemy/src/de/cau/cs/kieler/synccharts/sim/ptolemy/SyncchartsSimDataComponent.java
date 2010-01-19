@@ -61,18 +61,19 @@ import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 import org.eclipse.xtend.typesystem.emf.check.CheckEValidatorAdapter;
 import org.eclipse.emf.ecore.EValidator;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
+
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 
@@ -348,6 +349,22 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             }
         }
 
+        // get the output absent signals
+        String[] absentSignals = PTOEXE.getModelOutputAbsentSignals();
+        for (int c = 0; c < absentSignals.length; c++) {
+            String signalName = absentSignals[c];
+            System.out.println("Absent:" + signalName);
+            try {
+                JSONObject signalObject = JSONSignalValues.newValue(false);
+                try {
+                    returnObj.accumulate(signalName, signalObject);
+                } catch (Exception e) {
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        
         System.out.println(returnObj.toString());
 
         // the stateName is the second KIEM property
