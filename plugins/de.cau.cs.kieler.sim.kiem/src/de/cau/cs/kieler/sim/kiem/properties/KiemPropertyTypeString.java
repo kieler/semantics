@@ -47,7 +47,7 @@ public class KiemPropertyTypeString extends KiemPropertyType implements IKiemPro
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
-        return property.value;
+        return property.getValue();
     }
 
     // -------------------------------------------------------------------------

@@ -68,7 +68,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
-        return property.value;
+        return property.getValue();
     }
 
     // -------------------------------------------------------------------------

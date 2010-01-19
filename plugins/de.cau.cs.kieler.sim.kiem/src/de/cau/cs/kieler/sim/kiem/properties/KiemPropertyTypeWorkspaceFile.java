@@ -71,7 +71,7 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
-        return property.value;
+        return property.getValue();
     }
 
     // -------------------------------------------------------------------------
