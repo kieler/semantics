@@ -22,8 +22,8 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
