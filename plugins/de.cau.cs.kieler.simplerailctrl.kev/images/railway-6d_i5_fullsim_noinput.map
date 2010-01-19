@@ -1,0 +1,1565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://rtsys.informatik.uni-kiel.de/modelgui" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!--
+    <control port="0">
+       <textbox id="textbox"/>
+    </control>
+    -->
+    
+    <display port="303">
+        <opaque id="R0_KH_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="304">
+        <opaque id="R0_KH_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G0_KH_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="305">
+        <opaque id="R0_KH_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G0_KH_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="306">
+        <opaque id="R0_KH_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="307">
+        <opaque id="R0_KH_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="308">
+        <opaque id="R0_KH_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G0_KH_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="309">
+        <opaque id="R0_KH_LN_6" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G0_KH_LN_6" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="310">
+        <opaque id="R0_KH_LN_7" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_LN_7" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_LN_7" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="311">
+        <opaque id="R0_KH_LN_8" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G0_KH_LN_8" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="313">
+        <opaque id="R0_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="314">
+        <opaque id="R0_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="315">
+        <opaque id="R0_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="316">
+        <opaque id="R0_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="317">
+        <opaque id="R0_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="319">
+        <opaque id="R0_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="320">
+        <opaque id="R0_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y0_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G0_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+
+    <display port="338">
+        <opaque id="R1_IC_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IC_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="339">
+        <opaque id="R1_IC_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IC_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="340">
+        <opaque id="R1_IC_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IC_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="341">
+        <opaque id="R1_IC_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IC_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="342">
+        <opaque id="R1_IC_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IC_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IC_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="343">
+        <opaque id="R1_IC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="345">
+        <opaque id="R1_IC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="346">
+        <opaque id="R1_IC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="347">
+        <opaque id="R1_IC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="349">
+        <opaque id="R1_IO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="350">
+        <opaque id="R1_IO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_IO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="351">
+        <opaque id="R1_IO_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_IO_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_IO_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="352">
+        <opaque id="R1_KH_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_KH_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="353">
+        <opaque id="R1_KH_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_KH_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="354">
+        <opaque id="R1_KH_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="355">
+        <opaque id="R1_KH_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_KH_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="356">
+        <opaque id="R1_KH_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_KH_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="357">
+        <opaque id="R1_KH_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="358">
+        <opaque id="R1_KH_LN_6" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_LN_6" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_LN_6" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="359">
+        <opaque id="R1_KH_LN_7" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_KH_LN_7" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="360">
+        <opaque id="R1_KH_LN_8" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_LN_8" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_LN_8" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="362">
+        <opaque id="R1_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="363">
+        <opaque id="R1_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="364">
+        <opaque id="R1_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="365">
+        <opaque id="R1_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_ST_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="366">
+        <opaque id="R1_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KH_ST_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="368">
+        <opaque id="R1_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KIO_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="369">
+        <opaque id="R1_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_KIO_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="371">
+        <opaque id="R1_OC_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OC_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OC_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="372">
+        <opaque id="R1_OC_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OC_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="373">
+        <opaque id="R1_OC_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OC_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="374">
+        <opaque id="R1_OC_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OC_LN_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="375">
+        <opaque id="R1_OC_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OC_LN_4" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="376">
+        <opaque id="R1_OC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OC_LN_5" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="378">
+        <opaque id="R1_OC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OC_ST_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="379">
+        <opaque id="R1_OC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OC_ST_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="380">
+        <opaque id="R1_OC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OC_ST_3" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="382">
+        <opaque id="R1_OI_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OI_LN_0" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="383">
+        <opaque id="R1_OI_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="G1_OI_LN_1" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+    <display port="384">
+        <opaque id="R1_OI_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 1, 0.3, 0.3, 1, 1, 0.3, 1"/>
+        <opaque id="Y1_OI_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="G1_OI_LN_2" 
+	   input="simulation::S_OFF, simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 0.3, 1, 0.3, 1, 1, 1"/>
+    </display>
+
+    
+    <display port="385">
+        <opaque id="R0_KH_X" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.3"/>
+        <opaque id="Y0_KH_X" 
+	   input="simulation::S_OFF, simulation::S_RED,    simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+        <opaque id="R1_KH_X" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.3"/>
+        <opaque id="Y1_KH_X" 
+	   input="simulation::S_OFF, simulation::S_RED,    simulation::S_YELLOW, simulation::S_GREEN, simulation::S_YELLOW_RED, simulation::S_GREEN_RED, simulation::S_GREEN_YELLOW, simulation::S_GREEN_YELLOW_RED"
+	   opacity="0.3, 0.3, 1, 0.3, 1, 0.3, 1, 1"/>
+
+        <opaque id="bar1" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar2" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar3" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar4" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar5" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar6" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar7" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+        <opaque id="bar8" 
+	   input="simulation::S_RED, simulation::S_YELLOW, simulation::S_GREEN" opacity="1,  1, 0.2"/>
+    </display>
+
+    
+    <display port="0">
+        <move-path id="engine" input="1..100" path="IC_JCT_0"/>
+    </display>
+    <display port="48">
+        <move-path id="trailer" input="1..100" path="IC_JCT_0"/>
+    </display>
+    <display port="96">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_JCT_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="144">
+        <opaque id="t_IC_JCT_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_JCT_0"/>
+    </display>
+    <display port="192">
+        <opaque id="point_straight_0"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_0"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="240">
+        <textbox id="t_point_0"/>
+        <opaque id="t_point_0" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="1">
+        <move-path id="engine" input="1..100" path="IC_LN_0"/>
+    </display>
+    <display port="49">
+        <move-path id="trailer" input="1..100" path="IC_LN_0"/>
+    </display>
+    <display port="97">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="145">
+        <opaque id="t_IC_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_0"/>
+    </display>
+    <display port="193">
+        <opaque id="point_straight_1"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_1"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="241">
+        <textbox id="t_point_1"/>
+        <opaque id="t_point_1" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="2">
+        <move-path id="engine" input="1..100" path="IC_LN_1"/>
+    </display>
+    <display port="50">
+        <move-path id="trailer" input="1..100" path="IC_LN_1"/>
+    </display>
+    <display port="98">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="146">
+        <opaque id="t_IC_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_1"/>
+    </display>
+    <display port="194">
+        <opaque id="point_straight_2"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_2"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="242">
+        <textbox id="t_point_2"/>
+        <opaque id="t_point_2" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="3">
+        <move-path id="engine" input="1..100" path="IC_LN_2"/>
+    </display>
+    <display port="51">
+        <move-path id="trailer" input="1..100" path="IC_LN_2"/>
+    </display>
+    <display port="99">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="147">
+        <opaque id="t_IC_LN_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_2"/>
+    </display>
+    <display port="195">
+        <opaque id="point_straight_3"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_3"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="243">
+        <textbox id="t_point_3"/>
+        <opaque id="t_point_3" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="4">
+        <move-path id="engine" input="1..100" path="IC_LN_3"/>
+    </display>
+    <display port="52">
+        <move-path id="trailer" input="1..100" path="IC_LN_3"/>
+    </display>
+    <display port="100">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="148">
+        <opaque id="t_IC_LN_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_3"/>
+    </display>
+    <display port="196">
+        <opaque id="point_straight_4"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_4"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="244">
+        <textbox id="t_point_4"/>
+        <opaque id="t_point_4" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="5">
+        <move-path id="engine" input="1..100" path="IC_LN_4"/>
+    </display>
+    <display port="53">
+        <move-path id="trailer" input="1..100" path="IC_LN_4"/>
+    </display>
+    <display port="101">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="149">
+        <opaque id="t_IC_LN_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_4"/>
+    </display>
+    <display port="197">
+        <opaque id="point_straight_5"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_5"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="245">
+        <textbox id="t_point_5"/>
+        <opaque id="t_point_5" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="6">
+        <move-path id="engine" input="1..100" path="IC_LN_5"/>
+    </display>
+    <display port="54">
+        <move-path id="trailer" input="1..100" path="IC_LN_5"/>
+    </display>
+    <display port="102">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_LN_5" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="150">
+        <opaque id="t_IC_LN_5" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_LN_5"/>
+    </display>
+    <display port="198">
+        <opaque id="point_straight_6"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_6"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="246">
+        <textbox id="t_point_6"/>
+        <opaque id="t_point_6" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="7">
+        <move-path id="engine" input="1..100" path="IC_ST_0"/>
+    </display>
+    <display port="55">
+        <move-path id="trailer" input="1..100" path="IC_ST_0"/>
+    </display>
+    <display port="103">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_ST_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="151">
+        <opaque id="t_IC_ST_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_ST_0"/>
+    </display>
+    <display port="199">
+        <opaque id="point_straight_7"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_7"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="247">
+        <textbox id="t_point_7"/>
+        <opaque id="t_point_7" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="8">
+        <move-path id="engine" input="1..100" path="IC_ST_1"/>
+    </display>
+    <display port="56">
+        <move-path id="trailer" input="1..100" path="IC_ST_1"/>
+    </display>
+    <display port="104">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_ST_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="152">
+        <opaque id="t_IC_ST_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_ST_1"/>
+    </display>
+    <display port="200">
+        <opaque id="point_straight_8"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_8"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="248">
+        <textbox id="t_point_8"/>
+        <opaque id="t_point_8" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="9">
+        <move-path id="engine" input="1..100" path="IC_ST_2"/>
+    </display>
+    <display port="57">
+        <move-path id="trailer" input="1..100" path="IC_ST_2"/>
+    </display>
+    <display port="105">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_ST_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="153">
+        <opaque id="t_IC_ST_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_ST_2"/>
+    </display>
+    <display port="201">
+        <opaque id="point_straight_9"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_9"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="249">
+        <textbox id="t_point_9"/>
+        <opaque id="t_point_9" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="10">
+        <move-path id="engine" input="1..100" path="IC_ST_3"/>
+    </display>
+    <display port="58">
+        <move-path id="trailer" input="1..100" path="IC_ST_3"/>
+    </display>
+    <display port="106">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_ST_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="154">
+        <opaque id="t_IC_ST_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_ST_3"/>
+    </display>
+    <display port="202">
+        <opaque id="point_straight_10"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_10"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="250">
+        <textbox id="t_point_10"/>
+        <opaque id="t_point_10" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="11">
+        <move-path id="engine" input="1..100" path="IC_ST_4"/>
+    </display>
+    <display port="59">
+        <move-path id="trailer" input="1..100" path="IC_ST_4"/>
+    </display>
+    <display port="107">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IC_ST_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="155">
+        <opaque id="t_IC_ST_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IC_ST_4"/>
+    </display>
+    <display port="203">
+        <opaque id="point_straight_11"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_11"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="251">
+        <textbox id="t_point_11"/>
+        <opaque id="t_point_11" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="12">
+        <move-path id="engine" input="1..100" path="IO_LN_0"/>
+    </display>
+    <display port="60">
+        <move-path id="trailer" input="1..100" path="IO_LN_0"/>
+    </display>
+    <display port="108">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IO_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="156">
+        <opaque id="t_IO_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IO_LN_0"/>
+    </display>
+    <display port="204">
+        <opaque id="point_straight_12"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_12"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="252">
+        <textbox id="t_point_12"/>
+        <opaque id="t_point_12" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="13">
+        <move-path id="engine" input="1..100" path="IO_LN_1"/>
+    </display>
+    <display port="61">
+        <move-path id="trailer" input="1..100" path="IO_LN_1"/>
+    </display>
+    <display port="109">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IO_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="157">
+        <opaque id="t_IO_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IO_LN_1"/>
+    </display>
+    <display port="205">
+        <opaque id="point_straight_13"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_13"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="253">
+        <textbox id="t_point_13"/>
+        <opaque id="t_point_13" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="14">
+        <move-path id="engine" input="1..100" path="IO_LN_2"/>
+    </display>
+    <display port="62">
+        <move-path id="trailer" input="1..100" path="IO_LN_2"/>
+    </display>
+    <display port="110">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_IO_LN_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="158">
+        <opaque id="t_IO_LN_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_IO_LN_2"/>
+    </display>
+    <display port="206">
+        <opaque id="point_straight_14"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_14"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="254">
+        <textbox id="t_point_14"/>
+        <opaque id="t_point_14" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="15">
+        <move-path id="engine" input="1..100" path="KH_LN_0"/>
+    </display>
+    <display port="63">
+        <move-path id="trailer" input="1..100" path="KH_LN_0"/>
+    </display>
+    <display port="111">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="159">
+        <opaque id="t_KH_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_0"/>
+    </display>
+    <display port="207">
+        <opaque id="point_straight_15"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_15"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="255">
+        <textbox id="t_point_15"/>
+        <opaque id="t_point_15" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="16">
+        <move-path id="engine" input="1..100" path="KH_LN_1"/>
+    </display>
+    <display port="64">
+        <move-path id="trailer" input="1..100" path="KH_LN_1"/>
+    </display>
+    <display port="112">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="160">
+        <opaque id="t_KH_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_1"/>
+    </display>
+    <display port="208">
+        <opaque id="point_straight_16"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_16"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="256">
+        <textbox id="t_point_16"/>
+        <opaque id="t_point_16" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="17">
+        <move-path id="engine" input="1..100" path="KH_LN_2"/>
+    </display>
+    <display port="65">
+        <move-path id="trailer" input="1..100" path="KH_LN_2"/>
+    </display>
+    <display port="113">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="161">
+        <opaque id="t_KH_LN_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_2"/>
+    </display>
+    <display port="209">
+        <opaque id="point_straight_17"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_17"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="257">
+        <textbox id="t_point_17"/>
+        <opaque id="t_point_17" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="18">
+        <move-path id="engine" input="1..100" path="KH_LN_3"/>
+    </display>
+    <display port="66">
+        <move-path id="trailer" input="1..100" path="KH_LN_3"/>
+    </display>
+    <display port="114">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="162">
+        <opaque id="t_KH_LN_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_3"/>
+    </display>
+    <display port="210">
+        <opaque id="point_straight_18"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_18"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="258">
+        <textbox id="t_point_18"/>
+        <opaque id="t_point_18" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="19">
+        <move-path id="engine" input="1..100" path="KH_LN_4"/>
+    </display>
+    <display port="67">
+        <move-path id="trailer" input="1..100" path="KH_LN_4"/>
+    </display>
+    <display port="115">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="163">
+        <opaque id="t_KH_LN_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_4"/>
+    </display>
+    <display port="211">
+        <opaque id="point_straight_19"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_19"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="259">
+        <textbox id="t_point_19"/>
+        <opaque id="t_point_19" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="20">
+        <move-path id="engine" input="1..100" path="KH_LN_5"/>
+    </display>
+    <display port="68">
+        <move-path id="trailer" input="1..100" path="KH_LN_5"/>
+    </display>
+    <display port="116">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_5" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="164">
+        <opaque id="t_KH_LN_5" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_5"/>
+    </display>
+    <display port="212">
+        <opaque id="point_straight_20"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_20"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="260">
+        <textbox id="t_point_20"/>
+        <opaque id="t_point_20" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="21">
+        <move-path id="engine" input="1..100" path="KH_LN_6"/>
+    </display>
+    <display port="69">
+        <move-path id="trailer" input="1..100" path="KH_LN_6"/>
+    </display>
+    <display port="117">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_6" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="165">
+        <opaque id="t_KH_LN_6" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_6"/>
+    </display>
+    <display port="213">
+        <opaque id="point_straight_21"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_21"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="261">
+        <textbox id="t_point_21"/>
+        <opaque id="t_point_21" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="22">
+        <move-path id="engine" input="1..100" path="KH_LN_7"/>
+    </display>
+    <display port="70">
+        <move-path id="trailer" input="1..100" path="KH_LN_7"/>
+    </display>
+    <display port="118">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_7" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="166">
+        <opaque id="t_KH_LN_7" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_7"/>
+    </display>
+    <display port="214">
+        <opaque id="point_straight_22"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_22"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="262">
+        <textbox id="t_point_22"/>
+        <opaque id="t_point_22" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="23">
+        <move-path id="engine" input="1..100" path="KH_LN_8"/>
+    </display>
+    <display port="71">
+        <move-path id="trailer" input="1..100" path="KH_LN_8"/>
+    </display>
+    <display port="119">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_LN_8" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="167">
+        <opaque id="t_KH_LN_8" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_LN_8"/>
+    </display>
+    <display port="215">
+        <opaque id="point_straight_23"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_23"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="263">
+        <textbox id="t_point_23"/>
+        <opaque id="t_point_23" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="24">
+        <move-path id="engine" input="1..100" path="KH_ST_0"/>
+    </display>
+    <display port="72">
+        <move-path id="trailer" input="1..100" path="KH_ST_0"/>
+    </display>
+    <display port="120">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="168">
+        <opaque id="t_KH_ST_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_0"/>
+    </display>
+    <display port="216">
+        <opaque id="point_straight_24"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_24"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="264">
+        <textbox id="t_point_24"/>
+        <opaque id="t_point_24" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="25">
+        <move-path id="engine" input="1..100" path="KH_ST_1"/>
+    </display>
+    <display port="73">
+        <move-path id="trailer" input="1..100" path="KH_ST_1"/>
+    </display>
+    <display port="121">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="169">
+        <opaque id="t_KH_ST_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_1"/>
+    </display>
+    <display port="217">
+        <opaque id="point_straight_25"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_25"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="265">
+        <textbox id="t_point_25"/>
+        <opaque id="t_point_25" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="26">
+        <move-path id="engine" input="1..100" path="KH_ST_2"/>
+    </display>
+    <display port="74">
+        <move-path id="trailer" input="1..100" path="KH_ST_2"/>
+    </display>
+    <display port="122">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="170">
+        <opaque id="t_KH_ST_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_2"/>
+    </display>
+    <display port="218">
+        <opaque id="point_straight_26"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_26"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="266">
+        <textbox id="t_point_26"/>
+        <opaque id="t_point_26" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="27">
+        <move-path id="engine" input="1..100" path="KH_ST_3"/>
+    </display>
+    <display port="75">
+        <move-path id="trailer" input="1..100" path="KH_ST_3"/>
+    </display>
+    <display port="123">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="171">
+        <opaque id="t_KH_ST_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_3"/>
+    </display>
+    <display port="219">
+        <opaque id="point_straight_27"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_27"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="267">
+        <textbox id="t_point_27"/>
+        <opaque id="t_point_27" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="28">
+        <move-path id="engine" input="1..100" path="KH_ST_4"/>
+    </display>
+    <display port="76">
+        <move-path id="trailer" input="1..100" path="KH_ST_4"/>
+    </display>
+    <display port="124">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="172">
+        <opaque id="t_KH_ST_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_4"/>
+    </display>
+    <display port="220">
+        <opaque id="point_straight_28"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_28"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="268">
+        <textbox id="t_point_28"/>
+        <opaque id="t_point_28" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="29">
+        <move-path id="engine" input="1..100" path="KH_ST_5"/>
+    </display>
+    <display port="77">
+        <move-path id="trailer" input="1..100" path="KH_ST_5"/>
+    </display>
+    <display port="125">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_5" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="173">
+        <opaque id="t_KH_ST_5" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_5"/>
+    </display>
+    <display port="221">
+        <opaque id="point_straight_29"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="1, 0.3"/>
+        <opaque id="point_turn_29"
+            input="simulation::P_STRAIGHT, simulation::P_TURN" opacity="0.3, 1"/>
+    </display>
+    <display port="269">
+        <textbox id="t_point_29"/>
+        <opaque id="t_point_29" input="simulation::E_OK" opacity="0"/>
+    </display>
+    <display port="30">
+        <move-path id="engine" input="1..100" path="KH_ST_6"/>
+    </display>
+    <display port="78">
+        <move-path id="trailer" input="1..100" path="KH_ST_6"/>
+    </display>
+    <display port="126">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KH_ST_6" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="174">
+        <opaque id="t_KH_ST_6" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KH_ST_6"/>
+    </display>
+    <display port="31">
+        <move-path id="engine" input="1..100" path="KIO_LN_0"/>
+    </display>
+    <display port="79">
+        <move-path id="trailer" input="1..100" path="KIO_LN_0"/>
+    </display>
+    <display port="127">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KIO_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="175">
+        <opaque id="t_KIO_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KIO_LN_0"/>
+    </display>
+    <display port="32">
+        <move-path id="engine" input="1..100" path="KIO_LN_1"/>
+    </display>
+    <display port="80">
+        <move-path id="trailer" input="1..100" path="KIO_LN_1"/>
+    </display>
+    <display port="128">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_KIO_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="176">
+        <opaque id="t_KIO_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_KIO_LN_1"/>
+    </display>
+    <display port="33">
+        <move-path id="engine" input="1..100" path="OC_JCT_0"/>
+    </display>
+    <display port="81">
+        <move-path id="trailer" input="1..100" path="OC_JCT_0"/>
+    </display>
+    <display port="129">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_JCT_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="177">
+        <opaque id="t_OC_JCT_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_JCT_0"/>
+    </display>
+    <display port="34">
+        <move-path id="engine" input="1..100" path="OC_LN_0"/>
+    </display>
+    <display port="82">
+        <move-path id="trailer" input="1..100" path="OC_LN_0"/>
+    </display>
+    <display port="130">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="178">
+        <opaque id="t_OC_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_0"/>
+    </display>
+    <display port="35">
+        <move-path id="engine" input="1..100" path="OC_LN_1"/>
+    </display>
+    <display port="83">
+        <move-path id="trailer" input="1..100" path="OC_LN_1"/>
+    </display>
+    <display port="131">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="179">
+        <opaque id="t_OC_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_1"/>
+    </display>
+    <display port="36">
+        <move-path id="engine" input="1..100" path="OC_LN_2"/>
+    </display>
+    <display port="84">
+        <move-path id="trailer" input="1..100" path="OC_LN_2"/>
+    </display>
+    <display port="132">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="180">
+        <opaque id="t_OC_LN_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_2"/>
+    </display>
+    <display port="37">
+        <move-path id="engine" input="1..100" path="OC_LN_3"/>
+    </display>
+    <display port="85">
+        <move-path id="trailer" input="1..100" path="OC_LN_3"/>
+    </display>
+    <display port="133">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="181">
+        <opaque id="t_OC_LN_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_3"/>
+    </display>
+    <display port="38">
+        <move-path id="engine" input="1..100" path="OC_LN_4"/>
+    </display>
+    <display port="86">
+        <move-path id="trailer" input="1..100" path="OC_LN_4"/>
+    </display>
+    <display port="134">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="182">
+        <opaque id="t_OC_LN_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_4"/>
+    </display>
+    <display port="39">
+        <move-path id="engine" input="1..100" path="OC_LN_5"/>
+    </display>
+    <display port="87">
+        <move-path id="trailer" input="1..100" path="OC_LN_5"/>
+    </display>
+    <display port="135">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_LN_5" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="183">
+        <opaque id="t_OC_LN_5" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_LN_5"/>
+    </display>
+    <display port="40">
+        <move-path id="engine" input="1..100" path="OC_ST_0"/>
+    </display>
+    <display port="88">
+        <move-path id="trailer" input="1..100" path="OC_ST_0"/>
+    </display>
+    <display port="136">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_ST_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="184">
+        <opaque id="t_OC_ST_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_ST_0"/>
+    </display>
+    <display port="41">
+        <move-path id="engine" input="1..100" path="OC_ST_1"/>
+    </display>
+    <display port="89">
+        <move-path id="trailer" input="1..100" path="OC_ST_1"/>
+    </display>
+    <display port="137">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_ST_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="185">
+        <opaque id="t_OC_ST_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_ST_1"/>
+    </display>
+    <display port="42">
+        <move-path id="engine" input="1..100" path="OC_ST_2"/>
+    </display>
+    <display port="90">
+        <move-path id="trailer" input="1..100" path="OC_ST_2"/>
+    </display>
+    <display port="138">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_ST_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="186">
+        <opaque id="t_OC_ST_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_ST_2"/>
+    </display>
+    <display port="43">
+        <move-path id="engine" input="1..100" path="OC_ST_3"/>
+    </display>
+    <display port="91">
+        <move-path id="trailer" input="1..100" path="OC_ST_3"/>
+    </display>
+    <display port="139">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_ST_3" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="187">
+        <opaque id="t_OC_ST_3" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_ST_3"/>
+    </display>
+    <display port="44">
+        <move-path id="engine" input="1..100" path="OC_ST_4"/>
+    </display>
+    <display port="92">
+        <move-path id="trailer" input="1..100" path="OC_ST_4"/>
+    </display>
+    <display port="140">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OC_ST_4" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="188">
+        <opaque id="t_OC_ST_4" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OC_ST_4"/>
+    </display>
+    <display port="45">
+        <move-path id="engine" input="1..100" path="OI_LN_0"/>
+    </display>
+    <display port="93">
+        <move-path id="trailer" input="1..100" path="OI_LN_0"/>
+    </display>
+    <display port="141">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OI_LN_0" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="189">
+        <opaque id="t_OI_LN_0" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OI_LN_0"/>
+    </display>
+    <display port="46">
+        <move-path id="engine" input="1..100" path="OI_LN_1"/>
+    </display>
+    <display port="94">
+        <move-path id="trailer" input="1..100" path="OI_LN_1"/>
+    </display>
+    <display port="142">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OI_LN_1" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="190">
+        <opaque id="t_OI_LN_1" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OI_LN_1"/>
+    </display>
+    <display port="47">
+        <move-path id="engine" input="1..100" path="OI_LN_2"/>
+    </display>
+    <display port="95">
+        <move-path id="trailer" input="1..100" path="OI_LN_2"/>
+    </display>
+    <display port="143">
+        <colorize color="#ffffff, #00ff00, #ff0000, #000000"
+            color-property="stroke" id="b_OI_LN_2" input="simulation::M_OFF, simulation::M_PRIMARY, simulation::M_SECONDARY, simulation::M_BRAKE"/>
+    </display>
+    <display port="191">
+        <opaque id="t_OI_LN_2" input="simulation::E_OK" opacity="0"/>
+        <textbox id="t_OI_LN_2"/>
+    </display>
+</mapping>
