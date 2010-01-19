@@ -111,7 +111,7 @@ Your DataComponent may want to define properties that can be saved together with
                   The implementing class for this DataComponent.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent:de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.JSONStringDataComponent:de.cau.cs.kieler.sim.kiem.IJSONStringDataComponent"/>
                </appInfo>
             </annotation>
          </attribute>

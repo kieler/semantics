@@ -78,7 +78,7 @@ file in question as an Object of type IPath.
                   The implementing class for the Event Listener.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.extension.IKiemEventListener"/>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.IKiemEventListener"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -45,8 +45,6 @@ Take in mind that if your DataComponent is not both, an observer and a producer 
 &lt;BR&gt;&lt;BR&gt;
 Your DataComponent may want to define properties that can be saved together with the scheduling by the KIELER Execution Manager. For further information about properties and their usage please see the &lt;a href=&quot;&lt;BR&gt;
 &quot;&gt;official KIELER Wiki pages.&lt;/a&gt;
-
-
       </documentation>
    </annotation>
 
@@ -109,7 +107,7 @@ Your DataComponent may want to define properties that can be saved together with
                   The implementing class for this DataComponent.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent:de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent:de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -133,7 +131,7 @@ Your DataComponent may want to define properties that can be saved together with
          &lt;table width=&quot;80%&quot; border=&quot;1&quot; cellpadding=&quot;5&quot; bgcolor=&quot;#CCCCCC&quot;&gt;
   &lt;tr&gt; 
     &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;&amp;nbsp; 
-	
+ 
 /*&lt;BR&gt;
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
  *&lt;BR&gt;
@@ -443,12 +441,11 @@ public class DataComponent extends JSONObjectDataComponent implements&lt;BR&gt;
 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}&lt;BR&gt;
 &lt;BR&gt;
 }&lt;BR&gt;
-	
-	
+ 
+ 
       &lt;/font&gt;&lt;/td&gt;
   &lt;/tr&gt;
 &lt;/table&gt;
-
       </documentation>
    </annotation>
 

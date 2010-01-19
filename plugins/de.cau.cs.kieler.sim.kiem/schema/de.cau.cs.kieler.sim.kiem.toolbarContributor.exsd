@@ -74,7 +74,7 @@ been added.
                   The implementing class for the Toolbar Contributor.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.extension.IKiemToolbarContributor"/>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -84,7 +84,7 @@ implement the Serializable interface.
                   The implementing class for the Configuration Provider.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.extension.ConfigurationProvider"/>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:de.cau.cs.kieler.sim.kiem.ConfigurationProvider"/>
                </appInfo>
             </annotation>
          </attribute>
