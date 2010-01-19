@@ -33,6 +33,8 @@ import org.eclipse.ui.PlatformUI;
  * Utility class with static methods to handle EMF models and GEF EditParts.
  * 
  * @author haf
+ * 
+ * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
  */
 public final class ModelingUtil {
 
