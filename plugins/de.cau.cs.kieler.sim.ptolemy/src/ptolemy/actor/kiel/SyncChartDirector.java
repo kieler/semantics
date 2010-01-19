@@ -299,6 +299,8 @@ public class SyncChartDirector extends FixedPointDirector {
         		State currentState = modalModel.getController().currentState();
         		List realtionList = currentState.linkedRelationList();
         		
+        	System.out.println("ModalModel:"+modalModel.getName());
+        	
                 List transitionList = currentState.outgoingPort.linkedRelationList();
                 //List<Transition> enabledTransitions;
                 List<Transition> possiblyEnabledTransitions;

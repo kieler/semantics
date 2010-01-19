@@ -87,6 +87,7 @@
     <eLiterals name="POINT_27" value="26"/>
     <eLiterals name="POINT_28" value="27"/>
     <eLiterals name="POINT_29" value="28"/>
+    <eLiterals name="EEnumLiteral0" value="29"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="POSITION">
     <eLiterals name="FIRST"/>
@@ -118,8 +119,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//DIRECTION"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DIRECTION">
-    <eLiterals name="STRAIGHT"/>
     <eLiterals name="BRANCH" value="1"/>
+    <eLiterals name="STRAIGHT"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RailController">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
@@ -134,9 +135,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SIGNALCOLOR">
     <eLiterals name="RED" value="1"/>
+    <eLiterals name="OFF"/>
     <eLiterals name="GREEN" value="2"/>
     <eLiterals name="YELLOWGREEN" value="3"/>
-    <eLiterals name="OFF"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventOccupied" eSuperTypes="#//Transition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="track" upperBound="48"

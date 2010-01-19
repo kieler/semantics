@@ -41,153 +41,153 @@ public class SetSpeedItemProvider
 		IItemLabelProvider,
 		IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SetSpeedItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addTrackPropertyDescriptor(object);
-			addSpeedPropertyDescriptor(object);
-			addDirectionPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addTrackPropertyDescriptor(object);
+            addSpeedPropertyDescriptor(object);
+            addDirectionPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Track feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Track feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addTrackPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSpeed_track_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_track_feature", "_UI_SetSpeed_type"),
-				 SimplerailctrlPackage.Literals.SET_SPEED__TRACK,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSpeed_track_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_track_feature", "_UI_SetSpeed_type"),
+                 SimplerailctrlPackage.Literals.SET_SPEED__TRACK,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Speed feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Speed feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addSpeedPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSpeed_speed_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_speed_feature", "_UI_SetSpeed_type"),
-				 SimplerailctrlPackage.Literals.SET_SPEED__SPEED,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSpeed_speed_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_speed_feature", "_UI_SetSpeed_type"),
+                 SimplerailctrlPackage.Literals.SET_SPEED__SPEED,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Direction feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Direction feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addDirectionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSpeed_direction_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_direction_feature", "_UI_SetSpeed_type"),
-				 SimplerailctrlPackage.Literals.SET_SPEED__DIRECTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSpeed_direction_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSpeed_direction_feature", "_UI_SetSpeed_type"),
+                 SimplerailctrlPackage.Literals.SET_SPEED__DIRECTION,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This returns SetSpeed.gif.
-	 * <!-- begin-user-doc -->
+     * This returns SetSpeed.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SetSpeed"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SetSpeed"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		SetSpeed setSpeed = (SetSpeed)object;
-		return getString("_UI_SetSpeed_type") + " " + setSpeed.isInitial();
-	}
+        SetSpeed setSpeed = (SetSpeed)object;
+        return getString("_UI_SetSpeed_type") + " " + setSpeed.isInitial();
+    }
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+        updateChildren(notification);
 
-		switch (notification.getFeatureID(SetSpeed.class)) {
-			case SimplerailctrlPackage.SET_SPEED__TRACK:
-			case SimplerailctrlPackage.SET_SPEED__SPEED:
-			case SimplerailctrlPackage.SET_SPEED__DIRECTION:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
-		super.notifyChanged(notification);
-	}
+        switch (notification.getFeatureID(SetSpeed.class)) {
+            case SimplerailctrlPackage.SET_SPEED__TRACK:
+            case SimplerailctrlPackage.SET_SPEED__SPEED:
+            case SimplerailctrlPackage.SET_SPEED__DIRECTION:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
+        super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
 
 }

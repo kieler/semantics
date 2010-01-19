@@ -14,11 +14,12 @@
 
 package de.cau.cs.kieler.sim.syncsignalreset;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+
 import org.json.JSONObject;
 
 /**

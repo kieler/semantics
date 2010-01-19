@@ -31,13 +31,14 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.viewmanagement.RunLogic;

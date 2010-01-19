@@ -14,16 +14,17 @@
 
 package de.cau.cs.kieler.sim.abro;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -297,7 +298,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * (non-Javadoc)
      * 
      * @see
-     * de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(de.cau.cs.kieler.sim.kiem
+     * de.cau.cs.kieler.sim.kiem.internal.DataComponent#checkProperties(de.cau.cs.kieler.sim.kiem
      * .data.KiemProperty[])
      */
     @Override

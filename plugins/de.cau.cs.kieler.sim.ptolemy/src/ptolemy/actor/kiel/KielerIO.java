@@ -191,6 +191,10 @@ public class KielerIO extends TypedAtomicActor {
         if (present.getValueAsString().equals("true")) {
             signal.send(0, new IntToken(Integer.valueOf(value.getValueAsString())));
         }
+        else {
+            //else send clear because signal is absent
+            signal.sendClear(0);
+        }
         super.fire();
     }
 

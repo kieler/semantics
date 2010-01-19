@@ -20,9 +20,10 @@ import java.util.List;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.IJSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.internal.JSONStringDataComponent;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import de.cau.cs.kieler.sim.table.views.DataTableView;

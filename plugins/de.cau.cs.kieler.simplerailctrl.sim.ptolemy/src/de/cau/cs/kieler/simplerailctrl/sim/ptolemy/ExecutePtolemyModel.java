@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Manager;

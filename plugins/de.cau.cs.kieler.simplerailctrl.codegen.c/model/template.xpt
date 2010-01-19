@@ -12,10 +12,10 @@
  * See the file epl-v10.html for the license text.
  */
 
-ï¿½IMPORT simplerailctrlï¿½
+«IMPORT simplerailctrlï»
 
-ï¿½DEFINE main FOR RailController-ï¿½
-	ï¿½FILE "RailController.c"-ï¿½
+«DEFINE main FOR RailController-»
+	««FILE "RailController.c"»-»
 
 /* ==========================================================================
    
@@ -90,17 +90,17 @@ int ContactMem[48][2];      // arrays for saving contact/occupied
 int OccupiedMem[48];		// information during one macro tick
 
 
-ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-   ï¿½IF n.initial-ï¿½
-int localLOCKï¿½i.counter1-ï¿½ = 0;   
-   ï¿½ENDIF-ï¿½
-ï¿½ENDFOREACH-ï¿½
+«FOREACH nodes AS n ITERATOR i-»
+   «IF n.initial-»
+int localLOCK«i.counter1-» = 0;   
+   «ENDIF-»
+«ENDFOREACH-»
 
-ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-   ï¿½IF n.initial-ï¿½
-int localTERMINATEDï¿½i.counter1-ï¿½ = 0;   
-   ï¿½ENDIF-ï¿½
-ï¿½ENDFOREACH-ï¿½
+«FOREACH nodes AS n ITERATOR i-»
+   «IF n.initial-»
+int localTERMINATED«i.counter1-» = 0;   
+   «ENDIF-»
+«ENDFOREACH-»
 
 
 struct railway_system *railway;
@@ -173,16 +173,16 @@ void* ThreadFunctionMaster(void* port)
   int track;
   while (!MasterShutdown) {
    		//do not wait for terminated threads
-ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-   ï¿½IF n.initial-ï¿½
-   			if (localTERMINATEDï¿½i.counter1-ï¿½) {
-			   localLOCKï¿½i.counter1-ï¿½ = 1;   
+«FOREACH nodes AS n ITERATOR i-»
+   «IF n.initial-»
+   			if (localTERMINATED«i.counter1-») {
+			   localLOCK«i.counter1-» = 1;   
 			}
-   ï¿½ENDIF-ï¿½
-ï¿½ENDFOREACH-ï¿½
+   «ENDIF-»
+«ENDFOREACH-»
   
   		//wait for all localTicks to be increased
-  		if (ï¿½FOREACH nodes AS n ITERATOR i-ï¿½ï¿½IF n.initial-ï¿½(localLOCKï¿½i.counter1-ï¿½ == 1)&&ï¿½ENDIF-ï¿½ï¿½ENDFOREACH-ï¿½(1)) {
+  		if («FOREACH nodes AS n ITERATOR i-»«IF n.initial-»(localLOCK«i.counter1-» == 1)&&«ENDIF-»«ENDFOREACH-»(1)) {
 			//fill ContactMem and OccupiedMem array
 			for (track = 0; track < 48; track++) {
  			  ContactMem[track][0] = getcontact(railway,track,FIRST,1);
@@ -193,11 +193,11 @@ void* ThreadFunctionMaster(void* port)
   			//increase a tick counter (useless)
   			TICK++;
 			//if (DEBUGCONTROLLER) printf("TICK %d\n",TICK);
-ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-   ï¿½IF n.initial-ï¿½
-			localLOCKï¿½i.counter1-ï¿½ = 0;   
-   ï¿½ENDIF-ï¿½
-ï¿½ENDFOREACH-ï¿½
+«FOREACH nodes AS n ITERATOR i-»
+   «IF n.initial-»
+			localLOCK«i.counter1-» = 0;   
+   «ENDIF-»
+«ENDFOREACH-»
   		}//end if
 		usleep(1000); // sleep for 1ms
   }
@@ -205,15 +205,15 @@ void* ThreadFunctionMaster(void* port)
 }
  
  
-	ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-	   ï¿½IF n.initial-ï¿½
-void* ThreadFunctionï¿½i.counter1-ï¿½(void* port)
+	«FOREACH nodes AS n ITERATOR i-»
+	   «IF n.initial-»
+void* ThreadFunction«i.counter1-»(void* port)
 {
   int secondcounter = 0;
   int outtransition = 0;
-  int state = (int)(HASH("ï¿½n-ï¿½"));
+  int state = (int)(HASH("«n-»"));
   
-  if (DEBUGCONTROLLER) printf("Thread 'ï¿½i.toString()-ï¿½' started.\n");
+  if (DEBUGCONTROLLER) printf("Thread '«i.toString()-»' started.\n");
   
   while(1) {
       if (DEBUGCONTROLLER) printf("Entering state %d.\n",state);
@@ -226,118 +226,118 @@ void* ThreadFunctionï¿½i.counter1-ï¿½(void* port)
 	  
       //all states
       if (state == -1) {}
-	  ï¿½FOREACH nodes AS nn ITERATOR ii-ï¿½
-	  else if (state == ((int)(HASH("ï¿½nnï¿½")))) {
-	  		  P(ï¿½i.counter1-ï¿½); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d (ï¿½nn.toString()ï¿½) entered.\n",(int)(HASH("ï¿½nn-ï¿½")));
-	          ï¿½IF (nn.metaType.name.matches("simplerailctrl::SetSpeed"))-ï¿½
-	          //stateï¿½ii.counter1-ï¿½ entry code (SET SPEED)
-			  ï¿½FOREACH ((simplerailctrl::SetSpeed)nn).track AS t-ï¿½
-			  settrack(railway, ï¿½t-ï¿½, ï¿½((simplerailctrl::SetSpeed)nn).direction-ï¿½, ï¿½((simplerailctrl::SetSpeed)nn).speed-ï¿½);
-			  ï¿½IF((simplerailctrl::SetSpeed)nn).speed == 0-ï¿½
-			  	ï¿½IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, RED);
-		      	ï¿½ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, RED);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-			    ï¿½ELSE-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-		      	ï¿½ENDIF-ï¿½
-			  ï¿½ELSEIF((simplerailctrl::SetSpeed)nn).speed < 50-ï¿½
-			  	ï¿½IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, YELLOW);
-		      	ï¿½ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, YELLOW);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-			    ï¿½ELSE-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-		      	ï¿½ENDIF-ï¿½
-		      ï¿½ELSE-ï¿½
-			  	ï¿½IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, GREEN);
-		      	ï¿½ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, GREEN);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-			    ï¿½ELSE-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, FIRST, OFF);
-		      setsignal(railway, ï¿½t-ï¿½, SECOND, OFF);
-		      	ï¿½ENDIF-ï¿½
-		      ï¿½ENDIF-ï¿½
-			  ï¿½ENDFOREACH-ï¿½	          		
-	          ï¿½ENDIF-ï¿½
-	          ï¿½IF (nn.metaType.name.matches("simplerailctrl::SetSignal"))-ï¿½
-	          //stateï¿½ii.counter1-ï¿½ enty code (SET SIGNAL)
-			  ï¿½FOREACH ((simplerailctrl::SetSignal)nn).track AS t-ï¿½
-			  ï¿½FOREACH ((simplerailctrl::SetSignal)nn).position AS p-ï¿½
-		      setsignal(railway, ï¿½t-ï¿½, ï¿½p-ï¿½, ï¿½((simplerailctrl::SetSignal)nn).color-ï¿½);
-			  ï¿½ENDFOREACH-ï¿½	          		
-			  ï¿½ENDFOREACH-ï¿½	          		
-	          ï¿½ENDIF-ï¿½
-	          ï¿½IF (nn.metaType.name.matches("simplerailctrl::SetPoint"))-ï¿½
-	          //stateï¿½ii.counter1-ï¿½ enty code (SET POINT)
-			  ï¿½FOREACH ((simplerailctrl::SetPoint)nn).point AS p-ï¿½
-			  setpoint(railway,  ï¿½p-ï¿½, ï¿½((simplerailctrl::SetPoint)nn).direction-ï¿½);
-			  ï¿½ENDFOREACH-ï¿½	          		
-	          ï¿½ENDIF-ï¿½
-	  		  V(ï¿½i.counter1-ï¿½); // RELEASE THE GLOBALLOCK
+	  «FOREACH nodes AS nn ITERATOR ii-»
+	  else if (state == ((int)(HASH("«nn«")))) {
+	  		  P(«i.counter1-»); // GET THE GLOBALLOCK
+              if (DEBUGCONTROLLER) printf("State %d («nn.toString()«) entered.\n",(int)(HASH("«nn-»")));
+	          «IF (nn.metaType.name.matches("simplerailctrl::SetSpeed"))-»
+	          //state«ii.counter1-» entry code (SET SPEED)
+			  «FOREACH ((simplerailctrl::SetSpeed)nn).track AS t-»
+			  settrack(railway, «t-», «((simplerailctrl::SetSpeed)nn).direction-», «((simplerailctrl::SetSpeed)nn).speed-»);
+			  «IF((simplerailctrl::SetSpeed)nn).speed == 0-»
+			  	«IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, RED);
+		      	«ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-»
+		      setsignal(railway, «t-», FIRST, RED);
+		      setsignal(railway, «t-», SECOND, OFF);
+			    «ELSE-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, OFF);
+		      	«ENDIF-»
+			  «ELSEIF((simplerailctrl::SetSpeed)nn).speed < 50-»
+			  	«IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, YELLOW);
+		      	«ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-»
+		      setsignal(railway, «t-», FIRST, YELLOW);
+		      setsignal(railway, «t-», SECOND, OFF);
+			    «ELSE-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, OFF);
+		      	«ENDIF-»
+		      «ELSE-»
+			  	«IF((simplerailctrl::SetSpeed)nn).direction.toString() == 'FWD'-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, GREEN);
+		      	«ELSEIF((simplerailctrl::SetSpeed)nn).direction.toString() == 'REV'-»
+		      setsignal(railway, «t-», FIRST, GREEN);
+		      setsignal(railway, «t-», SECOND, OFF);
+			    «ELSE-»
+		      setsignal(railway, «t-», FIRST, OFF);
+		      setsignal(railway, «t-», SECOND, OFF);
+		      	«ENDIF-»
+		      «ENDIF-»
+			  «ENDFOREACH-»	          		
+	          «ENDIF-»
+	          «IF (nn.metaType.name.matches("simplerailctrl::SetSignal"))-»
+	          //state«ii.counter1-» enty code (SET SIGNAL)
+			  «FOREACH ((simplerailctrl::SetSignal)nn).track AS t-»
+			  «FOREACH ((simplerailctrl::SetSignal)nn).position AS p-»
+		      setsignal(railway, «t-», «p-», «((simplerailctrl::SetSignal)nn).color-»);
+			  «ENDFOREACH-»	          		
+			  «ENDFOREACH-»	          		
+	          «ENDIF-»
+	          «IF (nn.metaType.name.matches("simplerailctrl::SetPoint"))-»
+	          //state«ii.counter1-» enty code (SET POINT)
+			  «FOREACH ((simplerailctrl::SetPoint)nn).point AS p-»
+			  setpoint(railway,  «p-», «((simplerailctrl::SetPoint)nn).direction-»);
+			  «ENDFOREACH-»	          		
+	          «ENDIF-»
+	  		  V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	  		  
 	          
-	          //stateï¿½ii.counter1-ï¿½ transitions code
+	          //state«ii.counter1-» transitions code
 	          secondcounter = 0;
 	          while(1) {
-		   		    P(ï¿½i.counter1-ï¿½); // GET THE GLOBALLOCK
+		   		    P(«i.counter1-»); // GET THE GLOBALLOCK
 	                outtransition = 0;
 		            if ((DEBUGCONTROLLER)&&(!(secondcounter%10))) printf("Transition wait (%d seconds).\n",secondcounter/10);
-			  		ï¿½FOREACH (nn).outTransitions AS ot-ï¿½
+			  		«FOREACH (nn).outTransitions AS ot-»
 			  		outtransition = 1;
-	          		ï¿½IF (ot.metaType.name.matches("simplerailctrl::EventWait"))-ï¿½
+	          		«IF (ot.metaType.name.matches("simplerailctrl::EventWait"))-»
 	          		//test for wait-events
-			  		if (secondcounter/10 >= ï¿½((simplerailctrl::EventWait)ot).secondsï¿½) {
-			  		    V(ï¿½i.counter1-ï¿½); // RELEASE THE GLOBALLOCK
+			  		if (secondcounter/10 >= «((simplerailctrl::EventWait)ot).seconds«) {
+			  		    V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Wait-Transition taken.\n");
-			  			state = HASH("ï¿½((simplerailctrl::EventWait)ot).destination-ï¿½");
+			  			state = HASH("«((simplerailctrl::EventWait)ot).destination-»");
 			  			break;
 			  		}
 			  		
-	          		ï¿½ENDIF-ï¿½
-	          		ï¿½IF (ot.metaType.name.matches("simplerailctrl::EventContact"))-ï¿½
+	          		«ENDIF-»
+	          		«IF (ot.metaType.name.matches("simplerailctrl::EventContact"))-»
 	          		//test for contact-events
-			  		if ((getcontact_sync(railway,ï¿½((simplerailctrl::EventContact)ot).trackï¿½,ï¿½((simplerailctrl::EventContact)ot).positionï¿½,1) != 0)) {
-			  		    V(ï¿½i.counter1-ï¿½); // RELEASE THE GLOBALLOCK
+			  		if ((getcontact_sync(railway,«((simplerailctrl::EventContact)ot).track«,«((simplerailctrl::EventContact)ot).position«,1) != 0)) {
+			  		    V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Event-Transition taken.\n");
-			  			state = HASH("ï¿½((simplerailctrl::EventWait)ot).destination-ï¿½");
+			  			state = HASH("«((simplerailctrl::EventWait)ot).destination-»");
 			  			break;
 			  		}
-	          		ï¿½ENDIF-ï¿½
-	          		ï¿½IF (ot.metaType.name.matches("simplerailctrl::EventOccupied"))-ï¿½
+	          		«ENDIF-»
+	          		«IF (ot.metaType.name.matches("simplerailctrl::EventOccupied"))-»
 	          			//test for occupied-events
-			       		ï¿½IF (((simplerailctrl::EventOccupied)ot).condition.toString() == 'IF') -ï¿½
-				       		ï¿½IF (((simplerailctrl::EventOccupied)ot).conjunction.toString() == 'AND') -ï¿½
-						if ((ï¿½FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '&&'-ï¿½(trackused(railway,ï¿½t-ï¿½) != 0)ï¿½ENDFOREACH-ï¿½
-					        ï¿½ELSE-ï¿½
-						if (!(ï¿½FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '||'-ï¿½(trackused(railway,ï¿½t-ï¿½) != 0)ï¿½ENDFOREACH-ï¿½
-					        ï¿½ENDIF-ï¿½
-			          	ï¿½ELSE-ï¿½
-				       		ï¿½IF (((simplerailctrl::EventOccupied)ot).conjunction.toString() == 'AND') -ï¿½
-						if (!(ï¿½FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '&&'-ï¿½(trackused(railway,ï¿½t-ï¿½) != 0)ï¿½ENDFOREACH-ï¿½
-					        ï¿½ELSE-ï¿½
-						if (!(ï¿½FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '||'-ï¿½(trackused(railway,ï¿½t-ï¿½) != 0)ï¿½ENDFOREACH-ï¿½
-					        ï¿½ENDIF-ï¿½
-			          	ï¿½ENDIF-ï¿½)) {
-				  		    V(ï¿½i.counter1-ï¿½); // RELEASE THE GLOBALLOCK
+			       		«IF (((simplerailctrl::EventOccupied)ot).condition.toString() == 'IF') -»
+				       		«IF (((simplerailctrl::EventOccupied)ot).conjunction.toString() == 'AND') -»
+						if ((«FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '&&'-»(trackused(railway,«t-») != 0)«ENDFOREACH-»
+					        «ELSE-»
+						if (!(«FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '||'-»(trackused(railway,«t-») != 0)«ENDFOREACH-»
+					        «ENDIF-»
+			          	«ELSE-»
+				       		«IF (((simplerailctrl::EventOccupied)ot).conjunction.toString() == 'AND') -»
+						if (!(«FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '&&'-»(trackused(railway,«t-») != 0)«ENDFOREACH-»
+					        «ELSE-»
+						if (!(«FOREACH ((simplerailctrl::EventOccupied)ot).track AS t SEPARATOR '||'-»(trackused(railway,«t-») != 0)«ENDFOREACH-»
+					        «ENDIF-»
+			          	«ENDIF-»)) {
+				  		    V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	 	                	if (DEBUGCONTROLLER) printf("Occupied-Transition taken.\n");
-			  				state = HASH("ï¿½((simplerailctrl::EventOccupied)ot).destination-ï¿½");
+			  				state = HASH("«((simplerailctrl::EventOccupied)ot).destination-»");
 			  				break;
 			  		}
 			  		
-	          		ï¿½ENDIF-ï¿½
-			  		ï¿½ENDFOREACH-ï¿½
-	  		  		V(ï¿½i.counter1-ï¿½); // RELEASE THE GLOBALLOCK
+	          		«ENDIF-»
+			  		«ENDFOREACH-»
+	  		  		V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 			  			          		
 	                //escape if railway system is down
                     if (!railway_alive(railway)) {
@@ -349,7 +349,7 @@ void* ThreadFunctionï¿½i.counter1-ï¿½(void* port)
                     if (!outtransition) {
 	 	                if (DEBUGCONTROLLER) printf("Final state - terminating thread.\n");
 						//set localTERMINATED := 1 (so that we not wait on this thread in any next macro-tick any more)
-		          		localTERMINATEDï¿½i.counter1-ï¿½ = 1;   
+		          		localTERMINATED«i.counter1-» = 1;   
 						return (void *)1;
                     }//end if
                     	          
@@ -357,24 +357,24 @@ void* ThreadFunctionï¿½i.counter1-ï¿½(void* port)
 				usleep(100000); // sleep for 100ms
 					
 					//set localLOCK := 1 and wait for its reset
-	          		localLOCKï¿½i.counter1-ï¿½ = 1;   
-	          		while (localLOCKï¿½i.counter1-ï¿½ == 1){
+	          		localLOCK«i.counter1-» = 1;   
+	          		while (localLOCK«i.counter1-» == 1){
 		                    if (!railway_alive(railway)) {
 	 			                if (DEBUGCONTROLLER) printf("Railway system down - terminating thread.\n");
 						    	exit(EXIT_FAILURE);
                     		}//end if
 							usleep(5000); // sleep for 5ms
-							//if (DEBUGCONTROLLER) printf("Thread ï¿½i.counter1-ï¿½ waiting for next tick.\n");
+							//if (DEBUGCONTROLLER) printf("Thread «i.counter1-» waiting for next tick.\n");
 	          		}//end while
 	          		
 	          }//end while
 	      }//end if
 	      
-	  ï¿½ENDFOREACH-ï¿½
+	  «ENDFOREACH-»
   }//end while
 }	
-	   ï¿½ENDIF-ï¿½
-	ï¿½ENDFOREACH-ï¿½
+	   «ENDIF-»
+	«ENDFOREACH-»
 
 
 int main() {
@@ -400,19 +400,19 @@ int main() {
     pthread_create (&ThreadMaster, NULL, &ThreadFunctionMaster, NULL);
     
     //start concurrent threads of controllers
-	ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-	   ï¿½IF n.initial-ï¿½
-    pthread_t Threadï¿½i.counter1-ï¿½;
-    pthread_create (&Threadï¿½i.counter1-ï¿½, NULL, &ThreadFunctionï¿½i.counter1-ï¿½, NULL);
-	   ï¿½ENDIF-ï¿½
-	ï¿½ENDFOREACH-ï¿½
+	«FOREACH nodes AS n ITERATOR i-»
+	   «IF n.initial-»
+    pthread_t Thread«i.counter1-»;
+    pthread_create (&Thread«i.counter1-», NULL, &ThreadFunction«i.counter1-», NULL);
+	   «ENDIF-»
+	«ENDFOREACH-»
  
     //wait for concurrent controller threads
-	ï¿½FOREACH nodes AS n ITERATOR i-ï¿½
-	   ï¿½IF n.initial-ï¿½
-    pthread_join( Threadï¿½i.counter1-ï¿½, NULL ); 
-	   ï¿½ENDIF-ï¿½
-	ï¿½ENDFOREACH-ï¿½
+	«FOREACH nodes AS n ITERATOR i-»
+	   «IF n.initial-»
+    pthread_join( Thread«i.counter1-», NULL ); 
+	   «ENDIF-»
+	«ENDFOREACH-»
 	
 	//shutdown master thread
 	MasterShutdown = 1;
@@ -437,5 +437,5 @@ int main() {
     return 1;
 }
 
-ï¿½ENDFILE-ï¿½
-ï¿½ENDDEFINEï¿½
+«ENDFILE-»
+«ENDDEFINE»

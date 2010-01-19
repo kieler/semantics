@@ -41,153 +41,153 @@ public class SetSignalItemProvider
 		IItemLabelProvider,
 		IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SetSignalItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addTrackPropertyDescriptor(object);
-			addPositionPropertyDescriptor(object);
-			addColorPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addTrackPropertyDescriptor(object);
+            addPositionPropertyDescriptor(object);
+            addColorPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Track feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Track feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addTrackPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSignal_track_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_track_feature", "_UI_SetSignal_type"),
-				 SimplerailctrlPackage.Literals.SET_SIGNAL__TRACK,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSignal_track_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_track_feature", "_UI_SetSignal_type"),
+                 SimplerailctrlPackage.Literals.SET_SIGNAL__TRACK,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Position feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Position feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addPositionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSignal_position_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_position_feature", "_UI_SetSignal_type"),
-				 SimplerailctrlPackage.Literals.SET_SIGNAL__POSITION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSignal_position_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_position_feature", "_UI_SetSignal_type"),
+                 SimplerailctrlPackage.Literals.SET_SIGNAL__POSITION,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Color feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Color feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addColorPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SetSignal_color_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_color_feature", "_UI_SetSignal_type"),
-				 SimplerailctrlPackage.Literals.SET_SIGNAL__COLOR,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_SetSignal_color_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SetSignal_color_feature", "_UI_SetSignal_type"),
+                 SimplerailctrlPackage.Literals.SET_SIGNAL__COLOR,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This returns SetSignal.gif.
-	 * <!-- begin-user-doc -->
+     * This returns SetSignal.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SetSignal"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SetSignal"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		SetSignal setSignal = (SetSignal)object;
-		return getString("_UI_SetSignal_type") + " " + setSignal.isInitial();
-	}
+        SetSignal setSignal = (SetSignal)object;
+        return getString("_UI_SetSignal_type") + " " + setSignal.isInitial();
+    }
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+        updateChildren(notification);
 
-		switch (notification.getFeatureID(SetSignal.class)) {
-			case SimplerailctrlPackage.SET_SIGNAL__TRACK:
-			case SimplerailctrlPackage.SET_SIGNAL__POSITION:
-			case SimplerailctrlPackage.SET_SIGNAL__COLOR:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
-		super.notifyChanged(notification);
-	}
+        switch (notification.getFeatureID(SetSignal.class)) {
+            case SimplerailctrlPackage.SET_SIGNAL__TRACK:
+            case SimplerailctrlPackage.SET_SIGNAL__POSITION:
+            case SimplerailctrlPackage.SET_SIGNAL__COLOR:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
+        super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
 
 }

@@ -42,13 +42,8 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
 
@@ -80,16 +75,15 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 import org.eclipse.emf.common.util.URI;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -384,10 +378,11 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
      * .json.JSONObject)
      */
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
-        long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+        long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
+                .getTimeStamp();
         // check the dirty state of the editor containing the simulated model
-        if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty()) 
-                                    && !simulatingOldModelVersion) {
+        if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty())
+                && !simulatingOldModelVersion) {
             // remember that we warned the user (do this only once)
             simulatingOldModelVersion = true;
             // warn the user
