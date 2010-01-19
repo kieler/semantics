@@ -43,7 +43,7 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
     private static final int MAX = 100;
     private static final int MIN = 0;
     private static final int STEP = 5;
-    
+
     public Elevator() {
         // TODO Auto-generated constructor stub
     }
@@ -54,14 +54,14 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
         try {
             // Handle outputs
             if (jSONObject.has("MoveUp") && (JSONSignalValues.isPresent(jSONObject.get("MoveUp")))) {
-                pos+=STEP;
+                pos += STEP;
                 if (pos > MAX)
                     pos = MAX;
             }
             if (jSONObject.has("MoveDown")
                     && (JSONSignalValues.isPresent(jSONObject.get("MoveDown")))) {
 
-                pos-=STEP;
+                pos -= STEP;
                 if (pos < MIN)
                     pos = MIN;
             }
@@ -84,15 +84,19 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
                     && (JSONSignalValues.isPresent(jSONObject.get("AlarmLamp"))));
 
             // visualize inputs
-            result.accumulate("button_alarm", JSONSignalValues.newValue(jSONObject
-                    .has("ButtonAlarm")
-                    && JSONSignalValues.isPresent(jSONObject.get("ButtonAlarm"))));
+            result.accumulate("button_alarm", jSONObject.has("ButtonAlarm")
+                    && JSONSignalValues.isPresent(jSONObject.get("ButtonAlarm")));
 
-            result.accumulate("button_alarm", jSONObject.has("ButtonUp")
+            result.accumulate("button_up", jSONObject.has("ButtonUp")
                     && (JSONSignalValues.isPresent(jSONObject.get("ButtonUp"))));
 
-            result.accumulate("button_alarm", jSONObject.has("ButtonDown")
+            result.accumulate("button_down", jSONObject.has("ButtonDown")
                     && (JSONSignalValues.isPresent(jSONObject.get("ButtonDown"))));
+
+            result.accumulate("signal_up", jSONObject.has("MoveUp")
+                    && (JSONSignalValues.isPresent(jSONObject.get("MoveUp"))));
+            result.accumulate("signal_down", jSONObject.has("MoveDown")
+                    && (JSONSignalValues.isPresent(jSONObject.get("MoveDown"))));
 
             // generate inputs
             result.accumulate("IsUp", JSONSignalValues.newValue(pos == MAX));
@@ -143,7 +147,7 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
      */
     public void initialize() throws KiemInitializationException {
         pos = 0;
-
+        doorOpen = false;
     }
 
 }
