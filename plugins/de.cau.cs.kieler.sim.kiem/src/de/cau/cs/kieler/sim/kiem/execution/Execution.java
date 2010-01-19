@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
