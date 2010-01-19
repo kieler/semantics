@@ -1765,7 +1765,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
             out.close();
             outputStream.close();
-            KiemPlugin.getDefault().notifyEventListeners(currentFile, KiemEvent.SAVE);
+            
+            if (KiemPlugin.getDefault().getEventManager() != null) {
+                    KiemPlugin.getDefault().getEventManager().notify(new KiemEvent(KiemEvent.SAVE, currentFile));
+            }
         } catch (IOException e) {
             // TODO: error behavior
             e.printStackTrace();

@@ -318,42 +318,13 @@ public class KiemPlugin extends AbstractUIPlugin {
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
                     kIEMViewInstance.getAimedStepDurationTextField().update();
                     if (loadSuccessful) {
-                        notifyEventListeners(executionFile, KiemEvent.LOAD);
+                        if (eventManager != null) {
+                            eventManager.notify(new KiemEvent(KiemEvent.LOAD, executionFile));
+                        }
                     }
                 }
             }
         });
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Notify all event listeners that something happened.
-     * 
-     * author: soh
-     * 
-     * @param info
-     *            the info for the event
-     * @param eventNumber
-     *            the number of the event, found in KiemEvent
-     */
-    public void notifyEventListeners(final Object info, final int eventNumber) {
-        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.eventListener");
-
-        KiemEvent event = new KiemEvent(eventNumber, info);
-
-        for (IConfigurationElement element : contributors) {
-            try {
-                IKiemEventListener contributor = (IKiemEventListener) (element
-                        .createExecutableExtension("class"));
-                contributor.eventDispatched(event);
-            } catch (CoreException e0) {
-                // class attribute not found, throw exception and
-                // proceed with next listener
-                e0.printStackTrace();
-            }
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -1065,7 +1036,19 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
     }
-
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the single EventManager that handles notification of DataComponents
+     * when KiemEvents occur.
+     * 
+     * @return the event manager
+     */
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
