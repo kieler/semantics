@@ -27,7 +27,7 @@ public abstract class JSONStringDataComponent extends AbstractDataComponent impl
         IJSONStringDataComponent {
 
     /** The global initial variables as JSON Strings. */
-    String globalInitialVariables;
+    private String globalInitialVariables;
 
     // -------------------------------------------------------------------------
 

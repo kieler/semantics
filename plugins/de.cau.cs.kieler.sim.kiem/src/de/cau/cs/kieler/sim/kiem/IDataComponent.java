@@ -14,8 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem;
 
-import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
-
 /**
  * The Interface IDataComponent that a {@link AbstractDataComponent} implements.
  * 

@@ -42,7 +42,7 @@ public final class DataPoolTestApplication {
      *            the args
      */
     public static void main(final String[] args) {
-        String[] filter = null;// {"key01","key03","key05","key07"};
+        String[] filter = null; // {"key01","key03","key05","key07"};
 
         try {
             JSONDataPool dataPool = new JSONDataPool();

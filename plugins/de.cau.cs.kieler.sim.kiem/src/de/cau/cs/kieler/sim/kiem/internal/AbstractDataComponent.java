@@ -343,8 +343,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * calling the {@link #getInterfaceKeys()} method. <BR>
      * <BR>
      * <B>DEPRECATED: Use
-     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#provideInitialVariables()}
-     * or
+     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#provideInitialVariables()} or
      * {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#provideInitialVariables()}
      * instead!</B>
      * 
@@ -365,9 +364,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * initialization phase. <BR>
      * <BR>
      * <B>DEPRECATED: Use
-     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
-     * or
-     * {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables 
+     * (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
+     * or {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)}
      * instead!</B>
      * 
      * @param globalInterfaceKeysParam
@@ -447,8 +446,8 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if component is a delta observer. Delta values are all changed values that exist in the
-     * present tick (and in the past ticks when this component may have been skipped).<BR>
+     * Checks if component is a delta observer. Delta values are all changed values that exist in
+     * the present tick (and in the past ticks when this component may have been skipped).<BR>
      * If a component wants all (accumulated & updated) values of the present tick, it should return
      * false.<BR>
      * <BR>
@@ -488,7 +487,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * *EVERY* component's isPauseFlag() returns false! Also the step() function will never get
      * called again! Be careful when implementing side effects in this method!
      * 
-     * <BR><BR><B>DEPRECATED: use KiemExecutionException mustPause flag instead!</B>
+     * <BR>
+     * <BR>
+     * <B>DEPRECATED: use KiemExecutionException mustPause flag instead!</B>
      * 
      * @return true, if is pause flag
      */

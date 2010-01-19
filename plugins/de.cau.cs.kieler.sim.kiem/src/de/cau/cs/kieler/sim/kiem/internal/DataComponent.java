@@ -328,9 +328,9 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * initialization phase. <BR>
      * <BR>
      * <B>DEPRECATED: Use
-     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
-     * or
-     * {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)}
+     * {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent#setInitialVariables
+     *  (de.cau.cs.kieler.sim.kiem.json.JSONObject)}
+     * or {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent#setInitialVariables(String)}
      * instead!</B>
      * 
      * @param globalInterfaceKeysParam
