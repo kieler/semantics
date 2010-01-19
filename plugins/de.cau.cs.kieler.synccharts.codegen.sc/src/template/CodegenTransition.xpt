@@ -21,9 +21,6 @@
 	«ENDIF-»
 	«IF this.type == TransitionType::STRONGABORT-»
 	«ENDIF-»
-	«IF (this.sourceState.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT) && this.sourceState.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT))-»
-		«EXPAND computePrio FOR this-»
-	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
