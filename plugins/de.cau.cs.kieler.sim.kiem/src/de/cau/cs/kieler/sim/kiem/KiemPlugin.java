@@ -40,6 +40,7 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.sim.kiem.execution.EventManager;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -110,6 +111,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The KIEM view instance. */
     private KiemView kIEMViewInstance;
 
+    /** The event manager to handle notification of DataComponents. */
+    private EventManager eventManager;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -122,13 +126,29 @@ public class KiemPlugin extends AbstractUIPlugin {
     public KiemPlugin() {
         dataComponentList = this.getDataComponentList();
         dataComponentWrapperList = getDefaultComponentWrapperList();
+        updateEventManager();
         execution = null;
         aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
         kIEMViewInstance = null;
+
+        // create and fill the event manager
+        eventManager = new EventManager();
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Update event manager's DataComponentWrapper list.
+     */
+    public void updateEventManager() {
+        for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+            DataComponentWrapper dataComponentWrapper = this.dataComponentWrapperList.get(c);
+            eventManager.add(dataComponentWrapper);
+        }
+    }
 
+    // -------------------------------------------------------------------------
+    
     /**
      * Sets the execution.
      * 
@@ -620,6 +640,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 } // end if
             } // next cc
 
+            updateEventManager();
             if (!componentRestored) {
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
                         componentId), null, null, false);
@@ -851,7 +872,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         } // next c
 
         // now create and run the execution thread
-        this.execution = new Execution(dataComponentWrapperList);
+        this.execution = new Execution(dataComponentWrapperList, eventManager);
         // take the last set delay
         this.execution.setAimedStepDuration(this.getAimedStepDuration());
         // initialize the dataPool with this data
@@ -967,6 +988,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(0);
             dataComponentWrapper.getDataComponent().finalize();
             dataComponentWrapperList.remove(dataComponentWrapper);
+            //remove from event manager
+            this.eventManager.remove(dataComponentWrapper);
         }
         // suggest calling the garbage collector: this may
         // remove any DataComponent threads still running (but not linked==needed any more)

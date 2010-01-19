@@ -136,12 +136,9 @@ public class Execution implements Runnable {
     /** Threads for producers. */
     private ProducerExecution[] producerExecutionArray;
 
-    /**
-     * The event manager to handle notification of DataComponents. It is assembled before the
-     * execution and discarded when an execution finishes.
-     */
+    /** The event manager to handle notification of DataComponents. */
     private EventManager eventManager;
-
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -166,8 +163,12 @@ public class Execution implements Runnable {
      * 
      * @param dataComponentWrapperListParam
      *            the current DataComponentWrapper
+     * @param eventManagerParam
+     *            the evenet manager param
      */
-    public Execution(final List<DataComponentWrapper> dataComponentWrapperListParam) {
+    public Execution(final List<DataComponentWrapper> dataComponentWrapperListParam,
+            final EventManager eventManagerParam) {
+        this.eventManager = eventManagerParam;
         this.aimedStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
         this.stop = false;
         this.pausedCommand = false;
@@ -175,12 +176,6 @@ public class Execution implements Runnable {
         this.stepToPause = -1;
         this.dataComponentWrapperList = dataComponentWrapperListParam;
         this.dataPool = new JSONDataPool();
-        // create and fill the event manager
-        eventManager = new EventManager();
-        for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam.get(c);
-            eventManager.add(dataComponentWrapper);
-        }
         // start the timeout worker thread
         this.timeout = new TimeoutThread();
         this.timeout.start();
@@ -495,7 +490,9 @@ public class Execution implements Runnable {
                     // HISTORY COMPONENTS ONLY//
                             && dataComponentWrapper.isHistoryObserver()) {
                         timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
-                        eventManager.notify(KiemEvent.CMD_STEP_BACK);
+                        if (eventManager != null) {
+                            eventManager.notify(KiemEvent.CMD_STEP_BACK);
+                        }
                         // dataComponentWrapper.getDataComponent().commandStep();
                     }
                     timeout.abortTimeout();
@@ -534,7 +531,9 @@ public class Execution implements Runnable {
                     timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
                     if (dataComponentWrapper.isEnabled()) {
                         timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
-                        eventManager.notify(KiemEvent.CMD_STEP);
+                        if (eventManager != null) {
+                            eventManager.notify(KiemEvent.CMD_STEP);
+                        }
                         // dataComponentWrapper.getDataComponent().commandStep();
                     }
                     timeout.abortTimeout();
@@ -577,7 +576,9 @@ public class Execution implements Runnable {
                 timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
                 if (dataComponentWrapper.isEnabled()) {
                     timeout.timeout(getTimeout(), "commandPause", dataComponentWrapper, this);
-                    eventManager.notify(KiemEvent.CMD_PAUSE);
+                    if (eventManager != null) {
+                        eventManager.notify(KiemEvent.CMD_PAUSE);
+                    }
                     // dataComponentWrapper.getDataComponent().commandPause();
                 }
                 timeout.abortTimeout();
@@ -603,7 +604,9 @@ public class Execution implements Runnable {
                 timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
                 if (dataComponentWrapper.isEnabled()) {
                     timeout.timeout(getTimeout(), "commandRun", dataComponentWrapper, this);
-                    eventManager.notify(KiemEvent.CMD_RUN);
+                    if (eventManager != null) {
+                        eventManager.notify(KiemEvent.CMD_RUN);
+                    }
                     // dataComponentWrapper.getDataComponent().commandRun();
                 }
                 timeout.abortTimeout();
@@ -634,7 +637,9 @@ public class Execution implements Runnable {
                 if (dataComponentWrapper.isEnabled()) {
                     timeout.abortTimeout();
                     timeout.timeout(getTimeout(), "commandStop", dataComponentWrapper, this);
-                    eventManager.notify(KiemEvent.CMD_STOP);
+                    if (eventManager != null) {
+                           eventManager.notify(KiemEvent.CMD_STOP);
+                    }
                     // dataComponentWrapper.getDataComponent().commandStop();
                     timeout.abortTimeout();
                 }
@@ -1021,7 +1026,9 @@ public class Execution implements Runnable {
                     for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
                         KiemEvent infoEvent = new KiemEvent(KiemEvent.STEP_INFO,
                                 new Pair<Long, Long>(this.stepCounter, this.stepCounterMax));
-                        eventManager.notify(infoEvent);
+                        if (eventManager != null) {
+                              eventManager.notify(infoEvent);
+                        }
                         // dataComponentWrapperList.get(c).getDataComponent()
                         // .notifyStep(this.stepCounter,this.stepCounterMax);
                     }
