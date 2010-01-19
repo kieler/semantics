@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.synccharts.codegen.quartz
+Bundle-Name: SyncCharts Quartz generator
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.quartz;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.quartz.Activator
@@ -23,3 +23,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.ui.part
+Bundle-Vendor: Christian Albrechts Universität zu Kiel

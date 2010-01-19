@@ -8,38 +8,41 @@ module «innerStates.first().label»(event
 «FOREACH innerStates.first().signals AS sig SEPARATOR ", "-»«IF sig.isInput»?«ENDIF-»«IF sig.isOutput»!«ENDIF-»«sig.name»
 «ENDFOREACH-»
 ){
-  «FOREACH innerStates.first().regions AS region»«EXPAND Constelation FOR region»«ENDFOREACH-»
+  {«FOREACH innerStates.first().regions AS region SEPARATOR "}||{"»«EXPAND Constelation FOR region»«ENDFOREACH-»}
 }
 «ENDFILE-»
 «ENDDEFINE»
 
 «DEFINE Constelation FOR Region-»
+  «IF canTerminate()»event «innerStates.first().id»_done; weak abort{«ENDIF»
   event T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH»;
   emit (goto_«this.innerStates.first().id»);
   loop{
     weak abort{ 
-    «FOREACH this.innerStates.sortStates() AS state-»
+      «FOREACH this.innerStates.sortStates() AS state-»
+       // ========================== «state.id» ==========================
       if (goto_«state.id»){
-        event start_«state.id»;
-        «EXPAND Star FOR state-»
-        if(!start_«state.id»){
-          emit (T_«innerStates.first().id»);
-        }
+       «IF state.canBeTransient()» event start_«state.id»; emit (start_«state.id»);«ENDIF»
+         «EXPAND Star FOR state-»
+         «IF state.canBeTransient()»
+         if(!start_«state.id»){
+           emit (T_«innerStates.first().id»); pause;
+         } «ELSE»emit (T_«innerStates.first().id»); pause;«ENDIF»
       }
-    «ENDFOREACH-»
+      «ENDFOREACH-»
       halt;
     } when (T_«innerStates.first().id»);
   }
+  «IF canTerminate()» } when («innerStates.first().id»_done);«ENDIF» 
 «ENDDEFINE»
 
 «DEFINE Star FOR synccharts::State-»
- // «id»
  «FOREACH this.outgoingTransitions AS trans»
    «IF trans.type==TransitionType::WEAKABORT-»weak «IF trans.isImmediate»immediate «ENDIF-»abort{«ENDIF-»
    «IF trans.type==TransitionType::STRONGABORT-»«IF trans.isImmediate»immediate «ENDIF-»abort{«ENDIF-»
  «ENDFOREACH»
  «IF this.regions.isEmpty-»
-    halt;
+   «IF this.isFinal»emit «this.parentRegion.innerStates.first().id»_done;»«ENDIF» halt;
  «ELSE-»{
    «FOREACH this.regions AS region SEPARATOR "||"-»
    «EXPAND Constelation FOR region»

@@ -28,11 +28,12 @@ end module
       weak abort 
         «FOREACH this.innerStates.sortStates() AS state-»
         present goto_«state.id» then
-        «IF state.canBeTransient()»signal start_«state.id» in«ENDIF»
+        «IF state.canBeTransient()»signal start_«state.id» in emit start_«state.id»;«ENDIF»
+        
             «EXPAND Star FOR state-»           
          «IF state.canBeTransient()»
             present start_«state.id» else
-              emit T_«innerStates.first().id»;
+              emit T_«innerStates.first().id»;pause;
             end present   
           end signal
           «ENDIF»
@@ -48,8 +49,8 @@ end module
 «DEFINE Star FOR synccharts::State-»
  % «id»
  «FOREACH this.outgoingTransitions AS trans»
-   «IF trans.type==TransitionType::WEAKABORT-»weak «IF trans.isImmediate»immediate «ENDIF-»abort«ENDIF-»
-   «IF trans.type==TransitionType::STRONGABORT-»«IF trans.isImmediate»immediate «ENDIF-»abort«ENDIF-»
+   «IF trans.type==TransitionType::WEAKABORT-»weak abort«ENDIF-»
+   «IF trans.type==TransitionType::STRONGABORT-»abort«ENDIF-»
  «ENDFOREACH»
  «IF this.regions.isEmpty-»
    «IF this.isFinal»exit done;«ELSE»halt;«ENDIF»
@@ -66,7 +67,7 @@ end module
  «ENDIF» 
  «FOREACH sortTransitionPrios() AS trans-»
   «IF trans.type!=TransitionType::NORMALTERMINATION-»
-  when «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF»; 
+  when «IF trans.isImmediate»immediate «ENDIF-» «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF»; 
   emit goto_«trans.targetState.id»;
   «FOREACH trans.effects AS eff-»
     «EXPAND Effect FOR eff»
