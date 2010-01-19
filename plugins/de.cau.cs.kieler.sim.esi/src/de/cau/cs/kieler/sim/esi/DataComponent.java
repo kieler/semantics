@@ -40,7 +40,6 @@ import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
-import org.eclipse.xtext.ui.core.editor.model.IXtextDocument;
 
 import com.google.inject.Injector;
 
@@ -48,13 +47,13 @@ import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,16 +106,6 @@ public class DataComponent extends JSONObjectDataComponent {
                 }
             }
         }
-
-//        if (editor != null) {
-//            Display.getDefault().asyncExec(new Runnable() {
-//                public void run() {
-//                    editor.resetHighlightRange();
-//                    editor.setHighlightRange(pos, len, false);
-//                }
-//
-//            });
-//        }
 
         return res;
     }
