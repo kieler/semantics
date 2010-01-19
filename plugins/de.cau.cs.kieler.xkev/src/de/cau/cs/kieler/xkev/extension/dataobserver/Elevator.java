@@ -22,7 +22,6 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 //import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
@@ -43,7 +42,8 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
 
     private static final int MAX = 100;
     private static final int MIN = 0;
-
+    private static final int STEP = 5;
+    
     public Elevator() {
         // TODO Auto-generated constructor stub
     }
@@ -54,23 +54,16 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
         try {
             // Handle outputs
             if (jSONObject.has("MoveUp") && (JSONSignalValues.isPresent(jSONObject.get("MoveUp")))) {
-                try {
-                    pos++;
-                    if (pos > MAX)
-                        pos = MAX;
-
-                } catch (Exception e) {
-                }
+                pos+=STEP;
+                if (pos > MAX)
+                    pos = MAX;
             }
             if (jSONObject.has("MoveDown")
                     && (JSONSignalValues.isPresent(jSONObject.get("MoveDown")))) {
-                try {
-                    pos--;
-                    if (pos < MIN)
-                        pos = MIN;
 
-                } catch (Exception e) {
-                }
+                pos-=STEP;
+                if (pos < MIN)
+                    pos = MIN;
             }
             result.accumulate("elevator", pos);
 
@@ -80,37 +73,26 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
             }
 
             if (jSONObject.has("CloseDoor")
-                    && (JSONSignalValues.isPresent(jSONObject.get("OpenDoor")))) {
+                    && (JSONSignalValues.isPresent(jSONObject.get("CloseDoor")))) {
                 doorOpen = false;
             }
 
             result.accumulate("door_left", doorOpen);
             result.accumulate("door_right", doorOpen);
 
-            if (jSONObject.has("AlarmLamp")
-                    && (JSONSignalValues.isPresent(jSONObject.get("AlarmLamp")))) {
-                try {
-                    result.accumulate("signal_alarm", true);
-                } catch (Exception e) {
-                }
-
-            }
+            result.accumulate("signal_alarm", jSONObject.has("AlarmLamp")
+                    && (JSONSignalValues.isPresent(jSONObject.get("AlarmLamp"))));
 
             // visualize inputs
-            if (jSONObject.has("ButtonAlarm")
-                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonAlarm")))) {
-                result.accumulate("button_alarm", JSONSignalValues.newValue(true));
-            }
+            result.accumulate("button_alarm", JSONSignalValues.newValue(jSONObject
+                    .has("ButtonAlarm")
+                    && JSONSignalValues.isPresent(jSONObject.get("ButtonAlarm"))));
 
-            if (jSONObject.has("ButtonUp")
-                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonUp")))) {
-                result.accumulate("button_alarm", JSONSignalValues.newValue(true));
-            }
+            result.accumulate("button_alarm", jSONObject.has("ButtonUp")
+                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonUp"))));
 
-            if (jSONObject.has("ButtonDown")
-                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonDown")))) {
-                result.accumulate("button_alarm", JSONSignalValues.newValue(true));
-            }
+            result.accumulate("button_alarm", jSONObject.has("ButtonDown")
+                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonDown"))));
 
             // generate inputs
             result.accumulate("IsUp", JSONSignalValues.newValue(pos == MAX));
