@@ -63,14 +63,14 @@ import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeString;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.internal.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
 
 import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
 
@@ -118,7 +118,7 @@ public final class DataComponent extends JSONObjectDataComponent {
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
         JSONObject res = new JSONObject();
         LinkedList<Signal> inputs = assembler.getInputs();
-        LinkedList<Signal> outputs = assembler.getOutputs();
+        LinkedList<Signal> outputs = new  LinkedList<Signal>();
         int[] trace;
         try {
             for (Signal s : inputs) {
