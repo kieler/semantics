@@ -34,7 +34,7 @@ import org.eclipse.ui.PlatformUI;
  * 
  * @author haf
  * 
- * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
+ * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
 public final class ModelingUtil {
 
