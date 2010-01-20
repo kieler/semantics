@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.sim.kiem;
 
 import java.lang.reflect.Field;
-import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -273,7 +272,7 @@ public class KiemEvent {
      * 
      * @return the event name
      */
-    public static String getEventName(int eventCode) {
+    public static String getEventName(final int eventCode) {
         Field[] flds = KiemEvent.class.getDeclaredFields();
         for (Field f : flds) {
             if (f.getType().getName().equals("int")) {
