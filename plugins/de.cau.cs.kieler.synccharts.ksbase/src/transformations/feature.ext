@@ -58,6 +58,11 @@ transition.setSourceState(source) ->
 transition.setTargetState(target)
 ;
 
+// create a self loop of one state
+Void addSelfLoop(State state):
+  connectStates(state, state)
+;
+
 //Reroutes the target of the given transition
 //to the given state
 Void rerouteTransitionTarget(Transition t, State target):
@@ -85,6 +90,31 @@ parentState.regions.add(region)
 Void downgradeState(State parentState):
 if parentState.regions.size > 0 then
  parentState.regions.remove(parentState.regions.last())
+;
+
+// Add a state to the parent state and add all Regions
+// to that new State
+Void encapsulateRegions(State parentState):
+  let regions = parentState.regions:
+  let newRegion = new Region:
+  let newState = new State:
+  (parentState.regions.size > 0) ? 
+    (newState.regions.addAll(regions) ->
+    parentState.regions.add(newRegion) ->
+    newRegion.innerStates.add(newState)) : 
+   parentState
+;
+
+// Delete the state and move all its regions to the
+// parent state 
+Void flattenState(State state):
+let parentRegion = state.parentRegion:
+let parentState = parentRegion.parentState:
+parentState.regions.addAll(state.regions) ->
+state.setParentRegion(null) ->
+(parentState.regions.size == 0) ?
+   parentState.regions.remove(parentRegion) : 
+state
 ;
 
 //Copies a state, i.e. stores a reference in a 
