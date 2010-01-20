@@ -229,10 +229,20 @@ public class KiemEvent {
      */
     public List<Double> getEventsAsList() {
         LinkedList<Double> returnList = new LinkedList<Double>();
-
+        
+        int publicStaticFinalModifier = 0;
+        try {
+            publicStaticFinalModifier = KiemEvent.class.getDeclaredField("NONE").getModifiers();
+        } catch (SecurityException e0) {
+            e0.printStackTrace();
+        } catch (NoSuchFieldException e0) {
+            e0.printStackTrace();
+        }
+        
         Field[] flds = KiemEvent.class.getDeclaredFields();
         for (Field f : flds) {
-            if (f.isEnumConstant()) {
+            //if (f.isEnumConstant()) {
+            if (f.getModifiers() == publicStaticFinalModifier) {
                 try {
                     System.out.println(f.getName());
                     returnList.add(f.getDouble(f));
