@@ -30,9 +30,14 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IActionBars;
@@ -53,22 +58,22 @@ public class DataTableView extends ViewPart {
 
     /** The ID of the view as specified by the extension. */
     public static final String ID = "de.cau.cs.kieler.sim.table.views.KiemTable";
-    
+
     /** The Constant KEYBOARD_DELETE. */
     public static final int KEYBOARD_DELETE = 127;
 
     /** The Constant COLUMN_0_WIDTH. */
     private static final int COLUMN_0_WIDTH = 0;
-    
+
     /** The Constant COLUMN_1_WIDTH. */
     private static final int COLUMN_1_WIDTH = 38;
-    
+
     /** The Constant COLUMN_2_WIDTH. */
     private static final int COLUMN_2_WIDTH = 120;
-    
+
     /** The Constant COLUMN_3_WIDTH. */
     private static final int COLUMN_3_WIDTH = 120;
-    
+
     /** This data table view instance. */
     private static DataTableView dataTableView;
 
@@ -131,6 +136,7 @@ public class DataTableView extends ViewPart {
      * Refreshes the tree table viewer.
      */
     public void refreshViewer() {
+        System.out.println("REFRESH");
         viewer.refresh();
         return;
     }
@@ -190,6 +196,7 @@ public class DataTableView extends ViewPart {
         createColumns(viewer);
         viewer.setContentProvider(new TableDataContentProvider());
         viewer.setLabelProvider(new TableDataLabelProvider());
+
         viewer.getControl().addKeyListener(new KeyListener() {
             public void keyPressed(final KeyEvent e) {
                 // if user pressed delete
@@ -212,12 +219,26 @@ public class DataTableView extends ViewPart {
      *            the DataTableViewer
      */
     private void createColumns(final DataTableViewer viewerParam) {
-        String[] titles = {"", "P", "Key", "Value"};
-        String[] toolTip = {"", "Present/Absent/No Signal", "Key", "Value"};
-        int[] bounds = {COLUMN_0_WIDTH,
-                        COLUMN_1_WIDTH,
-                        COLUMN_2_WIDTH,
-                        COLUMN_3_WIDTH};
+        String[] titles = { "", "P", "Key", "Value" };
+        String[] toolTip = { "", "Present/Absent/No Signal", "Key", "Value" };
+        int[] bounds = { COLUMN_0_WIDTH, COLUMN_1_WIDTH, COLUMN_2_WIDTH, COLUMN_3_WIDTH };
+
+        SelectionListener headerListener = new SelectionAdapter() {
+            public void widgetSelected(final SelectionEvent e) {
+                int column = viewer.getTree().indexOf((TreeColumn) e.widget);
+                TableViewerSorter oldSorter = (TableViewerSorter) viewer.getSorter();
+                viewer.getTree().setSortColumn((TreeColumn) e.widget);
+                if (oldSorter != null && column == oldSorter.getColumn()) {
+                      oldSorter.setReversed(!oldSorter.getReversed());
+//                    System.out.println("SORTCOMMAND " + column);
+                    viewer.refresh();
+//                    viewer.setSorter(null);
+                } else {
+                    System.out.println("SORTCOMMAND " + column);
+                    viewer.setSorter(new TableViewerSorter(column));
+                }
+            }
+        };
 
         for (int i = 0; i < titles.length; i++) {
             TreeViewerColumn column = new TreeViewerColumn(viewerParam, SWT.NONE);
@@ -226,6 +247,7 @@ public class DataTableView extends ViewPart {
             column.getColumn().setToolTipText(toolTip[i]);
             column.getColumn().setResizable(true);
             column.getColumn().setMoveable(true);
+            column.getColumn().addSelectionListener(headerListener);
             if (i == 0) {
                 column.getColumn().setResizable(false);
             } else {
@@ -303,7 +325,7 @@ public class DataTableView extends ViewPart {
             public void run() {
                 TableData newElement = new TableData(TableDataList.getInstance(), false, "", "");
                 TableDataList.getInstance().add(newElement);
-                viewer.refresh();
+                refreshViewer();
                 viewer.setSelection((new StructuredSelection(newElement)));
                 updateEnabled();
             }
@@ -336,7 +358,7 @@ public class DataTableView extends ViewPart {
                     }
                 }
                 // viewer.setSelection(null);
-                viewer.refresh();
+                refreshViewer();
                 updateEnabled();
             }
         };
@@ -367,10 +389,11 @@ public class DataTableView extends ViewPart {
                 for (int c = 0; c < selection.size(); c++) {
                     TableData tableData = (TableData) selection.toArray()[c];
                     tableData.setPermanent(permanentValue);
-                    //if this is a signal and set to permanent, set it to present status by default!
+                    // if this is a signal and set to permanent, set it to present status by
+                    // default!
                     if (tableData.isPermanent() && tableData.isSignal()) {
                         tableData.setPresent(true);
-                    } //end if
+                    } // end if
                 }
                 // enable updates for the table because we cannot edit the element anyway
                 if (permanentValue) {
@@ -378,7 +401,7 @@ public class DataTableView extends ViewPart {
                 }
 
                 // viewer.setSelection(null);
-                viewer.refresh();
+                refreshViewer();
                 updateEnabled();
             }
         };
@@ -412,7 +435,7 @@ public class DataTableView extends ViewPart {
                     tableData.setSignal(signalValue);
                 }
                 // viewer.setSelection(null);
-                viewer.refresh();
+                refreshViewer();
                 updateEnabled();
             }
         };

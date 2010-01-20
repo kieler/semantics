@@ -63,7 +63,7 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * {@inheritDoc}
      */
