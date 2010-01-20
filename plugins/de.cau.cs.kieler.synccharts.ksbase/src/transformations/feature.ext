@@ -102,7 +102,7 @@ Void encapsulateRegions(State parentState):
     (newState.regions.addAll(regions) ->
     parentState.regions.add(newRegion) ->
     newRegion.innerStates.add(newState)) : 
-   parentState
+   null
 ;
 
 // Delete the state and move all its regions to the
@@ -110,11 +110,12 @@ Void encapsulateRegions(State parentState):
 Void flattenState(State state):
 let parentRegion = state.parentRegion:
 let parentState = parentRegion.parentState:
+let stateSize = parentRegion.innerStates.size:
 parentState.regions.addAll(state.regions) ->
 state.setParentRegion(null) ->
-(parentState.regions.size == 0) ?
+(stateSize <= 1) ?
    parentState.regions.remove(parentRegion) : 
-state
+null
 ;
 
 //Copies a state, i.e. stores a reference in a 
