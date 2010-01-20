@@ -35,6 +35,8 @@ import de.cau.cs.kieler.synccharts.Region;
  * parses all action labels again and then serializes all again.
  * 
  * @author haf
+ * 
+ * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
 public class ActionLabelParseHandler extends AbstractHandler {
 

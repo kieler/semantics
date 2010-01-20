@@ -26,7 +26,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * 
  * @author haf
  * 
- * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
+ * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
 public class TransitionPrioComparator implements Comparator<Transition> {
 
