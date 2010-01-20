@@ -123,7 +123,7 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
         JSONObject returnObj = new JSONObject();
         try {
             returnObj.accumulate("ButtonUp", JSONSignalValues.newValue(false));
-            returnObj.accumulate("ButtonDOwn", JSONSignalValues.newValue(false));
+            returnObj.accumulate("ButtonDown", JSONSignalValues.newValue(false));
             returnObj.accumulate("ButtonAlarm", JSONSignalValues.newValue(false));
             returnObj.accumulate("IsUp", JSONSignalValues.newValue(false));
             returnObj.accumulate("IsDown", JSONSignalValues.newValue(false));
