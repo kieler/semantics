@@ -47,9 +47,10 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
 
 /**
- * Wrapper of the parsing operation into a GMF AbstractTransactionalCommand. Hence parsing of an
- * Action label into trigger and effects Expression objects can be done either by manually calling
- * the parse method or by excuting the command on a GEF/GMF command stack.
+ * Wrapper of the parsing operation into a GMF AbstractTransactionalCommand.
+ * Hence parsing of an Action label into trigger and effects Expression objects
+ * can be done either by manually calling the parse method or by excuting the
+ * command on a GEF/GMF command stack.
  * 
  * @author haf
  * 
@@ -155,7 +156,8 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
     }
 
     /**
-     * Run the actual parse operation with the element and new string set by the constructor before.
+     * Run the actual parse operation with the element and new string set by the
+     * constructor before.
      * 
      * @throws KielerModelException
      *             if parsing of the string fails
@@ -216,13 +218,16 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             throw new KielerModelException("\"" + newString + "\""
                     + "Can't find the right scope for the action. Scope is null.", action);
         }
-        // FIXME: passing the parent to the scope provider in this static way is veeeeery evil
+        // FIXME: passing the parent to the scope provider in this static way is
+        // veeeeery evil
         ActionLabelScopeProvider.parent = parent;
 
         // now do parsing
         Map<Object, Object> loadOptions = resourceSet.getLoadOptions();
-        // set option to resolve all links. This avoids to do lazy linking only when elements
-        // are actually read. This helps to identify linking errors earlier, i.e. now
+        // set option to resolve all links. This avoids to do lazy linking only
+        // when elements
+        // are actually read. This helps to identify linking errors earlier,
+        // i.e. now
         loadOptions.put(org.eclipse.xtext.resource.XtextResource.OPTION_RESOLVE_ALL, true);
         resource.load(stream, loadOptions);
 
@@ -237,7 +242,10 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         if (errors != null && errors.size() > 0) {
             StringBuffer parseErrorString = new StringBuffer("");
             for (Diagnostic syntaxError : errors) {
-                parseErrorString.append("\n" + syntaxError.getMessage());
+                parseErrorString.append(syntaxError.getMessage());
+                if (errors.size() > 1) {
+                    parseErrorString.append("\n");
+                }
             }
             throw new KielerModelException("\"" + newString + "\""
                     + " Parse errors in action String: " + parseErrorString, action);
@@ -257,7 +265,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
          * 
          * }
          */
-        
+
         copyActionContents(newAction, action);
     }
 

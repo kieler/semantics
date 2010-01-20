@@ -45,7 +45,7 @@ import de.cau.cs.kieler.synccharts.ValuedObject;
  * A content adapter for SyncCharts EMF models that listens to model changes and
  * triggers appropriate changes like parsing of Action labels and handling of
  * state labels and IDs.
- *  
+ * 
  * @author haf
  * 
  * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
@@ -160,9 +160,11 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                         StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                     }
                 } else {
-                    // there is no editing domain (yet) for the element, so just execute
+                    // there is no editing domain (yet) for the element, so just
+                    // execute
                     // the changes without a transaction. A missing editing
-                    // domain can happen if an element is freshly created and does not belong
+                    // domain can happen if an element is freshly created and
+                    // does not belong
                     // to any resource yet.
                     notifyChanged(notification);
                 }
@@ -199,6 +201,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 recordedNotifications.add(notification);
             } else {
                 try {
+                    boolean clearMarker = true;
                     Object notifier = notification.getNotifier();
 
                     if (notifier instanceof Transition) {
@@ -211,10 +214,14 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                         handleValuedObject(notification, (ValuedObject) notifier);
                     } else if (notifier instanceof State) {
                         handleState(notification, (State) notifier);
+                    } else {
+                        // do not clear any markers if the object is not handled
+                        // by this
+                        clearMarker = false;
                     }
-
-                    // remove all existing problem markers
-                    if (notifier instanceof EObject) {
+                    // remove all existing problem markers if no exception
+                    // occured
+                    if (clearMarker) {
                         SyncchartsContentUtil.clearMarker((EObject) notifier);
                     }
                 } catch (IllegalStateException ise) {
@@ -223,6 +230,12 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                                     + ise.getClass().getName(), ise);
                     StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                 } catch (Exception e) {
+                    // if somebody has temporarily disabled us, we have to fix
+                    // this when
+                    // an exception occurs.
+                    if (!this.isEnabled()) {
+                        this.setEnabled(true);
+                    }
                     /*
                      * Try to handle the exception by placing a problem Marker in the diagram. 
                      * If this fails
@@ -236,7 +249,11 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                                         (EObject) modelObject);
                                 return;
                             } catch (KielerException e1) {
-                                /* nothing, will go on in next case */
+                                /*will go on in next case */
+                                Status debugStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                                        "Could not add problem Marker: " + e.getClass().getName(),
+                                        e1);
+                                StatusManager.getManager().handle(debugStatus, StatusManager.LOG);
                             }
                         }
                     }
@@ -281,7 +298,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             } /*else { // new transition created
                 handleTransitionNew(transition);
                 handleStateFixPriorities(transition.getSourceState());
-            }*/
+              }*/
         }
     }
 
@@ -304,8 +321,10 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 transition2.setPriority(i + 1); // prios should start with 1
                 this.setEnabled(true);
             }
-            // order the list of transitions also according to priority. This way
-            // the serialization will also save it in prio order e.g. in XMI or in KITS.
+            // order the list of transitions also according to priority. This
+            // way
+            // the serialization will also save it in prio order e.g. in XMI or
+            // in KITS.
             ECollections.sort(state.getOutgoingTransitions(), new TransitionPrioComparator());
         }
     }
@@ -372,7 +391,8 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             this.setEnabled(true);
         }
         // order the list of transitions also according to priority. This way
-        // the serialization will also save it in prio order e.g. in XMI or in KITS.
+        // the serialization will also save it in prio order e.g. in XMI or in
+        // KITS.
         ECollections.sort(transitions, new TransitionPrioComparator());
     }
 
