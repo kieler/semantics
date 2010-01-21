@@ -35,18 +35,10 @@ void selectCid() {
 	}
 }
 	«FOREACH innerStates.signals AS signal-»
-		«IF signal.isOutput-»
-			«EXPAND generateOutputSignals FOR signal»
+		«IF signal.isOutput || !(signal.isInput || signal.isOutput)-»
+			«EXPAND CodegenMisc::generateOutputSignals FOR signal»
 		«ENDIF-»
 	«ENDFOREACH-»
-«ENDDEFINE»
-
-«DEFINE generateOutputSignals FOR Signal»
-void «this.parentState.label»_O_«this.name»(){
-	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
-	cJSON_AddItemToObject(output, "«this.name»", value);
-}
 «ENDDEFINE»
 
 «DEFINE generateSetInputs FOR Region»

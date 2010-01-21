@@ -14,12 +14,8 @@ void Test_I_I(){
 }
 
 void callOutputs(){
-	if(signals & (1 << O1)){
-	  Test_O_O1();
-  }	
-	if(signals & (1 << O2)){
-	  Test_O_O2();
-  }	
+	  Test_O_O1(signals & (1 << O1));
+	  Test_O_O2(signals & (1 << O2));
 }
 
 void reset(){

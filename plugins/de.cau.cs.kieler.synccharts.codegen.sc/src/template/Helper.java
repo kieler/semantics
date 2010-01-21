@@ -282,12 +282,7 @@ public class Helper {
         threadListSorted.clear();
         fillDependencyList(state);
         printDependencyList();
-        System.out.print("realThreadList: ");
-        printTupelList(realStateList);
         fillSortedThreadList();
-        System.out.print("realThreadList: ");
-        printTupelList(realStateList);
-        System.out.println("!!!!!!!!!!!SORTIERT!!!!!!!!!!!!");
         System.out.println("threadListSorted: " + threadListSorted.toString());
         return threadListSorted;
     }

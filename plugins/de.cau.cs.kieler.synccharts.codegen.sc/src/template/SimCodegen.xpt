@@ -22,8 +22,8 @@ extern void JSONstate(char*);
 	«EXPAND CodegenMisc::generateSigArray FOR innerStates.signals-»
 
 	«FOREACH innerStates.signals AS signal-»
-		«IF signal.isInput-»
-			«EXPAND CodegenMisc::generateInputSignals FOR signal»
+		«IF signal.isInput || !(signal.isInput || signal.isOutput)-»
+			«EXPAND CodegenMisc::generateInputSignal FOR signal»
 		«ENDIF-»
 	«ENDFOREACH-»
 	«EXPAND CodegenMisc::generateCallOutputs FOR innerStates.signals»

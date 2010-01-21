@@ -24,16 +24,16 @@ void selectCid() {
 	}
 }
 			
-void Test_O_O1(){
+void Test_O_O1(int status){
 	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+	cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	cJSON_AddItemToObject(output, "O1", value);
 }
 
 			
-void Test_O_O2(){
+void Test_O_O2(int status){
 	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+	cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	cJSON_AddItemToObject(output, "O2", value);
 }
 
@@ -60,9 +60,7 @@ void setInputs(){
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
 		value = cJSON_GetObjectItem(child, "value");
-		if (present != NULL && present->type){
-			Test_I_I();
-		}
+		Test_I_I(present != NULL && present->type);
 	}
 }
 	
