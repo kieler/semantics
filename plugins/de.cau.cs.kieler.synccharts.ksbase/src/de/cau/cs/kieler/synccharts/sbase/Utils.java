@@ -14,7 +14,6 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.sbase;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import de.cau.cs.kieler.synccharts.State;

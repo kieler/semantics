@@ -77,7 +77,15 @@ public class XtendTransformationFramework implements ITransformationFramework {
      */
     public boolean initializeTransformation(final String fileName, final String operation,
             final String basePackage, final Object... parameter) {
-        xtendFacade = XtendFacade.create(fileName);
+        //removing file extension
+        String withFileExt = fileName;
+
+        if (withFileExt.contains("." + XtendFile.FILE_EXTENSION)) {
+            withFileExt = withFileExt.substring(0, withFileExt.indexOf("."
+                    + XtendFile.FILE_EXTENSION));
+        }
+
+        xtendFacade = XtendFacade.create(withFileExt);
 
         // The EMFMetaMetaModel,
         EmfMetaModel metaModel;
@@ -89,9 +97,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
         xtendFacade.registerMetaModel(metaModel);
 
         if (!xtendFacade.hasExtension(operation, parameter)) {
-            CoreModelPlugin.getDefault().logError(
-                    "Could not find transformation " + operation + " with the parameters"
-                            + parameter);
+            return false;
         } else {
             this.parameters = parameter;
             this.extension = operation;
@@ -102,14 +108,17 @@ public class XtendTransformationFramework implements ITransformationFramework {
 
     /**
      * Executes a transformation.
+     * @return The return value from XtendFacade.call()
      */
-    public void executeTransformation() {
+    public Object executeTransformation() {
+        Object result = null;
         if (initalized) {
-            xtendFacade.call(extension, parameters);
+            result = xtendFacade.call(extension, parameters);
         } else {
             CoreModelPlugin.getDefault().logError(
                     "Could not execute transformation: Transformation not initalized poroperly");
         }
+        return result;
     }
 
     /**
@@ -157,8 +166,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
     }
 
     /**
-     * The default file extension for Xtend is .ext.
-     * @return .ext
+     * The default file extension for Xtend is 'ext'.
+     * @return 'ext'
      */
     public String getFileExtension() {
         return XtendFile.FILE_EXTENSION;

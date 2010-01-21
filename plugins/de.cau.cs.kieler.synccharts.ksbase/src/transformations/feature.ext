@@ -92,6 +92,12 @@ if parentState.regions.size > 0 then
  parentState.regions.remove(parentState.regions.last())
 ;
 
+//Returns true if the state is a complex state, 
+//i.e. it has at least one inner region
+Boolean isRegionState(State state):
+	state.regions.size > 0
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):

@@ -71,7 +71,8 @@
              keyboardShortcut="M1+K D"
              name="Downgrade State"
              transformation="downgradeState"
-             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
+             transformationId="de.cau.cs.kieler.ksbase.downgradeState"
+             validation="isRegionState">
        </transformation>
        <transformation
              icon="icons/self_loop.gif"
@@ -181,5 +182,11 @@
 
 			</menus>
 		</configuration>
+ </extension>
+ <extension
+       point="de.cau.cs.kieler.ksbase.activator">
+    <Class
+          class="de.cau.cs.kieler.synccharts.sbase.ContentAdapterKSbasEBridge">
+    </Class>
  </extension>
 </plugin>

@@ -40,8 +40,9 @@ public interface ITransformationFramework {
     
     /**
      * Executes a transformation with the parameters set with the initalizeTransformation method.
+     * @return A return value from the transformation. May be null
      */
-    void executeTransformation();
+    Object executeTransformation();
 
     /**
      * Initializes a transformation.
