@@ -410,6 +410,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 // with underscores
                 state.setId(newId);
             }
+        // new state created
         } else if (notification.getFeature() != null
                 && notification.getFeature().equals(
                         SyncchartsPackage.eINSTANCE.getState_ParentRegion())) {
@@ -417,6 +418,12 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             if (state.getLabel() == null || state.getLabel().trim().equals("")) {
                 state.setId(SyncchartsContentUtil.getNewId(state));
             }
+        // transition removed
+        }  else if (notification.getEventType() == Notification.REMOVE
+                && notification.getFeature() != null
+                && notification.getFeature().equals(
+                        SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())) {
+                handleStateFixPriorities(state);
         }
     }
 
