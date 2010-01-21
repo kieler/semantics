@@ -16,8 +16,7 @@ package de.cau.cs.kieler.core.ui.figures;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
@@ -43,7 +42,8 @@ public class CircleDecoration extends PolygonDecoration {
      */
     @Override
     protected void outlineShape(final Graphics g) {
-        Rectangle ovalBounds = getBounds();
+        Rectangle ovalBounds = getBounds().getCopy();
+        ovalBounds.crop(new Insets(1));
         g.drawOval(ovalBounds);
     }
 
@@ -52,44 +52,9 @@ public class CircleDecoration extends PolygonDecoration {
      */
     @Override
     protected void fillShape(final Graphics g) {
-        Rectangle ovalBounds = getBounds();
+        Rectangle ovalBounds = getBounds().getCopy();
+        ovalBounds.crop(new Insets(1));
         g.fillOval(ovalBounds);
-    }
-
-    /**
-     * Calculate the bounds of the decoration.
-     * 
-     * @return The bounds of the decoration.
-     */
-    public Rectangle getBounds() {
-        if (getPoints().size() < 2) {
-            return super.getBounds();
-        }
-
-        PointList pointList = getPoints();
-        Point firstPoint = pointList.getFirstPoint();
-        int top = firstPoint.y;
-        int left = firstPoint.x;
-        int right = firstPoint.x;
-        int bottom = firstPoint.y;
-
-        // Take the outermost coordinates of all points as bounds
-        for (int i = 1; i < getPoints().size(); i++) {
-            Point p = pointList.getPoint(i);
-            if (p.x < left) {
-                left = p.x;
-            }
-            if (p.x > right) {
-                right = p.x;
-            }
-            if (p.y < top) {
-                top = p.y;
-            }
-            if (p.y > bottom) {
-                bottom = p.y;
-            }
-        }
-        return new Rectangle(left, top, right - left, bottom - top);
     }
 
 }

@@ -45,7 +45,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
     private static final ICondition COND_TERMINATION = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
     private static final ICondition COND_HISTORY = new FeatureValueCondition(
-            SyncchartsPackage.eINSTANCE.getTransition_IsHistory(), true);
+            SyncchartsPackage.eINSTANCE.getTransition_IsHistory(), Boolean.TRUE);
 
     private static final ICondition COND_WEAKAB_HIST = new CompoundCondition(new ICondition[] {
             COND_WEAKAB, COND_HISTORY
@@ -68,18 +68,18 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         this.setLineWidth(2);
 
         RotatableDecoration arrowDeco = createArrowDecoration();
-        RotatableDecoration weakAbortDeco = createWeakAbortDecoration();
+        RotatableDecoration weakAbortDeco = null;
         RotatableDecoration stronAbortDeco = createStrongAbortDecoration();
         RotatableDecoration terminationDeco = createTerminationDecoration();
         RotatableDecoration historyDeco = createHistoryDecoration();
         
         // Add all decorations with associated conditions to the figure's list
-        addConditionalDecoration(weakAbortDeco, arrowDeco, COND_WEAKAB);
-        addConditionalDecoration(stronAbortDeco, arrowDeco, COND_STRONGAB);
-        addConditionalDecoration(terminationDeco, arrowDeco, COND_TERMINATION);
         addConditionalDecoration(weakAbortDeco, historyDeco, COND_WEAKAB_HIST);
         addConditionalDecoration(stronAbortDeco, historyDeco, COND_STRONGAB_HIST);
         addConditionalDecoration(terminationDeco, historyDeco, COND_TERMINATION_HIST);
+        addConditionalDecoration(weakAbortDeco, arrowDeco, COND_WEAKAB);
+        addConditionalDecoration(stronAbortDeco, arrowDeco, COND_STRONGAB);
+        addConditionalDecoration(terminationDeco, arrowDeco, COND_TERMINATION);
 
         // Set default and current look
         setDefaultDecoration(weakAbortDeco, arrowDeco);
@@ -104,21 +104,6 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         circleDecoration.setTemplate(circleDecorationPoints);
         circleDecoration.setScale(SRTONG_ABORT_SCALE, SRTONG_ABORT_SCALE);
         return circleDecoration;
-    }
-
-    /**
-     * Create the weak abortion decoration.
-     * 
-     * @return The decoration.
-     */
-    private RotatableDecoration createWeakAbortDecoration() {
-        PolygonDecoration pointDecoration = new PolygonDecoration();
-        pointDecoration.setForegroundColor(ColorConstants.black);
-        pointDecoration.setBackgroundColor(ColorConstants.black);
-        PointList pointDecorationPoints = new PointList();
-        pointDecorationPoints.addPoint(0, 0);
-        pointDecoration.setTemplate(pointDecorationPoints);
-        return pointDecoration;
     }
 
     private static final int TERMINATION_SIZE = 2;
@@ -165,7 +150,9 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         return arrowDecoration;
     }
 
-    private static final int HISTORY_SIZE = 2;
+    private static final int HISTORY_SIZE = 3;
+    private static final double HISTORY_SCALE = 2.2;
+    private static final float H_REL_SIZE = 0.4f;
     
     /**
      * Create the history decoration.
@@ -176,18 +163,26 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
         CircleDecoration historyDecoration = new CircleDecoration() {
             protected void outlineShape(final Graphics g) {
                 super.outlineShape(g);
-                Rectangle ovalBounds = getBounds();
+                Rectangle bounds = getBounds();
+                int hsize = (int) (H_REL_SIZE * bounds.width);
+                int vsize = (int) (H_REL_SIZE * bounds.height);
+                int size = hsize < vsize ? hsize : vsize;
+                int topy = bounds.y + (bounds.height - size) / 2;
+                int leftx = bounds.x + (bounds.width - size) / 2;
                 g.setForegroundColor(ColorConstants.black);
-                g.drawString("H", ovalBounds.x + 2, ovalBounds.y - 2);
+                g.drawLine(leftx, topy, leftx, topy + size);
+                g.drawLine(leftx + size, topy, leftx + size, topy + size);
+                g.drawLine(leftx, topy + size / 2, leftx + size, topy + size / 2);
             }
         };
         historyDecoration.setLineWidth(2);
         historyDecoration.setForegroundColor(ColorConstants.black);
-        historyDecoration.setBackgroundColor(ColorConstants.gray);
+        historyDecoration.setBackgroundColor(ColorConstants.lightGray);
         PointList historyDecorationPoints = new PointList();
-        historyDecorationPoints.addPoint(HISTORY_SIZE / 2, HISTORY_SIZE);
-        historyDecorationPoints.addPoint(-HISTORY_SIZE / 2, -HISTORY_SIZE);
+        historyDecorationPoints.addPoint(HISTORY_SIZE, HISTORY_SIZE);
+        historyDecorationPoints.addPoint(-HISTORY_SIZE, -HISTORY_SIZE);
         historyDecoration.setTemplate(historyDecorationPoints);
+        historyDecoration.setScale(HISTORY_SCALE, HISTORY_SCALE);
         return historyDecoration;
     }
 
