@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.internal.xtend.expression.ast.DeclaredParameter;
 import org.eclipse.internal.xtend.xtend.XtendFile;
@@ -33,6 +34,7 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.transformation.AbstractTransformation;
 import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
  * An implementation of the ITransformationFramework interface for the use with the Xtend framework.
@@ -45,6 +47,7 @@ import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 
 public class XtendTransformationFramework implements ITransformationFramework {
 
+    private static final int XTEND_LIST_TYPE_PLENGTH = 5;
     /** The Xtend facade, used to execute a transformation. **/
     private XtendFacade xtendFacade;
     /** The extension parameters. **/
@@ -63,7 +66,76 @@ public class XtendTransformationFramework implements ITransformationFramework {
     }
 
     /**
-     * Executes a transformation using the XtendFacade.
+     * Sets the actual parameters.
+     * 
+     * @param parameter
+     *            The parameters.
+     */
+    public void setParameters(final Object... parameter) {
+        this.parameters = parameter.clone();
+    }
+
+    /**
+     * Sets the transformation parameters by matching the current selection with the given list of
+     * types.
+     * 
+     * @param parameter
+     *            The list of parameter types.
+     * 
+     * @return True if all parameters could be matched
+     */
+    public boolean setParameters(final String... parameter) {
+
+        List<EObject> slist = ModelingUtil.getModelElementsFromSelection();
+        LinkedList<Object> params = new LinkedList<Object>();
+
+        for (String param : parameter) {
+            // Is the parameter a list?
+            if (param.contains("List")) {
+                // A List-Type is : List[T] so we need the list param type.
+                String listType = param.substring(XTEND_LIST_TYPE_PLENGTH, param.length() - 1);
+                List<EObject> listParameterEntries = new LinkedList<EObject>();
+                // Search first occurrence of listType
+                boolean started = false; // did we find the type?
+                for (EObject next : slist) {
+                    if (next.eClass().getName().equals(listType)) {
+                        listParameterEntries.add(next);
+                        started = true;
+                    } else {
+                        if (started) {
+                            // so we started to add elements and now we found some other type, so
+                            // break the loop.
+                            break;
+                        }
+                    }
+                }
+                params.add(listParameterEntries);
+                // Remove selection elements:
+                for (EObject e : listParameterEntries) {
+                    slist.remove(e);
+                }
+            } else {
+                // Search first element matching type 'param'
+                EObject buffer = null;
+                for (EObject next : slist) {
+                    if (next.eClass().getName().equals(param)) {
+                        buffer = next;
+                        params.add(next);
+                        break;
+                    }
+                }
+                // Remove element from selection list
+                if (buffer != null) {
+                    slist.remove(buffer);
+                }
+            }
+        }
+        this.parameters = params.toArray(new Object[params.size()]);
+        return slist.size() == 0;
+    }
+
+    /**
+     * Initializes a transformation using the XtendFacade.
      * 
      * @param fileName
      *            The extension file name
@@ -71,13 +143,15 @@ public class XtendTransformationFramework implements ITransformationFramework {
      *            The extension to execute
      * @param basePackage
      *            The class name of the editors EPackage
-     * @param parameter
-     *            The parameters
-     * @return False if an error occoured.
+     * @return False if an error occurred.
      */
     public boolean initializeTransformation(final String fileName, final String operation,
-            final String basePackage, final Object... parameter) {
-        //removing file extension
+            final String basePackage) {
+
+        if (parameters == null) {
+            return false;
+        }
+        // removing file extension
         String withFileExt = fileName;
 
         if (withFileExt.contains("." + XtendFile.FILE_EXTENSION)) {
@@ -96,10 +170,9 @@ public class XtendTransformationFramework implements ITransformationFramework {
         metaModel = new EmfMetaModel(pack);
         xtendFacade.registerMetaModel(metaModel);
 
-        if (!xtendFacade.hasExtension(operation, parameter)) {
+        if (!xtendFacade.hasExtension(operation, parameters)) {
             return false;
         } else {
-            this.parameters = parameter;
             this.extension = operation;
             initalized = true;
         }
@@ -108,6 +181,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
 
     /**
      * Executes a transformation.
+     * 
      * @return The return value from XtendFacade.call()
      */
     public Object executeTransformation() {
@@ -138,7 +212,6 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 if (o != null) {
                     LinkedList<AbstractTransformation> transformations = 
                         new LinkedList<AbstractTransformation>();
-                    // irgendwie werden die parameter nicht richtig gesetzt
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods
@@ -167,10 +240,12 @@ public class XtendTransformationFramework implements ITransformationFramework {
 
     /**
      * The default file extension for Xtend is 'ext'.
+     * 
      * @return 'ext'
      */
     public String getFileExtension() {
         return XtendFile.FILE_EXTENSION;
     }
+
 
 }

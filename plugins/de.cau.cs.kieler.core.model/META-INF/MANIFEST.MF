@@ -14,4 +14,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.model.transformation,
- de.cau.cs.kieler.core.model.transformation.xtend
+ de.cau.cs.kieler.core.model.transformation.xtend,
+ de.cau.cs.kieler.core.model.util

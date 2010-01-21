@@ -16,6 +16,8 @@ package de.cau.cs.kieler.core.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -27,6 +29,8 @@ import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -244,5 +248,34 @@ public final class ModelingUtil {
             list.add(item);
         }
         return list;
+    }
+    
+    /**
+     * Returns a list of the EObjects currently selected in the diagram. 
+     * @return A List of EObjects
+     */
+    public static List<EObject> getModelElementsFromSelection() {
+        if (PlatformUI.getWorkbench() != null
+                && PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null
+                && PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService() != null) {
+            ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getSelectionService().getSelection();
+            LinkedList<EObject> eo = new LinkedList<EObject>();
+            if (sel instanceof StructuredSelection) {
+                Iterator<?> it = ((StructuredSelection) sel).iterator();
+                while (it.hasNext()) {
+                    Object next = it.next();
+                    if (next instanceof EditPart) {
+                        Object model = ((EditPart) next).getModel();
+                        if (model instanceof View) {
+                            eo.add(((View) model).getElement());
+                        }
+                    }
+                }
+            }
+            return eo;
+        } else {
+            return null;
+        }
     }
 }

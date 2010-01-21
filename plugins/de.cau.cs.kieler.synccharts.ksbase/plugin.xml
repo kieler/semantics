@@ -95,6 +95,12 @@
              transformation="flattenState"
              transformationId="de.cau.cs.kieler.ksbase.flattenState">
        </transformation>
+       <transformation
+             icon="icons/connect.gif"
+             name="Add Successor States"
+             transformation="addSuccessorStates"
+             transformationId="de.cau.cs.kieler.ksbase.addSucs">
+       </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -129,6 +135,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.addSucs">
           </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
