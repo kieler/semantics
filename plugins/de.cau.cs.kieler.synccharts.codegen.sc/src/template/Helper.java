@@ -32,8 +32,7 @@ public class Helper {
     private static ArrayList<String> threadListSorted = new ArrayList<String>();
     private static ArrayList<Tuple<State, Integer>> realStateList = new ArrayList<Tuple<State, Integer>>();
     private static ArrayList<String> childThreadList = new ArrayList<String>();
-    private static ArrayList<State> checkedStates = new ArrayList<State>();
-    private static ArrayList<State> codegenStateList = new ArrayList<State>();
+    private static ArrayList<State> checkedStateList = new ArrayList<State>();
     private static final int NORMAL_EDGE = 1;
     private static final int WEAK_EDGE = -1;
     private static final int WEAK_STATE = 1;
@@ -83,7 +82,7 @@ public class Helper {
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
         // add state to the checked State list
-        checkedStates.add(state);
+        checkedStateList.add(state);
         Tuple<State, Integer> sourceStateTupel = getStatePropertyTupel(state);
         // add tuple to the real state list
         realStateList.add(sourceStateTupel);
@@ -95,7 +94,7 @@ public class Helper {
                         WEAK_EDGE);
                 if (!dependencyList.contains(dependency)) {
                     dependencyList.add(dependency);
-                    if (!checkedStates.contains(targetState)) {
+                    if (!checkedStateList.contains(targetState)) {
                         fillDependencyList(targetState);
                     }
                 }
@@ -128,7 +127,7 @@ public class Helper {
                             }
                         }
                     }
-                    if (!checkedStates.contains(innerState)) {
+                    if (!checkedStateList.contains(innerState)) {
                         fillDependencyList(innerState);
                     }
                 }
@@ -227,6 +226,14 @@ public class Helper {
         }
     }
 
+    /**
+     * Computes the priority of the state. This is similar to the thread priority, if the state
+     * represents a new thread
+     * 
+     * @param state
+     *            the state, you want to get the priority for
+     * @return the priority of the state
+     */
     public static final int computeChangePriority(final State state) {
         childThreadList.clear();
         listAllChildThreads(state);
@@ -262,6 +269,13 @@ public class Helper {
         return childThreadList;
     }
 
+    /**
+     * Computes a list with all states in the right order of their priority.
+     * 
+     * @param state
+     *            the root state to start with
+     * @return a sorted list (by priority) of states
+     */
     public static final List<String> computeThreadPriorities(final State state) {
         dependencyList.clear();
         realStateList.clear();
@@ -278,29 +292,27 @@ public class Helper {
         return threadListSorted;
     }
 
-    //////////////////////////// DELETE?! /////////////////////////
-    
     /**
-     * Checks if a state is in the codegenStateList or not.
+     * Computes a sorted list with states. The order of the list is the control flow of all states
+     * in a region beginning with the initial one.
      * 
      * @param state
-     *            the state that should be checked
-     * @return true if the state is in the list otherwise false
+     *            the initial state to start with
+     * @return a list, sorted by the control flow in the SyncChart
      */
-    public static boolean isInCodegenStateList(final State state) {
-        return codegenStateList.contains(state);
+    public static List<State> sortStateControlFlow(final State state) {
+        List<State> sortedStates = new LinkedList<State>();
+        return sortStateControlFlowHelp(sortedStates, state);
     }
 
-    /**
-     * Adds a state to the codegenStateList.
-     * 
-     * @param state
-     *            the state that should be added
-     */
-    public static void addCodegenStateList(final State state) {
-        codegenStateList.add(state);
+    private static List<State> sortStateControlFlowHelp(final List<State> sortedStates,
+            final State state) {
+        sortedStates.add(state);
+        for (Transition transition : state.getOutgoingTransitions()) {
+            if (!sortedStates.contains(transition.getTargetState())) {
+                sortStateControlFlowHelp(sortedStates, transition.getTargetState());
+            }
+        }
+        return sortedStates;
     }
-    
-    ////////////////////////////DELETE?! END /////////////////////
-
 }
