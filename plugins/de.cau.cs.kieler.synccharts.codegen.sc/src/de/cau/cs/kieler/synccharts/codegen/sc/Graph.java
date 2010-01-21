@@ -6,39 +6,48 @@ import java.util.LinkedList;
 /**
  * An implementation of an unweighted, directed graph using an adjacency matrix or an adjacency list
  * for encoding the set of edges.
+ * 
+ * @author tam
  */
 public class Graph {
+
     /**
-     * Two types of edges for special use. Default should be STRONG_EDGE.
+     * There is no edge between two nodes.
      */
     public static final int NO_EDGE = 0;
+    /**
+     * A Strong edge between two nodes (default edge).
+     */
     public static final int STRONG_EDGE = 1;
+    /**
+     * A weak edge between two nodes.
+     */
     public static final int WEAK_EDGE = -1;
 
     /**
      * The number of vertices of this graph.
      */
-    int numberOfVertices;
+    private int numberOfVertices;
 
     /**
      * The number of edges of this graph.
      */
-    int numberOfEdges;
+    private int numberOfEdges;
 
     /**
-     * A boolean to differ between list and matrix
+     * A boolean to differ between list and matrix.
      */
-    boolean list;
+    private boolean list;
 
     /**
      * The adjacency matrix encoding the set of edges of this graph.
      */
-    int[][] adjacencyMatrix;
+    private int[][] adjacencyMatrix;
 
     /**
      * The adjacency list encoding the set of edges of this graph.
      */
-    ArrayList<ArrayList<Integer>> adjacencyList;
+    private ArrayList<ArrayList<Integer>> adjacencyList;
 
     /**
      * Constructs a new unweighted, directed graph with <code>n</code> vertices and no edges. Use
@@ -54,7 +63,7 @@ public class Graph {
      *                if <code>n</code> is less than zero
      * @see #addEdge(int, int)
      */
-    public Graph(int n, boolean isList) throws IllegalArgumentException {
+    public Graph(final int n, final boolean isList) throws IllegalArgumentException {
 
         // adjacency list or adjacency matrix?
         list = isList;
@@ -92,14 +101,15 @@ public class Graph {
     /**
      * Returns an enumeration of adjacent vertices of the graph.
      * 
-     * @param <code>i</code> the number of the vertex
+     * @param i
+     *            the number of the vertex
      * 
      * @return an enumeration of all vertices that are adjacent to i
      * 
      * @exception IllegalArgumentException
-     *                if <code>i</code> is an illegal vertex number
+     *                if i is an illegal vertex number
      */
-    public Enumerator enumerateAdjacentVertices(int i) throws IllegalArgumentException {
+    public Enumerator enumerateAdjacentVertices(final int i) throws IllegalArgumentException {
         return new Enumerator(this, i);
     }
 
@@ -119,7 +129,8 @@ public class Graph {
      *                if <code>i</code> or <code>j</code> are not between 0 and the number of
      *                vertices of this graph
      */
-    public void addEdge(int i, int j, int edgeType) throws IllegalArgumentException {
+    public void addEdge(final int i, final int j, final int edgeType)
+            throws IllegalArgumentException {
         // check the passed vertex indizes
         if (i < 0 || i >= numberOfVertices || j < 0 || j >= numberOfVertices) {
             String errorMessage = "Allows vertex indizes are 0.." + (numberOfVertices - 1) + ".";
@@ -136,8 +147,8 @@ public class Graph {
         if (list) {
             if (!adjacencyList.get(i).contains(j)) {
                 numberOfEdges++;
+                adjacencyList.get(i).add(j);
             }
-            adjacencyList.get(i).add(j);
         } else {
             if (adjacencyMatrix[i][j] == NO_EDGE) {
                 numberOfEdges++;
@@ -179,7 +190,7 @@ public class Graph {
      *                if <code>i</code> or <code>j</code> are not between 0 and the number of
      *                vertices of this graph
      */
-    public boolean hasEdge(int i, int j) throws IllegalArgumentException {
+    public boolean hasEdge(final int i, final int j) throws IllegalArgumentException {
         // check the passed vertex indizes
         if (i < 0 || i >= numberOfVertices || j < 0 || j >= numberOfVertices) {
             String errorMessage = "Allowed vertex indizes are 0.." + (numberOfVertices - 1) + ".";
@@ -203,10 +214,8 @@ public class Graph {
      * 
      * @return the number of vertices that are adjacent to <code>i</code>
      * 
-     * @exception IllegalArgumentException
-     *                if <code>i</code> is not between 0 and the number of vertices of this graph
      */
-    public int degree(int i) {
+    public int degree(final int i) {
         // check the passed vertex indizes
         if (i < 0 || i >= numberOfVertices) {
             String errorMessage = "Allowed vertex indizes are 0.." + (numberOfVertices - 1) + ".";
@@ -232,6 +241,7 @@ public class Graph {
     public void print() {
         if (list) {
             for (int i = 0; i < numberOfVertices; i++) {
+                System.out.print("Successor of node " + i + ": ");
                 System.out.println(adjacencyList.get(i));
             }
         } else {
@@ -245,8 +255,8 @@ public class Graph {
     }
 
     /**
-     * returns an integer array with a list of predecessor vertices (just implemented for adjacency
-     * lists)
+     * returns an integer array with a list of predecessor vertices (just implemented for
+     * adjacencylists).
      * 
      * @return an integer array with a list of predecessor vertices.
      */
@@ -267,7 +277,7 @@ public class Graph {
 
     /**
      * returns a linked list with the topological sort of the graph (just implemented for adjacency
-     * lists)
+     * lists).
      * 
      * @return a linked list with the topological sort of the graph
      */
@@ -277,22 +287,29 @@ public class Graph {
         // one loop for each node
         for (int i = 0; i < numberOfVertices; i++) {
             int source = -1;
-            // find source node
+            // find a source node (a node without predecessor)
             for (int j = 0; j < numberOfVertices; j++) {
                 if (predecessorList[j] == 0) {
                     source = j;
                     break;
                 }
             }
-            if (source >= 0) {
-                predecessorList[source] = -1;
-                // remove all predecessor dependencies of source
-                for (int j : adjacencyList.get(source)) {
-                    predecessorList[j]--;
-                }
-                result.add(source);
+            if (source == -1) { // the graph is not acyclic
+                // break the cycle and set a new source
+                source = breakCycle(predecessorList);
             }
+            predecessorList[source] = -1;
+            // remove all predecessor dependencies of source
+            for (int j : adjacencyList.get(source)) {
+                predecessorList[j]--;
+            }
+            result.add(source);
         }
         return result;
+    }
+    
+    private int breakCycle(final int[] predecessorList) {
+        int out = 0;
+        return out;
     }
 }

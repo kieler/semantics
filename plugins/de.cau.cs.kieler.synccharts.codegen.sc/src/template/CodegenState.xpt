@@ -6,7 +6,7 @@
 
 «IF (this.regions.size == 1)-»
 «EXPAND generateForkOneRegion FOR this-»
-«EXPAND state FOR getInitialState(this.regions.first())-»
+«EXPAND CodegenRegion::region FOREACH this.regions-»
 
 «this.id»_main:
 «ELSE-»
@@ -45,11 +45,6 @@
 			GOTO(«this.id»);
 		«ENDIF-»
 	«ENDIF-»
-	«FOREACH sortTransitionPrios(this) AS outTrans-»
-		«IF (((Transition)outTrans).targetState != ((Transition)outTrans).sourceState)-»
-			«EXPAND state FOR ((Transition)outTrans).targetState-»
-		«ENDIF-»
-	«ENDFOREACH-»
 «ENDIF-»
 «ENDDEFINE»
 

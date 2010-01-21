@@ -33,6 +33,7 @@ public class Helper {
     private static ArrayList<Tuple<State, Integer>> realStateList = new ArrayList<Tuple<State, Integer>>();
     private static ArrayList<String> childThreadList = new ArrayList<String>();
     private static ArrayList<State> checkedStates = new ArrayList<State>();
+    private static ArrayList<State> codegenStateList = new ArrayList<State>();
     private static final int NORMAL_EDGE = 1;
     private static final int WEAK_EDGE = -1;
     private static final int WEAK_STATE = 1;
@@ -51,7 +52,7 @@ public class Helper {
     }
 
     private static void printDependencyList() {
-        System.out.print("Dependency List: [ ");
+        System.out.print("dependencyList: [ ");
         for (Dependency dependency : dependencyList) {
             String weakStrongFirst = "";
             String weakStrongSecond = "";
@@ -87,10 +88,11 @@ public class Helper {
         // add tuple to the real state list
         realStateList.add(sourceStateTupel);
         for (Transition transition : state.getOutgoingTransitions()) {
-            if (!transition.getSourceState().equals(transition.getTargetState())){
+            if (!transition.getSourceState().equals(transition.getTargetState())) {
                 State targetState = transition.getTargetState();
                 Tuple<State, Integer> targetStateTupel = getStatePropertyTupel(targetState);
-                Dependency dependency = new Dependency(targetStateTupel, sourceStateTupel, WEAK_EDGE);
+                Dependency dependency = new Dependency(targetStateTupel, sourceStateTupel,
+                        WEAK_EDGE);
                 if (!dependencyList.contains(dependency)) {
                     dependencyList.add(dependency);
                     if (!checkedStates.contains(targetState)) {
@@ -190,6 +192,7 @@ public class Helper {
                 threadListUnsorted.add(dependency.getSecondStateTupel());
             }
         }
+        System.out.print("threadListUnsorted: ");
         printTupelList(threadListUnsorted);
 
         // Build a Graph with the dependencies of all threads.
@@ -205,7 +208,9 @@ public class Helper {
             edgeType = dependency.getDependencyType();
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
-            dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
+            if (edgeType == NORMAL_EDGE) {
+                dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
+            }
         }
 
         // Make a topological sort of the dependency graph.
@@ -272,5 +277,30 @@ public class Helper {
         System.out.println("threadListSorted: " + threadListSorted.toString());
         return threadListSorted;
     }
+
+    //////////////////////////// DELETE?! /////////////////////////
+    
+    /**
+     * Checks if a state is in the codegenStateList or not.
+     * 
+     * @param state
+     *            the state that should be checked
+     * @return true if the state is in the list otherwise false
+     */
+    public static boolean isInCodegenStateList(final State state) {
+        return codegenStateList.contains(state);
+    }
+
+    /**
+     * Adds a state to the codegenStateList.
+     * 
+     * @param state
+     *            the state that should be added
+     */
+    public static void addCodegenStateList(final State state) {
+        codegenStateList.add(state);
+    }
+    
+    ////////////////////////////DELETE?! END /////////////////////
 
 }

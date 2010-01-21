@@ -3,4 +3,5 @@
 «EXTENSION template::Helper»
 
 «DEFINE region FOR Region-»
+	«EXPAND CodegenState::state FOREACH this.innerStates-»
 «ENDDEFINE»

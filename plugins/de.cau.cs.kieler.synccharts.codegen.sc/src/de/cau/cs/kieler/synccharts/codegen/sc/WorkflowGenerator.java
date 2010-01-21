@@ -88,7 +88,7 @@ public class WorkflowGenerator {
                     + File.separator;
             // for debugging un-comment the following line
             //outPath = "/home/tam/scdebug/";
-            outPath = "." + File.separator + "scDebug" + File.separator;
+            //outPath = "." + File.separator + "scDebug" + File.separator;
         }
 
         // Outlet

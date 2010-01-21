@@ -34,7 +34,7 @@ int tick(int isInit){
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»
-	«EXPAND CodegenState::state FOR getInitialState(innerStates.regions.first())-»
+	«EXPAND CodegenRegion::region FOR this.innerStates.first().regions.first()-»
 «ENDDEFINE»
 
 «DEFINE finish FOR Region-»

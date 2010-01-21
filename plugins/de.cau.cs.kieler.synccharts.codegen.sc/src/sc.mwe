@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <workflow>
-  <property name="model" value="examples/SurfDepth.kits" />
+  <property name="model" value="examples/test.kixs" />
   <property name="src-gen" value="generated" />
 
   <!-- set up EMF for standalone execution -->
