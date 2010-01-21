@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.krep.compiler.helper;
 
 /**
- *  Basic Lustre types.
+ * Basic Lustre types.
+ * 
+ * @kieler.rating 2010-01-21 proposed yellow ctr
  * 
  * @author ctr
  */
