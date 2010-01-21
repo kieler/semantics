@@ -71,6 +71,15 @@ context State if (parentRegion == null || parentRegion.parentState == null)
   WARNING "Model has no outputs":
    (signals.exists(s | s.isOutput));
 
+context State if (parentRegion == null || parentRegion.parentState == null)
+  ERROR "The root state should have at least one Region containing at least one State! 
+  Try upgrading the root state!":
+   (regions.size > 0 && regions.forAll(r|r.innerStates.size > 0));
+
+context State if (parentRegion != null && parentRegion.parentState == null)
+  ERROR "There should be exactly one root State which represents the whole SyncChart.":
+   (parentRegion.innerStates.size == 1);
+
 // ================================================================================================
 // Regions
 
@@ -88,10 +97,9 @@ context Region if ((parentState.parentRegion.parentState != null) &&
 		+ "has to contain at least one final state in every parallel region." :
 	(innerStates.select(s|s.isFinal).size > 0);
 
-// Root Region
-context Region if (parentState == null)
-	ERROR "There should be exactly one root State which represents the whole SyncChart." :
-	(innerStates.size == 1);
+context Region 
+	ERROR "An empty Region does not make sense! Remove the Region or add States to it!" : 
+	(innerStates.size > 0);
 
 // ================================================================================================
 // Signals
