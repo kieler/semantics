@@ -25,7 +25,6 @@ Export-Package: de.cau.cs.kieler.krep.evalbench;
  de.cau.cs.kieler.krep.evalbench.program.kep;uses:="de.cau.cs.kieler.krep.evalbench.program",
  de.cau.cs.kieler.krep.evalbench.program.kep.parser;uses:="de.cau.cs.kieler.krep.evalbench.program.kep,org.antlr.runtime",
  de.cau.cs.kieler.krep.evalbench.program.klp;uses:="de.cau.cs.kieler.krep.evalbench.comm,de.cau.cs.kieler.krep.evalbench.program",
- de.cau.cs.kieler.krep.evalbench.program.klp.parser;uses:="org.antlr.runtime,de.cau.cs.kieler.krep.evalbench.program,de.cau.cs.kieler.krep.evalbench.program.klp",
  de.cau.cs.kieler.krep.evalbench.trace;
   uses:="org.eclipse.jface.action,
    de.cau.cs.kieler.krep.evalbench.comm,
