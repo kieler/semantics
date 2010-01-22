@@ -480,7 +480,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         IToolBarManager manager = bars.getToolBarManager();
         // first remove all entries
         manager.removeAll();
-
+        
         // call soh's extension point
         addExternalContributions(manager);
 
@@ -522,6 +522,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
         manager.add(getActionPause());
         manager.add(getActionStop());
+        
 
         // commit changes
         bars.updateActionBars();
@@ -530,7 +531,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Add components contributed by other plugins through the ToolBarContributor extension point.
+     * Add components contributed by other plugins through the
+     * ToolBarContributor extension point.
      * 
      * author soh
      * 
@@ -539,14 +541,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.toolbarContributor");
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.toolbarContributor");
 
         for (IConfigurationElement element : contributors) {
             try {
                 IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
                         .createExecutableExtension("class"));
 
-                ControlContribution[] contributions = contributor.provideToolbarContributions(null);
+                ControlContribution[] contributions = contributor
+                        .provideToolbarContributions(null);
 
                 if (contributions != null) {
                     for (ControlContribution contribution : contributions) {
@@ -560,6 +564,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 e0.printStackTrace();
             }
         }
+
     }
 
     // -------------------------------------------------------------------------
