@@ -220,10 +220,13 @@ public abstract class MonitoredOperation {
             }
             status.set(execute(monitor.get()));
         } finally {
-            if (status.get() == null) {
-                status.set(Status.OK_STATUS);
+            synchronized (status) {
+                if (status.get() == null) {
+                    status.set(Status.OK_STATUS);
+                }
+                display.wake();
+                status.notify();
             }
-            display.wake();
         }
     }
     
@@ -283,6 +286,15 @@ public abstract class MonitoredOperation {
                     }
                 }
             });
+            synchronized (status) {
+                while (status.get() == null) {
+                    try {
+                        status.wait();
+                    } catch (InterruptedException exception) {
+                        // ignore exception
+                    }
+                }
+            }
             postUIexec(status.get());
         } catch (InvocationTargetException exception) {
             if (monitor.get() == null) {
