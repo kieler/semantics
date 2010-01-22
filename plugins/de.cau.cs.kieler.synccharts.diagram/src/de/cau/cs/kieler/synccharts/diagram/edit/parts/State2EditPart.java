@@ -262,22 +262,7 @@ public class State2EditPart extends ShapeNodeEditPart {
                 .getType(StateLabel2EditPart.VISUAL_ID));
     }
 
-    @Override
-    public Command getCommand(Request request) {
-        System.out.println(request);
-        if (request instanceof ChangeBoundsRequest) {
-            Rectangle bounds = this.getFigure().getBounds();
-            Dimension minimumSize = this.getFigure().getMinimumSize();
-            ChangeBoundsRequest changeBoundsRequest = new ChangeBoundsRequest();
-            Dimension sizeDelta = new Dimension(bounds.width - minimumSize.width, bounds.height
-                    - minimumSize.height);
-            changeBoundsRequest.setSizeDelta(sizeDelta);
-            Command cmd = super.getCommand(changeBoundsRequest);
-            cmd.execute();
-        }
-        return super.getCommand(request);
-
-    }
+   
 
     /**
      * @generated
