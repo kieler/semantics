@@ -198,6 +198,7 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
      */
     public Region createRegion() {
         RegionImpl region = new RegionImpl();
+        region.eAdapters().addAll(this.eAdapters());
         return region;
     }
 
