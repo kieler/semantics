@@ -226,17 +226,11 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                         SyncchartsContentUtil.clearMarker((EObject) notifier);
                     }
                 } catch (IllegalStateException ise) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    Status myStatus = new Status(IStatus.WARNING, Activator.PLUGIN_ID,
                             "Exception during SyncChart model post-processing: "
                                     + ise.getClass().getName(), ise);
                     StatusManager.getManager().handle(myStatus, StatusManager.LOG);
                 } catch (Exception e) {
-                    // if somebody has temporarily disabled us, we have to fix
-                    // this when
-                    // an exception occurs.
-                    if (!this.isEnabled()) {
-                        this.setEnabled(true);
-                    }
                     /*
                      * Try to handle the exception by placing a problem Marker in the diagram. 
                      * If this fails
@@ -252,7 +246,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                             } catch (KielerException e1) {
                                 /*will go on in next case */
                                 Status debugStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                                        "Could not add problem Marker: " + e.getClass().getName(),
+                                        "Could not add problem Marker: " + e1.getClass().getName(),
                                         e1);
                                 StatusManager.getManager().handle(debugStatus, StatusManager.LOG);
                             }
@@ -266,6 +260,13 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                                     + e.getClass().getName(), e);
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+                } finally {
+                    // if somebody has temporarily disabled us, we have to fix
+                    // this when
+                    // an exception occurs.
+                    if (!this.isEnabled()) {
+                        this.setEnabled(true);
+                    }
                 }
             }
         }
@@ -409,7 +410,9 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 newId = newId.replaceAll("\\s", "_"); // replace all
                 // whitespace
                 // with underscores
+                this.setEnabled(false);
                 state.setId(newId);
+                this.setEnabled(true);
             }
             // new state created
         } else if (notification.getFeature() != null
@@ -441,7 +444,11 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     private void handleRegionId(final Notification notification, final Region region) {
         String newID = SyncchartsContentUtil.getNewId(region);
         this.setEnabled(false);
-        region.setId(newID);
+        try {
+            region.setId(newID);
+        } catch (IllegalStateException e) {
+            /* nothing, we don't set the Region ID if we are not allowed to */
+        }
         this.setEnabled(true);
     }
 
