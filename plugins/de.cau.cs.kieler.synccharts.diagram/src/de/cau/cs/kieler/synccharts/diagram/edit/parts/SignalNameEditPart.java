@@ -394,7 +394,7 @@ public class SignalNameEditPart extends CompartmentEditPart implements ITextAwar
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        refreshFontColor();
+        // refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }

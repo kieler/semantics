@@ -70,9 +70,7 @@
           name="RegionFigure"
           qualifiedClassName="de.cau.cs.kieler.synccharts.custom.CustomRegionFigure">
         <layout
-            xsi:type="gmfgraph:FlowLayout"
-            majorSpacing="0"
-            minorSpacing="0"/>
+            xsi:type="gmfgraph:StackLayout"/>
         <children
             xsi:type="gmfgraph:Label"
             name="RegionIdFigure"

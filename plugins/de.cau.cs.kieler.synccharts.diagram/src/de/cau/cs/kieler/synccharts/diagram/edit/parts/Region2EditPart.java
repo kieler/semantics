@@ -78,14 +78,17 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
+        LayoutEditPolicy lep = new LayoutEditPolicy() {
 
-        FlowLayoutEditPolicy lep = new FlowLayoutEditPolicy() {
-
-            protected Command createAddCommand(EditPart child, EditPart after) {
-                return null;
+            protected EditPolicy createChildEditPolicy(EditPart child) {
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                if (result == null) {
+                    result = new NonResizableEditPolicy();
+                }
+                return result;
             }
 
-            protected Command createMoveChildCommand(EditPart child, EditPart after) {
+            protected Command getMoveChildrenCommand(Request request) {
                 return null;
             }
 
@@ -272,17 +275,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
          * @generated
          */
         public RegionFigure() {
-
-            FlowLayout layoutThis = new FlowLayout();
-            layoutThis.setStretchMinorAxis(false);
-            layoutThis.setMinorAlignment(FlowLayout.ALIGN_LEFTTOP);
-
-            layoutThis.setMajorAlignment(FlowLayout.ALIGN_LEFTTOP);
-            layoutThis.setMajorSpacing(0);
-            layoutThis.setMinorSpacing(0);
-            layoutThis.setHorizontal(true);
-
-            this.setLayoutManager(layoutThis);
+            this.setLayoutManager(new StackLayout());
 
             createContents();
         }

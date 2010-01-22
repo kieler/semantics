@@ -15,7 +15,7 @@
 «EXTENSION xpt::diagram::ViewmapAttributesUtils»
 
 «REM»remove refreshFontColor for RegionID, otherwise the color set in gmfgraph will be
-     overidden by default color set in the preferences
+     overidden by default color set in the preferences«ENDREM»
 «DEFINE refreshVisuals(needsRefreshBounds : Boolean) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected void refreshVisuals() {
@@ -30,7 +30,7 @@
 		«ENDIF-»
 	}
 «ENDDEFINE»
-«ENDREM»
+
 
 «DEFINE getManager(diagram : gmfgen::GenDiagram) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»

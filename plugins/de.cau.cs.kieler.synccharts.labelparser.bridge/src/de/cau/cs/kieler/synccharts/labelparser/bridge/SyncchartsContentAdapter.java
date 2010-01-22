@@ -36,6 +36,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -410,7 +411,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
                 // with underscores
                 state.setId(newId);
             }
-        // new state created
+            // new state created
         } else if (notification.getFeature() != null
                 && notification.getFeature().equals(
                         SyncchartsPackage.eINSTANCE.getState_ParentRegion())) {
@@ -418,13 +419,30 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             if (state.getLabel() == null || state.getLabel().trim().equals("")) {
                 state.setId(SyncchartsContentUtil.getNewId(state));
             }
-        // transition removed
-        }  else if (notification.getEventType() == Notification.REMOVE
+            // transition removed
+        } else if (notification.getEventType() == Notification.REMOVE
                 && notification.getFeature() != null
                 && notification.getFeature().equals(
                         SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())) {
-                handleStateFixPriorities(state);
+            handleStateFixPriorities(state);
+        } else if (notification.getEventType() == Notification.ADD
+                && notification.getFeature() != null
+                && notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Regions())) {
+            handleRegionId(notification, (Region) notification.getNewValue());
         }
+    }
+
+    /**
+     * At creation of new Regions, a new unique ID should be given.
+     * 
+     * @param notification
+     * @param region
+     */
+    private void handleRegionId(final Notification notification, final Region region) {
+        String newID = SyncchartsContentUtil.getNewId(region);
+        this.setEnabled(false);
+        region.setId(newID);
+        this.setEnabled(true);
     }
 
     private void handleValuedObject(final Notification notification, final ValuedObject notifier)

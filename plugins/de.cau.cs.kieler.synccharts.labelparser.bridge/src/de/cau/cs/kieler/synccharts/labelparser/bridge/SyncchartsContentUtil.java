@@ -100,6 +100,50 @@ public final class SyncchartsContentUtil {
     }
 
     /**
+     * Determine a new unique ID for a given Region. Will search sibling regions
+     * (regions within the same State) and compare their IDs. Will return the
+     * next ID with the "Rn" where n is the next free integer number available,
+     * e.g. R0, R1, R2...
+     * 
+     * @param region
+     *            given Region
+     * @return a new unique ID within the State
+     */
+    public static String getNewId(final Region region) {
+        String id = "R";
+        State parentState = region.getParentState();
+        if (parentState == null) {
+            return id;
+        }
+        if (parentState != null) {
+            EList<Region> siblings = parentState.getRegions();
+            int counter = 0;
+            for (Region sibling : siblings) {
+                if (sibling == region || sibling.getId() == null) {
+                    continue;
+                } else {
+                    String siblingId = sibling.getId().trim();
+                    if (siblingId.matches("R\\d+")) {
+                        // matches S digits
+                        int i = siblingId.length();
+                        while (Character.isDigit(siblingId.charAt(i - 1))) {
+                            i--;
+                        }
+                        if (siblingId.charAt(i - 1) == 'R') {
+                            i = Integer.parseInt(siblingId.substring(i));
+                            if (i >= counter) {
+                                counter = i + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            id = id + counter;
+        }
+        return id;
+    }
+    
+    /**
      * Get a new unique priority to a given Transition. That is the current
      * priority will be changed if there is a conflict with any sibling
      * Transition. Set it to the max priority of all siblings plus one.

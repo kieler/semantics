@@ -394,7 +394,7 @@ public class RegionIdEditPart extends CompartmentEditPart implements ITextAwareE
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        refreshFontColor();
+        // refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }

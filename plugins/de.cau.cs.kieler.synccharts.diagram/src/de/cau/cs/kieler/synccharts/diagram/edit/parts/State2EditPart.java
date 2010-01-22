@@ -262,8 +262,6 @@ public class State2EditPart extends ShapeNodeEditPart {
                 .getType(StateLabel2EditPart.VISUAL_ID));
     }
 
-   
-
     /**
      * @generated
      */
