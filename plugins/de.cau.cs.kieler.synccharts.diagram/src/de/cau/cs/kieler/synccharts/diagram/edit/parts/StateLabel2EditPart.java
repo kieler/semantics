@@ -394,7 +394,7 @@ public class StateLabel2EditPart extends CompartmentEditPart implements ITextAwa
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        // refreshFontColor();
+        refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }

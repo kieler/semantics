@@ -401,7 +401,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart implemen
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        // refreshFontColor();
+        refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }

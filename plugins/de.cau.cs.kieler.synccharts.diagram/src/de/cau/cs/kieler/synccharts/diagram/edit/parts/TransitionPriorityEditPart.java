@@ -400,7 +400,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        // refreshFontColor();
+        refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }
