@@ -23,6 +23,7 @@ import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 /**
  * The activator class controls the plug-in life cycle.
  * 
+ * 
  * @author ctr
  */
 public final class Activator extends Plugin {

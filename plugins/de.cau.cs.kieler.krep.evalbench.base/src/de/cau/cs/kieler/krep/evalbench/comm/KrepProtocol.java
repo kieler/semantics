@@ -26,7 +26,8 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
 
 /**
- * Implementation of the communication protocol interface that uses the KREP protocol.
+ * Implementation of the communication protocol interface that uses the KREP protocol. Currently,
+ * this is only the KLP. The protocol itself is documented in ctr's thesis.
  * 
  * @author ctr
  */
@@ -69,6 +70,9 @@ public class KrepProtocol extends CommunicationProtocol {
     private static final int MASK_BYTE = 0xFF;
     private static final int BYTE_LENGTH = 8;
 
+    // The currently used assembler
+    private IAssembler asm = null;
+    
     private void sendCmd(final byte data) throws CommunicationException {
         getConnection().send(data);
         notifySend(Integer.toHexString(data) + "(" + String.valueOf((char) data) + ")");
@@ -76,14 +80,11 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private void send(final byte data) throws CommunicationException {
         getConnection().send(data);
-        // log("-> " + data);
         notifySend(Integer.toHexString(data));
-
     }
 
     private void send(final byte[] data) throws CommunicationException {
         getConnection().send(data);
-        // ConnectionView.log("-> " + data);
         StringBuffer t = new StringBuffer();
         for (byte b : data) {
             t.append(Integer.toHexString(b));
@@ -93,10 +94,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         final LinkedList<Integer> res = getConnection().receiveByte(n);
-
         notifyReceive(String.valueOf(res));
-
-        // ConnectionView.log("<- " + res);
         return res;
     }
 
@@ -130,7 +128,6 @@ public class KrepProtocol extends CommunicationProtocol {
         sendCmd(TRACE_COMMAND);
         LinkedList<Integer> t = receiveByte(bytes);
         for (int i = 0; i < bytes; i++) {
-            // String s = t.substring(2*i, 2*(i+1));
             int b = t.get(i);
             int mask = 1;
             for (int j = 0; j < BYTE_LENGTH; j++) {
@@ -185,6 +182,7 @@ public class KrepProtocol extends CommunicationProtocol {
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
         notifyComment("load program");
+        asm = program;
         if (krp == null) {
             getTargetInfo();
         }
@@ -245,6 +243,12 @@ public class KrepProtocol extends CommunicationProtocol {
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
         notifyComment("tick");
+        if(asm==null){
+            throw new CommunicationException("No program is currently running.");
+        }
+        for(Signal o: asm.getOutputs()){
+            outputs.add(o);
+        }
         int rt = 0;
         // send inputs
         byte i = 0;
@@ -271,12 +275,12 @@ public class KrepProtocol extends CommunicationProtocol {
         }
 
         // perform tick
-        getConnection().send(TICK_COMMAND);
+        send(TICK_COMMAND);
         rt = receiveByte(1).getFirst();
         // receive outputs
         i = 0;
-        for (Signal s : outputs) {
-            sendCmd(GETVALUE_COMMAND);
+        for (Signal s : asm.getOutputs()) {
+            send(GETVALUE_COMMAND);
             send(i);
             Integer v = receiveInt();
             if (s.isValued()) {
@@ -290,7 +294,13 @@ public class KrepProtocol extends CommunicationProtocol {
         return rt;
     }
 
+    /**
+     * reconstructs an integer from received bytes b0,..,bn
+     * @return res=b0..bn
+     * @throws CommunicationException
+     */            
     private Integer receiveInt() throws CommunicationException {
+       
         final int wordSize = 4;
         long tmp = 0;
         LinkedList<Integer> bytes = receiveByte(wordSize);
@@ -298,9 +308,11 @@ public class KrepProtocol extends CommunicationProtocol {
             tmp = tmp << BYTE_LENGTH;
             tmp += b;
         }
+        //check for overflow
         final long tmin = 0x80000000;
         final long tmax = 0x7FFFFFFF;
         if (tmp > tmax) {
+            // sign bit set, should be negative
             tmp += tmin;
             tmp += tmin;
         }

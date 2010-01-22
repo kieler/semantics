@@ -124,8 +124,8 @@ public final class DataComponent extends JSONObjectDataComponent {
             for (Signal s : inputs) {
                 if (data.has(s.getName())) {
                     Object obj = data.get(s.getName());
-                    s.setPresent(JSONSignalValues.isPresent(obj));
-                    Object val = JSONSignalValues.getSignalValue(obj);
+                    s.setPresent(JSONSignalValues.isPresent(obj));                    
+                    Object val = JSONSignalValues.getSignalValue(obj);                    
                     if (s.isValued() && val != null) {
                         s.setValue(val);
                     }
@@ -149,7 +149,6 @@ public final class DataComponent extends JSONObjectDataComponent {
         }
         try {
             for (Signal s : outputs) {
-
                 if (s.isValued()) {
                     res.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
                             .getPresent()));
@@ -167,7 +166,6 @@ public final class DataComponent extends JSONObjectDataComponent {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-
     }
 
     /**
