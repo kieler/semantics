@@ -13,8 +13,11 @@
  */
 package de.cau.cs.kieler.sim.krep;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -42,6 +45,7 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
@@ -466,49 +470,52 @@ public final class DataComponent extends JSONObjectDataComponent {
         String path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null))
                 .getPath();
 
-        Process p = Runtime.getRuntime().exec(path + "cec-strlxml");
+
+       // OutputStream xml = cecRun("strl2xml", path + "cec-strlxml", strl  );
+        
+        Process strl2xml = Runtime.getRuntime().exec(path + "cec-strlxml");
         // Process p = Runtime.getRuntime().exec();
-        InputStream xml = p.getInputStream();
-        InputStream stderr = p.getErrorStream();
-        OutputStream stdin = p.getOutputStream();
+        InputStream stderr = strl2xml.getErrorStream();
+        OutputStream stdin = strl2xml.getOutputStream();
 
         while (strl.available() > 0) {
             int r = strl.read();
             stdin.write(r);
         }
+        stdin.flush();
         stdin.close();
         try {
-            p.waitFor();
-            if (p.exitValue() != 0) {
+        	strl2xml.waitFor();
+            if (strl2xml.exitValue() != 0) {
                 checkErrors(stderr);
             }
             StringBuffer debug = new StringBuffer(
                     "===========================XML==================================");
 
             // expand modules
-            p = Runtime.getRuntime().exec(path + "cec-expandmodules");
-            InputStream exp = p.getInputStream();
-            stdin = p.getOutputStream();
-            stderr = p.getErrorStream();
+            Process expandmodules = Runtime.getRuntime().exec(path + "cec-expandmodules");
+            InputStream exp = expandmodules.getInputStream();
+            stdin = expandmodules.getOutputStream();
+            stderr = expandmodules.getErrorStream();
 
-            while (xml.available() > 0) {
-                int r = xml.read();
-                stdin.write(r);
-                debug.append(Character.toChars(r));
-            }
+           // while (xml.available() > 0) {
+           //     int r = xml.read();
+           ////     stdin.write(r);
+           //     debug.append(Character.toChars(r));
+           // }
             Activator.debug(debug.toString());
             stdin.close();
-            p.waitFor();
-            if (p.exitValue() != 0) {
+            expandmodules.waitFor();
+            if (expandmodules.exitValue() != 0) {
                 checkErrors(stderr);
             }
 
             // dismantle
-            p = Runtime.getRuntime().exec(new String[] { path + "cec-kepdismantle" }); // , "-d ALL"
+            Process dismantle = Runtime.getRuntime().exec(new String[] { path + "cec-kepdismantle" }); // , "-d ALL"
             // });
-            InputStream dis = p.getInputStream();
-            stdin = p.getOutputStream();
-            stderr = p.getErrorStream();
+            InputStream dis = dismantle.getInputStream();
+            stdin = dismantle.getOutputStream();
+            stderr = dismantle.getErrorStream();
 
             debug = new StringBuffer(
                     "===========================EXP==================================");
@@ -520,17 +527,17 @@ public final class DataComponent extends JSONObjectDataComponent {
             }
             Activator.debug(debug.toString());
             stdin.close();
-            p.waitFor();
-            if (p.exitValue() != 0) {
+            dismantle.waitFor();
+            if (dismantle.exitValue() != 0) {
                 checkErrors(stderr);
             }
 
             // to KEP
-            p = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
+            Process astkep = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
             // TODO: add -o for optimizations. Oops, must be independent of OS.
-            InputStream k = p.getInputStream();
-            stdin = p.getOutputStream();
-            stderr = p.getErrorStream();
+            InputStream k = astkep.getInputStream();
+            stdin = astkep.getOutputStream();
+            stderr = astkep.getErrorStream();
             debug = new StringBuffer(
                     "===========================DIS==================================");
 
@@ -541,22 +548,22 @@ public final class DataComponent extends JSONObjectDataComponent {
             }
             Activator.debug(debug.toString());
             stdin.close();
-            p.waitFor();
-            if (p.exitValue() != 0) {
+            astkep.waitFor();
+            if (astkep.exitValue() != 0) {
                 checkErrors(stderr);
             }
 
             // to kasm
-            p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
-            kasm = p.getInputStream();
-            stdin = p.getOutputStream();
-            stderr = p.getErrorStream();
+            Process xml2kasm = Runtime.getRuntime().exec(path + "cec-xmlkasm");
+            kasm = xml2kasm.getInputStream();
+            stdin = xml2kasm.getOutputStream();
+            stderr = xml2kasm.getErrorStream();
             while (k.available() > 0) {
                 stdin.write(k.read());
             }
             stdin.close();
-            p.waitFor();
-            if (p.exitValue() != 0) {
+            xml2kasm.waitFor();
+            if (xml2kasm.exitValue() != 0) {
                 checkErrors(stderr);
             }
         } catch (InterruptedException e) {
@@ -573,9 +580,72 @@ public final class DataComponent extends JSONObjectDataComponent {
     }
 
     /**
-     * @param stderr
-     * @throws IOException
-     * @throws KiemInitializationException
+     * run a cec process with a timeout
+     */
+    private InputStream cecRun(String name, String cmd, InputStream input, KielerProgressMonitor monitor) throws IOException, KiemInitializationException, InterruptedException  {  	final int TIMEOUT = 500;
+    	
+     	Process p = Runtime.getRuntime().exec(cmd);
+    	
+     	OutputStream output = new ByteArrayOutputStream();
+     	
+    	InputStream stdout = p.getInputStream();
+        InputStream stderr = p.getErrorStream();
+        OutputStream stdin = p.getOutputStream();
+        StringBuffer debug = new StringBuffer(name + ":\n");
+        
+        
+        
+        while(input.available() > 0) {
+        	int r = input.read();
+        	stdin.write(r);
+                debug.append(Character.toChars(r));
+            }
+            Activator.debug(debug.toString());            
+            stdin.close();
+            
+            
+            int time =0;
+            while(time < TIMEOUT){
+            	if(monitor.isCanceled()){
+            		throw new KiemInitializationException("cancled", true, null);
+            	}
+            if(stdout.available()>0){
+            	output.write(stdout.read());
+            }else{
+            	try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// silently ignore
+				}
+            	time+=100;
+            	
+            }
+            try{
+            checkErrors(stderr);                       
+            	stdin.close();
+                stdout.close();
+                stderr.available();
+                try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// silently ignore
+				}
+                p.waitFor();
+            }finally{
+            	p.destroy();
+            }
+                           
+            if (p.exitValue() != 0) {
+               throw new KiemInitializationException("error in " + name, true, null); 
+            }
+            }
+            return null; //new ByteArrayInputStream(output);
+    }
+    
+    /**
+     * @param stderr the error stream of an external process
+     * @throws IOException thrown if the error stream cannot be read
+     * @throws KiemInitializationException thrown if the error stream is not empty
      */
     private void checkErrors(final InputStream stderr) throws IOException,
             KiemInitializationException {
