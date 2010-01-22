@@ -53,6 +53,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4E
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
@@ -368,6 +369,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
+        Node label5009 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(RegionIdEditPart.VISUAL_ID));
         createCompartment(node, SyncchartsVisualIDRegistry
                 .getType(RegionStateCompartmentEditPart.VISUAL_ID), true, false, false, false);
         return node;

@@ -1,26 +1,40 @@
 package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
+import org.eclipse.draw2d.BorderLayout;
+import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.FlowLayout;
+import org.eclipse.draw2d.GridData;
+import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.editpolicies.FlowLayoutEditPolicy;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
-import de.cau.cs.kieler.synccharts.custom.RegionFigure;
+import de.cau.cs.kieler.synccharts.custom.CustomRegionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.Region2ItemSemanticEditPolicy;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
 /**
  * @generated
@@ -64,17 +78,14 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        LayoutEditPolicy lep = new LayoutEditPolicy() {
 
-            protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                if (result == null) {
-                    result = new NonResizableEditPolicy();
-                }
-                return result;
+        FlowLayoutEditPolicy lep = new FlowLayoutEditPolicy() {
+
+            protected Command createAddCommand(EditPart child, EditPart after) {
+                return null;
             }
 
-            protected Command getMoveChildrenCommand(Request request) {
+            protected Command createMoveChildCommand(EditPart child, EditPart after) {
                 return null;
             }
 
@@ -89,12 +100,12 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
-        primaryShape = new RegionFigure();
+        IFigure figure = new RegionFigure();
 
-        if (primaryShape instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+        if (figure instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
         }
-        return primaryShape;
+        return primaryShape = figure;
     }
 
     /**
@@ -102,6 +113,55 @@ public class Region2EditPart extends ShapeNodeEditPart {
      */
     public RegionFigure getPrimaryShape() {
         return (RegionFigure) primaryShape;
+    }
+
+    /**
+     * @generated
+     */
+    protected boolean addFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof RegionIdEditPart) {
+            ((RegionIdEditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureRegionIdFigure());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @generated
+     */
+    protected boolean removeFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof RegionIdEditPart) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @generated
+     */
+    protected void addChildVisual(EditPart childEditPart, int index) {
+        if (addFixedChild(childEditPart)) {
+            return;
+        }
+        super.addChildVisual(childEditPart, -1);
+    }
+
+    /**
+     * @generated
+     */
+    protected void removeChildVisual(EditPart childEditPart) {
+        if (removeFixedChild(childEditPart)) {
+            return;
+        }
+        super.removeChildVisual(childEditPart);
+    }
+
+    /**
+     * @generated
+     */
+    protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
+        return getContentPane();
     }
 
     /**
@@ -189,5 +249,94 @@ public class Region2EditPart extends ShapeNodeEditPart {
             ((Shape) primaryShape).setLineStyle(style);
         }
     }
+
+    /**
+     * @generated
+     */
+    public EditPart getPrimaryChildEditPart() {
+        return getChildBySemanticHint(SyncchartsVisualIDRegistry
+                .getType(RegionIdEditPart.VISUAL_ID));
+    }
+
+    /**
+     * @generated
+     */
+    public class RegionFigure extends CustomRegionFigure {
+
+        /**
+         * @generated
+         */
+        private WrappingLabel fFigureRegionIdFigure;
+
+        /**
+         * @generated
+         */
+        public RegionFigure() {
+
+            FlowLayout layoutThis = new FlowLayout();
+            layoutThis.setStretchMinorAxis(false);
+            layoutThis.setMinorAlignment(FlowLayout.ALIGN_LEFTTOP);
+
+            layoutThis.setMajorAlignment(FlowLayout.ALIGN_LEFTTOP);
+            layoutThis.setMajorSpacing(0);
+            layoutThis.setMinorSpacing(0);
+            layoutThis.setHorizontal(true);
+
+            this.setLayoutManager(layoutThis);
+
+            createContents();
+        }
+
+        /**
+         * @generated
+         */
+        private void createContents() {
+
+            fFigureRegionIdFigure = new WrappingLabel();
+            fFigureRegionIdFigure.setText("");
+            fFigureRegionIdFigure.setForegroundColor(ColorConstants.gray);
+
+            fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
+
+            fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(0), getMapMode()
+                    .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
+
+            this.add(fFigureRegionIdFigure);
+
+        }
+
+        /**
+         * @generated
+         */
+        private boolean myUseLocalCoordinates = false;
+
+        /**
+         * @generated
+         */
+        protected boolean useLocalCoordinates() {
+            return myUseLocalCoordinates;
+        }
+
+        /**
+         * @generated
+         */
+        protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
+            myUseLocalCoordinates = useLocalCoordinates;
+        }
+
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureRegionIdFigure() {
+            return fFigureRegionIdFigure;
+        }
+
+    }
+
+    /**
+     * @generated
+     */
+    static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 7,
+            SWT.NORMAL);
 
 }

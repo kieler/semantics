@@ -8,13 +8,16 @@ import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.Polyline;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
@@ -257,6 +260,23 @@ public class State2EditPart extends ShapeNodeEditPart {
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
                 .getType(StateLabel2EditPart.VISUAL_ID));
+    }
+
+    @Override
+    public Command getCommand(Request request) {
+        System.out.println(request);
+        if (request instanceof ChangeBoundsRequest) {
+            Rectangle bounds = this.getFigure().getBounds();
+            Dimension minimumSize = this.getFigure().getMinimumSize();
+            ChangeBoundsRequest changeBoundsRequest = new ChangeBoundsRequest();
+            Dimension sizeDelta = new Dimension(bounds.width - minimumSize.width, bounds.height
+                    - minimumSize.height);
+            changeBoundsRequest.setSizeDelta(sizeDelta);
+            Command cmd = super.getCommand(changeBoundsRequest);
+            cmd.execute();
+        }
+        return super.getCommand(request);
+
     }
 
     /**

@@ -42,6 +42,9 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case Region2EditPart.VISUAL_ID:
                 return new Region2EditPart(view);
 
+            case RegionIdEditPart.VISUAL_ID:
+                return new RegionIdEditPart(view);
+
             case State2EditPart.VISUAL_ID:
                 return new State2EditPart(view);
 

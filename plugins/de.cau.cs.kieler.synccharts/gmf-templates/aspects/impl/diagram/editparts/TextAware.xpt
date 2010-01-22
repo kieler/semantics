@@ -14,6 +14,23 @@
 «IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
 «EXTENSION xpt::diagram::ViewmapAttributesUtils»
 
+«REM»remove refreshFontColor for RegionID, otherwise the color set in gmfgraph will be
+     overidden by default color set in the preferences«ENDREM»
+«DEFINE refreshVisuals(needsRefreshBounds : Boolean) FOR gmfgen::GenCommonBase-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected void refreshVisuals() {
+		super.refreshVisuals();
+		refreshLabel();
+		refreshFont();
+		// refreshFontColor();
+		refreshUnderline();
+		refreshStrikeThrough();
+		«IF needsRefreshBounds-»
+		refreshBounds();
+		«ENDIF-»
+	}
+«ENDDEFINE»
+
 «DEFINE getManager(diagram : gmfgen::GenDiagram) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.gef.tools.DirectEditManager getManager() {

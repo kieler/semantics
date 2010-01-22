@@ -395,7 +395,7 @@ public class ActionTriggersAndEffectsEditPart extends CompartmentEditPart implem
         super.refreshVisuals();
         refreshLabel();
         refreshFont();
-        refreshFontColor();
+        // refreshFontColor();
         refreshUnderline();
         refreshStrikeThrough();
     }

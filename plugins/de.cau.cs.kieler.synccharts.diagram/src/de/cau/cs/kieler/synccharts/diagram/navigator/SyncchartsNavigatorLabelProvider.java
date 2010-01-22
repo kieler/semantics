@@ -27,6 +27,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4E
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
@@ -235,12 +236,15 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getRegion_3001Text(View view) {
-        Region domainModelElement = (Region) view.getElement();
-        if (domainModelElement != null) {
-            return domainModelElement.getId();
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Region_3001,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                        .getType(RegionIdEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "No domain element for view with visualID = " + 3001); //$NON-NLS-1$
+                    "Parser was not found for label " + 5009); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
     }

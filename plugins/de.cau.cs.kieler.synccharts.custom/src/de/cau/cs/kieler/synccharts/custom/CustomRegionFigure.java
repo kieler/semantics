@@ -25,7 +25,7 @@ import org.eclipse.draw2d.Graphics;
  * @author schm
  * @author haf
  */
-public class RegionFigure extends NeighborAwareOpenRectangleFigure {
+public class CustomRegionFigure extends NeighborAwareOpenRectangleFigure {
 
     private static final int DASH_BLACK = 10;
     private static final int DASH_WHITE = 5;
@@ -34,7 +34,7 @@ public class RegionFigure extends NeighborAwareOpenRectangleFigure {
     /**
      * The constructor.
      */
-    public RegionFigure() {
+    public CustomRegionFigure() {
         super();
 
         setFill(false);

@@ -54,13 +54,12 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsParserProvider;
 /**
  * @generated
  */
-public class ActionTriggersAndEffects4EditPart extends CompartmentEditPart implements
-        ITextAwareEditPart {
+public class RegionIdEditPart extends CompartmentEditPart implements ITextAwareEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5006;
+    public static final int VISUAL_ID = 5009;
 
     /**
      * @generated
@@ -85,7 +84,7 @@ public class ActionTriggersAndEffects4EditPart extends CompartmentEditPart imple
     /**
      * @generated
      */
-    public ActionTriggersAndEffects4EditPart(View view) {
+    public RegionIdEditPart(View view) {
         super(view);
     }
 
@@ -304,10 +303,10 @@ public class ActionTriggersAndEffects4EditPart extends CompartmentEditPart imple
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Action_3008,
+                            SyncchartsElementTypes.Region_3001,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
-                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4EditPart.VISUAL_ID));
+                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart.VISUAL_ID));
         }
         return parser;
     }
@@ -507,7 +506,7 @@ public class ActionTriggersAndEffects4EditPart extends CompartmentEditPart imple
      * @generated
      */
     private View getFontStyleOwnerView() {
-        return getPrimaryView();
+        return (View) getModel();
     }
 
     /**

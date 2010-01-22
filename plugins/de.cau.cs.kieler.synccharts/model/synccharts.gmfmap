@@ -36,6 +36,16 @@
         <ownedChild>
           <domainMetaElement
               href="synccharts.ecore#//Region"/>
+          <labelMappings
+              xsi:type="gmfmap:FeatureLabelMapping"
+              editorPattern="">
+            <diagramLabel
+                href="synccharts.gmfgraph#RegionId"/>
+            <features
+                href="synccharts.ecore#//Region/id"/>
+            <editableFeatures
+                href="synccharts.ecore#//Region/id"/>
+          </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#Region"/>
           <children

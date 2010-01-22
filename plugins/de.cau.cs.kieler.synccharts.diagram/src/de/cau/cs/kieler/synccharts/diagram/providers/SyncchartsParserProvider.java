@@ -18,6 +18,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects2E
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects3EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
@@ -46,6 +47,25 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             stateLabel_5008Parser = parser;
         }
         return stateLabel_5008Parser;
+    }
+
+    /**
+     * @generated
+     */
+    private IParser regionId_5009Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getRegionId_5009Parser() {
+        if (regionId_5009Parser == null) {
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getRegion_Id() };
+            EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getRegion_Id() };
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
+            regionId_5009Parser = parser;
+        }
+        return regionId_5009Parser;
     }
 
     /**
@@ -203,6 +223,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
         switch (visualID) {
         case StateLabelEditPart.VISUAL_ID:
             return getStateLabel_5008Parser();
+        case RegionIdEditPart.VISUAL_ID:
+            return getRegionId_5009Parser();
         case StateLabel2EditPart.VISUAL_ID:
             return getStateLabel_5007Parser();
         case SignalNameEditPart.VISUAL_ID:

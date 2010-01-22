@@ -68,7 +68,29 @@
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="RegionFigure"
-          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.RegionFigure"/>
+          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.CustomRegionFigure">
+        <layout
+            xsi:type="gmfgraph:FlowLayout"
+            majorSpacing="0"
+            minorSpacing="0"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="RegionIdFigure"
+            text="">
+          <foregroundColor
+              xsi:type="gmfgraph:ConstantColor"
+              value="gray"/>
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              faceName="Sans"
+              height="7"/>
+          <insets
+              left="2"
+              right="2"/>
+        </children>
+      </actualFigure>
+      <accessors
+          figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="InvisibleFigure">
@@ -184,4 +206,9 @@
         xsi:type="gmfgraph:AlignmentFacet"
         alignment="END"/>
   </labels>
+  <labels
+      name="RegionId"
+      figure="RegionFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.2/@accessors.0"/>
 </gmfgraph:Canvas>

@@ -18,6 +18,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4E
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
@@ -264,6 +265,9 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case Region2EditPart.VISUAL_ID:
+            if (RegionIdEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
             if (RegionStateCompartmentEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
