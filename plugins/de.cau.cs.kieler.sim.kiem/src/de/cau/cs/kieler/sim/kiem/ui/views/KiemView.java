@@ -548,9 +548,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
                 ControlContribution[] contributions = contributor.provideToolbarContributions(null);
 
-                for (ControlContribution contribution : contributions) {
-                    if (contribution != null) {
-                        manager.add(contribution);
+                if (contributions != null) {
+                    for (ControlContribution contribution : contributions) {
+                        if (contribution != null) {
+                            manager.add(contribution);
+                        }
                     }
                 }
             } catch (CoreException e0) {
