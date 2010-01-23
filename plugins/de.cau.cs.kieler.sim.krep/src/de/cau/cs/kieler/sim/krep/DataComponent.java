@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -115,21 +116,21 @@ public final class DataComponent extends JSONObjectDataComponent {
     public String getDataComponentId() {
         return "krep";
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
         JSONObject res = new JSONObject();
         LinkedList<Signal> inputs = assembler.getInputs();
-        LinkedList<Signal> outputs = new  LinkedList<Signal>();
+        LinkedList<Signal> outputs = new LinkedList<Signal>();
         int[] trace;
         try {
             for (Signal s : inputs) {
                 if (data.has(s.getName())) {
                     Object obj = data.get(s.getName());
-                    s.setPresent(JSONSignalValues.isPresent(obj));                    
-                    Object val = JSONSignalValues.getSignalValue(obj);                    
+                    s.setPresent(JSONSignalValues.isPresent(obj));
+                    Object val = JSONSignalValues.getSignalValue(obj);
                     if (s.isValued() && val != null) {
                         s.setValue(val);
                     }
@@ -460,8 +461,6 @@ public final class DataComponent extends JSONObjectDataComponent {
         InputStream strl = file.getContents();
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
-        InputStream kasm = null;
-
         if (fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
@@ -470,191 +469,108 @@ public final class DataComponent extends JSONObjectDataComponent {
         String path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null))
                 .getPath();
 
+        InputStream xml = cecRun("strl2xml", path + "cec-strlxml", strl);
+        InputStream exp = cecRun("expandModules", path + "cec-expandmodules", xml);
+        InputStream dis = cecRun("dismantle", path + "cec-kepdismantle ", exp); // "-d ALL"
+        InputStream kep = cecRun("generateCKAG", path + "cec-astkep -o", dis);
+        // TODO: add -o for optimizations. Oops, must be independent of OS.
+        InputStream kasm = cecRun("writeKASM", path + "cec-xmlkasm", kep);
 
-       // OutputStream xml = cecRun("strl2xml", path + "cec-strlxml", strl  );
-        
-        Process strl2xml = Runtime.getRuntime().exec(path + "cec-strlxml");
-        // Process p = Runtime.getRuntime().exec();
-        InputStream stderr = strl2xml.getErrorStream();
-        OutputStream stdin = strl2xml.getOutputStream();
-
-        while (strl.available() > 0) {
-            int r = strl.read();
-            stdin.write(r);
-        }
-        stdin.flush();
-        stdin.close();
-        try {
-        	strl2xml.waitFor();
-            if (strl2xml.exitValue() != 0) {
-                checkErrors(stderr);
-            }
-            StringBuffer debug = new StringBuffer(
-                    "===========================XML==================================");
-
-            // expand modules
-            Process expandmodules = Runtime.getRuntime().exec(path + "cec-expandmodules");
-            InputStream exp = expandmodules.getInputStream();
-            stdin = expandmodules.getOutputStream();
-            stderr = expandmodules.getErrorStream();
-
-           // while (xml.available() > 0) {
-           //     int r = xml.read();
-           ////     stdin.write(r);
-           //     debug.append(Character.toChars(r));
-           // }
-            Activator.debug(debug.toString());
-            stdin.close();
-            expandmodules.waitFor();
-            if (expandmodules.exitValue() != 0) {
-                checkErrors(stderr);
-            }
-
-            // dismantle
-            Process dismantle = Runtime.getRuntime().exec(new String[] { path + "cec-kepdismantle" }); // , "-d ALL"
-            // });
-            InputStream dis = dismantle.getInputStream();
-            stdin = dismantle.getOutputStream();
-            stderr = dismantle.getErrorStream();
-
-            debug = new StringBuffer(
-                    "===========================EXP==================================");
-
-            while (exp.available() > 0) {
-                int r = exp.read();
-                stdin.write(r);
-                debug.append(Character.toChars(r));
-            }
-            Activator.debug(debug.toString());
-            stdin.close();
-            dismantle.waitFor();
-            if (dismantle.exitValue() != 0) {
-                checkErrors(stderr);
-            }
-
-            // to KEP
-            Process astkep = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
-            // TODO: add -o for optimizations. Oops, must be independent of OS.
-            InputStream k = astkep.getInputStream();
-            stdin = astkep.getOutputStream();
-            stderr = astkep.getErrorStream();
-            debug = new StringBuffer(
-                    "===========================DIS==================================");
-
-            while (dis.available() > 0) {
-                int r = dis.read();
-                stdin.write(r);
-                debug.append(Character.toChars(r));
-            }
-            Activator.debug(debug.toString());
-            stdin.close();
-            astkep.waitFor();
-            if (astkep.exitValue() != 0) {
-                checkErrors(stderr);
-            }
-
-            // to kasm
-            Process xml2kasm = Runtime.getRuntime().exec(path + "cec-xmlkasm");
-            kasm = xml2kasm.getInputStream();
-            stdin = xml2kasm.getOutputStream();
-            stderr = xml2kasm.getErrorStream();
-            while (k.available() > 0) {
-                stdin.write(k.read());
-            }
-            stdin.close();
-            xml2kasm.waitFor();
-            if (xml2kasm.exitValue() != 0) {
-                checkErrors(stderr);
-            }
-        } catch (InterruptedException e) {
-            throw new ParseException(e.getMessage());
-        }
         connection = connect(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
-        KepAssembler kep = new KepAssembler();
-        assembler = kep;
+        KepAssembler asm = new KepAssembler();
+        assembler = asm;
 
-        // Reader reader = new BufferedReader(new InputStreamReader(kasm));
-        kep.assemble(name, kasm);
+        asm.assemble(name, kasm);
     }
 
     /**
      * run a cec process with a timeout
+     * 
+     * @param name
+     * @param input
+     *            the stdin that is feed to the executed program
+     * @return the output that was generated by the program
      */
-    private InputStream cecRun(String name, String cmd, InputStream input, KielerProgressMonitor monitor) throws IOException, KiemInitializationException, InterruptedException  {  	final int TIMEOUT = 500;
-    	
-     	Process p = Runtime.getRuntime().exec(cmd);
-    	
-     	OutputStream output = new ByteArrayOutputStream();
-     	
-    	InputStream stdout = p.getInputStream();
+    private InputStream cecRun(final String name, final String cmd, final InputStream input)
+            throws IOException, KiemInitializationException {
+        final int TIMEOUT = 500;
+
+        Process p = Runtime.getRuntime().exec(cmd);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        InputStream stdout = p.getInputStream();
         InputStream stderr = p.getErrorStream();
         OutputStream stdin = p.getOutputStream();
         StringBuffer debug = new StringBuffer(name + ":\n");
-        
-        
-        
-        while(input.available() > 0) {
-        	int r = input.read();
-        	stdin.write(r);
-                debug.append(Character.toChars(r));
-            }
-            Activator.debug(debug.toString());            
-            stdin.close();
-            
-            
-            int time =0;
-            while(time < TIMEOUT){
-            	if(monitor.isCanceled()){
-            		throw new KiemInitializationException("cancled", true, null);
-            	}
-            if(stdout.available()>0){
-            	output.write(stdout.read());
-            }else{
-            	try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// silently ignore
-				}
-            	time+=100;
-            	
-            }
-            try{
-            checkErrors(stderr);                       
-            	stdin.close();
-                stdout.close();
-                stderr.available();
+
+        while (input.available() > 0) {
+            int r = input.read();
+            stdin.write(r);
+            debug.append(Character.toChars(r));
+        }
+        Activator.debug(debug.toString());
+        stdin.close();
+
+        int time = 0;
+        while (time < TIMEOUT) {
+            if (stdout.available() > 0) {
+                output.write(stdout.read());
+            } else {
                 try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// silently ignore
-				}
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    // silently ignore
+                }
+                time += 100;
+            }
+        }
+        try {
+            StringBuffer err = new StringBuffer();
+            while (stderr.available() > 0) {
+                err.append(Character.toChars(stderr.read()));
+            }
+            stdin.close();
+            stdout.close();
+            stderr.close();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // silently ignore
+            }
+            try {
                 p.waitFor();
-            }finally{
-            	p.destroy();
+            } catch (InterruptedException e) {
+                // silently ignore
             }
-                           
-            if (p.exitValue() != 0) {
-               throw new KiemInitializationException("error in " + name, true, null); 
+            if (p.exitValue() != 0 && err.length() > 0) {
+                throw new KiemInitializationException("Parse Error: " + err.toString(), false, null);
             }
-            }
-            return null; //new ByteArrayInputStream(output);
+        } finally {
+            p.destroy();
+        }
+
+        if (p.exitValue() != 0) {
+            throw new KiemInitializationException("error in " + name, true, null);
+        }
+
+        return new ByteArrayInputStream(output.toByteArray());
     }
-    
+
     /**
-     * @param stderr the error stream of an external process
-     * @throws IOException thrown if the error stream cannot be read
-     * @throws KiemInitializationException thrown if the error stream is not empty
+     * @param stderr
+     *            the error stream of an external process
+     * @throws IOException
+     *             thrown if the error stream cannot be read
+     * @throws KiemInitializationException
+     *             thrown if the error stream is not empty
      */
-    private void checkErrors(final InputStream stderr) throws IOException,
+   /* private void checkErrors(final InputStream stderr) throws IOException,
             KiemInitializationException {
         if (stderr.available() > 0) {
-            StringBuffer s = new StringBuffer();
-            while (stderr.available() > 0) {
-                s.append(Character.toChars(stderr.read()));
-            }
-            throw new KiemInitializationException("Parse Error: " + s.toString(), false, null);
+
         }
-    }
+    }*/
 }
