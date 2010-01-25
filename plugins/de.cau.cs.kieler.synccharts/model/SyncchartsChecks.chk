@@ -133,6 +133,10 @@ context Transition if (isImmediate) ERROR "Immediate transitions must not have a
 	
 context Transition ERROR "Delays have to be at least 1!" :
 	(delay == null) || (delay >= 1);
+	
+context Transition if (isImmediate)
+	ERROR "An immediate transition produces an endless loop!" :
+	sourceState != targetState;
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
    	ERROR "Normal termination may not have a trigger!" :
