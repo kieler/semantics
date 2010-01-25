@@ -101,25 +101,25 @@ public class EsoComponent extends JSONObjectDataComponent {
                             break;
                         }
                     }
-                     
+
                     /** TODO:Everything emitted is in the trace */
-//                    Iterator<String> key = input.keys();
-//                    while (key.hasNext()) {
-//                     
-//                        JSONObject obj = input.getJSONObject(key.next());
-//                        if (JSONSignalValues.isSignalValue(obj)) {
-//                            if (JSONSignalValues.isPresent(obj) && !tick.getInput().contains(key)) {
-//                                valid = false;
-//                                break;
-//                            } else {
-//                                if (tick.getInput().contains(key)) {
-//                                    valid = false;
-//                                    break;
-//                                }
-//
-//                            }
-//                        }
-//                    }
+                    // Iterator<String> key = input.keys();
+                    // while (key.hasNext()) {
+                    //                     
+                    // JSONObject obj = input.getJSONObject(key.next());
+                    // if (JSONSignalValues.isSignalValue(obj)) {
+                    // if (JSONSignalValues.isPresent(obj) && !tick.getInput().contains(key)) {
+                    // valid = false;
+                    // break;
+                    // } else {
+                    // if (tick.getInput().contains(key)) {
+                    // valid = false;
+                    // break;
+                    // }
+                    //
+                    // }
+                    // }
+                    // }
                     res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
 
                 } catch (JSONException e) {
@@ -149,64 +149,10 @@ public class EsoComponent extends JSONObjectDataComponent {
     /** {@inheritDoc} */
     public void initialize() throws KiemInitializationException {
         pos = 0;
-
-        ISetup setup = new EsiStandaloneSetup();
-        Injector injector = setup.createInjectorAndDoEMFRegistration();
-        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-        rs.setClasspathURIContext(getClass());
-
-        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
-        // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
-        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
-        rs.getResources().add(resource);
-
-        InputStream in;
-        try {
-            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
-            IEditorReference[] editors = page.getEditorReferences();
-            XtextEditor editor = null;
-            String name = getProperties()[1].getValue();
-            if (editors != null) {
-                for (IEditorReference e : editors) {
-                    if (name.equals(e.getTitle() + " (" + e.getId() + ")")) {
-                        IEditorPart ed = e.getEditor(false);
-                        if (ed instanceof XtextEditor) {
-                            editor = (XtextEditor) ed;
-                            break;
-                        }
-
-                    }
-                }
-            }
-
-            if (editor != null) {
-                FileEditorInput input = (FileEditorInput) editor.getEditorInput();
-                if (input.exists()) {
-                    IFile file = input.getFile();
-                    in = file.getContents();
-                } else {
-                    throw new KiemInitializationException("Editor input not found", true, null);
-                }
-            } else {
-                in = new FileInputStream(getProperties()[0].getValue());
-            }
-
-            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
-                throw new KiemInitializationException("Parse error", true, null);
-            }
-            tracelist = (tracelist) parseResult.getRootASTElement();
-            iTrace = tracelist.getTraces().iterator();
-            iTick = iTrace.next().getTicks().iterator();
-        } catch (FileNotFoundException e) {
-            throw new KiemInitializationException("File not found", false, e);
-        } catch (Exception e) {
-            throw new KiemInitializationException("Unknown error", false, e);
-        }
+        tracelist = Helper.loadTrace(getClass(), getProperties()[0].getValue(), getProperties()[1]
+                .getValue());
+        iTrace = tracelist.getTraces().iterator();
+        iTick = iTrace.next().getTicks().iterator();
     }
 
     /** {@inheritDoc} */

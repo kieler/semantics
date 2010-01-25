@@ -13,35 +13,16 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Iterator;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.xtext.ISetup;
-import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.parsetree.NodeUtil;
-import org.eclipse.xtext.resource.IResourceFactory;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
-import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
@@ -63,10 +44,9 @@ import org.json.JSONObject;
  * 
  * @author ctr
  */
-public class DataComponent extends JSONObjectDataComponent {
+public class EsiComponent extends JSONObjectDataComponent {
 
     private tracelist tracelist = null;
-    private XtextEditor editor = null;
     private Iterator<trace> iTrace;
     private Iterator<tick> iTick;
 
@@ -116,6 +96,7 @@ public class DataComponent extends JSONObjectDataComponent {
     /** {@inheritDoc} */
     public void initialize() {
         // pos = "! reset".length();
+
     }
 
     /** {@inheritDoc} */
@@ -147,8 +128,7 @@ public class DataComponent extends JSONObjectDataComponent {
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(),
-                "/home/ctr/runtime-EclipseApplication/test/abro.esi");
+        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), "");
         properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
@@ -156,83 +136,17 @@ public class DataComponent extends JSONObjectDataComponent {
     /** {@inheritDoc} */
     public void wrapup() {
         tracelist = null;
-        editor = null;
     }
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-
-        ISetup setup = new EsiStandaloneSetup();
-        Injector injector = setup.createInjectorAndDoEMFRegistration();
-        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-        rs.setClasspathURIContext(getClass());
-
-        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
-        // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
-        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
-        rs.getResources().add(resource);
-
-        InputStream in;
-        try {
-            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
-            IEditorReference[] editors = page.getEditorReferences();
-            editor = null;
-            String name = getProperties()[1].getValue();
-            if (editors != null) {
-                for (IEditorReference e : editors) {
-                    if (name.equals(e.getTitle() + " (" + e.getId() + ")")) {
-                        IEditorPart ed = e.getEditor(false);
-                        if (ed instanceof XtextEditor) {
-                            editor = (XtextEditor) ed;
-                            break;
-                        }
-
-                    }
-                }
-            }
-
-            if (editor != null) {
-                FileEditorInput input = (FileEditorInput) editor.getEditorInput();
-                if (input.exists()) {
-                    IFile file = input.getFile();
-                    in = file.getContents();
-
-                    // resource=(XtextResource) editor. . .getResource();
-                } else {
-                    throw new KiemInitializationException("Editor input not found", true, null);
-                }
-            } else {
-                in = new FileInputStream(getProperties()[0].getValue());
-            }
-
-            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
-                throw new KiemInitializationException("Parse error", true, null);
-            }
-            tracelist = (tracelist) parseResult.getRootASTElement();
-            // tracelist = (tracelist) resource.getParseResult().getRootASTElement();
-            iTrace = tracelist.getTraces().iterator();
-            iTick = iTrace.next().getTicks().iterator();
-        } catch (FileNotFoundException e) {
-            throw new KiemInitializationException("File not found", false, e);
-        } catch (Exception e) {
-            throw new KiemInitializationException("Unknown error", false, e);
-        }
-
-        /*
-         * try { if (tracelist != null) { for (trace trace : tracelist.getTraces()) { for (tick tick
-         * : trace.getTicks()) { for (signal s : tick.getInput()) { signals.accumulate(s.getName(),
-         * JSONSignalValues.newValue("", false)); } for (signal s : tick.getOutput()) {
-         * signals.accumulate(s.getName(), JSONSignalValues.newValue("", false)); } } } } } catch
-         * (JSONException e) { throw new KiemInitializationException("Error building JSON object",
-         * false, e); }
-         */
+        tracelist = Helper.loadTrace(getClass(), getProperties()[0].getValue(), getProperties()[0]
+                .getValue());
+        iTrace = tracelist.getTraces().iterator();
+        iTick = iTrace.next().getTicks().iterator();
+        
+        // TODO: fill signal  list
         return signals;
     }
-
 }

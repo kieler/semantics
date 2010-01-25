@@ -13,7 +13,7 @@
   <extension
         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
      <content
-           class="de.cau.cs.kieler.sim.esi.DataComponent"
+           class="de.cau.cs.kieler.sim.esi.EsiComponent"
            id="de.cau.cs.kieler.sim.esi"
            name="Esi Reader">
      </content>
