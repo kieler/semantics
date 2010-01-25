@@ -86,7 +86,7 @@ Void upgradeState(State parentState):
 let region = new Region:
 let state = new State:
 state.setIsInitial(true) ->
-state.setLabel("S") ->
+state.setLabel("Initial") ->
 region.innerStates.add(state) ->
 parentState.regions.add(region)
 ;
@@ -100,7 +100,12 @@ if parentState.regions.size > 0 then
 //Returns true if the state is a complex state, 
 //i.e. it has at least one inner region
 Boolean isRegionState(State state):
-	state.regions.size > 0
+	state.parentRegion != null && state.parentRegion.parentState != null
+;
+
+//Checks if the state is the root state.
+Boolean isNoRootState(State state): 
+	state.eRootContainer.eContents.contains(state)
 ;
 
 // Add a state to the parent state and add all Regions
