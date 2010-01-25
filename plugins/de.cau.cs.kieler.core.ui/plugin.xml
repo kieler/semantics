@@ -214,7 +214,7 @@
       <key
             commandId="de.cau.cs.kieler.core.ui.command.zoom"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M3+F">
+            sequence="M1+R Z">
       </key>
    </extension>
    <extension
