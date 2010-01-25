@@ -47,7 +47,7 @@ int computeChangePriority(State state):
 	JAVA template.Helper.computeChangePriority(de.cau.cs.kieler.synccharts.State)
 ;
 
-List allSignals(State state):
+cached List allSignals(State state):
 	JAVA template.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
 ;
 

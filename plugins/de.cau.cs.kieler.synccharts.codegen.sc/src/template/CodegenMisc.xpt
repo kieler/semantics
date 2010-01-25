@@ -36,7 +36,7 @@ void «this.parentState.label»_O_«this.name»(int status){
 «DEFINE generateCallOutputs FOR List-»
 void callOutputs(){
 	«FOREACH this AS signal-»
-		«IF ((Signal)signal).isOutput-»
+		«IF !((Signal)signal).isInput-»
 	  «((Signal)signal).parentState.label»_O_«((Signal)signal).name-»(signals & (1 << «((Signal)signal).name-»));
 		«ENDIF-»
 	«ENDFOREACH-»

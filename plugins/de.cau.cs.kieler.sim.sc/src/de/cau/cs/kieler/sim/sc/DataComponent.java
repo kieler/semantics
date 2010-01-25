@@ -20,10 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
@@ -31,208 +31,220 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 public class DataComponent extends JSONObjectDataComponent {
 
-    JSONClient client = null;
-    WorkflowGenerator wf = null;
-    Process process = null;
+	JSONClient client = null;
+	WorkflowGenerator wf = null;
+	Process process = null;
 
-    private PrintWriter toSC;
-    private BufferedReader fromSC;
-    private BufferedReader error;
+	private PrintWriter toSC;
+	private BufferedReader fromSC;
+	private BufferedReader error;
 
-    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
-        JSONObject out = null;
-        try {
-            jSONObject.remove("state");
+	public JSONObject step(final JSONObject jSONObject)
+			throws KiemExecutionException {
+		JSONObject out = null;
+		try {
+			jSONObject.remove("state");
 
-            System.out.println("jSONObject: " + jSONObject.toString());
+			System.out.println("jSONObject: " + jSONObject.toString());
 
-            toSC.write(jSONObject.toString() + "\n");
-            toSC.flush();
-            while (error.ready()) {
-                System.out.print(error.read());
-            }
+			toSC.write(jSONObject.toString() + "\n");
+			toSC.flush();
+			while (error.ready()) {
+				System.out.print(error.read());
+			}
 
-            String receivedMessage = fromSC.readLine();
-            System.out.println("rcv from server: " + receivedMessage);
-            while (error.ready()) {
-                System.err.print(error.readLine());
-            }
+			String receivedMessage = fromSC.readLine();
+			System.out.println("rcv from server: " + receivedMessage);
+			while (error.ready()) {
+				System.err.print(error.readLine());
+			}
 
-            out = new JSONObject(receivedMessage);
-            System.out.println("out is: " + out.toString());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            process.destroy();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            process.destroy();
-        }
+			out = new JSONObject(receivedMessage);
+			System.out.println("out is: " + out.toString());
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+			process.destroy();
+		} catch (JSONException e) {
+			e.printStackTrace();
+			process.destroy();
+		}
 
-        try {
-            JSONArray stateArray = out.getJSONArray("state");
-            String allStates = "";
+		try {
+			JSONArray stateArray = out.getJSONArray("state");
+			String allStates = "";
 
-            for (int i = 0; i < stateArray.length(); i++) {
-                allStates += stateArray.opt(i) + ",";
-            }
-            allStates = allStates.substring(0, allStates.length() - 1);
-            out.remove("state");
-            out.put("state", allStates);
-            System.out.println("out:" + out);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            System.err.println(e.getMessage());
-            process.destroy();
-        }
+			for (int i = 0; i < stateArray.length(); i++) {
+				allStates += stateArray.opt(i) + ",";
+			}
+			allStates = allStates.substring(0, allStates.length() - 1);
+			out.remove("state");
+			out.put("state", allStates);
+			System.out.println("out:" + out);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			process.destroy();
+		}
 
-        return out;
-    }
+		return out;
+	}
 
-    public void initialize() throws KiemInitializationException {
-        // generate Code from SyncChart
-        // true sets the flag for simulation
-        wf.invokeWorkflow(true);
-        // building path to bundle
-        Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
+	public void initialize() throws KiemInitializationException {
+		// generate Code from SyncChart
+		// true sets the flag for simulation
+		wf.invokeWorkflow(true);
+		// building path to bundle
+		Bundle bundle = Platform
+				.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
-        URL url = null;
-        try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
-        } catch (IOException e2) {
-            // TODO Auto-generated catch block
-            e2.printStackTrace();
-        }
+		URL url = null;
+		try {
+			url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(
+					"simulation"), null));
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
-        String bundleLocation = url.getPath();
+		String bundleLocation = url.getPath();
 
-        try {
-            // compile
-            String compiler = (getProperties()[0]).getValue();
-            String compile = compiler + " " + wf.getOutPath() + "sim.c " + wf.getOutPath()
-                    + "sim_data.c " + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
-                    + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
-                    + "simulation -lm -Dexternflags";
-            System.out.println(compile);
-            process = Runtime.getRuntime().exec(compile);
-            process.waitFor();
+		try {
+			// compile
+			String compiler = (getProperties()[0]).getValue();
+			String compile = compiler + " " + wf.getOutPath() + "sim.c "
+					+ wf.getOutPath() + "sim_data.c " + bundleLocation
+					+ "cJSON.c " + bundleLocation + "tcpip.c " + "-I "
+					+ bundleLocation + " " + "-o " + wf.getOutPath()
+					+ "simulation -lm -Dexternflags";
+			System.out.println(compile);
+			process = Runtime.getRuntime().exec(compile);
+			process.waitFor();
 
-            if (process.exitValue() != 0) {
-                StringBuffer b = new StringBuffer();
-                InputStream err = process.getErrorStream();
+			if (process.exitValue() != 0) {
+				StringBuffer b = new StringBuffer();
+				InputStream err = process.getErrorStream();
 
-                while (err.available() > 0) {
-                    b.append(Character.toChars(err.read()));
-                }
+				while (err.available() > 0) {
+					b.append(Character.toChars(err.read()));
+				}
 
-                throw new KiemInitializationException("could not compile", true, new Exception(b
-                        .toString()));
-            }
+				throw new KiemInitializationException("could not compile",
+						true, new Exception(b.toString()));
+			}
 
-            // start compiled sc code
-            String executable = wf.getOutPath() + "simulation ";
-            System.out.println("start: " + executable);
+			// start compiled sc code
+			String executable = wf.getOutPath() + "simulation ";
+			System.out.println("start: " + executable);
 
-            process = Runtime.getRuntime().exec(executable);
+			process = Runtime.getRuntime().exec(executable);
 
-            toSC = new PrintWriter(new OutputStreamWriter(process.getOutputStream()));
-            fromSC = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.err.println(e.getMessage());
-            process.destroy();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            System.err.println(e.getMessage());
-            process.destroy();
-        }
+			toSC = new PrintWriter(new OutputStreamWriter(process
+					.getOutputStream()));
+			fromSC = new BufferedReader(new InputStreamReader(process
+					.getInputStream()));
+			error = new BufferedReader(new InputStreamReader(process
+					.getErrorStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			process.destroy();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			process.destroy();
+		}
 
-    }
+	}
 
-    public boolean isObserver() {
-        // TODO Auto-generated method stub
-        return true;
-    }
+	public boolean isObserver() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
-    public boolean isProducer() {
-        // TODO Auto-generated method stub
-        return true;
-    }
+	public boolean isProducer() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
-    public String[] provideInterfaceKeys() {
-        wf = new WorkflowGenerator();
-        String[] signals = getSignals();
-        return signals;
-    }
+	public String[] provideInterfaceKeys() {
+		wf = new WorkflowGenerator();
+		String[] signals = getSignals();
+		return signals;
+	}
 
-    @Override
-    public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("compiler", "gcc");
-        return properties;
-    }
+	@Override
+	public KiemProperty[] provideProperties() {
+		KiemProperty[] properties = new KiemProperty[1];
+		properties[0] = new KiemProperty("compiler", "gcc");
+		return properties;
+	}
 
-    public void wrapup() throws KiemInitializationException {
-        // try {
-        // client.close();
-        process.destroy();
-        // delete temp folder
-        File folder = new File(wf.getOutPath());
-        if (folder.getAbsolutePath().contains("tmp")) {
-            boolean folderDeleted = deleteFolder(folder);
-            if (folderDeleted) {
-                System.out.println("temp folder " + folder + "successfully deleted");
-            } else {
-                System.err.println("error while deleting temp folder: " + folder);
-            }
-        }
-    }
+	public void wrapup() throws KiemInitializationException {
+		// try {
+		// client.close();
+		process.destroy();
+		// delete temp folder
+		File folder = new File(wf.getOutPath());
+		if (folder.getAbsolutePath().contains("tmp")) {
+			boolean folderDeleted = deleteFolder(folder);
+			if (folderDeleted) {
+				System.out.println("temp folder " + folder
+						+ "successfully deleted");
+			} else {
+				System.err.println("error while deleting temp folder: "
+						+ folder);
+			}
+		}
+	}
 
-    @Override
-    public JSONObject provideInitialVariables() {
-        JSONObject returnObj = new JSONObject();
-        EObject myModel = wf.getModel();
-        List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
-        for (int i = 0; i < signalList.size(); i++) {
-            try {
-                returnObj.accumulate(signalList.get(i).getName(), JSONSignalValues.newValue(false));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return returnObj;
-    }
+	@Override
+	public JSONObject provideInitialVariables() {
+		JSONObject returnObj = new JSONObject();
+		EObject myModel = wf.getModel();
+		List<Signal> signalList = ((Region) myModel).getInnerStates().get(0)
+				.getSignals();
+		for (int i = 0; i < signalList.size(); i++) {
+			try {
+				returnObj.accumulate(signalList.get(i).getName(),
+						JSONSignalValues.newValue(false));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return returnObj;
+	}
 
-    public String[] getSignals() {
-        EObject myModel = wf.getModel();
-        List<String> tmp = new LinkedList<String>();
-        String[] out = new String[0];
-        List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
+	public String[] getSignals() {
+		Region myModel = (Region)(wf.getModel());
+		List<String> tmp = new LinkedList<String>();
+		String[] out = new String[0];
+		List<Signal> signalList = myModel.getInnerStates().get(0)
+				.getSignals();
 
-        for (int i = 0; i < signalList.size(); i++) {
-            tmp.add(signalList.get(i).getName());
-        }
-        out = tmp.toArray(new String[tmp.size()]);
-        return out;
-    }
+		for (int i = 0; i < signalList.size(); i++) {
+			tmp.add(signalList.get(i).getName());
+		}
+		out = tmp.toArray(new String[tmp.size()]);
+		return out;
+	}
 
-    public boolean deleteFolder(File dir) {
-        if (dir.isDirectory()) {
-            String[] entries = dir.list();
-            for (int x = 0; x < entries.length; x++) {
-                File aktFile = new File(dir.getPath(), entries[x]);
-                deleteFolder(aktFile);
-            }
-            if (dir.delete())
-                return true;
-            else
-                return false;
-        } else {
-            if (dir.delete())
-                return true;
-            else
-                return false;
-        }
-    }
+	public boolean deleteFolder(File dir) {
+		if (dir.isDirectory()) {
+			String[] entries = dir.list();
+			for (int x = 0; x < entries.length; x++) {
+				File aktFile = new File(dir.getPath(), entries[x]);
+				deleteFolder(aktFile);
+			}
+			if (dir.delete())
+				return true;
+			else
+				return false;
+		} else {
+			if (dir.delete())
+				return true;
+			else
+				return false;
+		}
+	}
 
 }

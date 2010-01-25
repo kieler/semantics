@@ -19,14 +19,14 @@
 extern void JSONstate(char*);
 
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
-	«EXPAND CodegenMisc::generateSigArray FOR innerStates.signals-»
+	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
 
-	«FOREACH innerStates.signals AS signal-»
-		«IF signal.isInput || !(signal.isInput || signal.isOutput)-»
-			«EXPAND CodegenMisc::generateInputSignal FOR signal»
+	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»
+			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
 		«ENDIF-»
 	«ENDFOREACH-»
-	«EXPAND CodegenMisc::generateCallOutputs FOR innerStates.signals»
+	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
 	«EXPAND CodegenMisc::generateReset-»
 int tick(int isInit){
 
