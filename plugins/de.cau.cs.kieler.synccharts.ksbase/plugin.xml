@@ -47,7 +47,7 @@
 				</transformation>
     <transformation
           icon="icons/reconnect_target.gif"
-          keyboardShortcut="M1+R Q"
+          keyboardShortcut="M1+R T"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
