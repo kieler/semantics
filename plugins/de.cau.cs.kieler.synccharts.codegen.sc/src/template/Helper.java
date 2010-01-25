@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
@@ -33,6 +34,7 @@ public class Helper {
     private static ArrayList<Tuple<State, Integer>> realStateList = new ArrayList<Tuple<State, Integer>>();
     private static ArrayList<String> childThreadList = new ArrayList<String>();
     private static ArrayList<State> checkedStateList = new ArrayList<State>();
+    private static ArrayList<Signal> allSignalsList = new ArrayList<Signal>();
     private static final int NORMAL_EDGE = 1;
     private static final int WEAK_EDGE = -1;
     private static final int WEAK_STATE = 1;
@@ -40,6 +42,118 @@ public class Helper {
     private static final int SIMPLE_STATE = 0;
     private static final int MAX_PRIO = 64;
 
+    
+
+    /**
+     * Computes the priority of the state. This is similar to the thread priority, if the state
+     * represents a new thread
+     * 
+     * @param state
+     *            the state, you want to get the priority for
+     * @return the priority of the state
+     */
+    public static final int computeChangePriority(final State state) {
+        childThreadList.clear();
+        listAllChildThreads(state);
+        LinkedList<Integer> intList = new LinkedList<Integer>();
+        int mainThreadPriority = threadListSorted.size() + 1;
+        for (String s : childThreadList) {
+            if (threadListSorted.contains(s)) {
+                intList.add(mainThreadPriority - 1 - threadListSorted.indexOf(s));
+            }
+        }
+        return getMax(intList);
+    }
+
+
+    /**
+     * Computes a list with all states in the right order of their priority.
+     * 
+     * @param state
+     *            the root state to start with
+     * @return a sorted list (by priority) of states
+     */
+    public static final List<String> computeThreadPriorities(final State state) {
+        dependencyList.clear();
+        realStateList.clear();
+        threadListSorted.clear();
+        fillDependencyList(state);
+        printDependencyList();
+        fillSortedThreadList();
+        System.out.println("threadListSorted: " + threadListSorted.toString());
+        return threadListSorted;
+    }
+
+    /**
+     * Computes a sorted list with states. The order of the list is the control flow of all states
+     * in a region beginning with the initial one.
+     * 
+     * @param state
+     *            the initial state to start with
+     * @return a list, sorted by the control flow in the SyncChart
+     */
+    public static List<State> sortStateControlFlow(final State state) {
+        List<State> sortedStates = new LinkedList<State>();
+        return sortStateControlFlowHelp(sortedStates, state);
+    }
+
+    /**
+     * Computes a list of all signals (global and local) that are used in the state and his
+     * child-states.
+     * 
+     * @param state
+     *            the state in which signals should be listed
+     * @return a list of all signals in the states and child-states
+     */
+    public static List<Signal> allSignals(final State state) {
+        for (Region region : state.getRegions()) {
+            addSignalsToList(region.getSignals());
+            for (State innerState : region.getInnerStates()) {
+                allSignals(innerState);
+            }
+        }
+        return allSignalsList;
+    }
+
+    private static void addSignalsToList(final List<Signal> signalList) {
+        for (Signal signal : signalList) {
+            allSignalsList.add(signal);
+        }
+    }
+
+    private static List<State> sortStateControlFlowHelp(final List<State> sortedStates,
+            final State state) {
+        sortedStates.add(state);
+        for (Transition transition : state.getOutgoingTransitions()) {
+            if (!sortedStates.contains(transition.getTargetState())) {
+                sortStateControlFlowHelp(sortedStates, transition.getTargetState());
+            }
+        }
+        return sortedStates;
+    }
+    
+    private static int getMax(final LinkedList<Integer> intList) {
+        int out = MAX_PRIO;
+        for (int minInt : intList) {
+            if (minInt < out) {
+                out = minInt;
+            }
+        }
+        return out - 1;
+    }
+    
+    private static List<String> listAllChildThreads(final State state) {
+        for (Region r : state.getRegions()) {
+            for (State s : r.getInnerStates()) {
+                childThreadList.add(s.getId());
+                if (!s.getRegions().isEmpty()) {
+                    listAllChildThreads(s);
+                }
+            }
+        }
+        return childThreadList;
+    }
+    
     private static void printTupelList(final ArrayList<Tuple<State, Integer>> list) {
         System.out.print("[");
         for (Tuple<State, Integer> tupel : list) {
@@ -225,89 +339,5 @@ public class Helper {
             }
         }
     }
-
-    /**
-     * Computes the priority of the state. This is similar to the thread priority, if the state
-     * represents a new thread
-     * 
-     * @param state
-     *            the state, you want to get the priority for
-     * @return the priority of the state
-     */
-    public static final int computeChangePriority(final State state) {
-        childThreadList.clear();
-        listAllChildThreads(state);
-        LinkedList<Integer> intList = new LinkedList<Integer>();
-        int mainThreadPriority = threadListSorted.size() + 1;
-        for (String s : childThreadList) {
-            if (threadListSorted.contains(s)) {
-                intList.add(mainThreadPriority - 1 - threadListSorted.indexOf(s));
-            }
-        }
-        return getMax(intList);
-    }
-
-    private static int getMax(final LinkedList<Integer> intList) {
-        int out = MAX_PRIO;
-        for (int minInt : intList) {
-            if (minInt < out) {
-                out = minInt;
-            }
-        }
-        return out - 1;
-    }
-
-    private static List<String> listAllChildThreads(final State state) {
-        for (Region r : state.getRegions()) {
-            for (State s : r.getInnerStates()) {
-                childThreadList.add(s.getId());
-                if (!s.getRegions().isEmpty()) {
-                    listAllChildThreads(s);
-                }
-            }
-        }
-        return childThreadList;
-    }
-
-    /**
-     * Computes a list with all states in the right order of their priority.
-     * 
-     * @param state
-     *            the root state to start with
-     * @return a sorted list (by priority) of states
-     */
-    public static final List<String> computeThreadPriorities(final State state) {
-        dependencyList.clear();
-        realStateList.clear();
-        threadListSorted.clear();
-        fillDependencyList(state);
-        printDependencyList();
-        fillSortedThreadList();
-        System.out.println("threadListSorted: " + threadListSorted.toString());
-        return threadListSorted;
-    }
-
-    /**
-     * Computes a sorted list with states. The order of the list is the control flow of all states
-     * in a region beginning with the initial one.
-     * 
-     * @param state
-     *            the initial state to start with
-     * @return a list, sorted by the control flow in the SyncChart
-     */
-    public static List<State> sortStateControlFlow(final State state) {
-        List<State> sortedStates = new LinkedList<State>();
-        return sortStateControlFlowHelp(sortedStates, state);
-    }
-
-    private static List<State> sortStateControlFlowHelp(final List<State> sortedStates,
-            final State state) {
-        sortedStates.add(state);
-        for (Transition transition : state.getOutgoingTransitions()) {
-            if (!sortedStates.contains(transition.getTargetState())) {
-                sortStateControlFlowHelp(sortedStates, transition.getTargetState());
-            }
-        }
-        return sortedStates;
-    }
+    
 }

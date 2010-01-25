@@ -18,7 +18,7 @@
 
 extern void JSONstate(char*);
 
-	«EXPAND CodegenMisc::generateSigType FOR innerStates.signals-»
+	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 	«EXPAND CodegenMisc::generateSigArray FOR innerStates.signals-»
 
 	«FOREACH innerStates.signals AS signal-»
