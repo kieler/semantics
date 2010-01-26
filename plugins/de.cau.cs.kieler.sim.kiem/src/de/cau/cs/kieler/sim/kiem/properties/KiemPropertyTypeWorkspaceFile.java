@@ -18,6 +18,8 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -43,10 +45,10 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
             "de.cau.cs.kieler.sim.kiem", "icons/propertyFileIcon.png").createImage();
 
     /** The Constant DEFAULT_FILTER_NAMES. */
-    private static final String[] DEFAULT_FILTER_NAMES = {"All Files (*.*)"};
+    private static final String[] DEFAULT_FILTER_NAMES = { "All Files (*.*)" };
 
     /** The Constant DEFAULT_FILTER_EXTS. */
-    private static final String[] DEFAULT_FILTER_EXTS = {"*.*"};
+    private static final String[] DEFAULT_FILTER_EXTS = { "*.*" };
 
     /** The filter extension names. */
     private String[] filterNames;
@@ -70,7 +72,7 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
     /**
      * {@inheritDoc}
      */
-    public Object getValue(final KiemProperty property) {
+    public String getValue(final KiemProperty property) {
         return property.getValue();
     }
 
@@ -79,10 +81,26 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final Object value) {
+    public void setValue(final KiemProperty property, final String value) {
         if (value != null) {
             property.setValue((String) value);
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the value as file.
+     * 
+     * @param property
+     *            the property
+     * 
+     * @return the value as file
+     */
+    public static IPath getValueAsIPath(final KiemProperty property) {
+        String filePath = property.getFilePath();
+        Path returnPath = new Path(filePath);
+        return returnPath;
     }
 
     // -------------------------------------------------------------------------

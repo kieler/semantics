@@ -37,7 +37,7 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
             "de.cau.cs.kieler.sim.kiem", "icons/propertyBoolIcon.png").createImage();
 
     /** The Constant BOOL_ITEMS. */
-    private static final String[] BOOL_ITEMS = {"false", "true"};
+    private static final String[] BOOL_ITEMS = { "false", "true" };
 
     // -------------------------------------------------------------------------
 
@@ -67,12 +67,8 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public Object getValue(final KiemProperty property) {
-        if (property.getValue().equals("true")) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public String getValue(final KiemProperty property) {
+        return property.getValue();
     }
 
     // -------------------------------------------------------------------------
@@ -80,12 +76,36 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final Object value) {
-        if (Integer.parseInt((String) value) == 0) {
-            property.setValue("false");
-        } else {
-            property.setValue("true");
-        }
+    public void setValue(final KiemProperty property, final String value) {
+        property.setValue(value);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the value as a boolean.
+     * 
+     * @param property
+     *            the KiemProperty
+     * 
+     * @return the value as boolean
+     */
+    public static boolean getValueAsBoolean(final KiemProperty property) {
+        return property.getValueAsBoolean();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the value as a boolean.
+     * 
+     * @param property
+     *            the KiemProperty
+     * @param value
+     *            the value
+     */
+    public static void setValue(final KiemProperty property, final boolean value) {
+        property.setValue("" + value);
     }
 
     // -------------------------------------------------------------------------

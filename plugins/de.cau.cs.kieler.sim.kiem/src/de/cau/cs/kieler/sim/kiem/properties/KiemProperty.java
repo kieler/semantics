@@ -181,6 +181,30 @@ public class KiemProperty implements Serializable {
         return this.value;
     }
 
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the value as boolean value.
+     * 
+     * @return the value as boolean
+     * 
+     */
+    public final boolean getValueAsBoolean() {
+        return Boolean.parseBoolean(this.getValue());
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the value as an integer value.
+     * 
+     * @return the value as integer
+     */
+    public final int getValueAsInt() {
+        return Integer.parseInt(this.getValue());
+    }
+    
     // -------------------------------------------------------------------------
 
     /**

@@ -35,11 +35,11 @@ public interface IKiemPropertyType {
      * returned object depends on the latter.
      * 
      * @param property
-     *            the KiemProperty
+     *            the KiemProperty that this type operates on
      * 
      * @return the value of the property with the type depending on the cell editor
      */
-    Object getValue(KiemProperty property);
+    String getValue(KiemProperty property);
 
     // -------------------------------------------------------------------------
 
@@ -47,11 +47,11 @@ public interface IKiemPropertyType {
      * Sets the value of the property type. This method is called by the cell editor and the object
      * parameter depends on the latter.
      * 
-     * @param property
-     *            the KiemProperty
      * @param value
      *            the value of the property with the type depending on the cell editor
+     * @param property
+     *            the KiemProperty that this type operates on
      */
-    void setValue(KiemProperty property, Object value);
+    void setValue(KiemProperty property, String value);
 
 }

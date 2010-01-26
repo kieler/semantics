@@ -96,16 +96,16 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-    public Object getValue(final KiemProperty property) {
+    public String getValue(final KiemProperty property) {
         if ((items == null) || (items.length == 0)) {
-            return 0;
+            return "0";
         }
         for (int c = 0; c < items.length; c++) {
             if (property.getValue().equals(items[c])) {
-                return c;
+                return "" + c;
             }
         }
-        return 0; // default is the first item
+        return "0"; // default is the first item
     }
 
     // -------------------------------------------------------------------------
@@ -113,7 +113,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-   public void setValue(final KiemProperty property, final Object value) {
+    public void setValue(final KiemProperty property, final String value) {
         if ((items == null) || (items.length == 0)) {
             return;
         }

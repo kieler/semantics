@@ -72,13 +72,13 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-    public Object getValue(final KiemProperty property) {
+    public String getValue(final KiemProperty property) {
         for (int c = 0; c < items.length; c++) {
             if (property.getValue().equals(items[c])) {
-                return c;
+                return "" + c;
             }
         }
-        return 0; // default is the first item
+        return "0"; // default is the first item
     }
 
     // -------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty element, final Object value) {
+    public void setValue(final KiemProperty element, final String value) {
         KiemProperty property = (KiemProperty) element;
         property.setValue(items[Integer.parseInt((String) value)]);
     }

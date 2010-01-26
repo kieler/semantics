@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.properties;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.swt.SWT;
@@ -21,6 +23,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
@@ -67,7 +70,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public Object getValue(final KiemProperty property) {
+    public String getValue(final KiemProperty property) {
         return property.getValue();
     }
 
@@ -76,10 +79,26 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final Object value) {
+    public void setValue(final KiemProperty property, final String value) {
         if (value != null) {
             property.setValue((String) value);
         }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the value as file.
+     * 
+     * @param property
+     *            the property
+     * 
+     * @return the value as file
+     */
+    public static IPath getValueAsIPath(final KiemProperty property) {
+        String filePath = property.getFilePath();
+        Path returnPath = new Path(filePath);
+        return returnPath;
     }
 
     // -------------------------------------------------------------------------
