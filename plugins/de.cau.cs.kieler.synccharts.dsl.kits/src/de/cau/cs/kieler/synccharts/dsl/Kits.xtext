@@ -70,7 +70,7 @@ State returns sync::State:
   ('onexit' exitActions+=Action)* 
   ('suspension' suspensionTrigger=Action)? // kein effect, kein delay, kein immediate
   ('{' regions+=Region ('||' regions+=Region)* '}')? 
-  (outgoingTransitions+=TextualTransition)*;
+  (outgoingTransitions+=(Transition|TextualTransition)*);
 
 Renaming returns sync::Renaming:
   oldID=STRING '/' newID=STRING;

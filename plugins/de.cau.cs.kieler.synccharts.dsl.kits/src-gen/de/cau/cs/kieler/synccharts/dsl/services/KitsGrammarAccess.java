@@ -128,14 +128,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRegionsRegionParserRuleCall_13_2_1_0 = (RuleCall)cRegionsAssignment_13_2_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_13_3 = (Keyword)cGroup_13.eContents().get(3);
 		private final Assignment cOutgoingTransitionsAssignment_14 = (Assignment)cGroup.eContents().get(14);
-		private final RuleCall cOutgoingTransitionsTextualTransitionParserRuleCall_14_0 = (RuleCall)cOutgoingTransitionsAssignment_14.eContents().get(0);
+		private final Alternatives cOutgoingTransitionsAlternatives_14_0 = (Alternatives)cOutgoingTransitionsAssignment_14.eContents().get(0);
+		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_14_0_0 = (RuleCall)cOutgoingTransitionsAlternatives_14_0.eContents().get(0);
+		private final RuleCall cOutgoingTransitionsTextualTransitionParserRuleCall_14_0_1 = (RuleCall)cOutgoingTransitionsAlternatives_14_0.eContents().get(1);
 		
 		//State returns sync::State:
 		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
 		//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
-		//  "}")? outgoingTransitions+=TextualTransition*; 
+		//  "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
 		//  
 		//    
 		//    // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
@@ -199,7 +201,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//"suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
-		//"}")? outgoingTransitions+=TextualTransition* 
+		//"}")? outgoingTransitions+=( Transition | TextualTransition )* 
 		//    // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
 		//        
 		//       
@@ -381,11 +383,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_13_3() { return cRightCurlyBracketKeyword_13_3; }
 
-		//outgoingTransitions+=TextualTransition*
+		//outgoingTransitions+=( Transition | TextualTransition )*
 		public Assignment getOutgoingTransitionsAssignment_14() { return cOutgoingTransitionsAssignment_14; }
 
+		//Transition|TextualTransition
+		public Alternatives getOutgoingTransitionsAlternatives_14_0() { return cOutgoingTransitionsAlternatives_14_0; }
+
+		//Transition
+		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_14_0_0() { return cOutgoingTransitionsTransitionParserRuleCall_14_0_0; }
+
 		//TextualTransition
-		public RuleCall getOutgoingTransitionsTextualTransitionParserRuleCall_14_0() { return cOutgoingTransitionsTextualTransitionParserRuleCall_14_0; }
+		public RuleCall getOutgoingTransitionsTextualTransitionParserRuleCall_14_0_1() { return cOutgoingTransitionsTextualTransitionParserRuleCall_14_0_1; }
 	}
 
 	public class RenamingElements extends AbstractParserRuleElementFinder {
@@ -2930,7 +2938,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 	//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 	//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
-	//  "}")? outgoingTransitions+=TextualTransition*; 
+	//  "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
 	//  
 	//    
 	//    // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 

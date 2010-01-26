@@ -364,7 +364,7 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
  *   FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
  *   Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
  *   "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
- *   "}")? outgoingTransitions+=TextualTransition*; 
+ *   "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
  *   
  *     
  *     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
@@ -429,7 +429,7 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
 // FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 // Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 // "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
-// "}")? outgoingTransitions+=TextualTransition* 
+// "}")? outgoingTransitions+=( Transition | TextualTransition )* 
 //     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
 //         
 //        
@@ -1407,7 +1407,7 @@ protected class State_RightCurlyBracketKeyword_13_3 extends KeywordToken  {
 }
 
 
-// outgoingTransitions+=TextualTransition*
+// outgoingTransitions+=( Transition | TextualTransition )*
 protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  {
 	
 	public State_OutgoingTransitionsAssignment_14(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1422,7 +1422,8 @@ protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new TextualTransition_Group(this, this, 0, inst);
+			case 0: return new Transition_Group(this, this, 0, inst);
+			case 1: return new TextualTransition_Group(this, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -1433,9 +1434,18 @@ protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  
 		IInstanceDescription obj = current.cloneAndConsume("outgoingTransitions");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getTransitionRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_14_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getTextualTransitionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getStateAccess().getOutgoingTransitionsTextualTransitionParserRuleCall_14_0(); 
+				element = grammarAccess.getStateAccess().getOutgoingTransitionsTextualTransitionParserRuleCall_14_0_1(); 
 				consumed = obj;
 				return param;
 			}

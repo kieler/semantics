@@ -107,7 +107,10 @@
           <tokens xsi:type="xtext:Keyword" value="}"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="*" feature="outgoingTransitions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+          <terminal xsi:type="xtext:Alternatives">
+            <groups xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+            <groups xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+          </terminal>
         </tokens>
       </alternatives>
     </rules>
