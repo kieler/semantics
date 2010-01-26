@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.ui;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import de.cau.cs.kieler.sim.kiem.Messages;
@@ -47,16 +49,16 @@ public class AddDataComponentDialog extends Dialog {
 
     /** The Constant MARGIN_WIDTH_AND_HEIGHT. */
     private static final int MARGIN_WIDTH_AND_HEIGHT = 15;
-    
+
     /** The Constant FORM_WIDTH. */
     private static final int FORM_WIDTH = 400;
-    
+
     /** The Constant FORM_HEIGHT. */
     private static final int FORM_HEIGHT = 300;
-    
+
     /** The Constant DISABLED_COLOR_GRAY. */
     private static final int DISABLED_COLOR_GRAY = 150;
-    
+
     /** The basic dialog SWT component. */
     private AddDataComponentDialog dialog;
 
@@ -74,8 +76,8 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
      * The DataComponentWrapperList. It is used to check for multiple instances. It should hold all
-     * DataComponentWrapper's that are in the original list of the KiemView to check if another instance
-     * of a DataComponent can safely be added.
+     * DataComponentWrapper's that are in the original list of the KiemView to check if another
+     * instance of a DataComponent can safely be added.
      */
     private List<DataComponentWrapper> dataComponentWrapperList;
 
@@ -187,14 +189,15 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
      * Sets the DataComponentEsList. It is used to check for multiple instances. It should hold all
-     * DataComponentWrapper's that are in the original list of the KiemView to check if another instance
-     * of a DataComponent can safely be added. <BR>
+     * DataComponentWrapper's that are in the original list of the KiemView to check if another
+     * instance of a DataComponent can safely be added. <BR>
      * This should be provided by the calling instance.
      * 
      * @param dataComponentWrapperListParam
      *            the new component list
      */
-    public void setComponentWrapperList(final List<DataComponentWrapper> dataComponentWrapperListParam) {
+    public void setComponentWrapperList(
+            final List<DataComponentWrapper> dataComponentWrapperListParam) {
         this.dataComponentWrapperList = dataComponentWrapperListParam;
     }
 
@@ -205,34 +208,60 @@ public class AddDataComponentDialog extends Dialog {
      * he/she wishes to add to its list. The type of the DataComponent is shown in brackets, and the
      * icon is also personalized for each type of DataComponent.
      */
-    private void updateTable() {
-        for (int c = 0; c < componentList.size(); c++) {
-            AbstractDataComponent component = componentList.get(c);
-            if (component.isInvisible()) {
-                // ignore invisible components
-                continue;
-            }
-            TableItem item = new TableItem(table, SWT.NULL);
-            String type = Messages.mInitializationDataComponent;
-            if (component.isObserver() && component.isProducer()) {
-                type = Messages.mObserverProducerDataComponent;
-            } else if (component.isObserver()) {
-                type = Messages.mObserverDataComponent;
-            } else if (component.isProducer()) {
-                type = Messages.mProducerDataComponent;
-            }
-            item.setText(component.getName() + " (" + type + ")");
-            item.setData(component);
-            if (component.isObserver() && component.isProducer()) {
-                item.setImage(KiemIcons.PRODUCEROBSERVER_ENABLED);
-            } else if (component.isObserver()) {
-                item.setImage(KiemIcons.OBSERVER_ENABLED);
-            } else if (component.isProducer()) {
-                item.setImage(KiemIcons.PRODUCER_ENABLED);
-            } else {
-                item.setImage(KiemIcons.INITCOMPONENT_ENABLED);
-            }
+    private void addToTable(AbstractDataComponent component) {
+        TableItem item = new TableItem(table, SWT.NULL);
+        String type = Messages.mInitializationDataComponent;
+        if (component.isObserver() && component.isProducer()) {
+            type = Messages.mObserverProducerDataComponent;
+        } else if (component.isObserver()) {
+            type = Messages.mObserverDataComponent;
+        } else if (component.isProducer()) {
+            type = Messages.mProducerDataComponent;
         }
+
+        // item.setText(new String[] { component.getName()+" (" + type + ")" });
+        item.setText(component.getName() + " (" + type + ")");
+
+        item.setData(component);
+        if (component.isObserver() && component.isProducer()) {
+            item.setImage(KiemIcons.PRODUCEROBSERVER_ENABLED);
+        } else if (component.isObserver()) {
+            item.setImage(KiemIcons.OBSERVER_ENABLED);
+        } else if (component.isProducer()) {
+            item.setImage(KiemIcons.PRODUCER_ENABLED);
+        } else {
+            item.setImage(KiemIcons.INITCOMPONENT_ENABLED);
+        }
+    }
+
+    private void updateTable() {
+        // make a copy of the list
+        List<AbstractDataComponent> componentListCopy = new LinkedList<AbstractDataComponent>();
+        for (int c = 0; c < componentList.size(); c++) {
+            componentListCopy.add(componentList.get(c));
+        } // next c
+
+        for (int c = 0; c < componentList.size(); c++) {
+            // find the min component of the copy list
+            AbstractDataComponent minComponent = null;
+            for (int cc = 0; cc < componentListCopy.size(); cc++) {
+                AbstractDataComponent component = componentListCopy.get(cc);
+                if ((minComponent == null)
+                        || (component.getName().compareTo(minComponent.getName())) < 0) {
+                    minComponent = component;
+                }
+            } // next c
+
+            // add it if visible
+            if (!minComponent.isInvisible()) {
+                this.addToTable(minComponent);
+            }
+            
+            // remove it
+            componentListCopy.remove(minComponent);
+
+        } // next c
+
     }
 
     // -------------------------------------------------------------------------
@@ -274,9 +303,9 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
      * Check if multiple instances of a DataComponent are okay and if not check if there already is
-     * another instance in the original DataComponentWrapperList. If the latter is the case then return
-     * false. In any other case it is okay to add another instance of this DataComponent so this
-     * method returns true.
+     * another instance in the original DataComponentWrapperList. If the latter is the case then
+     * return false. In any other case it is okay to add another instance of this DataComponent so
+     * this method returns true.
      * 
      * @param component
      *            the DataComponent that we want to check on
@@ -297,7 +326,8 @@ public class AddDataComponentDialog extends Dialog {
                 if (component.getClass().getName().equals(
                         (dataComponentWrapper.getDataComponent()).getClass().getName())) {
                     // class equal
-                    if (component.getName().equals(dataComponentWrapper.getDataComponent().getName())) {
+                    if (component.getName().equals(
+                            dataComponentWrapper.getDataComponent().getName())) {
                         // name equal
                         return false;
                     }
@@ -318,11 +348,12 @@ public class AddDataComponentDialog extends Dialog {
     public void refreshEnabledDisabledTextColors() {
         // change the text color (black or gray)
         Color colorEnabled = new Color(null, new RGB(0, 0, 0));
-        Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY, 
-                                        DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY));
+        Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY,
+                DISABLED_COLOR_GRAY));
 
         for (int c = 0; c < table.getItemCount(); c++) {
-            AbstractDataComponent dataComponent = (AbstractDataComponent) table.getItem(c).getData();
+            AbstractDataComponent dataComponent = (AbstractDataComponent) table.getItem(c)
+                    .getData();
             // select color
             Color currentColor = colorDisabled;
             if (checkMultipleInstanceOk(dataComponent)) {
