@@ -4,23 +4,44 @@
 package de.cau.cs.kieler.synccharts.dsl;
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.ILexicalHighlightingConfiguration;
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.antlr.AbstractAntlrTokenToAttributeIdMapper;
 
+import de.cau.cs.kieler.synccharts.dsl.kits.ui.custom.AntlrTokenToAttributeIdMapper;
+import de.cau.cs.kieler.synccharts.dsl.kits.ui.custom.TransitionTypeHighlighter;
 import de.cau.cs.kieler.synccharts.dsl.labeling.KitsLabelProvider;
-
-
 
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class KitsUiModule extends
-		de.cau.cs.kieler.synccharts.dsl.AbstractKitsUiModule {
+        de.cau.cs.kieler.synccharts.dsl.AbstractKitsUiModule {
 
-//	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-//	public Class<? extends org.eclipse.xtext.ui.core.editor.contentassist.IContentProposalProvider> bindIProposalProvider() {
-//		return de.cau.cs.kieler.synccharts.dsl.contentassist.KitsProposalProvider.class;
-//	}
+    // // contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+    // public Class<? extends
+    // org.eclipse.xtext.ui.core.editor.contentassist.IContentProposalProvider>
+    // bindIProposalProvider() {
+    // return
+    // de.cau.cs.kieler.synccharts.dsl.contentassist.KitsProposalProvider.class;
+    // }
     @Override
     public java.lang.Class<? extends IStyledLabelProvider> bindDelegatingStyledCellLabelProvider$IStyledLabelProvider() {
         return KitsLabelProvider.class;
-    } 
+    }
+
+    /**
+     * Register a text style for transition types that are not highlighted may
+     * be that is not necessary as we will use the keyword text style that is
+     * registered in the default highlighting configuration
+     * 
+     * @return custom text type registration
+     */
+    public Class<? extends ILexicalHighlightingConfiguration> bindILexicalHighlightingConfiguration() {
+        return TransitionTypeHighlighter.class;
+    }
+
+    public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+        return AntlrTokenToAttributeIdMapper.class;
+    }
+
 }
