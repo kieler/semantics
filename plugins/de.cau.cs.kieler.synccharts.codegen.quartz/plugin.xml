@@ -33,14 +33,5 @@
          </command>
       </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="de.cau.cs.kieler.synccharts.codegen.genQuartz"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+K Q">
-      </key>
-   </extension>
 
 </plugin>
