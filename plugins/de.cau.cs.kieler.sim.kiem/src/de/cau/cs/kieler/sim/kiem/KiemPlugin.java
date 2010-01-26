@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -103,7 +104,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     private Execution execution;
 
     /** Execution thread. */
-    private Thread executionThread;
+    //private Thread executionThread;
+    private Job executionThread;
 
     /** Current value of the aimed step duration in ms. */
     private int aimedStepDuration;
@@ -896,8 +898,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             e.printStackTrace();
         }
 
-        this.executionThread = new Thread(this.execution);
-        this.executionThread.start();
+        this.execution.schedule();
 
         this.kIEMViewInstance.setAllEnabled(true);
         return true;
@@ -1043,7 +1044,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the Exception if any, or null
      */
-    public void handleComponentError(final AbstractDataComponent dataComponent,
+    public static void handleComponentError(final AbstractDataComponent dataComponent,
             final Exception exception) {
 
         boolean mustStop = false;
@@ -1062,7 +1063,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         // show error or warning message dialog
         if (mustStop) {
             // notify components
-            this.getEventManager().notify(new KiemEvent(KiemEvent.ERROR_STOP));
+            KiemPlugin.getDefault().getEventManager().notify(new KiemEvent(KiemEvent.ERROR_STOP));
 
             // first terminate the execution
             if (KiemPlugin.getDefault().execution != null) {
@@ -1077,9 +1078,9 @@ public class KiemPlugin extends AbstractUIPlugin {
             // must pause makes only sense for running executions!
             if (mustPause) {
                 // notify components
-                this.getEventManager().notify(new KiemEvent(KiemEvent.ERROR_PAUSE));
+                KiemPlugin.getDefault().getEventManager().notify(new KiemEvent(KiemEvent.ERROR_PAUSE));
                 // pause execution
-                this.execution.pauseExecutionSync();
+                KiemPlugin.getDefault().getExecution().pauseExecutionSync();
             } // end if
         }
 
@@ -1095,6 +1096,41 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    private String getErrorWarningMessage(final String textMessage, final String pluginID,
+            final Exception exception) {
+        String message = "";
+
+        if (textMessage != null) {
+            message = textMessage + message;
+            // exception = null;
+        } else if (exception != null) {
+            message = exception.getMessage() + message;
+            // exception = null;
+        }
+
+        // do not post the same message twice
+        if ((exception != null) && (textMessage != null)
+                && (exception.getMessage().startsWith(textMessage))) {
+            message = "" + pluginID + "";
+        } else {
+            message += " (" + pluginID + ")";
+        }
+        return message;
+    }
+    
+    private String getPluginID(final String textMessage, final String pluginID,
+            final Exception exception) {
+        String pluginID2 = null;
+        if (pluginID == null) {
+            pluginID2 = KiemPlugin.PLUGIN_ID;
+        } else {
+            pluginID2 = pluginID;
+        }
+        return pluginID2;
     }
 
     // -------------------------------------------------------------------------
@@ -1118,30 +1154,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void showWarning(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         try {
-            String message = "";
-
-            if (textMessage != null) {
-                message = textMessage + message;
-                // exception = null;
-            } else if (exception != null) {
-                message = exception.getMessage() + message;
-                // exception = null;
-            }
-
-            // do not post the same message twice
-            if ((exception != null) && (textMessage != null)
-                    && (exception.getMessage().startsWith(textMessage))) {
-                message = "" + pluginID + "";
-            } else {
-                message += " (" + pluginID + ")";
-            }
-
-            String pluginID2 = null;
-            if (pluginID == null) {
-                pluginID2 = KiemPlugin.PLUGIN_ID;
-            } else {
-                pluginID2 = pluginID;
-            }
+            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String pluginID2 = getPluginID(textMessage, pluginID, exception);
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
@@ -1193,30 +1207,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         try {
-            String message = "";
-
-            if (textMessage != null) {
-                message = textMessage + message;
-                // exception = null;
-            } else if (exception != null) {
-                message = exception.getMessage() + message;
-                // exception = null;
-            }
-
-            // do not post the same message twice
-            if ((exception != null) && (textMessage != null)
-                    && (exception.getMessage().startsWith(textMessage))) {
-                message = "" + pluginID + "";
-            } else {
-                message += " (" + pluginID + ")";
-            }
-
-            String pluginID2 = null;
-            if (pluginID == null) {
-                pluginID2 = KiemPlugin.PLUGIN_ID;
-            } else {
-                pluginID2 = pluginID;
-            }
+            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String pluginID2 = getPluginID(textMessage, pluginID, exception);
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {

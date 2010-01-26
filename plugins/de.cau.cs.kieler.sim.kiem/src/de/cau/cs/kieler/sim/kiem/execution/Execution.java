@@ -26,6 +26,10 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,7 +43,7 @@ import org.json.JSONObject;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class Execution implements Runnable {
+public class Execution extends Job {
 
     /** Timeout for DataComponents. */
     private TimeoutThread timeout;
@@ -139,24 +143,23 @@ public class Execution implements Runnable {
 
     /** The event manager to handle notification of DataComponents. */
     private EventManager eventManager;
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Tries to get the Timeout from the plugins content providers.
-     * <BR><BR>
-     * If that fails the timeout is the TIMEOUTMULTIPLICITY x aimedStepDuration 
-     * but minimally a timeout of Execution.SECOND_WAITTIMEOUT. In this
-     * case the plugins content providers are notified of the default timeout
-     * value.
+     * Tries to get the Timeout from the plugins content providers. <BR>
+     * <BR>
+     * If that fails the timeout is the TIMEOUTMULTIPLICITY x aimedStepDuration but minimally a
+     * timeout of Execution.SECOND_WAITTIMEOUT. In this case the plugins content providers are
+     * notified of the default timeout value.
      * 
      * author: soh
      * 
      * @return the timeout
      */
     private int getTimeout() {
-        Integer providedTimeout = KiemPlugin.getDefault()
-        .getIntegerValueFromProviders(KiemPlugin.TIMEOUT_ID);
+        Integer providedTimeout = KiemPlugin.getDefault().getIntegerValueFromProviders(
+                KiemPlugin.TIMEOUT_ID);
         if (providedTimeout != null) {
             return providedTimeout;
         } else {
@@ -165,8 +168,8 @@ public class Execution implements Runnable {
             if (returnValue < Execution.SECOND_WAITTIMEOUT) {
                 returnValue = Execution.SECOND_WAITTIMEOUT;
             }
-            KiemPlugin.getDefault().notifyConfigurationProviders(
-                    KiemPlugin.TIMEOUT_ID, returnValue + "");
+            KiemPlugin.getDefault().notifyConfigurationProviders(KiemPlugin.TIMEOUT_ID,
+                    returnValue + "");
             return (returnValue);
         }
     }
@@ -183,6 +186,7 @@ public class Execution implements Runnable {
      */
     public Execution(final List<DataComponentWrapper> dataComponentWrapperListParam,
             final EventManager eventManagerParam) {
+        super("KIEM Execution");
         this.eventManager = eventManagerParam;
         this.aimedStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
         this.stop = false;
@@ -653,7 +657,7 @@ public class Execution implements Runnable {
                     timeout.abortTimeout();
                     timeout.timeout(getTimeout(), "commandStop", dataComponentWrapper, this);
                     if (eventManager != null) {
-                           eventManager.notify(KiemEvent.CMD_STOP);
+                        eventManager.notify(KiemEvent.CMD_STOP);
                     }
                     // dataComponentWrapper.getDataComponent().commandStop();
                     timeout.abortTimeout();
@@ -683,6 +687,11 @@ public class Execution implements Runnable {
 
         // stop timeout thread
         this.timeout.terminate();
+
+        // must notify the view here, because job can be canceled directly (or remotely by other
+        // plug-in)
+        KiemPlugin.getDefault().setExecution(null);
+        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
     }
 
     // -------------------------------------------------------------------------
@@ -802,9 +811,8 @@ public class Execution implements Runnable {
     // -------------------------------------------------------------------------
 
     /**
-     * Wrap-up components after execution was stopped. The quietmode should only
-     * be used if the wrapupComponents is called by the handleComponentError
-     * to not get any recusive call!
+     * Wrap-up components after execution was stopped. The quietmode should only be used if the
+     * wrapupComponents is called by the handleComponentError to not get any recusive call!
      * 
      * @param quietmode
      *            the quietmode ommits any errors
@@ -1003,7 +1011,11 @@ public class Execution implements Runnable {
     /**
      * {@inheritDoc}
      */
-    public void run() {
+    protected IStatus run(final IProgressMonitor monitor) {
+        // // TODO Auto-generated method stub
+        // return null;
+        // }
+        // public void run() {
         synchronized (this) {
             // this returns stepCounter and historyStepCounter and all other
             // timing variables
@@ -1051,7 +1063,7 @@ public class Execution implements Runnable {
                         KiemEvent infoEvent = new KiemEvent(KiemEvent.STEP_INFO,
                                 new Pair<Long, Long>(this.stepCounter, this.stepCounterMax));
                         if (eventManager != null) {
-                              eventManager.notify(infoEvent);
+                            eventManager.notify(infoEvent);
                         }
                         // dataComponentWrapperList.get(c).getDataComponent()
                         // .notifyStep(this.stepCounter,this.stepCounterMax);
@@ -1217,7 +1229,7 @@ public class Execution implements Runnable {
                             // escape if stopped
                             timeout.abortTimeout();
                             if (this.stop) {
-                                return;
+                                return Status.CANCEL_STATUS;
                             }
 
                             // System.out.println(c + ") " +dataComponentWrapper.getName() +
@@ -1275,9 +1287,13 @@ public class Execution implements Runnable {
 
             } // end synchronized
 
+            // stop if monitor is cancelled
+            if (monitor.isCanceled()) {
+                this.stopExecutionSync();
+            }
             // escape if stopped
             if (this.stop) {
-                return;
+                return Status.OK_STATUS;
             }
 
             // delay if time of step is left (in run mode only)
@@ -1319,9 +1335,13 @@ public class Execution implements Runnable {
                 this.stepToPause = -1;
             }
 
+            // stop if monitor is cancelled
+            if (monitor.isCanceled()) {
+                this.stopExecutionSync();
+            }
             // escape if stopped
             if (this.stop) {
-                return;
+                return Status.OK_STATUS;
             }
 
             // delay while paused
@@ -1335,15 +1355,20 @@ public class Execution implements Runnable {
                         KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
                     }
                 }
+                // stop if monitor is cancelled
+                if (monitor.isCanceled()) {
+                    this.stopExecutionSync();
+                }
                 // if stop is requested, jump out
                 if (this.stop) {
-                    return;
+                    return Status.OK_STATUS;
                 }
                 endtime = System.currentTimeMillis();
                 accumulatedPlauseDurations += endtime - starttime;
             }
 
         } // next while not stop
+        return Job.ASYNC_FINISH;
     }
 
     // -------------------------------------------------------------------------
