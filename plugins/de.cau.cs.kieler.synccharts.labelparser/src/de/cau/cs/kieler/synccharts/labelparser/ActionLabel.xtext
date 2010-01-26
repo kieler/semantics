@@ -133,7 +133,7 @@ OrOperation returns synccharts::Expression:
 // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 ParanthesedBooleanExpression returns synccharts::Expression:
-    BooleanValue | CompareOperation | SignalReference | HostCode | '('OrOperation')' ;
+    BooleanValue | CompareOperation | SignalReference | ValOperation | HostCode | '('OrOperation')' ;
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
 BooleanExpression returns synccharts::Expression:
