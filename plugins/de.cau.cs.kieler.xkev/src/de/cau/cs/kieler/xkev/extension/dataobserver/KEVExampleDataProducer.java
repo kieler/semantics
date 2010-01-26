@@ -44,11 +44,18 @@ public class KEVExampleDataProducer extends JSONObjectDataComponent implements
 
         try {
             simulationData.put("water", Integer.toString(counter));
+
+            JSONObject jo = new JSONObject();
+            jo.append("prensent", "true");
+            
             if (counter <= 50) {
                 simulationData.put("textString", Double.toString((50 - counter) * 10.5));
+                jo.append("value", "50");
             } else {
                 simulationData.put("textString", Double.toString((counter - 50) * 10.5));
+                jo.append("value", "10");
             }
+            simulationData.put("signal", jo);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

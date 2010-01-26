@@ -675,6 +675,7 @@ public class MapAnimations {
                 }
             }
         }
+        //System.out.println(flatOne);
         return flatOne;
     }
 }

@@ -8,8 +8,7 @@
   </svgElement>
   <svgElement id="text">
     <animation xsi:type="mapping:Text" key="textString" />
-    <animation xsi:type="mapping:Text" input="0,3,8,12,45,56" key="water" text_value="Leer, voller als eben, 100.0945, noch mehr, heiß, kalt" font_size="12,10,35,40,32,12,12,12" font_family="Arial,Verdana, Times New Roman,Verdana,Verdana, Courier" />
-    <animation xsi:type="mapping:Colorize" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
+    <animation xsi:type="mapping:Colorize" key="signal.value" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
   </svgElement>
   
 </mapping:SVGFile>
