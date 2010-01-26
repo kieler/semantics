@@ -336,98 +336,43 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kiml.layout.layoutInfo">
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart"
-            id="de.cau.cs.kieler.synccharts.diagram">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart"
-            id="de.cau.cs.kieler.synccharts.diagram">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart"
-            id="de.cau.cs.kieler.synccharts.diagram">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart"
-            id="de.cau.cs.kieler.synccharts.region">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart"
-            id="de.cau.cs.kieler.synccharts.region">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryActionEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryAction2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitActionEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitAction2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideActionEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideAction2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignal2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
       <option
-            object="de.cau.cs.kieler.synccharts.diagram"
+            class="de.cau.cs.kieler.synccharts.Region"
             option="de.cau.cs.kieler.layout.options.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.stateMachine">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.region"
+            class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.layout.options.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.nolayout"
+            class="de.cau.cs.kieler.synccharts.Action"
             option="de.cau.cs.kieler.layout.options.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.nolayout">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.region"
+            class="de.cau.cs.kieler.synccharts.Signal"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.layout.options.minSpacing"
             value="1.0">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.region"
+            class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.layout.options.borderSpacing"
             value="1.0">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.region"
+            class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.layout.options.expandNodes"
             value="true">
       </option>
       <option
-            object="de.cau.cs.kieler.synccharts.diagram"
+            class="de.cau.cs.kieler.synccharts.Region"
             option="de.cau.cs.kieler.layout.options.borderSpacing"
             value="1.0">
       </option>
