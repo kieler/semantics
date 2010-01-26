@@ -65,6 +65,11 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges boolean values (encoded as Strings in property) to
+     * int of the combobox cell editor. If the String is equal to "true" it
+     * returns 1. This tells the cell editor to display the first item (true) in
+     * the combobox. Otherwise the second item (false) is displayed.
+     * 
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
@@ -77,6 +82,10 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges boolean values (encoded as Strings in property) to
+     * int of the combobox cell editor. If the first item is selected, the
+     * saved value is "true", otherwise it is "false".
+     * 
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty property, final Object value) {

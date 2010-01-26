@@ -44,22 +44,38 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges integer values (encoded as Strings in property) to
+     * Strings of the string cell editor. It tries to encode the saved value
+     * as an Integer. If this fails, the default 0 value is taken.
+     * 
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
-        return property.getValue();
+        String value = (String) property.getValue();
+        try {
+            Integer.valueOf((String) value);
+        } catch (Exception e) {
+            // default 0 value
+            property.setValue("0");
+            value = "0";
+        }
+        return value;
     }
 
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges integer values (encoded as Strings in property) to
+     * Strings of the string cell editor. It tries to encode the saved value
+     * as an Integer. If this fails, the default 0 value is taken.
+     * 
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty property, final Object value) {
         try {
             property.setValue("" + Integer.valueOf((String) value));
         } catch (Exception e) {
-            // TODO:...
+            property.setValue("0");
         }
     }
 

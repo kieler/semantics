@@ -44,6 +44,8 @@ public class KiemPropertyTypeString extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
+     * This method does not bridge anything because the string cell editor handles Strings directly.
+     * 
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
@@ -53,6 +55,8 @@ public class KiemPropertyTypeString extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
+     * This method does not bridge anything because the string cell editor handles Strings directly.
+     * 
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty property, final Object value) {

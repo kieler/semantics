@@ -68,6 +68,9 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges String file location values (encoded as Strings in property) 
+     * and the String displayed in the String cell editor.
+     * 
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
@@ -77,6 +80,9 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges String file location values (encoded as Strings in property) 
+     * and the String displayed in the String cell editor.
+     * 
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty property, final Object value) {

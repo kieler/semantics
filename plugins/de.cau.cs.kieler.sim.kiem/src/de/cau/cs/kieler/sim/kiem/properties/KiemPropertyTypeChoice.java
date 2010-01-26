@@ -70,6 +70,11 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges String names values (encoded as Strings in property) to
+     * int of the combobox cell editor. All items are searched, and the resulting
+     * index is returned. If nothing is found, the first item with index 0
+     * is the default selected one.
+     * 
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
@@ -84,6 +89,10 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
+     * This method bridges String names values (encoded as Strings in property) to
+     * int of the combobox cell editor. The item text of the selected index
+     * is saved as a String.
+     *  
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty element, final Object value) {
