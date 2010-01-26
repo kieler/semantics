@@ -149,7 +149,7 @@ public class ObserverExecution implements Runnable {
                     try {
                         compJSON.step(this.data);
                     } catch (KiemExecutionException e) {
-                        KiemPlugin.getDefault().handleComponentError(dataComponent, e);
+                        KiemPlugin.handleComponentError(dataComponent, e);
                     }
                 } else {
                     JSONStringDataComponent compString = (JSONStringDataComponent) dataComponent;
@@ -162,7 +162,7 @@ public class ObserverExecution implements Runnable {
                             compString.step(null);
                         }
                     } catch (KiemExecutionException e) {
-                        KiemPlugin.getDefault().handleComponentError(dataComponent, e);
+                        KiemPlugin.handleComponentError(dataComponent, e);
                     }
                 }
             } catch (Exception e) {

@@ -180,7 +180,7 @@ public class ProducerExecution implements Runnable {
                     try {
                         this.data = compJSON.step(null);
                     } catch (KiemExecutionException e) {
-                        KiemPlugin.getDefault().handleComponentError(dataComponent, e);
+                        KiemPlugin.handleComponentError(dataComponent, e);
                     }
                 } else {
                     JSONStringDataComponent compString = (JSONStringDataComponent) dataComponent;
@@ -189,7 +189,7 @@ public class ProducerExecution implements Runnable {
                     try {
                         jSONString = compString.step(null);
                     } catch (KiemExecutionException e) {
-                        KiemPlugin.getDefault().handleComponentError(dataComponent, e);
+                        KiemPlugin.handleComponentError(dataComponent, e);
                     }
                     this.data = null;
                     if (jSONString != null && !jSONString.equals("")) {

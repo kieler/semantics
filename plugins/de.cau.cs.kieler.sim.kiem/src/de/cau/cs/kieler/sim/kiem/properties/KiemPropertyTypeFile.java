@@ -23,7 +23,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**

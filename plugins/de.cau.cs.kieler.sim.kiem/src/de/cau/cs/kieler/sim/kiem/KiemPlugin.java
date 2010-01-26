@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -102,10 +101,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /** Execution object. */
     private Execution execution;
-
-    /** Execution thread. */
-    //private Thread executionThread;
-    private Job executionThread;
 
     /** Current value of the aimed step duration in ms. */
     private int aimedStepDuration;

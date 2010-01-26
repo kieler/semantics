@@ -827,7 +827,7 @@ public class Execution extends Job {
                 } catch (KiemInitializationException e) {
                     timeout.abortTimeout();
                     if (!quietmode) {
-                        KiemPlugin.getDefault().handleComponentError(
+                        KiemPlugin.handleComponentError(
                                 dataComponentWrapper.getDataComponent(), e);
                     }
                 }
@@ -936,7 +936,7 @@ public class Execution extends Job {
                         .step(oldData);
             } catch (KiemExecutionException e) {
                 timeout.abortTimeout();
-                KiemPlugin.getDefault().handleComponentError(
+                KiemPlugin.handleComponentError(
                         dataComponentWrapper.getDataComponent(), e);
             }
 
@@ -952,7 +952,7 @@ public class Execution extends Job {
                         .step(oldData.toString());
             } catch (KiemExecutionException e) {
                 timeout.abortTimeout();
-                KiemPlugin.getDefault().handleComponentError(
+                KiemPlugin.handleComponentError(
                         dataComponentWrapper.getDataComponent(), e);
             }
             JSONObject newJsonData = null;
