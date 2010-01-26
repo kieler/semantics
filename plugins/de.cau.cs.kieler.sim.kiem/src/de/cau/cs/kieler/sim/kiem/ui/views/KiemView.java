@@ -909,6 +909,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // default (nothing selected) also collapsed
                 refreshTableColumns(true);
             }
+            this.refreshEnabledDisabledTextColors();
         }
     }
 
