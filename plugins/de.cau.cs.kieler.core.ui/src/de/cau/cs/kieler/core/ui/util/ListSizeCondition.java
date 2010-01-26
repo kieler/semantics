@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * A condition that checks whether a featured list of an EObject has a certain size.
  * 
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  * @author msp
  */

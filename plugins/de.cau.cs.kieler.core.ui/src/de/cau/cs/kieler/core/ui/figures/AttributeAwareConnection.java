@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * An attribute aware polyline connection figure that is able to change its
  * decoration according to attribute changes. 
  * 
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  * @author msp
  */

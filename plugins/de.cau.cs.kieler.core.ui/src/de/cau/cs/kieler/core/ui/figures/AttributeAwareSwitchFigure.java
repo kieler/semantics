@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.util.Pair;
 /**
  * An attribute aware figure that switches the displayed figure according to attribute changes. 
  * 
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  * @author msp
  */

@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * A condition that is composed of a set of other conditions.
  * 
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author msp
  */
 public class CompoundCondition implements ICondition {

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * A condition that evaluates a feature of an EOject.
  * 
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  * @author msp
  */

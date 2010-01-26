@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.ui.util;
 /**
  * Interface for conditions that can be evaluated on a specific object.
  *
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author msp
  */
 public interface ICondition {

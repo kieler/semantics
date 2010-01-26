@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * An interface for figures that react to changes of model attributes.
  *
+ * @kieler.rating 2010-01-26 proposed yellow msp
  * @author msp
  */
 public interface IAttributeAwareFigure extends IFigure, Adapter {
