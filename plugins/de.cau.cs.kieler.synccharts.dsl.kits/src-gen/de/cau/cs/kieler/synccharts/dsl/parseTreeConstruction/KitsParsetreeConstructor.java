@@ -39,38 +39,39 @@ protected class ThisRootNode extends RootToken {
 			case 1: return new State_Group(this, this, 1, inst);
 			case 2: return new Renaming_Group(this, this, 2, inst);
 			case 3: return new Transition_Group(this, this, 3, inst);
-			case 4: return new TransitionState_Group(this, this, 4, inst);
-			case 5: return new ValuedObject_Alternatives(this, this, 5, inst);
-			case 6: return new Variable_Group(this, this, 6, inst);
-			case 7: return new Signal_Group(this, this, 7, inst);
-			case 8: return new Action_Group(this, this, 8, inst);
-			case 9: return new Effect_Alternatives(this, this, 9, inst);
-			case 10: return new Emission_Group(this, this, 10, inst);
-			case 11: return new Assignment_Group(this, this, 11, inst);
-			case 12: return new SignalReference_SignalAssignment(this, this, 12, inst);
-			case 13: return new VariableReference_VariableAssignment(this, this, 13, inst);
-			case 14: return new IntValue_ValueAssignment(this, this, 14, inst);
-			case 15: return new FloatValue_ValueAssignment(this, this, 15, inst);
-			case 16: return new BooleanValue_ValueAssignment(this, this, 16, inst);
-			case 17: return new Value_Alternatives(this, this, 17, inst);
-			case 18: return new ValOperation_Group(this, this, 18, inst);
-			case 19: return new ValueExpression_PlusOperationParserRuleCall(this, this, 19, inst);
-			case 20: return new ParanthesedValueExpression_Alternatives(this, this, 20, inst);
-			case 21: return new PlusOperation_Group(this, this, 21, inst);
-			case 22: return new MultOrDivOperation_Alternatives(this, this, 22, inst);
-			case 23: return new MultOperation_Group(this, this, 23, inst);
-			case 24: return new DivOperation_Group(this, this, 24, inst);
-			case 25: return new PreArithmOperation_Group(this, this, 25, inst);
-			case 26: return new PreOrNormalValueExpression_Alternatives(this, this, 26, inst);
-			case 27: return new CompareOperation_Group(this, this, 27, inst);
-			case 28: return new UnaryOperation_Group(this, this, 28, inst);
-			case 29: return new UnaryParanthesedOperation_Group(this, this, 29, inst);
-			case 30: return new UnaryOrNormalExpression_Alternatives(this, this, 30, inst);
-			case 31: return new AndOperation_Group(this, this, 31, inst);
-			case 32: return new OrOperation_Group(this, this, 32, inst);
-			case 33: return new ParanthesedBooleanExpression_Alternatives(this, this, 33, inst);
-			case 34: return new BooleanExpression_OrOperationParserRuleCall(this, this, 34, inst);
-			case 35: return new HostCode_Group(this, this, 35, inst);
+			case 4: return new TextualTransition_Group(this, this, 4, inst);
+			case 5: return new TransitionState_Group(this, this, 5, inst);
+			case 6: return new ValuedObject_Alternatives(this, this, 6, inst);
+			case 7: return new Variable_Group(this, this, 7, inst);
+			case 8: return new Signal_Group(this, this, 8, inst);
+			case 9: return new Action_Group(this, this, 9, inst);
+			case 10: return new Effect_Alternatives(this, this, 10, inst);
+			case 11: return new Emission_Group(this, this, 11, inst);
+			case 12: return new Assignment_Group(this, this, 12, inst);
+			case 13: return new SignalReference_SignalAssignment(this, this, 13, inst);
+			case 14: return new VariableReference_VariableAssignment(this, this, 14, inst);
+			case 15: return new IntValue_ValueAssignment(this, this, 15, inst);
+			case 16: return new FloatValue_ValueAssignment(this, this, 16, inst);
+			case 17: return new BooleanValue_ValueAssignment(this, this, 17, inst);
+			case 18: return new Value_Alternatives(this, this, 18, inst);
+			case 19: return new ValOperation_Group(this, this, 19, inst);
+			case 20: return new ValueExpression_PlusOperationParserRuleCall(this, this, 20, inst);
+			case 21: return new ParanthesedValueExpression_Alternatives(this, this, 21, inst);
+			case 22: return new PlusOperation_Group(this, this, 22, inst);
+			case 23: return new MultOrDivOperation_Alternatives(this, this, 23, inst);
+			case 24: return new MultOperation_Group(this, this, 24, inst);
+			case 25: return new DivOperation_Group(this, this, 25, inst);
+			case 26: return new PreArithmOperation_Group(this, this, 26, inst);
+			case 27: return new PreOrNormalValueExpression_Alternatives(this, this, 27, inst);
+			case 28: return new CompareOperation_Group(this, this, 28, inst);
+			case 29: return new UnaryOperation_Group(this, this, 29, inst);
+			case 30: return new UnaryParanthesedOperation_Group(this, this, 30, inst);
+			case 31: return new UnaryOrNormalExpression_Alternatives(this, this, 31, inst);
+			case 32: return new AndOperation_Group(this, this, 32, inst);
+			case 33: return new OrOperation_Group(this, this, 33, inst);
+			case 34: return new ParanthesedBooleanExpression_Alternatives(this, this, 34, inst);
+			case 35: return new BooleanExpression_OrOperationParserRuleCall(this, this, 35, inst);
+			case 36: return new HostCode_Group(this, this, 36, inst);
 			default: return null;
 		}	
 	}	
@@ -87,13 +88,13 @@ protected class ThisRootNode extends RootToken {
  * // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
  * // Inner states --- a region has to have at least one state#2009-11-26
  *     
- * // GMF does not like empty models so avoid them:
+ * // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
  *
  **/
 
 // {sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
 // State+ 
-// // GMF does not like empty models so avoid them:
+// // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
 protected class Region_Group extends GroupToken {
 	
 	public Region_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -121,7 +122,7 @@ protected class Region_Group extends GroupToken {
 }
 
 // {sync::Region} 
-// // GMF does not like empty models so avoid them:
+// // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
 protected class Region_RegionAction_0 extends ActionToken  {
 
 	public Region_RegionAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -363,10 +364,10 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
  *   FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
  *   Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
  *   "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
- *   "}")? outgoingTransitions+=Transition*; 
+ *   "}")? outgoingTransitions+=TextualTransition*; 
  *   
  *     
- *     // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+ *     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
  *         
  *        
  *   // State_Group_1_1
@@ -407,13 +408,15 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
  *    //    |'state' id=FullStateID// State_Group_1_36
  *    //    |'state'
  *    //    |id=FullStateID)// State_Group_1_38 
- *    //change the datatype of label (from FullStateID) to STRING 
+ *   
+ *   //change the datatype of label (from FullStateID) to STRING 
  *    //to prevent wrong parsing in this case: 
  *    //init A
  *    //final B
  *    //A --> B;
  *    //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
- *    // order of actions has been fixed ---conform to thinkccharts#2009-11-26
+ *   
+ *   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
  *     
  *      
  *      
@@ -426,8 +429,8 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
 // FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 // Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 // "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
-// "}")? outgoingTransitions+=Transition* 
-//     // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+// "}")? outgoingTransitions+=TextualTransition* 
+//     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
 //         
 //        
 //   // State_Group_1_1
@@ -468,13 +471,15 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
 //    //    |'state' id=FullStateID// State_Group_1_36
 //    //    |'state'
 //    //    |id=FullStateID)// State_Group_1_38 
-//    //change the datatype of label (from FullStateID) to STRING 
+//   
+//   //change the datatype of label (from FullStateID) to STRING 
 //    //to prevent wrong parsing in this case: 
 //    //init A
 //    //final B
 //    //A --> B;
 //    //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-//    // order of actions has been fixed ---conform to thinkccharts#2009-11-26
+//   
+//   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
 //     
 //      
 //      
@@ -516,7 +521,7 @@ protected class State_Group extends GroupToken {
 }
 
 // {sync::State} 
-//     // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26
+//     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26
 protected class State_StateAction_0 extends ActionToken  {
 
 	public State_StateAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1402,7 +1407,7 @@ protected class State_RightCurlyBracketKeyword_13_3 extends KeywordToken  {
 }
 
 
-// outgoingTransitions+=Transition*
+// outgoingTransitions+=TextualTransition*
 protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  {
 	
 	public State_OutgoingTransitionsAssignment_14(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1417,7 +1422,7 @@ protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group(this, this, 0, inst);
+			case 0: return new TextualTransition_Group(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1428,9 +1433,9 @@ protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  
 		IInstanceDescription obj = current.cloneAndConsume("outgoingTransitions");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getTransitionRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getTextualTransitionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_14_0(); 
+				element = grammarAccess.getStateAccess().getOutgoingTransitionsTextualTransitionParserRuleCall_14_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -1592,9 +1597,11 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
 /************ begin Rule Transition ****************
  *
  * Transition returns sync::Transition:
- *   type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
- *   "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
- *   ","?)*)?))? isHistory?=" history"? ";";   //========================================================================================
+ *   type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
+ *   delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
+ *   " history"? ";";  
+ *   
+ * //========================================================================================
  * //===  									    ACTIONS  					               ===
  * //========================================================================================
  * //Action returns sync::Action:
@@ -1605,23 +1612,25 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
  * 
  * 
  *     
- *            
- *          
- *            
- * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
- * //|({sync::State} name=FullStateID)
- * //  |
- * //  (TransitionState))
- * //TargetState returns sync::Transition:
- * //	{sync::Transition}
- * //	//(isInitial?='init')? (isFinal?='final')
- * //;
+ * 
+ *    
+ *    
+ *   //targetStateProxy=STRING
+ *           
+ *           
+ *    
+ *   
+ *  //TextualTransition extends Transition
  *
  **/
 
-// type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
-// "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
-// ","?)*)?))? isHistory?=" history"? ";"
+// type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
+// delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
+// " history"? ";" 
+// 
+//    
+//    
+//   //targetStateProxy=STRING
 protected class Transition_Group extends GroupToken {
 	
 	public Transition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1636,7 +1645,7 @@ protected class Transition_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_SemicolonKeyword_5(parent, this, 0, inst);
+			case 0: return new Transition_SemicolonKeyword_4(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1681,38 +1690,18 @@ protected class Transition_TypeAssignment_0 extends AssignmentToken  {
 
 }
 
-// ("<" priority=INT ">")?
-protected class Transition_Group_1 extends GroupToken {
+// targetState=[sync::State|FullStateID]  
+//    
+//   //targetStateProxy=STRING
+protected class Transition_TargetStateAssignment_1 extends AssignmentToken  {
 	
-	public Transition_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_TargetStateAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Transition_GreaterThanSignKeyword_1_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "<"
-protected class Transition_LessThanSignKeyword_1_0 extends KeywordToken  {
-	
-	public Transition_LessThanSignKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getLessThanSignKeyword_1_0();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getTargetStateAssignment_1();
 	}
 
     @Override
@@ -1723,95 +1712,15 @@ protected class Transition_LessThanSignKeyword_1_0 extends KeywordToken  {
 		}	
 	}	
 		
-}
-
-// priority=INT
-protected class Transition_PriorityAssignment_1_1 extends AssignmentToken  {
-	
-	public Transition_PriorityAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getPriorityAssignment_1_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Transition_LessThanSignKeyword_1_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("priority",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("priority");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_1_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// ">"
-protected class Transition_GreaterThanSignKeyword_1_2 extends KeywordToken  {
-	
-	public Transition_GreaterThanSignKeyword_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGreaterThanSignKeyword_1_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Transition_PriorityAssignment_1_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-
-// targetState=[sync::State|FullStateID]
-protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
-	
-	public Transition_TargetStateAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTargetStateAssignment_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Transition_Group_1(parent, this, 0, inst);
-			case 1: return new Transition_TypeAssignment_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("targetState",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("targetState");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_1_0().getType().getClassifier())) {
 				type = AssignmentType.CR;
-				element = grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0(); 
+				element = grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_1_0(); 
 				return obj;
 			}
 		}
@@ -1822,21 +1731,21 @@ protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
 
 // ("with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=
 // Effect ","?)*)?))?
-protected class Transition_Group_3 extends GroupToken {
+protected class Transition_Group_2 extends GroupToken {
 	
-	public Transition_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_3();
+		return grammarAccess.getTransitionAccess().getGroup_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_3_3(parent, this, 0, inst);
+			case 0: return new Transition_Group_2_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1844,21 +1753,21 @@ protected class Transition_Group_3 extends GroupToken {
 }
 
 // "with"
-protected class Transition_WithKeyword_3_0 extends KeywordToken  {
+protected class Transition_WithKeyword_2_0 extends KeywordToken  {
 	
-	public Transition_WithKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_WithKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getWithKeyword_3_0();
+		return grammarAccess.getTransitionAccess().getWithKeyword_2_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TargetStateAssignment_2(parent, this, 0, inst);
+			case 0: return new Transition_TargetStateAssignment_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1866,21 +1775,21 @@ protected class Transition_WithKeyword_3_0 extends KeywordToken  {
 }
 
 // isImmediate?="#"?
-protected class Transition_IsImmediateAssignment_3_1 extends AssignmentToken  {
+protected class Transition_IsImmediateAssignment_2_1 extends AssignmentToken  {
 	
-	public Transition_IsImmediateAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_IsImmediateAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getIsImmediateAssignment_3_1();
+		return grammarAccess.getTransitionAccess().getIsImmediateAssignment_2_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_WithKeyword_3_0(parent, this, 0, inst);
+			case 0: return new Transition_WithKeyword_2_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1891,7 +1800,7 @@ protected class Transition_IsImmediateAssignment_3_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isImmediate");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_3_1_0();
+			element = grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_2_1_0();
 			return obj;
 		}
 		return null;
@@ -1900,22 +1809,22 @@ protected class Transition_IsImmediateAssignment_3_1 extends AssignmentToken  {
 }
 
 // delay=INT?
-protected class Transition_DelayAssignment_3_2 extends AssignmentToken  {
+protected class Transition_DelayAssignment_2_2 extends AssignmentToken  {
 	
-	public Transition_DelayAssignment_3_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_DelayAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getDelayAssignment_3_2();
+		return grammarAccess.getTransitionAccess().getDelayAssignment_2_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_IsImmediateAssignment_3_1(parent, this, 0, inst);
-			case 1: return new Transition_WithKeyword_3_0(parent, this, 1, inst);
+			case 0: return new Transition_IsImmediateAssignment_2_1(parent, this, 0, inst);
+			case 1: return new Transition_WithKeyword_2_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -1926,7 +1835,7 @@ protected class Transition_DelayAssignment_3_2 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("delay");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_2_0();
+			element = grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_2_2_0();
 			return obj;
 		}
 		return null;
@@ -1935,22 +1844,22 @@ protected class Transition_DelayAssignment_3_2 extends AssignmentToken  {
 }
 
 // trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
-protected class Transition_Group_3_3 extends GroupToken {
+protected class Transition_Group_2_3 extends GroupToken {
 	
-	public Transition_Group_3_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_2_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_3_3();
+		return grammarAccess.getTransitionAccess().getGroup_2_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_3_3_1(parent, this, 0, inst);
-			case 1: return new Transition_TriggerAssignment_3_3_0(parent, this, 1, inst);
+			case 0: return new Transition_Group_2_3_1(parent, this, 0, inst);
+			case 1: return new Transition_TriggerAssignment_2_3_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -1958,15 +1867,15 @@ protected class Transition_Group_3_3 extends GroupToken {
 }
 
 // trigger=BooleanExpression?
-protected class Transition_TriggerAssignment_3_3_0 extends AssignmentToken  {
+protected class Transition_TriggerAssignment_2_3_0 extends AssignmentToken  {
 	
-	public Transition_TriggerAssignment_3_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_TriggerAssignment_2_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTriggerAssignment_3_3_0();
+		return grammarAccess.getTransitionAccess().getTriggerAssignment_2_3_0();
 	}
 
     @Override
@@ -1985,7 +1894,7 @@ protected class Transition_TriggerAssignment_3_3_0 extends AssignmentToken  {
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getBooleanExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_3_0_0(); 
+				element = grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_2_3_0_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -1997,31 +1906,31 @@ protected class Transition_TriggerAssignment_3_3_0 extends AssignmentToken  {
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Transition_DelayAssignment_3_2(parent, next, actIndex, consumed);
-			case 1: return new Transition_IsImmediateAssignment_3_1(parent, next, actIndex, consumed);
-			case 2: return new Transition_WithKeyword_3_0(parent, next, actIndex, consumed);
+			case 0: return new Transition_DelayAssignment_2_2(parent, next, actIndex, consumed);
+			case 1: return new Transition_IsImmediateAssignment_2_1(parent, next, actIndex, consumed);
+			case 2: return new Transition_WithKeyword_2_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
 // ("/" (effects+=Effect ","?)*)?
-protected class Transition_Group_3_3_1 extends GroupToken {
+protected class Transition_Group_2_3_1 extends GroupToken {
 	
-	public Transition_Group_3_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_2_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_3_3_1();
+		return grammarAccess.getTransitionAccess().getGroup_2_3_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_3_3_1_1(parent, this, 0, inst);
-			case 1: return new Transition_SolidusKeyword_3_3_1_0(parent, this, 1, inst);
+			case 0: return new Transition_Group_2_3_1_1(parent, this, 0, inst);
+			case 1: return new Transition_SolidusKeyword_2_3_1_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -2029,24 +1938,24 @@ protected class Transition_Group_3_3_1 extends GroupToken {
 }
 
 // "/"
-protected class Transition_SolidusKeyword_3_3_1_0 extends KeywordToken  {
+protected class Transition_SolidusKeyword_2_3_1_0 extends KeywordToken  {
 	
-	public Transition_SolidusKeyword_3_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_SolidusKeyword_2_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_1_0();
+		return grammarAccess.getTransitionAccess().getSolidusKeyword_2_3_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TriggerAssignment_3_3_0(parent, this, 0, inst);
-			case 1: return new Transition_DelayAssignment_3_2(parent, this, 1, inst);
-			case 2: return new Transition_IsImmediateAssignment_3_1(parent, this, 2, inst);
-			case 3: return new Transition_WithKeyword_3_0(parent, this, 3, inst);
+			case 0: return new Transition_TriggerAssignment_2_3_0(parent, this, 0, inst);
+			case 1: return new Transition_DelayAssignment_2_2(parent, this, 1, inst);
+			case 2: return new Transition_IsImmediateAssignment_2_1(parent, this, 2, inst);
+			case 3: return new Transition_WithKeyword_2_0(parent, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -2054,21 +1963,21 @@ protected class Transition_SolidusKeyword_3_3_1_0 extends KeywordToken  {
 }
 
 // (effects+=Effect ","?)*
-protected class Transition_Group_3_3_1_1 extends GroupToken {
+protected class Transition_Group_2_3_1_1 extends GroupToken {
 	
-	public Transition_Group_3_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_2_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_3_3_1_1();
+		return grammarAccess.getTransitionAccess().getGroup_2_3_1_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_EffectsAssignment_3_3_1_1_0(parent, this, 0, inst);
+			case 0: return new Transition_EffectsAssignment_2_3_1_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2076,15 +1985,15 @@ protected class Transition_Group_3_3_1_1 extends GroupToken {
 }
 
 // effects+=Effect
-protected class Transition_EffectsAssignment_3_3_1_1_0 extends AssignmentToken  {
+protected class Transition_EffectsAssignment_2_3_1_1_0 extends AssignmentToken  {
 	
-	public Transition_EffectsAssignment_3_3_1_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_EffectsAssignment_2_3_1_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_1_1_0();
+		return grammarAccess.getTransitionAccess().getEffectsAssignment_2_3_1_1_0();
 	}
 
     @Override
@@ -2103,7 +2012,7 @@ protected class Transition_EffectsAssignment_3_3_1_1_0 extends AssignmentToken  
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_1_0_0(); 
+				element = grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_2_3_1_1_0_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2115,8 +2024,8 @@ protected class Transition_EffectsAssignment_3_3_1_1_0 extends AssignmentToken  
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Transition_Group_3_3_1_1(parent, next, actIndex, consumed);
-			case 1: return new Transition_SolidusKeyword_3_3_1_0(parent, next, actIndex, consumed);
+			case 0: return new Transition_Group_2_3_1_1(parent, next, actIndex, consumed);
+			case 1: return new Transition_SolidusKeyword_2_3_1_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -2127,22 +2036,22 @@ protected class Transition_EffectsAssignment_3_3_1_1_0 extends AssignmentToken  
 
 
 // isHistory?=" history"?
-protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
+protected class Transition_IsHistoryAssignment_3 extends AssignmentToken  {
 	
-	public Transition_IsHistoryAssignment_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_IsHistoryAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_4();
+		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_3(parent, this, 0, inst);
-			case 1: return new Transition_TargetStateAssignment_2(parent, this, 1, inst);
+			case 0: return new Transition_Group_2(parent, this, 0, inst);
+			case 1: return new Transition_TargetStateAssignment_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -2153,7 +2062,7 @@ protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isHistory");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0();
+			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_3_0();
 			return obj;
 		}
 		return null;
@@ -2162,23 +2071,23 @@ protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
 }
 
 // ";"
-protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
+protected class Transition_SemicolonKeyword_4 extends KeywordToken  {
 	
-	public Transition_SemicolonKeyword_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_SemicolonKeyword_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getSemicolonKeyword_5();
+		return grammarAccess.getTransitionAccess().getSemicolonKeyword_4();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_IsHistoryAssignment_4(parent, this, 0, inst);
-			case 1: return new Transition_Group_3(parent, this, 1, inst);
-			case 2: return new Transition_TargetStateAssignment_2(parent, this, 2, inst);
+			case 0: return new Transition_IsHistoryAssignment_3(parent, this, 0, inst);
+			case 1: return new Transition_Group_2(parent, this, 1, inst);
+			case 2: return new Transition_TargetStateAssignment_1(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	
@@ -2189,11 +2098,511 @@ protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
 /************ end Rule Transition ****************/
 
 
+/************ begin Rule TextualTransition ****************
+ *
+ * TextualTransition returns textualsync::TextualTransition:
+ *   type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? delay=INT? (
+ *   trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
+ *   ";";  
+ *   
+ *  //TextualTransition extends Transition
+ *         
+ *   
+ *  //targetState=[sync::State|FullStateID] 
+ *   
+ *         
+ *          
+ *  
+ *   
+ *   
+ * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+ * //|({sync::State} name=FullStateID)
+ * //  |
+ * //  (TransitionState))
+ * //TargetState returns sync::Transition:
+ * //	{sync::Transition}
+ * //	//(isInitial?='init')? (isFinal?='final')
+ * //;
+ *
+ **/
+
+// type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? delay=INT? (
+// trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
+// ";" 
+//   
+//  //targetState=[sync::State|FullStateID]
+protected class TextualTransition_Group extends GroupToken {
+	
+	public TextualTransition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_SemicolonKeyword_4(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getTextualTransitionRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// type=TransitionType 
+//   
+//  //targetState=[sync::State|FullStateID]
+protected class TextualTransition_TypeAssignment_0 extends AssignmentToken  {
+	
+	public TextualTransition_TypeAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getTypeAssignment_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("type",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("type");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getTextualTransitionAccess().getTypeTransitionTypeEnumRuleCall_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// targetStateProxy=STRING  
+//  //targetState=[sync::State|FullStateID]
+protected class TextualTransition_TargetStateProxyAssignment_1 extends AssignmentToken  {
+	
+	public TextualTransition_TargetStateProxyAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getTargetStateProxyAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_TypeAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("targetStateProxy",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("targetStateProxy");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getTextualTransitionAccess().getTargetStateProxySTRINGTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ("with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=
+// Effect ","?)*)?))?
+protected class TextualTransition_Group_2 extends GroupToken {
+	
+	public TextualTransition_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getGroup_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_Group_2_3(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "with"
+protected class TextualTransition_WithKeyword_2_0 extends KeywordToken  {
+	
+	public TextualTransition_WithKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getWithKeyword_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_TargetStateProxyAssignment_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// isImmediate?="#"?
+protected class TextualTransition_IsImmediateAssignment_2_1 extends AssignmentToken  {
+	
+	public TextualTransition_IsImmediateAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getIsImmediateAssignment_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_WithKeyword_2_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isImmediate",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isImmediate");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getTextualTransitionAccess().getIsImmediateNumberSignKeyword_2_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// delay=INT?
+protected class TextualTransition_DelayAssignment_2_2 extends AssignmentToken  {
+	
+	public TextualTransition_DelayAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getDelayAssignment_2_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_IsImmediateAssignment_2_1(parent, this, 0, inst);
+			case 1: return new TextualTransition_WithKeyword_2_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("delay",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("delay");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getTextualTransitionAccess().getDelayINTTerminalRuleCall_2_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
+protected class TextualTransition_Group_2_3 extends GroupToken {
+	
+	public TextualTransition_Group_2_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getGroup_2_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_Group_2_3_1(parent, this, 0, inst);
+			case 1: return new TextualTransition_TriggerAssignment_2_3_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// trigger=BooleanExpression?
+protected class TextualTransition_TriggerAssignment_2_3_0 extends AssignmentToken  {
+	
+	public TextualTransition_TriggerAssignment_2_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getTriggerAssignment_2_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new BooleanExpression_OrOperationParserRuleCall(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("trigger",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("trigger");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getBooleanExpressionRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getTextualTransitionAccess().getTriggerBooleanExpressionParserRuleCall_2_3_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new TextualTransition_DelayAssignment_2_2(parent, next, actIndex, consumed);
+			case 1: return new TextualTransition_IsImmediateAssignment_2_1(parent, next, actIndex, consumed);
+			case 2: return new TextualTransition_WithKeyword_2_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("/" (effects+=Effect ","?)*)?
+protected class TextualTransition_Group_2_3_1 extends GroupToken {
+	
+	public TextualTransition_Group_2_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getGroup_2_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_Group_2_3_1_1(parent, this, 0, inst);
+			case 1: return new TextualTransition_SolidusKeyword_2_3_1_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "/"
+protected class TextualTransition_SolidusKeyword_2_3_1_0 extends KeywordToken  {
+	
+	public TextualTransition_SolidusKeyword_2_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getSolidusKeyword_2_3_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_TriggerAssignment_2_3_0(parent, this, 0, inst);
+			case 1: return new TextualTransition_DelayAssignment_2_2(parent, this, 1, inst);
+			case 2: return new TextualTransition_IsImmediateAssignment_2_1(parent, this, 2, inst);
+			case 3: return new TextualTransition_WithKeyword_2_0(parent, this, 3, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// (effects+=Effect ","?)*
+protected class TextualTransition_Group_2_3_1_1 extends GroupToken {
+	
+	public TextualTransition_Group_2_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getGroup_2_3_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_EffectsAssignment_2_3_1_1_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// effects+=Effect
+protected class TextualTransition_EffectsAssignment_2_3_1_1_0 extends AssignmentToken  {
+	
+	public TextualTransition_EffectsAssignment_2_3_1_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getEffectsAssignment_2_3_1_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Effect_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("effects",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("effects");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getTextualTransitionAccess().getEffectsEffectParserRuleCall_2_3_1_1_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new TextualTransition_Group_2_3_1_1(parent, next, actIndex, consumed);
+			case 1: return new TextualTransition_SolidusKeyword_2_3_1_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+
+
+// isHistory?=" history"?
+protected class TextualTransition_IsHistoryAssignment_3 extends AssignmentToken  {
+	
+	public TextualTransition_IsHistoryAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getIsHistoryAssignment_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_Group_2(parent, this, 0, inst);
+			case 1: return new TextualTransition_TargetStateProxyAssignment_1(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isHistory",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isHistory");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getTextualTransitionAccess().getIsHistoryHistoryKeyword_3_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ";"
+protected class TextualTransition_SemicolonKeyword_4 extends KeywordToken  {
+	
+	public TextualTransition_SemicolonKeyword_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getSemicolonKeyword_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_IsHistoryAssignment_3(parent, this, 0, inst);
+			case 1: return new TextualTransition_Group_2(parent, this, 1, inst);
+			case 2: return new TextualTransition_TargetStateProxyAssignment_1(parent, this, 2, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+
+/************ end Rule TextualTransition ****************/
+
+
 /************ begin Rule TransitionState ****************
  *
  * TransitionState returns sync::State:
  *   {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
- *   FullStateID;  
+ *   FullStateID; 
+ *   
+ *   
  * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
  * //|({sync::State} name=FullStateID)
  * //  |

@@ -93,7 +93,7 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 								.getTransitionTypeAccess()
 								.getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0());
 		config.setLinewrap().after(
-				f.getTransitionAccess().getSemicolonKeyword_5());
+				f.getTransitionAccess().getSemicolonKeyword_4());
 		// comments
 		config.setLinewrap().before(f.getSL_COMMENTRule());
 		config.setLinewrap().after(f.getSL_COMMENTRule());

@@ -46,13 +46,18 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
     // }
 
     IScope scope_Transition_targetState(Transition context, EReference reference) {
-        State sourceState = (State) context.eContainer();
-        Region parentRegion = sourceState.getParentRegion();
+        State sourceState = null;
+        if (context.eContainer() != null
+                && context.eContainer() instanceof State) {
+            sourceState = (State) context.eContainer();
+        }
+        Region parentRegion = null;
+        if (sourceState.getParentRegion() != null) {
+            parentRegion = sourceState.getParentRegion();
+        }
 
         ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
-
         if (!(parentRegion.getInnerStates().isEmpty())) {
-
             for (State innerState : parentRegion.getInnerStates()) {
                 // if the inner state has a label then add its label
                 if (innerState.getLabel() != null) {
@@ -90,7 +95,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         if (a instanceof Transition) {
             Transition t = (Transition) a;
-            
+
             // has the parent state declared any signals?
             if (t.getSourceState().getSignals() != null) {
                 for (Signal sig : t.getSourceState().getSignals()) {
@@ -124,7 +129,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             // this parent region is not the root region yet?
             if (r.getParentState() != null) {
                 System.out.println("Region above "
-                        + r.getInnerStates().get(0).getId()
+                        + r.getInnerStates().get(0).getLabel()
                         + " has a parent state so ...");
                 scopeElems = gatherSignals(r, scopeElems);
             }
@@ -185,7 +190,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         // this parent region is not the root region yet?
         if (r.getParentState() != null) {
             System.out.println("Region above "
-                    + r.getInnerStates().get(0).getId()
+                    + r.getInnerStates().get(0).getLabel()
                     + " has a parent state so ...");
             scopeElems = gatherSignals(r, scopeElems);
         }
@@ -284,7 +289,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             }
         }
         System.out.println("...jump to its parent state: "
-                + parentState.getId());
+                + parentState.getLabel());
         if (parentState.getRegions() != null) {
             for (Region outerRegions : parentState.getRegions()) {
                 if (!outerRegions.getSignals().isEmpty()) {
@@ -318,7 +323,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         if (parentState.getParentRegion().getParentState() != null) {
             gatherSignals(parentState.getParentRegion(), scopedElems);
         }
-        System.out.println("Region above " + parentState.getId()
+        System.out.println("Region above " + parentState.getLabel()
                 + " has no parent state so we are at the top");
 
         return scopedElems;

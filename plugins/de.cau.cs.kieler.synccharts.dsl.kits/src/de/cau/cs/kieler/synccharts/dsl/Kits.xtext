@@ -1,19 +1,20 @@
 grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
+import "platform:/resource/de.cau.cs.kieler.synccharts.textual/model/textualsynccharts.ecore" as textualsync
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore 
 
 // IO Declarations --- come before state declarations #2009-11-26
 // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
 // Inner states --- a region has to have at least one state#2009-11-26
 Region returns sync::Region:
-// GMF does not like empty models so avoid them:
+// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
   {sync::Region} 
   ('region')? (id=ID)? 
   (variables+=Variable|signals+=Signal)* 
   (innerStates+=State)+;
   
 State returns sync::State:
-  {sync::State} // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+  {sync::State} // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
   (isInitial?='init')? (isFinal?='final')? (type=StateType)? 
   ('state')? (label=FullStateID)(id=STRING)? (bodyText=STRING)? 
   // State_Group_1_1
@@ -54,12 +55,14 @@ State returns sync::State:
   //    |'state' id=FullStateID// State_Group_1_36
   //    |'state'
   //    |id=FullStateID)// State_Group_1_38 
+  
   //change the datatype of label (from FullStateID) to STRING 
   //to prevent wrong parsing in this case: 
   //init A
   //final B
   //A --> B;
   //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+  
   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
   (signals+=Signal)* 
   ('onentry' entryActions+=Action)* 
@@ -67,13 +70,15 @@ State returns sync::State:
   ('onexit' exitActions+=Action)* 
   ('suspension' suspensionTrigger=Action)? // kein effect, kein delay, kein immediate
   ('{' regions+=Region ('||' regions+=Region)* '}')? 
-  (outgoingTransitions+=Transition)*;
+  (outgoingTransitions+=TextualTransition)*;
 
 Renaming returns sync::Renaming:
   oldID=STRING '/' newID=STRING;
 
 FullStateID:
-  ((ID '@')? ID); //========================================================================================
+  ((ID '@')? ID); 
+  
+//========================================================================================
 //===  									    ACTIONS  					               ===
 //========================================================================================
 //Action returns sync::Action:
@@ -84,9 +89,24 @@ FullStateID:
 
 
 Transition returns sync::Transition:
-  type=TransitionType ('<' priority=INT '>')? targetState=[sync::State|FullStateID] 
+
+  type=TransitionType 
+  targetState=[sync::State|FullStateID] 
+  //targetStateProxy=STRING
   ('with' (isImmediate?='#')? (delay=INT)? (((trigger=BooleanExpression)? 
-  ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'; 
+  ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'
+  ; 
+  
+ //TextualTransition extends Transition
+ TextualTransition returns textualsync::TextualTransition :
+ type=TransitionType 
+ //targetState=[sync::State|FullStateID] 
+ targetStateProxy=STRING
+ ('with' (isImmediate?='#')? (delay=INT)? (((trigger=BooleanExpression)? 
+ ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'
+ ;
+  
+  
 //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 //|({sync::State} name=FullStateID)
 //  |

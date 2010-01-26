@@ -3,6 +3,7 @@
 	<property name="runtimeProject" value="../${projectName}"/>	
 	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup">
 		<registerGeneratedEPackage value="de.cau.cs.kieler.synccharts.SyncchartsPackage"/>
+		<registerGeneratedEPackage value="textualsynccharts.TextualsyncchartsPackage"/>
 		<platformUri value="${runtimeProject}/.."/>
 	</bean>	
 	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner" directory="${runtimeProject}/src-gen"/>
