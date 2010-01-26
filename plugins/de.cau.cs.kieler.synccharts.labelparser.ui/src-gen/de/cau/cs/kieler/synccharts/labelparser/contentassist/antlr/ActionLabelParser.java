@@ -76,7 +76,7 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndOperationAccess().getGroup_1(), "rule__AndOperation__Group_1__0");
 					put(grammarAccess.getOrOperationAccess().getGroup(), "rule__OrOperation__Group__0");
 					put(grammarAccess.getOrOperationAccess().getGroup_1(), "rule__OrOperation__Group_1__0");
-					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_4(), "rule__ParanthesedBooleanExpression__Group_4__0");
+					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_5(), "rule__ParanthesedBooleanExpression__Group_5__0");
 					put(grammarAccess.getHostCodeAccess().getGroup(), "rule__HostCode__Group__0");
 					put(grammarAccess.getHostCodeAccess().getGroup_1(), "rule__HostCode__Group_1__0");
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_0(), "rule__Action__IsImmediateAssignment_0");

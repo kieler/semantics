@@ -478,6 +478,7 @@
         <groups xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
         <groups xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
         <groups xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.15"/>
         <groups xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         <groups xsi:type="xtext:Group">
           <tokens xsi:type="xtext:Keyword" value="("/>

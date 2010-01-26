@@ -1053,29 +1053,32 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBooleanValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cCompareOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cSignalReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cHostCodeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final RuleCall cOrOperationParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final RuleCall cValOperationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cHostCodeParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final RuleCall cOrOperationParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
 		//ParanthesedBooleanExpression returns synccharts::Expression:
-		//  BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")"; 
+		//  BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
+		//  OrOperation ")"; 
 		//
 		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 		//    
-		//                      
+		//                          
 		//
 		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		public ParserRule getRule() { return rule; }
 
-		//BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")" 
+		//BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
+		//OrOperation ")" 
 		//
 		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 		//    
-		//                      
+		//                          
 		//
 		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1089,20 +1092,23 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		//SignalReference
 		public RuleCall getSignalReferenceParserRuleCall_2() { return cSignalReferenceParserRuleCall_2; }
 
+		//ValOperation
+		public RuleCall getValOperationParserRuleCall_3() { return cValOperationParserRuleCall_3; }
+
 		//HostCode
-		public RuleCall getHostCodeParserRuleCall_3() { return cHostCodeParserRuleCall_3; }
+		public RuleCall getHostCodeParserRuleCall_4() { return cHostCodeParserRuleCall_4; }
 
 		//"(" OrOperation ")"
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_5() { return cGroup_5; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
 
 		//OrOperation
-		public RuleCall getOrOperationParserRuleCall_4_1() { return cOrOperationParserRuleCall_4_1; }
+		public RuleCall getOrOperationParserRuleCall_5_1() { return cOrOperationParserRuleCall_5_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
 	}
 
 	public class BooleanExpressionElements extends AbstractParserRuleElementFinder {
@@ -2054,12 +2060,13 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ParanthesedBooleanExpression returns synccharts::Expression:
-	//  BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")"; 
+	//  BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
+	//  OrOperation ")"; 
 	//
 	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 	//    
-	//                      
+	//                          
 	//
 	//// Example: not D and C or ?E = 42 or not (A and (B or C))
 	public ParanthesedBooleanExpressionElements getParanthesedBooleanExpressionAccess() {

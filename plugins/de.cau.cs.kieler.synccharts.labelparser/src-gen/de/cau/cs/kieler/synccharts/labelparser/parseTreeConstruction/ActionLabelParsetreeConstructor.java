@@ -4393,23 +4393,25 @@ protected class OrOperation_SubExpressionsAssignment_1_2 extends AssignmentToken
 /************ begin Rule ParanthesedBooleanExpression ****************
  *
  * ParanthesedBooleanExpression returns synccharts::Expression:
- *   BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")"; 
+ *   BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
+ *   OrOperation ")"; 
  * 
  * // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
  * // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
  *     
- *                       
+ *                           
  * 
  * // Example: not D and C or ?E = 42 or not (A and (B or C))
  *
  **/
 
-// BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")" 
+// BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
+// OrOperation ")" 
 // 
 // // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 // // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 //     
-//                       
+//                           
 // 
 // // Example: not D and C or ?E = 42 or not (A and (B or C))
 protected class ParanthesedBooleanExpression_Alternatives extends AlternativesToken {
@@ -4429,8 +4431,9 @@ protected class ParanthesedBooleanExpression_Alternatives extends AlternativesTo
 			case 0: return new ParanthesedBooleanExpression_BooleanValueParserRuleCall_0(parent, this, 0, inst);
 			case 1: return new ParanthesedBooleanExpression_CompareOperationParserRuleCall_1(parent, this, 1, inst);
 			case 2: return new ParanthesedBooleanExpression_SignalReferenceParserRuleCall_2(parent, this, 2, inst);
-			case 3: return new ParanthesedBooleanExpression_HostCodeParserRuleCall_3(parent, this, 3, inst);
-			case 4: return new ParanthesedBooleanExpression_Group_4(parent, this, 4, inst);
+			case 3: return new ParanthesedBooleanExpression_ValOperationParserRuleCall_3(parent, this, 3, inst);
+			case 4: return new ParanthesedBooleanExpression_HostCodeParserRuleCall_4(parent, this, 4, inst);
+			case 5: return new ParanthesedBooleanExpression_Group_5(parent, this, 5, inst);
 			default: return null;
 		}	
 	}	
@@ -4547,16 +4550,51 @@ protected class ParanthesedBooleanExpression_SignalReferenceParserRuleCall_2 ext
 	}	
 }
 
-// HostCode
-protected class ParanthesedBooleanExpression_HostCodeParserRuleCall_3 extends RuleCallToken {
+// ValOperation
+protected class ParanthesedBooleanExpression_ValOperationParserRuleCall_3 extends RuleCallToken {
 	
-	public ParanthesedBooleanExpression_HostCodeParserRuleCall_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public ParanthesedBooleanExpression_ValOperationParserRuleCall_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3();
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getValOperationParserRuleCall_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new ValOperation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	protected IInstanceDescription tryConsumeVal() {
+		if(checkForRecursion(ValOperation_Group.class, current)) return null;
+		if(!current.isInstanceOf(grammarAccess.getValOperationRule().getType().getClassifier())) return null;
+		return current;
+	}
+	
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// HostCode
+protected class ParanthesedBooleanExpression_HostCodeParserRuleCall_4 extends RuleCallToken {
+	
+	public ParanthesedBooleanExpression_HostCodeParserRuleCall_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_4();
 	}
 
     @Override
@@ -4583,21 +4621,21 @@ protected class ParanthesedBooleanExpression_HostCodeParserRuleCall_3 extends Ru
 }
 
 // "(" OrOperation ")"
-protected class ParanthesedBooleanExpression_Group_4 extends GroupToken {
+protected class ParanthesedBooleanExpression_Group_5 extends GroupToken {
 	
-	public ParanthesedBooleanExpression_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public ParanthesedBooleanExpression_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_4();
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_5();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new ParanthesedBooleanExpression_RightParenthesisKeyword_4_2(parent, this, 0, inst);
+			case 0: return new ParanthesedBooleanExpression_RightParenthesisKeyword_5_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -4605,15 +4643,15 @@ protected class ParanthesedBooleanExpression_Group_4 extends GroupToken {
 }
 
 // "("
-protected class ParanthesedBooleanExpression_LeftParenthesisKeyword_4_0 extends KeywordToken  {
+protected class ParanthesedBooleanExpression_LeftParenthesisKeyword_5_0 extends KeywordToken  {
 	
-	public ParanthesedBooleanExpression_LeftParenthesisKeyword_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public ParanthesedBooleanExpression_LeftParenthesisKeyword_5_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_4_0();
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_5_0();
 	}
 
     @Override
@@ -4626,15 +4664,15 @@ protected class ParanthesedBooleanExpression_LeftParenthesisKeyword_4_0 extends 
 }
 
 // OrOperation
-protected class ParanthesedBooleanExpression_OrOperationParserRuleCall_4_1 extends RuleCallToken {
+protected class ParanthesedBooleanExpression_OrOperationParserRuleCall_5_1 extends RuleCallToken {
 	
-	public ParanthesedBooleanExpression_OrOperationParserRuleCall_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public ParanthesedBooleanExpression_OrOperationParserRuleCall_5_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_4_1();
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_5_1();
 	}
 
     @Override
@@ -4655,28 +4693,28 @@ protected class ParanthesedBooleanExpression_OrOperationParserRuleCall_4_1 exten
     @Override
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new ParanthesedBooleanExpression_LeftParenthesisKeyword_4_0(parent, next, actIndex, inst);
+			case 0: return new ParanthesedBooleanExpression_LeftParenthesisKeyword_5_0(parent, next, actIndex, inst);
 			default: return null;
 		}	
 	}	
 }
 
 // ")"
-protected class ParanthesedBooleanExpression_RightParenthesisKeyword_4_2 extends KeywordToken  {
+protected class ParanthesedBooleanExpression_RightParenthesisKeyword_5_2 extends KeywordToken  {
 	
-	public ParanthesedBooleanExpression_RightParenthesisKeyword_4_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public ParanthesedBooleanExpression_RightParenthesisKeyword_5_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_4_2();
+		return grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_5_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new ParanthesedBooleanExpression_OrOperationParserRuleCall_4_1(parent, this, 0, inst);
+			case 0: return new ParanthesedBooleanExpression_OrOperationParserRuleCall_5_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	

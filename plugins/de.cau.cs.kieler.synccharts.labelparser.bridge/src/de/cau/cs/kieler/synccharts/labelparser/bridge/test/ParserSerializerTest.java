@@ -224,6 +224,17 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
+    public void testSerializerValue() throws Exception {
+        this.parseAndSerialize("? A");
+    }
+    
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
     public void testSerializerEmissionValue() throws Exception {
         this.parseAndSerialize("/ A(3)");
     }
@@ -315,6 +326,17 @@ public class ParserSerializerTest {
     @Test
     public void testSerializerImmediate() throws Exception {
         this.parseAndSerialize("# A / B");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerImmediateSimple() throws Exception {
+        this.parseAndSerialize("#");
     }
 
     /**
@@ -525,7 +547,7 @@ public class ParserSerializerTest {
     public void testSerializerBoolean() throws Exception {
         this.parseAndSerialize("true or false / A(true), B(false)");
     }
-
+    
     /**
      * Create a new parse command and execute its parse method. Likely to throw exceptions if the
      * text could not be parsed.

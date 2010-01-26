@@ -37,7 +37,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
         public InternalActionLabelParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[226+1];
+            ruleMemo = new HashMap[227+1];
          }
         
 
@@ -2740,11 +2740,11 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             if ( (LA1_0==RULE_ID) ) {
                 int LA1_1 = input.LA(2);
 
-                if ( (LA1_1==31) ) {
-                    alt1=2;
-                }
-                else if ( (LA1_1==EOF||LA1_1==RULE_ID||LA1_1==RULE_STRING||(LA1_1>=28 && LA1_1<=29)) ) {
+                if ( (LA1_1==EOF||LA1_1==RULE_ID||LA1_1==RULE_STRING||(LA1_1>=28 && LA1_1<=29)) ) {
                     alt1=1;
+                }
+                else if ( (LA1_1==31) ) {
+                    alt1=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
@@ -3657,11 +3657,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                         if ( (LA7_6==RULE_ID) ) {
                             int LA7_7 = input.LA(5);
 
-                            if ( (LA7_7==30) ) {
-                                alt7=3;
-                            }
-                            else if ( ((LA7_7>=19 && LA7_7<=27)) ) {
+                            if ( ((LA7_7>=16 && LA7_7<=17)||(LA7_7>=19 && LA7_7<=27)) ) {
                                 alt7=2;
+                            }
+                            else if ( (LA7_7==30) ) {
+                                int LA7_8 = input.LA(6);
+
+                                if ( (LA7_8==EOF||LA7_8==RULE_ID||LA7_8==RULE_STRING||(LA7_8>=16 && LA7_8<=18)||LA7_8==28||LA7_8==30) ) {
+                                    alt7=2;
+                                }
+                                else if ( ((LA7_8>=19 && LA7_8<=27)) ) {
+                                    alt7=3;
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("1173:1: rule__UnaryOrNormalExpression__Alternatives : ( ( ruleUnaryOperation ) | ( ruleUnaryParanthesedOperation ) | ( ruleParanthesedBooleanExpression ) );", 7, 8, input);
+
+                                    throw nvae;
+                                }
                             }
                             else {
                                 if (backtracking>0) {failed=true; return ;}
@@ -3800,14 +3814,14 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedBooleanExpression__Alternatives
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );
     public final void rule__ParanthesedBooleanExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1205:1: ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) )
-            int alt8=5;
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1205:1: ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) )
+            int alt8=6;
             switch ( input.LA(1) ) {
             case RULE_BOOLEAN:
                 {
@@ -3816,26 +3830,55 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                 break;
             case RULE_INT:
             case RULE_FLOAT:
-            case 13:
             case 15:
                 {
                 alt8=2;
                 }
                 break;
-            case RULE_ID:
+            case 13:
                 {
                 int LA8_3 = input.LA(2);
 
-                if ( (LA8_3==EOF||LA8_3==RULE_ID||LA8_3==RULE_STRING||(LA8_3>=16 && LA8_3<=18)||LA8_3==28||LA8_3==30) ) {
-                    alt8=3;
-                }
-                else if ( ((LA8_3>=19 && LA8_3<=27)) ) {
-                    alt8=2;
+                if ( (LA8_3==RULE_ID) ) {
+                    int LA8_7 = input.LA(3);
+
+                    if ( (LA8_7==EOF||LA8_7==RULE_ID||LA8_7==RULE_STRING||(LA8_7>=16 && LA8_7<=18)||LA8_7==28||LA8_7==30) ) {
+                        alt8=4;
+                    }
+                    else if ( ((LA8_7>=19 && LA8_7<=27)) ) {
+                        alt8=2;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 7, input);
+
+                        throw nvae;
+                    }
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 3, input);
+                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 3, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_ID:
+                {
+                int LA8_4 = input.LA(2);
+
+                if ( ((LA8_4>=19 && LA8_4<=27)) ) {
+                    alt8=2;
+                }
+                else if ( (LA8_4==EOF||LA8_4==RULE_ID||LA8_4==RULE_STRING||(LA8_4>=16 && LA8_4<=18)||LA8_4==28||LA8_4==30) ) {
+                    alt8=3;
+                }
+                else {
+                    if (backtracking>0) {failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 4, input);
 
                     throw nvae;
                 }
@@ -3846,24 +3889,24 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                 switch ( input.LA(2) ) {
                 case 29:
                     {
-                    int LA8_7 = input.LA(3);
+                    int LA8_9 = input.LA(3);
 
-                    if ( (LA8_7==RULE_ID) ) {
-                        int LA8_10 = input.LA(4);
+                    if ( (LA8_9==RULE_ID) ) {
+                        int LA8_13 = input.LA(4);
 
-                        if ( (LA8_10==30) ) {
-                            int LA8_11 = input.LA(5);
+                        if ( (LA8_13==30) ) {
+                            int LA8_14 = input.LA(5);
 
-                            if ( (LA8_11==EOF||LA8_11==RULE_ID||LA8_11==RULE_STRING||(LA8_11>=16 && LA8_11<=18)||LA8_11==28||LA8_11==30) ) {
-                                alt8=4;
+                            if ( (LA8_14==EOF||LA8_14==RULE_ID||LA8_14==RULE_STRING||(LA8_14>=16 && LA8_14<=18)||LA8_14==28||LA8_14==30) ) {
+                                alt8=5;
                             }
-                            else if ( ((LA8_11>=19 && LA8_11<=27)) ) {
+                            else if ( ((LA8_14>=19 && LA8_14<=27)) ) {
                                 alt8=2;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 11, input);
+                                    new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 14, input);
 
                                 throw nvae;
                             }
@@ -3871,7 +3914,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 10, input);
+                                new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 13, input);
 
                             throw nvae;
                         }
@@ -3879,10 +3922,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 7, input);
+                            new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 9, input);
 
                         throw nvae;
                     }
+                    }
+                    break;
+                case EOF:
+                case RULE_ID:
+                case RULE_STRING:
+                case 16:
+                case 17:
+                case 18:
+                case 28:
+                case 30:
+                    {
+                    alt8=5;
                     }
                     break;
                 case 19:
@@ -3898,22 +3953,10 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     alt8=2;
                     }
                     break;
-                case EOF:
-                case RULE_ID:
-                case RULE_STRING:
-                case 16:
-                case 17:
-                case 18:
-                case 28:
-                case 30:
-                    {
-                    alt8=4;
-                    }
-                    break;
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 4, input);
+                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 5, input);
 
                     throw nvae;
                 }
@@ -3922,18 +3965,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                 break;
             case 29:
                 {
-                int LA8_5 = input.LA(2);
+                int LA8_6 = input.LA(2);
 
                 if ( (synpred16()) ) {
                     alt8=2;
                 }
                 else if ( (true) ) {
-                    alt8=5;
+                    alt8=6;
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 5, input);
+                        new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 6, input);
 
                     throw nvae;
                 }
@@ -3942,7 +3985,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) ) );", 8, 0, input);
+                    new NoViableAltException("1201:1: rule__ParanthesedBooleanExpression__Alternatives : ( ( ruleBooleanValue ) | ( ruleCompareOperation ) | ( ruleSignalReference ) | ( ruleValOperation ) | ( ruleHostCode ) | ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) ) );", 8, 0, input);
 
                 throw nvae;
             }
@@ -4015,20 +4058,20 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1224:6: ( ruleHostCode )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1224:6: ( ruleValOperation )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1224:6: ( ruleHostCode )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1225:1: ruleHostCode
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1224:6: ( ruleValOperation )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1225:1: ruleValOperation
                     {
                     if ( backtracking==0 ) {
-                       before(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3()); 
+                       before(grammarAccess.getParanthesedBooleanExpressionAccess().getValOperationParserRuleCall_3()); 
                     }
-                    pushFollow(FOLLOW_ruleHostCode_in_rule__ParanthesedBooleanExpression__Alternatives2594);
-                    ruleHostCode();
+                    pushFollow(FOLLOW_ruleValOperation_in_rule__ParanthesedBooleanExpression__Alternatives2594);
+                    ruleValOperation();
                     _fsp--;
                     if (failed) return ;
                     if ( backtracking==0 ) {
-                       after(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3()); 
+                       after(grammarAccess.getParanthesedBooleanExpressionAccess().getValOperationParserRuleCall_3()); 
                     }
 
                     }
@@ -4037,26 +4080,48 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1230:6: ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1230:6: ( ruleHostCode )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1230:6: ( ( rule__ParanthesedBooleanExpression__Group_4__0 ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1231:1: ( rule__ParanthesedBooleanExpression__Group_4__0 )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1230:6: ( ruleHostCode )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1231:1: ruleHostCode
                     {
                     if ( backtracking==0 ) {
-                       before(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_4()); 
+                       before(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_4()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1232:1: ( rule__ParanthesedBooleanExpression__Group_4__0 )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1232:2: rule__ParanthesedBooleanExpression__Group_4__0
+                    pushFollow(FOLLOW_ruleHostCode_in_rule__ParanthesedBooleanExpression__Alternatives2611);
+                    ruleHostCode();
+                    _fsp--;
+                    if (failed) return ;
+                    if ( backtracking==0 ) {
+                       after(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_4()); 
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 6 :
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1236:6: ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) )
                     {
-                    pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_4__0_in_rule__ParanthesedBooleanExpression__Alternatives2611);
-                    rule__ParanthesedBooleanExpression__Group_4__0();
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1236:6: ( ( rule__ParanthesedBooleanExpression__Group_5__0 ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1237:1: ( rule__ParanthesedBooleanExpression__Group_5__0 )
+                    {
+                    if ( backtracking==0 ) {
+                       before(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_5()); 
+                    }
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1238:1: ( rule__ParanthesedBooleanExpression__Group_5__0 )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1238:2: rule__ParanthesedBooleanExpression__Group_5__0
+                    {
+                    pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_5__0_in_rule__ParanthesedBooleanExpression__Alternatives2628);
+                    rule__ParanthesedBooleanExpression__Group_5__0();
                     _fsp--;
                     if (failed) return ;
 
                     }
 
                     if ( backtracking==0 ) {
-                       after(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_4()); 
+                       after(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_5()); 
                     }
 
                     }
@@ -4082,13 +4147,13 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperator__Alternatives
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1242:1: rule__CompareOperator__Alternatives : ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) );
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1248:1: rule__CompareOperator__Alternatives : ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) );
     public final void rule__CompareOperator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1246:1: ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1252:1: ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) )
             int alt9=5;
             switch ( input.LA(1) ) {
             case 19:
@@ -4119,25 +4184,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1242:1: rule__CompareOperator__Alternatives : ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) );", 9, 0, input);
+                    new NoViableAltException("1248:1: rule__CompareOperator__Alternatives : ( ( ( '=' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) );", 9, 0, input);
 
                 throw nvae;
             }
 
             switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1247:1: ( ( '=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1253:1: ( ( '=' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1247:1: ( ( '=' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1248:1: ( '=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1253:1: ( ( '=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1254:1: ( '=' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1249:1: ( '=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1249:3: '='
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1255:1: ( '=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1255:3: '='
                     {
-                    match(input,19,FOLLOW_19_in_rule__CompareOperator__Alternatives2646); if (failed) return ;
+                    match(input,19,FOLLOW_19_in_rule__CompareOperator__Alternatives2663); if (failed) return ;
 
                     }
 
@@ -4151,18 +4216,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1254:6: ( ( '<' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1260:6: ( ( '<' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1254:6: ( ( '<' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1255:1: ( '<' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1260:6: ( ( '<' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1261:1: ( '<' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1256:1: ( '<' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1256:3: '<'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1262:1: ( '<' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1262:3: '<'
                     {
-                    match(input,20,FOLLOW_20_in_rule__CompareOperator__Alternatives2667); if (failed) return ;
+                    match(input,20,FOLLOW_20_in_rule__CompareOperator__Alternatives2684); if (failed) return ;
 
                     }
 
@@ -4176,18 +4241,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1261:6: ( ( '<=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1267:6: ( ( '<=' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1261:6: ( ( '<=' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1262:1: ( '<=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1267:6: ( ( '<=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1268:1: ( '<=' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1263:1: ( '<=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1263:3: '<='
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1269:1: ( '<=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1269:3: '<='
                     {
-                    match(input,21,FOLLOW_21_in_rule__CompareOperator__Alternatives2688); if (failed) return ;
+                    match(input,21,FOLLOW_21_in_rule__CompareOperator__Alternatives2705); if (failed) return ;
 
                     }
 
@@ -4201,18 +4266,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1268:6: ( ( '>' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1274:6: ( ( '>' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1268:6: ( ( '>' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1269:1: ( '>' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1274:6: ( ( '>' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1275:1: ( '>' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1270:1: ( '>' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1270:3: '>'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1276:1: ( '>' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1276:3: '>'
                     {
-                    match(input,22,FOLLOW_22_in_rule__CompareOperator__Alternatives2709); if (failed) return ;
+                    match(input,22,FOLLOW_22_in_rule__CompareOperator__Alternatives2726); if (failed) return ;
 
                     }
 
@@ -4226,18 +4291,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1275:6: ( ( '>=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1281:6: ( ( '>=' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1275:6: ( ( '>=' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1276:1: ( '>=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1281:6: ( ( '>=' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1282:1: ( '>=' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1277:1: ( '>=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1277:3: '>='
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1283:1: ( '>=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1283:3: '>='
                     {
-                    match(input,23,FOLLOW_23_in_rule__CompareOperator__Alternatives2730); if (failed) return ;
+                    match(input,23,FOLLOW_23_in_rule__CompareOperator__Alternatives2747); if (failed) return ;
 
                     }
 
@@ -4268,13 +4333,13 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperator__Alternatives
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1287:1: rule__PlusOperator__Alternatives : ( ( ( '+' ) ) | ( ( '-' ) ) );
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1293:1: rule__PlusOperator__Alternatives : ( ( ( '+' ) ) | ( ( '-' ) ) );
     public final void rule__PlusOperator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1291:1: ( ( ( '+' ) ) | ( ( '-' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1297:1: ( ( ( '+' ) ) | ( ( '-' ) ) )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -4287,24 +4352,24 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1287:1: rule__PlusOperator__Alternatives : ( ( ( '+' ) ) | ( ( '-' ) ) );", 10, 0, input);
+                    new NoViableAltException("1293:1: rule__PlusOperator__Alternatives : ( ( ( '+' ) ) | ( ( '-' ) ) );", 10, 0, input);
 
                 throw nvae;
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1292:1: ( ( '+' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1298:1: ( ( '+' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1292:1: ( ( '+' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1293:1: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1298:1: ( ( '+' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1299:1: ( '+' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getPlusOperatorAccess().getADDEnumLiteralDeclaration_0()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1294:1: ( '+' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1294:3: '+'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1300:1: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1300:3: '+'
                     {
-                    match(input,24,FOLLOW_24_in_rule__PlusOperator__Alternatives2766); if (failed) return ;
+                    match(input,24,FOLLOW_24_in_rule__PlusOperator__Alternatives2783); if (failed) return ;
 
                     }
 
@@ -4318,18 +4383,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1299:6: ( ( '-' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1305:6: ( ( '-' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1299:6: ( ( '-' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1300:1: ( '-' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1305:6: ( ( '-' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1306:1: ( '-' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getPlusOperatorAccess().getSUBEnumLiteralDeclaration_1()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1301:1: ( '-' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1301:3: '-'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1307:1: ( '-' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1307:3: '-'
                     {
-                    match(input,25,FOLLOW_25_in_rule__PlusOperator__Alternatives2787); if (failed) return ;
+                    match(input,25,FOLLOW_25_in_rule__PlusOperator__Alternatives2804); if (failed) return ;
 
                     }
 
@@ -4360,13 +4425,13 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperator__Alternatives
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1311:1: rule__MultOperator__Alternatives : ( ( ( '*' ) ) | ( ( 'mod' ) ) );
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1317:1: rule__MultOperator__Alternatives : ( ( ( '*' ) ) | ( ( 'mod' ) ) );
     public final void rule__MultOperator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1315:1: ( ( ( '*' ) ) | ( ( 'mod' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1321:1: ( ( ( '*' ) ) | ( ( 'mod' ) ) )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -4379,24 +4444,24 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1311:1: rule__MultOperator__Alternatives : ( ( ( '*' ) ) | ( ( 'mod' ) ) );", 11, 0, input);
+                    new NoViableAltException("1317:1: rule__MultOperator__Alternatives : ( ( ( '*' ) ) | ( ( 'mod' ) ) );", 11, 0, input);
 
                 throw nvae;
             }
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1316:1: ( ( '*' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1322:1: ( ( '*' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1316:1: ( ( '*' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1317:1: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1322:1: ( ( '*' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1323:1: ( '*' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration_0()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1318:1: ( '*' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1318:3: '*'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1324:1: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1324:3: '*'
                     {
-                    match(input,26,FOLLOW_26_in_rule__MultOperator__Alternatives2823); if (failed) return ;
+                    match(input,26,FOLLOW_26_in_rule__MultOperator__Alternatives2840); if (failed) return ;
 
                     }
 
@@ -4410,18 +4475,18 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1323:6: ( ( 'mod' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1329:6: ( ( 'mod' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1323:6: ( ( 'mod' ) )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1324:1: ( 'mod' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1329:6: ( ( 'mod' ) )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1330:1: ( 'mod' )
                     {
                     if ( backtracking==0 ) {
                        before(grammarAccess.getMultOperatorAccess().getMODEnumLiteralDeclaration_1()); 
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1325:1: ( 'mod' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1325:3: 'mod'
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1331:1: ( 'mod' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1331:3: 'mod'
                     {
-                    match(input,27,FOLLOW_27_in_rule__MultOperator__Alternatives2844); if (failed) return ;
+                    match(input,27,FOLLOW_27_in_rule__MultOperator__Alternatives2861); if (failed) return ;
 
                     }
 
@@ -4452,22 +4517,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1337:1: rule__Action__Group__0 : ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1343:1: rule__Action__Group__0 : ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1 ;
     public final void rule__Action__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1341:1: ( ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1342:1: ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1347:1: ( ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1348:1: ( ( rule__Action__IsImmediateAssignment_0 )? ) rule__Action__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1342:1: ( ( rule__Action__IsImmediateAssignment_0 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1343:1: ( rule__Action__IsImmediateAssignment_0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1348:1: ( ( rule__Action__IsImmediateAssignment_0 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1349:1: ( rule__Action__IsImmediateAssignment_0 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getIsImmediateAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1344:1: ( rule__Action__IsImmediateAssignment_0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1350:1: ( rule__Action__IsImmediateAssignment_0 )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -4476,9 +4541,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1344:2: rule__Action__IsImmediateAssignment_0
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1350:2: rule__Action__IsImmediateAssignment_0
                     {
-                    pushFollow(FOLLOW_rule__Action__IsImmediateAssignment_0_in_rule__Action__Group__02881);
+                    pushFollow(FOLLOW_rule__Action__IsImmediateAssignment_0_in_rule__Action__Group__02898);
                     rule__Action__IsImmediateAssignment_0();
                     _fsp--;
                     if (failed) return ;
@@ -4494,7 +4559,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Action__Group__1_in_rule__Action__Group__02891);
+            pushFollow(FOLLOW_rule__Action__Group__1_in_rule__Action__Group__02908);
             rule__Action__Group__1();
             _fsp--;
             if (failed) return ;
@@ -4517,22 +4582,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1355:1: rule__Action__Group__1 : ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1361:1: rule__Action__Group__1 : ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2 ;
     public final void rule__Action__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1359:1: ( ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1360:1: ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1365:1: ( ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1366:1: ( ( rule__Action__DelayAssignment_1 )? ) rule__Action__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1360:1: ( ( rule__Action__DelayAssignment_1 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1361:1: ( rule__Action__DelayAssignment_1 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1366:1: ( ( rule__Action__DelayAssignment_1 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1367:1: ( rule__Action__DelayAssignment_1 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getDelayAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1362:1: ( rule__Action__DelayAssignment_1 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1368:1: ( rule__Action__DelayAssignment_1 )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -4545,9 +4610,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1362:2: rule__Action__DelayAssignment_1
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1368:2: rule__Action__DelayAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__Action__DelayAssignment_1_in_rule__Action__Group__12919);
+                    pushFollow(FOLLOW_rule__Action__DelayAssignment_1_in_rule__Action__Group__12936);
                     rule__Action__DelayAssignment_1();
                     _fsp--;
                     if (failed) return ;
@@ -4563,7 +4628,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Action__Group__2_in_rule__Action__Group__12929);
+            pushFollow(FOLLOW_rule__Action__Group__2_in_rule__Action__Group__12946);
             rule__Action__Group__2();
             _fsp--;
             if (failed) return ;
@@ -4586,22 +4651,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1373:1: rule__Action__Group__2 : ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1379:1: rule__Action__Group__2 : ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3 ;
     public final void rule__Action__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1377:1: ( ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1378:1: ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1383:1: ( ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1384:1: ( ( rule__Action__TriggerAssignment_2 )? ) rule__Action__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1378:1: ( ( rule__Action__TriggerAssignment_2 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1379:1: ( rule__Action__TriggerAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1384:1: ( ( rule__Action__TriggerAssignment_2 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1385:1: ( rule__Action__TriggerAssignment_2 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getTriggerAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1380:1: ( rule__Action__TriggerAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1386:1: ( rule__Action__TriggerAssignment_2 )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -4610,9 +4675,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt14) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1380:2: rule__Action__TriggerAssignment_2
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1386:2: rule__Action__TriggerAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__Action__TriggerAssignment_2_in_rule__Action__Group__22957);
+                    pushFollow(FOLLOW_rule__Action__TriggerAssignment_2_in_rule__Action__Group__22974);
                     rule__Action__TriggerAssignment_2();
                     _fsp--;
                     if (failed) return ;
@@ -4628,7 +4693,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Action__Group__3_in_rule__Action__Group__22967);
+            pushFollow(FOLLOW_rule__Action__Group__3_in_rule__Action__Group__22984);
             rule__Action__Group__3();
             _fsp--;
             if (failed) return ;
@@ -4651,22 +4716,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group__3
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1391:1: rule__Action__Group__3 : ( ( rule__Action__Group_3__0 )? ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1397:1: rule__Action__Group__3 : ( ( rule__Action__Group_3__0 )? ) ;
     public final void rule__Action__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1395:1: ( ( ( rule__Action__Group_3__0 )? ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1396:1: ( ( rule__Action__Group_3__0 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1401:1: ( ( ( rule__Action__Group_3__0 )? ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1402:1: ( ( rule__Action__Group_3__0 )? )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1396:1: ( ( rule__Action__Group_3__0 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1397:1: ( rule__Action__Group_3__0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1402:1: ( ( rule__Action__Group_3__0 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1403:1: ( rule__Action__Group_3__0 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getGroup_3()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1398:1: ( rule__Action__Group_3__0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1404:1: ( rule__Action__Group_3__0 )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -4675,9 +4740,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1398:2: rule__Action__Group_3__0
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1404:2: rule__Action__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Action__Group_3__0_in_rule__Action__Group__32995);
+                    pushFollow(FOLLOW_rule__Action__Group_3__0_in_rule__Action__Group__33012);
                     rule__Action__Group_3__0();
                     _fsp--;
                     if (failed) return ;
@@ -4712,29 +4777,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group_3__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1416:1: rule__Action__Group_3__0 : ( '/' ) rule__Action__Group_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1422:1: rule__Action__Group_3__0 : ( '/' ) rule__Action__Group_3__1 ;
     public final void rule__Action__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1420:1: ( ( '/' ) rule__Action__Group_3__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1421:1: ( '/' ) rule__Action__Group_3__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1426:1: ( ( '/' ) rule__Action__Group_3__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1427:1: ( '/' ) rule__Action__Group_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1421:1: ( '/' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1422:1: '/'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1427:1: ( '/' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1428:1: '/'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getSolidusKeyword_3_0()); 
             }
-            match(input,18,FOLLOW_18_in_rule__Action__Group_3__03039); if (failed) return ;
+            match(input,18,FOLLOW_18_in_rule__Action__Group_3__03056); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getActionAccess().getSolidusKeyword_3_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__Action__Group_3__1_in_rule__Action__Group_3__03049);
+            pushFollow(FOLLOW_rule__Action__Group_3__1_in_rule__Action__Group_3__03066);
             rule__Action__Group_3__1();
             _fsp--;
             if (failed) return ;
@@ -4757,22 +4822,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group_3__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1436:1: rule__Action__Group_3__1 : ( ( rule__Action__Group_3_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1442:1: rule__Action__Group_3__1 : ( ( rule__Action__Group_3_1__0 )* ) ;
     public final void rule__Action__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1440:1: ( ( ( rule__Action__Group_3_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1441:1: ( ( rule__Action__Group_3_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1446:1: ( ( ( rule__Action__Group_3_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1447:1: ( ( rule__Action__Group_3_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1441:1: ( ( rule__Action__Group_3_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1442:1: ( rule__Action__Group_3_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1447:1: ( ( rule__Action__Group_3_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1448:1: ( rule__Action__Group_3_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getGroup_3_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1443:1: ( rule__Action__Group_3_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1449:1: ( rule__Action__Group_3_1__0 )*
             loop16:
             do {
                 int alt16=2;
@@ -4785,9 +4850,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt16) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1443:2: rule__Action__Group_3_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1449:2: rule__Action__Group_3_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__Action__Group_3_1__0_in_rule__Action__Group_3__13077);
+            	    pushFollow(FOLLOW_rule__Action__Group_3_1__0_in_rule__Action__Group_3__13094);
             	    rule__Action__Group_3_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -4825,25 +4890,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group_3_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1457:1: rule__Action__Group_3_1__0 : ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1463:1: rule__Action__Group_3_1__0 : ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1 ;
     public final void rule__Action__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1461:1: ( ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1462:1: ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1467:1: ( ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1468:1: ( ( rule__Action__EffectsAssignment_3_1_0 ) ) rule__Action__Group_3_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1462:1: ( ( rule__Action__EffectsAssignment_3_1_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1463:1: ( rule__Action__EffectsAssignment_3_1_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1468:1: ( ( rule__Action__EffectsAssignment_3_1_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1469:1: ( rule__Action__EffectsAssignment_3_1_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getEffectsAssignment_3_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1464:1: ( rule__Action__EffectsAssignment_3_1_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1464:2: rule__Action__EffectsAssignment_3_1_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1470:1: ( rule__Action__EffectsAssignment_3_1_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1470:2: rule__Action__EffectsAssignment_3_1_0
             {
-            pushFollow(FOLLOW_rule__Action__EffectsAssignment_3_1_0_in_rule__Action__Group_3_1__03116);
+            pushFollow(FOLLOW_rule__Action__EffectsAssignment_3_1_0_in_rule__Action__Group_3_1__03133);
             rule__Action__EffectsAssignment_3_1_0();
             _fsp--;
             if (failed) return ;
@@ -4856,7 +4921,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Action__Group_3_1__1_in_rule__Action__Group_3_1__03125);
+            pushFollow(FOLLOW_rule__Action__Group_3_1__1_in_rule__Action__Group_3_1__03142);
             rule__Action__Group_3_1__1();
             _fsp--;
             if (failed) return ;
@@ -4879,22 +4944,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__Group_3_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1475:1: rule__Action__Group_3_1__1 : ( ( ',' )? ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1481:1: rule__Action__Group_3_1__1 : ( ( ',' )? ) ;
     public final void rule__Action__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1479:1: ( ( ( ',' )? ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1480:1: ( ( ',' )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1485:1: ( ( ( ',' )? ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1486:1: ( ( ',' )? )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1480:1: ( ( ',' )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1481:1: ( ',' )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1486:1: ( ( ',' )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1487:1: ( ',' )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getCommaKeyword_3_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1482:1: ( ',' )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1488:1: ( ',' )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -4903,9 +4968,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1483:2: ','
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1489:2: ','
                     {
-                    match(input,28,FOLLOW_28_in_rule__Action__Group_3_1__13155); if (failed) return ;
+                    match(input,28,FOLLOW_28_in_rule__Action__Group_3_1__13172); if (failed) return ;
 
                     }
                     break;
@@ -4937,25 +5002,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1498:1: rule__Emission__Group__0 : ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1504:1: rule__Emission__Group__0 : ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1 ;
     public final void rule__Emission__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1502:1: ( ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1503:1: ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1508:1: ( ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1509:1: ( ( rule__Emission__SignalAssignment_0 ) ) rule__Emission__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1503:1: ( ( rule__Emission__SignalAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1504:1: ( rule__Emission__SignalAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1509:1: ( ( rule__Emission__SignalAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1510:1: ( rule__Emission__SignalAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getSignalAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1505:1: ( rule__Emission__SignalAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1505:2: rule__Emission__SignalAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1511:1: ( rule__Emission__SignalAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1511:2: rule__Emission__SignalAssignment_0
             {
-            pushFollow(FOLLOW_rule__Emission__SignalAssignment_0_in_rule__Emission__Group__03196);
+            pushFollow(FOLLOW_rule__Emission__SignalAssignment_0_in_rule__Emission__Group__03213);
             rule__Emission__SignalAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -4968,7 +5033,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__03205);
+            pushFollow(FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__03222);
             rule__Emission__Group__1();
             _fsp--;
             if (failed) return ;
@@ -4991,22 +5056,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1516:1: rule__Emission__Group__1 : ( ( rule__Emission__Alternatives_1 )? ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1522:1: rule__Emission__Group__1 : ( ( rule__Emission__Alternatives_1 )? ) ;
     public final void rule__Emission__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1520:1: ( ( ( rule__Emission__Alternatives_1 )? ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1521:1: ( ( rule__Emission__Alternatives_1 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1526:1: ( ( ( rule__Emission__Alternatives_1 )? ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1527:1: ( ( rule__Emission__Alternatives_1 )? )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1521:1: ( ( rule__Emission__Alternatives_1 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1522:1: ( rule__Emission__Alternatives_1 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1527:1: ( ( rule__Emission__Alternatives_1 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1528:1: ( rule__Emission__Alternatives_1 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getAlternatives_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1523:1: ( rule__Emission__Alternatives_1 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1529:1: ( rule__Emission__Alternatives_1 )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -5015,9 +5080,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1523:2: rule__Emission__Alternatives_1
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1529:2: rule__Emission__Alternatives_1
                     {
-                    pushFollow(FOLLOW_rule__Emission__Alternatives_1_in_rule__Emission__Group__13233);
+                    pushFollow(FOLLOW_rule__Emission__Alternatives_1_in_rule__Emission__Group__13250);
                     rule__Emission__Alternatives_1();
                     _fsp--;
                     if (failed) return ;
@@ -5052,29 +5117,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_0__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1537:1: rule__Emission__Group_1_0__0 : ( '(' ) rule__Emission__Group_1_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1543:1: rule__Emission__Group_1_0__0 : ( '(' ) rule__Emission__Group_1_0__1 ;
     public final void rule__Emission__Group_1_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1541:1: ( ( '(' ) rule__Emission__Group_1_0__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1542:1: ( '(' ) rule__Emission__Group_1_0__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1547:1: ( ( '(' ) rule__Emission__Group_1_0__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1548:1: ( '(' ) rule__Emission__Group_1_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1542:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1543:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1548:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1549:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_0_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Emission__Group_1_0__03273); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__Emission__Group_1_0__03290); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_0_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__Emission__Group_1_0__1_in_rule__Emission__Group_1_0__03283);
+            pushFollow(FOLLOW_rule__Emission__Group_1_0__1_in_rule__Emission__Group_1_0__03300);
             rule__Emission__Group_1_0__1();
             _fsp--;
             if (failed) return ;
@@ -5097,25 +5162,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_0__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1557:1: rule__Emission__Group_1_0__1 : ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1563:1: rule__Emission__Group_1_0__1 : ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2 ;
     public final void rule__Emission__Group_1_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1561:1: ( ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1562:1: ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1567:1: ( ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1568:1: ( ( rule__Emission__NewValueAssignment_1_0_1 ) ) rule__Emission__Group_1_0__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1562:1: ( ( rule__Emission__NewValueAssignment_1_0_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1563:1: ( rule__Emission__NewValueAssignment_1_0_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1568:1: ( ( rule__Emission__NewValueAssignment_1_0_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1569:1: ( rule__Emission__NewValueAssignment_1_0_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getNewValueAssignment_1_0_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1564:1: ( rule__Emission__NewValueAssignment_1_0_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1564:2: rule__Emission__NewValueAssignment_1_0_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1570:1: ( rule__Emission__NewValueAssignment_1_0_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1570:2: rule__Emission__NewValueAssignment_1_0_1
             {
-            pushFollow(FOLLOW_rule__Emission__NewValueAssignment_1_0_1_in_rule__Emission__Group_1_0__13311);
+            pushFollow(FOLLOW_rule__Emission__NewValueAssignment_1_0_1_in_rule__Emission__Group_1_0__13328);
             rule__Emission__NewValueAssignment_1_0_1();
             _fsp--;
             if (failed) return ;
@@ -5128,7 +5193,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Emission__Group_1_0__2_in_rule__Emission__Group_1_0__13320);
+            pushFollow(FOLLOW_rule__Emission__Group_1_0__2_in_rule__Emission__Group_1_0__13337);
             rule__Emission__Group_1_0__2();
             _fsp--;
             if (failed) return ;
@@ -5151,22 +5216,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_0__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1575:1: rule__Emission__Group_1_0__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1581:1: rule__Emission__Group_1_0__2 : ( ')' ) ;
     public final void rule__Emission__Group_1_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1579:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1580:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1585:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1586:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1580:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1581:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1586:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1587:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_0_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__Emission__Group_1_0__23349); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__Emission__Group_1_0__23366); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_0_2()); 
             }
@@ -5192,29 +5257,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1600:1: rule__Emission__Group_1_1__0 : ( '(' ) rule__Emission__Group_1_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1606:1: rule__Emission__Group_1_1__0 : ( '(' ) rule__Emission__Group_1_1__1 ;
     public final void rule__Emission__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1604:1: ( ( '(' ) rule__Emission__Group_1_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1605:1: ( '(' ) rule__Emission__Group_1_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1610:1: ( ( '(' ) rule__Emission__Group_1_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1611:1: ( '(' ) rule__Emission__Group_1_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1605:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1606:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1611:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1612:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_1_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Emission__Group_1_1__03391); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__Emission__Group_1_1__03408); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_1_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__Emission__Group_1_1__1_in_rule__Emission__Group_1_1__03401);
+            pushFollow(FOLLOW_rule__Emission__Group_1_1__1_in_rule__Emission__Group_1_1__03418);
             rule__Emission__Group_1_1__1();
             _fsp--;
             if (failed) return ;
@@ -5237,25 +5302,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1620:1: rule__Emission__Group_1_1__1 : ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1626:1: rule__Emission__Group_1_1__1 : ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2 ;
     public final void rule__Emission__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1624:1: ( ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1625:1: ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1630:1: ( ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1631:1: ( ( rule__Emission__NewValueAssignment_1_1_1 ) ) rule__Emission__Group_1_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1625:1: ( ( rule__Emission__NewValueAssignment_1_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1626:1: ( rule__Emission__NewValueAssignment_1_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1631:1: ( ( rule__Emission__NewValueAssignment_1_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1632:1: ( rule__Emission__NewValueAssignment_1_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1627:1: ( rule__Emission__NewValueAssignment_1_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1627:2: rule__Emission__NewValueAssignment_1_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1633:1: ( rule__Emission__NewValueAssignment_1_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1633:2: rule__Emission__NewValueAssignment_1_1_1
             {
-            pushFollow(FOLLOW_rule__Emission__NewValueAssignment_1_1_1_in_rule__Emission__Group_1_1__13429);
+            pushFollow(FOLLOW_rule__Emission__NewValueAssignment_1_1_1_in_rule__Emission__Group_1_1__13446);
             rule__Emission__NewValueAssignment_1_1_1();
             _fsp--;
             if (failed) return ;
@@ -5268,7 +5333,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Emission__Group_1_1__2_in_rule__Emission__Group_1_1__13438);
+            pushFollow(FOLLOW_rule__Emission__Group_1_1__2_in_rule__Emission__Group_1_1__13455);
             rule__Emission__Group_1_1__2();
             _fsp--;
             if (failed) return ;
@@ -5291,22 +5356,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__Group_1_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1638:1: rule__Emission__Group_1_1__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1644:1: rule__Emission__Group_1_1__2 : ( ')' ) ;
     public final void rule__Emission__Group_1_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1642:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1643:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1648:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1649:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1643:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1644:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1649:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1650:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_1_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__Emission__Group_1_1__23467); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__Emission__Group_1_1__23484); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_1_2()); 
             }
@@ -5332,25 +5397,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1663:1: rule__Assignment__Group__0 : ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1669:1: rule__Assignment__Group__0 : ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1 ;
     public final void rule__Assignment__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1667:1: ( ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1668:1: ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1673:1: ( ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1674:1: ( ( rule__Assignment__VariableAssignment_0 ) ) rule__Assignment__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1668:1: ( ( rule__Assignment__VariableAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1669:1: ( rule__Assignment__VariableAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1674:1: ( ( rule__Assignment__VariableAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1675:1: ( rule__Assignment__VariableAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getVariableAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1670:1: ( rule__Assignment__VariableAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1670:2: rule__Assignment__VariableAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1676:1: ( rule__Assignment__VariableAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1676:2: rule__Assignment__VariableAssignment_0
             {
-            pushFollow(FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__03508);
+            pushFollow(FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__03525);
             rule__Assignment__VariableAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -5363,7 +5428,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__03517);
+            pushFollow(FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__03534);
             rule__Assignment__Group__1();
             _fsp--;
             if (failed) return ;
@@ -5386,29 +5451,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1681:1: rule__Assignment__Group__1 : ( ':=' ) rule__Assignment__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1687:1: rule__Assignment__Group__1 : ( ':=' ) rule__Assignment__Group__2 ;
     public final void rule__Assignment__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1685:1: ( ( ':=' ) rule__Assignment__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1686:1: ( ':=' ) rule__Assignment__Group__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1691:1: ( ( ':=' ) rule__Assignment__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1692:1: ( ':=' ) rule__Assignment__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1686:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1687:1: ':='
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1692:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1693:1: ':='
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getColonEqualsSignKeyword_1()); 
             }
-            match(input,31,FOLLOW_31_in_rule__Assignment__Group__13546); if (failed) return ;
+            match(input,31,FOLLOW_31_in_rule__Assignment__Group__13563); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getColonEqualsSignKeyword_1()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__13556);
+            pushFollow(FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__13573);
             rule__Assignment__Group__2();
             _fsp--;
             if (failed) return ;
@@ -5431,25 +5496,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__Group__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1701:1: rule__Assignment__Group__2 : ( ( rule__Assignment__Alternatives_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1707:1: rule__Assignment__Group__2 : ( ( rule__Assignment__Alternatives_2 ) ) ;
     public final void rule__Assignment__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1705:1: ( ( ( rule__Assignment__Alternatives_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1706:1: ( ( rule__Assignment__Alternatives_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1711:1: ( ( ( rule__Assignment__Alternatives_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1712:1: ( ( rule__Assignment__Alternatives_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1706:1: ( ( rule__Assignment__Alternatives_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1707:1: ( rule__Assignment__Alternatives_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1712:1: ( ( rule__Assignment__Alternatives_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1713:1: ( rule__Assignment__Alternatives_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getAlternatives_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1708:1: ( rule__Assignment__Alternatives_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1708:2: rule__Assignment__Alternatives_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1714:1: ( rule__Assignment__Alternatives_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1714:2: rule__Assignment__Alternatives_2
             {
-            pushFollow(FOLLOW_rule__Assignment__Alternatives_2_in_rule__Assignment__Group__23584);
+            pushFollow(FOLLOW_rule__Assignment__Alternatives_2_in_rule__Assignment__Group__23601);
             rule__Assignment__Alternatives_2();
             _fsp--;
             if (failed) return ;
@@ -5481,25 +5546,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ValOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1724:1: rule__ValOperation__Group__0 : ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1730:1: rule__ValOperation__Group__0 : ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1 ;
     public final void rule__ValOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1728:1: ( ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1729:1: ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1734:1: ( ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1735:1: ( ( rule__ValOperation__OperatorAssignment_0 ) ) rule__ValOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1729:1: ( ( rule__ValOperation__OperatorAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1730:1: ( rule__ValOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1735:1: ( ( rule__ValOperation__OperatorAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1736:1: ( rule__ValOperation__OperatorAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getValOperationAccess().getOperatorAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1731:1: ( rule__ValOperation__OperatorAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1731:2: rule__ValOperation__OperatorAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1737:1: ( rule__ValOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1737:2: rule__ValOperation__OperatorAssignment_0
             {
-            pushFollow(FOLLOW_rule__ValOperation__OperatorAssignment_0_in_rule__ValOperation__Group__03624);
+            pushFollow(FOLLOW_rule__ValOperation__OperatorAssignment_0_in_rule__ValOperation__Group__03641);
             rule__ValOperation__OperatorAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -5512,7 +5577,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__ValOperation__Group__1_in_rule__ValOperation__Group__03633);
+            pushFollow(FOLLOW_rule__ValOperation__Group__1_in_rule__ValOperation__Group__03650);
             rule__ValOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -5535,25 +5600,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ValOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1742:1: rule__ValOperation__Group__1 : ( ( rule__ValOperation__SubExpressionsAssignment_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1748:1: rule__ValOperation__Group__1 : ( ( rule__ValOperation__SubExpressionsAssignment_1 ) ) ;
     public final void rule__ValOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1746:1: ( ( ( rule__ValOperation__SubExpressionsAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1747:1: ( ( rule__ValOperation__SubExpressionsAssignment_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1752:1: ( ( ( rule__ValOperation__SubExpressionsAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1753:1: ( ( rule__ValOperation__SubExpressionsAssignment_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1747:1: ( ( rule__ValOperation__SubExpressionsAssignment_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1748:1: ( rule__ValOperation__SubExpressionsAssignment_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1753:1: ( ( rule__ValOperation__SubExpressionsAssignment_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1754:1: ( rule__ValOperation__SubExpressionsAssignment_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getValOperationAccess().getSubExpressionsAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1749:1: ( rule__ValOperation__SubExpressionsAssignment_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1749:2: rule__ValOperation__SubExpressionsAssignment_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1755:1: ( rule__ValOperation__SubExpressionsAssignment_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1755:2: rule__ValOperation__SubExpressionsAssignment_1
             {
-            pushFollow(FOLLOW_rule__ValOperation__SubExpressionsAssignment_1_in_rule__ValOperation__Group__13661);
+            pushFollow(FOLLOW_rule__ValOperation__SubExpressionsAssignment_1_in_rule__ValOperation__Group__13678);
             rule__ValOperation__SubExpressionsAssignment_1();
             _fsp--;
             if (failed) return ;
@@ -5585,29 +5650,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_5__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1763:1: rule__ParanthesedValueExpression__Group_5__0 : ( '(' ) rule__ParanthesedValueExpression__Group_5__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1769:1: rule__ParanthesedValueExpression__Group_5__0 : ( '(' ) rule__ParanthesedValueExpression__Group_5__1 ;
     public final void rule__ParanthesedValueExpression__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1767:1: ( ( '(' ) rule__ParanthesedValueExpression__Group_5__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1768:1: ( '(' ) rule__ParanthesedValueExpression__Group_5__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1773:1: ( ( '(' ) rule__ParanthesedValueExpression__Group_5__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1774:1: ( '(' ) rule__ParanthesedValueExpression__Group_5__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1768:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1769:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1774:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1775:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_5_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__ParanthesedValueExpression__Group_5__03700); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__ParanthesedValueExpression__Group_5__03717); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_5_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_5__1_in_rule__ParanthesedValueExpression__Group_5__03710);
+            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_5__1_in_rule__ParanthesedValueExpression__Group_5__03727);
             rule__ParanthesedValueExpression__Group_5__1();
             _fsp--;
             if (failed) return ;
@@ -5630,22 +5695,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_5__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1783:1: rule__ParanthesedValueExpression__Group_5__1 : ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1789:1: rule__ParanthesedValueExpression__Group_5__1 : ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2 ;
     public final void rule__ParanthesedValueExpression__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1787:1: ( ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1788:1: ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1793:1: ( ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1794:1: ( rulePlusOperation ) rule__ParanthesedValueExpression__Group_5__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1788:1: ( rulePlusOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1789:1: rulePlusOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1794:1: ( rulePlusOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1795:1: rulePlusOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getPlusOperationParserRuleCall_5_1()); 
             }
-            pushFollow(FOLLOW_rulePlusOperation_in_rule__ParanthesedValueExpression__Group_5__13738);
+            pushFollow(FOLLOW_rulePlusOperation_in_rule__ParanthesedValueExpression__Group_5__13755);
             rulePlusOperation();
             _fsp--;
             if (failed) return ;
@@ -5655,7 +5720,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_5__2_in_rule__ParanthesedValueExpression__Group_5__13746);
+            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_5__2_in_rule__ParanthesedValueExpression__Group_5__13763);
             rule__ParanthesedValueExpression__Group_5__2();
             _fsp--;
             if (failed) return ;
@@ -5678,22 +5743,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_5__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1801:1: rule__ParanthesedValueExpression__Group_5__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1807:1: rule__ParanthesedValueExpression__Group_5__2 : ( ')' ) ;
     public final void rule__ParanthesedValueExpression__Group_5__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1805:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1806:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1811:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1812:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1806:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1807:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1812:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1813:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_5_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__ParanthesedValueExpression__Group_5__23775); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__ParanthesedValueExpression__Group_5__23792); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_5_2()); 
             }
@@ -5719,29 +5784,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_6__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1826:1: rule__ParanthesedValueExpression__Group_6__0 : ( '(' ) rule__ParanthesedValueExpression__Group_6__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1832:1: rule__ParanthesedValueExpression__Group_6__0 : ( '(' ) rule__ParanthesedValueExpression__Group_6__1 ;
     public final void rule__ParanthesedValueExpression__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1830:1: ( ( '(' ) rule__ParanthesedValueExpression__Group_6__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1831:1: ( '(' ) rule__ParanthesedValueExpression__Group_6__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1836:1: ( ( '(' ) rule__ParanthesedValueExpression__Group_6__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1837:1: ( '(' ) rule__ParanthesedValueExpression__Group_6__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1831:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1832:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1837:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1838:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_6_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__ParanthesedValueExpression__Group_6__03817); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__ParanthesedValueExpression__Group_6__03834); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_6_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_6__1_in_rule__ParanthesedValueExpression__Group_6__03827);
+            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_6__1_in_rule__ParanthesedValueExpression__Group_6__03844);
             rule__ParanthesedValueExpression__Group_6__1();
             _fsp--;
             if (failed) return ;
@@ -5764,22 +5829,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_6__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1846:1: rule__ParanthesedValueExpression__Group_6__1 : ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1852:1: rule__ParanthesedValueExpression__Group_6__1 : ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2 ;
     public final void rule__ParanthesedValueExpression__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1850:1: ( ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1851:1: ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1856:1: ( ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1857:1: ( ruleDivOperation ) rule__ParanthesedValueExpression__Group_6__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1851:1: ( ruleDivOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1852:1: ruleDivOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1857:1: ( ruleDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1858:1: ruleDivOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getDivOperationParserRuleCall_6_1()); 
             }
-            pushFollow(FOLLOW_ruleDivOperation_in_rule__ParanthesedValueExpression__Group_6__13855);
+            pushFollow(FOLLOW_ruleDivOperation_in_rule__ParanthesedValueExpression__Group_6__13872);
             ruleDivOperation();
             _fsp--;
             if (failed) return ;
@@ -5789,7 +5854,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_6__2_in_rule__ParanthesedValueExpression__Group_6__13863);
+            pushFollow(FOLLOW_rule__ParanthesedValueExpression__Group_6__2_in_rule__ParanthesedValueExpression__Group_6__13880);
             rule__ParanthesedValueExpression__Group_6__2();
             _fsp--;
             if (failed) return ;
@@ -5812,22 +5877,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ParanthesedValueExpression__Group_6__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1864:1: rule__ParanthesedValueExpression__Group_6__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1870:1: rule__ParanthesedValueExpression__Group_6__2 : ( ')' ) ;
     public final void rule__ParanthesedValueExpression__Group_6__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1868:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1869:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1874:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1875:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1869:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1870:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1875:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1876:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_6_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__ParanthesedValueExpression__Group_6__23892); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__ParanthesedValueExpression__Group_6__23909); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_6_2()); 
             }
@@ -5853,22 +5918,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1889:1: rule__PlusOperation__Group__0 : ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1895:1: rule__PlusOperation__Group__0 : ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1 ;
     public final void rule__PlusOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1893:1: ( ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1894:1: ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1899:1: ( ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1900:1: ( ruleMultOrDivOperation ) rule__PlusOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1894:1: ( ruleMultOrDivOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1895:1: ruleMultOrDivOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1900:1: ( ruleMultOrDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1901:1: ruleMultOrDivOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getMultOrDivOperationParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__Group__03933);
+            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__Group__03950);
             ruleMultOrDivOperation();
             _fsp--;
             if (failed) return ;
@@ -5878,7 +5943,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__PlusOperation__Group__1_in_rule__PlusOperation__Group__03941);
+            pushFollow(FOLLOW_rule__PlusOperation__Group__1_in_rule__PlusOperation__Group__03958);
             rule__PlusOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -5901,22 +5966,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1907:1: rule__PlusOperation__Group__1 : ( ( rule__PlusOperation__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1913:1: rule__PlusOperation__Group__1 : ( ( rule__PlusOperation__Group_1__0 )* ) ;
     public final void rule__PlusOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1911:1: ( ( ( rule__PlusOperation__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1912:1: ( ( rule__PlusOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1917:1: ( ( ( rule__PlusOperation__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1918:1: ( ( rule__PlusOperation__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1912:1: ( ( rule__PlusOperation__Group_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1913:1: ( rule__PlusOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1918:1: ( ( rule__PlusOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1919:1: ( rule__PlusOperation__Group_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1914:1: ( rule__PlusOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1920:1: ( rule__PlusOperation__Group_1__0 )*
             loop19:
             do {
                 int alt19=2;
@@ -5929,9 +5994,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt19) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1914:2: rule__PlusOperation__Group_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1920:2: rule__PlusOperation__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__PlusOperation__Group_1__0_in_rule__PlusOperation__Group__13969);
+            	    pushFollow(FOLLOW_rule__PlusOperation__Group_1__0_in_rule__PlusOperation__Group__13986);
             	    rule__PlusOperation__Group_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -5969,23 +6034,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1928:1: rule__PlusOperation__Group_1__0 : ( () ) rule__PlusOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1934:1: rule__PlusOperation__Group_1__0 : ( () ) rule__PlusOperation__Group_1__1 ;
     public final void rule__PlusOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1932:1: ( ( () ) rule__PlusOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1933:1: ( () ) rule__PlusOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1938:1: ( ( () ) rule__PlusOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1939:1: ( () ) rule__PlusOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1933:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1934:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1939:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1940:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1935:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1937:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1941:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1943:1: 
             {
             }
 
@@ -5995,7 +6060,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__PlusOperation__Group_1__1_in_rule__PlusOperation__Group_1__04018);
+            pushFollow(FOLLOW_rule__PlusOperation__Group_1__1_in_rule__PlusOperation__Group_1__04035);
             rule__PlusOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -6018,25 +6083,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1948:1: rule__PlusOperation__Group_1__1 : ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1954:1: rule__PlusOperation__Group_1__1 : ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2 ;
     public final void rule__PlusOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1952:1: ( ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1953:1: ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1958:1: ( ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1959:1: ( ( rule__PlusOperation__OperatorAssignment_1_1 ) ) rule__PlusOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1953:1: ( ( rule__PlusOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1954:1: ( rule__PlusOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1959:1: ( ( rule__PlusOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1960:1: ( rule__PlusOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1955:1: ( rule__PlusOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1955:2: rule__PlusOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1961:1: ( rule__PlusOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1961:2: rule__PlusOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__PlusOperation__OperatorAssignment_1_1_in_rule__PlusOperation__Group_1__14046);
+            pushFollow(FOLLOW_rule__PlusOperation__OperatorAssignment_1_1_in_rule__PlusOperation__Group_1__14063);
             rule__PlusOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -6049,7 +6114,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__PlusOperation__Group_1__2_in_rule__PlusOperation__Group_1__14055);
+            pushFollow(FOLLOW_rule__PlusOperation__Group_1__2_in_rule__PlusOperation__Group_1__14072);
             rule__PlusOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -6072,25 +6137,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1966:1: rule__PlusOperation__Group_1__2 : ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1972:1: rule__PlusOperation__Group_1__2 : ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__PlusOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1970:1: ( ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1971:1: ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1976:1: ( ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1977:1: ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1971:1: ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1972:1: ( rule__PlusOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1977:1: ( ( rule__PlusOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1978:1: ( rule__PlusOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1973:1: ( rule__PlusOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1973:2: rule__PlusOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1979:1: ( rule__PlusOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1979:2: rule__PlusOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__PlusOperation__SubExpressionsAssignment_1_2_in_rule__PlusOperation__Group_1__24083);
+            pushFollow(FOLLOW_rule__PlusOperation__SubExpressionsAssignment_1_2_in_rule__PlusOperation__Group_1__24100);
             rule__PlusOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -6122,29 +6187,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOrDivOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1989:1: rule__MultOrDivOperation__Group_1__0 : ( '(' ) rule__MultOrDivOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1995:1: rule__MultOrDivOperation__Group_1__0 : ( '(' ) rule__MultOrDivOperation__Group_1__1 ;
     public final void rule__MultOrDivOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1993:1: ( ( '(' ) rule__MultOrDivOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1994:1: ( '(' ) rule__MultOrDivOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1999:1: ( ( '(' ) rule__MultOrDivOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2000:1: ( '(' ) rule__MultOrDivOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1994:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:1995:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2000:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2001:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOrDivOperationAccess().getLeftParenthesisKeyword_1_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__MultOrDivOperation__Group_1__04124); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__MultOrDivOperation__Group_1__04141); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getMultOrDivOperationAccess().getLeftParenthesisKeyword_1_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__MultOrDivOperation__Group_1__1_in_rule__MultOrDivOperation__Group_1__04134);
+            pushFollow(FOLLOW_rule__MultOrDivOperation__Group_1__1_in_rule__MultOrDivOperation__Group_1__04151);
             rule__MultOrDivOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -6167,22 +6232,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOrDivOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2009:1: rule__MultOrDivOperation__Group_1__1 : ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2015:1: rule__MultOrDivOperation__Group_1__1 : ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2 ;
     public final void rule__MultOrDivOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2013:1: ( ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2014:1: ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2019:1: ( ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2020:1: ( ruleDivOperation ) rule__MultOrDivOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2014:1: ( ruleDivOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2015:1: ruleDivOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2020:1: ( ruleDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2021:1: ruleDivOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOrDivOperationAccess().getDivOperationParserRuleCall_1_1()); 
             }
-            pushFollow(FOLLOW_ruleDivOperation_in_rule__MultOrDivOperation__Group_1__14162);
+            pushFollow(FOLLOW_ruleDivOperation_in_rule__MultOrDivOperation__Group_1__14179);
             ruleDivOperation();
             _fsp--;
             if (failed) return ;
@@ -6192,7 +6257,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__MultOrDivOperation__Group_1__2_in_rule__MultOrDivOperation__Group_1__14170);
+            pushFollow(FOLLOW_rule__MultOrDivOperation__Group_1__2_in_rule__MultOrDivOperation__Group_1__14187);
             rule__MultOrDivOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -6215,22 +6280,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOrDivOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2027:1: rule__MultOrDivOperation__Group_1__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2033:1: rule__MultOrDivOperation__Group_1__2 : ( ')' ) ;
     public final void rule__MultOrDivOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2031:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2032:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2037:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2038:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2032:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2033:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2038:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2039:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOrDivOperationAccess().getRightParenthesisKeyword_1_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__MultOrDivOperation__Group_1__24199); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__MultOrDivOperation__Group_1__24216); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getMultOrDivOperationAccess().getRightParenthesisKeyword_1_2()); 
             }
@@ -6256,22 +6321,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2052:1: rule__MultOperation__Group__0 : ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2058:1: rule__MultOperation__Group__0 : ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1 ;
     public final void rule__MultOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2056:1: ( ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2057:1: ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2062:1: ( ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2063:1: ( rulePreOrNormalValueExpression ) rule__MultOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2057:1: ( rulePreOrNormalValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2058:1: rulePreOrNormalValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2063:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2064:1: rulePreOrNormalValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getPreOrNormalValueExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__Group__04240);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__Group__04257);
             rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return ;
@@ -6281,7 +6346,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__MultOperation__Group__1_in_rule__MultOperation__Group__04248);
+            pushFollow(FOLLOW_rule__MultOperation__Group__1_in_rule__MultOperation__Group__04265);
             rule__MultOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -6304,22 +6369,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2070:1: rule__MultOperation__Group__1 : ( ( rule__MultOperation__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2076:1: rule__MultOperation__Group__1 : ( ( rule__MultOperation__Group_1__0 )* ) ;
     public final void rule__MultOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2074:1: ( ( ( rule__MultOperation__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2075:1: ( ( rule__MultOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2080:1: ( ( ( rule__MultOperation__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2081:1: ( ( rule__MultOperation__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2075:1: ( ( rule__MultOperation__Group_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2076:1: ( rule__MultOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2081:1: ( ( rule__MultOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2082:1: ( rule__MultOperation__Group_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2077:1: ( rule__MultOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2083:1: ( rule__MultOperation__Group_1__0 )*
             loop20:
             do {
                 int alt20=2;
@@ -6332,9 +6397,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt20) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2077:2: rule__MultOperation__Group_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2083:2: rule__MultOperation__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__MultOperation__Group_1__0_in_rule__MultOperation__Group__14276);
+            	    pushFollow(FOLLOW_rule__MultOperation__Group_1__0_in_rule__MultOperation__Group__14293);
             	    rule__MultOperation__Group_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -6372,23 +6437,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2091:1: rule__MultOperation__Group_1__0 : ( () ) rule__MultOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2097:1: rule__MultOperation__Group_1__0 : ( () ) rule__MultOperation__Group_1__1 ;
     public final void rule__MultOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2095:1: ( ( () ) rule__MultOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2096:1: ( () ) rule__MultOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2101:1: ( ( () ) rule__MultOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2102:1: ( () ) rule__MultOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2096:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2097:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2102:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2103:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2098:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2100:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2104:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2106:1: 
             {
             }
 
@@ -6398,7 +6463,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__MultOperation__Group_1__1_in_rule__MultOperation__Group_1__04325);
+            pushFollow(FOLLOW_rule__MultOperation__Group_1__1_in_rule__MultOperation__Group_1__04342);
             rule__MultOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -6421,25 +6486,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2111:1: rule__MultOperation__Group_1__1 : ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2117:1: rule__MultOperation__Group_1__1 : ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2 ;
     public final void rule__MultOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2115:1: ( ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2116:1: ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2121:1: ( ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2122:1: ( ( rule__MultOperation__OperatorAssignment_1_1 ) ) rule__MultOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2116:1: ( ( rule__MultOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2117:1: ( rule__MultOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2122:1: ( ( rule__MultOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2123:1: ( rule__MultOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2118:1: ( rule__MultOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2118:2: rule__MultOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2124:1: ( rule__MultOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2124:2: rule__MultOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__MultOperation__OperatorAssignment_1_1_in_rule__MultOperation__Group_1__14353);
+            pushFollow(FOLLOW_rule__MultOperation__OperatorAssignment_1_1_in_rule__MultOperation__Group_1__14370);
             rule__MultOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -6452,7 +6517,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__MultOperation__Group_1__2_in_rule__MultOperation__Group_1__14362);
+            pushFollow(FOLLOW_rule__MultOperation__Group_1__2_in_rule__MultOperation__Group_1__14379);
             rule__MultOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -6475,25 +6540,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2129:1: rule__MultOperation__Group_1__2 : ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2135:1: rule__MultOperation__Group_1__2 : ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__MultOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2133:1: ( ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2134:1: ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2139:1: ( ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2140:1: ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2134:1: ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2135:1: ( rule__MultOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2140:1: ( ( rule__MultOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2141:1: ( rule__MultOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2136:1: ( rule__MultOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2136:2: rule__MultOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2142:1: ( rule__MultOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2142:2: rule__MultOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__MultOperation__SubExpressionsAssignment_1_2_in_rule__MultOperation__Group_1__24390);
+            pushFollow(FOLLOW_rule__MultOperation__SubExpressionsAssignment_1_2_in_rule__MultOperation__Group_1__24407);
             rule__MultOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -6525,22 +6590,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2152:1: rule__DivOperation__Group__0 : ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2158:1: rule__DivOperation__Group__0 : ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1 ;
     public final void rule__DivOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2156:1: ( ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2157:1: ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2162:1: ( ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2163:1: ( rulePreOrNormalValueExpression ) rule__DivOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2157:1: ( rulePreOrNormalValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2158:1: rulePreOrNormalValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2163:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2164:1: rulePreOrNormalValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getPreOrNormalValueExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__Group__04430);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__Group__04447);
             rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return ;
@@ -6550,7 +6615,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__DivOperation__Group__1_in_rule__DivOperation__Group__04438);
+            pushFollow(FOLLOW_rule__DivOperation__Group__1_in_rule__DivOperation__Group__04455);
             rule__DivOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -6573,22 +6638,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2170:1: rule__DivOperation__Group__1 : ( ( rule__DivOperation__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2176:1: rule__DivOperation__Group__1 : ( ( rule__DivOperation__Group_1__0 )* ) ;
     public final void rule__DivOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2174:1: ( ( ( rule__DivOperation__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2175:1: ( ( rule__DivOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2180:1: ( ( ( rule__DivOperation__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2181:1: ( ( rule__DivOperation__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2175:1: ( ( rule__DivOperation__Group_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2176:1: ( rule__DivOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2181:1: ( ( rule__DivOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2182:1: ( rule__DivOperation__Group_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2177:1: ( rule__DivOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2183:1: ( rule__DivOperation__Group_1__0 )*
             loop21:
             do {
                 int alt21=2;
@@ -6601,9 +6666,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt21) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2177:2: rule__DivOperation__Group_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2183:2: rule__DivOperation__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__DivOperation__Group_1__0_in_rule__DivOperation__Group__14466);
+            	    pushFollow(FOLLOW_rule__DivOperation__Group_1__0_in_rule__DivOperation__Group__14483);
             	    rule__DivOperation__Group_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -6641,23 +6706,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2191:1: rule__DivOperation__Group_1__0 : ( () ) rule__DivOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2197:1: rule__DivOperation__Group_1__0 : ( () ) rule__DivOperation__Group_1__1 ;
     public final void rule__DivOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2195:1: ( ( () ) rule__DivOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2196:1: ( () ) rule__DivOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2201:1: ( ( () ) rule__DivOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2202:1: ( () ) rule__DivOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2196:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2197:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2202:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2203:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2198:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2200:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2204:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2206:1: 
             {
             }
 
@@ -6667,7 +6732,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__DivOperation__Group_1__1_in_rule__DivOperation__Group_1__04515);
+            pushFollow(FOLLOW_rule__DivOperation__Group_1__1_in_rule__DivOperation__Group_1__04532);
             rule__DivOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -6690,25 +6755,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2211:1: rule__DivOperation__Group_1__1 : ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2217:1: rule__DivOperation__Group_1__1 : ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2 ;
     public final void rule__DivOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2215:1: ( ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2216:1: ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2221:1: ( ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2222:1: ( ( rule__DivOperation__OperatorAssignment_1_1 ) ) rule__DivOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2216:1: ( ( rule__DivOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2217:1: ( rule__DivOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2222:1: ( ( rule__DivOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2223:1: ( rule__DivOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2218:1: ( rule__DivOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2218:2: rule__DivOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2224:1: ( rule__DivOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2224:2: rule__DivOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__DivOperation__OperatorAssignment_1_1_in_rule__DivOperation__Group_1__14543);
+            pushFollow(FOLLOW_rule__DivOperation__OperatorAssignment_1_1_in_rule__DivOperation__Group_1__14560);
             rule__DivOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -6721,7 +6786,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__DivOperation__Group_1__2_in_rule__DivOperation__Group_1__14552);
+            pushFollow(FOLLOW_rule__DivOperation__Group_1__2_in_rule__DivOperation__Group_1__14569);
             rule__DivOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -6744,25 +6809,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2229:1: rule__DivOperation__Group_1__2 : ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2235:1: rule__DivOperation__Group_1__2 : ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__DivOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2233:1: ( ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2234:1: ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2239:1: ( ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2240:1: ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2234:1: ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2235:1: ( rule__DivOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2240:1: ( ( rule__DivOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2241:1: ( rule__DivOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2236:1: ( rule__DivOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2236:2: rule__DivOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2242:1: ( rule__DivOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2242:2: rule__DivOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__DivOperation__SubExpressionsAssignment_1_2_in_rule__DivOperation__Group_1__24580);
+            pushFollow(FOLLOW_rule__DivOperation__SubExpressionsAssignment_1_2_in_rule__DivOperation__Group_1__24597);
             rule__DivOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -6794,25 +6859,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2252:1: rule__PreArithmOperation__Group__0 : ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2258:1: rule__PreArithmOperation__Group__0 : ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1 ;
     public final void rule__PreArithmOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2256:1: ( ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2257:1: ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2262:1: ( ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2263:1: ( ( rule__PreArithmOperation__OperatorAssignment_0 ) ) rule__PreArithmOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2257:1: ( ( rule__PreArithmOperation__OperatorAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2258:1: ( rule__PreArithmOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2263:1: ( ( rule__PreArithmOperation__OperatorAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2264:1: ( rule__PreArithmOperation__OperatorAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getOperatorAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2259:1: ( rule__PreArithmOperation__OperatorAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2259:2: rule__PreArithmOperation__OperatorAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2265:1: ( rule__PreArithmOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2265:2: rule__PreArithmOperation__OperatorAssignment_0
             {
-            pushFollow(FOLLOW_rule__PreArithmOperation__OperatorAssignment_0_in_rule__PreArithmOperation__Group__04620);
+            pushFollow(FOLLOW_rule__PreArithmOperation__OperatorAssignment_0_in_rule__PreArithmOperation__Group__04637);
             rule__PreArithmOperation__OperatorAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -6825,7 +6890,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__PreArithmOperation__Group__1_in_rule__PreArithmOperation__Group__04629);
+            pushFollow(FOLLOW_rule__PreArithmOperation__Group__1_in_rule__PreArithmOperation__Group__04646);
             rule__PreArithmOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -6848,29 +6913,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2270:1: rule__PreArithmOperation__Group__1 : ( '(' ) rule__PreArithmOperation__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2276:1: rule__PreArithmOperation__Group__1 : ( '(' ) rule__PreArithmOperation__Group__2 ;
     public final void rule__PreArithmOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2274:1: ( ( '(' ) rule__PreArithmOperation__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2275:1: ( '(' ) rule__PreArithmOperation__Group__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2280:1: ( ( '(' ) rule__PreArithmOperation__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2281:1: ( '(' ) rule__PreArithmOperation__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2275:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2276:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2281:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2282:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,29,FOLLOW_29_in_rule__PreArithmOperation__Group__14658); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__PreArithmOperation__Group__14675); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getPreArithmOperationAccess().getLeftParenthesisKeyword_1()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__PreArithmOperation__Group__2_in_rule__PreArithmOperation__Group__14668);
+            pushFollow(FOLLOW_rule__PreArithmOperation__Group__2_in_rule__PreArithmOperation__Group__14685);
             rule__PreArithmOperation__Group__2();
             _fsp--;
             if (failed) return ;
@@ -6893,25 +6958,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__Group__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2290:1: rule__PreArithmOperation__Group__2 : ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2296:1: rule__PreArithmOperation__Group__2 : ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3 ;
     public final void rule__PreArithmOperation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2294:1: ( ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2295:1: ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2300:1: ( ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2301:1: ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) ) rule__PreArithmOperation__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2295:1: ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2296:1: ( rule__PreArithmOperation__SubExpressionsAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2301:1: ( ( rule__PreArithmOperation__SubExpressionsAssignment_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2302:1: ( rule__PreArithmOperation__SubExpressionsAssignment_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getSubExpressionsAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2297:1: ( rule__PreArithmOperation__SubExpressionsAssignment_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2297:2: rule__PreArithmOperation__SubExpressionsAssignment_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2303:1: ( rule__PreArithmOperation__SubExpressionsAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2303:2: rule__PreArithmOperation__SubExpressionsAssignment_2
             {
-            pushFollow(FOLLOW_rule__PreArithmOperation__SubExpressionsAssignment_2_in_rule__PreArithmOperation__Group__24696);
+            pushFollow(FOLLOW_rule__PreArithmOperation__SubExpressionsAssignment_2_in_rule__PreArithmOperation__Group__24713);
             rule__PreArithmOperation__SubExpressionsAssignment_2();
             _fsp--;
             if (failed) return ;
@@ -6924,7 +6989,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__PreArithmOperation__Group__3_in_rule__PreArithmOperation__Group__24705);
+            pushFollow(FOLLOW_rule__PreArithmOperation__Group__3_in_rule__PreArithmOperation__Group__24722);
             rule__PreArithmOperation__Group__3();
             _fsp--;
             if (failed) return ;
@@ -6947,22 +7012,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__Group__3
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2308:1: rule__PreArithmOperation__Group__3 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2314:1: rule__PreArithmOperation__Group__3 : ( ')' ) ;
     public final void rule__PreArithmOperation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2312:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2313:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2318:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2319:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2313:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2314:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2319:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2320:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,30,FOLLOW_30_in_rule__PreArithmOperation__Group__34734); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__PreArithmOperation__Group__34751); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getPreArithmOperationAccess().getRightParenthesisKeyword_3()); 
             }
@@ -6988,22 +7053,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2335:1: rule__CompareOperation__Group__0 : ( ruleValueExpression ) rule__CompareOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2341:1: rule__CompareOperation__Group__0 : ( ruleValueExpression ) rule__CompareOperation__Group__1 ;
     public final void rule__CompareOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2339:1: ( ( ruleValueExpression ) rule__CompareOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2340:1: ( ruleValueExpression ) rule__CompareOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2345:1: ( ( ruleValueExpression ) rule__CompareOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2346:1: ( ruleValueExpression ) rule__CompareOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2340:1: ( ruleValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2341:1: ruleValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2346:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2347:1: ruleValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getValueExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_rule__CompareOperation__Group__04777);
+            pushFollow(FOLLOW_ruleValueExpression_in_rule__CompareOperation__Group__04794);
             ruleValueExpression();
             _fsp--;
             if (failed) return ;
@@ -7013,7 +7078,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__CompareOperation__Group__1_in_rule__CompareOperation__Group__04785);
+            pushFollow(FOLLOW_rule__CompareOperation__Group__1_in_rule__CompareOperation__Group__04802);
             rule__CompareOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -7036,25 +7101,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2353:1: rule__CompareOperation__Group__1 : ( ( rule__CompareOperation__Group_1__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2359:1: rule__CompareOperation__Group__1 : ( ( rule__CompareOperation__Group_1__0 ) ) ;
     public final void rule__CompareOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2357:1: ( ( ( rule__CompareOperation__Group_1__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2358:1: ( ( rule__CompareOperation__Group_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2363:1: ( ( ( rule__CompareOperation__Group_1__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2364:1: ( ( rule__CompareOperation__Group_1__0 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2358:1: ( ( rule__CompareOperation__Group_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2359:1: ( rule__CompareOperation__Group_1__0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2364:1: ( ( rule__CompareOperation__Group_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2365:1: ( rule__CompareOperation__Group_1__0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2360:1: ( rule__CompareOperation__Group_1__0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2360:2: rule__CompareOperation__Group_1__0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2366:1: ( rule__CompareOperation__Group_1__0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2366:2: rule__CompareOperation__Group_1__0
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_1__0_in_rule__CompareOperation__Group__14813);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_1__0_in_rule__CompareOperation__Group__14830);
             rule__CompareOperation__Group_1__0();
             _fsp--;
             if (failed) return ;
@@ -7086,23 +7151,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2374:1: rule__CompareOperation__Group_1__0 : ( () ) rule__CompareOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2380:1: rule__CompareOperation__Group_1__0 : ( () ) rule__CompareOperation__Group_1__1 ;
     public final void rule__CompareOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2378:1: ( ( () ) rule__CompareOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2379:1: ( () ) rule__CompareOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2384:1: ( ( () ) rule__CompareOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2385:1: ( () ) rule__CompareOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2379:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2380:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2385:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2386:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2381:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2383:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2387:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2389:1: 
             {
             }
 
@@ -7112,7 +7177,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__CompareOperation__Group_1__1_in_rule__CompareOperation__Group_1__04861);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_1__1_in_rule__CompareOperation__Group_1__04878);
             rule__CompareOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -7135,25 +7200,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2394:1: rule__CompareOperation__Group_1__1 : ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2400:1: rule__CompareOperation__Group_1__1 : ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2 ;
     public final void rule__CompareOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2398:1: ( ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2399:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2404:1: ( ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2405:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) rule__CompareOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2399:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2400:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2405:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2406:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2401:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2401:2: rule__CompareOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2407:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2407:2: rule__CompareOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__CompareOperation__OperatorAssignment_1_1_in_rule__CompareOperation__Group_1__14889);
+            pushFollow(FOLLOW_rule__CompareOperation__OperatorAssignment_1_1_in_rule__CompareOperation__Group_1__14906);
             rule__CompareOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -7166,7 +7231,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__CompareOperation__Group_1__2_in_rule__CompareOperation__Group_1__14898);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_1__2_in_rule__CompareOperation__Group_1__14915);
             rule__CompareOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -7189,25 +7254,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2412:1: rule__CompareOperation__Group_1__2 : ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2418:1: rule__CompareOperation__Group_1__2 : ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__CompareOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2416:1: ( ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2417:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2422:1: ( ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2423:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2417:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2418:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2423:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2424:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2419:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2419:2: rule__CompareOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2425:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2425:2: rule__CompareOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__CompareOperation__SubExpressionsAssignment_1_2_in_rule__CompareOperation__Group_1__24926);
+            pushFollow(FOLLOW_rule__CompareOperation__SubExpressionsAssignment_1_2_in_rule__CompareOperation__Group_1__24943);
             rule__CompareOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -7239,25 +7304,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2435:1: rule__UnaryOperation__Group__0 : ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2441:1: rule__UnaryOperation__Group__0 : ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1 ;
     public final void rule__UnaryOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2439:1: ( ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2440:1: ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2445:1: ( ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2446:1: ( ( rule__UnaryOperation__OperatorAssignment_0 ) ) rule__UnaryOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2440:1: ( ( rule__UnaryOperation__OperatorAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2441:1: ( rule__UnaryOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2446:1: ( ( rule__UnaryOperation__OperatorAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2447:1: ( rule__UnaryOperation__OperatorAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryOperationAccess().getOperatorAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2442:1: ( rule__UnaryOperation__OperatorAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2442:2: rule__UnaryOperation__OperatorAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2448:1: ( rule__UnaryOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2448:2: rule__UnaryOperation__OperatorAssignment_0
             {
-            pushFollow(FOLLOW_rule__UnaryOperation__OperatorAssignment_0_in_rule__UnaryOperation__Group__04966);
+            pushFollow(FOLLOW_rule__UnaryOperation__OperatorAssignment_0_in_rule__UnaryOperation__Group__04983);
             rule__UnaryOperation__OperatorAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -7270,7 +7335,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__UnaryOperation__Group__1_in_rule__UnaryOperation__Group__04975);
+            pushFollow(FOLLOW_rule__UnaryOperation__Group__1_in_rule__UnaryOperation__Group__04992);
             rule__UnaryOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -7293,25 +7358,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2453:1: rule__UnaryOperation__Group__1 : ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2459:1: rule__UnaryOperation__Group__1 : ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) ) ;
     public final void rule__UnaryOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2457:1: ( ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2458:1: ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2463:1: ( ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2464:1: ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2458:1: ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2459:1: ( rule__UnaryOperation__SubExpressionsAssignment_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2464:1: ( ( rule__UnaryOperation__SubExpressionsAssignment_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2465:1: ( rule__UnaryOperation__SubExpressionsAssignment_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryOperationAccess().getSubExpressionsAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2460:1: ( rule__UnaryOperation__SubExpressionsAssignment_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2460:2: rule__UnaryOperation__SubExpressionsAssignment_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2466:1: ( rule__UnaryOperation__SubExpressionsAssignment_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2466:2: rule__UnaryOperation__SubExpressionsAssignment_1
             {
-            pushFollow(FOLLOW_rule__UnaryOperation__SubExpressionsAssignment_1_in_rule__UnaryOperation__Group__15003);
+            pushFollow(FOLLOW_rule__UnaryOperation__SubExpressionsAssignment_1_in_rule__UnaryOperation__Group__15020);
             rule__UnaryOperation__SubExpressionsAssignment_1();
             _fsp--;
             if (failed) return ;
@@ -7343,25 +7408,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2474:1: rule__UnaryParanthesedOperation__Group__0 : ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2480:1: rule__UnaryParanthesedOperation__Group__0 : ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1 ;
     public final void rule__UnaryParanthesedOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2478:1: ( ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2479:1: ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2484:1: ( ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2485:1: ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) ) rule__UnaryParanthesedOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2479:1: ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2480:1: ( rule__UnaryParanthesedOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2485:1: ( ( rule__UnaryParanthesedOperation__OperatorAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2486:1: ( rule__UnaryParanthesedOperation__OperatorAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getOperatorAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2481:1: ( rule__UnaryParanthesedOperation__OperatorAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2481:2: rule__UnaryParanthesedOperation__OperatorAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2487:1: ( rule__UnaryParanthesedOperation__OperatorAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2487:2: rule__UnaryParanthesedOperation__OperatorAssignment_0
             {
-            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__OperatorAssignment_0_in_rule__UnaryParanthesedOperation__Group__05041);
+            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__OperatorAssignment_0_in_rule__UnaryParanthesedOperation__Group__05058);
             rule__UnaryParanthesedOperation__OperatorAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -7374,7 +7439,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__1_in_rule__UnaryParanthesedOperation__Group__05050);
+            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__1_in_rule__UnaryParanthesedOperation__Group__05067);
             rule__UnaryParanthesedOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -7397,29 +7462,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2492:1: rule__UnaryParanthesedOperation__Group__1 : ( '(' ) rule__UnaryParanthesedOperation__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2498:1: rule__UnaryParanthesedOperation__Group__1 : ( '(' ) rule__UnaryParanthesedOperation__Group__2 ;
     public final void rule__UnaryParanthesedOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2496:1: ( ( '(' ) rule__UnaryParanthesedOperation__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2497:1: ( '(' ) rule__UnaryParanthesedOperation__Group__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2502:1: ( ( '(' ) rule__UnaryParanthesedOperation__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2503:1: ( '(' ) rule__UnaryParanthesedOperation__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2497:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2498:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2503:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2504:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,29,FOLLOW_29_in_rule__UnaryParanthesedOperation__Group__15079); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__UnaryParanthesedOperation__Group__15096); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getUnaryParanthesedOperationAccess().getLeftParenthesisKeyword_1()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__2_in_rule__UnaryParanthesedOperation__Group__15089);
+            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__2_in_rule__UnaryParanthesedOperation__Group__15106);
             rule__UnaryParanthesedOperation__Group__2();
             _fsp--;
             if (failed) return ;
@@ -7442,25 +7507,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__Group__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2512:1: rule__UnaryParanthesedOperation__Group__2 : ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2518:1: rule__UnaryParanthesedOperation__Group__2 : ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3 ;
     public final void rule__UnaryParanthesedOperation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2516:1: ( ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2517:1: ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2522:1: ( ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2523:1: ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) ) rule__UnaryParanthesedOperation__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2517:1: ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2518:1: ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2523:1: ( ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2524:1: ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getSubExpressionsAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2519:1: ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2519:2: rule__UnaryParanthesedOperation__SubExpressionsAssignment_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2525:1: ( rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2525:2: rule__UnaryParanthesedOperation__SubExpressionsAssignment_2
             {
-            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__SubExpressionsAssignment_2_in_rule__UnaryParanthesedOperation__Group__25117);
+            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__SubExpressionsAssignment_2_in_rule__UnaryParanthesedOperation__Group__25134);
             rule__UnaryParanthesedOperation__SubExpressionsAssignment_2();
             _fsp--;
             if (failed) return ;
@@ -7473,7 +7538,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__3_in_rule__UnaryParanthesedOperation__Group__25126);
+            pushFollow(FOLLOW_rule__UnaryParanthesedOperation__Group__3_in_rule__UnaryParanthesedOperation__Group__25143);
             rule__UnaryParanthesedOperation__Group__3();
             _fsp--;
             if (failed) return ;
@@ -7496,22 +7561,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__Group__3
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2530:1: rule__UnaryParanthesedOperation__Group__3 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2536:1: rule__UnaryParanthesedOperation__Group__3 : ( ')' ) ;
     public final void rule__UnaryParanthesedOperation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2534:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2535:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2540:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2541:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2535:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2536:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2541:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2542:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,30,FOLLOW_30_in_rule__UnaryParanthesedOperation__Group__35155); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__UnaryParanthesedOperation__Group__35172); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getUnaryParanthesedOperationAccess().getRightParenthesisKeyword_3()); 
             }
@@ -7537,22 +7602,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2557:1: rule__AndOperation__Group__0 : ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2563:1: rule__AndOperation__Group__0 : ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1 ;
     public final void rule__AndOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2561:1: ( ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2562:1: ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2567:1: ( ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2568:1: ( ruleUnaryOrNormalExpression ) rule__AndOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2562:1: ( ruleUnaryOrNormalExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2563:1: ruleUnaryOrNormalExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2568:1: ( ruleUnaryOrNormalExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2569:1: ruleUnaryOrNormalExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getUnaryOrNormalExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__Group__05198);
+            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__Group__05215);
             ruleUnaryOrNormalExpression();
             _fsp--;
             if (failed) return ;
@@ -7562,7 +7627,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__AndOperation__Group__1_in_rule__AndOperation__Group__05206);
+            pushFollow(FOLLOW_rule__AndOperation__Group__1_in_rule__AndOperation__Group__05223);
             rule__AndOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -7585,22 +7650,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2575:1: rule__AndOperation__Group__1 : ( ( rule__AndOperation__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2581:1: rule__AndOperation__Group__1 : ( ( rule__AndOperation__Group_1__0 )* ) ;
     public final void rule__AndOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2579:1: ( ( ( rule__AndOperation__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2580:1: ( ( rule__AndOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2585:1: ( ( ( rule__AndOperation__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2586:1: ( ( rule__AndOperation__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2580:1: ( ( rule__AndOperation__Group_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2581:1: ( rule__AndOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2586:1: ( ( rule__AndOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2587:1: ( rule__AndOperation__Group_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2582:1: ( rule__AndOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2588:1: ( rule__AndOperation__Group_1__0 )*
             loop22:
             do {
                 int alt22=2;
@@ -7613,9 +7678,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt22) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2582:2: rule__AndOperation__Group_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2588:2: rule__AndOperation__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__AndOperation__Group_1__0_in_rule__AndOperation__Group__15234);
+            	    pushFollow(FOLLOW_rule__AndOperation__Group_1__0_in_rule__AndOperation__Group__15251);
             	    rule__AndOperation__Group_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -7653,23 +7718,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2596:1: rule__AndOperation__Group_1__0 : ( () ) rule__AndOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2602:1: rule__AndOperation__Group_1__0 : ( () ) rule__AndOperation__Group_1__1 ;
     public final void rule__AndOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2600:1: ( ( () ) rule__AndOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2601:1: ( () ) rule__AndOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2606:1: ( ( () ) rule__AndOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2607:1: ( () ) rule__AndOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2601:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2602:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2607:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2608:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2603:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2605:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2609:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2611:1: 
             {
             }
 
@@ -7679,7 +7744,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__AndOperation__Group_1__1_in_rule__AndOperation__Group_1__05283);
+            pushFollow(FOLLOW_rule__AndOperation__Group_1__1_in_rule__AndOperation__Group_1__05300);
             rule__AndOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -7702,25 +7767,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2616:1: rule__AndOperation__Group_1__1 : ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2622:1: rule__AndOperation__Group_1__1 : ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2 ;
     public final void rule__AndOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2620:1: ( ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2621:1: ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2626:1: ( ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2627:1: ( ( rule__AndOperation__OperatorAssignment_1_1 ) ) rule__AndOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2621:1: ( ( rule__AndOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2622:1: ( rule__AndOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2627:1: ( ( rule__AndOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2628:1: ( rule__AndOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2623:1: ( rule__AndOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2623:2: rule__AndOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2629:1: ( rule__AndOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2629:2: rule__AndOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__AndOperation__OperatorAssignment_1_1_in_rule__AndOperation__Group_1__15311);
+            pushFollow(FOLLOW_rule__AndOperation__OperatorAssignment_1_1_in_rule__AndOperation__Group_1__15328);
             rule__AndOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -7733,7 +7798,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__AndOperation__Group_1__2_in_rule__AndOperation__Group_1__15320);
+            pushFollow(FOLLOW_rule__AndOperation__Group_1__2_in_rule__AndOperation__Group_1__15337);
             rule__AndOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -7756,25 +7821,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2634:1: rule__AndOperation__Group_1__2 : ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2640:1: rule__AndOperation__Group_1__2 : ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__AndOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2638:1: ( ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2639:1: ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2644:1: ( ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2645:1: ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2639:1: ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2640:1: ( rule__AndOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2645:1: ( ( rule__AndOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2646:1: ( rule__AndOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2641:1: ( rule__AndOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2641:2: rule__AndOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2647:1: ( rule__AndOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2647:2: rule__AndOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__AndOperation__SubExpressionsAssignment_1_2_in_rule__AndOperation__Group_1__25348);
+            pushFollow(FOLLOW_rule__AndOperation__SubExpressionsAssignment_1_2_in_rule__AndOperation__Group_1__25365);
             rule__AndOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -7806,22 +7871,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2657:1: rule__OrOperation__Group__0 : ( ruleAndOperation ) rule__OrOperation__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2663:1: rule__OrOperation__Group__0 : ( ruleAndOperation ) rule__OrOperation__Group__1 ;
     public final void rule__OrOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2661:1: ( ( ruleAndOperation ) rule__OrOperation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2662:1: ( ruleAndOperation ) rule__OrOperation__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2667:1: ( ( ruleAndOperation ) rule__OrOperation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2668:1: ( ruleAndOperation ) rule__OrOperation__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2662:1: ( ruleAndOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2663:1: ruleAndOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2668:1: ( ruleAndOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2669:1: ruleAndOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getAndOperationParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleAndOperation_in_rule__OrOperation__Group__05388);
+            pushFollow(FOLLOW_ruleAndOperation_in_rule__OrOperation__Group__05405);
             ruleAndOperation();
             _fsp--;
             if (failed) return ;
@@ -7831,7 +7896,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__OrOperation__Group__1_in_rule__OrOperation__Group__05396);
+            pushFollow(FOLLOW_rule__OrOperation__Group__1_in_rule__OrOperation__Group__05413);
             rule__OrOperation__Group__1();
             _fsp--;
             if (failed) return ;
@@ -7854,22 +7919,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2675:1: rule__OrOperation__Group__1 : ( ( rule__OrOperation__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2681:1: rule__OrOperation__Group__1 : ( ( rule__OrOperation__Group_1__0 )* ) ;
     public final void rule__OrOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2679:1: ( ( ( rule__OrOperation__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2680:1: ( ( rule__OrOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2685:1: ( ( ( rule__OrOperation__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2686:1: ( ( rule__OrOperation__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2680:1: ( ( rule__OrOperation__Group_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2681:1: ( rule__OrOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2686:1: ( ( rule__OrOperation__Group_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2687:1: ( rule__OrOperation__Group_1__0 )*
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2682:1: ( rule__OrOperation__Group_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2688:1: ( rule__OrOperation__Group_1__0 )*
             loop23:
             do {
                 int alt23=2;
@@ -7882,9 +7947,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
                 switch (alt23) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2682:2: rule__OrOperation__Group_1__0
+            	    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2688:2: rule__OrOperation__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__OrOperation__Group_1__0_in_rule__OrOperation__Group__15424);
+            	    pushFollow(FOLLOW_rule__OrOperation__Group_1__0_in_rule__OrOperation__Group__15441);
             	    rule__OrOperation__Group_1__0();
             	    _fsp--;
             	    if (failed) return ;
@@ -7922,23 +7987,23 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2696:1: rule__OrOperation__Group_1__0 : ( () ) rule__OrOperation__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2702:1: rule__OrOperation__Group_1__0 : ( () ) rule__OrOperation__Group_1__1 ;
     public final void rule__OrOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2700:1: ( ( () ) rule__OrOperation__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2701:1: ( () ) rule__OrOperation__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2706:1: ( ( () ) rule__OrOperation__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2707:1: ( () ) rule__OrOperation__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2701:1: ( () )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2702:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2707:1: ( () )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2708:1: ()
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getComplexExpressionSubExpressionsAction_1_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2703:1: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2705:1: 
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2709:1: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2711:1: 
             {
             }
 
@@ -7948,7 +8013,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__OrOperation__Group_1__1_in_rule__OrOperation__Group_1__05473);
+            pushFollow(FOLLOW_rule__OrOperation__Group_1__1_in_rule__OrOperation__Group_1__05490);
             rule__OrOperation__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -7971,25 +8036,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2716:1: rule__OrOperation__Group_1__1 : ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2722:1: rule__OrOperation__Group_1__1 : ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2 ;
     public final void rule__OrOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2720:1: ( ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2721:1: ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2726:1: ( ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2727:1: ( ( rule__OrOperation__OperatorAssignment_1_1 ) ) rule__OrOperation__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2721:1: ( ( rule__OrOperation__OperatorAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2722:1: ( rule__OrOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2727:1: ( ( rule__OrOperation__OperatorAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2728:1: ( rule__OrOperation__OperatorAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2723:1: ( rule__OrOperation__OperatorAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2723:2: rule__OrOperation__OperatorAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2729:1: ( rule__OrOperation__OperatorAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2729:2: rule__OrOperation__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__OrOperation__OperatorAssignment_1_1_in_rule__OrOperation__Group_1__15501);
+            pushFollow(FOLLOW_rule__OrOperation__OperatorAssignment_1_1_in_rule__OrOperation__Group_1__15518);
             rule__OrOperation__OperatorAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -8002,7 +8067,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__OrOperation__Group_1__2_in_rule__OrOperation__Group_1__15510);
+            pushFollow(FOLLOW_rule__OrOperation__Group_1__2_in_rule__OrOperation__Group_1__15527);
             rule__OrOperation__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -8025,25 +8090,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2734:1: rule__OrOperation__Group_1__2 : ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2740:1: rule__OrOperation__Group_1__2 : ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__OrOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2738:1: ( ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2739:1: ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2744:1: ( ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2745:1: ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2739:1: ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2740:1: ( rule__OrOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2745:1: ( ( rule__OrOperation__SubExpressionsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2746:1: ( rule__OrOperation__SubExpressionsAssignment_1_2 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2741:1: ( rule__OrOperation__SubExpressionsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2741:2: rule__OrOperation__SubExpressionsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2747:1: ( rule__OrOperation__SubExpressionsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2747:2: rule__OrOperation__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__OrOperation__SubExpressionsAssignment_1_2_in_rule__OrOperation__Group_1__25538);
+            pushFollow(FOLLOW_rule__OrOperation__SubExpressionsAssignment_1_2_in_rule__OrOperation__Group_1__25555);
             rule__OrOperation__SubExpressionsAssignment_1_2();
             _fsp--;
             if (failed) return ;
@@ -8074,31 +8139,31 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
     // $ANTLR end rule__OrOperation__Group_1__2
 
 
-    // $ANTLR start rule__ParanthesedBooleanExpression__Group_4__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2757:1: rule__ParanthesedBooleanExpression__Group_4__0 : ( '(' ) rule__ParanthesedBooleanExpression__Group_4__1 ;
-    public final void rule__ParanthesedBooleanExpression__Group_4__0() throws RecognitionException {
+    // $ANTLR start rule__ParanthesedBooleanExpression__Group_5__0
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2763:1: rule__ParanthesedBooleanExpression__Group_5__0 : ( '(' ) rule__ParanthesedBooleanExpression__Group_5__1 ;
+    public final void rule__ParanthesedBooleanExpression__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2761:1: ( ( '(' ) rule__ParanthesedBooleanExpression__Group_4__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2762:1: ( '(' ) rule__ParanthesedBooleanExpression__Group_4__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2767:1: ( ( '(' ) rule__ParanthesedBooleanExpression__Group_5__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2768:1: ( '(' ) rule__ParanthesedBooleanExpression__Group_5__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2762:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2763:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2768:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2769:1: '('
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_4_0()); 
+               before(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_5_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__ParanthesedBooleanExpression__Group_4__05579); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__ParanthesedBooleanExpression__Group_5__05596); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_4_0()); 
+               after(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_5_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_4__1_in_rule__ParanthesedBooleanExpression__Group_4__05589);
-            rule__ParanthesedBooleanExpression__Group_4__1();
+            pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_5__1_in_rule__ParanthesedBooleanExpression__Group_5__05606);
+            rule__ParanthesedBooleanExpression__Group_5__1();
             _fsp--;
             if (failed) return ;
 
@@ -8116,37 +8181,37 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__ParanthesedBooleanExpression__Group_4__0
+    // $ANTLR end rule__ParanthesedBooleanExpression__Group_5__0
 
 
-    // $ANTLR start rule__ParanthesedBooleanExpression__Group_4__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2777:1: rule__ParanthesedBooleanExpression__Group_4__1 : ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_4__2 ;
-    public final void rule__ParanthesedBooleanExpression__Group_4__1() throws RecognitionException {
+    // $ANTLR start rule__ParanthesedBooleanExpression__Group_5__1
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2783:1: rule__ParanthesedBooleanExpression__Group_5__1 : ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_5__2 ;
+    public final void rule__ParanthesedBooleanExpression__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2781:1: ( ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_4__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2782:1: ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_4__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2787:1: ( ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_5__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2788:1: ( ruleOrOperation ) rule__ParanthesedBooleanExpression__Group_5__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2782:1: ( ruleOrOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2783:1: ruleOrOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2788:1: ( ruleOrOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2789:1: ruleOrOperation
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_4_1()); 
+               before(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_5_1()); 
             }
-            pushFollow(FOLLOW_ruleOrOperation_in_rule__ParanthesedBooleanExpression__Group_4__15617);
+            pushFollow(FOLLOW_ruleOrOperation_in_rule__ParanthesedBooleanExpression__Group_5__15634);
             ruleOrOperation();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_4_1()); 
+               after(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_5_1()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_4__2_in_rule__ParanthesedBooleanExpression__Group_4__15625);
-            rule__ParanthesedBooleanExpression__Group_4__2();
+            pushFollow(FOLLOW_rule__ParanthesedBooleanExpression__Group_5__2_in_rule__ParanthesedBooleanExpression__Group_5__15642);
+            rule__ParanthesedBooleanExpression__Group_5__2();
             _fsp--;
             if (failed) return ;
 
@@ -8164,28 +8229,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__ParanthesedBooleanExpression__Group_4__1
+    // $ANTLR end rule__ParanthesedBooleanExpression__Group_5__1
 
 
-    // $ANTLR start rule__ParanthesedBooleanExpression__Group_4__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2795:1: rule__ParanthesedBooleanExpression__Group_4__2 : ( ')' ) ;
-    public final void rule__ParanthesedBooleanExpression__Group_4__2() throws RecognitionException {
+    // $ANTLR start rule__ParanthesedBooleanExpression__Group_5__2
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2801:1: rule__ParanthesedBooleanExpression__Group_5__2 : ( ')' ) ;
+    public final void rule__ParanthesedBooleanExpression__Group_5__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2799:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2800:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2805:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2806:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2800:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2801:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2806:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2807:1: ')'
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_4_2()); 
+               before(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_5_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__ParanthesedBooleanExpression__Group_4__25654); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__ParanthesedBooleanExpression__Group_5__25671); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_4_2()); 
+               after(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_5_2()); 
             }
 
             }
@@ -8205,29 +8270,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__ParanthesedBooleanExpression__Group_4__2
+    // $ANTLR end rule__ParanthesedBooleanExpression__Group_5__2
 
 
     // $ANTLR start rule__HostCode__Group__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2820:1: rule__HostCode__Group__0 : ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2826:1: rule__HostCode__Group__0 : ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1 ;
     public final void rule__HostCode__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2824:1: ( ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2825:1: ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2830:1: ( ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2831:1: ( ( rule__HostCode__CodeAssignment_0 ) ) rule__HostCode__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2825:1: ( ( rule__HostCode__CodeAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2826:1: ( rule__HostCode__CodeAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2831:1: ( ( rule__HostCode__CodeAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2832:1: ( rule__HostCode__CodeAssignment_0 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getCodeAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2827:1: ( rule__HostCode__CodeAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2827:2: rule__HostCode__CodeAssignment_0
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2833:1: ( rule__HostCode__CodeAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2833:2: rule__HostCode__CodeAssignment_0
             {
-            pushFollow(FOLLOW_rule__HostCode__CodeAssignment_0_in_rule__HostCode__Group__05695);
+            pushFollow(FOLLOW_rule__HostCode__CodeAssignment_0_in_rule__HostCode__Group__05712);
             rule__HostCode__CodeAssignment_0();
             _fsp--;
             if (failed) return ;
@@ -8240,7 +8305,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__HostCode__Group__1_in_rule__HostCode__Group__05704);
+            pushFollow(FOLLOW_rule__HostCode__Group__1_in_rule__HostCode__Group__05721);
             rule__HostCode__Group__1();
             _fsp--;
             if (failed) return ;
@@ -8263,22 +8328,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__Group__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2838:1: rule__HostCode__Group__1 : ( ( rule__HostCode__Group_1__0 )? ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2844:1: rule__HostCode__Group__1 : ( ( rule__HostCode__Group_1__0 )? ) ;
     public final void rule__HostCode__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2842:1: ( ( ( rule__HostCode__Group_1__0 )? ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2843:1: ( ( rule__HostCode__Group_1__0 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2848:1: ( ( ( rule__HostCode__Group_1__0 )? ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2849:1: ( ( rule__HostCode__Group_1__0 )? )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2843:1: ( ( rule__HostCode__Group_1__0 )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2844:1: ( rule__HostCode__Group_1__0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2849:1: ( ( rule__HostCode__Group_1__0 )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2850:1: ( rule__HostCode__Group_1__0 )?
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2845:1: ( rule__HostCode__Group_1__0 )?
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2851:1: ( rule__HostCode__Group_1__0 )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -8287,9 +8352,9 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
             }
             switch (alt24) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2845:2: rule__HostCode__Group_1__0
+                    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2851:2: rule__HostCode__Group_1__0
                     {
-                    pushFollow(FOLLOW_rule__HostCode__Group_1__0_in_rule__HostCode__Group__15732);
+                    pushFollow(FOLLOW_rule__HostCode__Group_1__0_in_rule__HostCode__Group__15749);
                     rule__HostCode__Group_1__0();
                     _fsp--;
                     if (failed) return ;
@@ -8324,29 +8389,29 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2859:1: rule__HostCode__Group_1__0 : ( '(' ) rule__HostCode__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2865:1: rule__HostCode__Group_1__0 : ( '(' ) rule__HostCode__Group_1__1 ;
     public final void rule__HostCode__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2863:1: ( ( '(' ) rule__HostCode__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2864:1: ( '(' ) rule__HostCode__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2869:1: ( ( '(' ) rule__HostCode__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2870:1: ( '(' ) rule__HostCode__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2864:1: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2865:1: '('
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2870:1: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2871:1: '('
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getLeftParenthesisKeyword_1_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__HostCode__Group_1__05772); if (failed) return ;
+            match(input,29,FOLLOW_29_in_rule__HostCode__Group_1__05789); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getHostCodeAccess().getLeftParenthesisKeyword_1_0()); 
             }
 
             }
 
-            pushFollow(FOLLOW_rule__HostCode__Group_1__1_in_rule__HostCode__Group_1__05782);
+            pushFollow(FOLLOW_rule__HostCode__Group_1__1_in_rule__HostCode__Group_1__05799);
             rule__HostCode__Group_1__1();
             _fsp--;
             if (failed) return ;
@@ -8369,25 +8434,25 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2879:1: rule__HostCode__Group_1__1 : ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2885:1: rule__HostCode__Group_1__1 : ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2 ;
     public final void rule__HostCode__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2883:1: ( ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2884:1: ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2889:1: ( ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2890:1: ( ( rule__HostCode__TypeAssignment_1_1 ) ) rule__HostCode__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2884:1: ( ( rule__HostCode__TypeAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2885:1: ( rule__HostCode__TypeAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2890:1: ( ( rule__HostCode__TypeAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2891:1: ( rule__HostCode__TypeAssignment_1_1 )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getTypeAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2886:1: ( rule__HostCode__TypeAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2886:2: rule__HostCode__TypeAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2892:1: ( rule__HostCode__TypeAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2892:2: rule__HostCode__TypeAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__HostCode__TypeAssignment_1_1_in_rule__HostCode__Group_1__15810);
+            pushFollow(FOLLOW_rule__HostCode__TypeAssignment_1_1_in_rule__HostCode__Group_1__15827);
             rule__HostCode__TypeAssignment_1_1();
             _fsp--;
             if (failed) return ;
@@ -8400,7 +8465,7 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
             }
 
-            pushFollow(FOLLOW_rule__HostCode__Group_1__2_in_rule__HostCode__Group_1__15819);
+            pushFollow(FOLLOW_rule__HostCode__Group_1__2_in_rule__HostCode__Group_1__15836);
             rule__HostCode__Group_1__2();
             _fsp--;
             if (failed) return ;
@@ -8423,22 +8488,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2897:1: rule__HostCode__Group_1__2 : ( ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2903:1: rule__HostCode__Group_1__2 : ( ')' ) ;
     public final void rule__HostCode__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2901:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2902:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2907:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2908:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2902:1: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2903:1: ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2908:1: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2909:1: ')'
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getRightParenthesisKeyword_1_2()); 
             }
-            match(input,30,FOLLOW_30_in_rule__HostCode__Group_1__25848); if (failed) return ;
+            match(input,30,FOLLOW_30_in_rule__HostCode__Group_1__25865); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getHostCodeAccess().getRightParenthesisKeyword_1_2()); 
             }
@@ -8464,28 +8529,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__IsImmediateAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2922:1: rule__Action__IsImmediateAssignment_0 : ( ( '#' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2928:1: rule__Action__IsImmediateAssignment_0 : ( ( '#' ) ) ;
     public final void rule__Action__IsImmediateAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2926:1: ( ( ( '#' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2927:1: ( ( '#' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2932:1: ( ( ( '#' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2933:1: ( ( '#' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2927:1: ( ( '#' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2928:1: ( '#' )
-            {
-            if ( backtracking==0 ) {
-               before(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0()); 
-            }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2929:1: ( '#' )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2930:1: '#'
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2933:1: ( ( '#' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2934:1: ( '#' )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0()); 
             }
-            match(input,32,FOLLOW_32_in_rule__Action__IsImmediateAssignment_05894); if (failed) return ;
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2935:1: ( '#' )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2936:1: '#'
+            {
+            if ( backtracking==0 ) {
+               before(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0()); 
+            }
+            match(input,32,FOLLOW_32_in_rule__Action__IsImmediateAssignment_05911); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0()); 
             }
@@ -8517,22 +8582,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__DelayAssignment_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2945:1: rule__Action__DelayAssignment_1 : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2951:1: rule__Action__DelayAssignment_1 : ( RULE_INT ) ;
     public final void rule__Action__DelayAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2949:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2950:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2955:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2956:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2950:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2951:1: RULE_INT
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2956:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2957:1: RULE_INT
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getDelayINTTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Action__DelayAssignment_15933); if (failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Action__DelayAssignment_15950); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getActionAccess().getDelayINTTerminalRuleCall_1_0()); 
             }
@@ -8558,22 +8623,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__TriggerAssignment_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2960:1: rule__Action__TriggerAssignment_2 : ( ruleBooleanExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2966:1: rule__Action__TriggerAssignment_2 : ( ruleBooleanExpression ) ;
     public final void rule__Action__TriggerAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2964:1: ( ( ruleBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2965:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2970:1: ( ( ruleBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2971:1: ( ruleBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2965:1: ( ruleBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2966:1: ruleBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2971:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2972:1: ruleBooleanExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getTriggerBooleanExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Action__TriggerAssignment_25964);
+            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Action__TriggerAssignment_25981);
             ruleBooleanExpression();
             _fsp--;
             if (failed) return ;
@@ -8602,22 +8667,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Action__EffectsAssignment_3_1_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2975:1: rule__Action__EffectsAssignment_3_1_0 : ( ruleEffect ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2981:1: rule__Action__EffectsAssignment_3_1_0 : ( ruleEffect ) ;
     public final void rule__Action__EffectsAssignment_3_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2979:1: ( ( ruleEffect ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2980:1: ( ruleEffect )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2985:1: ( ( ruleEffect ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2986:1: ( ruleEffect )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2980:1: ( ruleEffect )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2981:1: ruleEffect
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2986:1: ( ruleEffect )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2987:1: ruleEffect
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_3_1_0_0()); 
             }
-            pushFollow(FOLLOW_ruleEffect_in_rule__Action__EffectsAssignment_3_1_05995);
+            pushFollow(FOLLOW_ruleEffect_in_rule__Action__EffectsAssignment_3_1_06012);
             ruleEffect();
             _fsp--;
             if (failed) return ;
@@ -8646,28 +8711,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__SignalAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2990:1: rule__Emission__SignalAssignment_0 : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2996:1: rule__Emission__SignalAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__Emission__SignalAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2994:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2995:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3000:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3001:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2995:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2996:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3001:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3002:1: ( RULE_ID )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getSignalSignalCrossReference_0_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2997:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:2998:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3003:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3004:1: RULE_ID
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getSignalSignalIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emission__SignalAssignment_06030); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emission__SignalAssignment_06047); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getSignalSignalIDTerminalRuleCall_0_0_1()); 
             }
@@ -8699,22 +8764,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__NewValueAssignment_1_0_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3009:1: rule__Emission__NewValueAssignment_1_0_1 : ( ruleValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3015:1: rule__Emission__NewValueAssignment_1_0_1 : ( ruleValueExpression ) ;
     public final void rule__Emission__NewValueAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3013:1: ( ( ruleValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3014:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3019:1: ( ( ruleValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3020:1: ( ruleValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3014:1: ( ruleValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3015:1: ruleValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3020:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3021:1: ruleValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getNewValueValueExpressionParserRuleCall_1_0_1_0()); 
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_rule__Emission__NewValueAssignment_1_0_16065);
+            pushFollow(FOLLOW_ruleValueExpression_in_rule__Emission__NewValueAssignment_1_0_16082);
             ruleValueExpression();
             _fsp--;
             if (failed) return ;
@@ -8743,22 +8808,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Emission__NewValueAssignment_1_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3024:1: rule__Emission__NewValueAssignment_1_1_1 : ( ruleBooleanExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3030:1: rule__Emission__NewValueAssignment_1_1_1 : ( ruleBooleanExpression ) ;
     public final void rule__Emission__NewValueAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3028:1: ( ( ruleBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3029:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3034:1: ( ( ruleBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3035:1: ( ruleBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3029:1: ( ruleBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3030:1: ruleBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3035:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3036:1: ruleBooleanExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getNewValueBooleanExpressionParserRuleCall_1_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Emission__NewValueAssignment_1_1_16096);
+            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Emission__NewValueAssignment_1_1_16113);
             ruleBooleanExpression();
             _fsp--;
             if (failed) return ;
@@ -8787,28 +8852,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__VariableAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3039:1: rule__Assignment__VariableAssignment_0 : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3045:1: rule__Assignment__VariableAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__Assignment__VariableAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3043:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3044:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3049:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3050:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3044:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3045:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3050:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3051:1: ( RULE_ID )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getVariableVariableCrossReference_0_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3046:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3047:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3052:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3053:1: RULE_ID
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getVariableVariableIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_06131); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_06148); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getVariableVariableIDTerminalRuleCall_0_0_1()); 
             }
@@ -8840,22 +8905,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__ExpressionAssignment_2_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3058:1: rule__Assignment__ExpressionAssignment_2_0 : ( ruleValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3064:1: rule__Assignment__ExpressionAssignment_2_0 : ( ruleValueExpression ) ;
     public final void rule__Assignment__ExpressionAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3062:1: ( ( ruleValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3063:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3068:1: ( ( ruleValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3069:1: ( ruleValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3063:1: ( ruleValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3064:1: ruleValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3069:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3070:1: ruleValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionValueExpressionParserRuleCall_2_0_0()); 
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_rule__Assignment__ExpressionAssignment_2_06166);
+            pushFollow(FOLLOW_ruleValueExpression_in_rule__Assignment__ExpressionAssignment_2_06183);
             ruleValueExpression();
             _fsp--;
             if (failed) return ;
@@ -8884,22 +8949,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Assignment__ExpressionAssignment_2_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3073:1: rule__Assignment__ExpressionAssignment_2_1 : ( ruleBooleanExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3079:1: rule__Assignment__ExpressionAssignment_2_1 : ( ruleBooleanExpression ) ;
     public final void rule__Assignment__ExpressionAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3077:1: ( ( ruleBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3078:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3083:1: ( ( ruleBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3084:1: ( ruleBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3078:1: ( ruleBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3079:1: ruleBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3084:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3085:1: ruleBooleanExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionBooleanExpressionParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Assignment__ExpressionAssignment_2_16197);
+            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__Assignment__ExpressionAssignment_2_16214);
             ruleBooleanExpression();
             _fsp--;
             if (failed) return ;
@@ -8928,28 +8993,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__SignalReference__SignalAssignment
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3088:1: rule__SignalReference__SignalAssignment : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3094:1: rule__SignalReference__SignalAssignment : ( ( RULE_ID ) ) ;
     public final void rule__SignalReference__SignalAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3092:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3093:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3098:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3099:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3093:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3094:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3099:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3100:1: ( RULE_ID )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getSignalReferenceAccess().getSignalSignalCrossReference_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3095:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3096:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3101:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3102:1: RULE_ID
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getSignalReferenceAccess().getSignalSignalIDTerminalRuleCall_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__SignalReference__SignalAssignment6232); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__SignalReference__SignalAssignment6249); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getSignalReferenceAccess().getSignalSignalIDTerminalRuleCall_0_1()); 
             }
@@ -8981,28 +9046,28 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__VariableReference__VariableAssignment
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3107:1: rule__VariableReference__VariableAssignment : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3113:1: rule__VariableReference__VariableAssignment : ( ( RULE_ID ) ) ;
     public final void rule__VariableReference__VariableAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3111:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3112:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3117:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3118:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3112:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3113:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3118:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3119:1: ( RULE_ID )
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getVariableReferenceAccess().getVariableVariableCrossReference_0()); 
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3114:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3115:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3120:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3121:1: RULE_ID
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getVariableReferenceAccess().getVariableVariableIDTerminalRuleCall_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__VariableReference__VariableAssignment6271); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__VariableReference__VariableAssignment6288); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getVariableReferenceAccess().getVariableVariableIDTerminalRuleCall_0_1()); 
             }
@@ -9034,22 +9099,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__IntValue__ValueAssignment
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3128:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3134:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
     public final void rule__IntValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3132:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3133:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3138:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3139:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3133:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3134:1: RULE_INT
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3139:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3140:1: RULE_INT
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment6308); if (failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment6325); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
@@ -9075,22 +9140,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__FloatValue__ValueAssignment
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3143:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3149:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
     public final void rule__FloatValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3147:1: ( ( RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3148:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3153:1: ( ( RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3154:1: ( RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3148:1: ( RULE_FLOAT )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3149:1: RULE_FLOAT
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3154:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3155:1: RULE_FLOAT
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
             }
-            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment6339); if (failed) return ;
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment6356); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
             }
@@ -9116,22 +9181,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__BooleanValue__ValueAssignment
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3158:1: rule__BooleanValue__ValueAssignment : ( RULE_BOOLEAN ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3164:1: rule__BooleanValue__ValueAssignment : ( RULE_BOOLEAN ) ;
     public final void rule__BooleanValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3162:1: ( ( RULE_BOOLEAN ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3163:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3168:1: ( ( RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3169:1: ( RULE_BOOLEAN )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3163:1: ( RULE_BOOLEAN )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3164:1: RULE_BOOLEAN
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3169:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3170:1: RULE_BOOLEAN
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
             }
-            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment6370); if (failed) return ;
+            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment6387); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
             }
@@ -9157,22 +9222,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ValOperation__OperatorAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3173:1: rule__ValOperation__OperatorAssignment_0 : ( ruleValOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3179:1: rule__ValOperation__OperatorAssignment_0 : ( ruleValOperator ) ;
     public final void rule__ValOperation__OperatorAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3177:1: ( ( ruleValOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3178:1: ( ruleValOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3183:1: ( ( ruleValOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3184:1: ( ruleValOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3178:1: ( ruleValOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3179:1: ruleValOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3184:1: ( ruleValOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3185:1: ruleValOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getValOperationAccess().getOperatorValOperatorEnumRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleValOperator_in_rule__ValOperation__OperatorAssignment_06401);
+            pushFollow(FOLLOW_ruleValOperator_in_rule__ValOperation__OperatorAssignment_06418);
             ruleValOperator();
             _fsp--;
             if (failed) return ;
@@ -9201,22 +9266,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__ValOperation__SubExpressionsAssignment_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3188:1: rule__ValOperation__SubExpressionsAssignment_1 : ( ruleSignalReference ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3194:1: rule__ValOperation__SubExpressionsAssignment_1 : ( ruleSignalReference ) ;
     public final void rule__ValOperation__SubExpressionsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3192:1: ( ( ruleSignalReference ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3193:1: ( ruleSignalReference )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3198:1: ( ( ruleSignalReference ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3199:1: ( ruleSignalReference )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3193:1: ( ruleSignalReference )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3194:1: ruleSignalReference
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3199:1: ( ruleSignalReference )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3200:1: ruleSignalReference
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getValOperationAccess().getSubExpressionsSignalReferenceParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleSignalReference_in_rule__ValOperation__SubExpressionsAssignment_16432);
+            pushFollow(FOLLOW_ruleSignalReference_in_rule__ValOperation__SubExpressionsAssignment_16449);
             ruleSignalReference();
             _fsp--;
             if (failed) return ;
@@ -9245,22 +9310,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3203:1: rule__PlusOperation__OperatorAssignment_1_1 : ( rulePlusOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3209:1: rule__PlusOperation__OperatorAssignment_1_1 : ( rulePlusOperator ) ;
     public final void rule__PlusOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3207:1: ( ( rulePlusOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3208:1: ( rulePlusOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3213:1: ( ( rulePlusOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3214:1: ( rulePlusOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3208:1: ( rulePlusOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3209:1: rulePlusOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3214:1: ( rulePlusOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3215:1: rulePlusOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getOperatorPlusOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_rulePlusOperator_in_rule__PlusOperation__OperatorAssignment_1_16463);
+            pushFollow(FOLLOW_rulePlusOperator_in_rule__PlusOperation__OperatorAssignment_1_16480);
             rulePlusOperator();
             _fsp--;
             if (failed) return ;
@@ -9289,22 +9354,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PlusOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3218:1: rule__PlusOperation__SubExpressionsAssignment_1_2 : ( ruleMultOrDivOperation ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3224:1: rule__PlusOperation__SubExpressionsAssignment_1_2 : ( ruleMultOrDivOperation ) ;
     public final void rule__PlusOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3222:1: ( ( ruleMultOrDivOperation ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3223:1: ( ruleMultOrDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3228:1: ( ( ruleMultOrDivOperation ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3229:1: ( ruleMultOrDivOperation )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3223:1: ( ruleMultOrDivOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3224:1: ruleMultOrDivOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3229:1: ( ruleMultOrDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3230:1: ruleMultOrDivOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPlusOperationAccess().getSubExpressionsMultOrDivOperationParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__SubExpressionsAssignment_1_26494);
+            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__SubExpressionsAssignment_1_26511);
             ruleMultOrDivOperation();
             _fsp--;
             if (failed) return ;
@@ -9333,22 +9398,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3233:1: rule__MultOperation__OperatorAssignment_1_1 : ( ruleMultOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3239:1: rule__MultOperation__OperatorAssignment_1_1 : ( ruleMultOperator ) ;
     public final void rule__MultOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3237:1: ( ( ruleMultOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3238:1: ( ruleMultOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3243:1: ( ( ruleMultOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3244:1: ( ruleMultOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3238:1: ( ruleMultOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3239:1: ruleMultOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3244:1: ( ruleMultOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3245:1: ruleMultOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getOperatorMultOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleMultOperator_in_rule__MultOperation__OperatorAssignment_1_16525);
+            pushFollow(FOLLOW_ruleMultOperator_in_rule__MultOperation__OperatorAssignment_1_16542);
             ruleMultOperator();
             _fsp--;
             if (failed) return ;
@@ -9377,22 +9442,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__MultOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3248:1: rule__MultOperation__SubExpressionsAssignment_1_2 : ( rulePreOrNormalValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3254:1: rule__MultOperation__SubExpressionsAssignment_1_2 : ( rulePreOrNormalValueExpression ) ;
     public final void rule__MultOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3252:1: ( ( rulePreOrNormalValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3253:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3258:1: ( ( rulePreOrNormalValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3259:1: ( rulePreOrNormalValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3253:1: ( rulePreOrNormalValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3254:1: rulePreOrNormalValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3259:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3260:1: rulePreOrNormalValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getMultOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__SubExpressionsAssignment_1_26556);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__SubExpressionsAssignment_1_26573);
             rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return ;
@@ -9421,22 +9486,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3263:1: rule__DivOperation__OperatorAssignment_1_1 : ( ruleDivOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3269:1: rule__DivOperation__OperatorAssignment_1_1 : ( ruleDivOperator ) ;
     public final void rule__DivOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3267:1: ( ( ruleDivOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3268:1: ( ruleDivOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3273:1: ( ( ruleDivOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3274:1: ( ruleDivOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3268:1: ( ruleDivOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3269:1: ruleDivOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3274:1: ( ruleDivOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3275:1: ruleDivOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getOperatorDivOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleDivOperator_in_rule__DivOperation__OperatorAssignment_1_16587);
+            pushFollow(FOLLOW_ruleDivOperator_in_rule__DivOperation__OperatorAssignment_1_16604);
             ruleDivOperator();
             _fsp--;
             if (failed) return ;
@@ -9465,22 +9530,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__DivOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3278:1: rule__DivOperation__SubExpressionsAssignment_1_2 : ( rulePreOrNormalValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3284:1: rule__DivOperation__SubExpressionsAssignment_1_2 : ( rulePreOrNormalValueExpression ) ;
     public final void rule__DivOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3282:1: ( ( rulePreOrNormalValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3283:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3288:1: ( ( rulePreOrNormalValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3289:1: ( rulePreOrNormalValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3283:1: ( rulePreOrNormalValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3284:1: rulePreOrNormalValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3289:1: ( rulePreOrNormalValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3290:1: rulePreOrNormalValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getDivOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__SubExpressionsAssignment_1_26618);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__SubExpressionsAssignment_1_26635);
             rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return ;
@@ -9509,22 +9574,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__OperatorAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3293:1: rule__PreArithmOperation__OperatorAssignment_0 : ( ruleUnaryParanthesedOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3299:1: rule__PreArithmOperation__OperatorAssignment_0 : ( ruleUnaryParanthesedOperator ) ;
     public final void rule__PreArithmOperation__OperatorAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3297:1: ( ( ruleUnaryParanthesedOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3298:1: ( ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3303:1: ( ( ruleUnaryParanthesedOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3304:1: ( ruleUnaryParanthesedOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3298:1: ( ruleUnaryParanthesedOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3299:1: ruleUnaryParanthesedOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3304:1: ( ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3305:1: ruleUnaryParanthesedOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_rule__PreArithmOperation__OperatorAssignment_06649);
+            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_rule__PreArithmOperation__OperatorAssignment_06666);
             ruleUnaryParanthesedOperator();
             _fsp--;
             if (failed) return ;
@@ -9553,22 +9618,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__PreArithmOperation__SubExpressionsAssignment_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3308:1: rule__PreArithmOperation__SubExpressionsAssignment_2 : ( ruleValOperation ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3314:1: rule__PreArithmOperation__SubExpressionsAssignment_2 : ( ruleValOperation ) ;
     public final void rule__PreArithmOperation__SubExpressionsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3312:1: ( ( ruleValOperation ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3313:1: ( ruleValOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3318:1: ( ( ruleValOperation ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3319:1: ( ruleValOperation )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3313:1: ( ruleValOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3314:1: ruleValOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3319:1: ( ruleValOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3320:1: ruleValOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getPreArithmOperationAccess().getSubExpressionsValOperationParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleValOperation_in_rule__PreArithmOperation__SubExpressionsAssignment_26680);
+            pushFollow(FOLLOW_ruleValOperation_in_rule__PreArithmOperation__SubExpressionsAssignment_26697);
             ruleValOperation();
             _fsp--;
             if (failed) return ;
@@ -9597,22 +9662,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3323:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3329:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
     public final void rule__CompareOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3327:1: ( ( ruleCompareOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3328:1: ( ruleCompareOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3333:1: ( ( ruleCompareOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3334:1: ( ruleCompareOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3328:1: ( ruleCompareOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3329:1: ruleCompareOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3334:1: ( ruleCompareOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3335:1: ruleCompareOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_1_16711);
+            pushFollow(FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_1_16728);
             ruleCompareOperator();
             _fsp--;
             if (failed) return ;
@@ -9641,22 +9706,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__CompareOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3338:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3344:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleValueExpression ) ;
     public final void rule__CompareOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3342:1: ( ( ruleValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3343:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3348:1: ( ( ruleValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3349:1: ( ruleValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3343:1: ( ruleValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3344:1: ruleValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3349:1: ( ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3350:1: ruleValueExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsValueExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_rule__CompareOperation__SubExpressionsAssignment_1_26742);
+            pushFollow(FOLLOW_ruleValueExpression_in_rule__CompareOperation__SubExpressionsAssignment_1_26759);
             ruleValueExpression();
             _fsp--;
             if (failed) return ;
@@ -9685,22 +9750,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryOperation__OperatorAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3353:1: rule__UnaryOperation__OperatorAssignment_0 : ( ruleUnaryOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3359:1: rule__UnaryOperation__OperatorAssignment_0 : ( ruleUnaryOperator ) ;
     public final void rule__UnaryOperation__OperatorAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3357:1: ( ( ruleUnaryOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3358:1: ( ruleUnaryOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3363:1: ( ( ruleUnaryOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3364:1: ( ruleUnaryOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3358:1: ( ruleUnaryOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3359:1: ruleUnaryOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3364:1: ( ruleUnaryOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3365:1: ruleUnaryOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryOperationAccess().getOperatorUnaryOperatorEnumRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleUnaryOperator_in_rule__UnaryOperation__OperatorAssignment_06773);
+            pushFollow(FOLLOW_ruleUnaryOperator_in_rule__UnaryOperation__OperatorAssignment_06790);
             ruleUnaryOperator();
             _fsp--;
             if (failed) return ;
@@ -9729,22 +9794,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryOperation__SubExpressionsAssignment_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3368:1: rule__UnaryOperation__SubExpressionsAssignment_1 : ( ruleParanthesedBooleanExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3374:1: rule__UnaryOperation__SubExpressionsAssignment_1 : ( ruleParanthesedBooleanExpression ) ;
     public final void rule__UnaryOperation__SubExpressionsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3372:1: ( ( ruleParanthesedBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3373:1: ( ruleParanthesedBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3378:1: ( ( ruleParanthesedBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3379:1: ( ruleParanthesedBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3373:1: ( ruleParanthesedBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3374:1: ruleParanthesedBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3379:1: ( ruleParanthesedBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3380:1: ruleParanthesedBooleanExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_rule__UnaryOperation__SubExpressionsAssignment_16804);
+            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_rule__UnaryOperation__SubExpressionsAssignment_16821);
             ruleParanthesedBooleanExpression();
             _fsp--;
             if (failed) return ;
@@ -9773,22 +9838,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__OperatorAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3383:1: rule__UnaryParanthesedOperation__OperatorAssignment_0 : ( ruleUnaryParanthesedOperator ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3389:1: rule__UnaryParanthesedOperation__OperatorAssignment_0 : ( ruleUnaryParanthesedOperator ) ;
     public final void rule__UnaryParanthesedOperation__OperatorAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3387:1: ( ( ruleUnaryParanthesedOperator ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3388:1: ( ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3393:1: ( ( ruleUnaryParanthesedOperator ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3394:1: ( ruleUnaryParanthesedOperator )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3388:1: ( ruleUnaryParanthesedOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3389:1: ruleUnaryParanthesedOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3394:1: ( ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3395:1: ruleUnaryParanthesedOperator
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_rule__UnaryParanthesedOperation__OperatorAssignment_06835);
+            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_rule__UnaryParanthesedOperation__OperatorAssignment_06852);
             ruleUnaryParanthesedOperator();
             _fsp--;
             if (failed) return ;
@@ -9817,22 +9882,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__UnaryParanthesedOperation__SubExpressionsAssignment_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3398:1: rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 : ( ruleBooleanExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3404:1: rule__UnaryParanthesedOperation__SubExpressionsAssignment_2 : ( ruleBooleanExpression ) ;
     public final void rule__UnaryParanthesedOperation__SubExpressionsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3402:1: ( ( ruleBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3403:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3408:1: ( ( ruleBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3409:1: ( ruleBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3403:1: ( ruleBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3404:1: ruleBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3409:1: ( ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3410:1: ruleBooleanExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getUnaryParanthesedOperationAccess().getSubExpressionsBooleanExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__UnaryParanthesedOperation__SubExpressionsAssignment_26866);
+            pushFollow(FOLLOW_ruleBooleanExpression_in_rule__UnaryParanthesedOperation__SubExpressionsAssignment_26883);
             ruleBooleanExpression();
             _fsp--;
             if (failed) return ;
@@ -9861,22 +9926,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3413:1: rule__AndOperation__OperatorAssignment_1_1 : ( ruleOperatorAnd ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3419:1: rule__AndOperation__OperatorAssignment_1_1 : ( ruleOperatorAnd ) ;
     public final void rule__AndOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3417:1: ( ( ruleOperatorAnd ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3418:1: ( ruleOperatorAnd )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3423:1: ( ( ruleOperatorAnd ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3424:1: ( ruleOperatorAnd )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3418:1: ( ruleOperatorAnd )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3419:1: ruleOperatorAnd
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3424:1: ( ruleOperatorAnd )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3425:1: ruleOperatorAnd
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getOperatorOperatorAndEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleOperatorAnd_in_rule__AndOperation__OperatorAssignment_1_16897);
+            pushFollow(FOLLOW_ruleOperatorAnd_in_rule__AndOperation__OperatorAssignment_1_16914);
             ruleOperatorAnd();
             _fsp--;
             if (failed) return ;
@@ -9905,22 +9970,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__AndOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3428:1: rule__AndOperation__SubExpressionsAssignment_1_2 : ( ruleUnaryOrNormalExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3434:1: rule__AndOperation__SubExpressionsAssignment_1_2 : ( ruleUnaryOrNormalExpression ) ;
     public final void rule__AndOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3432:1: ( ( ruleUnaryOrNormalExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3433:1: ( ruleUnaryOrNormalExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3438:1: ( ( ruleUnaryOrNormalExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3439:1: ( ruleUnaryOrNormalExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3433:1: ( ruleUnaryOrNormalExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3434:1: ruleUnaryOrNormalExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3439:1: ( ruleUnaryOrNormalExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3440:1: ruleUnaryOrNormalExpression
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getAndOperationAccess().getSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__SubExpressionsAssignment_1_26928);
+            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__SubExpressionsAssignment_1_26945);
             ruleUnaryOrNormalExpression();
             _fsp--;
             if (failed) return ;
@@ -9949,22 +10014,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__OperatorAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3443:1: rule__OrOperation__OperatorAssignment_1_1 : ( ruleOperatorOr ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3449:1: rule__OrOperation__OperatorAssignment_1_1 : ( ruleOperatorOr ) ;
     public final void rule__OrOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3447:1: ( ( ruleOperatorOr ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3448:1: ( ruleOperatorOr )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3453:1: ( ( ruleOperatorOr ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3454:1: ( ruleOperatorOr )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3448:1: ( ruleOperatorOr )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3449:1: ruleOperatorOr
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3454:1: ( ruleOperatorOr )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3455:1: ruleOperatorOr
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getOperatorOperatorOrEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleOperatorOr_in_rule__OrOperation__OperatorAssignment_1_16959);
+            pushFollow(FOLLOW_ruleOperatorOr_in_rule__OrOperation__OperatorAssignment_1_16976);
             ruleOperatorOr();
             _fsp--;
             if (failed) return ;
@@ -9993,22 +10058,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__OrOperation__SubExpressionsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3458:1: rule__OrOperation__SubExpressionsAssignment_1_2 : ( ruleAndOperation ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3464:1: rule__OrOperation__SubExpressionsAssignment_1_2 : ( ruleAndOperation ) ;
     public final void rule__OrOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3462:1: ( ( ruleAndOperation ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3463:1: ( ruleAndOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3468:1: ( ( ruleAndOperation ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3469:1: ( ruleAndOperation )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3463:1: ( ruleAndOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3464:1: ruleAndOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3469:1: ( ruleAndOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3470:1: ruleAndOperation
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getOrOperationAccess().getSubExpressionsAndOperationParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleAndOperation_in_rule__OrOperation__SubExpressionsAssignment_1_26990);
+            pushFollow(FOLLOW_ruleAndOperation_in_rule__OrOperation__SubExpressionsAssignment_1_27007);
             ruleAndOperation();
             _fsp--;
             if (failed) return ;
@@ -10037,22 +10102,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__CodeAssignment_0
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3473:1: rule__HostCode__CodeAssignment_0 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3479:1: rule__HostCode__CodeAssignment_0 : ( RULE_STRING ) ;
     public final void rule__HostCode__CodeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3477:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3478:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3483:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3484:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3478:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3479:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3484:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3485:1: RULE_STRING
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getCodeSTRINGTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__HostCode__CodeAssignment_07021); if (failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__HostCode__CodeAssignment_07038); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getHostCodeAccess().getCodeSTRINGTerminalRuleCall_0_0()); 
             }
@@ -10078,22 +10143,22 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__HostCode__TypeAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3488:1: rule__HostCode__TypeAssignment_1_1 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3494:1: rule__HostCode__TypeAssignment_1_1 : ( RULE_ID ) ;
     public final void rule__HostCode__TypeAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3492:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3493:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3498:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3499:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3493:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3494:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3499:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/contentassist/antlr/internal/InternalActionLabel.g:3500:1: RULE_ID
             {
             if ( backtracking==0 ) {
                before(grammarAccess.getHostCodeAccess().getTypeIDTerminalRuleCall_1_1_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__HostCode__TypeAssignment_1_17052); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__HostCode__TypeAssignment_1_17069); if (failed) return ;
             if ( backtracking==0 ) {
                after(grammarAccess.getHostCodeAccess().getTypeIDTerminalRuleCall_1_1_0()); 
             }
@@ -10438,175 +10503,176 @@ public class InternalActionLabelParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleBooleanValue_in_rule__ParanthesedBooleanExpression__Alternatives2543 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCompareOperation_in_rule__ParanthesedBooleanExpression__Alternatives2560 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignalReference_in_rule__ParanthesedBooleanExpression__Alternatives2577 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHostCode_in_rule__ParanthesedBooleanExpression__Alternatives2594 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_4__0_in_rule__ParanthesedBooleanExpression__Alternatives2611 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_rule__CompareOperator__Alternatives2646 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rule__CompareOperator__Alternatives2667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__CompareOperator__Alternatives2688 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_rule__CompareOperator__Alternatives2709 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_rule__CompareOperator__Alternatives2730 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__PlusOperator__Alternatives2766 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rule__PlusOperator__Alternatives2787 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_rule__MultOperator__Alternatives2823 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__MultOperator__Alternatives2844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Action__IsImmediateAssignment_0_in_rule__Action__Group__02881 = new BitSet(new long[]{0x000000002004E1F2L});
-    public static final BitSet FOLLOW_rule__Action__Group__1_in_rule__Action__Group__02891 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Action__DelayAssignment_1_in_rule__Action__Group__12919 = new BitSet(new long[]{0x000000002004E1F2L});
-    public static final BitSet FOLLOW_rule__Action__Group__2_in_rule__Action__Group__12929 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Action__TriggerAssignment_2_in_rule__Action__Group__22957 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_rule__Action__Group__3_in_rule__Action__Group__22967 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Action__Group_3__0_in_rule__Action__Group__32995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Action__Group_3__03039 = new BitSet(new long[]{0x0000000000000122L});
-    public static final BitSet FOLLOW_rule__Action__Group_3__1_in_rule__Action__Group_3__03049 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Action__Group_3_1__0_in_rule__Action__Group_3__13077 = new BitSet(new long[]{0x0000000000000122L});
-    public static final BitSet FOLLOW_rule__Action__EffectsAssignment_3_1_0_in_rule__Action__Group_3_1__03116 = new BitSet(new long[]{0x0000000010000002L});
-    public static final BitSet FOLLOW_rule__Action__Group_3_1__1_in_rule__Action__Group_3_1__03125 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Action__Group_3_1__13155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emission__SignalAssignment_0_in_rule__Emission__Group__03196 = new BitSet(new long[]{0x0000000020000002L});
-    public static final BitSet FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__03205 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emission__Alternatives_1_in_rule__Emission__Group__13233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Emission__Group_1_0__03273 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__Emission__Group_1_0__1_in_rule__Emission__Group_1_0__03283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_0_1_in_rule__Emission__Group_1_0__13311 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__Emission__Group_1_0__2_in_rule__Emission__Group_1_0__13320 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__Emission__Group_1_0__23349 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Emission__Group_1_1__03391 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__Emission__Group_1_1__1_in_rule__Emission__Group_1_1__03401 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_1_1_in_rule__Emission__Group_1_1__13429 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__Emission__Group_1_1__2_in_rule__Emission__Group_1_1__13438 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__Emission__Group_1_1__23467 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__03508 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__03517 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__Assignment__Group__13546 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__13556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__Alternatives_2_in_rule__Assignment__Group__23584 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValOperation__OperatorAssignment_0_in_rule__ValOperation__Group__03624 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__ValOperation__Group__1_in_rule__ValOperation__Group__03633 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValOperation__SubExpressionsAssignment_1_in_rule__ValOperation__Group__13661 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__ParanthesedValueExpression__Group_5__03700 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_5__1_in_rule__ParanthesedValueExpression__Group_5__03710 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePlusOperation_in_rule__ParanthesedValueExpression__Group_5__13738 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_5__2_in_rule__ParanthesedValueExpression__Group_5__13746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__ParanthesedValueExpression__Group_5__23775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__ParanthesedValueExpression__Group_6__03817 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_6__1_in_rule__ParanthesedValueExpression__Group_6__03827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivOperation_in_rule__ParanthesedValueExpression__Group_6__13855 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_6__2_in_rule__ParanthesedValueExpression__Group_6__13863 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__ParanthesedValueExpression__Group_6__23892 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__Group__03933 = new BitSet(new long[]{0x0000000003000002L});
-    public static final BitSet FOLLOW_rule__PlusOperation__Group__1_in_rule__PlusOperation__Group__03941 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__0_in_rule__PlusOperation__Group__13969 = new BitSet(new long[]{0x0000000003000002L});
-    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__1_in_rule__PlusOperation__Group_1__04018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PlusOperation__OperatorAssignment_1_1_in_rule__PlusOperation__Group_1__14046 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__2_in_rule__PlusOperation__Group_1__14055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PlusOperation__SubExpressionsAssignment_1_2_in_rule__PlusOperation__Group_1__24083 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__MultOrDivOperation__Group_1__04124 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__MultOrDivOperation__Group_1__1_in_rule__MultOrDivOperation__Group_1__04134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivOperation_in_rule__MultOrDivOperation__Group_1__14162 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__MultOrDivOperation__Group_1__2_in_rule__MultOrDivOperation__Group_1__14170 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__MultOrDivOperation__Group_1__24199 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__Group__04240 = new BitSet(new long[]{0x000000000C000002L});
-    public static final BitSet FOLLOW_rule__MultOperation__Group__1_in_rule__MultOperation__Group__04248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultOperation__Group_1__0_in_rule__MultOperation__Group__14276 = new BitSet(new long[]{0x000000000C000002L});
-    public static final BitSet FOLLOW_rule__MultOperation__Group_1__1_in_rule__MultOperation__Group_1__04325 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultOperation__OperatorAssignment_1_1_in_rule__MultOperation__Group_1__14353 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__MultOperation__Group_1__2_in_rule__MultOperation__Group_1__14362 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultOperation__SubExpressionsAssignment_1_2_in_rule__MultOperation__Group_1__24390 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__Group__04430 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_rule__DivOperation__Group__1_in_rule__DivOperation__Group__04438 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivOperation__Group_1__0_in_rule__DivOperation__Group__14466 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_rule__DivOperation__Group_1__1_in_rule__DivOperation__Group_1__04515 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivOperation__OperatorAssignment_1_1_in_rule__DivOperation__Group_1__14543 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__DivOperation__Group_1__2_in_rule__DivOperation__Group_1__14552 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivOperation__SubExpressionsAssignment_1_2_in_rule__DivOperation__Group_1__24580 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PreArithmOperation__OperatorAssignment_0_in_rule__PreArithmOperation__Group__04620 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__1_in_rule__PreArithmOperation__Group__04629 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__PreArithmOperation__Group__14658 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__2_in_rule__PreArithmOperation__Group__14668 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PreArithmOperation__SubExpressionsAssignment_2_in_rule__PreArithmOperation__Group__24696 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__3_in_rule__PreArithmOperation__Group__24705 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__PreArithmOperation__Group__34734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_rule__CompareOperation__Group__04777 = new BitSet(new long[]{0x0000000000F80000L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group__1_in_rule__CompareOperation__Group__04785 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__0_in_rule__CompareOperation__Group__14813 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__1_in_rule__CompareOperation__Group_1__04861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_1_1_in_rule__CompareOperation__Group_1__14889 = new BitSet(new long[]{0x000000002000A170L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__2_in_rule__CompareOperation__Group_1__14898 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_1_2_in_rule__CompareOperation__Group_1__24926 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__UnaryOperation__OperatorAssignment_0_in_rule__UnaryOperation__Group__04966 = new BitSet(new long[]{0x000000002000A1F0L});
-    public static final BitSet FOLLOW_rule__UnaryOperation__Group__1_in_rule__UnaryOperation__Group__04975 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__UnaryOperation__SubExpressionsAssignment_1_in_rule__UnaryOperation__Group__15003 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__OperatorAssignment_0_in_rule__UnaryParanthesedOperation__Group__05041 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__1_in_rule__UnaryParanthesedOperation__Group__05050 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__UnaryParanthesedOperation__Group__15079 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__2_in_rule__UnaryParanthesedOperation__Group__15089 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__SubExpressionsAssignment_2_in_rule__UnaryParanthesedOperation__Group__25117 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__3_in_rule__UnaryParanthesedOperation__Group__25126 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__UnaryParanthesedOperation__Group__35155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__Group__05198 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_rule__AndOperation__Group__1_in_rule__AndOperation__Group__05206 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AndOperation__Group_1__0_in_rule__AndOperation__Group__15234 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_rule__AndOperation__Group_1__1_in_rule__AndOperation__Group_1__05283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AndOperation__OperatorAssignment_1_1_in_rule__AndOperation__Group_1__15311 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__AndOperation__Group_1__2_in_rule__AndOperation__Group_1__15320 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AndOperation__SubExpressionsAssignment_1_2_in_rule__AndOperation__Group_1__25348 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAndOperation_in_rule__OrOperation__Group__05388 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_rule__OrOperation__Group__1_in_rule__OrOperation__Group__05396 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrOperation__Group_1__0_in_rule__OrOperation__Group__15424 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_rule__OrOperation__Group_1__1_in_rule__OrOperation__Group_1__05473 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrOperation__OperatorAssignment_1_1_in_rule__OrOperation__Group_1__15501 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__OrOperation__Group_1__2_in_rule__OrOperation__Group_1__15510 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrOperation__SubExpressionsAssignment_1_2_in_rule__OrOperation__Group_1__25538 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__ParanthesedBooleanExpression__Group_4__05579 = new BitSet(new long[]{0x000000002000E1F0L});
-    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_4__1_in_rule__ParanthesedBooleanExpression__Group_4__05589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOrOperation_in_rule__ParanthesedBooleanExpression__Group_4__15617 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_4__2_in_rule__ParanthesedBooleanExpression__Group_4__15625 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__ParanthesedBooleanExpression__Group_4__25654 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__HostCode__CodeAssignment_0_in_rule__HostCode__Group__05695 = new BitSet(new long[]{0x0000000020000002L});
-    public static final BitSet FOLLOW_rule__HostCode__Group__1_in_rule__HostCode__Group__05704 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__HostCode__Group_1__0_in_rule__HostCode__Group__15732 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__HostCode__Group_1__05772 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__HostCode__Group_1__1_in_rule__HostCode__Group_1__05782 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__HostCode__TypeAssignment_1_1_in_rule__HostCode__Group_1__15810 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__HostCode__Group_1__2_in_rule__HostCode__Group_1__15819 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__HostCode__Group_1__25848 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Action__IsImmediateAssignment_05894 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Action__DelayAssignment_15933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Action__TriggerAssignment_25964 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEffect_in_rule__Action__EffectsAssignment_3_1_05995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Emission__SignalAssignment_06030 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_rule__Emission__NewValueAssignment_1_0_16065 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Emission__NewValueAssignment_1_1_16096 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_06131 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_rule__Assignment__ExpressionAssignment_2_06166 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Assignment__ExpressionAssignment_2_16197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__SignalReference__SignalAssignment6232 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__VariableReference__VariableAssignment6271 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment6308 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment6339 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment6370 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValOperator_in_rule__ValOperation__OperatorAssignment_06401 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignalReference_in_rule__ValOperation__SubExpressionsAssignment_16432 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePlusOperator_in_rule__PlusOperation__OperatorAssignment_1_16463 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__SubExpressionsAssignment_1_26494 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultOperation__OperatorAssignment_1_16525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__SubExpressionsAssignment_1_26556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivOperation__OperatorAssignment_1_16587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__SubExpressionsAssignment_1_26618 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_rule__PreArithmOperation__OperatorAssignment_06649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValOperation_in_rule__PreArithmOperation__SubExpressionsAssignment_26680 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_1_16711 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_rule__CompareOperation__SubExpressionsAssignment_1_26742 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryOperator_in_rule__UnaryOperation__OperatorAssignment_06773 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_rule__UnaryOperation__SubExpressionsAssignment_16804 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_rule__UnaryParanthesedOperation__OperatorAssignment_06835 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__UnaryParanthesedOperation__SubExpressionsAssignment_26866 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOperatorAnd_in_rule__AndOperation__OperatorAssignment_1_16897 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__SubExpressionsAssignment_1_26928 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOperatorOr_in_rule__OrOperation__OperatorAssignment_1_16959 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAndOperation_in_rule__OrOperation__SubExpressionsAssignment_1_26990 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__HostCode__CodeAssignment_07021 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__HostCode__TypeAssignment_1_17052 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValOperation_in_rule__ParanthesedBooleanExpression__Alternatives2594 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHostCode_in_rule__ParanthesedBooleanExpression__Alternatives2611 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_5__0_in_rule__ParanthesedBooleanExpression__Alternatives2628 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_rule__CompareOperator__Alternatives2663 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_rule__CompareOperator__Alternatives2684 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_rule__CompareOperator__Alternatives2705 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_rule__CompareOperator__Alternatives2726 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_rule__CompareOperator__Alternatives2747 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__PlusOperator__Alternatives2783 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rule__PlusOperator__Alternatives2804 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_rule__MultOperator__Alternatives2840 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__MultOperator__Alternatives2861 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Action__IsImmediateAssignment_0_in_rule__Action__Group__02898 = new BitSet(new long[]{0x000000002004E1F2L});
+    public static final BitSet FOLLOW_rule__Action__Group__1_in_rule__Action__Group__02908 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Action__DelayAssignment_1_in_rule__Action__Group__12936 = new BitSet(new long[]{0x000000002004E1F2L});
+    public static final BitSet FOLLOW_rule__Action__Group__2_in_rule__Action__Group__12946 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Action__TriggerAssignment_2_in_rule__Action__Group__22974 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_rule__Action__Group__3_in_rule__Action__Group__22984 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Action__Group_3__0_in_rule__Action__Group__33012 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__Action__Group_3__03056 = new BitSet(new long[]{0x0000000000000122L});
+    public static final BitSet FOLLOW_rule__Action__Group_3__1_in_rule__Action__Group_3__03066 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Action__Group_3_1__0_in_rule__Action__Group_3__13094 = new BitSet(new long[]{0x0000000000000122L});
+    public static final BitSet FOLLOW_rule__Action__EffectsAssignment_3_1_0_in_rule__Action__Group_3_1__03133 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_rule__Action__Group_3_1__1_in_rule__Action__Group_3_1__03142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Action__Group_3_1__13172 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emission__SignalAssignment_0_in_rule__Emission__Group__03213 = new BitSet(new long[]{0x0000000020000002L});
+    public static final BitSet FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__03222 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emission__Alternatives_1_in_rule__Emission__Group__13250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Emission__Group_1_0__03290 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__Emission__Group_1_0__1_in_rule__Emission__Group_1_0__03300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_0_1_in_rule__Emission__Group_1_0__13328 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__Emission__Group_1_0__2_in_rule__Emission__Group_1_0__13337 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__Emission__Group_1_0__23366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Emission__Group_1_1__03408 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__Emission__Group_1_1__1_in_rule__Emission__Group_1_1__03418 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_1_1_in_rule__Emission__Group_1_1__13446 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__Emission__Group_1_1__2_in_rule__Emission__Group_1_1__13455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__Emission__Group_1_1__23484 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__03525 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__03534 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_rule__Assignment__Group__13563 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__13573 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__Alternatives_2_in_rule__Assignment__Group__23601 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValOperation__OperatorAssignment_0_in_rule__ValOperation__Group__03641 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__ValOperation__Group__1_in_rule__ValOperation__Group__03650 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValOperation__SubExpressionsAssignment_1_in_rule__ValOperation__Group__13678 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__ParanthesedValueExpression__Group_5__03717 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_5__1_in_rule__ParanthesedValueExpression__Group_5__03727 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePlusOperation_in_rule__ParanthesedValueExpression__Group_5__13755 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_5__2_in_rule__ParanthesedValueExpression__Group_5__13763 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__ParanthesedValueExpression__Group_5__23792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__ParanthesedValueExpression__Group_6__03834 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_6__1_in_rule__ParanthesedValueExpression__Group_6__03844 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivOperation_in_rule__ParanthesedValueExpression__Group_6__13872 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_6__2_in_rule__ParanthesedValueExpression__Group_6__13880 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__ParanthesedValueExpression__Group_6__23909 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__Group__03950 = new BitSet(new long[]{0x0000000003000002L});
+    public static final BitSet FOLLOW_rule__PlusOperation__Group__1_in_rule__PlusOperation__Group__03958 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__0_in_rule__PlusOperation__Group__13986 = new BitSet(new long[]{0x0000000003000002L});
+    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__1_in_rule__PlusOperation__Group_1__04035 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PlusOperation__OperatorAssignment_1_1_in_rule__PlusOperation__Group_1__14063 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__PlusOperation__Group_1__2_in_rule__PlusOperation__Group_1__14072 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PlusOperation__SubExpressionsAssignment_1_2_in_rule__PlusOperation__Group_1__24100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__MultOrDivOperation__Group_1__04141 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__MultOrDivOperation__Group_1__1_in_rule__MultOrDivOperation__Group_1__04151 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivOperation_in_rule__MultOrDivOperation__Group_1__14179 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__MultOrDivOperation__Group_1__2_in_rule__MultOrDivOperation__Group_1__14187 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__MultOrDivOperation__Group_1__24216 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__Group__04257 = new BitSet(new long[]{0x000000000C000002L});
+    public static final BitSet FOLLOW_rule__MultOperation__Group__1_in_rule__MultOperation__Group__04265 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultOperation__Group_1__0_in_rule__MultOperation__Group__14293 = new BitSet(new long[]{0x000000000C000002L});
+    public static final BitSet FOLLOW_rule__MultOperation__Group_1__1_in_rule__MultOperation__Group_1__04342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultOperation__OperatorAssignment_1_1_in_rule__MultOperation__Group_1__14370 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__MultOperation__Group_1__2_in_rule__MultOperation__Group_1__14379 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultOperation__SubExpressionsAssignment_1_2_in_rule__MultOperation__Group_1__24407 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__Group__04447 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_rule__DivOperation__Group__1_in_rule__DivOperation__Group__04455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivOperation__Group_1__0_in_rule__DivOperation__Group__14483 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_rule__DivOperation__Group_1__1_in_rule__DivOperation__Group_1__04532 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivOperation__OperatorAssignment_1_1_in_rule__DivOperation__Group_1__14560 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__DivOperation__Group_1__2_in_rule__DivOperation__Group_1__14569 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivOperation__SubExpressionsAssignment_1_2_in_rule__DivOperation__Group_1__24597 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PreArithmOperation__OperatorAssignment_0_in_rule__PreArithmOperation__Group__04637 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__1_in_rule__PreArithmOperation__Group__04646 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__PreArithmOperation__Group__14675 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__2_in_rule__PreArithmOperation__Group__14685 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PreArithmOperation__SubExpressionsAssignment_2_in_rule__PreArithmOperation__Group__24713 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__PreArithmOperation__Group__3_in_rule__PreArithmOperation__Group__24722 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__PreArithmOperation__Group__34751 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_rule__CompareOperation__Group__04794 = new BitSet(new long[]{0x0000000000F80000L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group__1_in_rule__CompareOperation__Group__04802 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__0_in_rule__CompareOperation__Group__14830 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__1_in_rule__CompareOperation__Group_1__04878 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_1_1_in_rule__CompareOperation__Group_1__14906 = new BitSet(new long[]{0x000000002000A170L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_1__2_in_rule__CompareOperation__Group_1__14915 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_1_2_in_rule__CompareOperation__Group_1__24943 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__UnaryOperation__OperatorAssignment_0_in_rule__UnaryOperation__Group__04983 = new BitSet(new long[]{0x000000002000A1F0L});
+    public static final BitSet FOLLOW_rule__UnaryOperation__Group__1_in_rule__UnaryOperation__Group__04992 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__UnaryOperation__SubExpressionsAssignment_1_in_rule__UnaryOperation__Group__15020 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__OperatorAssignment_0_in_rule__UnaryParanthesedOperation__Group__05058 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__1_in_rule__UnaryParanthesedOperation__Group__05067 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__UnaryParanthesedOperation__Group__15096 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__2_in_rule__UnaryParanthesedOperation__Group__15106 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__SubExpressionsAssignment_2_in_rule__UnaryParanthesedOperation__Group__25134 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__UnaryParanthesedOperation__Group__3_in_rule__UnaryParanthesedOperation__Group__25143 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__UnaryParanthesedOperation__Group__35172 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__Group__05215 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__AndOperation__Group__1_in_rule__AndOperation__Group__05223 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AndOperation__Group_1__0_in_rule__AndOperation__Group__15251 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__AndOperation__Group_1__1_in_rule__AndOperation__Group_1__05300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AndOperation__OperatorAssignment_1_1_in_rule__AndOperation__Group_1__15328 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__AndOperation__Group_1__2_in_rule__AndOperation__Group_1__15337 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AndOperation__SubExpressionsAssignment_1_2_in_rule__AndOperation__Group_1__25365 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAndOperation_in_rule__OrOperation__Group__05405 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_rule__OrOperation__Group__1_in_rule__OrOperation__Group__05413 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrOperation__Group_1__0_in_rule__OrOperation__Group__15441 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_rule__OrOperation__Group_1__1_in_rule__OrOperation__Group_1__05490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrOperation__OperatorAssignment_1_1_in_rule__OrOperation__Group_1__15518 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__OrOperation__Group_1__2_in_rule__OrOperation__Group_1__15527 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrOperation__SubExpressionsAssignment_1_2_in_rule__OrOperation__Group_1__25555 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__ParanthesedBooleanExpression__Group_5__05596 = new BitSet(new long[]{0x000000002000E1F0L});
+    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_5__1_in_rule__ParanthesedBooleanExpression__Group_5__05606 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOrOperation_in_rule__ParanthesedBooleanExpression__Group_5__15634 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__ParanthesedBooleanExpression__Group_5__2_in_rule__ParanthesedBooleanExpression__Group_5__15642 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__ParanthesedBooleanExpression__Group_5__25671 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__HostCode__CodeAssignment_0_in_rule__HostCode__Group__05712 = new BitSet(new long[]{0x0000000020000002L});
+    public static final BitSet FOLLOW_rule__HostCode__Group__1_in_rule__HostCode__Group__05721 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__HostCode__Group_1__0_in_rule__HostCode__Group__15749 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__HostCode__Group_1__05789 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__HostCode__Group_1__1_in_rule__HostCode__Group_1__05799 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__HostCode__TypeAssignment_1_1_in_rule__HostCode__Group_1__15827 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__HostCode__Group_1__2_in_rule__HostCode__Group_1__15836 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__HostCode__Group_1__25865 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Action__IsImmediateAssignment_05911 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Action__DelayAssignment_15950 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Action__TriggerAssignment_25981 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEffect_in_rule__Action__EffectsAssignment_3_1_06012 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Emission__SignalAssignment_06047 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_rule__Emission__NewValueAssignment_1_0_16082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Emission__NewValueAssignment_1_1_16113 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_06148 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_rule__Assignment__ExpressionAssignment_2_06183 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__Assignment__ExpressionAssignment_2_16214 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__SignalReference__SignalAssignment6249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__VariableReference__VariableAssignment6288 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment6325 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment6356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment6387 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValOperator_in_rule__ValOperation__OperatorAssignment_06418 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignalReference_in_rule__ValOperation__SubExpressionsAssignment_16449 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePlusOperator_in_rule__PlusOperation__OperatorAssignment_1_16480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rule__PlusOperation__SubExpressionsAssignment_1_26511 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultOperation__OperatorAssignment_1_16542 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__MultOperation__SubExpressionsAssignment_1_26573 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivOperation__OperatorAssignment_1_16604 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_rule__DivOperation__SubExpressionsAssignment_1_26635 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_rule__PreArithmOperation__OperatorAssignment_06666 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValOperation_in_rule__PreArithmOperation__SubExpressionsAssignment_26697 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_1_16728 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_rule__CompareOperation__SubExpressionsAssignment_1_26759 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOperator_in_rule__UnaryOperation__OperatorAssignment_06790 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_rule__UnaryOperation__SubExpressionsAssignment_16821 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_rule__UnaryParanthesedOperation__OperatorAssignment_06852 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_rule__UnaryParanthesedOperation__SubExpressionsAssignment_26883 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOperatorAnd_in_rule__AndOperation__OperatorAssignment_1_16914 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_rule__AndOperation__SubExpressionsAssignment_1_26945 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOperatorOr_in_rule__OrOperation__OperatorAssignment_1_16976 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAndOperation_in_rule__OrOperation__SubExpressionsAssignment_1_27007 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__HostCode__CodeAssignment_07038 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__HostCode__TypeAssignment_1_17069 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Emission__Group_1_0__0_in_synpred32139 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Assignment__ExpressionAssignment_2_0_in_synpred42190 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ParanthesedValueExpression__Group_5__0_in_synpred102327 = new BitSet(new long[]{0x0000000000000002L});

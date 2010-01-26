@@ -1986,33 +1986,46 @@ ruleParanthesedBooleanExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3(), currentNode); 
+        currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getValOperationParserRuleCall_3(), currentNode); 
     }
-    this_HostCode_3=ruleHostCode
+    this_ValOperation_3=ruleValOperation
     { 
-        $current = $this_HostCode_3.current; 
+        $current = $this_ValOperation_3.current; 
+        currentNode = currentNode.getParent();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_4(), currentNode); 
+    }
+    this_HostCode_4=ruleHostCode
+    { 
+        $current = $this_HostCode_4.current; 
         currentNode = currentNode.getParent();
     }
 
     |(	'(' 
     {
-        createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_4_0(), null); 
+        createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_5_0(), null); 
     }
 
 	{ 
 	  /* */ 
 	}
     { 
-        currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_4_1(), currentNode); 
+        currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_5_1(), currentNode); 
     }
-    this_OrOperation_5=ruleOrOperation
+    this_OrOperation_6=ruleOrOperation
     { 
-        $current = $this_OrOperation_5.current; 
+        $current = $this_OrOperation_6.current; 
         currentNode = currentNode.getParent();
     }
 	')' 
     {
-        createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_4_2(), null); 
+        createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_5_2(), null); 
     }
 ))
 ;
