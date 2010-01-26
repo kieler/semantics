@@ -1075,7 +1075,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 AddDataComponentDialog addDialog = new AddDataComponentDialog(viewer.getControl()
                         .getShell());
                 addDialog.setComponentWrapperList(kIEMInstance.getDataComponentWrapperList());
-                addDialog.setComponentList(KiemPlugin.getDefault().getDataComponentList());
+                addDialog.setComponentList(KiemPlugin.getDefault().getRegisteredDataComponentList());
                 if (addDialog.open() == 0) {
                     List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
                     if (selected != null) {

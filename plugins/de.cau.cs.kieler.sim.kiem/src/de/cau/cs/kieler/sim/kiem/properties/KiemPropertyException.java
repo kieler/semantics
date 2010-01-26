@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.properties;
 
+import de.cau.cs.kieler.core.KielerException;
+
 
 /**
  * The Class KiemPropertyError defines an error that can be thrown by DataComponents if the

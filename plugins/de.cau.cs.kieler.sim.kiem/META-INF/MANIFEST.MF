@@ -5,16 +5,17 @@ Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.KiemPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: de.cau.cs.kieler.core;bundle-version="0.2.0",
+ org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.core;bundle-version="0.1.2",
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
  org.eclipse.emf.common.ui,
  org.eclipse.core.resources,
  org.eclipse.ui.views.log;bundle-version="1.0.100",
  org.eclipse.ui.ide,
  org.eclipse.emf.ecore,
- org.json;bundle-version="0.1.0"
+ org.json;bundle-version="0.1.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.1"
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.execution,
@@ -22,11 +23,11 @@ Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.properties,
  de.cau.cs.kieler.sim.kiem.ui,
  de.cau.cs.kieler.sim.kiem.ui.views
-Import-Package: org.json,
- org.eclipse.core.resources,
+Import-Package: org.eclipse.core.resources,
  org.eclipse.emf.common.ui,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore.resource.impl,
  org.eclipse.ui.editors.text,
- org.eclipse.ui.part
+ org.eclipse.ui.part,
+ org.json
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

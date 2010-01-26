@@ -32,7 +32,8 @@ public interface IKiemPropertyType {
 
     /**
      * Gets the value of the property type. This method is called by the cell editor and its
-     * returned object depends on the latter.
+     * returned object depends on the latter. It returns the value that the
+     * cell editor can handle.
      * <BR>
      * The concrete type of value is determined by the used cell editor and the type
      * it can handle. The task of an implementation of this method is to bridge the property 
@@ -49,7 +50,8 @@ public interface IKiemPropertyType {
 
     /**
      * Sets the value of the property type. This method is called by the cell editor and the object
-     * parameter depends on the latter.
+     * parameter depends on the latter. It gets the value from the cell editor and
+     * should store the appropriate string representation in the KIEM property.
      * <BR>
      * The concrete type of value is determined by the used cell editor and the type
      * it can handle. The task of an implementation of this method is to bridge the property 

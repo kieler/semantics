@@ -124,7 +124,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @see de.cau.cs.kieler.sim.kiem.ui.views.KiemView
      */
     public KiemPlugin() {
-        dataComponentList = this.getDataComponentList();
+        dataComponentList = this.getRegisteredDataComponentList();
         dataComponentWrapperList = getDefaultComponentWrapperList();
         updateEventManager();
         execution = null;
@@ -133,7 +133,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Update event manager's DataComponentWrapper list.
      */
@@ -149,26 +149,26 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
-    /**
-     * Sets the execution.
-     * 
-     * @param executionParam
-     *            the new execution
-     */
-    public void setExecution(final Execution executionParam) {
-        this.execution = executionParam;
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
-     * Gets the execution.
+     * Gets the execution. The use of this method is only recommended for remote controlling KIEM.
      * 
      * @return the execution
      */
     public Execution getExecution() {
         return this.execution;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the execution. The use of this method is only recommended for remote controlling KIEM.
+     * 
+     * @param executionParam
+     *            the execution param
+     */
+    public void setExecution(final Execution executionParam) {
+        this.execution = executionParam;
     }
 
     // -------------------------------------------------------------------------
@@ -572,7 +572,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     private void restoreDataComponentWrapperList(
             final List<DataComponentWrapper> dataComponentWrapperListParam) {
-        List<AbstractDataComponent> dataComponentListTmp = getDataComponentList();
+        List<AbstractDataComponent> dataComponentListTmp = getRegisteredDataComponentList();
 
         for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam.get(c);
@@ -636,7 +636,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @return the DataComponentList
      */
-    public List<AbstractDataComponent> getDataComponentList() {
+    public List<AbstractDataComponent> getRegisteredDataComponentList() {
         if (dataComponentList != null) {
             // return a cached version of the list
             // it is only built the first time
@@ -691,28 +691,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Initializes the Execution. This is one of the heart-methods of this plug-in. It does the
-     * following tasks: <BR>
-     * <BR>
-     * (1) Check if there are any (enabled) DataProducers or DataConsumers.<BR>
-     * (2) Check if all DataComponent's properties are set correctly<BR>
-     * (3) Grab all interface variables provided by the DataComponents.<BR>
-     * (4) Distribute the union of all the variables to all DataComponents.<BR>
-     * (5) Initialize the DataComponents<BR>
-     * (6) Create an run the Execution thread<BR>
-     * <BR>
-     * This method returns true if the execution is successfully initialized or if the execution
-     * thread already exists, hence the {@link #execution} is not null.
-     * 
-     * @return true, if successful
-     */
-    public boolean initExecution() {
-        if (this.execution != null) {
-            return true;
-        }
-
-        this.kIEMViewInstance.setAllEnabled(false);
+    private boolean testNumberOfProducersObservers() {
         // count all (enabled) data producer and observer
         int countEnabledProducer = 0;
         int countEnabledObserver = 0;
@@ -736,7 +715,10 @@ public class KiemPlugin extends AbstractUIPlugin {
             showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null, false);
             return false;
         }
+        return true;
+    }
 
+    private boolean testForKiemPropertyError() {
         // now check if properties are OK hence no KiemPropertyError is thrown
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
@@ -746,13 +728,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                     dataComponentWrapper.checkProperties(properties);
                 }
             } catch (Exception e) {
-                this.kIEMViewInstance.setAllEnabled(true);
                 this.showError(null, dataComponentWrapper.getDataComponent()
                         .getConfigurationElement().getContributor().getName(), e, false);
                 return false;
             }
         }
+        return true;
+    }
 
+    private boolean distributeInterfaceKeys() {
         // DEPRECATED PART FOLLOWING -------------------------------------------
         // Handling interface keys as a list of strings turned out to be not sufficient
         // for example when data components want to provide variables with special
@@ -776,7 +760,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                         } // next cc
                     } // end if not null
                 } catch (Exception e) {
-                    this.kIEMViewInstance.setAllEnabled(true);
                     KiemPlugin.getDefault().handleComponentError(
                             dataComponentWrapper.getDataComponent(), e);
                     return false;
@@ -794,10 +777,13 @@ public class KiemPlugin extends AbstractUIPlugin {
         } // next c
 
         // DEPRECATED PART END -------------------------------------------------
+        return true;
+    }
 
+    private JSONObject distributeInitialKeys() throws Exception {
+        JSONObject globalInitialVariables = new JSONObject();
         // get all InitialValues from (enabled) data producer
         // and combine them into globalInitialVariables
-        JSONObject globalInitialVariables = new JSONObject();
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
             if (dataComponentWrapper.isEnabled()) {
@@ -811,10 +797,9 @@ public class KiemPlugin extends AbstractUIPlugin {
                         globalInitialVariables = merged;
                     } // end if not null
                 } catch (Exception e) {
-                    this.kIEMViewInstance.setAllEnabled(true);
                     KiemPlugin.getDefault().handleComponentError(
                             dataComponentWrapper.getDataComponent(), e);
-                    return false;
+                    throw e;
                 }
             } // if enabled
         } // next c
@@ -827,6 +812,10 @@ public class KiemPlugin extends AbstractUIPlugin {
             } // end if enabled
         } // next c
 
+        return globalInitialVariables;
+    }
+
+    private boolean initializeDataComponents() {
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
@@ -834,7 +823,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                 try {
                     dataComponentWrapper.getDataComponent().initialize();
                 } catch (Exception e) {
-                    this.kIEMViewInstance.setAllEnabled(true);
                     e.printStackTrace();
                     KiemPlugin.getDefault().handleComponentError(
                             dataComponentWrapper.getDataComponent(), e);
@@ -842,6 +830,59 @@ public class KiemPlugin extends AbstractUIPlugin {
                 }
             } // end if enabled
         } // next c
+        return true;
+    }
+
+    /**
+     * Initializes the Execution. This is one of the heart-methods of this plug-in. It does the
+     * following tasks: <BR>
+     * <BR>
+     * (1) Check if there are any (enabled) DataProducers or DataConsumers.<BR>
+     * (2) Check if all DataComponent's properties are set correctly<BR>
+     * (3) Grab all interface variables provided by the DataComponents.<BR>
+     * (4) Distribute the union of all the variables to all DataComponents.<BR>
+     * (5) Initialize the DataComponents<BR>
+     * (6) Create an run the Execution thread<BR>
+     * <BR>
+     * This method returns true if the execution is successfully initialized or if the execution
+     * thread already exists, hence the {@link #execution} is not null.
+     * 
+     * @return true, if successful
+     */
+    public boolean initExecution() {
+        if (this.execution != null) {
+            return true;
+        }
+
+        this.kIEMViewInstance.setAllEnabled(false);
+
+        if (!testNumberOfProducersObservers()) {
+            this.kIEMViewInstance.setAllEnabled(true);
+            return false;
+        }
+
+        if (!testForKiemPropertyError()) {
+            this.kIEMViewInstance.setAllEnabled(true);
+            return false;
+        }
+
+        if (!distributeInterfaceKeys()) {
+            this.kIEMViewInstance.setAllEnabled(true);
+            return false;
+        }
+
+        JSONObject globalInitialVariables = new JSONObject();
+        try {
+            globalInitialVariables = distributeInitialKeys();
+        } catch (Exception e) {
+            this.kIEMViewInstance.setAllEnabled(true);
+            return false;
+        }
+
+        if (!initializeDataComponents()) {
+            this.kIEMViewInstance.setAllEnabled(true);
+            return false;
+        }
 
         // now create and run the execution thread
         this.execution = new Execution(dataComponentWrapperList, eventManager);
@@ -910,7 +951,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         // suggest calling the garbage collector: this may
         // remove any DataComponent threads still running (but not linked==needed any more)
         System.gc();
-        List<AbstractDataComponent> list = this.getDataComponentList();
+        List<AbstractDataComponent> list = this.getRegisteredDataComponentList();
         List<DataComponentWrapper> returnList = new LinkedList<DataComponentWrapper>();
         // first add initialization components
         for (int c = 0; c < list.size(); c++) {
@@ -960,7 +1001,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(0);
             dataComponentWrapper.getDataComponent().finalize();
             dataComponentWrapperList.remove(dataComponentWrapper);
-            //remove from event manager
+            // remove from event manager
             this.eventManager.remove(dataComponentWrapper);
         }
         // suggest calling the garbage collector: this may
@@ -1022,7 +1063,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (mustStop) {
             // notify components
             this.getEventManager().notify(new KiemEvent(KiemEvent.ERROR_STOP));
-            
+
             // first terminate the execution
             if (KiemPlugin.getDefault().execution != null) {
                 KiemPlugin.getDefault().execution.errorTerminate();
@@ -1043,19 +1084,19 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Gets the single EventManager that handles notification of DataComponents
-     * when KiemEvents occur.
+     * Gets the single EventManager that handles notification of DataComponents when KiemEvents
+     * occur.
      * 
      * @return the event manager
      */
     public EventManager getEventManager() {
         return eventManager;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**

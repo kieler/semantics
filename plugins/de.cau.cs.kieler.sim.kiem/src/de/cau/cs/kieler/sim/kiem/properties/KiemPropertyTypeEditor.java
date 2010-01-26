@@ -14,11 +14,15 @@
 
 package de.cau.cs.kieler.sim.kiem.properties;
 
+import java.util.StringTokenizer;
+
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -94,10 +98,9 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String names values (encoded as Strings in property) to
-     * int of the combobox cell editor. All items are searched, and the resulting
-     * index is returned. If nothing is found, the first item with index 0
-     * is the default selected one.
+     * This method bridges String names values (encoded as Strings in property) to int of the
+     * combobox cell editor. All items are searched, and the resulting index is returned. If nothing
+     * is found, the first item with index 0 is the default selected one.
      * 
      * {@inheritDoc}
      */
@@ -116,9 +119,51 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String names values (encoded as Strings in property) to
-     * int of the combobox cell editor. The item text of the selected index
-     * is saved as a String.
+     * Gets the DiagramEditor selected in the KiemProperty.
+     * 
+     * @param property
+     *            the KiemProperty
+     * 
+     * @return the DiagramEditor
+     */
+    public DiagramEditor getValueAsDiagramEditor(final KiemProperty property) {
+        String kiemEditorProperty = property.getValue();
+        DiagramEditor noDiagramEditor = null;
+
+        // only check non-empty and valid property (this is optional)
+        if (!kiemEditorProperty.equals("")) {
+            if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
+                return null;
+            }
+
+            StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
+            if (tokenizer.hasMoreTokens()) {
+                String fileString = tokenizer.nextToken();
+                String editorString = tokenizer.nextToken();
+
+                IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getActivePage().getEditorReferences();
+                for (int i = 0; i < editorRefs.length; i++) {
+                    if (editorRefs[i].getId().equals(editorString)) {
+                        IEditorPart editor = editorRefs[i].getEditor(true);
+                        if (editor instanceof DiagramEditor) {
+                            // test if correct file
+                            if (fileString.equals(editor.getTitle())) {
+                                return (DiagramEditor) editor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return noDiagramEditor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method bridges String names values (encoded as Strings in property) to int of the
+     * combobox cell editor. The item text of the selected index is saved as a String.
      * 
      * {@inheritDoc}
      */
