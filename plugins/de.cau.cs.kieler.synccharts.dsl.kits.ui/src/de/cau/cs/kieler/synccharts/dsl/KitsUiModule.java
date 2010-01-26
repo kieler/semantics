@@ -3,6 +3,10 @@
  */
 package de.cau.cs.kieler.synccharts.dsl;
 
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+
+import de.cau.cs.kieler.synccharts.dsl.labeling.KitsLabelProvider;
+
 
 
 /**
@@ -15,5 +19,8 @@ public class KitsUiModule extends
 //	public Class<? extends org.eclipse.xtext.ui.core.editor.contentassist.IContentProposalProvider> bindIProposalProvider() {
 //		return de.cau.cs.kieler.synccharts.dsl.contentassist.KitsProposalProvider.class;
 //	}
-
+    @Override
+    public java.lang.Class<? extends IStyledLabelProvider> bindDelegatingStyledCellLabelProvider$IStyledLabelProvider() {
+        return KitsLabelProvider.class;
+    } 
 }
