@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.json;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.execution,
  de.cau.cs.kieler.sim.kiem.internal,
  de.cau.cs.kieler.sim.kiem.properties,
  de.cau.cs.kieler.sim.kiem.ui,

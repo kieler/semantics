@@ -251,11 +251,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY,
                 DISABLED_COLOR_GRAY));
         Color colorMaster = new Color(null, new RGB(0, 0, MASTER_COLOR_BLUE));
+        int disabledCounter = 0; // we must decrement the visible index by this
         for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
             DataComponentWrapper dataComponentWrapper = kIEMInstance.getDataComponentWrapperList()
                     .get(c);
             if (dataComponentWrapper.getDataComponent().isInvisible()) {
                 // ignore invisible components
+                disabledCounter++;
                 continue;
             }
             // select color
@@ -268,11 +270,12 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
 
             // update text colors
-            viewer.getTree().getItem(c).setForeground(currentColor);
+            viewer.getTree().getItem(c - disabledCounter).setForeground(currentColor);
             // enable sub items
-            int subItemCnt = viewer.getTree().getItem(c).getItemCount();
+            int subItemCnt = viewer.getTree().getItem(c - disabledCounter).getItemCount();
             for (int cc = 0; cc < subItemCnt; cc++) {
-                viewer.getTree().getItem(c).getItem(cc).setForeground(currentColor);
+                viewer.getTree().getItem(c - disabledCounter).getItem(cc).setForeground(
+                        currentColor);
             }
         }
     }
@@ -480,7 +483,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         IToolBarManager manager = bars.getToolBarManager();
         // first remove all entries
         manager.removeAll();
-        
+
         // call soh's extension point
         addExternalContributions(manager);
 
@@ -522,7 +525,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
         manager.add(getActionPause());
         manager.add(getActionStop());
-        
 
         // commit changes
         bars.updateActionBars();
@@ -531,8 +533,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Add components contributed by other plugins through the
-     * ToolBarContributor extension point.
+     * Add components contributed by other plugins through the ToolBarContributor extension point.
      * 
      * author soh
      * 
@@ -541,16 +542,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(
-                        "de.cau.cs.kieler.sim.kiem.toolbarContributor");
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.toolbarContributor");
 
         for (IConfigurationElement element : contributors) {
             try {
                 IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
                         .createExecutableExtension("class"));
 
-                ControlContribution[] contributions = contributor
-                        .provideToolbarContributions(null);
+                ControlContribution[] contributions = contributor.provideToolbarContributions(null);
 
                 if (contributions != null) {
                     for (ControlContribution contribution : contributions) {
