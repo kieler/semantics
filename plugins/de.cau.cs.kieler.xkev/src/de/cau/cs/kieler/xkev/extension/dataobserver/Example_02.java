@@ -12,10 +12,10 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
@@ -99,7 +99,6 @@ public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDa
         return false;
     }
 
-    @Override
     public JSONObject provideInitialVariables()
     		throws KiemInitializationException {
     	JSONObject initialVars = new JSONObject();

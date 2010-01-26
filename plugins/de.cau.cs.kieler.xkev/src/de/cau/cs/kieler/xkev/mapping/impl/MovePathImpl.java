@@ -367,6 +367,10 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             hashMapList = new HashMap<String, HashMap<String,String>>();
             SVGOMPathElement path;
             path = (SVGOMPathElement) doc.getElementById(getPath());
+            if (path == null) {
+                Activator.reportDebugMessage("The svg-path element with id[" + svgElementID + "] does not exists.");
+                return;
+            }
             ArrayList<String> inputArray, xPos, yPos, angle;
             MapAnimations mapAnimation = new MapAnimations();
             inputArray = mapAnimation.attributeParser(getInput(), true);
