@@ -20,9 +20,9 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.xkev.extension.dataobserver.XKevDataObserver"
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.KEVDataObserver"
             id="de.cau.cs.kieler.xkev.extension.DataObserver"
-            name="xKEV-Observer">
+            name="KEV Data Observer">
       </content>
    </extension>
    <extension
@@ -38,9 +38,9 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_04"
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.KEVExampleDataProducer"
             id="de.cau.cs.kieler.xkev.extension.DataObserverExample"
-            name="Example (Watertank &amp; MovePath)">
+            name="KEV Example Data Producer">
       </content>
    </extension>
    <extension

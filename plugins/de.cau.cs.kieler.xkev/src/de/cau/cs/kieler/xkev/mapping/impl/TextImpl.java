@@ -286,7 +286,7 @@ public class TextImpl extends AnimationImpl implements Text {
         return result.toString();
     }
 
-   public void apply(Object jsonObject, String svgElementID) {
+   public void apply(final Object jsonObject, final String svgElementID) {
        RunnableAnimation runnableAnimation = new RunnableAnimation((JSONObject) jsonObject, svgElementID) {
 
            public void run() {
@@ -296,7 +296,7 @@ public class TextImpl extends AnimationImpl implements Text {
                    String textValue = hashMapList.get("text_value").get(jsonValue);
                    if (textValue != null) {
                        if (textValue.indexOf("$") == 0) {
-                           textValue = ((JSONObject) getJSONObject()).optString(textValue.substring(1));
+                           textValue = getJSONObject().optString(textValue.substring(1));
                        }
                        
                        String styleAttrib, specialValue;
@@ -328,7 +328,23 @@ public class TextImpl extends AnimationImpl implements Text {
                                Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
                            }
                        }
-                   }   
+                   }  
+               } else { //jsonValue == null means jsonkey doesn't exists or input == null
+                   //If no input is set, return the value of actual json key
+                   String textValue = getJSONObject().optString(getKey());
+                   //Now apply the animation
+                   if (elem != null) { 
+                       try {
+                           //We need to read the first child, to get the textcontent of the tag
+                           if (elem.getChildNodes() != null) {
+                               elem.getChildNodes().item(0).setNodeValue(textValue);
+                           }
+                       }
+                       catch (DOMException e) {
+                           Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
+                       }
+                   }
+                   
                }
            }
        };

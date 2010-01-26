@@ -448,39 +448,29 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
                                 if (hashValue.indexOf("$") == 0) {
                                     hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
                                 }
-                                if (styleAttribute.contains("fill:")) {
-                                    styleAttribute = styleAttribute.replaceFirst("fill:[^;]+", "fill:"+hashValue);                                
-                                } else {
-                                    styleAttribute += ";fill:"+hashValue;
-                                }
-    
+                                styleAttribute = styleAttribute.replaceAll("fill:[^;]*[;]?", "");
+                                styleAttribute = "fill:"+hashValue+";" + styleAttribute;
                             }
+                            
                             hashValue = hashMapList.get("stroke_color").get(jsonValue);
                             if (hashValue != null) {
                                 if (hashValue.indexOf("$") == 0) {
                                     hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
                                 }
-                                if (styleAttribute.contains("stroke:")) {
-                                    styleAttribute = styleAttribute.replaceFirst("stroke:[^;]+", "stroke:"+hashValue);                                
-                                } else {
-                                    styleAttribute += ";stroke:"+hashValue;
-                                }
+                                styleAttribute = styleAttribute.replaceAll("stroke:[^;]*[;]?", "");
+                                styleAttribute = "stroke:"+hashValue+";" + styleAttribute;
                             }
+                            
                             hashValue = hashMapList.get("stroke_width").get(jsonValue);
                             if (hashValue != null) {
                                 if (hashValue.indexOf("$") == 0) {
                                     hashValue = ((JSONObject) getJSONObject()).optString(hashValue.substring(1));
                                 }
-                                if (styleAttribute.contains("stroke-width:")) {
-                                    styleAttribute = styleAttribute.replaceFirst("stroke-width:[^;]+", "stroke-width:"+hashValue);
-                                } else {
-                                    styleAttribute += ";stroke-width:"+hashValue;
-                                }
+                                styleAttribute = styleAttribute.replaceAll("stroke-width:[^;]*[;]?", "");
+                                styleAttribute = "stroke-width:"+hashValue+";" + styleAttribute;
                             }
-                            //only change if old value and new value aren't the same
-                            if (!elem.getAttribute("style").equals(styleAttribute)) {
-                                elem.setAttribute("style", styleAttribute);
-                            }
+                            //Set the current style attribute
+                            elem.setAttribute("style", styleAttribute);
                         } catch (DOMException e1) {
                             Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
                         }
@@ -557,7 +547,6 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
         this.hashMapList = new HashMap<String, HashMap<String,String>>();
-        System.out.println(getAccessID());
         
         //Initialize values if necessary
         if (getFill_color() == null) {

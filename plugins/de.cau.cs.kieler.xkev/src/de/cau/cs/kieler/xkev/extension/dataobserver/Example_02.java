@@ -12,10 +12,10 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
-import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
@@ -26,13 +26,13 @@ import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * 
  */
-public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDataComponent {
+public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
     private boolean flag = true;
     private int counter = 0;
     private MapAnimations mapAnimation;
     
-    public Example_03() {
+    public Example_02() {
         // TODO Auto-generated method stu
     }
 

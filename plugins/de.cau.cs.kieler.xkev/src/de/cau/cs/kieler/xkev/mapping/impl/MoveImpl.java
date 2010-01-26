@@ -93,6 +93,10 @@ public class MoveImpl extends AnimationImpl implements Move {
      */
     private HashMap<String, String> hashMapYRange = null;
     
+    /**
+     * The hashmap for mapping the input values to output
+     */
+    private HashMap<String, HashMap<String, String>> hashMapList = null;
     
     /**
      * <!-- begin-user-doc -->
@@ -271,7 +275,12 @@ public class MoveImpl extends AnimationImpl implements Move {
             for (int i = 0; i < numberOfInputValues; i++) {
                 range.add(value);
             }
-        } //else we have invalid values for move x_range and y_range
+        } else if (Pattern.matches("$([^$,])+", value)) {
+            //if the $-operator exists, we add the key to the range as it is
+            System.out.println(value);
+            range.add(value);
+        }
+          //else we have invalid values for move x_range and y_range
 //        System.out.println("Range size:"+ range.size());
         return range;
     }
@@ -299,32 +308,86 @@ public class MoveImpl extends AnimationImpl implements Move {
                             //BoundingBox is always the same. so get the x,y position of the upperleft corner
                             SVGLocatable locatable = (SVGLocatable) elem;
                             String xValue, yValue;
-                            xValue = hashMapXRange.get(jsonValue);
-                            yValue = hashMapYRange.get(jsonValue);
+                            xValue = hashMapList.get("x_range").get(jsonValue);
+                            yValue = hashMapList.get("y_range").get(jsonValue);
                             
-                            if (xValue == null) {
-                                xValue = "0";
-                                if (yValue == null) {
-                                    return;
+                            //Move-animation makes only sense if at least one of theses attributes exists
+                            if (xValue != null || yValue != null) {
+                               
+                                if (xValue != null) {
+                                    if (xValue.indexOf("$") == 0) {
+                                        xValue = getJSONObject().optString(xValue.substring(1));
+                                        System.out.println("stimmt "+xValue);
+                                        if (xValue.isEmpty()) {
+                                            xValue = "0"; //Set shift in x-direction to zero
+                                        } else {
+                                            //compute the distance between bounding box and origin
+                                            try {
+                                                xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+                                                System.out.println("OK");
+                                            } catch (NumberFormatException e) {
+                                                Activator.reportErrorMessage("The x_range-attribute has a wrong number format!", e);
+                                            }
+                                        }
+                                    } else {
+                                        //compute the distance between bounding box and origin
+                                        try {
+                                            xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+                                        } catch (NumberFormatException e) {
+                                            Activator.reportErrorMessage("The x_range-attribute has a wrong number format!", e);
+                                        }
+                                    }
+                                } else {
+                                    xValue = "0"; //Set shift in x-direction to zero
                                 }
-                            } else {
-                                xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+
+                                if (yValue != null) {
+                                    if (yValue.indexOf("$") == 0) {
+                                        yValue = getJSONObject().optString(yValue.substring(1));
+                                        if (yValue.isEmpty()) {
+                                            yValue = "0"; //Set shift in x-direction to zero
+                                        } else {
+                                            //compute the distance between bounding box and origin
+                                            try {
+                                                yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
+                                            } catch (NumberFormatException e) {
+                                                Activator.reportErrorMessage("The y_range-attribute has a wrong number format!", e);
+                                            }
+                                        }
+                                    } else {
+                                        //compute the distance between bounding box and origin
+                                        try {
+                                            yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
+                                        } catch (NumberFormatException e) {
+                                            Activator.reportErrorMessage("The y_range-attribute has a wrong number format!", e);
+                                        }
+                                    }
+                                } else {
+                                    yValue = "0"; //Set shift in x-direction to zero
+                                }
+                                elem.setAttribute("transform", "translate("+xValue+","+yValue+")");
                             }
                                 
-                            if (yValue == null) {
-                                yValue = "0";
-                                if (xValue == null) {
-                                    return;
-                                }
-                            } else {
-                                yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
-                            }
-                            //Only transform if we have at least one value != null
-//                            String attrib = elem.getAttribute("transform");
-                            //Delete all old translate values ohterwise they were concatenated
-//                            attrib = attrib.replaceAll("translate\\([-]?\\d+([.]\\d+)?[,][-]?\\d+([.]\\d+)?\\)", "");
-//                            attrib.trim();
-                            elem.setAttribute("transform", "translate("+xValue+","+yValue+")");
+                            
+                            
+//                            
+//                            if (xValue == null) {
+//                                xValue = "0";
+//                                if (yValue == null) {
+//                                    return;
+//                                }
+//                            } else {
+//                                xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+//                            }
+//                                
+//                            if (yValue == null) {
+//                                yValue = "0";
+//                                if (xValue == null) {
+//                                    return;
+//                                }
+//                            } else {
+//                                yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
+//                            }
                         } catch (DOMException e1) {
                             Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e1);
                         }
@@ -368,6 +431,7 @@ public class MoveImpl extends AnimationImpl implements Move {
      */
     public void initialize() {
         MapAnimations mapAnimation = new MapAnimations();
+        hashMapList = new HashMap<String, HashMap<String,String>>();
 
         //If the attribute is null, set the default value to the empty string
         if (getX_range() == null) {
@@ -377,15 +441,23 @@ public class MoveImpl extends AnimationImpl implements Move {
         if (getY_range() == null) {
             setY_range("");
         }
-
-        ArrayList<String> inputArray, xRange, yRange;
-        inputArray = mapAnimation.attributeParser(getInput(), true);
         
-        xRange = computeRange(getX_range(), inputArray.size());
-        yRange = computeRange(getY_range(), inputArray.size());
+        ArrayList<String> outputList, inputList;
+        inputList = mapAnimation.attributeParser(getInput(), true);
         
-        this.hashMapXRange = mapAnimation.mapInputToOutput(inputArray, xRange);
-        this.hashMapYRange = mapAnimation.mapInputToOutput(inputArray, yRange);
+        outputList = computeRange(getX_range(), inputList.size());
+        hashMapList.put("x_range",mapAnimation.mapInputToOutput(inputList, outputList));
+        outputList = computeRange(getY_range(), inputList.size());
+        hashMapList.put("y_range",mapAnimation.mapInputToOutput(inputList, outputList));
+        
+//        ArrayList<String> inputArray, xRange, yRange;
+//        inputArray = mapAnimation.attributeParser(getInput(), true);
+//        
+//        xRange = computeRange(getX_range(), inputArray.size());
+//        yRange = computeRange(getY_range(), inputArray.size());
+//        
+//        this.hashMapXRange = mapAnimation.mapInputToOutput(inputArray, xRange);
+//        this.hashMapYRange = mapAnimation.mapInputToOutput(inputArray, yRange);
     }
 
 } //MoveImpl

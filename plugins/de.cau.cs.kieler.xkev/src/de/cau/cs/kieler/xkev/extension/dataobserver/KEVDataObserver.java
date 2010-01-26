@@ -14,21 +14,11 @@ package de.cau.cs.kieler.xkev.extension.dataobserver;
 
 import java.util.Iterator;
 
-import org.apache.batik.dom.svg.SVGDOMImplementation;
-import org.apache.batik.dom.svg.SVGOMDocument;
-import org.apache.batik.dom.svg.SVGOMPathElement;
-import org.apache.batik.dom.svg.SVGOMSVGElement;
 import org.eclipse.ui.PartInitException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGAnimateMotionElement;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGPathElement;
 
-import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
@@ -41,11 +31,11 @@ import de.cau.cs.kieler.xkev.views.KevView;
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * 
  */
-public class XKevDataObserver extends JSONObjectDataComponent implements IJSONObjectDataComponent {
+public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
     /** Sets the sleep time for the step-method. */
     private static final int SLEEP_TIME = 100;
-       
+
     /**
      * Applies the JSON data to the SVG document.
      * 
@@ -53,7 +43,8 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
      *            The actual JSONObject, returned by the ExecutionManager.
      * @return null Here we don't need to return a JSON object, because the KEV-view is an observer
      *         only now.
-     * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
+     * @see de.cau.cs.kieler.sim.kiem.extension.
+     *          IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
      * @see JSONObject, ExecutionManager
      * 
      */
@@ -63,17 +54,18 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
         }
         try {
             // For refreshing the svg document, we only need to be called every 100 ms.
-            // TODO: Should be changable in the Kev properties view
+            // TODO: Should be changeable in the Kev properties view
             Thread.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
             Activator.reportErrorMessage("Error during sleeping in the KEV step-method.", e);
         }
-        return null;// Return null because it's only an observer right now.
+        return null; // Return null because it's only an observer right now.
     }
 
     /**
      * Sets the initial values for the KIEM data table with the SVG element id's from mapping file
      * as JSON keys.
+     * 
      * @return The JSONObject with all SVG element id's of the current mapping file.
      */
     public JSONObject provideInitialVariables() {
@@ -100,7 +92,9 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
 
     /**
      * Disables the load button during execution and creates the KEV-view if it's not already done.
-     * @throws KiemInitializationException An exception which raises if the KEV-view can't be created.
+     * 
+     * @throws KiemInitializationException
+     *             An exception which raises if the KEV-view can't be created.
      */
     public void initialize() throws KiemInitializationException {
         Activator.setExecutionManagerStatus(true);
@@ -129,7 +123,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
             // Update the composite uri path for refreshing the canvas if button is pressed
             // Activator.getKevView().getComposite().setSVGURI(java.net.URI.create(EclipseJSVGCanvas.getInstance().getSVGDocument().getURL()));
         }
-        
+
     }
 
     /**
@@ -157,6 +151,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
 
     /**
      * Tells the ExecutionManager to store all data for an eventually history playback.
+     * 
      * @return true, because KEV-view should be able the show history steps.
      */
     public boolean isHistoryObserver() {
@@ -164,7 +159,7 @@ public class XKevDataObserver extends JSONObjectDataComponent implements IJSONOb
     }
 
     /**
-     * Sets the running status of the ExecutionManager to false an enables the open wizard button. 
+     * Sets the running status of the ExecutionManager to false an enables the open wizard button.
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
      * @see Activator

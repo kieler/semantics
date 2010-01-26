@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/Watertank.svg">
   <svgElement id="water">
-    <animation xsi:type="mapping:Move" input="0..28" x_range="" y_range="71..350"/>
+    <animation xsi:type="mapping:Move" input="0..28" x_range="$x_range" y_range="71..350"/>
     <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="blue, red, yellow, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
     <animation xsi:type="mapping:Move" input="29..56" y_range="350..71" />
-    <animation xsi:type="mapping:Colorize" input="on,off" fill_color="#626262, red" key="color"/>
+    <animation xsi:type="mapping:Colorize" input="on,off" fill_color="$fill_color,#626262" key="color" stroke_color="$stroke_color, none" stroke_width="$stroke_width, 10"/>
   </svgElement>
   <svgElement id="text">
+    <animation xsi:type="mapping:Text" key="textString" />
     <animation xsi:type="mapping:Text" input="0,3,8,12,45,56" key="water" text_value="Leer, voller als eben, 100.0945, noch mehr, heiß, kalt" font_size="12,10,35,40,32,12,12,12" font_family="Arial,Verdana, Times New Roman,Verdana,Verdana, Courier" />
     <animation xsi:type="mapping:Colorize" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
   </svgElement>
