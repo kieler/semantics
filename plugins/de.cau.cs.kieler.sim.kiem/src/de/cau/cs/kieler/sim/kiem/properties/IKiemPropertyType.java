@@ -33,25 +33,33 @@ public interface IKiemPropertyType {
     /**
      * Gets the value of the property type. This method is called by the cell editor and its
      * returned object depends on the latter.
+     * <BR>
+     * The concrete type of value is determined by the used cell editor and the type
+     * it can handle. The task of an implementation of this method is to bridge the property 
+     * string type and the cell editor type.
      * 
      * @param property
      *            the KiemProperty that this type operates on
      * 
      * @return the value of the property with the type depending on the cell editor
      */
-    String getValue(KiemProperty property);
+    Object getValue(KiemProperty property);
 
     // -------------------------------------------------------------------------
 
     /**
      * Sets the value of the property type. This method is called by the cell editor and the object
      * parameter depends on the latter.
+     * <BR>
+     * The concrete type of value is determined by the used cell editor and the type
+     * it can handle. The task of an implementation of this method is to bridge the property 
+     * string type and the cell editor type.
      * 
      * @param value
      *            the value of the property with the type depending on the cell editor
      * @param property
      *            the KiemProperty that this type operates on
      */
-    void setValue(KiemProperty property, String value);
+    void setValue(KiemProperty property, Object value);
 
 }

@@ -96,7 +96,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-    public String getValue(final KiemProperty property) {
+    public Object getValue(final KiemProperty property) {
         if ((items == null) || (items.length == 0)) {
             return "0";
         }
@@ -113,7 +113,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final String value) {
+    public void setValue(final KiemProperty property, final Object value) {
         if ((items == null) || (items.length == 0)) {
             return;
         }

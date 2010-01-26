@@ -33,13 +33,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public abstract class KiemPropertyType implements IKiemPropertyType {
 
-    // CHECKSTYLEOFF VisibilityModifier
-    // Rationale: It should be simple to provide new derived KiemProperty types
-
     /** The cell editor. */
-    protected CellEditor cellEditor;
-
-    // CHECKSTYLEON VisibilityModifier
+    private CellEditor cellEditor;
 
     /** The Constant PROPERTY_DEFAULT. */
     private static final Image PROPERTY_DEFAULT = AbstractUIPlugin.imageDescriptorFromPlugin(

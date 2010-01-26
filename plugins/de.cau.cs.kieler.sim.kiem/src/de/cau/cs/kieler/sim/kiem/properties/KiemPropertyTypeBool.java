@@ -67,8 +67,11 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public String getValue(final KiemProperty property) {
-        return property.getValue();
+    public Object getValue(final KiemProperty property) {
+        if (property.getValue().equals("true")) {
+            return 1;
+        }
+        return 0;
     }
 
     // -------------------------------------------------------------------------
@@ -76,8 +79,12 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final String value) {
-        property.setValue(value);
+    public void setValue(final KiemProperty property, final Object value) {
+        if (((Integer) value) == 1) {
+            property.setValue("true");
+        } else {
+            property.setValue("false");
+        }
     }
 
     // -------------------------------------------------------------------------

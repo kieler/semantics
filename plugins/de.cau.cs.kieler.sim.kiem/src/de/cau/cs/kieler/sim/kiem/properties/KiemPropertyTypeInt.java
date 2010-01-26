@@ -46,7 +46,7 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
     /**
      * {@inheritDoc}
      */
-    public String getValue(final KiemProperty property) {
+    public Object getValue(final KiemProperty property) {
         return property.getValue();
     }
 
@@ -55,7 +55,7 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final String value) {
+    public void setValue(final KiemProperty property, final Object value) {
         try {
             property.setValue("" + Integer.valueOf((String) value));
         } catch (Exception e) {

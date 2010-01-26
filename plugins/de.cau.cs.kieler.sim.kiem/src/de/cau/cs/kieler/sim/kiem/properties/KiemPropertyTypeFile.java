@@ -70,7 +70,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public String getValue(final KiemProperty property) {
+    public Object getValue(final KiemProperty property) {
         return property.getValue();
     }
 
@@ -79,7 +79,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /**
      * {@inheritDoc}
      */
-    public void setValue(final KiemProperty property, final String value) {
+    public void setValue(final KiemProperty property, final Object value) {
         if (value != null) {
             property.setValue((String) value);
         }
