@@ -173,6 +173,7 @@ context Emission if (!(signal.type == ValueType::PURE)) ERROR "Valued signals mu
 // Actions
 
 context Action if (triggersAndEffects != null && triggersAndEffects.trim().compareTo("") != 0 ) 
-    ERROR "Triggers and Effects String has not correctly been parsed yet!" :
-    (trigger != null || (effects!=null && effects.size >0) );
+    ERROR "Triggers and Effects String has not correctly been parsed yet! Action children are empty
+           but triggers and effects string contains text." :
+    (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
 	
