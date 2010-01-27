@@ -24,6 +24,14 @@
 #endif
 
 
+/* Definition of the macros for a minimum and a maximum function.
+ * MAX(a, b) returns a if it is greater than b, otherwise b.
+ * MIN(a, b) returns a if it is less than b, otherwise b.
+ */
+
+#define MAX(a, b) a > b ? a : b
+#define MIN(a, b) a < b ? a : b
+
 // ===================================================================
 // Type definitions
 
@@ -764,9 +772,36 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
 
 //! Emission of a valued signal 's', type integer, combined with * .
 #define EMITINTMUL(s, val) do {					\
-    valSigIntMult[s] *= val;						\
+    valSigInt[s] *= val;						\
     trace4t("EMITINTMUL:", "emits %s/%d, value %d, result %d\n",		\
-	    s2signame[s], s, val, valSigIntMult[s])			\
+	    s2signame[s], s, val, valSigInt[s])			\
+    signals |= u2b(s);						        \
+  } while (0)
+
+
+//! Emission of a valued signal 's', type integer, combined with + .
+#define EMITINTADD(s, val) do {					\
+    valSigInt[s] += val;						\
+    trace4t("EMITINTADD:", "emits %s/%d, value %d, result %d\n",		\
+	    s2signame[s], s, val, valSigInt[s])			\
+    signals |= u2b(s);						        \
+  } while (0)
+
+
+//! Emission of a valued signal 's', type integer, combined with the maximum function .
+#define EMITINTMAX(s, val) do {					\
+    valSigInt[s] = MAX(val, valSigInt[s]);						\
+    trace4t("EMITINTMAX:", "emits %s/%d, value %d, result %d\n",		\
+	    s2signame[s], s, val, valSigInt[s])			\
+    signals |= u2b(s);						        \
+  } while (0)
+
+
+//! Emission of a valued signal 's', type integer, combined with the minimum function .
+#define EMITINTMIN(s, val) do {					\
+    valSigInt[s] = MIN(val, valSigInt[s]);						\
+    trace4t("EMITINTMIN:", "emits %s/%d, value %d, result %d\n",		\
+	    s2signame[s], s, val, valSigInt[s])			\
     signals |= u2b(s);						        \
   } while (0)
 

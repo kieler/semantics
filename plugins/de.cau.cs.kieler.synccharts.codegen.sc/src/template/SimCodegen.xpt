@@ -11,15 +11,21 @@
 	«EXPAND finish-»
 	«ENDFILE-»
 	«EXPAND CodegenData::main»
+	«EXPAND CodegenHeader::main»
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
 #include "sc.h"
+#include "misc.h"
 
 extern void JSONstate(char*);
 
-	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
+
+// Define valued int signals
+int valSigInt[valSigIntCnt];
+
+	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»
 		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»

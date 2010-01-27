@@ -22,16 +22,16 @@ import org.eclipse.core.commands.IHandler;
 
 /**
  * A simple class to invoke the process of generating SC-Code.
- *
+ * 
  * @author tam
- *
+ * 
  */
 public class SCGenerator extends AbstractHandler implements IHandler {
 
-    private WorkflowGenerator wf = new WorkflowGenerator();
+	private WorkflowGenerator wf = new WorkflowGenerator();
 
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        wf.invokeWorkflow(false);
-        return null;
-    }
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		wf.invokeWorkflow(false);
+		return null;
+	}
 }

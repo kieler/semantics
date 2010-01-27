@@ -13,9 +13,12 @@
 «ENDDEFINE»
 
 «DEFINE init FOR Region»
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "sc.h"
 #include "cJSON.h"
-#include <string.h>
+#include "misc.h"
 
 cJSON* output = 0;
 cJSON* value = 0;
@@ -85,7 +88,7 @@ void printOutputs(){
 
 «DEFINE generateMain FOR Region»
 int main(int argc, const char* argv[]){
-	
+	initialize();
 	stateArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
 	setInputs();

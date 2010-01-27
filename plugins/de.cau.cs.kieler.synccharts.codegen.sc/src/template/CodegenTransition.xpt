@@ -24,18 +24,23 @@
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
+	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
 	«EXPAND transitionEffects FOR this-»
 		}
 «ENDDEFINE»
 
 «DEFINE complexTrigger FOR Transition-»
->>>> TODO complex Trigger
+//>>>> TODO complex Trigger
 «ENDDEFINE»
 
 «DEFINE transitionEffects FOR Transition-»
 	«FOREACH this.effects AS effect-»
+		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
+			«EXPAND valuedSignal FOR ((Emission)effect)-»
+		«ELSE-»
 			EMIT(«((Emission)effect).signal.name-»);
+		«ENDIF-»
 	«ENDFOREACH-»
 	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
 «ENDDEFINE»
@@ -59,4 +64,31 @@
 			PRIO(«computeChangePriority(this.sourceState)»);
 		«ENDIF-»
 	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE valuedSignal FOR Emission-»
+	«IF this.signal.combineOperator == CombineOperator::NONE-»
+		  EMITINT(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::MULT-»
+		  if (PRESENT(«this.signal.name-»)){
+		    EMITINTMUL(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::ADD-»
+		  if (PRESENT(«this.signal.name-»)){
+		    EMITINTADD(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::MAX-»
+		  if (PRESENT(«this.signal.name-»)){
+		    EMITINTMAX(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::MIN-»
+		  if (PRESENT(«this.signal.name-»)){
+		    EMITINTMIN(«EXPAND signalAndValue FOR this-»);
+	«ENDIF-»
+	«IF this.signal.combineOperator == CombineOperator::MULT || this.signal.combineOperator == CombineOperator::ADD || this.signal.combineOperator == CombineOperator::MAX || this.signal.combineOperator == CombineOperator::MIN-»
+		  } else {
+		    EMITINT(«EXPAND signalAndValue FOR this-»);
+		  }
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE signalAndValue FOR Emission-»
+«this.signal.name», «((IntValue)this.newValue).value-»
 «ENDDEFINE»

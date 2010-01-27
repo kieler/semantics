@@ -30,13 +30,13 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 public class WorkflowGenerator {
 
-    EObject myModel = null;
-    String outPath = null;
-    String uriString = null;
-    IEditorPart editor = null;
-    URI uri = null;
+    private EObject myModel = null;
+    private String outPath = null;
+    private String uriString = null;
+    private IEditorPart editor = null;
+    private URI uri = null;
 
-    public String part2Location(IEditorPart editor) {
+    private static String part2Location(final IEditorPart editor) {
         String out = null;
 
         FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
@@ -46,7 +46,7 @@ public class WorkflowGenerator {
         return out;
     }
 
-    public String randomString() {
+    private static String randomString() {
         String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
         Random random = new Random();
         int max = allowedChars.length();
@@ -74,7 +74,7 @@ public class WorkflowGenerator {
         }
     }
 
-    public void invokeWorkflow(boolean sim) {
+    public void invokeWorkflow(final boolean sim) {
         // EMF reader
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);

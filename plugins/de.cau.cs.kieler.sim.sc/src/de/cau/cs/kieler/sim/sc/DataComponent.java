@@ -3,7 +3,6 @@ package de.cau.cs.kieler.sim.sc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -31,10 +30,8 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 public class DataComponent extends JSONObjectDataComponent {
 
-	JSONClient client = null;
-	WorkflowGenerator wf = null;
-	Process process = null;
-
+	private WorkflowGenerator wf = null;
+	private Process process = null;
 	private PrintWriter toSC;
 	private BufferedReader fromSC;
 	private BufferedReader error;
@@ -113,19 +110,20 @@ public class DataComponent extends JSONObjectDataComponent {
 			String compiler = (getProperties()[0]).getValue();
 			String compile = compiler + " " + wf.getOutPath() + "sim.c "
 					+ wf.getOutPath() + "sim_data.c " + bundleLocation
-					+ "cJSON.c " + bundleLocation + "tcpip.c " + "-I "
-					+ bundleLocation + " " + "-o " + wf.getOutPath()
-					+ "simulation -lm -Dexternflags";
+					+ "cJSON.c " + "-I " + bundleLocation + " " + "-o "
+					+ wf.getOutPath() + "simulation -lm -Dexternflags";
 			System.out.println(compile);
 			process = Runtime.getRuntime().exec(compile);
 			process.waitFor();
 
 			if (process.exitValue() != 0) {
 				StringBuffer b = new StringBuffer();
-				InputStream err = process.getErrorStream();
+				InputStreamReader err = new InputStreamReader(process
+						.getErrorStream(), "UTF8");
 
-				while (err.available() > 0) {
-					b.append(Character.toChars(err.read()));
+				int character;
+				while ((character = err.read()) > -1) {
+					b.append((char) character);
 				}
 
 				throw new KiemInitializationException("could not compile",
@@ -145,11 +143,9 @@ public class DataComponent extends JSONObjectDataComponent {
 			error = new BufferedReader(new InputStreamReader(process
 					.getErrorStream()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());
 			process.destroy();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());
 			process.destroy();
 		}
@@ -157,12 +153,10 @@ public class DataComponent extends JSONObjectDataComponent {
 	}
 
 	public boolean isObserver() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	public boolean isProducer() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -214,12 +208,11 @@ public class DataComponent extends JSONObjectDataComponent {
 		return returnObj;
 	}
 
-	public String[] getSignals() {
-		Region myModel = (Region)(wf.getModel());
+	private String[] getSignals() {
+		Region myModel = (Region) (wf.getModel());
 		List<String> tmp = new LinkedList<String>();
 		String[] out = new String[0];
-		List<Signal> signalList = myModel.getInnerStates().get(0)
-				.getSignals();
+		List<Signal> signalList = myModel.getInnerStates().get(0).getSignals();
 
 		for (int i = 0; i < signalList.size(); i++) {
 			tmp.add(signalList.get(i).getName());
@@ -228,23 +221,14 @@ public class DataComponent extends JSONObjectDataComponent {
 		return out;
 	}
 
-	public boolean deleteFolder(File dir) {
+	private boolean deleteFolder(final File dir) {
 		if (dir.isDirectory()) {
 			String[] entries = dir.list();
 			for (int x = 0; x < entries.length; x++) {
 				File aktFile = new File(dir.getPath(), entries[x]);
 				deleteFolder(aktFile);
 			}
-			if (dir.delete())
-				return true;
-			else
-				return false;
-		} else {
-			if (dir.delete())
-				return true;
-			else
-				return false;
 		}
+		return dir.delete();
 	}
-
 }

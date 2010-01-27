@@ -20,7 +20,7 @@ const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
 «ENDDEFINE»
 
 «DEFINE generateInputSignal FOR Signal-»
-void «this.parentState.label»_I_«this.name»(){
+void «this.parentState.label»_I_«this.name»() {
 	signals = signals | (1 << «this.name»);
 }
 «ENDDEFINE»
@@ -29,12 +29,17 @@ void «this.parentState.label»_I_«this.name»(){
 void «this.parentState.label»_O_«this.name»(int status){
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
+	«IF this.type == ValueType::INTEGER-»
+	char c[256];
+	sprintf(c, "%d" , valSigInt[«this.name»]);
+	cJSON_AddItemToObject(value, "value", cJSON_CreateString(c));
+	«ENDIF-»
 	cJSON_AddItemToObject(output, "«this.name»", value);
 }
 «ENDDEFINE»
 
 «DEFINE generateCallOutputs FOR List-»
-void callOutputs(){
+void callOutputs() {
 	«FOREACH this AS signal-»
 		«IF !((Signal)signal).isInput-»
 	  «((Signal)signal).parentState.label»_O_«((Signal)signal).name-»(signals & (1 << «((Signal)signal).name-»));
@@ -44,8 +49,25 @@ void callOutputs(){
 «ENDDEFINE»
 
 «DEFINE generateReset FOR Region-»
-void reset(){
+void reset() {
 	signals = 0;
 }
 
+«ENDDEFINE»
+
+«DEFINE detectLocalSignal FOR Signal-»
+	«IF !getRootState(this.parentState).signals.contains(this)-»
+		SIGNAL(«this.name»);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE generateInitialize FOR Region-»
+void initialize() {
+	// initialize all valued integer signals
+	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+		«IF ((Signal)signal).type == ValueType::INTEGER-»
+	valSigInt[«((Signal)signal).name»] = «((Signal)signal).initialValue»;
+		«ENDIF-»
+	«ENDFOREACH-»
+}
 «ENDDEFINE»

@@ -1,0 +1,22 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE main FOR Region-»
+	«FILE "misc.h"-»
+«EXPAND signals FOR this-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE signals FOR Region-»
+#ifndef MISC_H
+#define MISC_H
+
+	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
+	extern const char *s2signame[];
+	
+// Define valued int signals
+#define valSigIntCnt «allSignals(this.innerStates.first()).size»
+extern int valSigInt[valSigIntCnt];
+#endif
+«ENDDEFINE»

@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.tcpip";
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.sc";
 
 	// The shared instance
 	private static Activator plugin;

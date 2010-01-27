@@ -22,11 +22,11 @@ List sortStateControlFlow(State state):
 	JAVA template.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
 ;
 
-String getURI(State state):
+cached String getURI(State state):
 	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.State)
 ;
 	
-State getRootState(State s):
+cached State getRootState(State s):
 	s.parentRegion.parentState == null ? s :
 	getRootState(s.parentRegion.parentState)
 ;
