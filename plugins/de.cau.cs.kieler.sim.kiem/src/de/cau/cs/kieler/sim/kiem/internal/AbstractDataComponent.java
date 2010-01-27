@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  * component. Implemented components may want to override some of the here provided methods.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public abstract class AbstractDataComponent implements IDataComponent, IExecutableExtension {

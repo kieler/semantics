@@ -23,6 +23,7 @@ import org.json.JSONObject;
  * {@link "www.json.org/java"}.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public interface IJSONObjectDataComponent {

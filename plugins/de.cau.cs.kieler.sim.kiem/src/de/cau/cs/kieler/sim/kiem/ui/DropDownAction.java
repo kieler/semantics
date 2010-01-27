@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Menu;
  * contain Actions but also Separators for example.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
+ * 
  */
 public class DropDownAction extends Action implements IMenuCreator {
 

@@ -59,6 +59,7 @@ import org.json.JSONObject;
  * step information text field.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public class KiemPlugin extends AbstractUIPlugin {

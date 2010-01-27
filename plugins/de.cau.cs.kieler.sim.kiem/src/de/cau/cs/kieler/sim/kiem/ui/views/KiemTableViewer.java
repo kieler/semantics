@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Table;
  * modifications in the future within this class declaration.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class KiemTableViewer extends TreeViewer {

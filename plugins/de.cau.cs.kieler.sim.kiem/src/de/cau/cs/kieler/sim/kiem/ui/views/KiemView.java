@@ -86,6 +86,8 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * It holds the DataComponent table list view and buttons to control the execution.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
+ * @kieler.rating 2009-01-15 proposed yellow
+ * 
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {
 

@@ -24,6 +24,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * types.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public final class KiemIcons {

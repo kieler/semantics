@@ -32,6 +32,7 @@ import org.json.JSONObject;
  * It sleeps until it is called and indicates that it is ready for the next step with its done flag.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class ObserverExecution implements Runnable {

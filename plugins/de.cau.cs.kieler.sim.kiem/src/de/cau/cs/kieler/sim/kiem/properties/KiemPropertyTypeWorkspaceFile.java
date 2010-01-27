@@ -33,6 +33,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * customized Eclipse dialog to browse for a workspace file.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
+ * 
  */
 @SuppressWarnings("restriction")
 public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements IKiemPropertyType {

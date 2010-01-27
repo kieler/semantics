@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
  * A timeout must be at least 100ms (reasonable).
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class TimeoutThread extends Thread {

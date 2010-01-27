@@ -35,6 +35,7 @@ import org.json.JSONObject;
  * pool index for delta observer DataComponents.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public class DataComponentWrapper implements Serializable {

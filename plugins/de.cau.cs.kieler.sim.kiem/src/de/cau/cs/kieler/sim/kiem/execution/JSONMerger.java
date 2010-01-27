@@ -23,6 +23,7 @@ import org.json.JSONObject;
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @author Stephan Knaur <skn@informatik.uni-kiel.de>
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class JSONMerger {

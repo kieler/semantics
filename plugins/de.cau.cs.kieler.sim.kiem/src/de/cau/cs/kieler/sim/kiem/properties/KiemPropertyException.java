@@ -21,6 +21,8 @@ package de.cau.cs.kieler.sim.kiem.properties;
  * and will prevent any execution.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
+ * 
  */
 public class KiemPropertyException extends Exception {
 

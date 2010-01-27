@@ -29,6 +29,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * By default the TextCellEditor and a blank default property icon will be used.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public abstract class KiemPropertyType implements IKiemPropertyType {

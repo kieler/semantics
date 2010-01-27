@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * the opening of the file. The editor is not needed anymore and closes itself immediately.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  */
 public class KiemProxyEditor extends MultiPageEditorPart {
 

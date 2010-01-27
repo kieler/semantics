@@ -24,6 +24,7 @@ package de.cau.cs.kieler.sim.kiem;
  * still enough.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  */
 public class KiemExecutionException extends Exception {
 

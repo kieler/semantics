@@ -22,6 +22,7 @@ package de.cau.cs.kieler.sim.kiem;
  * this flag.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  */
 public class KiemInitializationException extends Exception {
 

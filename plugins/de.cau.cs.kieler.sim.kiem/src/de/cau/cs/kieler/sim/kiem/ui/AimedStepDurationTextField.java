@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sim.kiem.Messages;
  * aimed step duration for the execution. It can also be used to edit this duration.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class AimedStepDurationTextField extends ControlContribution implements KeyListener,

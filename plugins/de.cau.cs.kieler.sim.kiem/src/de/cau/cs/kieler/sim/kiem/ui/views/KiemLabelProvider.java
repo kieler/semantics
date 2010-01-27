@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
  * KiemView.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class KiemLabelProvider implements ITableLabelProvider {

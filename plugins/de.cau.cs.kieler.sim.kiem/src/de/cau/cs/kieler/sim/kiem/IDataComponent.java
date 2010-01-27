@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sim.kiem;
  * The Interface IDataComponent that a {@link AbstractDataComponent} implements.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public interface IDataComponent {

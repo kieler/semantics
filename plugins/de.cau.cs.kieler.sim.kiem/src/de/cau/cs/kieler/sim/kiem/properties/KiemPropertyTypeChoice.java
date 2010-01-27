@@ -26,6 +26,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * String from a String[] array with a drop down list.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPropertyType {

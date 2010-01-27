@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sim.kiem.Messages;
  * a running or paused execution.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class StepTextField extends ControlContribution {

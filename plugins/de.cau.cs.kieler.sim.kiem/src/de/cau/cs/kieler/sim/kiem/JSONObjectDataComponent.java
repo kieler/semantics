@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
  * that implements the interface {@link IJSONObjectDataComponent}.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public abstract class JSONObjectDataComponent extends AbstractDataComponent implements
