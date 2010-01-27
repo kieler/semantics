@@ -28,6 +28,7 @@
     <property name="plugin"              value=" "/>
     <property name="feature"             value=" "/>
     <property name="product"             value=" "/>
+    <property name="executables"         value=" "/>
     <property name="doc.excludes"        value=" "/>
     <property name="checkstyle.excludes" value=" "/>
     <property name="pmd.excludes"        value=" "/>
@@ -148,6 +149,8 @@
                      each folder should contain the subfolders 'features' and 'plugins'
                      can be relative (to ${basedir})
                      CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
+            <arg value="-Dexecutables=${executables}" />
+                <!-- comma separated path patterns included while adding executable flags -->
             <arg value="-Dupdatesite.autobuild=${updatesite.autobuild}" />
                 <!-- location of the update site, default is defined in build.properties -->
             <arg value="-Dfindbugs.classes=${findbugs.classes}" />
@@ -479,13 +482,15 @@
     </target>
     
     <target name="update.launcher"
-        description="private target for updating the permission flags of the launcher binaries">
-        <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755 -->
+        description="private target for updating the permission flags of the launcher and other binaries">
+        <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755
+             ${binaries} my contain a comma separated list of further executables -->
         
         <basename file="${zipfile}" property="platform" suffix="zip" />
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
             <patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}" />
             <patternset includes="${basename}/${basename}" />
+            <patternset includes="${executables}" />
         </unzip>
         <touch>
             <fileset dir="${basedir}/${buildLabel}/${platform}" />
