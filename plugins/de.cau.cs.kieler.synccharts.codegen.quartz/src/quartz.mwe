@@ -32,7 +32,7 @@
   <metaModelPackage value="dataflow.DataflowPackage"/>  
     </metaModel> -->
     <expand
-	  value="template::quartz::main FOR model" />
+	  value="template::esterel::main FOR model" />
     <outlet path="${src-gen}" />
   </component>
 </workflow>

@@ -3,17 +3,36 @@ import synccharts;
 List[Transition] sortTransitionPrios(State transitions):
 	transitions.outgoingTransitions.sortBy(e|e.priority).reject(e|e.type==TransitionType::NORMALTERMINATION);
 
+List[Transition] getSAborts(State s):  
+  s.outgoingTransitions.select(e|e.type==TransitionType::STRONGABORT).sortBy(e|e.priority);
+
+Boolean hasSAborts(State s):
+  !s.getSAborts().isEmpty;
+
+List[Transition] getWAborts(State s):  
+  s.outgoingTransitions.select(e|e.type==TransitionType::WEAKABORT).sortBy(e|e.priority);
+
+Boolean hasWAborts(State s):
+  !s.getWAborts().isEmpty;
+
+cached List[Transition] getNTs(State s):
+ s.outgoingTransitions.select(e|e.type==TransitionType::NORMALTERMINATION);
+
+
+cached Transition getNT(State s):
+     s.getNTs().first();
+      
 Boolean hasNT(State s):
-  !s.outgoingTransitions.select(e|e.type==TransitionType::NORMALTERMINATION).isEmpty;
-  
-Transition getNT(State s):
-     s.outgoingTransitions.select(e|e.type==TransitionType::NORMALTERMINATION).first();
+  !s.getNTs().isEmpty;
     
 List[State] sortStates (List[State] states):
   JAVA de.cau.cs.kieler.synccharts.codegen.quartz.Helper.sortStates(java.util.List);
      
 List[Signal] locals(State s):
   s.signals.select(e | !e.isInput && !e.isOutput);
+
+State initial(Region r):
+  r.innerStates.select(e|e.isInitial).first();
   
 Boolean canTerminate(Region r):
   !r.innerStates.select(e|e.isFinal).isEmpty;

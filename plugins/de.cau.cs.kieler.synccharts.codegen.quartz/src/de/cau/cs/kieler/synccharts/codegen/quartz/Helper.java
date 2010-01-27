@@ -24,10 +24,8 @@ public class Helper {
                     if(value == null){
                         value=0;
                     }
-                    value++;
-                    if(todo.containsKey(t.getTargetState())){
-                        todo.put(t.getTargetState(), value);
-                    }
+                    value++;                   
+                    todo.put(t.getTargetState(), value);                    
                 }
             }
         }

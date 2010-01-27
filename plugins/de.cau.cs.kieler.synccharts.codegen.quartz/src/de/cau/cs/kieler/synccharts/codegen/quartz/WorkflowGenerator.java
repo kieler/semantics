@@ -44,6 +44,9 @@ public class WorkflowGenerator {
     }
 
     public WorkflowGenerator() {
+    }
+
+    public void invokeWorkflow() {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
 
@@ -57,9 +60,6 @@ public class WorkflowGenerator {
             uri = myModel.eResource().getURI();
             uriString = uri.toString();
         }
-    }
-
-    public void invokeWorkflow() {
         // EMF reader
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
@@ -88,10 +88,7 @@ public class WorkflowGenerator {
 
         esterelGenerator.setExpand("template::esterel::main FOR model");
 
-        
         Workflow workflow = new Workflow();
-        
-        
 
         workflow.addComponent(emfReader);
         workflow.addComponent(generator);
@@ -119,9 +116,9 @@ public class WorkflowGenerator {
         for (MWEDiagnostic s : issues.getIssues()) {
             issue.append(s + "\n");
         }
+
         StatusManager.getManager().handle(
                 new Status(status, Activator.PLUGIN_ID, issue.toString(), null), StatusManager.LOG);
-    
- 
+
     }
 }
