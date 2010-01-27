@@ -192,6 +192,7 @@ public class TableDataEditing extends EditingSupport {
 
         // updates the table
         getViewer().update(element, null);
+        getViewer().refresh();
     }
 
 }

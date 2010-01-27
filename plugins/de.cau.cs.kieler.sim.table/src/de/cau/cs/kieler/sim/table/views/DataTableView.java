@@ -254,6 +254,9 @@ public class DataTableView extends ViewPart {
                 column.setEditingSupport(new TableDataEditing(viewerParam, i));
             }
         }
+        // for default sorting
+        viewer.setSorter(new TableViewerSorter(2));
+        
         Tree tree = viewerParam.getTree();
         tree.setHeaderVisible(true);
         tree.setLinesVisible(true);
@@ -323,7 +326,7 @@ public class DataTableView extends ViewPart {
         }
         actionNew = new Action() {
             public void run() {
-                TableData newElement = new TableData(TableDataList.getInstance(), false, "", "");
+                TableData newElement = new TableData(TableDataList.getInstance(), false, " ", "");
                 TableDataList.getInstance().add(newElement);
                 refreshViewer();
                 viewer.setSelection((new StructuredSelection(newElement)));
