@@ -21,8 +21,9 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 
 /**
- * A filled circle with a 'C' inside.
+ * A filled circle with a 'C' inside, used for conditional states.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  */
 public class ConditionalStateFigure extends Ellipse {

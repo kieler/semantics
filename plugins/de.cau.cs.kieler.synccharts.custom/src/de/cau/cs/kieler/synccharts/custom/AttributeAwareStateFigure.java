@@ -35,6 +35,7 @@ import de.cau.cs.kieler.synccharts.State;
 /**
  * This class represents attribute aware state figures.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  * @author msp
  */
@@ -163,7 +164,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         Notifier target = getTarget();
         LayoutManager layoutManager = getLayoutManager();
         if (target instanceof State && layoutManager instanceof StateLayout) {
-            ((StateLayout)layoutManager).checkNewSize(this, (State) target, rect);
+            ((StateLayout) layoutManager).checkNewSize(this, (State) target, rect);
         }
         super.setBounds(rect);
     }

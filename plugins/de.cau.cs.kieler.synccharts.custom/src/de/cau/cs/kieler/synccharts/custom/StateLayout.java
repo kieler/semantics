@@ -38,8 +38,10 @@ import de.cau.cs.kieler.synccharts.StateType;
  * compartments are reduced in size to zero. If the state is complex, the name is written on top and
  * the compartments are laid out in a column below the name.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  * @author haf
+ * @author msp
  */
 public class StateLayout extends AbstractHintLayout {
 
@@ -129,7 +131,7 @@ public class StateLayout extends AbstractHintLayout {
         for (Object child : parent.getChildren()) {
             if (child instanceof IFigure) {
                 ((IFigure) child).invalidate();
-                invalidateChildren((IFigure)child);
+                invalidateChildren((IFigure) child);
             }
         }
     }

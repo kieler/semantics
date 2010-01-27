@@ -33,6 +33,7 @@ import de.cau.cs.kieler.synccharts.TransitionType;
 /**
  * This class represents attribute aware transition figures.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  * @author msp
  */

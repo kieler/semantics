@@ -32,6 +32,7 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
  * If the neighbors are too far away, the corresponding site still gets drawn to
  * get clear bounds if the children are laid out sparsely.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author haf
  */
 public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {

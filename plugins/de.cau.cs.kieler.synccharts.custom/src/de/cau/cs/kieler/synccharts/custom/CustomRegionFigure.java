@@ -22,6 +22,7 @@ import org.eclipse.draw2d.Graphics;
  * dashed boxes.It extends NeighborAwareOpenRectangleFigure in order to reduce the
  * number of border lines that have to be drawn and make the diagram clearer.
  * 
+ * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  * @author haf
  */
