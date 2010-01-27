@@ -32,8 +32,9 @@ import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.VariableReference;
 
 /**
- * Simple serializer for Action objects parsed by the Xtext parser. This class is a preliminary
- * workaround because the official Xtext serializer does not yet work for the given grammar.
+ * Simple serializer for Action objects parsed by the Xtext parser. This class
+ * is a preliminary workaround because the official Xtext serializer does not
+ * yet work for the given grammar.
  * 
  * @author haf
  * 

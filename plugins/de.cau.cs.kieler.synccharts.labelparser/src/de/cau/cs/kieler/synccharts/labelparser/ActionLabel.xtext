@@ -113,7 +113,7 @@ CompareOperation returns synccharts::Expression:
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
 UnaryOperation returns synccharts::ComplexExpression:
-	operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;
+	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
 
 UnaryParanthesedOperation returns synccharts::ComplexExpression:
     operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';

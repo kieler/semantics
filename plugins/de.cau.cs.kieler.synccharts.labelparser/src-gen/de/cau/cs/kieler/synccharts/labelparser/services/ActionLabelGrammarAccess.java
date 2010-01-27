@@ -846,16 +846,20 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOperatorUnaryOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+		private final Alternatives cSubExpressionsAlternatives_1_0 = (Alternatives)cSubExpressionsAssignment_1.eContents().get(0);
+		private final RuleCall cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0 = (RuleCall)cSubExpressionsAlternatives_1_0.eContents().get(0);
+		private final RuleCall cSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1 = (RuleCall)cSubExpressionsAlternatives_1_0.eContents().get(1);
 		
 		//UnaryOperation returns synccharts::ComplexExpression:
-		//  operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   	
+		//  operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
+		//  UnaryParanthesedOperation );   	
 		//
 		//// Example: not A, not false, not (A or B)
 		//// at the latter we need the parans to indicate the right binding
 		public ParserRule getRule() { return rule; }
 
-		//operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression
+		//operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
+		//UnaryParanthesedOperation )
 		public Group getGroup() { return cGroup; }
 
 		//operator=UnaryOperator
@@ -864,11 +868,17 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		//UnaryOperator
 		public RuleCall getOperatorUnaryOperatorEnumRuleCall_0_0() { return cOperatorUnaryOperatorEnumRuleCall_0_0; }
 
-		//subExpressions+=ParanthesedBooleanExpression
+		//subExpressions+=( ParanthesedBooleanExpression | UnaryParanthesedOperation )
 		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
 
+		//ParanthesedBooleanExpression|UnaryParanthesedOperation
+		public Alternatives getSubExpressionsAlternatives_1_0() { return cSubExpressionsAlternatives_1_0; }
+
 		//ParanthesedBooleanExpression
-		public RuleCall getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0() { return cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0; }
+		public RuleCall getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0() { return cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0; }
+
+		//UnaryParanthesedOperation
+		public RuleCall getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1() { return cSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1; }
 	}
 
 	public class UnaryParanthesedOperationElements extends AbstractParserRuleElementFinder {
@@ -1981,7 +1991,8 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UnaryOperation returns synccharts::ComplexExpression:
-	//  operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   	
+	//  operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
+	//  UnaryParanthesedOperation );   	
 	//
 	//// Example: not A, not false, not (A or B)
 	//// at the latter we need the parans to indicate the right binding

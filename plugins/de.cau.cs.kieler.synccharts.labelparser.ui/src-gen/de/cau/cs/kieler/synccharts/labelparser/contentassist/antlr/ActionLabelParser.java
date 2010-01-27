@@ -44,6 +44,7 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParanthesedValueExpressionAccess().getAlternatives(), "rule__ParanthesedValueExpression__Alternatives");
 					put(grammarAccess.getMultOrDivOperationAccess().getAlternatives(), "rule__MultOrDivOperation__Alternatives");
 					put(grammarAccess.getPreOrNormalValueExpressionAccess().getAlternatives(), "rule__PreOrNormalValueExpression__Alternatives");
+					put(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0(), "rule__UnaryOperation__SubExpressionsAlternatives_1_0");
 					put(grammarAccess.getUnaryOrNormalExpressionAccess().getAlternatives(), "rule__UnaryOrNormalExpression__Alternatives");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
 					put(grammarAccess.getOperatorTypeAccess().getAlternatives(), "rule__OperatorType__Alternatives");

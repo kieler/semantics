@@ -399,7 +399,10 @@
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.30"/>
+          <terminal xsi:type="xtext:Alternatives">
+            <groups xsi:type="xtext:RuleCall" rule="/0/@rules.30"/>
+            <groups xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
+          </terminal>
         </tokens>
       </alternatives>
     </rules>

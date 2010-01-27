@@ -3513,14 +3513,16 @@ protected class CompareOperation_SubExpressionsAssignment_1_2 extends Assignment
 /************ begin Rule UnaryOperation ****************
  *
  * UnaryOperation returns synccharts::ComplexExpression:
- *   operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   	
+ *   operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
+ *   UnaryParanthesedOperation );   	
  * 
  * // Example: not A, not false, not (A or B)
  * // at the latter we need the parans to indicate the right binding
  *
  **/
 
-// operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression
+// operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
+// UnaryParanthesedOperation )
 protected class UnaryOperation_Group extends GroupToken {
 	
 	public UnaryOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3580,7 +3582,7 @@ protected class UnaryOperation_OperatorAssignment_0 extends AssignmentToken  {
 
 }
 
-// subExpressions+=ParanthesedBooleanExpression
+// subExpressions+=( ParanthesedBooleanExpression | UnaryParanthesedOperation )
 protected class UnaryOperation_SubExpressionsAssignment_1 extends AssignmentToken  {
 	
 	public UnaryOperation_SubExpressionsAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3596,6 +3598,7 @@ protected class UnaryOperation_SubExpressionsAssignment_1 extends AssignmentToke
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new ParanthesedBooleanExpression_Alternatives(this, this, 0, inst);
+			case 1: return new UnaryParanthesedOperation_Group(this, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -3608,7 +3611,16 @@ protected class UnaryOperation_SubExpressionsAssignment_1 extends AssignmentToke
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getParanthesedBooleanExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(); 
+				element = grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getUnaryOperationAccess().getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1(); 
 				consumed = obj;
 				return param;
 			}

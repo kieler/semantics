@@ -393,6 +393,8 @@ public class ParserSerializerTest {
     public void testSerializerAndNot() throws Exception {
         this.parseAndSerialize("not A and B");
     }
+    
+    
 
     /**
      * A JUnit test for the Labelparser.
@@ -405,6 +407,7 @@ public class ParserSerializerTest {
         this.parseAndSerialize("not (A and B)");
     }
 
+ 
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -482,6 +485,28 @@ public class ParserSerializerTest {
         this.parseAndSerialize("(pre (A) or (pre (? B) > 3)) or pre ((A and B))");
     }
 
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerNotPre() throws Exception {
+        this.parseAndSerialize("not pre (B)");
+    }
+    
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerNotNot() throws Exception {
+        this.parseAndSerialize("not (not B)");
+    }
+    
     /**
      * A JUnit test for the Labelparser.
      * 

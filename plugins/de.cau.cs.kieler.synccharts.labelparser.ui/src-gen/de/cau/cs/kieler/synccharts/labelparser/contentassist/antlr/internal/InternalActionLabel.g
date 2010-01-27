@@ -1170,6 +1170,28 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__UnaryOperation__SubExpressionsAlternatives_1_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0()); }
+	ruleParanthesedBooleanExpression
+{ after(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0()); }
+)
+
+    |(
+{ before(grammarAccess.getUnaryOperationAccess().getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1()); }
+	ruleUnaryParanthesedOperation
+{ after(grammarAccess.getUnaryOperationAccess().getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__UnaryOrNormalExpression__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -3377,8 +3399,9 @@ rule__UnaryOperation__SubExpressionsAssignment_1
     }
 :
 (
-{ before(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0()); }
-	ruleParanthesedBooleanExpression{ after(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0()); }
+{ before(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0()); }
+(rule__UnaryOperation__SubExpressionsAlternatives_1_0)
+{ after(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0()); }
 )
 
 ;

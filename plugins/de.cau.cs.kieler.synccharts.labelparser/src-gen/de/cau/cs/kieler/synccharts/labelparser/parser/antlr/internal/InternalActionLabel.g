@@ -1553,10 +1553,11 @@ ruleUnaryOperation returns [EObject current=null]
 )
 )(
 (
+(
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0(), currentNode); 
 	    }
-		lv_subExpressions_1_0=ruleParanthesedBooleanExpression		{
+		lv_subExpressions_1_1=ruleParanthesedBooleanExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getUnaryOperationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1565,7 +1566,7 @@ ruleUnaryOperation returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"subExpressions",
-	        		lv_subExpressions_1_0, 
+	        		lv_subExpressions_1_1, 
 	        		"ParanthesedBooleanExpression", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1573,6 +1574,29 @@ ruleUnaryOperation returns [EObject current=null]
 	        }
 	        currentNode = currentNode.getParent();
 	    }
+
+    |		{ 
+	        currentNode=createCompositeNode(grammarAccess.getUnaryOperationAccess().getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1(), currentNode); 
+	    }
+		lv_subExpressions_1_2=ruleUnaryParanthesedOperation		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getUnaryOperationRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"subExpressions",
+	        		lv_subExpressions_1_2, 
+	        		"UnaryParanthesedOperation", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
 
 )
 ))
