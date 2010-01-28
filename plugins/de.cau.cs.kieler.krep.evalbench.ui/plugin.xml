@@ -8,7 +8,7 @@
             class="de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPerspective"
             icon="icons/logo16.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.perspective"
-            name="Evaluation Bench">
+            name="KIELER (Evaluation Bench)">
       </perspective>
    </extension>
    <extension
