@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.sim.kiem;
 
+import java.util.List;
+
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+
 /**
  * Interface for components that want to interact
  * with the automated execution plugin.
@@ -20,6 +24,24 @@ package de.cau.cs.kieler.sim.kiem;
  * @author soh
  */
 public interface IAutomatedComponent {
+    
+    /** Identifier for the model file. */
+    String MODEL_FILE = "Model file";
+    /** Identifier for the iteration. */
+    String ITERATION = "Iteration";
+    /** Identifier for the status of the execution. */
+    String STATUS = "Status";
+
+    /**
+     * Give the component information.
+     * This at least contains the following properties:
+     * {@link #MODEL_FILE} gotten from IPath.toOSString()
+     * {@link #ITERATION} as an integer starting with 0 of course
+     * 
+     * 
+     * @param properties some info
+     */
+    void setParameters(List<KiemProperty> properties);
     
     
     /**
@@ -30,5 +52,16 @@ public interface IAutomatedComponent {
      * @return true if the component wants another run.
      */
     boolean wantsAnotherRun();
+    
+    /**
+     * Ask the component if it wants to do another step.
+     * As soon as all components answer with false the execution
+     * is stopped, the producers are asked to supply data
+     * and the components will be asked if they want
+     * another run.
+     * 
+     * @return true if another step should be performed
+     */
+    boolean wantsNextStep();
 
 }
