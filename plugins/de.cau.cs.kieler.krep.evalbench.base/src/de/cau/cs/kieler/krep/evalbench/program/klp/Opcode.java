@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.krep.evalbench.program.klp;
 
 /**
- * Defines the opcode for each KLP instructions
+ * Defines the opcode for each KLP instructions.
  * 
  * @kieler.rating 2010-01-28 proposed yellow ctr
  * 

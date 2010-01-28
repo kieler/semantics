@@ -27,7 +27,11 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
- * @author ctr interface to external assembler to generate object code from the kep assembler file
+ * Interface to external assembler to generate object code from the KEP assembler file.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public final class KasmAssembler implements IAssembler {
 

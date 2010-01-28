@@ -42,7 +42,11 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
 
 /**
- * @author ctr assembler description for the Lustre processor
+ * Read and assembler a assembler file for the KLP.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public class KlpAssembler implements IAssembler {
 
@@ -126,13 +130,8 @@ public class KlpAssembler implements IAssembler {
     private void initialize(final Instruction instruction,
             final HashMap<String, Integer> label2addr, final HashMap<String, Integer> regs) {
 
-        if (instruction == null || instruction instanceof Done || instruction == null) {
-            Done i = null;
-            // if (instruction == null) {
-            // i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
-            // } else {
-            i = (Done) instruction;
-            // }
+        if (instruction instanceof Done) {
+            Done i = (Done) instruction;
             i.setOpcode0(Opcode.DONE.getCode());
             if (i.getPc() != null) {
                 i.getPc().setAddr(label2addr.get(i.getPc().getName()));

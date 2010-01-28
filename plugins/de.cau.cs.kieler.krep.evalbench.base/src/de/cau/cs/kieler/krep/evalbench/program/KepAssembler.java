@@ -38,9 +38,15 @@ import de.cau.cs.kieler.krep.evalbench.program.kep.parser.kepLexer;
 import de.cau.cs.kieler.krep.evalbench.program.kep.parser.kepParser;
 
 /**
+ * 
+ * Reads human readable KEP assembler files. This contrast to the KasmAssembler, which uses an
+ * externally defined compiler to transform KEP assembler files into object code, before reading
+ * them.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
- *         integrated interface for kep assembler files
  */
 public class KepAssembler implements IAssembler {
     /** Internal list of input signals. */

@@ -18,12 +18,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**
  * A trace is a set of ticks, which contains input and output valuations.
+ * 
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
  * 
  * @author ctr
  * 
@@ -31,16 +33,46 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 public class Trace implements Iterator<Tick> {
 
     /** List of ticks in this trace. */
-    protected ArrayList<Tick> ticks = new ArrayList<Tick>();
+    private ArrayList<Tick> ticks = new ArrayList<Tick>();
 
     private ArrayList<Boolean> valid = new ArrayList<Boolean>();
 
     private int step = 0;
 
     /**
-     *  Signal index for all signals in the trace.
+     * Signal index for all signals in the trace.
      */
-    protected HashMap<String, Integer> index;
+    private HashMap<String, Integer> index;
+
+    /**
+     * @return mapping for all signals in the trace to their index.
+     */
+    public HashMap<String, Integer> getIndex() {
+        return index;
+    }
+
+    /**
+     * @param idx
+     *            mapping for all signals in the trace to their index.
+     */
+    public void setIndex(final HashMap<String, Integer> idx) {
+        this.index = idx;
+    }
+
+    /**
+     * @param ts
+     *            all ticks of the current trace.
+     */
+    public void setTicks(final ArrayList<Tick> ts) {
+        this.ticks = ts;
+    }
+
+    /**
+     * @return all ticks of the current trace.
+     */
+    public ArrayList<Tick> getTicks() {
+        return ticks;
+    }
 
     /**
      * read trace from a file.
@@ -114,8 +146,6 @@ public class Trace implements Iterator<Tick> {
             t.clearOutput();
             valid.add(null);
         }
-        // current = ticks.iterator();
-        // notifyListeners();
     }
 
     /**
@@ -155,7 +185,7 @@ public class Trace implements Iterator<Tick> {
      * 
      * @return String representation of the trace for table in Trace view
      */
-    public LinkedList<String[]> getTicks() {
+    public LinkedList<String[]> printTicks() {
         LinkedList<String[]> res = new LinkedList<String[]>();
         for (int i = 0; i < ticks.size(); i++) {
             Tick tick = ticks.get(i);
@@ -169,7 +199,6 @@ public class Trace implements Iterator<Tick> {
             res.add(t);
         }
         return res;
-        // return res.toArray(new String[0][0]);
     }
 
     /**
@@ -183,7 +212,6 @@ public class Trace implements Iterator<Tick> {
         if (i >= 0 && i < ticks.size()) {
             ticks.get(i).setOutput(output);
         }
-        // notifyListeners();
     }
 
     /**
@@ -200,7 +228,6 @@ public class Trace implements Iterator<Tick> {
      * @return the next tick
      */
     public final Tick next() {
-        // notifyListeners();
         if (step < ticks.size()) {
             return ticks.get(step++);
         } else {
@@ -264,8 +291,6 @@ public class Trace implements Iterator<Tick> {
         }
         return res.toString();
     }
-
-   
 
     /**
      * @return String to indicate minimal, average and maximal execution times

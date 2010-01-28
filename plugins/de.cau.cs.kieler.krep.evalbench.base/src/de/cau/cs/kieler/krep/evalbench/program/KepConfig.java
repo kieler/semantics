@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.evalbench.program;
 
 /**
- * @author ctr configuration of the Kiel Esterel Processor
+ *  Configuration of the Kiel Esterel Processor.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr
  * 
  */
 public class KepConfig implements Config {

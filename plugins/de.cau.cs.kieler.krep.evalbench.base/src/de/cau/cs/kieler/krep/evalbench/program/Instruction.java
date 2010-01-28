@@ -19,7 +19,13 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
- * @author ctr abstract superclass for all assembler instructions
+ * 
+ * Superclass for all assembler instructions. This includes same basic code for displaying an
+ * instruction and to convert it into object code.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr abstract
  * 
  */
 public abstract class Instruction {
@@ -27,17 +33,7 @@ public abstract class Instruction {
     /**
      * all labels for this instruction.
      */
-    protected LinkedList<String> labels = new LinkedList<String>();
-
-    /**
-     * add an additional label.
-     * 
-     * @param l
-     *            new label for this instruction
-     */
-    public void addLabel(final String l) {
-        labels.add(l);
-    }
+    private LinkedList<String> labels = new LinkedList<String>();
 
     /**
      * @return unique label for this instruction
@@ -68,7 +64,7 @@ public abstract class Instruction {
     }
 
     @Override
-    public abstract  String toString();
+    public abstract String toString();
 
     /**
      * give object code for this instruction.
@@ -88,7 +84,6 @@ public abstract class Instruction {
         }
     }
 
-    
     /**
      * 
      * @return object code for the instruction.
@@ -119,12 +114,10 @@ public abstract class Instruction {
      * replace label by addresses.
      * 
      * @param label2addr
-     *            mapping from label to absolute addresses in the instruction
-     *            ROM
+     *            mapping from label to absolute addresses in the instruction ROM
      * @throws ParseException
      *             exception thrown for undefined labels
      */
-    public abstract void asmLabel(HashMap<String, Integer> label2addr)
-            throws ParseException;
+    public abstract void asmLabel(HashMap<String, Integer> label2addr) throws ParseException;
 
 }

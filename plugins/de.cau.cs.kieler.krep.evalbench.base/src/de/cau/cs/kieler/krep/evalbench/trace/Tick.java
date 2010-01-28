@@ -20,8 +20,10 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 /**
- * One tick in a trace. contains input and output signals with their values, as well as output
+ * One tick in a trace. Contains input and output signals with their values, as well as output
  * signals that were saved at a given time.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
  * 
  * @author ctr
  * 

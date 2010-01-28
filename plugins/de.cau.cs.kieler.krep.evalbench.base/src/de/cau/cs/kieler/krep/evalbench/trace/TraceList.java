@@ -28,17 +28,15 @@ import de.cau.cs.kieler.krep.evalbench.trace.esi.esiParser;
 import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
 
 /**
+ * 
+ * A list of different independent traces, as they are for example stored in esi files.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
- *         a list of different independent traces, as they are stored in esi files
  */
 public class TraceList {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5484327142382381107L;
-
     private ListIterator<Trace> iterator;
 
     private LinkedList<Trace> traces;
@@ -63,7 +61,7 @@ public class TraceList {
         super();
         traces = new LinkedList<Trace>();
         try {
-            File traceFile = null; // = new File(baseName + ".rif");
+            File traceFile = null; 
             if ((new File(baseName + ".rif")).exists()) {
                 traceFile = new File(baseName + ".rif");
                 traces.add(rifParser.parse(asm, new FileReader(traceFile)));
@@ -97,7 +95,7 @@ public class TraceList {
         notifyListeners(true);
     }
 
-    // Iterator access
+    
     /**
      * @return true if another tick or trace exists
      */
@@ -158,7 +156,7 @@ public class TraceList {
             final String[] reset = { "reset", "", "", "", "" };
             i++;
             res.add(reset);
-            res.addAll(t.getTicks());
+            res.addAll(t.printTicks());
         }
         return res;
     }
@@ -237,8 +235,7 @@ public class TraceList {
             } else {
 
                 Tick output = new Tick();
-          
-                
+
                 final int ticklen = krep.tick(tick.getInputs().size() + tick.getOutputs().size(),
                         tick.getInputs(), output.getOutputs());
                 setOutput(output);
@@ -278,7 +275,7 @@ public class TraceList {
         int sum = 0;
         int avgRT = 0;
         for (final Trace trace : traces) {
-            for (final Tick tick : trace.ticks) {
+            for (final Tick tick : trace.getTicks()) {
                 final int i = tick.getRT();
                 if (i >= 0) {
                     // ignore ticks that were not executed

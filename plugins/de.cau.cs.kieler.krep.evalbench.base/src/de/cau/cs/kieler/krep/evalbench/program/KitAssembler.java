@@ -30,10 +30,13 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.helpers.Tracer;
 
 /**
+ * Assembler for Safe State Machines in the Kit format. This is mainly a wrapper for KepAssembler,
+ * into which SSMs are compiled.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
- *         Assembler for Safe State Machines in the Kit format. This is mainly a wrapper for
- *         KepAssembler, into which SSMs are compiled.
  * 
  */
 public class KitAssembler implements IAssembler {
@@ -53,6 +56,7 @@ public class KitAssembler implements IAssembler {
         kasm = new KepAssembler();
         instructions = new LinkedList<String>();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -109,15 +113,15 @@ public class KitAssembler implements IAssembler {
                     kitFile.getParentFile());
             // any output?
 
-            
             // TODO: handle error messages
-            //final StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), "ERROR");
+            // final StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(),
+            // "ERROR");
 
-           // final StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(),
-           //         "OUTPUT");
+            // final StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(),
+            // "OUTPUT");
 
-            //errorGobbler.start();
-            //outputGobbler.start();
+            // errorGobbler.start();
+            // outputGobbler.start();
 
             final int exitVal = process.waitFor();
             System.out.println("ExitValue: " + exitVal);
@@ -127,7 +131,7 @@ public class KitAssembler implements IAssembler {
             // get the created listing file
             kasmFile = new File(kitFile.getParentFile(), filePrefix + ".kasm");
             kasmFile.deleteOnExit();
-          //  final FileReader reader = new FileReader(kasmFile);
+            // final FileReader reader = new FileReader(kasmFile);
             kasm.assemble(name, new FileInputStream(kasmFile));
             try {
                 lines = Tracer.trace(kitFile.getAbsolutePath(), kasmFile.getAbsolutePath());
@@ -135,7 +139,7 @@ public class KitAssembler implements IAssembler {
                 e.printStackTrace();
             } catch (Throwable t) {
                 t.printStackTrace();
-         
+
             }
 
             final StringTokenizer token = new StringTokenizer(program, "\n");
@@ -215,10 +219,11 @@ public class KitAssembler implements IAssembler {
     public String getName() {
         return kasm.getName();
     }
+
     /**
      * {@inheritDoc}
      */
-    public int getTickLen() {       
+    public int getTickLen() {
         return kasm.getTickLen();
     }
 }

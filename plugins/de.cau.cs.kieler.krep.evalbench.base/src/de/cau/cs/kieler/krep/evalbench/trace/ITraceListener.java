@@ -14,8 +14,11 @@
 package de.cau.cs.kieler.krep.evalbench.trace;
 
 /**
- * @author ctr Interface for listeners that are notified when he current trace
- *         is changed
+ * Interface for listeners that are notified when he current trace is changed.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr
  */
 public interface ITraceListener {
 
@@ -23,8 +26,7 @@ public interface ITraceListener {
      * the current trace has changed.
      * 
      * @param newTrace
-     *            true if the table has changed, false if only the current index
-     *            changed
+     *            true if the table has changed, false if only the current index changed
      */
     void traceChanged(boolean newTrace);
 

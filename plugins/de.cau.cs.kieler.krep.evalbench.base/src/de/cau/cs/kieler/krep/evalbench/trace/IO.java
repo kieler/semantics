@@ -16,6 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.trace;
 /**
  * distinguishes the kinds of signal that are stored in a trace.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */

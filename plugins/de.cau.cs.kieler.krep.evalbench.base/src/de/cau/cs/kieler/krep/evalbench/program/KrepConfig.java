@@ -16,6 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.program;
 /**
  * Holds the actual configuration of a Kiel Reactive Processor.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr 
  * 
  */
