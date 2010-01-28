@@ -76,7 +76,7 @@
        </transformation>
        <transformation
              icon="icons/self_loop.gif"
-             keyboardShortcut="M1 + R L"
+             keyboardShortcut="M1 + R O"
              name="Add Self Loop"
              transformation="addSelfLoop"
              transformationId="de.cau.cs.kieler.ksbase.selfLoop">
@@ -99,7 +99,8 @@
              icon="icons/connect.gif"
              name="Add Successor States"
              transformation="addSuccessorStates"
-             transformationId="de.cau.cs.kieler.ksbase.addSucs">
+             transformationId="de.cau.cs.kieler.ksbase.addSucs"
+             validation="isNoRootState">
        </transformation>
 			</transformations>
 			<menus>

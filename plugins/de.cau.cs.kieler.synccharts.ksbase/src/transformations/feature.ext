@@ -37,10 +37,10 @@ opt2.setLabel("S1") ->
 connectStates(source,choice) ->
 t1.setSourceState(choice) ->
 t1.setTargetState(opt1) ->
-t1.setPriority(0) ->
+t1.setPriority(1) ->
 t2.setSourceState(choice) ->
 t2.setTargetState(opt2) ->
-t2.setPriority(1) ->
+t2.setPriority(2) ->
 source.parentRegion.innerStates.add(choice) ->
 source.parentRegion.innerStates.add(opt1) ->
 source.parentRegion.innerStates.add(opt2)
