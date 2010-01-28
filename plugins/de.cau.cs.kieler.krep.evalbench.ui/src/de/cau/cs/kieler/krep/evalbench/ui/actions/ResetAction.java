@@ -51,7 +51,6 @@ public class ResetAction extends Action {
         setText("&Reset");
         setToolTipText("Reset the current program");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
-        // this.statusLineManager = manager;
         this.traces = traceList;
     }
 

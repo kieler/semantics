@@ -22,7 +22,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
-import de.cau.cs.kieler.krep.evalbench.ui.actions.CheckConnectionAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
 
 /**
@@ -49,7 +48,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 
         // create actions
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-        toolBarManager.add(new CheckConnectionAction());
         toolBarManager.add(new ClearAction(viewer));
     }
 
@@ -104,7 +102,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * @param msg
+     * @param msg message to display in the connection view
      * @return true if the message was displayed
      */
     public static boolean log(final String msg) {
@@ -123,7 +121,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * @param msg
+     * @param msg message to display in the connection view
      */
     public void show(final String msg) {
         if (viewer != null && display != null) {

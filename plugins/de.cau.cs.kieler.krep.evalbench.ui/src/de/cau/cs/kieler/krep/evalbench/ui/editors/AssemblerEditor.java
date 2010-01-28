@@ -36,14 +36,13 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.Config;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
  * The basic editor for displaying assembler instructions in the evaluation bench. Subclasses of
  * this abstract class must create a suitable implementation of the <code>IAssembler</code>
  * interface.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public abstract class AssemblerEditor extends EditorPart {
 
@@ -63,7 +62,11 @@ public abstract class AssemblerEditor extends EditorPart {
      * Assembler used to parse the input file. Subclasses must fill this field with their
      * implementation.
      */
-    protected IAssembler assembler;
+    private IAssembler assembler;
+
+    public void setAssembler(IAssembler assembler) {
+        this.assembler = assembler;
+    }
 
     /**
      * Gets the protocol type suited for the current editor implementation. Subclasses must extend

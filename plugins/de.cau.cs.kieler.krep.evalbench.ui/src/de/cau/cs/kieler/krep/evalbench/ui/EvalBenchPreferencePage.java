@@ -24,7 +24,6 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 
 /**
@@ -68,8 +67,10 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
     public EvalBenchPreferencePage() {
         super(FieldEditorPreferencePage.GRID);
         setDescription("This is the preference page for the Communication with a reactive processor. "
-                + "These preferences are only used by the Verify  view, for other executions the preferences are set in the execution manager. "
-                + "This preference page is obsolete as soon as the execution manager is extended by a verification component.");
+                + "These preferences are only used by the Verify  view, "
+                + "for other executions the preferences are set in the execution manager. "
+                + "This preference page is obsolete as soon as the execution manager "
+                + "is extended by a verification component.");
     }
 
     /**
@@ -89,35 +90,31 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
     @Override
     protected void createFieldEditors() {
 
-        //Group com = new Group(getFieldEditorParent(), SWT.NONE);
-       // Label com = new Label(getFieldEditorParent(), SWT.NONE);
-        //com.setText("Communication Parameters");
-        String[][] labels = new String[][] {
+         String[][] labels = new String[][] {
                 { "KIEL Esterel Processor Protocol", ICommunicationProtocol.P_KEP },
                 { "KIEL Reactive Processor Protocol", ICommunicationProtocol.P_KREP } };
         FieldEditor fieldEditor = new RadioGroupFieldEditor(PROTOCOL_TYPE,
                 "Default communication protocol:", 1, labels, getFieldEditorParent());
         addField(fieldEditor);
 
-        
-        
         // Connection
-        FileFieldEditor file = new FileFieldEditor(LOG_FILE, "Communication log File", getFieldEditorParent());
+        FileFieldEditor file = new FileFieldEditor(LOG_FILE, "Communication log File",
+                getFieldEditorParent());
         String[] extensions = { "*.esi", "*.eso", "*" };
         file.setFileExtensions(extensions);
         addField(file);
 
         // Verify
-       // Label verify = new Label(getFieldEditorParent(), SWT.NONE);
-       // verify.setText("Verify");
-        fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path the benchmarks:", getFieldEditorParent());
+        fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path the benchmarks:",
+                getFieldEditorParent());
         addField(fieldEditor);
 
         fieldEditor = new StringFieldEditor(BENCHMARK_FILES,
                 "Regular expression to describe benchmark directories:", getFieldEditorParent());
         addField(fieldEditor);
 
-        fieldEditor = new BooleanFieldEditor(CASE_SENSITIVE, "signals are case sensitve", getFieldEditorParent());
+        fieldEditor = new BooleanFieldEditor(CASE_SENSITIVE, "signals are case sensitve",
+                getFieldEditorParent());
         addField(fieldEditor);
 
         FileFieldEditor log = new FileFieldEditor(VERIFY_LOG, "log File for verification results",
@@ -130,12 +127,6 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
                 "continue verify run after mismatch as detected", getFieldEditorParent());
         addField(fieldEditor);
 
-        // create field editor for the KEP type:
-        // labels = new String[][] { { "Esterel KEP", KasmAssembler.S_KEPE },
-        // { "VHDL KEP", KasmAssembler.S_KEPV } };
-        // fieldEditor = new RadioGroupFieldEditor(KEP_TYPE, "KEP type to use:", 1, labels,
-        // getFieldEditorParent());
-        // addField(fieldEditor);
 
         adjustGridLayout();
     }

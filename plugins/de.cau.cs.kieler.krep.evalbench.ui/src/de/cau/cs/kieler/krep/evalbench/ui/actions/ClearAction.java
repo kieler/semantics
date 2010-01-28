@@ -28,20 +28,21 @@ public class ClearAction extends Action {
 
     /** Identifier string for this action. */
     private static final String CLEAR_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.clear";
-    
+
     /** Relative path to the icon to use for this action. */
     private static final String ICON_PATH = "icons/clear.gif";
 
     /**
-     * @param v
+     * @param textViewer
+     *            a text viewer which content is erased by this action.
      */
-    public ClearAction(final TextViewer v) {
+    public ClearAction(final TextViewer textViewer) {
         super();
         setId(CLEAR_ID);
         setText("C&lear");
         setToolTipText("Verify all benchmarks");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
-        viewer = v;
+        viewer = textViewer;
     }
 
     @Override

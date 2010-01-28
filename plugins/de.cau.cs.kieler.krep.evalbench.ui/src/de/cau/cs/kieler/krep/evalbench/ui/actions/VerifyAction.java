@@ -69,11 +69,11 @@ public class VerifyAction extends Action {
 
     private TableViewer table;
 
-    private final static int ROW_STATUS = 1;
-    private final static int ROW_RT = 2;
-    private final static int ROW_WCRT = 3;
-    private final static int ROW_TICKS = 4;
-    private final static int ROM_COMMENT = 5;
+    private static final int ROW_STATUS = 1;
+    private static final int ROW_RT = 2;
+    private static final int ROW_WCRT = 3;
+    private static final int ROW_TICKS = 4;
+    private static final int ROM_COMMENT = 5;
 
     private LinkedList<String[]> data = new LinkedList<String[]>();
 
@@ -206,7 +206,7 @@ public class VerifyAction extends Action {
                             s[ROW_WCRT] = String.valueOf(asm.getTickLen());
                             s[ROW_TICKS] = String.valueOf(steps);
                             if (!success) {
-                                s[ROM_COMMENT] = "traces differ (" + (steps-1) + ")";
+                                s[ROM_COMMENT] = "traces differ (" + (steps - 1) + ")";
                             }
                         }
 
@@ -273,9 +273,9 @@ public class VerifyAction extends Action {
                         }
                     }
                 }
-               // Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
-               //         "Verification done: " + Tools.showTime(), null);
-               // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                // Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
+                // "Verification done: " + Tools.showTime(), null);
+                // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         });
     }

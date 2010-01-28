@@ -16,7 +16,6 @@ package de.cau.cs.kieler.krep.evalbench.ui.editors;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 
-
 /**
  * An editor for KEP assembler files that uses the functionality of the abstract
  * <code>AssemblerEditor</code>.
@@ -29,8 +28,8 @@ public class KasmEditor extends AssemblerEditor {
      * Creates a KASM editor using the external assembler.
      */
     public KasmEditor() {
-        // assembler = new KasmAssembler();
-        assembler = new KepAssembler();
+        super();
+        setAssembler(new KepAssembler());
     }
 
     /*
@@ -40,7 +39,6 @@ public class KasmEditor extends AssemblerEditor {
      */
     @Override
     public String getProtocolType() {
-        // KASM files are related to the KEP protocol
         return ICommunicationProtocol.P_KEP;
     }
 

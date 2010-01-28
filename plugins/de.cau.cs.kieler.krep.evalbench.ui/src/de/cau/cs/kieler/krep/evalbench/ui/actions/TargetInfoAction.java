@@ -21,7 +21,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
  * Action that fetches information about the current target. The plugin
  * activator and the common layer are used to access all relevant data.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public class TargetInfoAction extends Action {
 

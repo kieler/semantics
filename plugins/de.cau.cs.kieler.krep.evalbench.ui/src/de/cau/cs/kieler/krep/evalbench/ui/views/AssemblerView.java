@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 
-import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramContentProvider;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramLabelProvider;
@@ -41,23 +40,12 @@ public class AssemblerView extends ViewPart {
     private static final int[] COLUMN_WIDTH = { 40, 90, 300, 50 };
 
     private static final int[] COLUMN_ALIGN = { SWT.RIGHT, SWT.LEFT, SWT.LEFT, SWT.LEFT };
-    /** Activator for this view. */
-    public Activator activator = null;
 
     /** The embedded table. */
     private Table table = null;
 
     /** The viewer used to display program instructions. */
     private TableViewer viewer = null;
-
-    /**
-     * Generate an empty assembler viewer.
-     */
-    public AssemblerView() {
-        super();
-        activator = Activator.getDefault();
-        activator.setViewer(this);
-    }
 
     @Override
     public final void createPartControl(final Composite parent) {

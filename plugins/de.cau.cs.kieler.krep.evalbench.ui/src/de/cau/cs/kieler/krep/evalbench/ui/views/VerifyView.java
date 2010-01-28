@@ -36,10 +36,11 @@ public class VerifyView extends ViewPart {
     public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.verify";
 
     /** Column identifiers for the embedded table. */
-    public static final String[] COLUMN_NAMES = { "module", "status", "reaction time", "wcrt", "ticks", "remark" };
+    public static final String[] COLUMN_NAMES = { "module", "status", "reaction time", "wcrt",
+            "ticks", "remark" };
 
     private static final int[] COLUMN_WIDTH = { 150, 50, 100, 50, 50, 250 };
-    
+
     /** Table viewer where inputs are listed. */
     private TableViewer viewer = null;
     private Table table = null;
@@ -51,12 +52,12 @@ public class VerifyView extends ViewPart {
     public void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.NONE);
-        for(int i=0; i< COLUMN_NAMES.length; i++){
+        for (int i = 0; i < COLUMN_NAMES.length; i++) {
             TableColumn column = new TableColumn(table, SWT.NONE, i);
             column.setText(COLUMN_NAMES[i]);
             column.setWidth(COLUMN_WIDTH[i]);
         }
- 
+
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 
@@ -72,7 +73,7 @@ public class VerifyView extends ViewPart {
         verifyAction = new VerifyAction(statusLineManager, viewer);
         toolBarManager.add(verifyAction);
         verifyAction.setEnabled(true);
-     
+
     }
 
     @Override
