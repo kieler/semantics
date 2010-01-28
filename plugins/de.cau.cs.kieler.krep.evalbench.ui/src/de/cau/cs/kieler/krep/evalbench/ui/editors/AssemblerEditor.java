@@ -98,9 +98,9 @@ public abstract class AssemblerEditor extends EditorPart {
             // execute assembler
             assembler.assemble(inputFile.getName(), source);
 
-            String baseName = inputFile.getAbsolutePath();
-            baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-            Activator.getDefault().setTraces(new TraceList(assembler, baseName));
+           // String baseName = inputFile.getAbsolutePath();
+           // baseName = baseName.substring(0, baseName.lastIndexOf('.'));
+           // Activator.getDefault().setTraces(new TraceList(assembler, baseName));
         } finally {
             reader.close();
         }

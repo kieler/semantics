@@ -47,7 +47,6 @@ import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
@@ -274,9 +273,9 @@ public class VerifyAction extends Action {
                         }
                     }
                 }
-                Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
-                        "Verification done: " + Tools.showTime(), null);
-                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+               // Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
+               //         "Verification done: " + Tools.showTime(), null);
+               // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         });
     }
