@@ -57,10 +57,10 @@
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
         </tokens>
         <tokens xsi:type="xtext:Keyword" cardinality="?" value="state"/>
-        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+        <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </tokens>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="label" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="bodyText" operator="=">
@@ -161,8 +161,11 @@
           <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
             <terminal xsi:type="xtext:Keyword" value="#"/>
           </tokens>
-          <tokens xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+          <tokens xsi:type="xtext:Group" cardinality="?">
+            <tokens xsi:type="xtext:Keyword" value="delay:="/>
+            <tokens xsi:type="xtext:Assignment" feature="delay" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+            </tokens>
           </tokens>
           <tokens xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
@@ -201,8 +204,11 @@
           <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
             <terminal xsi:type="xtext:Keyword" value="#"/>
           </tokens>
-          <tokens xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+          <tokens xsi:type="xtext:Group" cardinality="?">
+            <tokens xsi:type="xtext:Keyword" value="delay:="/>
+            <tokens xsi:type="xtext:Assignment" feature="delay" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+            </tokens>
           </tokens>
           <tokens xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
@@ -280,6 +286,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
           </tokens>
         </tokens>
+        <tokens xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Signal">
@@ -327,6 +334,7 @@
             </groups>
           </tokens>
         </tokens>
+        <tokens xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="VariableSignalValue">

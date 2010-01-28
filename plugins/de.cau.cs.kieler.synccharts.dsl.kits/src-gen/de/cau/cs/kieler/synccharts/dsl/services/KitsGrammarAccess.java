@@ -94,10 +94,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypeStateTypeEnumRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
 		private final Keyword cStateKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cLabelFullStateIDParserRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
-		private final Assignment cIdAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cIdSTRINGTerminalRuleCall_6_0 = (RuleCall)cIdAssignment_6.eContents().get(0);
+		private final Assignment cIdAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cIdFullStateIDParserRuleCall_5_0 = (RuleCall)cIdAssignment_5.eContents().get(0);
+		private final Assignment cLabelAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_6_0 = (RuleCall)cLabelAssignment_6.eContents().get(0);
 		private final Assignment cBodyTextAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cBodyTextSTRINGTerminalRuleCall_7_0 = (RuleCall)cBodyTextAssignment_7.eContents().get(0);
 		private final Assignment cSignalsAssignment_8 = (Assignment)cGroup.eContents().get(8);
@@ -133,8 +133,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTextualTransitionParserRuleCall_14_0_1 = (RuleCall)cOutgoingTransitionsAlternatives_14_0.eContents().get(1);
 		
 		//State returns sync::State:
-		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
-		//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
+		//  FullStateID label=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//  "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
@@ -197,8 +197,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//      // kein effect, kein delay, kein immediate
 		public ParserRule getRule() { return rule; }
 
-		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
-		//FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
+		//FullStateID label=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//"suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//"}")? outgoingTransitions+=( Transition | TextualTransition )* 
@@ -284,17 +284,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"state"?
 		public Keyword getStateKeyword_4() { return cStateKeyword_4; }
 
-		//label=FullStateID
-		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
+		//id=FullStateID
+		public Assignment getIdAssignment_5() { return cIdAssignment_5; }
 
 		//FullStateID
-		public RuleCall getLabelFullStateIDParserRuleCall_5_0() { return cLabelFullStateIDParserRuleCall_5_0; }
+		public RuleCall getIdFullStateIDParserRuleCall_5_0() { return cIdFullStateIDParserRuleCall_5_0; }
 
-		//id=STRING?
-		public Assignment getIdAssignment_6() { return cIdAssignment_6; }
+		//label=STRING?
+		public Assignment getLabelAssignment_6() { return cLabelAssignment_6; }
 
 		//STRING
-		public RuleCall getIdSTRINGTerminalRuleCall_6_0() { return cIdSTRINGTerminalRuleCall_6_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_6_0() { return cLabelSTRINGTerminalRuleCall_6_0; }
 
 		//bodyText=STRING?
 		public Assignment getBodyTextAssignment_7() { return cBodyTextAssignment_7; }
@@ -480,8 +480,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cWithKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cIsImmediateAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final Keyword cIsImmediateNumberSignKeyword_2_1_0 = (Keyword)cIsImmediateAssignment_2_1.eContents().get(0);
-		private final Assignment cDelayAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cDelayINTTerminalRuleCall_2_2_0 = (RuleCall)cDelayAssignment_2_2.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cDelayKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cDelayAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cDelayINTTerminalRuleCall_2_2_1_0 = (RuleCall)cDelayAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_2_3 = (Group)cGroup_2.eContents().get(3);
 		private final Assignment cTriggerAssignment_2_3_0 = (Assignment)cGroup_2_3.eContents().get(0);
 		private final RuleCall cTriggerBooleanExpressionParserRuleCall_2_3_0_0 = (RuleCall)cTriggerAssignment_2_3_0.eContents().get(0);
@@ -497,8 +499,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Transition returns sync::Transition:
 		//  type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-		//  delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-		//  " history"? ";";  
+		//  ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))?
+		//  isHistory?=" history"? ";";  
 		//  
 		////========================================================================================
 		////===  									    ACTIONS  					               ===
@@ -515,7 +517,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//   
 		//   
 		//  //targetStateProxy=STRING
-		//          
+		//            
 		//          
 		//   
 		//  
@@ -523,8 +525,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-		//delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-		//" history"? ";" 
+		//("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))?
+		//isHistory?=" history"? ";" 
 		//
 		//   
 		//   
@@ -549,8 +551,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//FullStateID
 		public RuleCall getTargetStateStateFullStateIDParserRuleCall_1_0_1() { return cTargetStateStateFullStateIDParserRuleCall_1_0_1; }
 
-		//("with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=
-		//Effect ","?)*)?))?
+		//("with" isImmediate?="#"? ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (
+		//effects+=Effect ","?)*)?))?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"with"
@@ -562,11 +564,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"#"
 		public Keyword getIsImmediateNumberSignKeyword_2_1_0() { return cIsImmediateNumberSignKeyword_2_1_0; }
 
-		//delay=INT?
-		public Assignment getDelayAssignment_2_2() { return cDelayAssignment_2_2; }
+		//("delay:=" delay=INT)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//"delay:="
+		public Keyword getDelayKeyword_2_2_0() { return cDelayKeyword_2_2_0; }
+
+		//delay=INT
+		public Assignment getDelayAssignment_2_2_1() { return cDelayAssignment_2_2_1; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_2_2_0() { return cDelayINTTerminalRuleCall_2_2_0; }
+		public RuleCall getDelayINTTerminalRuleCall_2_2_1_0() { return cDelayINTTerminalRuleCall_2_2_1_0; }
 
 		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
 		public Group getGroup_2_3() { return cGroup_2_3; }
@@ -616,8 +624,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cWithKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cIsImmediateAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final Keyword cIsImmediateNumberSignKeyword_2_1_0 = (Keyword)cIsImmediateAssignment_2_1.eContents().get(0);
-		private final Assignment cDelayAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cDelayINTTerminalRuleCall_2_2_0 = (RuleCall)cDelayAssignment_2_2.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cDelayKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cDelayAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cDelayINTTerminalRuleCall_2_2_1_0 = (RuleCall)cDelayAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_2_3 = (Group)cGroup_2.eContents().get(3);
 		private final Assignment cTriggerAssignment_2_3_0 = (Assignment)cGroup_2_3.eContents().get(0);
 		private final RuleCall cTriggerBooleanExpressionParserRuleCall_2_3_0_0 = (RuleCall)cTriggerAssignment_2_3_0.eContents().get(0);
@@ -632,16 +642,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//TextualTransition returns textualsync::TextualTransition:
-		//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? delay=INT? (
-		//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
-		//  ";";  
+		//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
+		//  delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
+		//  " history"? ";";  
 		//  
 		// //TextualTransition extends Transition
 		//        
 		//  
 		// //targetState=[sync::State|FullStateID] 
 		//  
-		//        
+		//          
 		//         
 		// 
 		//  
@@ -656,9 +666,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////;
 		public ParserRule getRule() { return rule; }
 
-		//type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? delay=INT? (
-		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
-		//";" 
+		//type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
+		//delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
+		//" history"? ";" 
 		//  
 		// //targetState=[sync::State|FullStateID]
 		public Group getGroup() { return cGroup; }
@@ -679,8 +689,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getTargetStateProxySTRINGTerminalRuleCall_1_0() { return cTargetStateProxySTRINGTerminalRuleCall_1_0; }
 
-		//("with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=
-		//Effect ","?)*)?))?
+		//("with" isImmediate?="#"? ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (
+		//effects+=Effect ","?)*)?))?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"with"
@@ -692,11 +702,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"#"
 		public Keyword getIsImmediateNumberSignKeyword_2_1_0() { return cIsImmediateNumberSignKeyword_2_1_0; }
 
-		//delay=INT?
-		public Assignment getDelayAssignment_2_2() { return cDelayAssignment_2_2; }
+		//("delay:=" delay=INT)?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//"delay:="
+		public Keyword getDelayKeyword_2_2_0() { return cDelayKeyword_2_2_0; }
+
+		//delay=INT
+		public Assignment getDelayAssignment_2_2_1() { return cDelayAssignment_2_2_1; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_2_2_0() { return cDelayINTTerminalRuleCall_2_2_0; }
+		public RuleCall getDelayINTTerminalRuleCall_2_2_1_0() { return cDelayINTTerminalRuleCall_2_2_1_0; }
 
 		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
 		public Group getGroup_2_3() { return cGroup_2_3; }
@@ -913,12 +929,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonSpaceKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
 		private final Assignment cTypeAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cTypeValueTypeEnumRuleCall_2_2_0 = (RuleCall)cTypeAssignment_2_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Variable returns sync::Variable:
-		//  "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType);
+		//  "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType) ";";
 		public ParserRule getRule() { return rule; }
 
-		//"var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType)
+		//"var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType) ";"
 		public Group getGroup() { return cGroup; }
 
 		//"var"
@@ -953,6 +970,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_2_2_0() { return cTypeValueTypeEnumRuleCall_2_2_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
 	public class SignalElements extends AbstractParserRuleElementFinder {
@@ -984,11 +1004,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_1_3_0.eContents().get(0);
 		private final Assignment cHostCombineOperatorAssignment_3_1_1_3_1 = (Assignment)cAlternatives_3_1_1_3.eContents().get(1);
 		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_1_3_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Signal returns sync::Signal:
 		//  isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
 		//  VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-		//  combineOperator=CombineOperator|hostCombineOperator=STRING)))?; 
+		//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 		//
 		//    
 		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
@@ -998,7 +1019,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
 		//VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-		//combineOperator=CombineOperator|hostCombineOperator=STRING)))? 
+		//combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";" 
 		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
 		//     //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
@@ -1087,6 +1108,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
 	public class VariableSignalValueElements extends AbstractParserRuleElementFinder {
@@ -2934,8 +2958,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//State returns sync::State:
-	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
-	//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
+	//  FullStateID label=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 	//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 	//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 	//  "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
@@ -3038,8 +3062,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Transition returns sync::Transition:
 	//  type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-	//  delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-	//  " history"? ";";  
+	//  ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))?
+	//  isHistory?=" history"? ";";  
 	//  
 	////========================================================================================
 	////===  									    ACTIONS  					               ===
@@ -3056,7 +3080,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//   
 	//   
 	//  //targetStateProxy=STRING
-	//          
+	//            
 	//          
 	//   
 	//  
@@ -3070,16 +3094,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextualTransition returns textualsync::TextualTransition:
-	//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? delay=INT? (
-	//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
-	//  ";";  
+	//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
+	//  delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
+	//  " history"? ";";  
 	//  
 	// //TextualTransition extends Transition
 	//        
 	//  
 	// //targetState=[sync::State|FullStateID] 
 	//  
-	//        
+	//          
 	//         
 	// 
 	//  
@@ -3187,7 +3211,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Variable returns sync::Variable:
-	//  "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType);
+	//  "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=ValueType) ";";
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -3199,7 +3223,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//Signal returns sync::Signal:
 	//  isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
 	//  VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-	//  combineOperator=CombineOperator|hostCombineOperator=STRING)))?; 
+	//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 	//
 	//    
 	//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
