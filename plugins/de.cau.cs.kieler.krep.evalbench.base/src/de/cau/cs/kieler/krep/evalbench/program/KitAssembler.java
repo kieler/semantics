@@ -27,7 +27,6 @@ import java.util.StringTokenizer;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.helpers.StreamGobbler;
 import de.cau.cs.kieler.krep.evalbench.helpers.Tracer;
 
 /**
@@ -110,13 +109,15 @@ public class KitAssembler implements IAssembler {
                     kitFile.getParentFile());
             // any output?
 
-            final StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), "ERROR");
+            
+            // TODO: handle error messages
+            //final StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), "ERROR");
 
-            final StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(),
-                    "OUTPUT");
+           // final StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(),
+           //         "OUTPUT");
 
-            errorGobbler.start();
-            outputGobbler.start();
+            //errorGobbler.start();
+            //outputGobbler.start();
 
             final int exitVal = process.waitFor();
             System.out.println("ExitValue: " + exitVal);
@@ -134,8 +135,7 @@ public class KitAssembler implements IAssembler {
                 e.printStackTrace();
             } catch (Throwable t) {
                 t.printStackTrace();
-            } finally {
-                System.out.println("okay");
+         
             }
 
             final StringTokenizer token = new StringTokenizer(program, "\n");
@@ -158,7 +158,6 @@ public class KitAssembler implements IAssembler {
         if (!c.isKEP()) {
             return "wrong processor";
         }
-        // TODO Auto-generated method stub
         return null;
     }
 

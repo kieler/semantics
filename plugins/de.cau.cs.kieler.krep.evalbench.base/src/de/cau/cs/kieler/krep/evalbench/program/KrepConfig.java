@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.krep.evalbench.program;
 
 /**
- * @author ctr configuration of the Kiel Reactive Processor
+ * Holds the actual configuration of a Kiel Reactive Processor.
+ * 
+ * @author ctr 
  * 
  */
 public class KrepConfig implements Config {

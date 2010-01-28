@@ -39,7 +39,6 @@ import de.cau.cs.kieler.krep.editors.klp.klp.SetPC;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
 import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
 
 /**
@@ -584,6 +583,19 @@ public class KlpAssembler implements IAssembler {
     }
 
     /**
+     * @param i
+     *            integer containing a byte
+     * @return Hex String for this integer value, includinga leading 0 if neccessary
+     */
+    private static String toHex(final int i) {
+        String res = Integer.toHexString(i);
+        if (res.length() == 1) {
+            res = "0" + res;
+        }
+        return res;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public String[] getObj(final Config c) {
@@ -597,7 +609,7 @@ public class KlpAssembler implements IAssembler {
                     final String t = "" + padByte(i.getOpcode0()) + padByte(i.getOpcode1())
                             + padByte(i.getOpcode2()) + padByte(i.getOpcode3());
                     if (t != null) {
-                        obj.add(Tools.toHex(j++) + t);
+                        obj.add(toHex(j++) + t);
                     }
                 }
             }
