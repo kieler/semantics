@@ -24,6 +24,8 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
  * Interface for assemblers that transform assembler files into binary object
  * code.
  * 
+ * 
+ * 
  * @author msp, ctr
  */
 

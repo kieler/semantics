@@ -124,7 +124,6 @@ public class KepAssembler implements IAssembler {
 
             for (final Signal s : outputs) {
                 signalIndex.put(s.getName(), s.getIndex());
-                // signalIndex.put("TICKWARN", s.getIndex());
             }
 
             for (final Signal s : locals) {
@@ -174,6 +173,7 @@ public class KepAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public String[][] getInstructions() {
+        final int lineSize = 4;
         final LinkedList<String[]> res = new LinkedList<String[]>();
         if (instructions != null) {
             int j = 0;
@@ -186,7 +186,7 @@ public class KepAssembler implements IAssembler {
                 res.add(new String[] { num, label, instr, opcode });
             }
         }
-        return res.toArray(new String[res.size()][4]);
+        return res.toArray(new String[res.size()][lineSize]);
     }
 
     /**
