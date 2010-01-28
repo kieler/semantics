@@ -247,8 +247,8 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
                     parseErrorString.append("\n");
                 }
             }
-            throw new KielerModelException("\"" + newString + "\""
-                    + " Parse errors in action String: " + parseErrorString, action);
+            throw new DiagnosticException("\"" + newString + "\""
+                    + " Parse errors in action String: " + parseErrorString, action, errors);
         }
 
         EObject parsedObject = resource.getContents().get(0);
