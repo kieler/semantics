@@ -31,14 +31,6 @@
             id="de.cau.cs.kieler.krep.evalbench.ui.editors.kit"
             name="KitEditor">
       </editor>
-      <editor
-            class="de.cau.cs.kieler.krep.evalbench.ui.editors.LstEditor"
-            contributorClass="org.eclipse.ui.part.EditorActionBarContributor"
-            default="true"
-            extensions="lst"
-            id="de.cau.cs.kieler.krep.evalbench.ui.editors.lst"
-            name="LST Editor">
-      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.views">
