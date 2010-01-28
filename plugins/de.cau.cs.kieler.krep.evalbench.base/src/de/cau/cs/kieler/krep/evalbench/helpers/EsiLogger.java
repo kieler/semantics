@@ -19,7 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * log communication with the processor to an esi trace file. This can be used for debugging of the
+ * Log communication with the processor to an esi trace file. This can be used for debugging of the
  * processor in E-Studio.
  * 
  * @author ctr
