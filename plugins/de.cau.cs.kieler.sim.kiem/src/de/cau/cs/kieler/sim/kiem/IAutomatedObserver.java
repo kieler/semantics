@@ -31,6 +31,8 @@ public interface IAutomatedObserver extends IAutomatedComponent {
     String ITERATION = "Iteration";
     /** Identifier for the execution file. */
     String EXEC_FILE = "Execution file";
+    /** Identifier for the status of the execution. */
+    String STATUS = "Status";
 
     /**
      * Give the component information.
