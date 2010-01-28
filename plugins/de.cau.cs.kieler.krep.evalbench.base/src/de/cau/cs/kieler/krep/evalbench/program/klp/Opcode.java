@@ -14,7 +14,11 @@
 package de.cau.cs.kieler.krep.evalbench.program.klp;
 
 /**
- * @author ctr Opcode for KLP instructions
+ * Defines the opcode for each KLP instructions
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr 
  */
 public enum Opcode {
     // Initialize and synchonization

@@ -20,6 +20,8 @@ import java.util.LinkedList;
 /**
  * Abstract class, implements common protocol features.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public abstract class CommunicationProtocol implements ICommunicationProtocol {
@@ -83,7 +85,6 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
         }
     }
 
-  
     /**
      * {@inheritDoc}
      */

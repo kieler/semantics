@@ -25,6 +25,8 @@ import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 /**
  * JNI wrapper for the Kiel Esterel Processor.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -33,8 +35,8 @@ public class KepWrapper implements IKrepWrapper {
     private final EsiLogger esi;
 
     private static final String NAME = "kep";
-    private static final int   MASK_BYTE = 0xFF;
-    
+    private static final int MASK_BYTE = 0xFF;
+
     static {
         System.loadLibrary("kep");
     }
@@ -49,9 +51,8 @@ public class KepWrapper implements IKrepWrapper {
         final String msg = "";
         kep_reset(msg);
 
-           // TODO: log to esi
+        // TODO: log to esi
         final String fileName = "kep.esi";
-            //preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger(fileName);
         esi.reset();
     }
@@ -85,15 +86,8 @@ public class KepWrapper implements IKrepWrapper {
         String msg = "";
         String io = ";";
         byte c = kep_step(msg);
-        /*if (msg.length() != 0) {
-            MessageView.print(msg);
-            msg = "";
-        }*/
         if (c != 0) {
             c = kep_recv(msg);
-           /* if (msg.length() > 0) {
-                MessageView.print(msg);
-            }*/
             io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
@@ -109,13 +103,13 @@ public class KepWrapper implements IKrepWrapper {
         step();
         esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         kep_send(b, msg);
-        /*if (msg.length() > 0) {
-            MessageView.print(msg);
-        }*/
         step();
 
     }
 
+    
+    // CHECKSTYLEOFF Name
+    // This names are enforced by the KEP and JNI
     private static native byte kep_step(final String msg);
 
     private static native byte kep_recv(final String msg);
@@ -123,10 +117,11 @@ public class KepWrapper implements IKrepWrapper {
     private static native void kep_reset(final String msg);
 
     private static native void kep_send(final byte c, final String msg);
-
+    // CHECKSTYLEON Name
+    
     /**
      * {@inheritDoc}
-     */    
+     */
     public void saveEsi(final String esiFile) {
         BufferedWriter out = null;
         try {

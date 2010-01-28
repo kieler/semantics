@@ -21,6 +21,8 @@ import de.cau.cs.kieler.krep.evalbench.program.Config;
 /**
  * Connection to software emulation of the processor via java native interfaces.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */

@@ -26,6 +26,7 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  * protocols.
  * 
  * @kieler.rating 2009-12-10 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public interface ICommunicationProtocol {

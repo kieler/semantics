@@ -19,6 +19,8 @@ import java.util.HashMap;
 /**
  * Pure or valued signal for the synchronous signal model.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public class Signal implements Comparable<Signal> {
@@ -118,7 +120,7 @@ public class Signal implements Comparable<Signal> {
      *            initial value for a valued signal, null for a pure signal
      */
     public Signal(final String tName, final Integer tValue) {
-         this.name = tName;
+        this.name = tName;
         this.valued = tValue != null;
         this.value = tValue;
         this.index = 0;

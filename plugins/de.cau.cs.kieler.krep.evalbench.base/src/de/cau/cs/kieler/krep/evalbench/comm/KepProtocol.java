@@ -22,6 +22,9 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**
  * Implementation of the communication protocol interface that uses the KEP protocol.
+ * For details on the processors see Xin's or Malte's theses.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
  * 
  * @author msp
  */
@@ -104,7 +107,7 @@ public class KepProtocol extends CommunicationProtocol {
     /** Length of information items for target information. */
     private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2 };
 
-    /** currently loaded assembler */
+    /** Currently loaded assembler. */
     private IAssembler asm = null;
 
     /**

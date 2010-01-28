@@ -13,12 +13,17 @@
  */
 package de.cau.cs.kieler.krep.evalbench.exceptions;
 
+import de.cau.cs.kieler.core.KielerException;
+
 /**
+ * Any exception that occurred while Parsing an Assembler file.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
- *         Any exception that occurred while Parsing an Assembler file
  */
-public class ParseException extends Exception {
+public class ParseException extends KielerException {
 
     /**
      * @param cause

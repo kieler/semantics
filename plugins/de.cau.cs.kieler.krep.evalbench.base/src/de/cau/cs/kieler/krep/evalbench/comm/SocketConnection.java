@@ -24,13 +24,15 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 /**
  * Connection that uses sockets from <code>java.net</code>.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public class SocketConnection extends ConnectionProtocol {
 
     /** The socket used for connection. */
     private Socket socket;
-    private InputStreamReader reader=null;
+    private InputStreamReader reader = null;
 
     /**
      * Initializes connection.
@@ -60,9 +62,6 @@ public class SocketConnection extends ConnectionProtocol {
             socket.close();
         } catch (IOException e) {
             // Ignore silently
-            // tatus myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-            // "Error closing socket", e);
-            // StatusManager.getManager().handle(myStatus, StatusManager.LOG);
         }
     }
 

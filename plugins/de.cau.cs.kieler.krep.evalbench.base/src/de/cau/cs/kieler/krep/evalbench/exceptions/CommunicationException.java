@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.KielerException;
  */
 public class CommunicationException extends KielerException {
 
+    private static final long serialVersionUID = 2490080184709008581L;
+
     /**
      * Creates a communication exception with given message.
      * 

@@ -25,6 +25,8 @@ import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 /**
  * Wrapper to software simulation of the Kiel Lustre Processor.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -49,11 +51,7 @@ public class KlpWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         klp_reset(msg);
-
-        // final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-
         // TODO: log File
-        // final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger("klp.esi");
         esi.reset();
         step();
@@ -113,6 +111,8 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
+    // CHECKSTYLEOFF Name
+    // This names are enforced by the KLP and JNI
     private static native byte klp_step(final String msg);
 
     private static native byte klp_recv(final String msg);
@@ -120,7 +120,8 @@ public class KlpWrapper implements IKrepWrapper {
     private static native void klp_reset(final String msg);
 
     private static native void klp_send(final byte c, final String msg);
-
+    // CHECKSTYLEON Name
+    
     /**
      * {@inheritDoc}
      */
@@ -130,20 +131,15 @@ public class KlpWrapper implements IKrepWrapper {
             File f = new File(esiFile);
             out = new BufferedWriter(new FileWriter(f));
             out.write(esi.toString());
+            out.flush();
         } catch (IOException e) {
             // silently ignore
-            //Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-            //        "Error saving esi log file: " + esiFile, e);
-            // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e) {
                     // silently ignore
-                   // Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                   //        "Error saving esi log file: " + esiFile, e);
-                    // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
         }

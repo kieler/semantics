@@ -13,14 +13,17 @@
  */
 package de.cau.cs.kieler.krep.evalbench.exceptions;
 
-/**
- * @author ctr
- * 
- *         Exception that is thrown while downloading a program onto a processor
- */
-public class LoadException extends Exception {
+import de.cau.cs.kieler.core.KielerException;
 
-    /** The serial version UID. */
+/**
+ * Exception that is thrown while downloading a program onto a processor.
+ * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
+ * @author ctr
+ * */
+public class LoadException extends KielerException {
+
     private static final long serialVersionUID = 6075808941855187075L;
 
     /**

@@ -29,6 +29,8 @@ import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
  * Implementation of the communication protocol interface that uses the KREP protocol. Currently,
  * this is only the KLP. The protocol itself is documented in ctr's thesis.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author ctr
  */
 public class KrepProtocol extends CommunicationProtocol {
@@ -72,7 +74,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
     // The currently used assembler
     private IAssembler asm = null;
-    
+
     private void sendCmd(final byte data) throws CommunicationException {
         getConnection().send(data);
         notifySend(Integer.toHexString(data) + "(" + String.valueOf((char) data) + ")");
@@ -159,12 +161,10 @@ public class KrepProtocol extends CommunicationProtocol {
             stringBuffer.append(INFO_DESC[i] + "0x" + String.valueOf(msg.get(i)) + "\n");
         }
         Iterator<Integer> i = msg.iterator();
-        // int nKind = msg.get(0);
         int kind = i.next();
         if (kind != 0x2) {
             throw new CommunicationException("Wrong processor");
         }
-        // int version =
         i.next();
 
         int nCores = i.next();
@@ -243,10 +243,10 @@ public class KrepProtocol extends CommunicationProtocol {
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
         notifyComment("tick");
-        if(asm==null){
+        if (asm == null) {
             throw new CommunicationException("No program is currently running.");
         }
-        for(Signal o: asm.getOutputs()){
+        for (Signal o : asm.getOutputs()) {
             outputs.add(o);
         }
         int rt = 0;
@@ -295,12 +295,13 @@ public class KrepProtocol extends CommunicationProtocol {
     }
 
     /**
-     * reconstructs an integer from received bytes b0,..,bn
+     * Reconstructs an integer from received bytes b0,..,bn.
+     * 
      * @return res=b0..bn
      * @throws CommunicationException
-     */            
+     */
     private Integer receiveInt() throws CommunicationException {
-       
+
         final int wordSize = 4;
         long tmp = 0;
         LinkedList<Integer> bytes = receiveByte(wordSize);
@@ -308,7 +309,7 @@ public class KrepProtocol extends CommunicationProtocol {
             tmp = tmp << BYTE_LENGTH;
             tmp += b;
         }
-        //check for overflow
+        // check for overflow
         final long tmin = 0x80000000;
         final long tmax = 0x7FFFFFFF;
         if (tmp > tmax) {

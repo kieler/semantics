@@ -16,6 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 /**
  * Listener for communication events which occur when data is sent or received.
  * 
+ * @kieler.rating 2010-01-28 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public interface ICommunicationListener {
