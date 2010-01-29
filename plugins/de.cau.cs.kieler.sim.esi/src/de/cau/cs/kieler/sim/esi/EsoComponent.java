@@ -144,8 +144,7 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     /** {@inheritDoc} */
     public void initialize() throws KiemInitializationException {
         pos = 0;
-        tracelist = Helper.loadTrace(getClass(), getProperties()[0].getValue(), getProperties()[1]
-                .getValue());
+        tracelist = Helper.loadTrace(getClass(), traceFile);
         iTrace = tracelist.getTraces().iterator();
         iTick = iTrace.next().getTicks().iterator();
     }

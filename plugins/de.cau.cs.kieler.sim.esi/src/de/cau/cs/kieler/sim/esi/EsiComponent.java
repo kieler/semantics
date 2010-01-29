@@ -13,14 +13,17 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorPart;
@@ -58,8 +61,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     private Iterator<tick> iTick;
 
     private int iteration = 0;
-    private String traceFile = ""; 
-    
+    private String traceFile = "";
 
     /**
      * {@inheritDoc}
@@ -145,11 +147,18 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        tracelist = Helper.loadTrace(getClass(), getProperties()[0].getValue(), getProperties()[0]
-                .getValue());
-        
+        try {
+            String name = getProperties()[0].getValue();
+            if (traceFile != null) { // Automated run
+                name = traceFile;
+            }
+            tracelist = Helper.loadTrace(getClass(),  name);
+        } catch (Exception e) {
+            throw new KiemInitializationException("Cannot open trace file", true, e);
+        }
+
         iTrace = tracelist.getTraces().iterator();
-        //iTrace +=iteration;
+        // iTrace +=iteration;
         iTick = iTrace.next().getTicks().iterator();
 
         HashSet<String> sigs = new HashSet<String>();
@@ -199,9 +208,12 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
         }
         if (model != null) {
             IPath path = Path.fromOSString(model);
-            path.removeFileExtension();
-            path.addFileExtension("esi");
-            traceFile = path.toOSString();
+            path = path.removeFileExtension();
+            path = path.addFileExtension("esi");
+            
+            IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+
+            traceFile = file.getLocation().toOSString();
             properties.add(new KiemProperty("TRACE", traceFile));
         }
     }

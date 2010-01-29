@@ -112,4 +112,44 @@ public class Helper {
         }
         return res;
     }
+
+    public static tracelist loadTrace(Object classpathURIContext, String fileName)
+            throws KiemInitializationException {
+        tracelist res = null;
+
+        ISetup setup = new EsiStandaloneSetup();
+        Injector injector = setup.createInjectorAndDoEMFRegistration();
+        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+        rs.setClasspathURIContext(classpathURIContext);
+
+        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+        // setup.doSetup();
+        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
+        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
+        rs.getResources().add(resource);
+
+        InputStream in;
+        try {
+
+            if (fileName != null && fileName.length() > 0) {
+                in = new FileInputStream(fileName);
+            } else {
+                throw new KiemInitializationException(
+                        "EsiComponent is activated but no trace file is set", false, null);
+            }
+
+            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
+            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
+            IParseResult parseResult = parser.parse(in);
+            if (!parseResult.getParseErrors().isEmpty()) {
+                throw new KiemInitializationException("Parse error", true, null);
+            }
+            res = (tracelist) parseResult.getRootASTElement();
+        } catch (FileNotFoundException e) {
+            throw new KiemInitializationException("File not found", false, e);
+        } catch (Exception e) {
+            throw new KiemInitializationException("Unknown error", false, e);
+        }
+        return res;
+    }
 }
