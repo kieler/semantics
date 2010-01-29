@@ -59,7 +59,8 @@ Void flipTransition(Transition t):
 Void connectStates(State source, State target):
 let transition = new Transition:
 transition.setSourceState(source) ->
-transition.setTargetState(target)
+transition.setTargetState(target) ->
+setSelection(transition)
 ;
 
 // create a self loop of one state
@@ -88,7 +89,8 @@ let state = new State:
 state.setIsInitial(true) ->
 state.setLabel("Initial") ->
 region.innerStates.add(state) ->
-parentState.regions.add(region)
+parentState.regions.add(region) ->
+setSelection(state)
 ;
 
 Void downgradeState(State parentState):
@@ -101,6 +103,11 @@ if parentState.regions.size > 0 then
 //i.e. it has at least one inner region
 Boolean isRegionState(State state):
 	state.parentRegion != null && state.parentRegion.parentState != null
+;
+
+//Sets the object that should be selected after the transformation is executed
+Void setSelection(Object object):
+ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.setPostTransformationSelection(java.lang.Object)
 ;
 
 //Checks if the state is the root state.
@@ -166,7 +173,8 @@ state.regions.add(region) ->
 innerState.setLabel("Initial") ->
 innerState.setIsInitial(true) -> 
 region.innerStates.add(innerState) ->
-rootRegion.innerStates.add(state)
+rootRegion.innerStates.add(state) ->
+setSelection(innerState)
 ;
 
 //Good ol' ABRO
