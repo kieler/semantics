@@ -13,37 +13,27 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtext.ISetup;
-import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
-import org.eclipse.xtext.resource.IResourceFactory;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
-
-import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
+import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
@@ -55,13 +45,17 @@ import org.json.JSONObject;
  * 
  * @author ctr
  */
-public class EsoComponent extends JSONObjectDataComponent {
+public class EsoComponent extends JSONObjectDataComponent implements IAutomatedProducer {
 
     private tracelist tracelist = null;
     private Iterator<trace> iTrace;
     private Iterator<tick> iTick;
 
+    private String traceFile = "";
+
     private int pos = 0;
+
+    private boolean isValid;
 
     /**
      * {@inheritDoc}
@@ -120,6 +114,7 @@ public class EsoComponent extends JSONObjectDataComponent {
                     // }
                     // }
                     // }
+                    isValid = isValid && valid;
                     res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
 
                 } catch (JSONException e) {
@@ -193,5 +188,44 @@ public class EsoComponent extends JSONObjectDataComponent {
     /** {@inheritDoc} */
     public void wrapup() {
         tracelist = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsAnotherRun() {
+        return iTick.hasNext();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<KiemProperty> produceInformation() {
+        List<KiemProperty> res = new LinkedList<KiemProperty>();
+        res.add(new KiemProperty("valid", new KiemPropertyTypeBool(), String.valueOf(isValid)));
+        return res;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setParameters(final List<KiemProperty> properties) {
+        String trace = null;
+        for (KiemProperty p : properties) {
+            if (p.getKey().equals("TRACE")) {
+                trace = p.getValue();
+            }
+        }
+        if (trace != null) {
+            traceFile = trace;
+        }
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsNextStep() {
+        return false;
     }
 }

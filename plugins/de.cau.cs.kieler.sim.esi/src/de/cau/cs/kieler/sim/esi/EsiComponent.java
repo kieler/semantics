@@ -13,21 +13,26 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.parsetree.AbstractNode;
-import org.eclipse.xtext.parsetree.NodeUtil;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
-
 
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
+import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -44,14 +49,15 @@ import org.json.JSONObject;
  * 
  * @author ctr
  */
-public class EsiComponent extends JSONObjectDataComponent {
+public class EsiComponent extends JSONObjectDataComponent implements IAutomatedProducer {
 
     private tracelist tracelist = null;
     private Iterator<trace> iTrace;
     private Iterator<tick> iTick;
 
-    private int pos = 0;
-    private int len = 0;
+    private int iteration = 0;
+    private String traceFile = ""; 
+    
 
     /**
      * {@inheritDoc}
@@ -68,9 +74,7 @@ public class EsiComponent extends JSONObjectDataComponent {
             }
             if (iTick.hasNext()) {
                 tick = iTick.next();
-                AbstractNode node = NodeUtil.getNodeAdapter(tick).getParserNode();
-                pos = node.getTotalOffset();
-                len = node.getLength();
+                // AbstractNode node = NodeUtil.getNodeAdapter(tick).getParserNode();
                 try {
                     for (signal s : tick.getInput()) {
                         if (s.isValued()) {
@@ -95,8 +99,6 @@ public class EsiComponent extends JSONObjectDataComponent {
 
     /** {@inheritDoc} */
     public void initialize() {
-        // pos = "! reset".length();
-
     }
 
     /** {@inheritDoc} */
@@ -128,7 +130,7 @@ public class EsiComponent extends JSONObjectDataComponent {
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), "");
+        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), traceFile);
         properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
@@ -143,10 +145,79 @@ public class EsiComponent extends JSONObjectDataComponent {
         JSONObject signals = new JSONObject();
         tracelist = Helper.loadTrace(getClass(), getProperties()[0].getValue(), getProperties()[0]
                 .getValue());
-        iTrace = tracelist.getTraces().iterator();
-        iTick = iTrace.next().getTicks().iterator();
         
-        // TODO: fill signal  list
+        iTrace = tracelist.getTraces().iterator();
+        //iTrace +=iteration;
+        iTick = iTrace.next().getTicks().iterator();
+
+        HashSet<String> sigs = new HashSet<String>();
+        try {
+            for (trace trace : tracelist.getTraces()) {
+                for (tick tick : trace.getTicks()) {
+                    for (signal s : tick.getInput()) {
+                        if (!sigs.contains(s.getName())) {
+                            sigs.add(s.getName());
+                            signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
+                        }
+                    }
+                    for (signal s : tick.getOutput()) {
+                        if (!sigs.contains(s.getName())) {
+                            sigs.add(s.getName());
+                            signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
+                        }
+
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            // ignore
+        }
+
         return signals;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsAnotherRun() {
+        return iTrace.hasNext();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<KiemProperty> produceInformation() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setParameters(List<KiemProperty> properties) {
+        String model = null;
+        for (KiemProperty p : properties) {
+            if (p.getKey().equals(MODEL_FILE)) {
+                model = p.getValue();
+            } else if (p.getKey().equals(ITERATION)) {
+                iteration = Integer.parseInt(p.getValue());
+            }
+        }
+        if (model != null) {
+            IPath path = Path.fromOSString(model);
+            path.removeFileExtension();
+            path.addFileExtension("esi");
+            traceFile = path.toOSString();
+            // IWorkspaceRoot ws = ResourcesPlugin.getWorkspace().getRoot();
+            // IFolder s = ws.getFolder(path);
+            // s.
+            properties.add(new KiemProperty("TRACE", traceFile));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsNextStep() {
+        return iTick.hasNext();
     }
 }
