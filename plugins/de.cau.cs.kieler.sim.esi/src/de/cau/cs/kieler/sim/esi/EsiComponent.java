@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sim.esi;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFolder;
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
+import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -49,7 +51,7 @@ import org.json.JSONObject;
  * 
  * @author ctr
  */
-public class EsiComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public class EsiComponent extends JSONObjectDataComponent implements IAutomatedComponent {
 
     private tracelist tracelist = null;
     private Iterator<trace> iTrace;
@@ -186,14 +188,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedP
     /**
      * {@inheritDoc}
      */
-    public List<KiemProperty> produceInformation() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setParameters(List<KiemProperty> properties) {
+    public void setParameters(final List<KiemProperty> properties) {
         String model = null;
         for (KiemProperty p : properties) {
             if (p.getKey().equals(MODEL_FILE)) {
@@ -207,9 +202,6 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedP
             path.removeFileExtension();
             path.addFileExtension("esi");
             traceFile = path.toOSString();
-            // IWorkspaceRoot ws = ResourcesPlugin.getWorkspace().getRoot();
-            // IFolder s = ws.getFolder(path);
-            // s.
             properties.add(new KiemProperty("TRACE", traceFile));
         }
     }
