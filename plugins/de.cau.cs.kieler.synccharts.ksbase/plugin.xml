@@ -15,7 +15,8 @@
           keyboardShortcut="M1+R S"
           name="Add Successor State"
           transformation="addSuccessorState"
-          transformationId="de.cau.cs.kieler.ksbase.addSuc">
+          transformationId="de.cau.cs.kieler.ksbase.addSuc"
+          validation="isNoRootState">
 				</transformation>
 				<transformation
           icon="icons/predecessor_state.gif"
@@ -99,8 +100,7 @@
              icon="icons/connect.gif"
              name="Add Successor States"
              transformation="addSuccessorStates"
-             transformationId="de.cau.cs.kieler.ksbase.addSucs"
-             validation="isNoRootState">
+             transformationId="de.cau.cs.kieler.ksbase.addSucs">
        </transformation>
 			</transformations>
 			<menus>

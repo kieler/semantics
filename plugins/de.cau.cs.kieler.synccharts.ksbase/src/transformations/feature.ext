@@ -7,7 +7,8 @@ import synccharts;
 Void addSuccessorState(State source):
  let target = new State:
  connectStates(source, target) ->
- source.parentRegion.innerStates.add(target)
+ source.parentRegion.innerStates.add(target) ->
+ setSelection(target)
 ;
 
 Void addSuccessorStates(List[State] states):
@@ -112,9 +113,12 @@ Void setSelection(Object object):
 
 //Checks if the state is the root state.
 Boolean isNoRootState(State state): 
-	state.eRootContainer.eContents.contains(state)
+	state.parentRegion.parentState != null
 ;
 
+Boolean isNoRootState(List[State] states):
+	states.notExists(e|e.parentRegion.parentState == null)
+;
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):
@@ -244,7 +248,6 @@ wBTrans.setTriggersAndEffects("B") ->
 waitAB.regions.add(wB) ->
 //ABO final state
 ABOFinal.setLabel("done") ->
-ABOFinal.setIsFinal(true) ->
 waitABToFinal.setSourceState(waitAB) ->
 waitABToFinal.setTargetState(ABOFinal) ->
 waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
