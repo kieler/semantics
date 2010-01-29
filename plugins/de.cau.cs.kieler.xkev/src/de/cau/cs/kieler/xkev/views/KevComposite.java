@@ -32,11 +32,15 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.swing.JLabel;
@@ -61,6 +65,10 @@ import org.apache.batik.swing.svg.JSVGComponent;
 import org.apache.batik.swing.svg.SVGDocumentLoaderAdapter;
 import org.apache.batik.swing.svg.SVGDocumentLoaderEvent;
 import org.apache.batik.swing.svg.SVGUserAgent;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -130,6 +138,8 @@ public class KevComposite extends Composite implements ISelectionListener {
     public SVGLoadingStatusListener getSVGLoadingStatusListener() {
         return loadingStatusListener;
     }
+    
+    
     
     
     public KevComposite(Composite parent, int style, boolean showScrollbars) {
@@ -220,11 +230,15 @@ public class KevComposite extends Composite implements ISelectionListener {
             });
             
             svgCanvas.addMouseListener(new MouseAdapter() {
-                IStatusLineManager slm = Activator.getKevView().getViewSite().getActionBars().getStatusLineManager();
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("Canvas Width: "+svgCanvas.getWidth() +" Canvas Height: "+ svgCanvas.getHeight());
-//                    System.out.println(svgCanvas.getSVGDocument().getRootElement().getBBox().getX());
-//                    slm.setMessage("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XPos: "+ e.getXOnScreen() + " YPos: "+ e.getYOnScreen());
+                    int onmask = MouseEvent.CTRL_DOWN_MASK | MouseEvent.SHIFT_DOWN_MASK;
+                    if ((e.getModifiersEx() & onmask) == onmask) {
+                        //Only save current SVGDocument to file, if CTRL+SHIFT+Right-Mousebutton is clicked
+                        if (e.getButton() == MouseEvent.BUTTON3) {
+                            SaveSVGDocument();
+                        }
+                    }
                     System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XOnScreenPos: "+ e.getXOnScreen() + " YOnScreenPos: "+ e.getYOnScreen());
                 }
                 
@@ -419,6 +433,44 @@ public class KevComposite extends Composite implements ISelectionListener {
     public JSVGCanvas getSVGCanvas() {
         return svgCanvas;
     }
+    
+    /**
+     * Helper function for saving current-status of svg-file
+     */
+    public void SaveSVGDocument() {
+        try {
+            TranscoderInput input = new TranscoderInput(Activator.getKevView().getSVGCanvas().getSVGDocument());
+
+            FileWriter writer;
+//            Calendar calendar = Calendar.getInstance();
+//            Timestamp ct = new Timestamp(calendar.getTime().getTime());
+            String s = "C:\\SVGFileDump[";
+            s += Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+".";
+            s += Calendar.getInstance().get(Calendar.MONTH+1)+".";
+            s += Calendar.getInstance().get(Calendar.YEAR)+"_";
+            s += Calendar.getInstance().get(Calendar.HOUR)+"-";
+            s += Calendar.getInstance().get(Calendar.MINUTE)+"-";
+            s += Calendar.getInstance().get(Calendar.SECOND)+"-";
+            s += Calendar.getInstance().get(Calendar.MILLISECOND)+"].svg";
+
+            //writer = new FileWriter("C:\\SVGFileDump["+ct.toString()+"].svg");
+            writer = new FileWriter(s);
+           
+            TranscoderOutput output = new TranscoderOutput(writer);
+            SVGTranscoder t = new SVGTranscoder();
+
+            t.transcode(input, output);
+            writer.flush();
+            writer.close();
+        } catch (TranscoderException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+    }
+
 
 //    public URI getSvgFile() throws URISyntaxException {
 //        if (svgURI == null) {
