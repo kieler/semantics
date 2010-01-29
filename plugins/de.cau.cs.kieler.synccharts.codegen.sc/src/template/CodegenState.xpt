@@ -4,8 +4,12 @@
 
 «DEFINE state FOR State-»
 
-«IF (this.regions.size == 1)-»
+«IF (this.regions.size >= 1)-»
+	«IF this.regions.size == 1-»
 «EXPAND generateForkOneRegion FOR this-»
+	«ELSE-»
+«EXPAND generateForkMoreRegions FOR this-»
+	«ENDIF-»
 «EXPAND CodegenRegion::region FOREACH this.regions-»
 
 «this.id»_main:
@@ -32,9 +36,20 @@
 			«ENDIF-»
 		«ENDFOREACH-»
 		«EXPAND CodegenMisc::callJSONState-»
+		«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
 			PAUSE;
+		«ENDIF-»
 		«FOREACH sortTransitionPrios(this) AS outTrans-»
-			«IF !((Transition)outTrans).isImmediate-»
+			«IF !((Transition)outTrans).isImmediate && (((Transition)outTrans).type == TransitionType::STRONGABORT)-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«ENDIF-»
+		«ENDFOREACH-»
+		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		  // PRIO für WEAK setzen
+		  PRIO(«computeWeakTreadPriority()»);
+		«ENDIF-»
+		«FOREACH sortTransitionPrios(this) AS outTrans-»
+			«IF !((Transition)outTrans).isImmediate  && (((Transition)outTrans).type != TransitionType::STRONGABORT)-»
 				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 			«ENDIF-»
 		«ENDFOREACH-»
@@ -50,6 +65,14 @@
 
 «DEFINE generateForkOneRegion FOR State-»
 «this.id»:
-			FORK(«getInitialState(this.regions.first()).id-», «computeThreadPriority(getInitialState(this.regions.first()))»);
+			FORK(«getInitialState(this.regions.first()).id-», «computeRealThreadPriority(getInitialState(this.regions.first()))»);
+			FORKE(«this.id»_main);
+«ENDDEFINE»
+
+«DEFINE generateForkMoreRegions FOR State-»
+«this.id»:
+	«FOREACH this.regions AS region-»
+			FORK(«getInitialState(region).id-», «computeRealThreadPriority(getInitialState(region))»);
+	«ENDFOREACH»
 			FORKE(«this.id»_main);
 «ENDDEFINE»

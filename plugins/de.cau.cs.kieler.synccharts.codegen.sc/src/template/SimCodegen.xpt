@@ -3,6 +3,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
+	«computeThreadPriorities(this.innerStates.first())»
 	«FILE "sim.c"-»
 	
 // generated SC-code //

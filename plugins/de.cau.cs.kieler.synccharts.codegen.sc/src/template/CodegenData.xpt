@@ -94,10 +94,11 @@ int main(int argc, const char* argv[]){
 	setInputs();
 	tick(1);
 	while(1){
+		printDebugInfo("Ein Tick ist vergangen!");
 		callOutputs();
 		char* outString = cJSON_Print(output);
 		strip_white_spaces(outString);
-		printf("%s\n", outString);
+		printf("DEBUGEND%s\n", outString);
 		fflush(stdout);
 		reset();
 		output = cJSON_CreateObject();

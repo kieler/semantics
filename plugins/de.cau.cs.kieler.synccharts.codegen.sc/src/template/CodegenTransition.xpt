@@ -12,7 +12,7 @@
 			«ENDIF-»
 		«ELSE-»
 			«IF this.type == TransitionType::NORMALTERMINATION-»
-			JOIN;
+			JOINELSE(«this.sourceState.id»_main);
 			«ENDIF-»
 			«EXPAND transitionEffects FOR this-»
 		«ENDIF-»
@@ -51,18 +51,8 @@
 	«ENDIF-»
 	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
 			// static PRIO
-			PRIO(«computeThreadPriority(this.targetState)»);
+			PRIO(«computeRealThreadPriority(this.targetState)»);
 			GOTO(«this.targetState.id»);
-	«ENDIF-»
-«ENDDEFINE»
-
-«DEFINE computePrio FOR Transition-»
-	«IF !(this.sourceState.regions.isEmpty)-»
-		«IF this.type == TransitionType::WEAKABORT-»
-			PRIO(«computeThreadPriority(this.sourceState)»);
-		«ELSEIF this.type == TransitionType::STRONGABORT-»
-			PRIO(«computeChangePriority(this.sourceState)»);
-		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 

@@ -4,13 +4,16 @@
 
 «DEFINE main FOR Region-»
 	«FILE "misc.h"-»
-«EXPAND signals FOR this-»
+«EXPAND header FOR this-»
+	«ENDFILE-»
+	«FILE "misc.c"-»
+«EXPAND file FOR this-»
 	«ENDFILE-»
 «ENDDEFINE»
 
-«DEFINE signals FOR Region-»
-#ifndef MISC_H
-#define MISC_H
+«DEFINE header FOR Region-»
+#ifndef MISC_H_
+#define MISC_H_
 
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 	extern const char *s2signame[];
@@ -18,5 +21,17 @@
 // Define valued int signals
 #define valSigIntCnt «allSignals(this.innerStates.first()).size»
 extern int valSigInt[valSigIntCnt];
-#endif
+
+void printDebugInfo(char* str);
+
+#endif /* MISC_H_*/
+«ENDDEFINE»
+
+«DEFINE file FOR Region-»
+#include <stdio.h>
+#include "misc.h"
+
+void printDebugInfo(char* str){
+	printf("%s INFO", str);
+}
 «ENDDEFINE»

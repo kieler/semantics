@@ -40,11 +40,19 @@ cached List computeThreadPriorities(State rootState):
 ;
 
 cached int computeMainTreadPriority(State rootState):
-	computeThreadPriority(getInitialState(rootState))
+	computeRealThreadPriority(getInitialState(rootState))
 ;
 
-int computeChangePriority(State state):
-	JAVA template.Helper.computeChangePriority(de.cau.cs.kieler.synccharts.State)
+int computeRealThreadPriority(State state):
+	JAVA template.Helper.computeRealThreadPriority(de.cau.cs.kieler.synccharts.State)
+;
+
+int computeWeakTreadPriority(State rootState):
+	JAVA template.Helper.computeWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+;
+
+int smallestChildPriority(State state):
+	JAVA template.Helper.smallestChildPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 cached List allSignals(State state):
@@ -54,8 +62,4 @@ cached List allSignals(State state):
 
 State getInitialState(State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
-;
-
-int computeThreadPriority(State state):
-	(computeThreadPriorities(getRootState(state)).indexOf(state.id)) + 1
 ;
