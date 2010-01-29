@@ -55,7 +55,9 @@ public class WorkflowGenerator {
             int value = random.nextInt(max);
             buffer.append(allowedChars.charAt(value));
         }
-        return buffer.toString();
+        // return buffer.toString();
+        // for debugging:
+        return "scDebug";
     }
 
     public WorkflowGenerator() {
@@ -84,11 +86,7 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
-            outPath = System.getProperty("java.io.tmpdir") + File.separator + randomString()
-                    + File.separator;
-            // for debugging un-comment the following line
-            //outPath = "/home/tam/scdebug/";
-            outPath = "." + File.separator + "scDebug" + File.separator;
+            outPath = System.getProperty("java.io.tmpdir") + randomString() + File.separator;
         }
 
         // Outlet
