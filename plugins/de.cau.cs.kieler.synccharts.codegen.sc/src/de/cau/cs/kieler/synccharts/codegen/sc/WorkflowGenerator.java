@@ -86,7 +86,12 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
-            outPath = System.getProperty("java.io.tmpdir") + File.separator + randomString() + File.separator;
+        	String tempDir = System.getProperty("java.io.tmpdir");
+        	// for Windows (tmpdir ends with backslash)
+        	if (tempDir.endsWith("\\")) {
+				tempDir = tempDir.substring(0, tempDir.length() - 1);
+			}
+            outPath = tempDir + File.separator + randomString() + File.separator;
         }
 
         // Outlet

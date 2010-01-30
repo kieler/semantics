@@ -50,10 +50,8 @@ public class DataComponent extends JSONObjectDataComponent {
             }
 
             String receivedMessage = fromSC.readLine();
-            // if there are Debug Infos
-            if (receivedMessage.contains("DEBUGEND")) {
-                receivedMessage = printDebugInfos(receivedMessage);
-            }
+            // print and delete debug information
+            receivedMessage = printDebugInfos(receivedMessage);
             System.out.println("in:  " + receivedMessage);
             while (error.ready()) {
                 System.err.print(error.readLine());
@@ -103,7 +101,14 @@ public class DataComponent extends JSONObjectDataComponent {
             e2.printStackTrace();
         }
 
-        String bundleLocation = url.getPath();
+        String bundleLocation = url.getFile();
+        // because of windows vs Linux
+        System.out.println("PATH: " + bundleLocation);
+        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
+        System.out.println("PATH: " + bundleLocation);
+        if (bundleLocation.startsWith("\\")){
+        	bundleLocation = bundleLocation.substring(1);
+        }
 
         try {
             // compile
