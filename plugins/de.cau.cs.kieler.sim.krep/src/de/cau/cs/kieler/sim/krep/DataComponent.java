@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,6 +49,7 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
 import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
@@ -70,16 +72,14 @@ import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
-
-import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
 
 /**
  * Integrates the KReP execution into KIELER.
@@ -87,7 +87,8 @@ import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public final class DataComponent extends JSONObjectDataComponent implements
+        IAutomatedProducer {
 
     private IConnectionProtocol connection = null;
     private CommunicationProtocol protocol = null;
@@ -150,7 +151,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                     }
                 }
             }
-            int reactionTime = protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
+            int reactionTime = protocol.tick(inputs.size() + outputs.size(),
+                    inputs, outputs);
             if (reactionTime > maxRT) {
                 maxRT = reactionTime;
             }
@@ -172,17 +174,19 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 viewer.markTrace(trace);
             }
         } catch (CommunicationException e) {
-            throw new KiemExecutionException("Communication error performing tick", true, e);
+            throw new KiemExecutionException(
+                    "Communication error performing tick", true, e);
         } catch (JSONException e) {
             throw new KiemExecutionException("Error in Data exchange", true, e);
         }
         try {
             for (Signal s : outputs) {
                 if (s.isValued()) {
-                    res.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
-                            .getPresent()));
+                    res.accumulate(s.getName(), JSONSignalValues.newValue(s
+                            .getValue(), s.getPresent()));
                 } else {
-                    res.accumulate(s.getName(), JSONSignalValues.newValue(s.getPresent()));
+                    res.accumulate(s.getName(), JSONSignalValues.newValue(s
+                            .getPresent()));
                 }
             }
         } catch (JSONException e) {
@@ -235,7 +239,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
         } else {
             items = new String[] { ID_JNI, ID_TCPIP, ID_RS232 };
         }
-        properties.add(new KiemProperty("Connection", new KiemPropertyTypeChoice(items), items[0]));
+        properties.add(new KiemProperty("Connection",
+                new KiemPropertyTypeChoice(items), items[0]));
 
         KiemProperty p = new KiemProperty("logFile", new KiemPropertyTypeFile());
         p.setValue("klp.esi");
@@ -250,7 +255,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
         properties.add(p);
 
         if (serialPorts.length > 0) {
-            p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(serialPorts));
+            p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(
+                    serialPorts));
             properties.add(p);
         }
 
@@ -258,7 +264,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
     }
 
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject provideInitialVariables()
+            throws KiemInitializationException {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchPage page = null;
         if (workbench != null) {
@@ -268,16 +275,20 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 if (page != null) {
 
                     try {
-                        viewer = (AssemblerView) (page.showView(AssemblerView.VIEW_ID));
+                        viewer = (AssemblerView) (page
+                                .showView(AssemblerView.VIEW_ID));
                     } catch (PartInitException e) {
-                        throw new KiemInitializationException("Cannot show assembler view", true, e);
+                        throw new KiemInitializationException(
+                                "Cannot show assembler view", true, e);
                     }
 
                     try {
-                        krepView = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
+                        krepView = (ConnectionView) (page.showView(
+                                ConnectionView.VIEW_ID, null,
                                 IWorkbenchPage.VIEW_VISIBLE));
                     } catch (PartInitException e) {
-                        throw new KiemInitializationException("Cannot show target view", true, e);
+                        throw new KiemInitializationException(
+                                "Cannot show target view", true, e);
                     }
                 }
             }
@@ -286,7 +297,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
 
         try {
             if (modelFile != null) {
-                IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(modelFile);
+                IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+                        modelFile);
                 String name = modelFile.removeLastSegments(1).lastSegment();
                 if (file.getFileExtension().equals("klp")) {
                     klp2klp(name, file);
@@ -300,7 +312,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 IEditorPart editor = page.getActiveEditor();
                 if (editor.getEditorInput().exists()
                         && editor.getEditorInput() instanceof FileEditorInput) {
-                    FileEditorInput input = (FileEditorInput) editor.getEditorInput();
+                    FileEditorInput input = (FileEditorInput) editor
+                            .getEditorInput();
                     IFile file = input.getFile();
                     String name = editor.getEditorInput().getName();
                     if (editor instanceof DataflowDiagramEditor) {
@@ -315,10 +328,12 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 }
             }
         } catch (IOException e) {
-            throw new KiemInitializationException("Assembler file not found", true, e);
+            throw new KiemInitializationException("Assembler file not found",
+                    true, e);
         } catch (ParseException e) {
             assembler = null;
-            throw new KiemInitializationException("Cannot parse assembler file", true, e);
+            throw new KiemInitializationException(
+                    "Cannot parse assembler file", true, e);
         } catch (CommunicationException e) {
             assembler = null;
             throw new KiemInitializationException("Connection failed", true, e);
@@ -345,23 +360,26 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                     viewer.markTrace(trace);
                 }
                 for (Signal s : assembler.getInputs()) {
-                    signals.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
-                            .getPresent()));
+                    signals.accumulate(s.getName(), JSONSignalValues.newValue(s
+                            .getValue(), s.getPresent()));
                 }
                 for (Signal s : assembler.getOutputs()) {
-                    signals.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
-                            .getPresent()));
+                    signals.accumulate(s.getName(), JSONSignalValues.newValue(s
+                            .getValue(), s.getPresent()));
                 }
             } catch (CommunicationException e) {
-                throw new KiemInitializationException("Communication Error", false, e);
+                throw new KiemInitializationException("Communication Error",
+                        false, e);
             } catch (LoadException e) {
-                throw new KiemInitializationException("Cannot load program", false, e);
+                throw new KiemInitializationException("Cannot load program",
+                        false, e);
             } catch (JSONException e) {
                 throw new KiemInitializationException("JSON error", false, e);
             }
         } else {
             throw new KiemInitializationException(
-                    "Active editor cannot be executed on a reactive processor.", false, null);
+                    "Active editor cannot be executed on a reactive processor.",
+                    false, null);
         }
 
         return signals;
@@ -382,16 +400,19 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
             } else if (type.equals(ID_TCPIP)) {
 
                 String device = getProperties()[PROP_HOST].getValue();
-                int port = Integer.parseInt(getProperties()[PROP_PORT].getValue());
+                int port = Integer.parseInt(getProperties()[PROP_PORT]
+                        .getValue());
                 return new SocketConnection(device, port);
             } else if (type.equals(ID_RS232)) {
                 String device = getProperties()[PROP_SERIAL_PORT].getValue();
                 return new RxtxSerialConnection(device);
             }
         } catch (CommunicationException e) {
-            throw new KiemInitializationException("Could not establish connection", true, e);
+            throw new KiemInitializationException(
+                    "Could not establish connection", true, e);
         }
-        throw new KiemInitializationException("Unknown connection protocol" + type, true, null);
+        throw new KiemInitializationException("Unknown connection protocol"
+                + type, true, null);
     }
 
     /**
@@ -404,9 +425,10 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      * @throws FileNotFoundException
      * @throws ParseException
      */
-    private void data2klp(final String name, final IFile file) throws IOException,
-            KiemInitializationException, ParseException {
-        String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
+    private void data2klp(final String name, final IFile file)
+            throws IOException, KiemInitializationException, ParseException {
+        String workspace = file.getWorkspace().getRoot().getLocation()
+                .toOSString();
 
         LustreGenerator gen = new LustreGenerator();
         String lus = gen.generateLus() + "Dummy.lus";
@@ -419,12 +441,14 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
 
         assembler = klpAsm;
 
-        File path = new File(workspace + file.getFullPath().removeLastSegments(1));
+        File path = new File(workspace
+                + file.getFullPath().removeLastSegments(1));
 
         String cmd = lus2ec + " " + lus + " MAIN";
         String[] env = new String[] { "PATH=/usr/bin/:/home/esterel/bin" };
         Process p = Runtime.getRuntime().exec(cmd, env, path);
-        Reader out = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        Reader out = new BufferedReader(new InputStreamReader(p
+                .getErrorStream()));
         StringBuffer s = new StringBuffer();
         while (out.ready()) {
             s.append(Character.toChars(out.read()));
@@ -438,12 +462,13 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
         String ec = ec2klp.compile("Dummy", in);
         ByteArrayInputStream klp = new ByteArrayInputStream(ec.getBytes());
 
-        Injector injector = new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
+        Injector injector = new KlpStandaloneSetup()
+                .createInjectorAndDoEMFRegistration();
         IAntlrParser parser = injector.getInstance(IAntlrParser.class);
         IParseResult parseResult = parser.parse(klp);
         if (!parseResult.getParseErrors().isEmpty()) {
-            throw new KiemInitializationException(parseResult.getParseErrors().toString(), false,
-                    null);
+            throw new KiemInitializationException(parseResult.getParseErrors()
+                    .toString(), false, null);
         }
         KLP model = (KLP) parseResult.getRootASTElement();
         klpAsm.assemble(name, model);
@@ -459,14 +484,16 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      * @throws KiemInitializationException
      * @throws ParseException
      */
-    private void klp2klp(final String name, final IFile file) throws CommunicationException,
-            CoreException, KiemInitializationException, ParseException {
+    private void klp2klp(final String name, final IFile file)
+            throws CommunicationException, CoreException,
+            KiemInitializationException, ParseException {
         connection = connect(ICommunicationProtocol.P_KREP);
         protocol = new KrepProtocol(connection);
         assembler = new KlpAssembler();
         InputStream in = file.getContents();
 
-        Injector injector = new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
+        Injector injector = new KlpStandaloneSetup()
+                .createInjectorAndDoEMFRegistration();
         IAntlrParser parser = injector.getInstance(IAntlrParser.class);
         IParseResult parseResult = parser.parse(in);
         if (!parseResult.getParseErrors().isEmpty()) {
@@ -485,8 +512,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      * @throws ParseException
      * @throws KiemInitializationException
      */
-    private void kasm2kep(final String name, final IFile file) throws CoreException,
-            ParseException, KiemInitializationException {
+    private void kasm2kep(final String name, final IFile file)
+            throws CoreException, ParseException, KiemInitializationException {
         connection = connect(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
@@ -505,30 +532,34 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      * @throws ParseException
      *             thrown if the compilation fails
      */
-    private void strl2kep(final String name, final IFile file) throws KiemInitializationException,
-            ParseException {
+    private void strl2kep(final String name, final IFile file)
+            throws KiemInitializationException, ParseException {
         InputStream strl;
         try {
             strl = file.getContents();
         } catch (CoreException e) {
             throw new KiemInitializationException("cannot load file", true, e);
         }
-        Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
+        Bundle[] fragments = Platform.getFragments(Activator.getDefault()
+                .getBundle());
 
         if (fragments.length != 1) {
-            throw new KiemInitializationException("strl2kasm compiler not found", false, null);
+            throw new KiemInitializationException(
+                    "strl2kasm compiler not found", false, null);
         }
         Bundle compiler = fragments[0];
 
         String path;
         try {
-            path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
+            path = FileLocator.toFileURL(
+                    FileLocator.find(compiler, new Path(""), null)).getPath();
         } catch (IOException e) {
             throw new KiemInitializationException("cannot load file", true, e);
         }
 
         InputStream xml = cecRun("strl2xml", path + "cec-strlxml", strl);
-        InputStream exp = cecRun("expandModules", path + "cec-expandmodules", xml);
+        InputStream exp = cecRun("expandModules", path + "cec-expandmodules",
+                xml);
         InputStream dis = cecRun("dismantle", path + "cec-kepdismantle ", exp); // "-d ALL"
         InputStream kep = cecRun("generateCKAG", path + "cec-astkep -o", dis);
         // TODO: add -o for optimizations. Oops, must be independent of OS.
@@ -556,8 +587,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      * 
      * @throw KiemInitializationException if the compilation is not successful
      */
-    private InputStream cecRun(final String name, final String cmd, final InputStream input)
-            throws KiemInitializationException {
+    private InputStream cecRun(final String name, final String cmd,
+            final InputStream input) throws KiemInitializationException {
 
         Process p;
         try {
@@ -606,19 +637,21 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                     // silently ignore
                 }
                 if (p.exitValue() != 0 && err.length() > 0) {
-                    throw new KiemInitializationException("Parse Error: " + err.toString(), false,
-                            null);
+                    throw new KiemInitializationException("Parse Error: "
+                            + err.toString(), false, null);
                 }
             } finally {
                 p.destroy();
             }
 
             if (p.exitValue() != 0) {
-                throw new KiemInitializationException("error in " + name, true, null);
+                throw new KiemInitializationException("error in " + name, true,
+                        null);
             }
             return new ByteArrayInputStream(output.toByteArray());
         } catch (IOException e1) {
-            throw new KiemInitializationException("error compiling file " + name, true, e1);
+            throw new KiemInitializationException("error compiling file "
+                    + name, true, e1);
         }
 
     }
@@ -661,6 +694,20 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
      */
     public boolean wantsNextStep() {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int wantsMoreRuns() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int wantsMoreSteps() {
+        return 0;
     }
 
 }

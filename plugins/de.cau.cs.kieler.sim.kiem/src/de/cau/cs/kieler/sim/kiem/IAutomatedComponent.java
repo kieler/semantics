@@ -71,7 +71,7 @@ public interface IAutomatedComponent {
      * 
      * @return the number of additional runs
      */
-    // int wantsMoreRuns();
+    int wantsMoreRuns();
 
     /**
      * Ask the component if it wants to do more steps. This causes the entire
@@ -79,6 +79,6 @@ public interface IAutomatedComponent {
      * 
      * @return the number of additional steps
      */
-    // int wantsMoreSteps();
+    int wantsMoreSteps();
 
 }

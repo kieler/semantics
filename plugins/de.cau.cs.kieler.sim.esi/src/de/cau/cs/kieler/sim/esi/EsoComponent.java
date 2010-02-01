@@ -22,30 +22,30 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Data-component to read traces in esi format.
  * 
  * @author ctr
  */
-public class EsoComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public class EsoComponent extends JSONObjectDataComponent implements
+        IAutomatedProducer {
 
     private tracelist tracelist = null;
     private Iterator<trace> iTrace;
@@ -60,7 +60,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+    public JSONObject step(final JSONObject input)
+            throws KiemExecutionException {
         trace trace;
         tick tick;
         JSONObject res = new JSONObject();
@@ -84,8 +85,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
                                 break;
                             }
                             if (sig.isValued()) {
-                                if ((Integer) (JSONSignalValues.getSignalValue(obj)) != sig
-                                        .getVal()) {
+                                if ((Integer) (JSONSignalValues
+                                        .getSignalValue(obj)) != sig.getVal()) {
                                     valid = false;
                                     break;
                                 }
@@ -102,7 +103,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
                     //                     
                     // JSONObject obj = input.getJSONObject(key.next());
                     // if (JSONSignalValues.isSignalValue(obj)) {
-                    // if (JSONSignalValues.isPresent(obj) && !tick.getInput().contains(key)) {
+                    // if (JSONSignalValues.isPresent(obj) &&
+                    // !tick.getInput().contains(key)) {
                     // valid = false;
                     // break;
                     // } else {
@@ -115,10 +117,12 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
                     // }
                     // }
                     isValid = isValid && valid;
-                    res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
+                    res.accumulate("valid", JSONSignalValues.newValue(pos,
+                            valid));
 
                 } catch (JSONException e) {
-                    throw new KiemExecutionException("Error building JSON Object", false, e);
+                    throw new KiemExecutionException(
+                            "Error building JSON Object", false, e);
                 }
             }
             pos++;
@@ -131,7 +135,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     // additional methods
     /** {@inheritDoc} */
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject provideInitialVariables()
+            throws KiemInitializationException {
         JSONObject res = new JSONObject();
         try {
             res.accumulate("valid", JSONSignalValues.newValue(true));
@@ -162,7 +167,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     @Override
     public KiemProperty[] provideProperties() {
         String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
         if (page != null) {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
@@ -178,9 +184,11 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(),
+        properties[0] = new KiemProperty("Input File",
+                new KiemPropertyTypeFile(),
                 "/home/ctr/runtime-EclipseApplication/test/abro.esi");
-        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
+        properties[1] = new KiemProperty("Input Editor",
+                new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
 
@@ -201,7 +209,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
      */
     public List<KiemProperty> produceInformation() {
         List<KiemProperty> res = new LinkedList<KiemProperty>();
-        res.add(new KiemProperty("valid", new KiemPropertyTypeBool(), String.valueOf(isValid)));
+        res.add(new KiemProperty("valid", new KiemPropertyTypeBool(), String
+                .valueOf(isValid)));
         return res;
     }
 
@@ -226,5 +235,21 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
      */
     public boolean wantsNextStep() {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int wantsMoreRuns() {
+        return wantsAnotherRun() ? 1 : 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int wantsMoreSteps() {
+        return 0;
     }
 }
