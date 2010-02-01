@@ -141,27 +141,27 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
 
     /** {@inheritDoc} */
     public void wrapup() {
-        //tracelist = null;
+        tracelist = null;
     }
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        if (iteration == 0) {
-            try {
-                String name = getProperties()[0].getValue();
-                if (traceFile != null) { // Automated run
-                    name = traceFile;
-                }
-                tracelist = Helper.loadTrace(getClass(), name);
-            } catch (Exception e) {
-                throw new KiemInitializationException("Cannot open trace file", true, e);
+        try {
+            String name = getProperties()[0].getValue();
+            if (traceFile != null) { // Automated run
+                name = traceFile;
             }
-
-            iTrace = tracelist.getTraces().iterator();
-
+            tracelist = Helper.loadTrace(getClass(), name);
+        } catch (Exception e) {
+            throw new KiemInitializationException("Cannot open trace file", true, e);
         }
 
+        iTrace = tracelist.getTraces().iterator();
+        for (int i = 0; i < iteration && iTrace.hasNext(); i++) {
+            iTrace.next();
+        }
+        // iTrace +=iteration;
         if (iTrace.hasNext()) {
             iTick = iTrace.next().getTicks().iterator();
 
@@ -195,7 +195,11 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
      * {@inheritDoc}
      */
     public boolean wantsAnotherRun() {
-        return iTrace.hasNext();
+        if (iTrace == null) {
+            return false;
+        } else {
+            return iTrace.hasNext();
+        }
     }
 
     /**
