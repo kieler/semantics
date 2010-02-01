@@ -26,6 +26,9 @@ import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramContentProvider;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramLabelProvider;
 
 /**
+ * Displays the assembler in a table, including labels, instructions and object code. Each assembler
+ * instructions takes exactly one line in the table.
+ * 
  * @author ctr
  * 
  */

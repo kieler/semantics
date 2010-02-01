@@ -27,9 +27,13 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 
 /**
- * Preference page for general EvalBench preferences.
+ * Preference page for general EvalBench preferences. These preferences are only used by the Verify
+ * view, for other executions the preferences are set in the execution manager. This preference page
+ * is obsolete as soon as the execution manager is extended by a feature for automatic verification.
  * 
  * @author msp, ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class EvalBenchPreferencePage extends FieldEditorPreferencePage implements
         IWorkbenchPreferencePage {
@@ -90,7 +94,7 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
     @Override
     protected void createFieldEditors() {
 
-         String[][] labels = new String[][] {
+        String[][] labels = new String[][] {
                 { "KIEL Esterel Processor Protocol", ICommunicationProtocol.P_KEP },
                 { "KIEL Reactive Processor Protocol", ICommunicationProtocol.P_KREP } };
         FieldEditor fieldEditor = new RadioGroupFieldEditor(PROTOCOL_TYPE,
@@ -126,7 +130,6 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
         fieldEditor = new BooleanFieldEditor(IGNORE_INVALID,
                 "continue verify run after mismatch as detected", getFieldEditorParent());
         addField(fieldEditor);
-
 
         adjustGridLayout();
     }

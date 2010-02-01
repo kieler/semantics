@@ -34,7 +34,9 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
 /**
  * A Viewer for displaying some sort of text content.
  * 
- * @author msp
+ * @author msp, ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class TextViewer extends ContentViewer {
 

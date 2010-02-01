@@ -64,8 +64,14 @@ public abstract class AssemblerEditor extends EditorPart {
      */
     private IAssembler assembler;
 
-    public void setAssembler(IAssembler assembler) {
-        this.assembler = assembler;
+    /**
+     * setter for the assembler. This should only be used once by each subclass.
+     * 
+     * @param asm
+     *            the assembler used by this editor
+     */
+    protected void setAssembler(final IAssembler asm) {
+        this.assembler = asm;
     }
 
     /**
@@ -101,9 +107,6 @@ public abstract class AssemblerEditor extends EditorPart {
             // execute assembler
             assembler.assemble(inputFile.getName(), source);
 
-           // String baseName = inputFile.getAbsolutePath();
-           // baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-           // Activator.getDefault().setTraces(new TraceList(assembler, baseName));
         } finally {
             reader.close();
         }
@@ -124,11 +127,7 @@ public abstract class AssemblerEditor extends EditorPart {
             File file;
             if (input instanceof IPathEditorInput) {
                 file = ((IPathEditorInput) input).getPath().toFile();
-                // TODO add support for default editor inputs
-                /*
-                 * } else if (input instanceof IURIEditorInput) { file = new
-                 * File(((IURIEditorInput)input).getURI().getPath());
-                 */
+
             } else {
                 file = new File(input.getName());
             }
@@ -156,12 +155,6 @@ public abstract class AssemblerEditor extends EditorPart {
             TableColumn column0 = new TableColumn(table, COLUMN_ALIGN[i], i);
             column0.setWidth(COLUMN_WIDTH[i]);
         }
-        /*
-         * TableColumn column0 = new TableColumn(table, SWT.RIGHT, 0); column0.setWidth(40);
-         * TableColumn column1 = new TableColumn(table, SWT.NONE, 1); column1.setWidth(90);
-         * TableColumn column2 = new TableColumn(table, SWT.NONE, 2); column2.setWidth(300);
-         * TableColumn column3 = new TableColumn(table, SWT.NONE, 3); column3.setWidth(50);
-         */
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 

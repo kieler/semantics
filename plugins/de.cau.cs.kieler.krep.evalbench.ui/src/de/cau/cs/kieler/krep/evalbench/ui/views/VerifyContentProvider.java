@@ -17,12 +17,14 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
- * Diplay contents as expected by traces.
+ * A content provider for the verify view.
  * 
  * @author ctr
  * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
+ * 
  */
-public class TraceContentProvider implements IStructuredContentProvider {
+public class VerifyContentProvider implements IStructuredContentProvider {
     /**
      * {@inheritDoc}
      * 

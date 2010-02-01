@@ -23,6 +23,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
  * The activator class controls the plug-in life cycle.
  * 
  * @author ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class Activator extends AbstractUIPlugin {
 

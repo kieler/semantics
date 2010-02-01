@@ -17,9 +17,13 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
- * Content provider for the program view.
+ * Content provider for the assembler view.
  * 
- * @author msp
+ * @author msp, ctr
+ *
+ *
+ * @kieler.rating 2010-02-01 proposed yellow ctr
+ * 
  */
 public class ProgramContentProvider implements IStructuredContentProvider {
 

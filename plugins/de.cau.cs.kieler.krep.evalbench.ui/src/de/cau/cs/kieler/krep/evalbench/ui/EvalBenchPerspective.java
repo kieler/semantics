@@ -26,6 +26,9 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
  * view and the connection log.
  * 
  * @author msp, ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
+ * 
  */
 public class EvalBenchPerspective implements IPerspectiveFactory {
 

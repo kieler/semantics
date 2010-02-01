@@ -28,6 +28,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
  * 
  * @author ctr
  * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
+ * 
  */
 public class VerifyLabelProvider implements ITableLabelProvider {
     /** Relative path to the image to use for present signals. */

@@ -29,6 +29,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
  * A View for displaying a trace file.
  * 
  * @author ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class VerifyView extends ViewPart {
 
@@ -64,7 +66,7 @@ public class VerifyView extends ViewPart {
         // create table viewer
         viewer = new TableViewer(table);
         viewer.setColumnProperties(COLUMN_NAMES);
-        viewer.setContentProvider(new TraceContentProvider());
+        viewer.setContentProvider(new VerifyContentProvider());
         viewer.setLabelProvider(new VerifyLabelProvider());
 
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();

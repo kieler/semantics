@@ -22,7 +22,9 @@ import org.eclipse.swt.graphics.Image;
 /**
  * Label provider for the program view.
  * 
- * @author msp
+ * @author msp, ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class ProgramLabelProvider implements ITableLabelProvider {
 

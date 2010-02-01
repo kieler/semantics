@@ -19,7 +19,11 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TextViewer;
 
 /**
+ * Erases the contents of a given text viewer.
+ * 
  * @author ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  * 
  */
 public class ClearAction extends Action {

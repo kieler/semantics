@@ -25,9 +25,13 @@ import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
 
 /**
- * A View for logging of connection messages to targets.
+ * A view for logging of connection messages to targets. This includes the information on the
+ * current target.
  * 
  * @author msp, ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
+ * 
  */
 public class ConnectionView extends ViewPart implements ICommunicationListener {
 
@@ -102,7 +106,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * @param msg message to display in the connection view
+     * @param msg
+     *            message to display in the connection view
      * @return true if the message was displayed
      */
     public static boolean log(final String msg) {
@@ -121,7 +126,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * @param msg message to display in the connection view
+     * @param msg
+     *            message to display in the connection view
      */
     public void show(final String msg) {
         if (viewer != null && display != null) {

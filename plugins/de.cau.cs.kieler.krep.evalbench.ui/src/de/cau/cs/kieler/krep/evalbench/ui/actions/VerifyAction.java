@@ -55,9 +55,12 @@ import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
  * Action that runs the current program. The plugin activator and the common layer are used to
- * access all relevant data.
+ * access all relevant data. This action is obsolete as soon as the execution manager has a feature
+ * for automatic validation.
  * 
  * @author ctr
+ * 
+ * @kieler.rating 2010-02-01 proposed yellow ctr
  */
 public class VerifyAction extends Action {
 
@@ -273,9 +276,6 @@ public class VerifyAction extends Action {
                         }
                     }
                 }
-                // Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
-                // "Verification done: " + Tools.showTime(), null);
-                // StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         });
     }
