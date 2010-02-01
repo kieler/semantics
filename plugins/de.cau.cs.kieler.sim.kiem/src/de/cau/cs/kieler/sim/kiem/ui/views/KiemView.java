@@ -1086,6 +1086,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         }
                         setDirty(true);
                         checkForSingleEnabledMaster(false);
+                        viewer.refresh();
                         updateView(true);
                     }
                 }

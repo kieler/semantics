@@ -208,7 +208,7 @@ public class AddDataComponentDialog extends Dialog {
      * he/she wishes to add to its list. The type of the DataComponent is shown in brackets, and the
      * icon is also personalized for each type of DataComponent.
      */
-    private void addToTable(AbstractDataComponent component) {
+    private void addToTable(final AbstractDataComponent component) {
         TableItem item = new TableItem(table, SWT.NULL);
         String type = Messages.mInitializationDataComponent;
         if (component.isObserver() && component.isProducer()) {
@@ -284,6 +284,7 @@ public class AddDataComponentDialog extends Dialog {
      * the list. The selected list can be obtained by calling {@link #getSelectedComponents()}.
      */
     private void updateSelectedList() {
+        System.out.println("updateSelectedList()");
         selectedList = new LinkedList<AbstractDataComponent>();
         TableItem[] selection = table.getSelection();
         for (int c = 0; c < selection.length; c++) {
@@ -291,10 +292,13 @@ public class AddDataComponentDialog extends Dialog {
             // only add if multiple instances are ok
             // or if there are no instances yet!
             if (checkMultipleInstanceOk(dataComponent)) {
-                selectedList.add(dataComponent);
+                // only if dataComponent is visible
+                if (!dataComponent.isInvisible()) {
+                    selectedList.add(dataComponent);
+                }
             }
         }
-        if (selection.length < 1) {
+        if ((selectedList.size() < 1) || (selection.length < 1)) {
             selectedList = null;
         }
     }
