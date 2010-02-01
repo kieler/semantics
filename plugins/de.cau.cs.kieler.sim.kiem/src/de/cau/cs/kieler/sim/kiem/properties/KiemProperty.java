@@ -17,9 +17,10 @@ package de.cau.cs.kieler.sim.kiem.properties;
 import java.io.Serializable;
 
 /**
- * The Class KiemProperty. This is the basic serializable KiemProperty implementation which can hold
- * a key value pair of types String and also a KiemPropertyType. The contents of the KiemProperty
- * can be saved and loaded but the KiemPropertyType is recovered by its identifier.
+ * The Class KiemProperty. This is the basic serializable KiemProperty
+ * implementation which can hold a key value pair of types String and also a
+ * KiemPropertyType. The contents of the KiemProperty can be saved and loaded
+ * but the KiemPropertyType is recovered by its identifier.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 yellow
@@ -55,9 +56,8 @@ public class KiemProperty implements Serializable {
      * @param valueParam
      *            the value of this property
      */
-    public KiemProperty(final String keyParam, 
-                        final KiemPropertyType typeParam, 
-                        final String valueParam) {
+    public KiemProperty(final String keyParam,
+            final KiemPropertyType typeParam, final String valueParam) {
         this.key = keyParam;
         this.value = valueParam;
         this.type = typeParam;
@@ -76,7 +76,8 @@ public class KiemProperty implements Serializable {
      * @param valueParam
      *            the value of this property
      */
-    public KiemProperty(final String keyParam, final KiemPropertyType typeParam, final int valueParam) {
+    public KiemProperty(final String keyParam,
+            final KiemPropertyType typeParam, final int valueParam) {
         this.key = keyParam;
         this.value = "" + valueParam;
         this.type = typeParam;
@@ -140,7 +141,7 @@ public class KiemProperty implements Serializable {
      */
     public KiemProperty(final String keyParam, final int valueParam) {
         this.key = keyParam;
-        this.value = value + "";
+        this.value = valueParam + "";
         this.type = new KiemPropertyTypeInt();
     }
 
@@ -182,9 +183,8 @@ public class KiemProperty implements Serializable {
         return this.value;
     }
 
-    
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the value as boolean value.
      * 
@@ -194,7 +194,7 @@ public class KiemProperty implements Serializable {
     public final boolean getValueAsBoolean() {
         return Boolean.parseBoolean(this.getValue());
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -205,7 +205,7 @@ public class KiemProperty implements Serializable {
     public final int getValueAsInt() {
         return Integer.parseInt(this.getValue());
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -244,7 +244,8 @@ public class KiemProperty implements Serializable {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the file path as a String. This interprets the property value as a file path.
+     * Gets the file path as a String. This interprets the property value as a
+     * file path.
      * 
      * @return the String file path
      */
@@ -255,8 +256,8 @@ public class KiemProperty implements Serializable {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the directory as a String. This interprets the property value as a file and extracts the
-     * directory out of it.
+     * Gets the directory as a String. This interprets the property value as a
+     * file and extracts the directory out of it.
      * 
      * @return the String directory
      */
