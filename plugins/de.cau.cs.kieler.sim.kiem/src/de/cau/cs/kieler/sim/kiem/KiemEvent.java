@@ -41,8 +41,11 @@ public class KiemEvent {
      */
     public static final int NONE = 0;
 
-    /** The Constant STEP event is triggered before a step is about to occur. */
+    /** The Constant STEP INFO event is triggered before a step is about to occur. */
     public static final int STEP_INFO = 1;
+
+    /** The Constant STEP DONE event is triggered after a step has been made. */
+    public static final int STEP_DONE = 13;
 
     /** The Constant CMD_STEP event is triggered when the user hits the step button. */
     public static final int CMD_STEP = 2;

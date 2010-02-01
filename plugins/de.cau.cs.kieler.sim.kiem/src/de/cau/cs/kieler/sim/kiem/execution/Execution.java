@@ -1278,6 +1278,11 @@ public class Execution extends Job {
                         steps = NO_STEPS;
                     }
 
+                    // notify about the finished step (STEP_DONE)
+                    if (eventManager != null) {
+                        eventManager.notify(new KiemEvent(KiemEvent.STEP_DONE));
+                    }
+                    
                 } // end if - make a step
 
                 // got async pause command!
