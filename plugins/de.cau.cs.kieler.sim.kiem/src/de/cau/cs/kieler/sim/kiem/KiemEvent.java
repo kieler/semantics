@@ -19,12 +19,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class implements some constants that define specific events in KIEM. A DataComponent may
- * register itself using the
- * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.provideEventOfInterest} method
- * to be a listener of some events. The method
- * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.notifyEvent} will then be called
- * by KIEM for the registered events.
+ * This class implements some constants that define specific events in KIEM. A
+ * DataComponent may register itself using the
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.provideEventOfInterest}
+ * method to be a listener of some events. The method
+ * {@link de.cau.cs.kieler.sim.kiem.extension.AbstractDataComponent.notifyEvent}
+ * will then be called by KIEM for the registered events.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 proposed yellow
@@ -36,78 +36,118 @@ public class KiemEvent {
     private Object info;
 
     /**
-     * The Constant NONE event represents the default NULL event and means this component does not
-     * want to be notified for any event.
+     * The Constant NONE event represents the default NULL event and means this
+     * component does not want to be notified for any event.
      */
     public static final int NONE = 0;
 
-    /** The Constant STEP INFO event is triggered before a step is about to occur. */
+    /**
+     * The Constant STEP INFO event is triggered before a step is about to
+     * occur.
+     */
     public static final int STEP_INFO = 1;
 
     /** The Constant STEP DONE event is triggered after a step has been made. */
-    public static final int STEP_DONE = 13;
+    public static final int STEP_DONE = 18;
 
-    /** The Constant CMD_STEP event is triggered when the user hits the step button. */
+    /**
+     * The Constant CMD_STEP event is triggered when the user hits the step
+     * button.
+     */
     public static final int CMD_STEP = 2;
 
-    /** The Constant CMD_STEP event is triggered when the user hits the step button. */
+    /**
+     * The Constant CMD_STEP event is triggered when the user hits the step
+     * button.
+     */
     public static final int CMD_STEP_BACK = 3;
 
-    /** The Constant CMD_STEP event is triggered when the user hits the step button. */
+    /**
+     * The Constant CMD_STEP event is triggered when the user hits the step
+     * button.
+     */
     public static final int CMD_STEP_MACRO = 4;
 
-    /** The Constant CMD_RUN event is triggered when the user hits the run button. */
+    /**
+     * The Constant CMD_RUN event is triggered when the user hits the run
+     * button.
+     */
     public static final int CMD_RUN = 5;
 
-    /** The Constant CMD_PAUSE event is triggered when the user hits the pause button. */
+    /**
+     * The Constant CMD_PAUSE event is triggered when the user hits the pause
+     * button.
+     */
     public static final int CMD_PAUSE = 6;
 
     /** The Constant CMD_STOP event is triggered when user hits the stop button. */
     public static final int CMD_STOP = 7;
 
-    /** The Constant ADDED event is triggered when the user adds a component (instance). */
+    /**
+     * The Constant ADDED event is triggered when the user adds a component
+     * (instance).
+     */
     public static final int ADDED = 8;
 
-    /** The Constant DELETED event is triggered when the user deletes a component (instance). */
+    /**
+     * The Constant DELETED event is triggered when the user deletes a component
+     * (instance).
+     */
     public static final int DELETED = 9;
 
-    /** The Constant SCHEDULED event is triggered when the user changes the scheduling order. */
+    /**
+     * The Constant SCHEDULED event is triggered when the user changes the
+     * scheduling order.
+     */
     public static final int SCHEDULED = 10;
 
-    /** The Constant ACTIVATED event is triggered when the user activates the component. */
+    /**
+     * The Constant ACTIVATED event is triggered when the user activates the
+     * component.
+     */
     public static final int ACTIVATED = 11;
 
-    /** The Constant DEACTIVATED event is triggered when the user deactivates the component. */
+    /**
+     * The Constant DEACTIVATED event is triggered when the user deactivates the
+     * component.
+     */
     public static final int DEACTIVATED = 12;
 
     /**
-     * The Constant LOAD event is triggered when the user loads a scheduling. The info in this case
-     * is the location of the file as an IPath object.
+     * The Constant LOAD event is triggered when the user loads a scheduling.
+     * The info in this case is the location of the file as an IPath object.
      */
     public static final int LOAD = 13;
 
     /**
-     * The Constant SAVE event is triggered when the user saves a scheduling. The info in this case
-     * is the location of the file as an IPath object.
+     * The Constant SAVE event is triggered when the user saves a scheduling.
+     * The info in this case is the location of the file as an IPath object.
      */
     public static final int SAVE = 14;
 
     /**
-     * The Constant KIEMPROPERTY_CHANGE event is triggered when the user changes/edited a property
-     * value in table.
+     * The Constant KIEMPROPERTY_CHANGE event is triggered when the user
+     * changes/edited a property value in table.
      */
     public static final int KIEMPROPERTY_CHANGE = 15;
 
-    /** The Constant ERROR_STOP event is triggered when an error leads to the execution stop. */
+    /**
+     * The Constant ERROR_STOP event is triggered when an error leads to the
+     * execution stop.
+     */
     public static final int ERROR_STOP = 16;
 
-    /** The Constant ERROR_STOP event is triggered when an error leads to the execution pause. */
+    /**
+     * The Constant ERROR_STOP event is triggered when an error leads to the
+     * execution pause.
+     */
     public static final int ERROR_PAUSE = 17;
 
     // -------------------------------------------------------------------------
 
     /**
-     * This KiemEvent constructor sets the event(s) of interest during construction.
+     * This KiemEvent constructor sets the event(s) of interest during
+     * construction.
      * 
      * @param infoParam
      *            the (optional) info parameter
@@ -122,7 +162,8 @@ public class KiemEvent {
     // -------------------------------------------------------------------------
 
     /**
-     * This KiemEvent constructor sets the event(s) of interest during construction.
+     * This KiemEvent constructor sets the event(s) of interest during
+     * construction.
      * 
      * @param eventCodesParam
      *            the event codes param
@@ -135,7 +176,8 @@ public class KiemEvent {
     // -------------------------------------------------------------------------
 
     /**
-     * This KiemEvent constructor sets the event(s) of interest during construction.
+     * This KiemEvent constructor sets the event(s) of interest during
+     * construction.
      * 
      * @param infoParam
      *            the (optional) info parameter
@@ -151,7 +193,8 @@ public class KiemEvent {
     // -------------------------------------------------------------------------
 
     /**
-     * This KiemEvent constructor sets the event(s) of interest during construction.
+     * This KiemEvent constructor sets the event(s) of interest during
+     * construction.
      * 
      * @param eventCodeParam
      *            the event code param
@@ -165,7 +208,8 @@ public class KiemEvent {
     // -------------------------------------------------------------------------
 
     /**
-     * This KiemEvent constructor sets the no event of interest during construction.
+     * This KiemEvent constructor sets the no event of interest during
+     * construction.
      */
     public KiemEvent() {
         this.event = new int[1];
@@ -307,7 +351,8 @@ public class KiemEvent {
 
         int publicStaticFinalModifier = 0;
         try {
-            publicStaticFinalModifier = KiemEvent.class.getDeclaredField("NONE").getModifiers();
+            publicStaticFinalModifier = KiemEvent.class
+                    .getDeclaredField("NONE").getModifiers();
         } catch (SecurityException e0) {
             e0.printStackTrace();
         } catch (NoSuchFieldException e0) {
@@ -321,7 +366,7 @@ public class KiemEvent {
                 try {
                     int currentEvent = f.getInt(f);
                     if (currentEvent > 0 && this.isEvent(currentEvent)) {
-                        //System.out.println(f.getName());
+                        // System.out.println(f.getName());
                         returnList.add(currentEvent);
                     }
                 } catch (IllegalArgumentException e) {
