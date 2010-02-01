@@ -141,12 +141,12 @@ public class XtendTransformationFramework implements ITransformationFramework {
      *            The extension file name
      * @param operation
      *            The extension to execute
-     * @param basePackage
+     * @param basePackages
      *            The class name of the editors EPackage
      * @return False if an error occurred.
      */
     public boolean initializeTransformation(final String fileName, final String operation,
-            final String basePackage) {
+            final String... basePackages) {
 
         if (parameters == null) {
             return false;
@@ -160,15 +160,17 @@ public class XtendTransformationFramework implements ITransformationFramework {
         }
 
         xtendFacade = XtendFacade.create(withFileExt);
+        //Register all meta models
+        for (String basePackage : basePackages) {
+            // The EMFMetaMetaModel,
+            EmfMetaModel metaModel;
 
-        // The EMFMetaMetaModel,
-        EmfMetaModel metaModel;
-
-        // Load the EPackage class by using EcoreUtils
-        EPackage pack = EcoreUtil2.getEPackageByClassName(basePackage);
-        // create EMFMetaModel with the given EPackage
-        metaModel = new EmfMetaModel(pack);
-        xtendFacade.registerMetaModel(metaModel);
+            // Load the EPackage class by using EcoreUtils
+            EPackage pack = EcoreUtil2.getEPackageByClassName(basePackage);
+            // create EMFMetaModel with the given EPackage
+            metaModel = new EmfMetaModel(pack);
+            xtendFacade.registerMetaModel(metaModel);
+        }
 
         if (!xtendFacade.hasExtension(operation, parameters)) {
             return false;
@@ -210,8 +212,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 Reader reader = new InputStreamReader(fileName.openStream());
                 Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
                 if (o != null) {
-                    LinkedList<AbstractTransformation> transformations = 
-                        new LinkedList<AbstractTransformation>();
+                    LinkedList<AbstractTransformation> transformations = new LinkedList<AbstractTransformation>();
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods
@@ -246,6 +247,5 @@ public class XtendTransformationFramework implements ITransformationFramework {
     public String getFileExtension() {
         return XtendFile.FILE_EXTENSION;
     }
-
 
 }

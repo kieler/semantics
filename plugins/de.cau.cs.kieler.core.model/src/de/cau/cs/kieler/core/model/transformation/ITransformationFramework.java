@@ -73,11 +73,11 @@ public interface ITransformationFramework {
      *            The transformation file name
      * @param operation
      *            The operation to execute
-     * @param basePackage
+     * @param basePackages
      *            The class name of the editors EPackage
      * @return False if an error occurred.
      */
-    boolean initializeTransformation(String fileName, String operation, String basePackage);
+    boolean initializeTransformation(String fileName, String operation, String... basePackages);
 
     /**
      * Parses a transformation file and returns the existing in-place transformations.
