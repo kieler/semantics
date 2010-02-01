@@ -141,49 +141,53 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
 
     /** {@inheritDoc} */
     public void wrapup() {
-        tracelist = null;
+        //tracelist = null;
     }
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        try {
-            String name = getProperties()[0].getValue();
-            if (traceFile != null) { // Automated run
-                name = traceFile;
+        if (iteration == 0) {
+            try {
+                String name = getProperties()[0].getValue();
+                if (traceFile != null) { // Automated run
+                    name = traceFile;
+                }
+                tracelist = Helper.loadTrace(getClass(), name);
+            } catch (Exception e) {
+                throw new KiemInitializationException("Cannot open trace file", true, e);
             }
-            tracelist = Helper.loadTrace(getClass(),  name);
-        } catch (Exception e) {
-            throw new KiemInitializationException("Cannot open trace file", true, e);
+
+            iTrace = tracelist.getTraces().iterator();
+
         }
 
-        iTrace = tracelist.getTraces().iterator();
-        // iTrace +=iteration;
-        iTick = iTrace.next().getTicks().iterator();
+        if (iTrace.hasNext()) {
+            iTick = iTrace.next().getTicks().iterator();
 
-        HashSet<String> sigs = new HashSet<String>();
-        try {
-            for (trace trace : tracelist.getTraces()) {
-                for (tick tick : trace.getTicks()) {
-                    for (signal s : tick.getInput()) {
-                        if (!sigs.contains(s.getName())) {
-                            sigs.add(s.getName());
-                            signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
+            HashSet<String> sigs = new HashSet<String>();
+            try {
+                for (trace trace : tracelist.getTraces()) {
+                    for (tick tick : trace.getTicks()) {
+                        for (signal s : tick.getInput()) {
+                            if (!sigs.contains(s.getName())) {
+                                sigs.add(s.getName());
+                                signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
+                            }
                         }
-                    }
-                    for (signal s : tick.getOutput()) {
-                        if (!sigs.contains(s.getName())) {
-                            sigs.add(s.getName());
-                            signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
-                        }
+                        for (signal s : tick.getOutput()) {
+                            if (!sigs.contains(s.getName())) {
+                                sigs.add(s.getName());
+                                signals.accumulate(s.getName(), JSONSignalValues.newValue(false));
+                            }
 
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                // ignore
             }
-        } catch (JSONException e) {
-            // ignore
         }
-
         return signals;
     }
 
@@ -210,7 +214,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
             IPath path = Path.fromOSString(model);
             path = path.removeFileExtension();
             path = path.addFileExtension("esi");
-            
+
             IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
             traceFile = file.getLocation().toOSString();

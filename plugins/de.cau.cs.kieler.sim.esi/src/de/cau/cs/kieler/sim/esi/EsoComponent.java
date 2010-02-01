@@ -193,7 +193,7 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
      * {@inheritDoc}
      */
     public boolean wantsAnotherRun() {
-        return iTick.hasNext();
+        return false;
     }
 
     /**
