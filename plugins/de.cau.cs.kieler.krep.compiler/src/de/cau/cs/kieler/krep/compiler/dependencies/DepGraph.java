@@ -55,8 +55,8 @@ public class DepGraph {
             for (final String v : e.getValue()) {
                 addNode(v);
                 final Node source = nodes.get(v);
-                source.addOut(new Edge(target, 0));// v.getDelay()));
-                target.addIn(new Edge(source, 0));// v.getDelay()));
+                source.addOut(new Edge(target, 0)); // v.getDelay()));
+                target.addIn(new Edge(source, 0)); // v.getDelay()));
                 edges++;
             }
         }

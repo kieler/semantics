@@ -83,7 +83,7 @@ public class VarAccess extends Expression {
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        setClock(var.getClock().clone());// new ClockList();
+        setClock(var.getClock().clone()); 
         return new ClockList();
     }
 
