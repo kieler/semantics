@@ -63,6 +63,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     private int iteration = 0;
     private String traceFile = "";
 
+
     /**
      * {@inheritDoc}
      */
@@ -141,12 +142,15 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
 
     /** {@inheritDoc} */
     public void wrapup() {
-        tracelist = null;
+        iteration = 0;
     }
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
+        // if (iteration == 0) {
+        // load new trace
+
         try {
             String name = getProperties()[0].getValue();
             if (traceFile != null) { // Automated run
@@ -161,7 +165,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
         for (int i = 0; i < iteration && iTrace.hasNext(); i++) {
             iTrace.next();
         }
-        // iTrace +=iteration;
+        // } // iTrace +=iteration;
         if (iTrace.hasNext()) {
             iTick = iTrace.next().getTicks().iterator();
 
@@ -188,6 +192,7 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
                 // ignore
             }
         }
+
         return signals;
     }
 

@@ -43,7 +43,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  */
 public class Helper {
 
-    public static tracelist loadTrace(Object classpathURIContext, String editorId, String fileName)
+    public static tracelist loadTrace(final Object classpathURIContext, final String editorId, final String fileName)
             throws KiemInitializationException {
         tracelist res = null;
 
@@ -56,7 +56,7 @@ public class Helper {
 
         IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
         // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
+        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); // Activator.PLUGIN_ID);
         XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
         rs.getResources().add(resource);
 
@@ -113,7 +113,7 @@ public class Helper {
         return res;
     }
 
-    public static tracelist loadTrace(Object classpathURIContext, String fileName)
+    public static tracelist loadTrace(final Object classpathURIContext, final String fileName)
             throws KiemInitializationException {
         tracelist res = null;
 
@@ -124,7 +124,7 @@ public class Helper {
 
         IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
         // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
+        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); // Activator.PLUGIN_ID);
         XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
         rs.getResources().add(resource);
 

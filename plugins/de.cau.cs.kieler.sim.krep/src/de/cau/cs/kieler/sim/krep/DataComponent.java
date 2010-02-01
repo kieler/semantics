@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.sim.krep;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,15 +24,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -46,7 +48,6 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
@@ -68,6 +69,7 @@ import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
+import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -85,7 +87,7 @@ import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent {
+public final class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
 
     private IConnectionProtocol connection = null;
     private CommunicationProtocol protocol = null;
@@ -93,6 +95,13 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     private AssemblerView viewer = null;
     private ConnectionView krepView = null;
+    private IPath modelFile = null;
+
+    // WCRT
+    private int maxRT = Integer.MIN_VALUE;
+    private int minRT = Integer.MAX_VALUE;
+    private int rt = 0;
+    private int steps = 1;
 
     /*
      * number of the properties in the property array. This is established in provideProperties
@@ -111,6 +120,11 @@ public final class DataComponent extends JSONObjectDataComponent {
     private static final String ID_RS232 = "RS 232";
     /** Identifier to connect via a TCP/IP connection. */
     private static final String ID_TCPIP = "TCP/IP";
+
+    /** timeout when running CEC processes in ms. */
+    private static final int CEC_TIMEOUT = 100;
+    /** frequency to check whether new output is generated. */
+    private static final int CEC_STEP = 100;
 
     @Override
     public String getDataComponentId() {
@@ -137,6 +151,14 @@ public final class DataComponent extends JSONObjectDataComponent {
                 }
             }
             int reactionTime = protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
+            if (reactionTime > maxRT) {
+                maxRT = reactionTime;
+            }
+            if (reactionTime < minRT) {
+                minRT = reactionTime;
+            }
+            rt += reactionTime;
+            steps++;
             res.accumulate("Reaction Time", reactionTime);
             if (reactionTime > assembler.getTickLen()) {
                 res.accumulate("TickWarn", JSONSignalValues.newValue(true));
@@ -146,7 +168,9 @@ public final class DataComponent extends JSONObjectDataComponent {
             for (int i = 0; i < trace.length; i++) {
                 trace[i] = assembler.adr2row(trace[i]);
             }
-            viewer.markTrace(trace);
+            if (viewer != null) {
+                viewer.markTrace(trace);
+            }
         } catch (CommunicationException e) {
             throw new KiemExecutionException("Communication error performing tick", true, e);
         } catch (JSONException e) {
@@ -235,36 +259,59 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        try {
-            viewer = (AssemblerView) (page.showView(AssemblerView.VIEW_ID));
-        } catch (PartInitException e) {
-            throw new KiemInitializationException("Cannot show assembler view", true, e);
-        }
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        IWorkbenchPage page = null;
+        if (workbench != null) {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+                page = window.getActivePage();
+                if (page != null) {
 
-        try {
-            krepView = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
-                    IWorkbenchPage.VIEW_VISIBLE));
-        } catch (PartInitException e) {
-            throw new KiemInitializationException("Cannot show target view", true, e);
+                    try {
+                        viewer = (AssemblerView) (page.showView(AssemblerView.VIEW_ID));
+                    } catch (PartInitException e) {
+                        throw new KiemInitializationException("Cannot show assembler view", true, e);
+                    }
+
+                    try {
+                        krepView = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
+                                IWorkbenchPage.VIEW_VISIBLE));
+                    } catch (PartInitException e) {
+                        throw new KiemInitializationException("Cannot show target view", true, e);
+                    }
+                }
+            }
         }
         JSONObject signals = new JSONObject();
-        // connection.setLogFile(getProperties()[propertyLog].getValue());
+
         try {
-            IEditorPart editor = page.getActiveEditor();
-            if (editor.getEditorInput().exists()
-                    && editor.getEditorInput() instanceof FileEditorInput) {
-                FileEditorInput input = (FileEditorInput) editor.getEditorInput();
-                IFile file = input.getFile();
-                String name = editor.getEditorInput().getName();
-                if (editor instanceof DataflowDiagramEditor) {
-                    data2klp(name, file);
-                } else if (file.getFileExtension().equals("klp")) {
+            if (modelFile != null) {
+                IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(modelFile);
+                String name = modelFile.removeLastSegments(1).lastSegment();
+                if (file.getFileExtension().equals("klp")) {
                     klp2klp(name, file);
                 } else if (file.getFileExtension().equals("kasm")) {
                     kasm2kep(name, file);
                 } else if (file.getFileExtension().equals("strl")) {
                     strl2kep(name, file);
+                }
+            } else if (page != null) {
+                // take active editor
+                IEditorPart editor = page.getActiveEditor();
+                if (editor.getEditorInput().exists()
+                        && editor.getEditorInput() instanceof FileEditorInput) {
+                    FileEditorInput input = (FileEditorInput) editor.getEditorInput();
+                    IFile file = input.getFile();
+                    String name = editor.getEditorInput().getName();
+                    if (editor instanceof DataflowDiagramEditor) {
+                        data2klp(name, file);
+                    } else if (file.getFileExtension().equals("klp")) {
+                        klp2klp(name, file);
+                    } else if (file.getFileExtension().equals("kasm")) {
+                        kasm2kep(name, file);
+                    } else if (file.getFileExtension().equals("strl")) {
+                        strl2kep(name, file);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -294,7 +341,9 @@ public final class DataComponent extends JSONObjectDataComponent {
 
                 protocol.loadProgram(assembler, null);
                 int[] trace = protocol.getExecutionTrace();
-                viewer.markTrace(trace);
+                if (viewer != null) {
+                    viewer.markTrace(trace);
+                }
                 for (Signal s : assembler.getInputs()) {
                     signals.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
                             .getPresent()));
@@ -347,26 +396,22 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     /**
      * @param name
+     *            human readable name of the file
      * @param file
-     * @throws CommunicationException
+     *            the dataflow diagram that is executed
      * @throws IOException
      * @throws KiemInitializationException
      * @throws FileNotFoundException
      * @throws ParseException
      */
-    private void data2klp(final String name, final IFile file) throws CommunicationException,
-            IOException, KiemInitializationException, ParseException {
+    private void data2klp(final String name, final IFile file) throws IOException,
+            KiemInitializationException, ParseException {
         String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
 
-        /*
-         * DataflowDiagramEditor dEditor = (DataflowDiagramEditor) editor; View notationElement =
-         * ((View) dEditor.getDiagramEditPart().getModel()); EObject myModel = (EObject)
-         * notationElement.getElement();
-         */
         LustreGenerator gen = new LustreGenerator();
         String lus = gen.generateLus() + "Dummy.lus";
 
-        String lus2ec = "/home/esterel/bin/lus2ec";
+        String lus2ec = "lus2ec";
 
         connection = connect(ICommunicationProtocol.P_KREP);
         protocol = new KrepProtocol(connection);
@@ -405,7 +450,10 @@ public final class DataComponent extends JSONObjectDataComponent {
     }
 
     /**
+     * @param name
+     *            human readable name of the file
      * @param file
+     *            the KLP assembler file that is executed
      * @throws CommunicationException
      * @throws CoreException
      * @throws KiemInitializationException
@@ -430,44 +478,54 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     /**
      * @param name
+     *            human readable name of the file
      * @param file
-     * @throws CommunicationException
+     *            the KEP assembler file that is executed
      * @throws CoreException
      * @throws ParseException
      * @throws KiemInitializationException
      */
-    private void kasm2kep(final String name, final IFile file) throws CommunicationException,
-            CoreException, ParseException, KiemInitializationException {
+    private void kasm2kep(final String name, final IFile file) throws CoreException,
+            ParseException, KiemInitializationException {
         connection = connect(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
         KepAssembler kep = new KepAssembler();
         assembler = kep;
         InputStream in = file.getContents();
-        // Reader reader = new BufferedReader(new InputStreamReader(in));
         kep.assemble(name, in);
     }
 
     /**
+     * @param name
+     *            human readable name of the file
      * @param file
-     * @throws CoreException
+     *            the Esterel file that is executed
      * @throws KiemInitializationException
-     * @throws IOException
      * @throws ParseException
-     * @throws CommunicationException
+     *             thrown if the compilation fails
      */
-    private void strl2kep(final String name, final IFile file) throws CoreException,
-            KiemInitializationException, IOException, ParseException, CommunicationException {
-        InputStream strl = file.getContents();
+    private void strl2kep(final String name, final IFile file) throws KiemInitializationException,
+            ParseException {
+        InputStream strl;
+        try {
+            strl = file.getContents();
+        } catch (CoreException e) {
+            throw new KiemInitializationException("cannot load file", true, e);
+        }
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
         Bundle compiler = fragments[0];
-        // String path = compiler.getLocation();
-        String path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null))
-                .getPath();
+
+        String path;
+        try {
+            path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
+        } catch (IOException e) {
+            throw new KiemInitializationException("cannot load file", true, e);
+        }
 
         InputStream xml = cecRun("strl2xml", path + "cec-strlxml", strl);
         InputStream exp = cecRun("expandModules", path + "cec-expandmodules", xml);
@@ -486,91 +544,123 @@ public final class DataComponent extends JSONObjectDataComponent {
     }
 
     /**
-     * run a cec process with a timeout
+     * Run a cec process with a timeout.
      * 
      * @param name
+     *            human readable name of the process
+     * @param cmd
+     *            command that is actually executed
      * @param input
      *            the stdin that is feed to the executed program
      * @return the output that was generated by the program
+     * 
+     * @throw KiemInitializationException if the compilation is not successful
      */
     private InputStream cecRun(final String name, final String cmd, final InputStream input)
-            throws IOException, KiemInitializationException {
-        final int TIMEOUT = 500;
+            throws KiemInitializationException {
 
-        Process p = Runtime.getRuntime().exec(cmd);
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(cmd);
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        InputStream stdout = p.getInputStream();
-        InputStream stderr = p.getErrorStream();
-        OutputStream stdin = p.getOutputStream();
-        StringBuffer debug = new StringBuffer(name + ":\n");
+            InputStream stdout = p.getInputStream();
+            InputStream stderr = p.getErrorStream();
+            OutputStream stdin = p.getOutputStream();
+            StringBuffer debug = new StringBuffer(name + ":\n");
 
-        while (input.available() > 0) {
-            int r = input.read();
-            stdin.write(r);
-            debug.append(Character.toChars(r));
-        }
-        Activator.debug(debug.toString());
-        stdin.close();
+            while (input.available() > 0) {
+                int r = input.read();
+                stdin.write(r);
+                debug.append(Character.toChars(r));
+            }
+            Activator.debug(debug.toString());
+            stdin.close();
 
-        int time = 0;
-        while (time < TIMEOUT) {
-            if (stdout.available() > 0) {
-                output.write(stdout.read());
-            } else {
+            int time = 0;
+            while (time < CEC_TIMEOUT) {
+                if (stdout.available() > 0) {
+                    output.write(stdout.read());
+                    time = 0;
+                } else {
+                    try {
+                        Thread.sleep(CEC_TIMEOUT / CEC_STEP);
+                    } catch (InterruptedException e) {
+                        // silently ignore
+                    }
+                    time += CEC_TIMEOUT / CEC_STEP;
+                }
+            }
+            try {
+                StringBuffer err = new StringBuffer();
+                while (stderr.available() > 0) {
+                    err.append(Character.toChars(stderr.read()));
+                }
+                stdin.close();
+                stdout.close();
+                stderr.close();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(CEC_TIMEOUT);
                 } catch (InterruptedException e) {
                     // silently ignore
                 }
-                time += 100;
+                if (p.exitValue() != 0 && err.length() > 0) {
+                    throw new KiemInitializationException("Parse Error: " + err.toString(), false,
+                            null);
+                }
+            } finally {
+                p.destroy();
             }
-        }
-        try {
-            StringBuffer err = new StringBuffer();
-            while (stderr.available() > 0) {
-                err.append(Character.toChars(stderr.read()));
+
+            if (p.exitValue() != 0) {
+                throw new KiemInitializationException("error in " + name, true, null);
             }
-            stdin.close();
-            stdout.close();
-            stderr.close();
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // silently ignore
-            }
-            try {
-                p.waitFor();
-            } catch (InterruptedException e) {
-                // silently ignore
-            }
-            if (p.exitValue() != 0 && err.length() > 0) {
-                throw new KiemInitializationException("Parse Error: " + err.toString(), false, null);
-            }
-        } finally {
-            p.destroy();
+            return new ByteArrayInputStream(output.toByteArray());
+        } catch (IOException e1) {
+            throw new KiemInitializationException("error compiling file " + name, true, e1);
         }
 
-        if (p.exitValue() != 0) {
-            throw new KiemInitializationException("error in " + name, true, null);
-        }
-
-        return new ByteArrayInputStream(output.toByteArray());
     }
 
     /**
-     * @param stderr
-     *            the error stream of an external process
-     * @throws IOException
-     *             thrown if the error stream cannot be read
-     * @throws KiemInitializationException
-     *             thrown if the error stream is not empty
+     * {@inheritDoc}
      */
-   /* private void checkErrors(final InputStream stderr) throws IOException,
-            KiemInitializationException {
-        if (stderr.available() > 0) {
+    public List<KiemProperty> produceInformation() {
+        List<KiemProperty> res = new LinkedList<KiemProperty>();
+        res.add(new KiemProperty("Est. Reaction Time", assembler.getTickLen()));
+        res.add(new KiemProperty("Reaction Time", "{" + minRT + "/ "
+                + (steps == 0 ? 0 : rt / steps) + "/" + maxRT + "}"));
+        return res;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setParameters(final List<KiemProperty> properties) {
+        String model = null;
+        for (KiemProperty p : properties) {
+            if (p.getKey().equals(MODEL_FILE)) {
+                model = p.getValue();
+            }
         }
-    }*/
+        if (model != null) {
+            modelFile = Path.fromOSString(model);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsAnotherRun() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean wantsNextStep() {
+        return false;
+    }
+
 }
