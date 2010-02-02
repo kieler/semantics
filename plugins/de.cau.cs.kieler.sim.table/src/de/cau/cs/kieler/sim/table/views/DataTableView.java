@@ -136,7 +136,6 @@ public class DataTableView extends ViewPart {
      * Refreshes the tree table viewer.
      */
     public void refreshViewer() {
-        System.out.println("REFRESH");
         viewer.refresh();
         return;
     }
@@ -150,7 +149,6 @@ public class DataTableView extends ViewPart {
      *            true, if user is currently editing an entry
      */
     public void setCurrentlyEditing(final boolean currentlyEditingParam) {
-        System.out.println("SETTING EDITING TO:" + currentlyEditingParam);
         this.currentlyEditing = currentlyEditingParam;
     }
 
@@ -234,7 +232,6 @@ public class DataTableView extends ViewPart {
                     viewer.refresh();
 //                    viewer.setSorter(null);
                 } else {
-                    System.out.println("SORTCOMMAND " + column);
                     viewer.setSorter(new TableViewerSorter(column));
                 }
             }

@@ -100,7 +100,6 @@ public class TableViewerSorter extends ViewerSorter {
     public int compare(final Viewer viewer, final Object o1, final Object o2) {
         TableData t1 = ((TableData)o1);
         TableData t2 = ((TableData)o2);
-        System.out.println(">>> SORTTABLE <<<");
         String name1 = removeStar(t1.getKey());
         String name2 = removeStar(t2.getKey());
         if (column == 3) {
