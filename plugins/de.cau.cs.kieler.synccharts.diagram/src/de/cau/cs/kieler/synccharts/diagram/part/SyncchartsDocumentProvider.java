@@ -55,6 +55,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
+import de.cau.cs.kieler.synccharts.contentadapter.SyncChartsTriggerListener;
+import de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil;
+
 /**
  * @generated
  */
@@ -195,6 +198,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
 
         });
 
+        SyncchartsContentUtil.addTriggerListeners(editingDomain);
         return editingDomain;
     }
 

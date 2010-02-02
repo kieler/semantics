@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter">
-      </startup>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:de.cau.cs.kieler">
@@ -37,6 +31,15 @@
             id="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
             name="Parse all action labels">
       </command>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerChangedTrigger">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerRenamedSignals">
+      </triggerListener>
    </extension>
 
 </plugin>

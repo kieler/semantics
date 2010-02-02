@@ -17,25 +17,34 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 import java.io.IOException;
 
 import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.gmf.runtime.diagram.ui.commands.CommandProxy;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
+import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
 /**
- * A wrapper class that provides methods to process (i.e. parse or serialize) Action labels (i.e.
- * transition labels or entry, inner, exit, suspend actions of states).
+ * A wrapper class that provides methods to process (i.e. parse or serialize)
+ * Action labels (i.e. transition labels or entry, inner, exit, suspend actions
+ * of states).
  * 
  * @author haf
  * 
@@ -61,19 +70,22 @@ public class ActionLabelProcessorWrapper {
     }
 
     /**
-     * Recursively parse or serialize all Action objects starting from the parent object and
-     * recursively calling it to child states resp. child regions. All state actions (entry, exit,
-     * inner, suspension) and all transitions will be serialized or parsed again. If the parent is
-     * null, the parent is determined by the container object of the given Signal/Variable. If the
-     * changed object is null, then all children of the parent will be processed. If both are null,
-     * this cannot be handled and will silently return.
+     * Recursively parse or serialize all Action objects starting from the
+     * parent object and recursively calling it to child states resp. child
+     * regions. All state actions (entry, exit, inner, suspension) and all
+     * transitions will be serialized or parsed again. If the parent is null,
+     * the parent is determined by the container object of the given
+     * Signal/Variable. If the changed object is null, then all children of the
+     * parent will be processed. If both are null, this cannot be handled and
+     * will silently return.
      * 
      * @param changedObject
      *            the Signal/Variable that has changed its name
      * @param theParent
      *            the current parent object, either State or Region
      * @param parse
-     *            true if the label should be reparsed, false if it should be serialized
+     *            true if the label should be reparsed, false if it should be
+     *            serialized
      * @throws IOException
      *             unlikely parser IO error
      * @throws KielerModelException
@@ -121,11 +133,53 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
+    public Command getProcessAffectedActionLabelCommand(final ValuedObject changedObject,
+            final EObject theParent, final boolean parse){
+        EObject parent = theParent;
+        PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
+        if (changedObject == null && parent == null) {
+            return UnexecutableCommand.INSTANCE; // cannot handle this combination
+        }
+        if (parent == null) {
+            parent = changedObject.eContainer();
+            if (parent != null) {
+                return getProcessAffectedActionLabelCommand(changedObject, parent, parse);
+            }
+        }
+        if (parent instanceof State) {
+            for (Action action : ((State) parent).getEntryActions()) {
+                cc.append(getProcessActionCommand(action, parse));
+            }
+            for (Action action : ((State) parent).getExitActions()) {
+                cc.append(getProcessActionCommand(action, parse));
+            }
+            for (Action action : ((State) parent).getInnerActions()) {
+                cc.append(getProcessActionCommand(action, parse));
+            }
+            if (((State) parent).getSuspensionTrigger() != null) {
+                cc.append(getProcessActionCommand(((State) parent).getSuspensionTrigger(), parse));
+            }
+            // do a recursive call
+            for (Region childRegion : ((State) parent).getRegions()) {
+                cc.append(getProcessAffectedActionLabelCommand(changedObject, childRegion, parse));
+            }
+        } else if (parent instanceof Region) {
+            for (State childState : ((Region) parent).getInnerStates()) {
+                for (Transition trans : childState.getOutgoingTransitions()) {
+                    cc.append(getProcessActionCommand(trans, parse));
+                }
+                cc.append(getProcessAffectedActionLabelCommand(changedObject, childState, parse));
+            }
+        }
+        return cc;
+    }
+    
     /**
-     * Trigger the parsing or serialization of Action labels of a given scope. Starting from a given
-     * parent (i.e. State or Region) recursively iterate all Actions contained, i.e. all transitions
-     * and all entry, inner, exit and suspension actions. Parse/Serialize the found actions. Execute
-     * in a GMF command on the model's command stack to get access to the model.
+     * Trigger the parsing or serialization of Action labels of a given scope.
+     * Starting from a given parent (i.e. State or Region) recursively iterate
+     * all Actions contained, i.e. all transitions and all entry, inner, exit
+     * and suspension actions. Parse/Serialize the found actions. Execute in a
+     * GMF command on the model's command stack to get access to the model.
      * 
      * @param parent
      *            the context to start the action search
@@ -147,9 +201,10 @@ public class ActionLabelProcessorWrapper {
     }
 
     /**
-     * Parse or serialize an action. Serialize an Action and store the String result in the Action's
-     * TriggerAndEffects String attribute. Alternatively parse the TriggerAndEffects String and
-     * build the corresponding effects and trigger objects and add/replace them in the Action.
+     * Parse or serialize an action. Serialize an Action and store the String
+     * result in the Action's TriggerAndEffects String attribute. Alternatively
+     * parse the TriggerAndEffects String and build the corresponding effects
+     * and trigger objects and add/replace them in the Action.
      * 
      * @param action
      *            the action to be serialized/parsed
@@ -176,11 +231,19 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
+    Command getProcessActionCommand(final Action action, final boolean parse) {
+        if (parse == PARSE) {
+            return new ActionLabelParseCommand(action, action.getTriggersAndEffects(), parser, injector);
+        } else {
+            return new ActionLabelSerializeCommand(action);
+        }
+    }
+
     /**
      * Helper Command that executes the
      * {@link ActionLabelProcessorWrapper#processAffectedActionLabels(ValuedObject, EObject, boolean)}
-     * method. Can be used execute the method on a GMF command stack to get proper access to the
-     * model.
+     * method. Can be used execute the method on a GMF command stack to get
+     * proper access to the model.
      * 
      * @author haf
      * 

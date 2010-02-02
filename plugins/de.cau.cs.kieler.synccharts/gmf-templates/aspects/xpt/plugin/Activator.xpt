@@ -35,7 +35,7 @@ public class «activatorClassName» extends org.eclipse.ui.plugin.AbstractUIPlug
 		adapterFactory = createAdapterFactory();
 		«REM»Custom change added here: Initialization of SyncCharts model listener for label parsing
 		     such that it gets activated at latest when diagram Editor opens up.«ENDREM»
-		de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
+		//de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
 	}
 
 	«EXPAND xpt::Common::generatedMemberComment»

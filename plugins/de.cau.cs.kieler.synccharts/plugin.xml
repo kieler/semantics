@@ -9,6 +9,7 @@
 -->
 
 <plugin>
+   <extension-point id="triggerListener" name="Trigger Listener" schema="schema/triggerListener.exsd"/>
 
    <extension
          id="product"
@@ -42,6 +43,12 @@
             uri="http://kieler.cs.cau.de/synccharts"
             class="de.cau.cs.kieler.synccharts.SyncchartsPackage"
             genModel="model/synccharts.genmodel"/>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.SyncChartsTriggerListener">
+      </triggerListener>
    </extension>
 
 </plugin>

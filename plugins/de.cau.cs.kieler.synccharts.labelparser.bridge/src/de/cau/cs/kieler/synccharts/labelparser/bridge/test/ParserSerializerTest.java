@@ -14,15 +14,20 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.labelparser.bridge.test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
@@ -32,9 +37,11 @@ import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
+import de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter;
 
 /**
- * JUnit Test Case for the SyncCharts Editor Transition label parser and its serializer.
+ * JUnit Test Case for the SyncCharts Editor Transition label parser and its
+ * serializer.
  * 
  * @author haf
  * 
@@ -54,14 +61,15 @@ public class ParserSerializerTest {
     private static final int Z = 90;
 
     /**
-     * Create a simple SyncChart, one root state machine and two states connected by one transition.
-     * The transition will then be tested.
+     * Create a simple SyncChart, one root state machine and two states
+     * connected by one transition. The transition will then be tested.
      * 
      * @throws java.lang.Exception
      *             Something failed
      */
     @Before
     public void setUpSyncChart() throws Exception {
+        SyncchartsContentAdapter.INSTANCE.setEnabled(false);
         rootRegion = SyncchartsFactory.eINSTANCE.createRegion();
 
         State rootState = SyncchartsFactory.eINSTANCE.createState();
@@ -96,6 +104,7 @@ public class ParserSerializerTest {
         transition = SyncchartsFactory.eINSTANCE.createTransition();
         transition.setSourceState(s1);
         transition.setTargetState(s2);
+        
     }
 
     /**
@@ -227,7 +236,7 @@ public class ParserSerializerTest {
     public void testSerializerValue() throws Exception {
         this.parseAndSerialize("? A");
     }
-    
+
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -393,8 +402,6 @@ public class ParserSerializerTest {
     public void testSerializerAndNot() throws Exception {
         this.parseAndSerialize("not A and B");
     }
-    
-    
 
     /**
      * A JUnit test for the Labelparser.
@@ -407,7 +414,6 @@ public class ParserSerializerTest {
         this.parseAndSerialize("not (A and B)");
     }
 
- 
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -495,7 +501,7 @@ public class ParserSerializerTest {
     public void testSerializerNotPre() throws Exception {
         this.parseAndSerialize("not pre (B)");
     }
-    
+
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -506,7 +512,7 @@ public class ParserSerializerTest {
     public void testSerializerNotNot() throws Exception {
         this.parseAndSerialize("not (not B)");
     }
-    
+
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -572,28 +578,43 @@ public class ParserSerializerTest {
     public void testSerializerBoolean() throws Exception {
         this.parseAndSerialize("true or false / A(true), B(false)");
     }
-    
+
     /**
-     * Create a new parse command and execute its parse method. Likely to throw exceptions if the
-     * text could not be parsed.
+     * Create a new parse command and execute its parse method. Likely to throw
+     * exceptions if the text could not be parsed.
      * 
      * @param textToParse
      *            String to be parsed
      * @throws KielerException
      *             the main exception if something failed
      * @throws IOException
-     *             unlikely to be thrown, only if there are internal errors regarding the resource
-     *             factories.
+     *             unlikely to be thrown, only if there are internal errors
+     *             regarding the resource factories.
      */
     private void parse(final String textToParse) throws KielerException, IOException {
-        ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition,
-                textToParse, parser, injector);
+        ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
+                parser, injector);
         parseCommand.parse();
+    }
+
+    String serialize(final Action action) {
+        XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+        XtextResource resource = (XtextResource) resourceSet.createResource(URI
+                .createURI("platform:/resource/./dummy2.action"));
+        resource.getContents().add(action);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            resource.save(outputStream, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toString();
     }
 
     private void parseAndSerialize(final String inputString) throws KielerException, IOException {
         parse(inputString);
-        String serializedString = ActionLabelSerializer.toString(transition);
+        // String serializedString = ActionLabelSerializer.toString(transition);
+        String serializedString = serialize(transition);
         if (inputString.equals(serializedString)) {
             return;
         } else {

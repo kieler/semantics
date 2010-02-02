@@ -68,7 +68,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT, getPreferenceStore());
         adapterFactory = createAdapterFactory();
 
-        SyncchartsContentAdapter.init();
+        //de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
     }
 
     /**

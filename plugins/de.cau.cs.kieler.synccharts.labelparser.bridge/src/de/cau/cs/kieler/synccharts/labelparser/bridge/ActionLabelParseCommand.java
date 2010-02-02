@@ -19,18 +19,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.gmf.runtime.common.core.command.CommandResult;
-import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.parser.IParseResult;
@@ -56,7 +53,7 @@ import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
  * 
  * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
-public class ActionLabelParseCommand extends AbstractTransactionalCommand {
+public class ActionLabelParseCommand extends AbstractCommand {
 
     private String newString;
     private Injector injector;
@@ -78,8 +75,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         // the editing domain might be null if the object to be edited
         // does not belong to some resource, i.e. is not really part
         // of the model yet. Then this command will fail.
-        super(TransactionUtil.getEditingDomain(((Action) (((EObjectAdapter) theElement)
-                .getRealObject()))), theNewString, null);
+        super();
         this.newString = theNewString;
         this.injector = theInjector;
         this.element = ((Action) (((EObjectAdapter) theElement).getRealObject()));
@@ -109,50 +105,31 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
      */
     public ActionLabelParseCommand(final EObject theElement, final String theNewString,
             final IAntlrParser parser, final Injector theInjector) {
-        // the editing domain might be null if the object to be edited
-        // does not belong to some resource, i.e. is not really part
-        // of the model yet. Then this command will fail.
-        super(TransactionUtil.getEditingDomain(((Action) theElement)), theNewString, null);
+        super();
         this.newString = theNewString;
         this.injector = theInjector;
         this.element = theElement;
-
-        /*
-         * TransactionalEditingDomain domain = TransactionUtil .getEditingDomain(((Action)
-         * theElement));
-         * 
-         * if(domain == null){ // this is very evil, because then the element is not contained // by
-         * any resource, especially not by the diagram model Status myStatus = new
-         * Status(IStatus.ERROR, Activator.PLUGIN_ID,
-         * "Parser failed to parse the action string \""+newString+
-         * "\"! The action object is not part of the model and hence has no editing domain." ,
-         * null); StatusManager.getManager().handle(myStatus, StatusManager.SHOW); }
-         */
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.eclipse.gmf.runtime.emf.commands.core.command. AbstractTransactionalCommand
-     * #doExecuteWithResult(org.eclipse.core.runtime.IProgressMonitor,
-     * org.eclipse.core.runtime.IAdaptable)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    protected CommandResult doExecuteWithResult(final IProgressMonitor monitor,
-            final IAdaptable info) throws ExecutionException {
+    public void execute() {
         try {
             parse();
-            return CommandResult.newOKCommandResult();
         } catch (Exception e) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error parsing the action string. ", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
-        // return ok even when the parsing was not successful. Then at least
-        // the new String should be correctly stored in the
-        // TriggersAndEffectsString of the new Action. This could be rolled
-        // back if we return a not-ok result.
-        return CommandResult.newOKCommandResult();
+    }
+    
+    /**
+     * {@inheritDoc}
+     * Simply calls execute.
+     */
+    public void redo() {
+        execute();
     }
 
     /**
@@ -290,4 +267,14 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         target.getEffects().addAll(source.getEffects());
         // linkAllReferences(target.getTrigger());
     }
+
+    /**
+     * 
+     */
+    @Override
+    protected boolean prepare() {
+        return true;
+    }
+
+    
 }
