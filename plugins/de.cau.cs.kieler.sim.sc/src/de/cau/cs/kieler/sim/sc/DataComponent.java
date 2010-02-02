@@ -103,9 +103,7 @@ public class DataComponent extends JSONObjectDataComponent {
 
         String bundleLocation = url.getFile();
         // because of windows vs Linux
-        System.out.println("PATH: " + bundleLocation);
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        System.out.println("PATH: " + bundleLocation);
         if (bundleLocation.startsWith("\\")){
         	bundleLocation = bundleLocation.substring(1);
         }

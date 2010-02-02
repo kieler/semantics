@@ -21,6 +21,7 @@
 	«IF this.isFinal-»
 			TERM;
 	«ELSE-»
+			//HALT;
 			// this should be HALT; but for simulation:
 			PAUSE;
 		«IF !(this.regions.isEmpty)-»
@@ -46,7 +47,7 @@
 		«ENDFOREACH-»
 		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
 		  // PRIO für WEAK setzen
-		  PRIO(«computeWeakTreadPriority()»);
+		  PRIO(«computeWeakThreadPriority()»);
 		«ENDIF-»
 		«FOREACH sortTransitionPrios(this) AS outTrans-»
 			«IF !((Transition)outTrans).isImmediate  && (((Transition)outTrans).type != TransitionType::STRONGABORT)-»

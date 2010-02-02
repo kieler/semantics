@@ -47,11 +47,13 @@
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
 	«IF !(this.sourceState.regions.isEmpty)-»
+		«IF (this.targetState != this.sourceState)-»
+		«ENDIF-»
+			// static PRIO
+			PRIO(«computeRealThreadPriority(this.targetState)»);
 			ABORT;
 	«ENDIF-»
 	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
-			// static PRIO
-			PRIO(«computeRealThreadPriority(this.targetState)»);
 			GOTO(«this.targetState.id»);
 	«ENDIF-»
 «ENDDEFINE»

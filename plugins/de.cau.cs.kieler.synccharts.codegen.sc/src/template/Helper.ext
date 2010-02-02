@@ -47,7 +47,7 @@ int computeRealThreadPriority(State state):
 	JAVA template.Helper.computeRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
-int computeWeakTreadPriority(State rootState):
+int computeWeakThreadPriority(State rootState):
 	JAVA template.Helper.computeWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
