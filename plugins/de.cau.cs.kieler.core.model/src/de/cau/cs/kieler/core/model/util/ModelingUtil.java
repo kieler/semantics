@@ -15,15 +15,20 @@ package de.cau.cs.kieler.core.model.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
@@ -32,6 +37,8 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.PlatformUI;
+
+import de.cau.cs.kieler.core.KielerException;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
@@ -44,6 +51,8 @@ public final class ModelingUtil {
 
     private ModelingUtil() {
     }
+
+    private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
     /**
      * Find an GEF EditPart that corresponds to an semantic model EObject.
@@ -249,9 +258,10 @@ public final class ModelingUtil {
         }
         return list;
     }
-    
+
     /**
-     * Returns a list of the EObjects currently selected in the diagram. 
+     * Returns a list of the EObjects currently selected in the diagram.
+     * 
      * @return A List of EObjects
      */
     public static List<EObject> getModelElementsFromSelection() {
@@ -277,5 +287,80 @@ public final class ModelingUtil {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Find an GEF EditPart that corresponds to an semantic model EObject.
+     * 
+     * @param eObject
+     *            the semantic object
+     * @return the corresponding EditPart
+     * 
+     *         TODO: search of transition edit parts iterates all edit parts and
+     *         will take linear time. You should improve this, by maybe build a
+     *         local cache hash map
+     */
+
+    public static EditPart getEditPart(final EObject eObject) {
+        try {
+            DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+            DiagramEditPart dep = editor.getDiagramEditPart();
+            EditPart editPart = dep.findEditPart(dep, eObject);
+            if (editPart == null) {
+                dep.getViewer().getEditPartRegistry().get(eObject);
+            }
+            // have to search registry manually
+            if (editPart == null) {
+                @SuppressWarnings("unchecked")
+                Collection<Object> editParts = dep.getViewer().getEditPartRegistry().values();
+                for (Object object : editParts) {
+                    try {
+                        editPart = (EditPart) object;
+                        EObject model = ((View) ((EditPart) object).getModel()).getElement();
+                        if (model == eObject) {
+                            // search the most valid parent
+                            // this is necessary because inner EditParts may
+                            // also
+                            // reference the same model, e.g.
+                            // TransitionTriggerAndEffectsEditPart has
+                            // TransitionImpl as model element
+                            // however, the parent
+                            // TransitionEditPart also has TransitionImpl as
+                            // model
+                            // element
+                            // so there are multiple EditParts that have the
+                            // same
+                            // EObject. Here we will
+                            // return only the outermost parent EditPart
+                            while (editPart.getParent() != null) {
+                                EditPart parentPart = editPart.getParent();
+                                Object view = parentPart.getModel();
+                                if (view instanceof View) {
+                                    EObject parentModel = ((View) view).getElement();
+                                    if (parentModel == eObject) {
+                                        editPart = parentPart;
+                                        System.out.println();
+                                    }
+                                } else {
+                                    break;
+                                } // a Root diagram edit part has no real view,
+                                  // so
+                                // we will stop searching there
+                            }
+                            return editPart;
+                        }
+
+                    } catch (Exception e) {
+                        /* nothing, go on with the next element */
+                    }
+                }
+            }
+            return editPart;
+        } catch (Exception e) {
+            e.printStackTrace();
+            /* nothing, we simply return null if it cannot be found */
+        }
+        return null;
     }
 }
