@@ -14,9 +14,14 @@ Require-Bundle: de.cau.cs.kieler.core,
  org.eclipse.gmf.runtime.diagram.ui,
  org.eclipse.gmf.runtime.diagram.ui.render,
  org.eclipse.platform;bundle-version="3.3.201",
- org.eclipse.ui.ide;bundle-version="3.5.1"
+ org.eclipse.ui.ide;bundle-version="3.5.1",
+ org.eclipse.ui.ide.application;bundle-version="1.0.101",
+ de.cau.cs.kieler.core.model;bundle-version="1.0.0"
 Export-Package: de.cau.cs.kieler.core.ui,
+ de.cau.cs.kieler.core.ui.errorhandler,
  de.cau.cs.kieler.core.ui.figures,
+ de.cau.cs.kieler.core.ui.handler,
+ de.cau.cs.kieler.core.ui.preferences,
  de.cau.cs.kieler.core.ui.util
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

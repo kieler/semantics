@@ -226,6 +226,17 @@
             name="KIELER Modeling">
       </perspective>
    </extension>
+   <extension
+         point="org.eclipse.ui.statusHandlers">
+      <statusHandlerProductBinding
+            handlerId="de.cau.cs.kieler.core.ui.statusHandler"
+            productId="de.cau.cs.kieler.core.ui.product">
+      </statusHandlerProductBinding>
+      <statusHandler
+            class="de.cau.cs.kieler.core.ui.errorhandler.ModelErrorHandler"
+            id="de.cau.cs.kieler.core.ui.statusHandler">
+      </statusHandler>
+   </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config
