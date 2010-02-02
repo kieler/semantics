@@ -244,7 +244,6 @@ public class EsiComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    @Override
     public int wantsMoreRuns() {
         return wantsAnotherRun() ? 1 : 0;
     }
@@ -252,7 +251,6 @@ public class EsiComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    @Override
     public int wantsMoreSteps() {
         return wantsNextStep() ? 1 : 0;
     }

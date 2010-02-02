@@ -240,7 +240,6 @@ public class EsoComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    @Override
     public int wantsMoreRuns() {
         return wantsAnotherRun() ? 1 : 0;
     }
@@ -248,7 +247,6 @@ public class EsoComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    @Override
     public int wantsMoreSteps() {
         return 0;
     }
