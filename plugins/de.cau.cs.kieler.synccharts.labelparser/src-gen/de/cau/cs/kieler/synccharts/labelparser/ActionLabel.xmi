@@ -526,6 +526,10 @@
           <literal value="not"/>
         </groups>
         <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts#//OperatorType/NE"/>
+          <literal value="&lt;>"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/synccharts#//OperatorType/AND"/>
           <literal value="and"/>
         </groups>
@@ -596,6 +600,10 @@
         <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/synccharts#//OperatorType/GEQ"/>
           <literal value=">="/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts#//OperatorType/NE"/>
+          <literal value="&lt;>"/>
         </groups>
       </alternatives>
     </rules>

@@ -144,13 +144,13 @@ BooleanExpression returns synccharts::Expression:
 //==============================================================================
 	
 enum OperatorType returns synccharts::OperatorType:
-	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
 
 enum ValOperator returns synccharts::OperatorType:
 	VAL="?";
 
 enum CompareOperator returns synccharts::OperatorType:
-	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 
 // not A	
 enum UnaryOperator returns synccharts::OperatorType:

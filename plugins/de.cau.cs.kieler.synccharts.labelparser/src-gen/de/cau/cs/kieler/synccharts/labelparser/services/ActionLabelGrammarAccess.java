@@ -1207,36 +1207,38 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cNOTNotKeyword_5_0 = (Keyword)cNOTEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cANDAndKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cOROrKeyword_7_0 = (Keyword)cOREnumLiteralDeclaration_7.eContents().get(0);
-		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
-		private final Keyword cADDPlusSignKeyword_8_0 = (Keyword)cADDEnumLiteralDeclaration_8.eContents().get(0);
-		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
-		private final Keyword cSUBHyphenMinusKeyword_9_0 = (Keyword)cSUBEnumLiteralDeclaration_9.eContents().get(0);
-		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
-		private final Keyword cMULTAsteriskKeyword_10_0 = (Keyword)cMULTEnumLiteralDeclaration_10.eContents().get(0);
-		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
-		private final Keyword cDIVSolidusKeyword_11_0 = (Keyword)cDIVEnumLiteralDeclaration_11.eContents().get(0);
-		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
-		private final Keyword cMODModKeyword_12_0 = (Keyword)cMODEnumLiteralDeclaration_12.eContents().get(0);
-		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
-		private final Keyword cVALQuestionMarkKeyword_13_0 = (Keyword)cVALEnumLiteralDeclaration_13.eContents().get(0);
-		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
-		private final Keyword cPREPreKeyword_14_0 = (Keyword)cPREEnumLiteralDeclaration_14.eContents().get(0);
+		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cNELessThanSignGreaterThanSignKeyword_6_0 = (Keyword)cNEEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cANDAndKeyword_7_0 = (Keyword)cANDEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cOROrKeyword_8_0 = (Keyword)cOREnumLiteralDeclaration_8.eContents().get(0);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cADDPlusSignKeyword_9_0 = (Keyword)cADDEnumLiteralDeclaration_9.eContents().get(0);
+		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
+		private final Keyword cSUBHyphenMinusKeyword_10_0 = (Keyword)cSUBEnumLiteralDeclaration_10.eContents().get(0);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
+		private final Keyword cMULTAsteriskKeyword_11_0 = (Keyword)cMULTEnumLiteralDeclaration_11.eContents().get(0);
+		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
+		private final Keyword cDIVSolidusKeyword_12_0 = (Keyword)cDIVEnumLiteralDeclaration_12.eContents().get(0);
+		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
+		private final Keyword cMODModKeyword_13_0 = (Keyword)cMODEnumLiteralDeclaration_13.eContents().get(0);
+		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
+		private final Keyword cVALQuestionMarkKeyword_14_0 = (Keyword)cVALEnumLiteralDeclaration_14.eContents().get(0);
+		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
+		private final Keyword cPREPreKeyword_15_0 = (Keyword)cPREEnumLiteralDeclaration_15.eContents().get(0);
 		
 		//enum OperatorType returns synccharts::OperatorType:
-		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//  "-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"; 
+		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD=
+		//  "+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"; 
 		//
 		////==============================================================================
 		//// Operators
 		////==============================================================================
 		public EnumRule getRule() { return rule; }
 
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//"-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre" 
+		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD=
+		//"+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre" 
 		//
 		////==============================================================================
 		//// Operators
@@ -1279,59 +1281,65 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		//"not"
 		public Keyword getNOTNotKeyword_5_0() { return cNOTNotKeyword_5_0; }
 
+		//NE="<>"
+		public EnumLiteralDeclaration getNEEnumLiteralDeclaration_6() { return cNEEnumLiteralDeclaration_6; }
+
+		//"<>"
+		public Keyword getNELessThanSignGreaterThanSignKeyword_6_0() { return cNELessThanSignGreaterThanSignKeyword_6_0; }
+
 		//AND="and"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_7() { return cANDEnumLiteralDeclaration_7; }
 
 		//"and"
-		public Keyword getANDAndKeyword_6_0() { return cANDAndKeyword_6_0; }
+		public Keyword getANDAndKeyword_7_0() { return cANDAndKeyword_7_0; }
 
 		//OR="or"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration_7() { return cOREnumLiteralDeclaration_7; }
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration_8() { return cOREnumLiteralDeclaration_8; }
 
 		//"or"
-		public Keyword getOROrKeyword_7_0() { return cOROrKeyword_7_0; }
+		public Keyword getOROrKeyword_8_0() { return cOROrKeyword_8_0; }
 
 		//ADD="+"
-		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_8() { return cADDEnumLiteralDeclaration_8; }
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_9() { return cADDEnumLiteralDeclaration_9; }
 
 		//"+"
-		public Keyword getADDPlusSignKeyword_8_0() { return cADDPlusSignKeyword_8_0; }
+		public Keyword getADDPlusSignKeyword_9_0() { return cADDPlusSignKeyword_9_0; }
 
 		//SUB="-"
-		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_9() { return cSUBEnumLiteralDeclaration_9; }
+		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_10() { return cSUBEnumLiteralDeclaration_10; }
 
 		//"-"
-		public Keyword getSUBHyphenMinusKeyword_9_0() { return cSUBHyphenMinusKeyword_9_0; }
+		public Keyword getSUBHyphenMinusKeyword_10_0() { return cSUBHyphenMinusKeyword_10_0; }
 
 		//MULT="*"
-		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_10() { return cMULTEnumLiteralDeclaration_10; }
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_11() { return cMULTEnumLiteralDeclaration_11; }
 
 		//"*"
-		public Keyword getMULTAsteriskKeyword_10_0() { return cMULTAsteriskKeyword_10_0; }
+		public Keyword getMULTAsteriskKeyword_11_0() { return cMULTAsteriskKeyword_11_0; }
 
 		//DIV="/"
-		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_11() { return cDIVEnumLiteralDeclaration_11; }
+		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_12() { return cDIVEnumLiteralDeclaration_12; }
 
 		//"/"
-		public Keyword getDIVSolidusKeyword_11_0() { return cDIVSolidusKeyword_11_0; }
+		public Keyword getDIVSolidusKeyword_12_0() { return cDIVSolidusKeyword_12_0; }
 
 		//MOD="mod"
-		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_12() { return cMODEnumLiteralDeclaration_12; }
+		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_13() { return cMODEnumLiteralDeclaration_13; }
 
 		//"mod"
-		public Keyword getMODModKeyword_12_0() { return cMODModKeyword_12_0; }
+		public Keyword getMODModKeyword_13_0() { return cMODModKeyword_13_0; }
 
 		//VAL="?"
-		public EnumLiteralDeclaration getVALEnumLiteralDeclaration_13() { return cVALEnumLiteralDeclaration_13; }
+		public EnumLiteralDeclaration getVALEnumLiteralDeclaration_14() { return cVALEnumLiteralDeclaration_14; }
 
 		//"?"
-		public Keyword getVALQuestionMarkKeyword_13_0() { return cVALQuestionMarkKeyword_13_0; }
+		public Keyword getVALQuestionMarkKeyword_14_0() { return cVALQuestionMarkKeyword_14_0; }
 
 		//PRE="pre"
-		public EnumLiteralDeclaration getPREEnumLiteralDeclaration_14() { return cPREEnumLiteralDeclaration_14; }
+		public EnumLiteralDeclaration getPREEnumLiteralDeclaration_15() { return cPREEnumLiteralDeclaration_15; }
 
 		//"pre"
-		public Keyword getPREPreKeyword_14_0() { return cPREPreKeyword_14_0; }
+		public Keyword getPREPreKeyword_15_0() { return cPREPreKeyword_15_0; }
 	}
 
 	public class ValOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1363,20 +1371,22 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cNELessThanSignGreaterThanSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum CompareOperator returns synccharts::OperatorType:
-		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">="; 
+		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"; 
 		//
 		//      
-		//	                
+		//	                    
 		//
 		//// not A
 		public EnumRule getRule() { return rule; }
 
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" 
+		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>" 
 		//
 		//      
-		//	                
+		//	                    
 		//
 		//// not A
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1410,6 +1420,12 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//">="
 		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
+
+		//NE="<>"
+		public EnumLiteralDeclaration getNEEnumLiteralDeclaration_5() { return cNEEnumLiteralDeclaration_5; }
+
+		//"<>"
+		public Keyword getNELessThanSignGreaterThanSignKeyword_5_0() { return cNELessThanSignGreaterThanSignKeyword_5_0; }
 	}
 
 	public class UnaryOperatorElements extends AbstractEnumRuleElementFinder {
@@ -2107,8 +2123,8 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum OperatorType returns synccharts::OperatorType:
-	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-	//  "-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"; 
+	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD=
+	//  "+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"; 
 	//
 	////==============================================================================
 	//// Operators
@@ -2132,10 +2148,10 @@ public class ActionLabelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CompareOperator returns synccharts::OperatorType:
-	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">="; 
+	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"; 
 	//
 	//      
-	//	                
+	//	                    
 	//
 	//// not A
 	public CompareOperatorElements getCompareOperatorAccess() {

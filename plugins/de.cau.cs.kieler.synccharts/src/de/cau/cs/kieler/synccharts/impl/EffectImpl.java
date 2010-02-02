@@ -45,165 +45,165 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public abstract class EffectImpl extends EObjectImpl implements Effect {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected EffectImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.EFFECT;
-    }
+		return SyncchartsPackage.Literals.EFFECT;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public Action getParentEAction() {
-        if (eContainerFeatureID() != SyncchartsPackage.EFFECT__PARENT_EACTION) return null;
-        return (Action)eContainer();
-    }
+		if (eContainerFeatureID() != SyncchartsPackage.EFFECT__PARENT_EACTION) return null;
+		return (Action)eContainer();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetParentEAction(Action newParentEAction, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentEAction, SyncchartsPackage.EFFECT__PARENT_EACTION, msgs);
-        return msgs;
-    }
+		msgs = eBasicSetContainer((InternalEObject)newParentEAction, SyncchartsPackage.EFFECT__PARENT_EACTION, msgs);
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setParentEAction(Action newParentEAction) {
-        if (newParentEAction != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.EFFECT__PARENT_EACTION && newParentEAction != null)) {
-            if (EcoreUtil.isAncestor(this, newParentEAction))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentEAction != null)
-                msgs = ((InternalEObject)newParentEAction).eInverseAdd(this, SyncchartsPackage.ACTION__EFFECTS, Action.class, msgs);
-            msgs = basicSetParentEAction(newParentEAction, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.EFFECT__PARENT_EACTION, newParentEAction, newParentEAction));
-    }
+		if (newParentEAction != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.EFFECT__PARENT_EACTION && newParentEAction != null)) {
+			if (EcoreUtil.isAncestor(this, newParentEAction))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParentEAction != null)
+				msgs = ((InternalEObject)newParentEAction).eInverseAdd(this, SyncchartsPackage.ACTION__EFFECTS, Action.class, msgs);
+			msgs = basicSetParentEAction(newParentEAction, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.EFFECT__PARENT_EACTION, newParentEAction, newParentEAction));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentEAction((Action)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParentEAction((Action)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                return basicSetParentEAction(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				return basicSetParentEAction(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.ACTION__EFFECTS, Action.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
+		switch (eContainerFeatureID()) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.ACTION__EFFECTS, Action.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                return getParentEAction();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				return getParentEAction();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                setParentEAction((Action)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				setParentEAction((Action)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                setParentEAction((Action)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				setParentEAction((Action)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.EFFECT__PARENT_EACTION:
-                return getParentEAction() != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.EFFECT__PARENT_EACTION:
+				return getParentEAction() != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //EffectImpl

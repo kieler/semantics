@@ -202,6 +202,10 @@
         <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//OperatorType/NOT"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wxgiUXqYEd6nBdJEKpuS9w"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_TigEsRA5Ed-xve5PtKA6Ag" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//OperatorType/NE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TigEshA5Ed-xve5PtKA6Ag"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_wxhJYHqYEd6nBdJEKpuS9w" type="2006">
         <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//OperatorType/AND"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wxhJYXqYEd6nBdJEKpuS9w"/>

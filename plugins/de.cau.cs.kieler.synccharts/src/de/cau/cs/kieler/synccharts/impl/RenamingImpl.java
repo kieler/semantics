@@ -47,285 +47,285 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class RenamingImpl extends EObjectImpl implements Renaming {
 	/**
-     * The default value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getOldID()
-     * @generated
-     * @ordered
-     */
+	 * @see #getOldID()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final String OLD_ID_EDEFAULT = null;
 
 	/**
-     * The cached value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getOldID()
-     * @generated
-     * @ordered
-     */
+	 * @see #getOldID()
+	 * @generated
+	 * @ordered
+	 */
 	protected String oldID = OLD_ID_EDEFAULT;
 
 	/**
-     * The default value of the '{@link #getNewID() <em>New ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getNewID() <em>New ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getNewID()
-     * @generated
-     * @ordered
-     */
+	 * @see #getNewID()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final String NEW_ID_EDEFAULT = null;
 
 	/**
-     * The cached value of the '{@link #getNewID() <em>New ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getNewID() <em>New ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getNewID()
-     * @generated
-     * @ordered
-     */
+	 * @see #getNewID()
+	 * @generated
+	 * @ordered
+	 */
 	protected String newID = NEW_ID_EDEFAULT;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected RenamingImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.RENAMING;
-    }
+		return SyncchartsPackage.Literals.RENAMING;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public State getParentState() {
-        if (eContainerFeatureID() != SyncchartsPackage.RENAMING__PARENT_STATE) return null;
-        return (State)eContainer();
-    }
+		if (eContainerFeatureID() != SyncchartsPackage.RENAMING__PARENT_STATE) return null;
+		return (State)eContainer();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.RENAMING__PARENT_STATE, msgs);
-        return msgs;
-    }
+		msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.RENAMING__PARENT_STATE, msgs);
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setParentState(State newParentState) {
-        if (newParentState != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.RENAMING__PARENT_STATE && newParentState != null)) {
-            if (EcoreUtil.isAncestor(this, newParentState))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentState != null)
-                msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__RENAMINGS, State.class, msgs);
-            msgs = basicSetParentState(newParentState, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__PARENT_STATE, newParentState, newParentState));
-    }
+		if (newParentState != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.RENAMING__PARENT_STATE && newParentState != null)) {
+			if (EcoreUtil.isAncestor(this, newParentState))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParentState != null)
+				msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__RENAMINGS, State.class, msgs);
+			msgs = basicSetParentState(newParentState, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__PARENT_STATE, newParentState, newParentState));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public String getOldID() {
-        return oldID;
-    }
+		return oldID;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setOldID(String newOldID) {
-        String oldOldID = oldID;
-        oldID = newOldID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__OLD_ID, oldOldID, oldID));
-    }
+		String oldOldID = oldID;
+		oldID = newOldID;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__OLD_ID, oldOldID, oldID));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public String getNewID() {
-        return newID;
-    }
+		return newID;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setNewID(String newNewID) {
-        String oldNewID = newID;
-        newID = newNewID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__NEW_ID, oldNewID, newID));
-    }
+		String oldNewID = newID;
+		newID = newNewID;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.RENAMING__NEW_ID, oldNewID, newID));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentState((State)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParentState((State)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                return basicSetParentState(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				return basicSetParentState(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__RENAMINGS, State.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
+		switch (eContainerFeatureID()) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__RENAMINGS, State.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                return getParentState();
-            case SyncchartsPackage.RENAMING__OLD_ID:
-                return getOldID();
-            case SyncchartsPackage.RENAMING__NEW_ID:
-                return getNewID();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				return getParentState();
+			case SyncchartsPackage.RENAMING__OLD_ID:
+				return getOldID();
+			case SyncchartsPackage.RENAMING__NEW_ID:
+				return getNewID();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                setParentState((State)newValue);
-                return;
-            case SyncchartsPackage.RENAMING__OLD_ID:
-                setOldID((String)newValue);
-                return;
-            case SyncchartsPackage.RENAMING__NEW_ID:
-                setNewID((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				setParentState((State)newValue);
+				return;
+			case SyncchartsPackage.RENAMING__OLD_ID:
+				setOldID((String)newValue);
+				return;
+			case SyncchartsPackage.RENAMING__NEW_ID:
+				setNewID((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                setParentState((State)null);
-                return;
-            case SyncchartsPackage.RENAMING__OLD_ID:
-                setOldID(OLD_ID_EDEFAULT);
-                return;
-            case SyncchartsPackage.RENAMING__NEW_ID:
-                setNewID(NEW_ID_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				setParentState((State)null);
+				return;
+			case SyncchartsPackage.RENAMING__OLD_ID:
+				setOldID(OLD_ID_EDEFAULT);
+				return;
+			case SyncchartsPackage.RENAMING__NEW_ID:
+				setNewID(NEW_ID_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.RENAMING__PARENT_STATE:
-                return getParentState() != null;
-            case SyncchartsPackage.RENAMING__OLD_ID:
-                return OLD_ID_EDEFAULT == null ? oldID != null : !OLD_ID_EDEFAULT.equals(oldID);
-            case SyncchartsPackage.RENAMING__NEW_ID:
-                return NEW_ID_EDEFAULT == null ? newID != null : !NEW_ID_EDEFAULT.equals(newID);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.RENAMING__PARENT_STATE:
+				return getParentState() != null;
+			case SyncchartsPackage.RENAMING__OLD_ID:
+				return OLD_ID_EDEFAULT == null ? oldID != null : !OLD_ID_EDEFAULT.equals(oldID);
+			case SyncchartsPackage.RENAMING__NEW_ID:
+				return NEW_ID_EDEFAULT == null ? newID != null : !NEW_ID_EDEFAULT.equals(newID);
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (oldID: ");
-        result.append(oldID);
-        result.append(", newID: ");
-        result.append(newID);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (oldID: ");
+		result.append(oldID);
+		result.append(", newID: ");
+		result.append(newID);
+		result.append(')');
+		return result.toString();
+	}
 
 } //RenamingImpl

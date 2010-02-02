@@ -46,230 +46,230 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class VariableImpl extends ValuedObjectImpl implements Variable {
 	/**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getValue()
-     * @generated
-     * @ordered
-     */
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
 	protected EObject value;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected VariableImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.VARIABLE;
-    }
+		return SyncchartsPackage.Literals.VARIABLE;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EObject getValue() {
-        return value;
-    }
+		return value;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetValue(EObject newValue, NotificationChain msgs) {
-        EObject oldValue = value;
-        value = newValue;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__VALUE, oldValue, newValue);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		EObject oldValue = value;
+		value = newValue;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__VALUE, oldValue, newValue);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setValue(EObject newValue) {
-        if (newValue != value) {
-            NotificationChain msgs = null;
-            if (value != null)
-                msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.VARIABLE__VALUE, null, msgs);
-            if (newValue != null)
-                msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.VARIABLE__VALUE, null, msgs);
-            msgs = basicSetValue(newValue, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__VALUE, newValue, newValue));
-    }
+		if (newValue != value) {
+			NotificationChain msgs = null;
+			if (value != null)
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.VARIABLE__VALUE, null, msgs);
+			if (newValue != null)
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.VARIABLE__VALUE, null, msgs);
+			msgs = basicSetValue(newValue, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__VALUE, newValue, newValue));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public Region getParentRegion() {
-        if (eContainerFeatureID() != SyncchartsPackage.VARIABLE__PARENT_REGION) return null;
-        return (Region)eContainer();
-    }
+		if (eContainerFeatureID() != SyncchartsPackage.VARIABLE__PARENT_REGION) return null;
+		return (Region)eContainer();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public NotificationChain basicSetParentRegion(Region newParentRegion, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentRegion, SyncchartsPackage.VARIABLE__PARENT_REGION, msgs);
-        return msgs;
-    }
+		msgs = eBasicSetContainer((InternalEObject)newParentRegion, SyncchartsPackage.VARIABLE__PARENT_REGION, msgs);
+		return msgs;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setParentRegion(Region newParentRegion) {
-        if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.VARIABLE__PARENT_REGION && newParentRegion != null)) {
-            if (EcoreUtil.isAncestor(this, newParentRegion))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentRegion != null)
-                msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, SyncchartsPackage.REGION__VARIABLES, Region.class, msgs);
-            msgs = basicSetParentRegion(newParentRegion, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__PARENT_REGION, newParentRegion, newParentRegion));
-    }
+		if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.VARIABLE__PARENT_REGION && newParentRegion != null)) {
+			if (EcoreUtil.isAncestor(this, newParentRegion))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParentRegion != null)
+				msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, SyncchartsPackage.REGION__VARIABLES, Region.class, msgs);
+			msgs = basicSetParentRegion(newParentRegion, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VARIABLE__PARENT_REGION, newParentRegion, newParentRegion));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentRegion((Region)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParentRegion((Region)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__VALUE:
-                return basicSetValue(null, msgs);
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                return basicSetParentRegion(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__VALUE:
+				return basicSetValue(null, msgs);
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				return basicSetParentRegion(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.REGION__VARIABLES, Region.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
+		switch (eContainerFeatureID()) {
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.REGION__VARIABLES, Region.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__VALUE:
-                return getValue();
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                return getParentRegion();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__VALUE:
+				return getValue();
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				return getParentRegion();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__VALUE:
-                setValue((EObject)newValue);
-                return;
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                setParentRegion((Region)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__VALUE:
+				setValue((EObject)newValue);
+				return;
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				setParentRegion((Region)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__VALUE:
-                setValue((EObject)null);
-                return;
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                setParentRegion((Region)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__VALUE:
+				setValue((EObject)null);
+				return;
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				setParentRegion((Region)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.VARIABLE__VALUE:
-                return value != null;
-            case SyncchartsPackage.VARIABLE__PARENT_REGION:
-                return getParentRegion() != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.VARIABLE__VALUE:
+				return value != null;
+			case SyncchartsPackage.VARIABLE__PARENT_REGION:
+				return getParentRegion() != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //VariableImpl

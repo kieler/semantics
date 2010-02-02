@@ -35,57 +35,57 @@ package de.cau.cs.kieler.synccharts;
  */
 public interface Assignment extends Effect {
 	/**
-     * Returns the value of the '<em><b>Variable</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Variable</b></em>' reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Variable</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Variable</em>' reference.
-     * @see #setVariable(Variable)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAssignment_Variable()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Variable</em>' reference.
+	 * @see #setVariable(Variable)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAssignment_Variable()
+	 * @model required="true"
+	 * @generated
+	 */
 	Variable getVariable();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Assignment#getVariable <em>Variable</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Assignment#getVariable <em>Variable</em>}' reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Variable</em>' reference.
-     * @see #getVariable()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Variable</em>' reference.
+	 * @see #getVariable()
+	 * @generated
+	 */
 	void setVariable(Variable value);
 
 	/**
-     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Expression#getParentAssignment <em>Parent Assignment</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Expression#getParentAssignment <em>Parent Assignment</em>}'.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Expression</em>' containment reference.
-     * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAssignment_Expression()
-     * @see de.cau.cs.kieler.synccharts.Expression#getParentAssignment
-     * @model opposite="parentAssignment" containment="true" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Expression</em>' containment reference.
+	 * @see #setExpression(Expression)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAssignment_Expression()
+	 * @see de.cau.cs.kieler.synccharts.Expression#getParentAssignment
+	 * @model opposite="parentAssignment" containment="true" required="true"
+	 * @generated
+	 */
 	Expression getExpression();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Assignment#getExpression <em>Expression</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Assignment#getExpression <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expression</em>' containment reference.
-     * @see #getExpression()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
+	 * @see #getExpression()
+	 * @generated
+	 */
 	void setExpression(Expression value);
 
 } // Assignment

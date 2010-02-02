@@ -37,83 +37,83 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Renaming extends EObject {
 	/**
-     * Returns the value of the '<em><b>Parent State</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getRenamings <em>Renamings</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Parent State</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getRenamings <em>Renamings</em>}'.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parent State</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent State</em>' container reference.
-     * @see #setParentState(State)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_ParentState()
-     * @see de.cau.cs.kieler.synccharts.State#getRenamings
-     * @model opposite="renamings" required="true" transient="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Parent State</em>' container reference.
+	 * @see #setParentState(State)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_ParentState()
+	 * @see de.cau.cs.kieler.synccharts.State#getRenamings
+	 * @model opposite="renamings" required="true" transient="false"
+	 * @generated
+	 */
 	State getParentState();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getParentState <em>Parent State</em>}' container reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getParentState <em>Parent State</em>}' container reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent State</em>' container reference.
-     * @see #getParentState()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Parent State</em>' container reference.
+	 * @see #getParentState()
+	 * @generated
+	 */
 	void setParentState(State value);
 
 	/**
-     * Returns the value of the '<em><b>Old ID</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Old ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Old ID</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Old ID</em>' attribute.
-     * @see #setOldID(String)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_OldID()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Old ID</em>' attribute.
+	 * @see #setOldID(String)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_OldID()
+	 * @model required="true"
+	 * @generated
+	 */
 	String getOldID();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getOldID <em>Old ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getOldID <em>Old ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Old ID</em>' attribute.
-     * @see #getOldID()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Old ID</em>' attribute.
+	 * @see #getOldID()
+	 * @generated
+	 */
 	void setOldID(String value);
 
 	/**
-     * Returns the value of the '<em><b>New ID</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>New ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>New ID</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>New ID</em>' attribute.
-     * @see #setNewID(String)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_NewID()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>New ID</em>' attribute.
+	 * @see #setNewID(String)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRenaming_NewID()
+	 * @model required="true"
+	 * @generated
+	 */
 	String getNewID();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getNewID <em>New ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Renaming#getNewID <em>New ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>New ID</em>' attribute.
-     * @see #getNewID()
-     * @generated
-     */
+	 * @param value the new value of the '<em>New ID</em>' attribute.
+	 * @see #getNewID()
+	 * @generated
+	 */
 	void setNewID(String value);
 
 } // Renaming

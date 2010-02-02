@@ -1307,6 +1307,13 @@ rule__CompareOperator__Alternatives
 { after(grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4()); }
 )
 
+    |(
+{ before(grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5()); }
+(	'<>' 
+)
+{ after(grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

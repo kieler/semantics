@@ -74,8 +74,9 @@
     <eLiterals name="GT" value="12" literal=">"/>
     <eLiterals name="GEQ" value="10" literal=">="/>
     <eLiterals name="NOT" literal="not"/>
-    <eLiterals name="VAL" literal="?"/>
+    <eLiterals name="VAL" value="15" literal="?"/>
     <eLiterals name="PRE" value="11" literal="pre"/>
+    <eLiterals name="NE" value="14" literal="&lt;>"/>
     <eLiterals name="AND" value="4" literal="and"/>
     <eLiterals name="OR" value="5" literal="or"/>
     <eLiterals name="ADD" value="6" literal="+"/>
