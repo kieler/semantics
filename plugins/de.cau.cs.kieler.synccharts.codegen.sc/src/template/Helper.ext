@@ -63,3 +63,7 @@ cached List allSignals(State state):
 State getInitialState(State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
 ;
+
+int fillStateSignalList(State state):
+	JAVA template.Helper.fillStateSignalList(de.cau.cs.kieler.synccharts.State)
+;

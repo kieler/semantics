@@ -20,8 +20,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 
+import de.cau.cs.kieler.synccharts.Effect;
+import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
@@ -132,6 +135,13 @@ public class Helper {
         allSignalsHelp(state);
         return allSignalsList;
     }
+    
+    /*
+     * TODO
+    public static List<Signal> stateSignalList(final State state){
+        return fillStateSignalList(state);
+    }
+     */
 
     private static int computeThreadPriority(final State state, final boolean weak) {
         int out = 0;
@@ -350,9 +360,25 @@ public class Helper {
             for (State innerState : region.getInnerStates()) {
                 // every outgoing transition
                 for (Transition transition : innerState.getOutgoingTransitions()) {
-                    // all signals from trigger and effect
-                    // signalabh. in liste packen wenn noch nicht drin .....
-                    System.out.println(transition.getTriggersAndEffects());
+                    // simple signals
+                    if (transition.getTrigger() instanceof SignalReference) {
+                        // put trigger signal into the list
+                        Signal triggerSignal = ((SignalReference) transition.getTrigger())
+                                .getSignal();
+                        if (!stateSignalList.contains(triggerSignal)) {
+                            stateSignalList.add(triggerSignal);
+                        }
+                    }
+                    EList<Effect> effectSignals = transition.getEffects();
+                    // put all effect signals into the list
+                    for (Effect effect : effectSignals) {
+                        if (effect instanceof Emission) {
+                            Signal effectSignal = ((Emission) effect).getSignal();
+                            if (!stateSignalList.contains(effectSignal)) {
+                                stateSignalList.add(effectSignal);
+                            }
+                        }
+                    }
                 }
                 if (!innerState.getRegions().isEmpty()) {
                     fillStateSignalList(innerState);

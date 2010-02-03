@@ -3,6 +3,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
+«REM»«fillStateSignalList(this)»«ENDREM»
 
 «IF (this.regions.size >= 1)-»
 	«IF this.regions.size == 1-»
@@ -49,9 +50,10 @@
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
           «EXPAND onInside FOR this-»
 		  // PRIO für WEAK setzen
-		  PRIO(1); //PRIO(«computeWeakThreadPriority()»);
+		  PRIO(«computeWeakThreadPriority(this)»);
 	«ENDIF-»
 	«EXPAND allWeak FOR this-»
+		  PRIO(«computeRealThreadPriority(this)»);
 	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
 		«IF !(this.regions.isEmpty)-»
 			GOTO(«this.id»_main_intern);
