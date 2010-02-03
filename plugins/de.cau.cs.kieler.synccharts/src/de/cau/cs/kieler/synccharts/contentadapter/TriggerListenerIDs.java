@@ -1,11 +1,18 @@
 package de.cau.cs.kieler.synccharts.contentadapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.ResourceSetChangeEvent;
+import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
@@ -28,6 +35,8 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  */
 public class TriggerListenerIDs extends FireOnceTriggerListener {
 
+    List<UniqueStringCache> caches = new ArrayList<UniqueStringCache>();
+    
     public TriggerListenerIDs() {
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getState_Label())
                 .or(
@@ -62,7 +71,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
     private Command handleNewRegion(Notification notification) {
         Region region = (Region)notification.getNewValue();
         if(region!=null){
-            String newRegionId = SyncchartsContentUtil.getNewUniqueString(region,
+            String newRegionId = getUniqueString(region,
                     SyncchartsPackage.eINSTANCE.getRegion_Id(), "R");
             return new SetCommand(getTarget(), region, SyncchartsPackage.eINSTANCE
                     .getRegion_Id(), newRegionId);
@@ -81,7 +90,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         CompoundCommand cc = new CompoundCommand();
         State state = (State) notification.getNewValue();
         if (state != null) {
-            String newLabel = SyncchartsContentUtil.getNewUniqueString(state,
+            String newLabel = getUniqueString(state,
                     SyncchartsPackage.eINSTANCE.getState_Label(), "S");
             String newId = ("_" + newLabel).replaceAll("\\s", "_");
             cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE
@@ -106,7 +115,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         CompoundCommand cc = new CompoundCommand();
         
         if(newId == null || newId.trim().equals("")){
-            String anonymousId = SyncchartsContentUtil.getNewUniqueString(state,
+            String anonymousId = getUniqueString(state,
                     SyncchartsPackage.eINSTANCE.getState_Id(), "_S");
             return new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE.getState_Id(),
                     anonymousId);
@@ -121,7 +130,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                     // resolve conflict by changing auto generated IDs (for
                     // anonymous states)
                     if (sibling.getLabel() == null || sibling.getLabel().trim().equals("")) {
-                        String dummyId = SyncchartsContentUtil.getNewUniqueString(sibling,
+                        String dummyId = getUniqueString(sibling,
                                 SyncchartsPackage.eINSTANCE.getState_Id(), "_S");
                         cc.append(new SetCommand(getTarget(), sibling, SyncchartsPackage.eINSTANCE
                                 .getState_Id(), dummyId));
@@ -149,6 +158,33 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                 newLabel));
         cc.append(handleStateId(state, newId));
         return cc;
+    }
+    
+    private String getUniqueString(EObject target, EAttribute attribute, String prefix){
+        EObject parent = target.eContainer();
+        UniqueStringCache cache = null;
+        for (UniqueStringCache c : caches) {
+            if ((parent == null && c.getParent()==null) || c.getParent().equals(parent) && c.getAttribute().equals(attribute)){
+                cache = c;
+            }
+        }
+        if(cache == null){
+            cache = new UniqueStringCache(parent,attribute);
+            caches.add(cache);
+        }
+        String temp = SyncchartsContentUtil.getNewUniqueString(target,
+                attribute, prefix, cache);
+        cache.add(temp);
+        return temp;
+    }
+
+    @Override
+    public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
+        // when the transaction is finished and a new starts, we can clear the String caches
+        if (transaction != null && transaction.isActive()) {
+            caches.clear();
+        }
+        return super.transactionAboutToCommit(event);
     }
 
 }

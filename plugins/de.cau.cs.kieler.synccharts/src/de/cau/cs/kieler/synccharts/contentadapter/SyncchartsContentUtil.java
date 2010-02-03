@@ -14,6 +14,9 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.contentadapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
@@ -72,107 +75,43 @@ public final class SyncchartsContentUtil {
     }
 
     /**
-     * Determine a new unique ID for a given State. Will search sibling states
-     * (states within the same Region) and compare their IDs. Will return the
-     * next ID with the "Sn" where n is the next free integer number available,
-     * e.g. S0, S1, S2...
+     * Determine a new unique ID for a given EObject (e.g. a Region or a State).
+     * Will search siblings (e.g. regions within the same State) and compare
+     * their IDs. Will return the next ID with the "PrefixN" where N is the next
+     * free integer number available, e.g. R0, R1, R2...
      * 
-     * @param state
-     *            given State
-     * @return a new unique ID within the Region
-     */
-    public static String getNewId(final State state) {
-        String id = "S";
-        Region region = state.getParentRegion();
-        if (region == null) {
-            return id;
-        }
-        if (region != null) {
-            EList<State> siblings = region.getInnerStates();
-            int counter = 0;
-            for (State sibling : siblings) {
-                if (sibling == state || sibling.getId() == null) {
-                    continue;
-                } else {
-                    String siblingId = sibling.getId().trim();
-                    if (siblingId.matches("S\\d+")) {
-                        // matches S digits
-                        int i = siblingId.length();
-                        while (Character.isDigit(siblingId.charAt(i - 1))) {
-                            i--;
-                        }
-                        if (siblingId.charAt(i - 1) == 'S') {
-                            i = Integer.parseInt(siblingId.substring(i));
-                            if (i >= counter) {
-                                counter = i + 1;
-                            }
-                        }
-                    }
-                }
-            }
-            id = id + counter;
-        }
-        return id;
-    }
-
-    /**
-     * Determine a new unique ID for a given Region. Will search sibling regions
-     * (regions within the same State) and compare their IDs. Will return the
-     * next ID with the "Rn" where n is the next free integer number available,
-     * e.g. R0, R1, R2...
-     * 
-     * @param region
-     *            given Region
+     * @param target
+     *            given EObject to look for a unique ID
+     * @param attribute
+     *            the feature in which the String is stored, e.g. a "name"
+     *            feature of a State
+     * @param prefix
+     *            A String Prefix with which the unique String should start.
      * @return a new unique ID within the State
      */
-    public static String getNewId(final Region region) {
-        String id = "R";
-        State parentState = region.getParentState();
-        if (parentState == null) {
-            return id;
-        }
-        if (parentState != null) {
-            EList<Region> siblings = parentState.getRegions();
-            int counter = 0;
-            for (Region sibling : siblings) {
-                if (sibling == region || sibling.getId() == null) {
-                    continue;
-                } else {
-                    String siblingId = sibling.getId().trim();
-                    if (siblingId.matches("R\\d+")) {
-                        // matches S digits
-                        int i = siblingId.length();
-                        while (Character.isDigit(siblingId.charAt(i - 1))) {
-                            i--;
-                        }
-                        if (siblingId.charAt(i - 1) == 'R') {
-                            i = Integer.parseInt(siblingId.substring(i));
-                            if (i >= counter) {
-                                counter = i + 1;
-                            }
-                        }
-                    }
-                }
-            }
-            id = id + counter;
-        }
-        return id;
-    }
-
-    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix) {
+    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix, UniqueStringCache cache) {
         String id = prefix;
         EObject parent = target.eContainer();
         if (parent == null) {
             return id;
         }
         EList<EObject> siblings = parent.eContents();
+        List<String> ids = new ArrayList<String>();
         int counter = 0;
         for (EObject sibling : siblings) {
             Object val = sibling.eGet(attribute);
             if (val == null || !(val instanceof String)) {
                 continue;
             } else {
-                String siblingId = ((String) val).trim();
+                ids.add((String)val);
+            }
+        }
+        if(cache!=null){
+            ids.addAll(cache.getList());
+        }
+        
+        for (String string : ids) {
+                String siblingId = string.trim();
                 if (siblingId.matches(prefix + "\\d+")) {
                     // matches e.g. S24 or R99
                     int i = siblingId.length();
@@ -189,7 +128,6 @@ public final class SyncchartsContentUtil {
                     }
                 }
             }
-        }
         id = id + counter;
         return id;
     }
@@ -230,5 +168,7 @@ public final class SyncchartsContentUtil {
             return currentPrio;
         }
     }
+    
+   
 
 }

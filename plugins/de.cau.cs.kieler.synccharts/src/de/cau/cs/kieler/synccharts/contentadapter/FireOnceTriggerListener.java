@@ -17,7 +17,7 @@ import org.eclipse.emf.transaction.TriggerListener;
  */
 public abstract class FireOnceTriggerListener extends TriggerListener {
 
-    private Transaction transaction;
+    protected Transaction transaction;
 
     public FireOnceTriggerListener(NotificationFilter filter) {
         super(filter);
