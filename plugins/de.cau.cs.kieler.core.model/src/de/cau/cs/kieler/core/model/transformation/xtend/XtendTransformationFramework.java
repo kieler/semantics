@@ -151,6 +151,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
         if (parameters == null) {
             return false;
         }
+        
         // removing file extension
         String withFileExt = fileName;
 
