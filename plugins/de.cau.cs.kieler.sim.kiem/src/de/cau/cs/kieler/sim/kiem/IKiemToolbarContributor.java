@@ -17,29 +17,28 @@ package de.cau.cs.kieler.sim.kiem;
 import org.eclipse.jface.action.ControlContribution;
 
 /**
- * Classes implementing this interface may be asked if they want
- * to contribute controls to the toolbar inside the KIEM View.
- * <BR><BR>
- * The plugin will add the components from left to right in the order
- * that the contributors are stored in the extension registry. KIEM's 
- * own controls will be added after the contributed components have
- * been added.
- * <BR><BR>
+ * Classes implementing this interface may be asked if they want to contribute
+ * controls to the toolbar inside the KIEM View.
+ * <p>
+ * The plugin will add the components from left to right in the order that the
+ * contributors are stored in the extension registry. KIEM's own controls will
+ * be added after the contributed components have been added.
+ * 
  * @author soh
- *
+ * @kieler.rating 2010-02-03 proposed yellow
  */
 public interface IKiemToolbarContributor {
 
     /**
-     * The plugin will add the components from left to right in the order
-     * that the contributors are stored in the extension registry. KIEM's 
-     * own controls will be added after the contributed components have
-     * been added.
-     * <BR><BR>
-     * The array should contain the components in the order that they
-     * are supposed to be added, null values will be ignored.
-     * <BR><BR>
-     * @param info may hold some information.
+     * The plugin will add the components from left to right in the order that
+     * the contributors are stored in the extension registry. KIEM's own
+     * controls will be added after the contributed components have been added. <BR>
+     * <p>
+     * The array should contain the components in the order that they are
+     * supposed to be added, null values will be ignored.
+     * 
+     * @param info
+     *            may hold some information.
      * @return the list of controls that should be contributed.
      */
     ControlContribution[] provideToolbarContributions(Object info);

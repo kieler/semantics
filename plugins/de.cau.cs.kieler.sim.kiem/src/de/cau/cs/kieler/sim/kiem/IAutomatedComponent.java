@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * plugin.
  * 
  * @author soh
+ * @kieler.rating 2010-02-03 proposed yellow
  */
 public interface IAutomatedComponent {
 

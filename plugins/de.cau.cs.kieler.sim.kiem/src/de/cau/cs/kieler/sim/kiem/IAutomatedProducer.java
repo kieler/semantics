@@ -18,18 +18,17 @@ import java.util.List;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * DataComponents implementing this interface will be asked
- * to respond to requests for information about the execution
- * run.
+ * DataComponents implementing this interface will be asked to respond to
+ * requests for information about the execution run.
  * 
  * @author soh
+ * @kieler.rating 2010-02-03 proposed yellow
  */
 public interface IAutomatedProducer extends IAutomatedComponent {
 
     /**
-     * Notifies the DataComponent that the schedule has
-     * finished and asks it to provide some information for
-     * evaluation.
+     * Notifies the DataComponent that the schedule has finished and asks it to
+     * provide some information for evaluation.
      * 
      * @return information
      */
