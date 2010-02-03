@@ -20,7 +20,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter;
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
 /**

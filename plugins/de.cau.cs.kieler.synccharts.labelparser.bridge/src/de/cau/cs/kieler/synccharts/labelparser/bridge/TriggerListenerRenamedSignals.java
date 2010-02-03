@@ -14,6 +14,12 @@ import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
+/**
+ * Listen to renamings of Signals and Variables and then re-serialize all affected transition
+ * labels.
+ * @author haf
+ *
+ */
 public class TriggerListenerRenamedSignals extends TriggerListener {
 
     public TriggerListenerRenamedSignals() {

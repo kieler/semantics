@@ -40,6 +40,9 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerRenamedSignals">
       </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerSerializer">
+      </triggerListener>
    </extension>
 
 </plugin>

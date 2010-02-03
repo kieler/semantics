@@ -20,6 +20,12 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
+/**
+ * Listen to changes of the TriggerAndEffects String of an Action and trigger the 
+ * Xtext LabelParser to parse the String and create real objects out of it.
+ * @author haf
+ *
+ */
 public class TriggerListenerChangedTrigger extends TriggerListener {
 
     public TriggerListenerChangedTrigger() {

@@ -36,8 +36,6 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
-import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
-import de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its
@@ -69,7 +67,6 @@ public class ParserSerializerTest {
      */
     @Before
     public void setUpSyncChart() throws Exception {
-        SyncchartsContentAdapter.INSTANCE.setEnabled(false);
         rootRegion = SyncchartsFactory.eINSTANCE.createRegion();
 
         State rootState = SyncchartsFactory.eINSTANCE.createState();

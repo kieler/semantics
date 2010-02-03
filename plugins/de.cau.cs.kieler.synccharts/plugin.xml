@@ -47,7 +47,13 @@
    <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.contentadapter.SyncChartsTriggerListener">
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerIDs">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerPriorities">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerChoice">
       </triggerListener>
    </extension>
 

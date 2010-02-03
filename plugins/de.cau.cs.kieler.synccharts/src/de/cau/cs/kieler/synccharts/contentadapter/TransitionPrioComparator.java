@@ -13,7 +13,7 @@
  * 
  *****************************************************************************/
 
-package de.cau.cs.kieler.synccharts.labelparser.bridge;
+package de.cau.cs.kieler.synccharts.contentadapter;
 
 import java.util.Comparator;
 

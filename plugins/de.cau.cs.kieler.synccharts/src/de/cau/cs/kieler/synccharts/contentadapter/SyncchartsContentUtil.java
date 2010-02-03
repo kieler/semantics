@@ -20,6 +20,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -47,7 +50,9 @@ public final class SyncchartsContentUtil {
     /**
      * Add all TriggerListener classes that are registered via the corresponding
      * extension point as a listener to the passed TransactionalEditingDomain.
-     * @param domain the given TransactionalEditingDomain
+     * 
+     * @param domain
+     *            the given TransactionalEditingDomain
      */
     public static void addTriggerListeners(TransactionalEditingDomain domain) {
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
@@ -151,6 +156,41 @@ public final class SyncchartsContentUtil {
             }
             id = id + counter;
         }
+        return id;
+    }
+
+    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix) {
+        String id = prefix;
+        EObject parent = target.eContainer();
+        if (parent == null) {
+            return id;
+        }
+        EList<EObject> siblings = parent.eContents();
+        int counter = 0;
+        for (EObject sibling : siblings) {
+            Object val = sibling.eGet(attribute);
+            if (val == null || !(val instanceof String)) {
+                continue;
+            } else {
+                String siblingId = ((String) val).trim();
+                if (siblingId.matches(prefix + "\\d+")) {
+                    // matches e.g. S24 or R99
+                    int i = siblingId.length();
+                    // get the number
+                    while (Character.isDigit(siblingId.charAt(i - 1))) {
+                        i--;
+                    }
+                    if (siblingId.substring(0, i).equals(prefix)) {
+                        // if id starts with prefix
+                        i = Integer.parseInt(siblingId.substring(i));
+                        if (i >= counter) {
+                            counter = i + 1;
+                        }
+                    }
+                }
+            }
+        }
+        id = id + counter;
         return id;
     }
 
