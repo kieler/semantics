@@ -6,15 +6,16 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.toolbarContributor" name="de.cau.cs.kieler.sim.kiem.toolbarContributor"/>
       </appInfo>
       <documentation>
-         &lt;BR&gt;
+         &lt;p&gt;
 Classes implementing this interface may be asked if they want
 to contribute controls to the toolbar inside the KIEM View.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
+&lt;p&gt;
 The plugin will add the components from left to right in the order
 that the contributors are stored in the extension registry. KIEM&apos;s 
 own controls will be added after the contributed components have
 been added.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
       </documentation>
    </annotation>
 
@@ -95,10 +96,10 @@ been added.
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         &lt;BR&gt;
+         &lt;p&gt;
 This simple example shows how to add a label displaying &quot;Hello, World!&quot;
 to the views toolbar.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
 &lt;table width=&quot;100%&quot; border=&quot;1&quot; cellpadding=&quot;5&quot; bgcolor=&quot;#CCCCCC&quot;&gt;
   &lt;tr&gt; 
     &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;

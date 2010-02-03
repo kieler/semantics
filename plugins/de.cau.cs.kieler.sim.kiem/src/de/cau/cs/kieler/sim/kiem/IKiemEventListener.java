@@ -15,13 +15,17 @@
 package de.cau.cs.kieler.sim.kiem;
 
 /**
+ * <p>
  * Classes implementing this interface can listen to events happening anywhere
  * in KIEM.
+ * </p>
  * <p>
  * When an event successfully completes somewhere inside the KIEM plugin, the
  * plugin may choose to notify the listeners of this event.
+ * </p>
  * <p>
- * {@link #de.cau.cs.kieler.sim.kiem.KiemEvent}
+ * {@link de.cau.cs.kieler.sim.kiem.KiemEvent}
+ * </p>
  * 
  * @author soh
  * @kieler.rating 2010-02-03 proposed yellow
@@ -40,17 +44,21 @@ public interface IKiemEventListener {
     void notifyEvent(final KiemEvent event);
 
     /**
+     * <p>
      * Return a KiemEvent type (integer value) that represents a number of
      * events this component wants to listen to.
+     * </p>
      * <p>
      * A KiemEvent can be a combination of several events. The simplest way to
      * register for two events that e.g., indicate a step-command and the
      * removal of the component is to have the following code:
+     * </p>
      * <p>
      * public KiemEvent provideEventOfInterest() {<BR>
      * int[] events = {CMD_STEP, DELETED}<BR>
      * return new KiemEvent(events);<BR>
      * }
+     * </p>
      * 
      * @return the KiemEvent type indicating the events of interest
      */

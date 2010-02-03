@@ -6,25 +6,29 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.configurationProvider" name="de.cau.cs.kieler.sim.kiem.configurationProvider"/>
       </appInfo>
       <documentation>
-         &lt;BR&gt;
+         &lt;p&gt;
 Plugins on this extension point can provide configuration
 information for KIEM. For example change the aimed step duration
 and be notified if the user changes it in one of the components.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
+&lt;p&gt;
 Whenever the value of a configuration element is needed by the plugin
 it will start to ask all configuration providers for a value through
 the changeProperty(propertyId) method. Providers that do not wish
 to provide a value or can&apos;t provide one should throw an Exception.
 The plugin will take the value from the first provider that does
 not throw an Exception. All other providers will be ignored.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
+&lt;p&gt;
 When a property is changed through the user interface the plugin
 will inform all providers of the change through a (key, value) pair.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
+&lt;p&gt;
 The extension point only supports String values as that is the format
 that is easiest to store in the PreferenceScope. This implementation
 might later be changed to support general Objects that must at least
 implement the Serializable interface.
+&lt;/p&gt;
       </documentation>
    </annotation>
 
@@ -105,10 +109,10 @@ implement the Serializable interface.
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         &lt;BR&gt;
+         &lt;p&gt;
 This simple example shows how to provide a place to save the aimed
 step duration for the main KIEM plugin using the extension point.
-&lt;BR&gt;&lt;BR&gt;
+&lt;/p&gt;
 &lt;table width=&quot;100%&quot; border=&quot;1&quot; cellpadding=&quot;5&quot; bgcolor=&quot;#CCCCCC&quot;&gt;
   &lt;tr&gt; 
     &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;

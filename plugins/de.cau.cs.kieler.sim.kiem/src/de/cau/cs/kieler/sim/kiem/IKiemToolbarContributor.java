@@ -17,12 +17,15 @@ package de.cau.cs.kieler.sim.kiem;
 import org.eclipse.jface.action.ControlContribution;
 
 /**
+ * <p>
  * Classes implementing this interface may be asked if they want to contribute
  * controls to the toolbar inside the KIEM View.
+ * </p>
  * <p>
  * The plugin will add the components from left to right in the order that the
  * contributors are stored in the extension registry. KIEM's own controls will
  * be added after the contributed components have been added.
+ * </p>
  * 
  * @author soh
  * @kieler.rating 2010-02-03 proposed yellow
@@ -30,12 +33,15 @@ import org.eclipse.jface.action.ControlContribution;
 public interface IKiemToolbarContributor {
 
     /**
+     * <p>
      * The plugin will add the components from left to right in the order that
      * the contributors are stored in the extension registry. KIEM's own
-     * controls will be added after the contributed components have been added. <BR>
+     * controls will be added after the contributed components have been added.
+     * </p>
      * <p>
      * The array should contain the components in the order that they are
      * supposed to be added, null values will be ignored.
+     * </p>
      * 
      * @param info
      *            may hold some information.
