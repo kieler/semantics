@@ -21,9 +21,10 @@
 	«IF this.isFinal-»
 			TERM;
 	«ELSE-»
-			//HALT;
+		«EXPAND onEntry FOR this-»
 			// this should be HALT; but for simulation:
 			PAUSE;
+		«EXPAND onInside FOR this-»
 		«IF !(this.regions.isEmpty)-»
 			GOTO(«this.id»_main);
 		«ELSE-»
@@ -31,34 +32,31 @@
 		«ENDIF-»
 	«ENDIF-»
 «ELSE-»
-		«FOREACH sortTransitionPrios(this) AS outTrans-»
-			«IF ((Transition)outTrans).isImmediate-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
-			«ENDIF-»
-		«ENDFOREACH-»
-		«EXPAND CodegenMisc::callJSONState-»
-		«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
+	«EXPAND immediateStrong FOR this-»
+	«EXPAND CodegenMisc::callJSONState-»
+	«EXPAND onEntry FOR this-»
+	«EXPAND immediateWeak FOR this-»
+	«IF !(this.regions.isEmpty)-»
+«this.id»_main_intern:
+	«ELSE-»
+«this.id»_intern:
+	«ENDIF-»
+	«EXPAND CodegenMisc::callJSONState-»
+	«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
 			PAUSE;
-		«ENDIF-»
-		«FOREACH sortTransitionPrios(this) AS outTrans-»
-			«IF !((Transition)outTrans).isImmediate && (((Transition)outTrans).type == TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
-			«ENDIF-»
-		«ENDFOREACH-»
-		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+	«ENDIF-»
+	«EXPAND allStrong FOR this-»
+	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+          «EXPAND onInside FOR this-»
 		  // PRIO für WEAK setzen
-		  PRIO(«computeWeakThreadPriority()»);
-		«ENDIF-»
-		«FOREACH sortTransitionPrios(this) AS outTrans-»
-			«IF !((Transition)outTrans).isImmediate  && (((Transition)outTrans).type != TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
-			«ENDIF-»
-		«ENDFOREACH-»
+		  PRIO(1); //PRIO(«computeWeakThreadPriority()»);
+	«ENDIF-»
+	«EXPAND allWeak FOR this-»
 	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
 		«IF !(this.regions.isEmpty)-»
-			GOTO(«this.id»_main);
+			GOTO(«this.id»_main_intern);
 		«ELSE-»
-			GOTO(«this.id»);
+			GOTO(«this.id»_intern);
 		«ENDIF-»
 	«ENDIF-»
 «ENDIF-»
@@ -76,4 +74,52 @@
 			FORK(«getInitialState(region).id-», «computeRealThreadPriority(getInitialState(region))»);
 	«ENDFOREACH»
 			FORKE(«this.id»_main);
+«ENDDEFINE»
+
+«DEFINE immediateStrong FOR State-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type == TransitionType::STRONGABORT)-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE immediateWeak FOR State-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type != TransitionType::STRONGABORT)-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE allStrong FOR State-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).type == TransitionType::STRONGABORT)-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE allWeak FOR State-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).type != TransitionType::STRONGABORT)-»
+				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE onEntry FOR State-»
+	«IF !this.entryActions.isEmpty-»
+		«FOREACH this.entryActions AS onEntryAction-»
+			«EXPAND CodegenTriggerAndEffect::trigger FOR onEntryAction-»
+		«ENDFOREACH-»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE onInside FOR State-»
+	«IF !this.innerActions.isEmpty-»
+		«FOREACH this.innerActions AS onInsideAction-»
+			«EXPAND CodegenTriggerAndEffect::trigger FOR onInsideAction-»
+		«ENDFOREACH-»
+	«ENDIF»
 «ENDDEFINE»

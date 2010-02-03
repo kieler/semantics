@@ -179,12 +179,15 @@ public class DataComponent extends JSONObjectDataComponent {
         // delete temp folder
         File folder = new File(wf.getOutPath());
         if (folder.getAbsolutePath().contains("tmp")) {
+            /* Deleting folder for debugging disabled
+             * 
             boolean folderDeleted = deleteFolder(folder);
             if (folderDeleted) {
                 System.out.println("temp folder " + folder + " successfully deleted");
             } else {
                 System.err.println("error while deleting temp folder: " + folder);
             }
+            */
         }
     }
 
@@ -216,6 +219,10 @@ public class DataComponent extends JSONObjectDataComponent {
         return out;
     }
 
+    @SuppressWarnings("unused")
+    /*
+     *  just unused for debugging
+     */
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {
             String[] entries = dir.list();

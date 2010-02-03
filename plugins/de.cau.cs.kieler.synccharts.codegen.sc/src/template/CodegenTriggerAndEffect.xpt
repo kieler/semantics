@@ -2,7 +2,7 @@
 
 «EXTENSION template::Helper»
 
-«DEFINE transition FOR Transition-»
+«DEFINE trigger FOR Action-»
 	«IF !(this.triggersAndEffects == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
@@ -11,30 +11,23 @@
 					«EXPAND complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
-			«IF this.type == TransitionType::NORMALTERMINATION-»
-			JOINELSE(«this.sourceState.id»_main);
-			«ENDIF-»
-			«EXPAND transitionEffects FOR this-»
+			«EXPAND effects FOR this-»
 		«ENDIF-»
-	«ELSE»
-		«EXPAND transitionWithoutTriggersAndEffects FOR this»
-	«ENDIF-»
-	«IF this.type == TransitionType::STRONGABORT-»
 	«ENDIF-»
 «ENDDEFINE»
 
-«DEFINE simpleTrigger FOR Transition-»
+«DEFINE simpleTrigger FOR Action-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
-	«EXPAND transitionEffects FOR this-»
+	«EXPAND effects FOR this-»
 		}
 «ENDDEFINE»
 
-«DEFINE complexTrigger FOR Transition-»
+«DEFINE complexTrigger FOR Action-»
 //>>>> TODO complex Trigger
 «ENDDEFINE»
 
-«DEFINE transitionEffects FOR Transition-»
+«DEFINE effects FOR Action-»
 	«FOREACH this.effects AS effect-»
 		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
 			«EXPAND valuedSignal FOR ((Emission)effect)-»
@@ -42,23 +35,6 @@
 			EMIT(«((Emission)effect).signal.name-»);
 		«ENDIF-»
 	«ENDFOREACH-»
-	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
-«ENDDEFINE»
-
-«DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
-	«IF !(this.sourceState.regions.isEmpty)-»
-		«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
-		«IF this.type != TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
-		«ENDIF-»
-			ABORT;
-		«IF this.type == TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
-		«ENDIF-»
-	«ENDIF-»
-	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
-			GOTO(«this.targetState.id»);
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE valuedSignal FOR Emission-»
