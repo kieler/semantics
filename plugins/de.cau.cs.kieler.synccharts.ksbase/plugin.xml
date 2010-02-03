@@ -193,10 +193,4 @@
 			</menus>
 		</configuration>
  </extension>
- <extension
-       point="de.cau.cs.kieler.ksbase.activator">
-    <Class
-          class="de.cau.cs.kieler.synccharts.sbase.ContentAdapterKSbasEBridge">
-    </Class>
- </extension>
 </plugin>
