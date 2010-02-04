@@ -134,10 +134,19 @@ public class KitsLazyLinkingResource extends LazyLinkingResource {
     }
 
     /**
+     * If the user has typed "init" or "final", set the state type and create a
+     * unique id for the state (e.g."init S7") Otherwise if the user has typed
+     * "conditional", set the state modifier to conditional as well as the state
+     * id and label
+     * 
      * @param s
+     *            the state that has been created
      * @param t
+     *            the transition that has s as its target state
      * @param i
+     *            determines whether the state is initial, final or conditional
      * @param leaf
+     *            parser tree leaf node, contains the user input
      */
     private static void setDesiredStateModifier(State s, Transition t, int i,
             LeafNode leaf) {
@@ -148,7 +157,6 @@ public class KitsLazyLinkingResource extends LazyLinkingResource {
                         .getElement();
                 if (parentOfCurrentLeaf.getTargetState().getId().equals(
                         t.getTargetState().getId()))
-                    // case modifier
                     switch (i) {
                     case 0:
                         s.setIsInitial(true);
@@ -160,7 +168,6 @@ public class KitsLazyLinkingResource extends LazyLinkingResource {
                         break;
                     case 1:
                         s.setIsFinal(true);
-                        // set id and label to unique identifier
                         s.setId(SyncchartsContentUtil.getNewUniqueString(s,
                                 syncFac.getSyncchartsPackage().getState_Id(),
                                 "S", null));

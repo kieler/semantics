@@ -49,7 +49,7 @@ public class SyncchartsSerializersTest {
      */
     public SyncchartsSerializersTest() {
         resourceSet = new XtextResourceSet();
-        fileURI = URI.createFileURI(new File("testRuntime.kits")
+        fileURI = URI.createFileURI(new File("model.kits")
                 .getAbsolutePath());
 
     }
@@ -71,8 +71,8 @@ public class SyncchartsSerializersTest {
         // return;
         // }
         Region r;
-        r = myText.createEMFModel();
-        myText.saveModel(r);
+//        r = 
+//        myText.saveModel(r);
         myText.loadModel();
 
     }

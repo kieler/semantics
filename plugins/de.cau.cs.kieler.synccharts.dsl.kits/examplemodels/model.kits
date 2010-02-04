@@ -1,1 +1,11 @@
-init A
+input IN ;
+output O ;
+init Start {
+  region blup
+  init A "labelss"
+  --> "B";
+  --> C with / ;
+  C
+  --> F with IN / O ;
+  final F
+}

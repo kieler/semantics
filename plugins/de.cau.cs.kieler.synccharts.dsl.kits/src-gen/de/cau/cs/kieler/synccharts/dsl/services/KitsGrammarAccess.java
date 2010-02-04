@@ -21,66 +21,91 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Region");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cRegionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cRegionKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Assignment cVariablesAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_3_0_0 = (RuleCall)cVariablesAssignment_3_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_3_1_0 = (RuleCall)cSignalsAssignment_3_1.eContents().get(0);
-		private final Assignment cInnerStatesAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cInnerStatesStateParserRuleCall_4_0 = (RuleCall)cInnerStatesAssignment_4.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cRegionKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_0_1_0 = (RuleCall)cIdAssignment_1_0_1.eContents().get(0);
+		private final Keyword cRegionKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cVariablesAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_2_0_0 = (RuleCall)cVariablesAssignment_2_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_2_1_0 = (RuleCall)cSignalsAssignment_2_1.eContents().get(0);
+		private final Assignment cInnerStatesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cInnerStatesStateParserRuleCall_3_0 = (RuleCall)cInnerStatesAssignment_3.eContents().get(0);
 		
 		//Region returns sync::Region:
-		//  {sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-		//  State+;  
+		//  {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+		//  innerStates+=State+;  
 		//
 		//// IO Declarations --- come before state declarations #2009-11-26
 		//// There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
 		//// Inner states --- a region has to have at least one state#2009-11-26
 		//    
 		//// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
+		//    
+		//          // region ID's are introduced by the keyword "region". 
+		//   //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
+		//   //computes a unique ID for the region. An ID without the keyword "region" is not allowed
+		//   //because it could be a local signal or a state ID also!
 		public ParserRule getRule() { return rule; }
 
-		//{sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-		//State+ 
+		//{sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+		//innerStates+=State+ 
 		//// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
+		//    
+		//          // region ID's are introduced by the keyword "region". 
+		//   //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
+		//   //computes a unique ID for the region. An ID without the keyword "region" is not allowed
+		//   //because it could be a local signal or a state ID also!
 		public Group getGroup() { return cGroup; }
 
 		//{sync::Region} 
 		//// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
 		public Action getRegionAction_0() { return cRegionAction_0; }
 
-		//"region"?
-		public Keyword getRegionKeyword_1() { return cRegionKeyword_1; }
+		//("region" id=ID|"region")?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//id=ID?
-		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
+		//"region" id=ID
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//"region"
+		public Keyword getRegionKeyword_1_0_0() { return cRegionKeyword_1_0_0; }
+
+		//id=ID
+		public Assignment getIdAssignment_1_0_1() { return cIdAssignment_1_0_1; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_2_0() { return cIdIDTerminalRuleCall_2_0; }
+		public RuleCall getIdIDTerminalRuleCall_1_0_1_0() { return cIdIDTerminalRuleCall_1_0_1_0; }
 
-		//(variables+=Variable|signals+=Signal)*
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		//"region"
+		public Keyword getRegionKeyword_1_1() { return cRegionKeyword_1_1; }
+
+		//(variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region". 
+		//   //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
+		//   //computes a unique ID for the region. An ID without the keyword "region" is not allowed
+		//   //because it could be a local signal or a state ID also!
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//variables+=Variable
-		public Assignment getVariablesAssignment_3_0() { return cVariablesAssignment_3_0; }
+		public Assignment getVariablesAssignment_2_0() { return cVariablesAssignment_2_0; }
 
 		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_3_0_0() { return cVariablesVariableParserRuleCall_3_0_0; }
+		public RuleCall getVariablesVariableParserRuleCall_2_0_0() { return cVariablesVariableParserRuleCall_2_0_0; }
 
 		//signals+=Signal
-		public Assignment getSignalsAssignment_3_1() { return cSignalsAssignment_3_1; }
+		public Assignment getSignalsAssignment_2_1() { return cSignalsAssignment_2_1; }
 
 		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_3_1_0() { return cSignalsSignalParserRuleCall_3_1_0; }
+		public RuleCall getSignalsSignalParserRuleCall_2_1_0() { return cSignalsSignalParserRuleCall_2_1_0; }
 
 		//innerStates+=State+
-		public Assignment getInnerStatesAssignment_4() { return cInnerStatesAssignment_4; }
+		public Assignment getInnerStatesAssignment_3() { return cInnerStatesAssignment_3; }
 
 		//State
-		public RuleCall getInnerStatesStateParserRuleCall_4_0() { return cInnerStatesStateParserRuleCall_4_0; }
+		public RuleCall getInnerStatesStateParserRuleCall_3_0() { return cInnerStatesStateParserRuleCall_3_0; }
 	}
 
 	public class StateElements extends AbstractParserRuleElementFinder {
@@ -618,39 +643,47 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Assignment cTargetStateProxyAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTargetStateProxySTRINGTerminalRuleCall_1_0 = (RuleCall)cTargetStateProxyAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cWithKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final Keyword cIsImmediateNumberSignKeyword_2_1_0 = (Keyword)cIsImmediateAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cDelayKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cDelayAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cDelayINTTerminalRuleCall_2_2_1_0 = (RuleCall)cDelayAssignment_2_2_1.eContents().get(0);
-		private final Group cGroup_2_3 = (Group)cGroup_2.eContents().get(3);
-		private final Assignment cTriggerAssignment_2_3_0 = (Assignment)cGroup_2_3.eContents().get(0);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_2_3_0_0 = (RuleCall)cTriggerAssignment_2_3_0.eContents().get(0);
-		private final Group cGroup_2_3_1 = (Group)cGroup_2_3.eContents().get(1);
-		private final Keyword cSolidusKeyword_2_3_1_0 = (Keyword)cGroup_2_3_1.eContents().get(0);
-		private final Group cGroup_2_3_1_1 = (Group)cGroup_2_3_1.eContents().get(1);
-		private final Assignment cEffectsAssignment_2_3_1_1_0 = (Assignment)cGroup_2_3_1_1.eContents().get(0);
-		private final RuleCall cEffectsEffectParserRuleCall_2_3_1_1_0_0 = (RuleCall)cEffectsAssignment_2_3_1_1_0.eContents().get(0);
-		private final Keyword cCommaKeyword_2_3_1_1_1 = (Keyword)cGroup_2_3_1_1.eContents().get(1);
-		private final Assignment cIsHistoryAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cIsHistoryHistoryKeyword_3_0 = (Keyword)cIsHistoryAssignment_3.eContents().get(0);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Keyword cInitKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cInitialKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Keyword cFinalKeyword_1_2 = (Keyword)cAlternatives_1.eContents().get(2);
+		private final Keyword cCondKeyword_1_3 = (Keyword)cAlternatives_1.eContents().get(3);
+		private final Keyword cConditionalKeyword_1_4 = (Keyword)cAlternatives_1.eContents().get(4);
+		private final Assignment cTargetStateProxyAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTargetStateProxyFullStateIDParserRuleCall_2_0 = (RuleCall)cTargetStateProxyAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_3_1_0 = (Keyword)cIsImmediateAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cDelayKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cDelayAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cDelayINTTerminalRuleCall_3_2_1_0 = (RuleCall)cDelayAssignment_3_2_1.eContents().get(0);
+		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
+		private final Assignment cTriggerAssignment_3_3_0 = (Assignment)cGroup_3_3.eContents().get(0);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_3_0_0 = (RuleCall)cTriggerAssignment_3_3_0.eContents().get(0);
+		private final Group cGroup_3_3_1 = (Group)cGroup_3_3.eContents().get(1);
+		private final Keyword cSolidusKeyword_3_3_1_0 = (Keyword)cGroup_3_3_1.eContents().get(0);
+		private final Group cGroup_3_3_1_1 = (Group)cGroup_3_3_1.eContents().get(1);
+		private final Assignment cEffectsAssignment_3_3_1_1_0 = (Assignment)cGroup_3_3_1_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_3_3_1_1_0_0 = (RuleCall)cEffectsAssignment_3_3_1_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_3_1_1_1 = (Keyword)cGroup_3_3_1_1.eContents().get(1);
+		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//TextualTransition returns textualsync::TextualTransition:
-		//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
-		//  delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-		//  " history"? ";";  
+		//  type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+		//  targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
+		//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
+		//  ";";  
 		//  
 		// //TextualTransition extends Transition
 		//        
 		//  
 		// //targetState=[sync::State|FullStateID] 
-		//  
+		//                
+		// 
 		//          
 		//         
 		// 
@@ -666,9 +699,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////;
 		public ParserRule getRule() { return rule; }
 
-		//type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
-		//delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-		//" history"? ";" 
+		//type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+		//targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
+		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
+		//";" 
 		//  
 		// //targetState=[sync::State|FullStateID]
 		public Group getGroup() { return cGroup; }
@@ -682,73 +716,91 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		// //targetState=[sync::State|FullStateID]
 		public RuleCall getTypeTransitionTypeEnumRuleCall_0_0() { return cTypeTransitionTypeEnumRuleCall_0_0; }
 
-		//targetStateProxy=STRING  
+		//("init"|"initial"|"final"|"cond"|"conditional")?  
 		// //targetState=[sync::State|FullStateID]
-		public Assignment getTargetStateProxyAssignment_1() { return cTargetStateProxyAssignment_1; }
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//STRING
-		public RuleCall getTargetStateProxySTRINGTerminalRuleCall_1_0() { return cTargetStateProxySTRINGTerminalRuleCall_1_0; }
+		//"init"
+		public Keyword getInitKeyword_1_0() { return cInitKeyword_1_0; }
+
+		//"initial"
+		public Keyword getInitialKeyword_1_1() { return cInitialKeyword_1_1; }
+
+		//"final"
+		public Keyword getFinalKeyword_1_2() { return cFinalKeyword_1_2; }
+
+		//"cond"
+		public Keyword getCondKeyword_1_3() { return cCondKeyword_1_3; }
+
+		//"conditional"
+		public Keyword getConditionalKeyword_1_4() { return cConditionalKeyword_1_4; }
+
+		//targetStateProxy=FullStateID
+		public Assignment getTargetStateProxyAssignment_2() { return cTargetStateProxyAssignment_2; }
+
+		//FullStateID
+		public RuleCall getTargetStateProxyFullStateIDParserRuleCall_2_0() { return cTargetStateProxyFullStateIDParserRuleCall_2_0; }
 
 		//("with" isImmediate?="#"? ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (
 		//effects+=Effect ","?)*)?))?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//"with"
-		public Keyword getWithKeyword_2_0() { return cWithKeyword_2_0; }
+		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
 
 		//isImmediate?="#"?
-		public Assignment getIsImmediateAssignment_2_1() { return cIsImmediateAssignment_2_1; }
+		public Assignment getIsImmediateAssignment_3_1() { return cIsImmediateAssignment_3_1; }
 
 		//"#"
-		public Keyword getIsImmediateNumberSignKeyword_2_1_0() { return cIsImmediateNumberSignKeyword_2_1_0; }
+		public Keyword getIsImmediateNumberSignKeyword_3_1_0() { return cIsImmediateNumberSignKeyword_3_1_0; }
 
 		//("delay:=" delay=INT)?
-		public Group getGroup_2_2() { return cGroup_2_2; }
+		public Group getGroup_3_2() { return cGroup_3_2; }
 
 		//"delay:="
-		public Keyword getDelayKeyword_2_2_0() { return cDelayKeyword_2_2_0; }
+		public Keyword getDelayKeyword_3_2_0() { return cDelayKeyword_3_2_0; }
 
 		//delay=INT
-		public Assignment getDelayAssignment_2_2_1() { return cDelayAssignment_2_2_1; }
+		public Assignment getDelayAssignment_3_2_1() { return cDelayAssignment_3_2_1; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_2_2_1_0() { return cDelayINTTerminalRuleCall_2_2_1_0; }
+		public RuleCall getDelayINTTerminalRuleCall_3_2_1_0() { return cDelayINTTerminalRuleCall_3_2_1_0; }
 
 		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
-		public Group getGroup_2_3() { return cGroup_2_3; }
+		public Group getGroup_3_3() { return cGroup_3_3; }
 
 		//trigger=BooleanExpression?
-		public Assignment getTriggerAssignment_2_3_0() { return cTriggerAssignment_2_3_0; }
+		public Assignment getTriggerAssignment_3_3_0() { return cTriggerAssignment_3_3_0; }
 
 		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_2_3_0_0() { return cTriggerBooleanExpressionParserRuleCall_2_3_0_0; }
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_3_0_0() { return cTriggerBooleanExpressionParserRuleCall_3_3_0_0; }
 
 		//("/" (effects+=Effect ","?)*)?
-		public Group getGroup_2_3_1() { return cGroup_2_3_1; }
+		public Group getGroup_3_3_1() { return cGroup_3_3_1; }
 
 		//"/"
-		public Keyword getSolidusKeyword_2_3_1_0() { return cSolidusKeyword_2_3_1_0; }
+		public Keyword getSolidusKeyword_3_3_1_0() { return cSolidusKeyword_3_3_1_0; }
 
 		//(effects+=Effect ","?)*
-		public Group getGroup_2_3_1_1() { return cGroup_2_3_1_1; }
+		public Group getGroup_3_3_1_1() { return cGroup_3_3_1_1; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_2_3_1_1_0() { return cEffectsAssignment_2_3_1_1_0; }
+		public Assignment getEffectsAssignment_3_3_1_1_0() { return cEffectsAssignment_3_3_1_1_0; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_2_3_1_1_0_0() { return cEffectsEffectParserRuleCall_2_3_1_1_0_0; }
+		public RuleCall getEffectsEffectParserRuleCall_3_3_1_1_0_0() { return cEffectsEffectParserRuleCall_3_3_1_1_0_0; }
 
 		//","?
-		public Keyword getCommaKeyword_2_3_1_1_1() { return cCommaKeyword_2_3_1_1_1; }
+		public Keyword getCommaKeyword_3_3_1_1_1() { return cCommaKeyword_3_3_1_1_1; }
 
 		//isHistory?=" history"?
-		public Assignment getIsHistoryAssignment_3() { return cIsHistoryAssignment_3; }
+		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
 
 		//" history"
-		public Keyword getIsHistoryHistoryKeyword_3_0() { return cIsHistoryHistoryKeyword_3_0; }
+		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
 	public class TransitionStateElements extends AbstractParserRuleElementFinder {
@@ -978,139 +1030,152 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIsInputAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_0 = (Keyword)cIsInputAssignment_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_1_0 = (Keyword)cIsOutputAssignment_1.eContents().get(0);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameQualifiedNameParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Group cGroup_3_0 = (Group)cGroup_3.eContents().get(0);
-		private final Keyword cColonEqualsSignKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
-		private final Assignment cInitialValueAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
-		private final RuleCall cInitialValueVariableSignalValueParserRuleCall_3_0_1_0 = (RuleCall)cInitialValueAssignment_3_0_1.eContents().get(0);
-		private final Alternatives cAlternatives_3_1 = (Alternatives)cGroup_3.eContents().get(1);
-		private final Group cGroup_3_1_0 = (Group)cAlternatives_3_1.eContents().get(0);
-		private final Keyword cColonSpaceKeyword_3_1_0_0 = (Keyword)cGroup_3_1_0.eContents().get(0);
-		private final Assignment cTypeAssignment_3_1_0_1 = (Assignment)cGroup_3_1_0.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_0_1_0 = (RuleCall)cTypeAssignment_3_1_0_1.eContents().get(0);
-		private final Group cGroup_3_1_1 = (Group)cAlternatives_3_1.eContents().get(1);
-		private final Keyword cCombineKeyword_3_1_1_0 = (Keyword)cGroup_3_1_1.eContents().get(0);
-		private final Assignment cTypeAssignment_3_1_1_1 = (Assignment)cGroup_3_1_1.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_1_1_0 = (RuleCall)cTypeAssignment_3_1_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_3_1_1_2 = (Keyword)cGroup_3_1_1.eContents().get(2);
-		private final Alternatives cAlternatives_3_1_1_3 = (Alternatives)cGroup_3_1_1.eContents().get(3);
-		private final Assignment cCombineOperatorAssignment_3_1_1_3_0 = (Assignment)cAlternatives_3_1_1_3.eContents().get(0);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_1_3_0.eContents().get(0);
-		private final Assignment cHostCombineOperatorAssignment_3_1_1_3_1 = (Assignment)cAlternatives_3_1_1_3.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_1_3_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cAlternatives_0.eContents().get(0);
+		private final Assignment cIsInputAssignment_0_0_0 = (Assignment)cGroup_0_0.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0_0_0 = (Keyword)cIsInputAssignment_0_0_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_0_1_0 = (Keyword)cIsOutputAssignment_0_0_1.eContents().get(0);
+		private final Keyword cSignalKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cGroup_2.eContents().get(0);
+		private final Keyword cColonEqualsSignKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cInitialValueAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cInitialValueVariableSignalValueParserRuleCall_2_0_1_0 = (RuleCall)cInitialValueAssignment_2_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
+		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
+		private final Assignment cTypeAssignment_2_1_0_1 = (Assignment)cGroup_2_1_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_2_1_0_1_0 = (RuleCall)cTypeAssignment_2_1_0_1.eContents().get(0);
+		private final Group cGroup_2_1_1 = (Group)cAlternatives_2_1.eContents().get(1);
+		private final Keyword cCombineKeyword_2_1_1_0 = (Keyword)cGroup_2_1_1.eContents().get(0);
+		private final Assignment cTypeAssignment_2_1_1_1 = (Assignment)cGroup_2_1_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_2_1_1_1_0 = (RuleCall)cTypeAssignment_2_1_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_1_1_2 = (Keyword)cGroup_2_1_1.eContents().get(2);
+		private final Alternatives cAlternatives_2_1_1_3 = (Alternatives)cGroup_2_1_1.eContents().get(3);
+		private final Assignment cCombineOperatorAssignment_2_1_1_3_0 = (Assignment)cAlternatives_2_1_1_3.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_2_1_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_2_1_1_3_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_2_1_1_3_1 = (Assignment)cAlternatives_2_1_1_3.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_2_1_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_2_1_1_3_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Signal returns sync::Signal:
-		//  isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
-		//  VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-		//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
+		//  (isInput?="input"? isOutput?="output"?|"signal") name=QualifiedName ((":="
+		//  initialValue=VariableSignalValue) (": " type=ValueType|": combine" type=ValueType
+		//  "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 		//
 		//    
-		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     //default signal type is PURE
+		//        // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//   //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public ParserRule getRule() { return rule; }
 
-		//isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
-		//VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-		//combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";" 
-		//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     //default signal type is PURE
+		//(isInput?="input"? isOutput?="output"?|"signal") name=QualifiedName ((":="
+		//initialValue=VariableSignalValue) (": " type=ValueType|": combine" type=ValueType
+		//"with" (combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";" 
+		//        // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//   //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
 		public Group getGroup() { return cGroup; }
 
+		//isInput?="input"? isOutput?="output"?|"signal"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//isInput?="input"? isOutput?="output"?
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
 		//isInput?="input"?
-		public Assignment getIsInputAssignment_0() { return cIsInputAssignment_0; }
+		public Assignment getIsInputAssignment_0_0_0() { return cIsInputAssignment_0_0_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_0() { return cIsInputInputKeyword_0_0; }
+		public Keyword getIsInputInputKeyword_0_0_0_0() { return cIsInputInputKeyword_0_0_0_0; }
 
 		//isOutput?="output"?
-		public Assignment getIsOutputAssignment_1() { return cIsOutputAssignment_1; }
+		public Assignment getIsOutputAssignment_0_0_1() { return cIsOutputAssignment_0_0_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
+		public Keyword getIsOutputOutputKeyword_0_0_1_0() { return cIsOutputOutputKeyword_0_0_1_0; }
+
+		//"signal"
+		public Keyword getSignalKeyword_0_1() { return cSignalKeyword_0_1; }
 
 		//name=QualifiedName   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//     //default signal type is PURE
+		//   //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//QualifiedName   //default signal type is PURE
+		//QualifiedName // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//   //default signal type is PURE
 		//   // after the initial value, either the type or the combine type has to come
-		public RuleCall getNameQualifiedNameParserRuleCall_2_0() { return cNameQualifiedNameParserRuleCall_2_0; }
+		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
 
 		//((":=" initialValue=VariableSignalValue) (": " type=ValueType|": combine" type=
 		//ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)))?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//":=" initialValue=VariableSignalValue
-		public Group getGroup_3_0() { return cGroup_3_0; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//":="
-		public Keyword getColonEqualsSignKeyword_3_0_0() { return cColonEqualsSignKeyword_3_0_0; }
+		public Keyword getColonEqualsSignKeyword_2_0_0() { return cColonEqualsSignKeyword_2_0_0; }
 
 		//initialValue=VariableSignalValue
-		public Assignment getInitialValueAssignment_3_0_1() { return cInitialValueAssignment_3_0_1; }
+		public Assignment getInitialValueAssignment_2_0_1() { return cInitialValueAssignment_2_0_1; }
 
 		//VariableSignalValue
-		public RuleCall getInitialValueVariableSignalValueParserRuleCall_3_0_1_0() { return cInitialValueVariableSignalValueParserRuleCall_3_0_1_0; }
+		public RuleCall getInitialValueVariableSignalValueParserRuleCall_2_0_1_0() { return cInitialValueVariableSignalValueParserRuleCall_2_0_1_0; }
 
 		//": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
 		//CombineOperator|hostCombineOperator=STRING)
-		public Alternatives getAlternatives_3_1() { return cAlternatives_3_1; }
+		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
 
 		//": " type=ValueType
-		public Group getGroup_3_1_0() { return cGroup_3_1_0; }
+		public Group getGroup_2_1_0() { return cGroup_2_1_0; }
 
 		//": "
-		public Keyword getColonSpaceKeyword_3_1_0_0() { return cColonSpaceKeyword_3_1_0_0; }
+		public Keyword getColonSpaceKeyword_2_1_0_0() { return cColonSpaceKeyword_2_1_0_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_1_0_1() { return cTypeAssignment_3_1_0_1; }
+		public Assignment getTypeAssignment_2_1_0_1() { return cTypeAssignment_2_1_0_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_1_0_1_0() { return cTypeValueTypeEnumRuleCall_3_1_0_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_2_1_0_1_0() { return cTypeValueTypeEnumRuleCall_2_1_0_1_0; }
 
 		//": combine" type=ValueType "with" (combineOperator=CombineOperator|
 		//hostCombineOperator=STRING)
-		public Group getGroup_3_1_1() { return cGroup_3_1_1; }
+		public Group getGroup_2_1_1() { return cGroup_2_1_1; }
 
 		//": combine"
-		public Keyword getCombineKeyword_3_1_1_0() { return cCombineKeyword_3_1_1_0; }
+		public Keyword getCombineKeyword_2_1_1_0() { return cCombineKeyword_2_1_1_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_1_1_1() { return cTypeAssignment_3_1_1_1; }
+		public Assignment getTypeAssignment_2_1_1_1() { return cTypeAssignment_2_1_1_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_1_1_1_0() { return cTypeValueTypeEnumRuleCall_3_1_1_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_2_1_1_1_0() { return cTypeValueTypeEnumRuleCall_2_1_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_3_1_1_2() { return cWithKeyword_3_1_1_2; }
+		public Keyword getWithKeyword_2_1_1_2() { return cWithKeyword_2_1_1_2; }
 
 		//combineOperator=CombineOperator|hostCombineOperator=STRING
-		public Alternatives getAlternatives_3_1_1_3() { return cAlternatives_3_1_1_3; }
+		public Alternatives getAlternatives_2_1_1_3() { return cAlternatives_2_1_1_3; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_3_1_1_3_0() { return cCombineOperatorAssignment_3_1_1_3_0; }
+		public Assignment getCombineOperatorAssignment_2_1_1_3_0() { return cCombineOperatorAssignment_2_1_1_3_0; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_1_3_0_0; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_2_1_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_2_1_1_3_0_0; }
 
 		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_3_1_1_3_1() { return cHostCombineOperatorAssignment_3_1_1_3_1; }
+		public Assignment getHostCombineOperatorAssignment_2_1_1_3_1() { return cHostCombineOperatorAssignment_2_1_1_3_1; }
 
 		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_1_3_1_0; }
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_2_1_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_2_1_1_3_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
 	public class VariableSignalValueElements extends AbstractParserRuleElementFinder {
@@ -2941,14 +3006,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns sync::Region:
-	//  {sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-	//  State+;  
+	//  {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+	//  innerStates+=State+;  
 	//
 	//// IO Declarations --- come before state declarations #2009-11-26
 	//// There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
 	//// Inner states --- a region has to have at least one state#2009-11-26
 	//    
 	//// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
+	//    
+	//          // region ID's are introduced by the keyword "region". 
+	//   //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
+	//   //computes a unique ID for the region. An ID without the keyword "region" is not allowed
+	//   //because it could be a local signal or a state ID also!
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -3094,15 +3164,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextualTransition returns textualsync::TextualTransition:
-	//  type=TransitionType targetStateProxy=STRING ("with" isImmediate?="#"? ("delay:="
-	//  delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=
-	//  " history"? ";";  
+	//  type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+	//  targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
+	//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
+	//  ";";  
 	//  
 	// //TextualTransition extends Transition
 	//        
 	//  
 	// //targetState=[sync::State|FullStateID] 
-	//  
+	//                
+	// 
 	//          
 	//         
 	// 
@@ -3221,13 +3293,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signal returns sync::Signal:
-	//  isInput?="input"? isOutput?="output"? name=QualifiedName ((":=" initialValue=
-	//  VariableSignalValue) (": " type=ValueType|": combine" type=ValueType "with" (
-	//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
+	//  (isInput?="input"? isOutput?="output"?|"signal") name=QualifiedName ((":="
+	//  initialValue=VariableSignalValue) (": " type=ValueType|": combine" type=ValueType
+	//  "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 	//
 	//    
-	//      // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-	//     //default signal type is PURE
+	//        // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+	//   //default signal type is PURE
 	//   // after the initial value, either the type or the combine type has to come
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());

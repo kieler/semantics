@@ -166,6 +166,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
         }
         Region r = null;
+        assert parentState != null && parentState.getParentRegion() != null;
         if (parentState.getParentRegion() != null)
 
         {
@@ -213,6 +214,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
         ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
         // this is my transition
+        assert context.getParentExpression().getParentAction() != null;
         Action a = context.getParentExpression().getParentAction();
         // Action a = context.getParentAction();
         if (a instanceof Transition) {
