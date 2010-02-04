@@ -4,7 +4,10 @@
 package de.cau.cs.kieler.krep.outline;
 
 import org.eclipse.xtext.ui.common.editor.outline.actions.DefaultContentOutlineNodeAdapterFactory;
-
+/**
+ * @generated
+ *
+ */
 public class KlpOutlineNodeAdapterFactory extends DefaultContentOutlineNodeAdapterFactory {
 
 	private static final Class[] types = { 

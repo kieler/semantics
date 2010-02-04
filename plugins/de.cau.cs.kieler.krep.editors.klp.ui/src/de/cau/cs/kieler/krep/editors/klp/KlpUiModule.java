@@ -5,6 +5,8 @@ package de.cau.cs.kieler.krep.editors.klp;
 
 /**
  * Use this class to register components to be used within the IDE.
+ * 
+ *  @generated
  */
 public class KlpUiModule extends de.cau.cs.kieler.krep.editors.klp.AbstractKlpUiModule {
 

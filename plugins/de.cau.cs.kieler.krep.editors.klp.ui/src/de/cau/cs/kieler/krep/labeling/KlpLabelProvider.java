@@ -7,6 +7,7 @@ import org.eclipse.xtext.ui.core.DefaultLabelProvider;
 
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * @generated
  */
 public class KlpLabelProvider extends DefaultLabelProvider {
 /*

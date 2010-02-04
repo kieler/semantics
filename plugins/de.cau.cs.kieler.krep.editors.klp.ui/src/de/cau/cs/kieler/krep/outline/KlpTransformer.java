@@ -7,7 +7,7 @@ import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativ
 
 /**
  * customization of the default outline structure
- * 
+ * @generated
  */
 public class KlpTransformer extends AbstractDeclarativeSemanticModelTransformer {
 	

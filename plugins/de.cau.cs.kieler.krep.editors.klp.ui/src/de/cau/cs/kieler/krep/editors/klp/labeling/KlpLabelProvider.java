@@ -6,7 +6,9 @@ package de.cau.cs.kieler.krep.editors.klp.labeling;
 import org.eclipse.xtext.ui.core.DefaultLabelProvider;
 
 /**
- * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvide
+ * 
+ * @generated
  */
 public class KlpLabelProvider extends DefaultLabelProvider {
 /*

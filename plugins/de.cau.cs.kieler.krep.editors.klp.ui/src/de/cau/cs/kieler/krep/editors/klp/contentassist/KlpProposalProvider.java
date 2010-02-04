@@ -6,6 +6,9 @@ package de.cau.cs.kieler.krep.editors.klp.contentassist;
 import de.cau.cs.kieler.krep.editors.klp.contentassist.AbstractKlpProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
+ * 
+ * @generated
+ * 
  */
 public class KlpProposalProvider extends AbstractKlpProposalProvider {
 
