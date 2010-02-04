@@ -33,21 +33,28 @@ public class DoubleFieldEditor extends StringFieldEditor {
     /**
      * Creates a new Double Field Editor.
      * 
-     * @param name the name of the preference this field editor works on
-     * @param labelText the label text of the field editor
-     * @param parent the parent of the field editor's control
+     * @param name
+     *            the name of the preference this field editor works on
+     * @param labelText
+     *            the label text of the field editor
+     * @param parent
+     *            the parent of the field editor's control
      */
-    public DoubleFieldEditor(final String name, final String labelText, final Composite parent) {
+    public DoubleFieldEditor(final String name, final String labelText,
+            final Composite parent) {
         super(name, labelText, parent);
     }
 
     /**
      * Sets the range of valid values for this field.
      * 
-     * @param thelowerBound the minimum allowed value (inclusive)
-     * @param theupperBound the maximum allowed value (inclusive)
+     * @param thelowerBound
+     *            the minimum allowed value (inclusive)
+     * @param theupperBound
+     *            the maximum allowed value (inclusive)
      */
-    public void setValidRange(final double thelowerBound, final double theupperBound) {
+    public void setValidRange(final double thelowerBound,
+            final double theupperBound) {
         this.lowerBound = thelowerBound;
         this.upperBound = theupperBound;
         setErrorMessage("Double Field requires double in the bounds ["
@@ -91,7 +98,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
         Text text = getTextControl();
         if (text != null) {
             double value = getPreferenceStore().getDouble(getPreferenceName());
-            text.setText("" + value);//$NON-NLS-1$
+            text.setText("" + value); //$NON-NLS-1$
             oldValue = "" + value; //$NON-NLS-1$
         }
     }
@@ -103,8 +110,9 @@ public class DoubleFieldEditor extends StringFieldEditor {
     protected void doLoadDefault() {
         Text text = getTextControl();
         if (text != null) {
-            double value = getPreferenceStore().getDefaultDouble(getPreferenceName());
-            text.setText("" + value);//$NON-NLS-1$
+            double value = getPreferenceStore().getDefaultDouble(
+                    getPreferenceName());
+            text.setText("" + value); //$NON-NLS-1$
         }
         valueChanged();
     }

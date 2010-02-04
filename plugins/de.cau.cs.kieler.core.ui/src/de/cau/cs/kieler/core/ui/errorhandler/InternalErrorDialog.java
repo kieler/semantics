@@ -28,8 +28,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * Added a Details button to the MessageDialog to show the exception
- * stack trace.
+ * Added a Details button to the MessageDialog to show the exception stack
+ * trace.
+ * 
+ * @author Sebastian Davids
  */
 public class InternalErrorDialog extends MessageDialog {
 
@@ -39,8 +41,8 @@ public class InternalErrorDialog extends MessageDialog {
 
     private Text text;
 
-    //Workaround. SWT does not seem to set the default button if 
-    //there is not control with focus. Bug: 14668
+    // Workaround. SWT does not seem to set the default button if
+    // there is not control with focus. Bug: 14668
     private int defaultButtonIndex = 0;
 
     /**
@@ -51,27 +53,38 @@ public class InternalErrorDialog extends MessageDialog {
     /**
      * Create a new dialog.
      * 
-     * @param parentShell the parent shell
-     * @param dialogTitle the  title
-     * @param dialogTitleImage the title image
-     * @param dialogMessage the message
-     * @param detail the error to display
-     * @param dialogImageType the type of image
-     * @param dialogButtonLabels the button labels
-     * @param defaultIndex the default selected button index
+     * @param parentShell
+     *            the parent shell
+     * @param dialogTitle
+     *            the title
+     * @param dialogTitleImage
+     *            the title image
+     * @param dialogMessage
+     *            the message
+     * @param detailParam
+     *            the error to display
+     * @param dialogImageType
+     *            the type of image
+     * @param dialogButtonLabels
+     *            the button labels
+     * @param defaultIndex
+     *            the default selected button index
      */
-    public InternalErrorDialog(Shell parentShell, String dialogTitle,
-            Image dialogTitleImage, String dialogMessage, Throwable detail,
-            int dialogImageType, String[] dialogButtonLabels, int defaultIndex) {
+    public InternalErrorDialog(final Shell parentShell,
+            final String dialogTitle, final Image dialogTitleImage,
+            final String dialogMessage, final Throwable detailParam,
+            final int dialogImageType, final String[] dialogButtonLabels,
+            final int defaultIndex) {
         super(parentShell, dialogTitle, dialogTitleImage, dialogMessage,
                 dialogImageType, dialogButtonLabels, defaultIndex);
         defaultButtonIndex = defaultIndex;
-        this.detail = detail;
+        this.detail = detailParam;
         setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL);
     }
 
-    //Workaround. SWT does not seem to set rigth the default button if 
-    //there is not control with focus. Bug: 14668
+    // Workaround. SWT does not seem to set rigth the default button if
+    // there is not control with focus. Bug: 14668
+    @Override
     public int open() {
         create();
         Button b = getButton(defaultButtonIndex);
@@ -81,17 +94,20 @@ public class InternalErrorDialog extends MessageDialog {
     }
 
     /**
-     * Set the detail button;
-     * @param index the detail button index
+     * Set the detail button.
+     * 
+     * @param index
+     *            the detail button index
      */
-    public void setDetailButton(int index) {
+    public void setDetailButton(final int index) {
         detailButtonID = index;
     }
 
     /* (non-Javadoc)
      * Method declared on Dialog.
      */
-    protected void buttonPressed(int buttonId) {
+    @Override
+    protected void buttonPressed(final int buttonId) {
         if (buttonId == detailButtonID) {
             toggleDetailsArea();
         } else {
@@ -100,8 +116,8 @@ public class InternalErrorDialog extends MessageDialog {
     }
 
     /**
-     * Toggles the unfolding of the details area.  This is triggered by
-     * the user pressing the details button.
+     * Toggles the unfolding of the details area. This is triggered by the user
+     * pressing the details button.
      */
     private void toggleDetailsArea() {
         Point windowSize = getShell().getSize();
@@ -127,10 +143,11 @@ public class InternalErrorDialog extends MessageDialog {
 
     /**
      * Create this dialog's drop-down list component.
-     *
-     * @param parent the parent composite
+     * 
+     * @param parent
+     *            the parent composite
      */
-    protected void createDropDownText(Composite parent) {
+    protected void createDropDownText(final Composite parent) {
         // create the list
         text = new Text(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
         text.setFont(parent.getFont());
@@ -144,6 +161,7 @@ public class InternalErrorDialog extends MessageDialog {
             baos.flush();
             text.setText(baos.toString());
         } catch (IOException e) {
+            // do nothing
         }
 
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL
@@ -154,35 +172,40 @@ public class InternalErrorDialog extends MessageDialog {
         text.setLayoutData(data);
     }
 
-    /** 
+    /**
      * Convenience method to open a simple Yes/No question dialog.
-     *
-     * @param parent the parent shell of the dialog, or <code>null</code> if none
-     * @param title the dialog's title, or <code>null</code> if none
-     * @param message the message
-     * @param detail the error 
-     * @param defaultIndex the default index of the button to select
+     * 
+     * @param parent
+     *            the parent shell of the dialog, or <code>null</code> if none
+     * @param title
+     *            the dialog's title, or <code>null</code> if none
+     * @param message
+     *            the message
+     * @param detail
+     *            the error
+     * @param defaultIndex
+     *            the default index of the button to select
      * @return <code>true</code> if the user presses the OK button,
-     *    <code>false</code> otherwise
+     *         <code>false</code> otherwise
      */
-    public static boolean openQuestion(Shell parent, String title,
-            String message, Throwable detail, int defaultIndex) {
+    public static boolean openQuestion(final Shell parent, final String title,
+            final String message, final Throwable detail, final int defaultIndex) {
         String[] labels;
         if (detail == null) {
-                        labels = new String[] { IDialogConstants.YES_LABEL,
+            labels = new String[] { IDialogConstants.YES_LABEL,
                     IDialogConstants.NO_LABEL };
-                } else {
-                        labels = new String[] { IDialogConstants.YES_LABEL,
+        } else {
+            labels = new String[] { IDialogConstants.YES_LABEL,
                     IDialogConstants.NO_LABEL,
                     IDialogConstants.SHOW_DETAILS_LABEL };
-                }
+        }
 
         InternalErrorDialog dialog = new InternalErrorDialog(parent, title,
                 null, // accept the default window icon
                 message, detail, QUESTION, labels, defaultIndex);
         if (detail != null) {
-                        dialog.setDetailButton(2);
-                }
+            dialog.setDetailButton(2);
+        }
         return dialog.open() == 0;
     }
 
