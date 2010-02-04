@@ -24,7 +24,7 @@ public abstract class AbstractKlpRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	protected void bindProperties(Binder binder) {
-		bindProperties(binder, "/de/cau/cs/kieler/krep/editors/klp/Klp.properties");
+		bindProperties(binder, "de/cau/cs/kieler/krep/editors/klp/Klp.properties");
 	}
 	
 	
@@ -78,14 +78,24 @@ public abstract class AbstractKlpRuntimeModule extends DefaultRuntimeModule {
 		return de.cau.cs.kieler.krep.editors.klp.validation.KlpJavaValidator.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.scoping.JavaScopingFragment
+	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
+	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return org.eclipse.xtext.naming.SimpleNameProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return de.cau.cs.kieler.krep.editors.klp.scoping.KlpScopeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.scoping.JavaScopingFragment
+	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
 	public void configureIScopeProviderDelegate(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.scoping.IScopeProvider.class).annotatedWith(com.google.inject.name.Names.named("org.eclipse.xtext.scoping.IScopeProvider.delegate")).to(org.eclipse.xtext.scoping.impl.SimpleNameScopeProvider.class);
+		binder.bind(org.eclipse.xtext.scoping.IScopeProvider.class).annotatedWith(com.google.inject.name.Names.named("org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider.delegate")).to(org.eclipse.xtext.scoping.impl.SimpleLocalScopeProvider.class);
+	}
+
+	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
+	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
+		return org.eclipse.xtext.scoping.impl.ImportUriGlobalScopeProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment

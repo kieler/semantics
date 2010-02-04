@@ -10,6 +10,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
  * on how and when to use it 
+ *  @generated
  *
  */
 public class KlpScopeProvider extends AbstractDeclarativeScopeProvider {

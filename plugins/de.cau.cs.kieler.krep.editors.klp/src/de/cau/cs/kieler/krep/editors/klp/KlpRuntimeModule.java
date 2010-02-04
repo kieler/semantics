@@ -15,6 +15,7 @@ import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
 
 /**
  * Use this class to register components to be used within the IDE.
+ *  @generated
  */
 public class KlpRuntimeModule extends de.cau.cs.kieler.krep.editors.klp.AbstractKlpRuntimeModule {
 
