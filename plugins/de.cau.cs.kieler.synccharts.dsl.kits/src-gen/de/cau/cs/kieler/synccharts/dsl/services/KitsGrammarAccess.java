@@ -541,8 +541,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//   
 		//   
-		//  //targetStateProxy=STRING
-		//            
+		//           
 		//          
 		//   
 		//  
@@ -551,11 +550,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
 		//("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))?
-		//isHistory?=" history"? ";" 
-		//
-		//   
-		//   
-		//  //targetStateProxy=STRING
+		//isHistory?=" history"? ";"
 		public Group getGroup() { return cGroup; }
 
 		//type=TransitionType
@@ -564,13 +559,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//TransitionType
 		public RuleCall getTypeTransitionTypeEnumRuleCall_0_0() { return cTypeTransitionTypeEnumRuleCall_0_0; }
 
-		//targetState=[sync::State|FullStateID]  
-		//   
-		//  //targetStateProxy=STRING
+		//targetState=[sync::State|FullStateID]
 		public Assignment getTargetStateAssignment_1() { return cTargetStateAssignment_1; }
 
-		//[sync::State|FullStateID]  
-		//  //targetStateProxy=STRING
+		//[sync::State|FullStateID]
 		public CrossReference getTargetStateStateCrossReference_1_0() { return cTargetStateStateCrossReference_1_0; }
 
 		//FullStateID
@@ -643,37 +635,37 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Keyword cInitKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
-		private final Keyword cInitialKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
-		private final Keyword cFinalKeyword_1_2 = (Keyword)cAlternatives_1.eContents().get(2);
-		private final Keyword cCondKeyword_1_3 = (Keyword)cAlternatives_1.eContents().get(3);
-		private final Keyword cConditionalKeyword_1_4 = (Keyword)cAlternatives_1.eContents().get(4);
-		private final Assignment cTargetStateProxyAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTargetStateProxyFullStateIDParserRuleCall_2_0 = (RuleCall)cTargetStateProxyAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final Keyword cIsImmediateNumberSignKeyword_3_1_0 = (Keyword)cIsImmediateAssignment_3_1.eContents().get(0);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Keyword cDelayKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final Assignment cDelayAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
-		private final RuleCall cDelayINTTerminalRuleCall_3_2_1_0 = (RuleCall)cDelayAssignment_3_2_1.eContents().get(0);
-		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
-		private final Assignment cTriggerAssignment_3_3_0 = (Assignment)cGroup_3_3.eContents().get(0);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_3_0_0 = (RuleCall)cTriggerAssignment_3_3_0.eContents().get(0);
-		private final Group cGroup_3_3_1 = (Group)cGroup_3_3.eContents().get(1);
-		private final Keyword cSolidusKeyword_3_3_1_0 = (Keyword)cGroup_3_3_1.eContents().get(0);
-		private final Group cGroup_3_3_1_1 = (Group)cGroup_3_3_1.eContents().get(1);
-		private final Assignment cEffectsAssignment_3_3_1_1_0 = (Assignment)cGroup_3_3_1_1.eContents().get(0);
-		private final RuleCall cEffectsEffectParserRuleCall_3_3_1_1_0_0 = (RuleCall)cEffectsAssignment_3_3_1_1_0.eContents().get(0);
-		private final Keyword cCommaKeyword_3_3_1_1_1 = (Keyword)cGroup_3_3_1_1.eContents().get(1);
-		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cMakeConditionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cMakeConditionalAlternatives_1_0 = (Alternatives)cMakeConditionalAssignment_1.eContents().get(0);
+		private final Keyword cMakeConditionalCondKeyword_1_0_0 = (Keyword)cMakeConditionalAlternatives_1_0.eContents().get(0);
+		private final Keyword cMakeConditionalConditionalKeyword_1_0_1 = (Keyword)cMakeConditionalAlternatives_1_0.eContents().get(1);
+		private final Assignment cMakeFinalAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cMakeFinalFinalKeyword_2_0 = (Keyword)cMakeFinalAssignment_2.eContents().get(0);
+		private final Assignment cTargetStateProxyAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTargetStateProxyFullStateIDParserRuleCall_3_0 = (RuleCall)cTargetStateProxyAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_4_1_0 = (Keyword)cIsImmediateAssignment_4_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
+		private final Keyword cDelayKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Assignment cDelayAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final RuleCall cDelayINTTerminalRuleCall_4_2_1_0 = (RuleCall)cDelayAssignment_4_2_1.eContents().get(0);
+		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
+		private final Assignment cTriggerAssignment_4_3_0 = (Assignment)cGroup_4_3.eContents().get(0);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_3_0_0 = (RuleCall)cTriggerAssignment_4_3_0.eContents().get(0);
+		private final Group cGroup_4_3_1 = (Group)cGroup_4_3.eContents().get(1);
+		private final Keyword cSolidusKeyword_4_3_1_0 = (Keyword)cGroup_4_3_1.eContents().get(0);
+		private final Group cGroup_4_3_1_1 = (Group)cGroup_4_3_1.eContents().get(1);
+		private final Assignment cEffectsAssignment_4_3_1_1_0 = (Assignment)cGroup_4_3_1_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_4_3_1_1_0_0 = (RuleCall)cEffectsAssignment_4_3_1_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_4_3_1_1_1 = (Keyword)cGroup_4_3_1_1.eContents().get(1);
+		private final Assignment cIsHistoryAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Keyword cIsHistoryHistoryKeyword_5_0 = (Keyword)cIsHistoryAssignment_5.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//TextualTransition returns textualsync::TextualTransition:
-		//  type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+		//  type=TransitionType makeConditional?=( "cond" | "conditional" )? makeFinal?="final"?
 		//  targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
 		//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
 		//  ";";  
@@ -681,8 +673,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		// //TextualTransition extends Transition
 		//        
 		//  
-		// //targetState=[sync::State|FullStateID] 
-		//                
+		////targetStateProxy=TextualState 
+		//        
+		//    
 		// 
 		//          
 		//         
@@ -699,108 +692,107 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////;
 		public ParserRule getRule() { return rule; }
 
-		//type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+		//type=TransitionType makeConditional?=( "cond" | "conditional" )? makeFinal?="final"?
 		//targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
 		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
 		//";" 
 		//  
-		// //targetState=[sync::State|FullStateID]
+		////targetStateProxy=TextualState
 		public Group getGroup() { return cGroup; }
 
 		//type=TransitionType 
 		//  
-		// //targetState=[sync::State|FullStateID]
+		////targetStateProxy=TextualState
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 
 		//TransitionType  
-		// //targetState=[sync::State|FullStateID]
+		////targetStateProxy=TextualState
 		public RuleCall getTypeTransitionTypeEnumRuleCall_0_0() { return cTypeTransitionTypeEnumRuleCall_0_0; }
 
-		//("init"|"initial"|"final"|"cond"|"conditional")?  
-		// //targetState=[sync::State|FullStateID]
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		//makeConditional?=( "cond" | "conditional" )?
+		public Assignment getMakeConditionalAssignment_1() { return cMakeConditionalAssignment_1; }
 
-		//"init"
-		public Keyword getInitKeyword_1_0() { return cInitKeyword_1_0; }
-
-		//"initial"
-		public Keyword getInitialKeyword_1_1() { return cInitialKeyword_1_1; }
-
-		//"final"
-		public Keyword getFinalKeyword_1_2() { return cFinalKeyword_1_2; }
+		//"cond"|"conditional"
+		public Alternatives getMakeConditionalAlternatives_1_0() { return cMakeConditionalAlternatives_1_0; }
 
 		//"cond"
-		public Keyword getCondKeyword_1_3() { return cCondKeyword_1_3; }
+		public Keyword getMakeConditionalCondKeyword_1_0_0() { return cMakeConditionalCondKeyword_1_0_0; }
 
 		//"conditional"
-		public Keyword getConditionalKeyword_1_4() { return cConditionalKeyword_1_4; }
+		public Keyword getMakeConditionalConditionalKeyword_1_0_1() { return cMakeConditionalConditionalKeyword_1_0_1; }
+
+		//makeFinal?="final"?
+		public Assignment getMakeFinalAssignment_2() { return cMakeFinalAssignment_2; }
+
+		//"final"
+		public Keyword getMakeFinalFinalKeyword_2_0() { return cMakeFinalFinalKeyword_2_0; }
 
 		//targetStateProxy=FullStateID
-		public Assignment getTargetStateProxyAssignment_2() { return cTargetStateProxyAssignment_2; }
+		public Assignment getTargetStateProxyAssignment_3() { return cTargetStateProxyAssignment_3; }
 
 		//FullStateID
-		public RuleCall getTargetStateProxyFullStateIDParserRuleCall_2_0() { return cTargetStateProxyFullStateIDParserRuleCall_2_0; }
+		public RuleCall getTargetStateProxyFullStateIDParserRuleCall_3_0() { return cTargetStateProxyFullStateIDParserRuleCall_3_0; }
 
 		//("with" isImmediate?="#"? ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (
 		//effects+=Effect ","?)*)?))?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//"with"
-		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
+		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
 
 		//isImmediate?="#"?
-		public Assignment getIsImmediateAssignment_3_1() { return cIsImmediateAssignment_3_1; }
+		public Assignment getIsImmediateAssignment_4_1() { return cIsImmediateAssignment_4_1; }
 
 		//"#"
-		public Keyword getIsImmediateNumberSignKeyword_3_1_0() { return cIsImmediateNumberSignKeyword_3_1_0; }
+		public Keyword getIsImmediateNumberSignKeyword_4_1_0() { return cIsImmediateNumberSignKeyword_4_1_0; }
 
 		//("delay:=" delay=INT)?
-		public Group getGroup_3_2() { return cGroup_3_2; }
+		public Group getGroup_4_2() { return cGroup_4_2; }
 
 		//"delay:="
-		public Keyword getDelayKeyword_3_2_0() { return cDelayKeyword_3_2_0; }
+		public Keyword getDelayKeyword_4_2_0() { return cDelayKeyword_4_2_0; }
 
 		//delay=INT
-		public Assignment getDelayAssignment_3_2_1() { return cDelayAssignment_3_2_1; }
+		public Assignment getDelayAssignment_4_2_1() { return cDelayAssignment_4_2_1; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_3_2_1_0() { return cDelayINTTerminalRuleCall_3_2_1_0; }
+		public RuleCall getDelayINTTerminalRuleCall_4_2_1_0() { return cDelayINTTerminalRuleCall_4_2_1_0; }
 
 		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
-		public Group getGroup_3_3() { return cGroup_3_3; }
+		public Group getGroup_4_3() { return cGroup_4_3; }
 
 		//trigger=BooleanExpression?
-		public Assignment getTriggerAssignment_3_3_0() { return cTriggerAssignment_3_3_0; }
+		public Assignment getTriggerAssignment_4_3_0() { return cTriggerAssignment_4_3_0; }
 
 		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_3_0_0() { return cTriggerBooleanExpressionParserRuleCall_3_3_0_0; }
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_3_0_0() { return cTriggerBooleanExpressionParserRuleCall_4_3_0_0; }
 
 		//("/" (effects+=Effect ","?)*)?
-		public Group getGroup_3_3_1() { return cGroup_3_3_1; }
+		public Group getGroup_4_3_1() { return cGroup_4_3_1; }
 
 		//"/"
-		public Keyword getSolidusKeyword_3_3_1_0() { return cSolidusKeyword_3_3_1_0; }
+		public Keyword getSolidusKeyword_4_3_1_0() { return cSolidusKeyword_4_3_1_0; }
 
 		//(effects+=Effect ","?)*
-		public Group getGroup_3_3_1_1() { return cGroup_3_3_1_1; }
+		public Group getGroup_4_3_1_1() { return cGroup_4_3_1_1; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_3_3_1_1_0() { return cEffectsAssignment_3_3_1_1_0; }
+		public Assignment getEffectsAssignment_4_3_1_1_0() { return cEffectsAssignment_4_3_1_1_0; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_3_3_1_1_0_0() { return cEffectsEffectParserRuleCall_3_3_1_1_0_0; }
+		public RuleCall getEffectsEffectParserRuleCall_4_3_1_1_0_0() { return cEffectsEffectParserRuleCall_4_3_1_1_0_0; }
 
 		//","?
-		public Keyword getCommaKeyword_3_3_1_1_1() { return cCommaKeyword_3_3_1_1_1; }
+		public Keyword getCommaKeyword_4_3_1_1_1() { return cCommaKeyword_4_3_1_1_1; }
 
 		//isHistory?=" history"?
-		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
+		public Assignment getIsHistoryAssignment_5() { return cIsHistoryAssignment_5; }
 
 		//" history"
-		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
+		public Keyword getIsHistoryHistoryKeyword_5_0() { return cIsHistoryHistoryKeyword_5_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
 	public class TransitionStateElements extends AbstractParserRuleElementFinder {
@@ -3149,8 +3141,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//   
 	//   
-	//  //targetStateProxy=STRING
-	//            
+	//           
 	//          
 	//   
 	//  
@@ -3164,7 +3155,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextualTransition returns textualsync::TextualTransition:
-	//  type=TransitionType ("init"|"initial"|"final"|"cond"|"conditional")?
+	//  type=TransitionType makeConditional?=( "cond" | "conditional" )? makeFinal?="final"?
 	//  targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)? (
 	//  trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"?
 	//  ";";  
@@ -3172,8 +3163,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	// //TextualTransition extends Transition
 	//        
 	//  
-	// //targetState=[sync::State|FullStateID] 
-	//                
+	////targetStateProxy=TextualState 
+	//        
+	//    
 	// 
 	//          
 	//         

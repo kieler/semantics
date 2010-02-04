@@ -201,12 +201,14 @@
         <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.15"/>
         </tokens>
-        <tokens xsi:type="xtext:Alternatives" cardinality="?">
-          <groups xsi:type="xtext:Keyword" value="init"/>
-          <groups xsi:type="xtext:Keyword" value="initial"/>
-          <groups xsi:type="xtext:Keyword" value="final"/>
-          <groups xsi:type="xtext:Keyword" value="cond"/>
-          <groups xsi:type="xtext:Keyword" value="conditional"/>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="makeConditional" operator="?=">
+          <terminal xsi:type="xtext:Alternatives">
+            <groups xsi:type="xtext:Keyword" value="cond"/>
+            <groups xsi:type="xtext:Keyword" value="conditional"/>
+          </terminal>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="makeFinal" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="final"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" feature="targetStateProxy" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>

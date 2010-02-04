@@ -95,7 +95,6 @@ Transition returns sync::Transition:
 
   type=TransitionType 
   targetState=[sync::State|FullStateID] 
-  //targetStateProxy=STRING
   ('with' (isImmediate?='#')? ("delay:=" delay=INT)? (((trigger=BooleanExpression)? 
   ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'
   ; 
@@ -103,8 +102,9 @@ Transition returns sync::Transition:
  //TextualTransition extends Transition
  TextualTransition returns textualsync::TextualTransition :
  type=TransitionType 
- //targetState=[sync::State|FullStateID] 
- ("init"| "initial" | "final" | "cond" | "conditional")?
+//targetStateProxy=TextualState 
+(makeConditional ?= ("cond" | "conditional"))?
+(makeFinal ?= "final")?
  targetStateProxy=FullStateID
  ('with' (isImmediate?='#')? ("delay:=" delay=INT)? (((trigger=BooleanExpression)? 
  ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'

@@ -926,36 +926,75 @@ ruleTextualTransition returns [EObject current=null]
 	    }
 
 )
-)(	'init' 
+)(
+(
+(
+		lv_makeConditional_1_1=	'cond' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getInitKeyword_1_0(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getMakeConditionalCondKeyword_1_0_0(), "makeConditional"); 
     }
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "makeConditional", true, null, lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
 
-    |	'initial' 
+    |		lv_makeConditional_1_2=	'conditional' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getInitialKeyword_1_1(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getMakeConditionalConditionalKeyword_1_0_1(), "makeConditional"); 
     }
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "makeConditional", true, null, lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
 
-    |	'final' 
-    {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getFinalKeyword_1_2(), null); 
-    }
+)
 
-    |	'cond' 
+)
+)?(
+(
+		lv_makeFinal_2_0=	'final' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getCondKeyword_1_3(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getMakeFinalFinalKeyword_2_0(), "makeFinal"); 
     }
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "makeFinal", true, "final", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
 
-    |	'conditional' 
-    {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getConditionalKeyword_1_4(), null); 
-    }
+)
 )?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getTargetStateProxyFullStateIDParserRuleCall_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getTargetStateProxyFullStateIDParserRuleCall_3_0(), currentNode); 
 	    }
-		lv_targetStateProxy_6_0=ruleFullStateID		{
+		lv_targetStateProxy_3_0=ruleFullStateID		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -964,7 +1003,7 @@ ruleTextualTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"targetStateProxy",
-	        		lv_targetStateProxy_6_0, 
+	        		lv_targetStateProxy_3_0, 
 	        		"FullStateID", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -976,13 +1015,13 @@ ruleTextualTransition returns [EObject current=null]
 )
 )(	'with' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getWithKeyword_3_0(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getWithKeyword_4_0(), null); 
     }
 (
 (
-		lv_isImmediate_8_0=	'#' 
+		lv_isImmediate_5_0=	'#' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getIsImmediateNumberSignKeyword_3_1_0(), "isImmediate"); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getIsImmediateNumberSignKeyword_4_1_0(), "isImmediate"); 
     }
  
 	    {
@@ -1001,13 +1040,13 @@ ruleTextualTransition returns [EObject current=null]
 )
 )?(	'delay:=' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getDelayKeyword_3_2_0(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getDelayKeyword_4_2_0(), null); 
     }
 (
 (
-		lv_delay_10_0=RULE_INT
+		lv_delay_7_0=RULE_INT
 		{
-			createLeafNode(grammarAccess.getTextualTransitionAccess().getDelayINTTerminalRuleCall_3_2_1_0(), "delay"); 
+			createLeafNode(grammarAccess.getTextualTransitionAccess().getDelayINTTerminalRuleCall_4_2_1_0(), "delay"); 
 		}
 		{
 	        if ($current==null) {
@@ -1018,7 +1057,7 @@ ruleTextualTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"delay",
-	        		lv_delay_10_0, 
+	        		lv_delay_7_0, 
 	        		"INT", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1030,9 +1069,9 @@ ruleTextualTransition returns [EObject current=null]
 ))?((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_3_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getTriggerBooleanExpressionParserRuleCall_4_3_0_0(), currentNode); 
 	    }
-		lv_trigger_11_0=ruleBooleanExpression		{
+		lv_trigger_8_0=ruleBooleanExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1041,7 +1080,7 @@ ruleTextualTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"trigger",
-	        		lv_trigger_11_0, 
+	        		lv_trigger_8_0, 
 	        		"BooleanExpression", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1053,14 +1092,14 @@ ruleTextualTransition returns [EObject current=null]
 )
 )?(	'/' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getSolidusKeyword_3_3_1_0(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getSolidusKeyword_4_3_1_0(), null); 
     }
 ((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTextualTransitionAccess().getEffectsEffectParserRuleCall_4_3_1_1_0_0(), currentNode); 
 	    }
-		lv_effects_13_0=ruleEffect		{
+		lv_effects_10_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTextualTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1069,7 +1108,7 @@ ruleTextualTransition returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"effects",
-	        		lv_effects_13_0, 
+	        		lv_effects_10_0, 
 	        		"Effect", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1081,13 +1120,13 @@ ruleTextualTransition returns [EObject current=null]
 )
 )(	',' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getCommaKeyword_3_3_1_1_1(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getCommaKeyword_4_3_1_1_1(), null); 
     }
 )?)*)?))?(
 (
-		lv_isHistory_15_0=	' history' 
+		lv_isHistory_12_0=	' history' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getIsHistoryHistoryKeyword_5_0(), "isHistory"); 
     }
  
 	    {
@@ -1106,7 +1145,7 @@ ruleTextualTransition returns [EObject current=null]
 )
 )?	';' 
     {
-        createLeafNode(grammarAccess.getTextualTransitionAccess().getSemicolonKeyword_5(), null); 
+        createLeafNode(grammarAccess.getTextualTransitionAccess().getSemicolonKeyword_6(), null); 
     }
 )
 ;
