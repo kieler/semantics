@@ -23,11 +23,16 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
     public TriggerListenerChoice() {
         // either the type is changed explicitly or a new Conditional state is inserted in a region
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getState_Type())
-          .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getRegion_InnerStates())));
+          .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getRegion_InnerStates()))
+          .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())));
     }
 
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+        if(notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())){
+            return handleNewTransition(notification);
+        }
+        
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
     
         State state = null;
@@ -54,6 +59,15 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
             }
         }
         return cc;
+    }
+
+    private Command handleNewTransition(Notification notification) {
+        State state = (State)notification.getNotifier();
+        Transition transition = (Transition)notification.getNewValue();
+        if(state.getType().equals(StateType.CONDITIONAL)){
+            return new SetCommand(getTarget(),transition,SyncchartsPackage.eINSTANCE.getAction_IsImmediate(),true);
+        }
+        return null;
     }
     
     
