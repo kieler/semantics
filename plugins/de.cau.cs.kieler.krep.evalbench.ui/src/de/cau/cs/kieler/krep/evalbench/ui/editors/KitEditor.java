@@ -20,6 +20,8 @@ import de.cau.cs.kieler.krep.evalbench.program.KitAssembler;
  * An editor SyncCharts files in the kit format that uses the functionality of the abstract
  * <code>AssemblerEditor</code>.
  * 
+ * @kieler.rating 2010-02-04 proposed yellow ctr
+ * 
  * @author ctr
  */
 public class KitEditor extends AssemblerEditor {

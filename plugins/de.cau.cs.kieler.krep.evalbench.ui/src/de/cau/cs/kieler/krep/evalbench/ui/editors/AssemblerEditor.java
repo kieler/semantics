@@ -42,6 +42,8 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  * this abstract class must create a suitable implementation of the <code>IAssembler</code>
  * interface.
  * 
+ * @kieler.rating 2010-02-04 proposed yellow ctr
+ * 
  * @author msp, ctr
  */
 public abstract class AssemblerEditor extends EditorPart {

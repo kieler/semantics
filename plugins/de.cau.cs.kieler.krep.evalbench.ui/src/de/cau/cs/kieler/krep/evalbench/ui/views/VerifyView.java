@@ -26,7 +26,8 @@ import org.eclipse.ui.part.ViewPart;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
 
 /**
- * A View for displaying a trace file.
+ * A View for displaying a trace file. This view should be replaced by a more generic KIELER view
+ * for automated runs in the execution manager.
  * 
  * @author ctr
  * 

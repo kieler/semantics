@@ -29,6 +29,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramLabelProvider;
  * Displays the assembler in a table, including labels, instructions and object code. Each assembler
  * instructions takes exactly one line in the table.
  * 
+ * @kieler.rating 2010-02-04 proposed yellow ctr
+ * 
  * @author ctr
  * 
  */
@@ -107,7 +109,6 @@ public class AssemblerView extends ViewPart {
                 table.deselectAll();
                 table.select(trace);
             }
-
         });
     }
 }
