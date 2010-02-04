@@ -117,14 +117,14 @@ public class KitsLazyLinkingResource extends LazyLinkingResource {
 
                             if (leaf.getText().equals("init")
                                     || leaf.getText().trim().equals("init"))
-                                setDesiredStateModifier(s, t, 0, leaf);
+                                setStateAttributes(s, t, 0, leaf);
                             else if (leaf.getText().equals("final")
                                     || leaf.getText().trim().equals("final"))
-                                setDesiredStateModifier(s, t, 1, leaf);
+                                setStateAttributes(s, t, 1, leaf);
                             else if (leaf.getText().equals("conditional")
                                     || leaf.getText().trim().equals(
                                             "conditional"))
-                                setDesiredStateModifier(s, t, 2, leaf);
+                                setStateAttributes(s, t, 2, leaf);
 
                         }
                     }
@@ -148,7 +148,7 @@ public class KitsLazyLinkingResource extends LazyLinkingResource {
      * @param leaf
      *            parser tree leaf node, contains the user input
      */
-    private static void setDesiredStateModifier(State s, Transition t, int i,
+    private static void setStateAttributes(State s, Transition t, int i,
             LeafNode leaf) {
         if (!(leaf.getParent().getElement() == null)) {
             if (leaf.getParent().getElement() instanceof TransitionImpl) {
