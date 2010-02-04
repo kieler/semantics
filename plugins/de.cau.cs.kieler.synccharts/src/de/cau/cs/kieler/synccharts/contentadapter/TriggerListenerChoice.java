@@ -41,10 +41,13 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
         }
         if(notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getRegion_InnerStates())){
             state = (State)notification.getNewValue();
-            newStateType = state.getType();
+            // state might be null if a state is removed and not added
+            if(state != null){
+                newStateType = state.getType();
+            }
             oldStateType = null;
         }
-        
+        // in null case, no state was added but removed. we don't handle this here
         if(state != null && newStateType != null && newStateType.equals(StateType.CONDITIONAL) && !newStateType.equals(oldStateType)){
             for (Transition t : state.getOutgoingTransitions()) {
                 cc.append(new SetCommand(getTarget(),t,SyncchartsPackage.eINSTANCE.getAction_IsImmediate(),true));
