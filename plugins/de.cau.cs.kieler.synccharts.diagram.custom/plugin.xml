@@ -368,6 +368,11 @@
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.fixedSize"
+            value="false">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.layout.options.expandNodes"
             value="true">
       </option>
