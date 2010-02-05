@@ -18,7 +18,8 @@ import java.util.LinkedList;
 /**
  * Static helper functions for clocked equations.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 proposed yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */

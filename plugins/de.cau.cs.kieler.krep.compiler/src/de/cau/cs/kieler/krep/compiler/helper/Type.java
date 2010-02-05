@@ -14,9 +14,10 @@
 package de.cau.cs.kieler.krep.compiler.helper;
 
 /**
- * Basic Lustre types.
+ * Basic types used in Lustre, CEQs and KLP.
  * 
- * @kieler.rating 2010-01-21 proposed yellow ctr
+  * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */

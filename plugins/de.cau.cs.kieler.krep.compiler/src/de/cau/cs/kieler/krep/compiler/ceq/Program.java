@@ -25,8 +25,9 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
  * CEQ program, eg, a set of CEQ equation and Safe State Machines plus information on inputs and
  * outputs.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
  * @author ctr
  * */
 public class Program {

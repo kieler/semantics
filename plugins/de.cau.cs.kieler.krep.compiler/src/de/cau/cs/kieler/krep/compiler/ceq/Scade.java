@@ -30,8 +30,9 @@ import de.cau.cs.kieler.krep.compiler.parser.scadeParser;
 /**
  * Representation of a Scade program, this extends a ceq program by a parser for Scade files.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
  * @author ctr
  * 
  */

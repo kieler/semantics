@@ -23,8 +23,8 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
  * A Variable declaration in CEQ. A variable has a name, a type and a scope, i.e., input output,
  * local or temporary. A variable also has a register id.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * @author ctr
  */
 public class Variable {

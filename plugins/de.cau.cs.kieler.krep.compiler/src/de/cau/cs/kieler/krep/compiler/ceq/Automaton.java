@@ -29,7 +29,8 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
  * Implement automaton as part of clocked equations. An automaton contains other automata and
  * dataflow equations.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  * 

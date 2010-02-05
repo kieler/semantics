@@ -31,8 +31,10 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 /**
  * Conditional: if e1 then e2 else e3.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
+* 
  * @author ctr
  */
 public class If extends Expression {

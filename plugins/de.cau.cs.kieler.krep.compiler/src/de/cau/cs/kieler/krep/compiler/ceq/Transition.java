@@ -27,8 +27,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 /**
  * A transition in an Safe State Machine, consitiing of a trigger and a target state.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+
  * @author ctr
  * 
  */

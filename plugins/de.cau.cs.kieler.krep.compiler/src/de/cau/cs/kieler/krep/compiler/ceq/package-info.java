@@ -16,7 +16,7 @@
  * Implementation of clocked equations. 
  * Clocked equations are implemented as manually designed classes, 
  * where each class contains code to generate assembler from it. 
- * Maybe this should be converted into an ecore model using expand or xtend to 
+ * Maybe this should be converted into an ecore model and use xpand to 
  * generate assembler code.
  * 
  * @author ctr 

@@ -29,8 +29,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
  * A Variable access in ceq. This includes the information, if the current or previous value is
  * accessed
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+  * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+* 
  * @author ctr
  */
 public class VarAccess extends Expression {

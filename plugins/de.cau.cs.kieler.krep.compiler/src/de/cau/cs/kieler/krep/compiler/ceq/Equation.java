@@ -29,8 +29,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
  * A clocked equation, consisting of a name, a initial expression, a runtime expression, and a
  * clock.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
  * @author ctr
  */
 public class Equation {

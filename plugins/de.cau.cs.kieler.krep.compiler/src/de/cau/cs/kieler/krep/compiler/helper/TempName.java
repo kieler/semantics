@@ -18,7 +18,7 @@ import java.util.HashMap;
 /**
  * Compute unique temporary names.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-01-05 proposed red ctr
  * 
  * @author ctr 
  */

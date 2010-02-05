@@ -26,8 +26,9 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
 /**
  * CEQ binary operations, this includes comparison, arithmetic and logical operators.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
  * @author ctr
  */
 public class BinOp extends Expression {

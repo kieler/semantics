@@ -25,8 +25,9 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 /**
  * Constant, can either be an integer number or a boolean.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
- * 
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
+ *   
  * @author ctr
  */
 public class Const extends Expression {
