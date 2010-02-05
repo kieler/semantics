@@ -71,7 +71,7 @@ public class Instruction extends
 
     @Override
     public void asmLabel(HashMap<String, Integer> label2addr) {
-        // TODO Auto-generated method stub
+        // nothing per default
     }
 
     private int[] string2Array(String bin) {

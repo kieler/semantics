@@ -209,8 +209,7 @@ public final class KasmAssembler implements IAssembler {
                 s += (char) (program.read());
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ParseException(e.getMessage());
         }
         assemble(progName, s);
     }

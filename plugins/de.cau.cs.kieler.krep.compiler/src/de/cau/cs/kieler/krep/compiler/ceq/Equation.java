@@ -36,14 +36,19 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 public class Equation {
     private String name;
 
+    /** Expression that is evaluated at runtime. */
     private Expression expression;
 
+    /** expression to initialize the equation. If this is null, the runtime expression is used */
     private Expression initialize;
 
+    /** Computed type of this equation. */
     private Type type;
 
+    /** Clock on which the equation runs, null for base clock. */
     private String clock;
 
+    /** Computed priority. */
     private int prio;
 
     /**
@@ -152,9 +157,14 @@ public class Equation {
     }
 
     /**
+     * Replace complex expressions in the init expression and introduce auxiliary equations if
+     * necessary.
+     * 
      * @param vars
      *            list of new introduced variables
-     * @return replace complex expressions
+     * @return List of new introduced equations, the first element in the list is the original
+     *         equation (this).
+     * 
      */
     public LinkedList<Equation> flatten(final HashMap<String, Variable> vars) {
         LinkedList<Expression> es = new LinkedList<Expression>();
@@ -175,7 +185,7 @@ public class Equation {
      * generate KLP code to compute this equation.
      * 
      * @param useClocks
-     *            true if hw clocks f the klp are used
+     *            true if hardware clocks of the klp are used
      * @param scope
      *            scope of the equation
      * 
@@ -189,11 +199,13 @@ public class Equation {
         Debug.low(toString());
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
         LinkedList<Expression> es = new LinkedList<Expression>();
+        // generate labels
         Label l = Label.get(name + scope);
         Label lInit = Label.get(name + "_init" + scope);
         Label lRun = Label.get(name + "_run" + scope);
         Label lDone = Label.get(name + "_done" + scope);
 
+        // init code
         instr.add(l);
         if (!useClocks && hasClock()) {
             instr.add(new CJmp(CJmp.Cond.T, new Read(Variable.get(clock), false), lInit));
@@ -201,8 +213,6 @@ public class Equation {
             instr.add(lInit);
         }
         if (initialize != null) {
-            // init.flatten(id, vars, es);
-
             for (Expression e : es) {
                 instr.addAll(e.toKlp(Variable.get(e.getName())));
                 Debug.low(e.toString());
@@ -215,7 +225,6 @@ public class Equation {
         if (!useClocks && hasClock()) {
             instr.add(new CJmp(CJmp.Cond.F, new Read(Variable.get(clock), false), lDone));
         }
-        // expr.flatten(id, vars, es);
         for (Expression e : es) {
             instr.addAll(e.toKlp(Variable.get(e.getName())));
             Debug.low(e.toString());
@@ -349,7 +358,7 @@ public class Equation {
     }
 
     /**
-     * @return all depdencies of the equation.
+     * @return all dependencies of the equation.
      */
     public List<String> getPDeps() {
         return expression.getVars();
@@ -358,7 +367,7 @@ public class Equation {
     /**
      * @param eq
      *            equation to replace.
-     * @return true if the replacement was succesful.
+     * @return true if the replacement was successful.
      */
     public boolean replace(final Equation eq) {
         if (eq.initialize != null) {

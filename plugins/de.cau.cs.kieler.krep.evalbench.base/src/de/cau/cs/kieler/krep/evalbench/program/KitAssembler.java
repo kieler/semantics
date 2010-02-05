@@ -113,6 +113,8 @@ public class KitAssembler implements IAssembler {
                     kitFile.getParentFile());
             // any output?
 
+            
+            
             // TODO: handle error messages
             // final StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(),
             // "ERROR");

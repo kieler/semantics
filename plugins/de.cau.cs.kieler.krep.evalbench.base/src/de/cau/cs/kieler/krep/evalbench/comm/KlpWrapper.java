@@ -51,7 +51,7 @@ public class KlpWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         klp_reset(msg);
-        // TODO: log File
+       
         esi = new EsiLogger("klp.esi");
         esi.reset();
         step();

@@ -18,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -459,7 +458,7 @@ public final class DataComponent extends JSONObjectDataComponent implements
 
         InputStream in = new FileInputStream(path + "/MAIN.ec");
         Ec2klp ec2klp = new Ec2klp();
-        String ec = ec2klp.compile("Dummy", in);
+        String ec = ec2klp.compile("Dummy", in, true);
         ByteArrayInputStream klp = new ByteArrayInputStream(ec.getBytes());
 
         Injector injector = new KlpStandaloneSetup()

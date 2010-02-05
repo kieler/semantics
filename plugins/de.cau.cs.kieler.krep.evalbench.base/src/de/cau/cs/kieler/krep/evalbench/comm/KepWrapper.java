@@ -51,7 +51,6 @@ public class KepWrapper implements IKrepWrapper {
         final String msg = "";
         kep_reset(msg);
 
-        // TODO: log to esi
         final String fileName = "kep.esi";
         esi = new EsiLogger(fileName);
         esi.reset();

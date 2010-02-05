@@ -18,3 +18,5 @@ Export-Package: de.cau.cs.kieler.krep.compiler.ceq,
  org.apache.commons.cli
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian Albrechts Universität zu Kiel
+Require-Bundle: de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0",
+ de.cau.cs.kieler.core;bundle-version="0.2.0"

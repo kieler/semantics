@@ -65,7 +65,6 @@ public class ClockList implements Cloneable {
         try {
             super.clone();
         } catch (CloneNotSupportedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         ClockList res = new ClockList();
