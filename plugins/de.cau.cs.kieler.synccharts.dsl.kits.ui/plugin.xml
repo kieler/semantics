@@ -103,13 +103,6 @@
 
 <!-- adding resource factories -->
 
-	<extension
-		point="org.eclipse.emf.ecore.extension_parser">
-		<parser
-			class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.resource.XtextResourceFactory"
-			type="kits">
-		</parser>
-	</extension>
 <!-- merged from plugin.xml_gen due to suggestions in the newsgroup to create the new project wizard-->
    <!-- 
    <extension  
