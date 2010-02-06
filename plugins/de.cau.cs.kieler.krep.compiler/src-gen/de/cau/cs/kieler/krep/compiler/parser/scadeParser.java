@@ -138,7 +138,7 @@ public class scadeParser extends Parser {
     private LinkedList<Variable> toVar(LinkedList<String> vars, Kind io, Type t) {
         LinkedList<Variable> res = new LinkedList<Variable>();
         for (String v : vars) {
-            res.add(Variable.get(v, io, t));
+            res.add(Program.getVar(v, io, t));
         }
         return res;
     }
@@ -2653,7 +2653,7 @@ public class scadeParser extends Parser {
                 }
 
                 id = (Token) match(input, ID, FOLLOW_ID_in_var1737);
-                var = Variable.get((id != null ? id.getText() : null));
+                var = Program.getVar((id != null ? id.getText() : null));
 
             }
 

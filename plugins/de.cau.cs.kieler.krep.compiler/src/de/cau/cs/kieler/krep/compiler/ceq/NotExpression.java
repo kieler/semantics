@@ -67,7 +67,7 @@ public class NotExpression extends Expression {
             return this;
         } else {
             expr = expr.flatten(name, vars, es);
-            Variable t = Variable.getTemp(name, expr.getType());
+            Variable t = Program.getTemp(name, expr.getType());
             es.add(expr);
             return new NotExpression(t.getName(), new VarAccessExpression(t, false));
         }

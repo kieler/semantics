@@ -29,7 +29,7 @@ grammar scade;
   private LinkedList<Variable> toVar(LinkedList<String> vars, Kind io, Type t){
       LinkedList<Variable> res = new LinkedList<Variable>();
       for(String v: vars){
-          res.add(Variable.get(v, io, t));
+          res.add(Program.get(v, io, t));
       }
       return res;
   }
@@ -230,7 +230,7 @@ id_expr returns [Expression expr]
     ; 
 
 var returns [Variable var]
-    : '\''? id = ID { $var = Variable.get($id.text); }
+    : '\''? id = ID { $var = Program.get($id.text); }
     ;
 //////////////////////////////////////////////////////////////
 //bin_expr returns [Expression expr] 

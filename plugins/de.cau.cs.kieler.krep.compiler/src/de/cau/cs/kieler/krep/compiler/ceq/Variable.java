@@ -58,10 +58,6 @@ public class Variable {
 
     private int id;
 
-    private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
-
-    private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
-
     /** count number of variables for each kind. */
     private static int[] nValue = new int[] { 0, 0, 0, 0 };
 
@@ -100,10 +96,8 @@ public class Variable {
         this.io = kind;
         this.type = t;
         id = nValue[getKindId(kind)]++;
-        if (vars.containsKey(n)) {
-            System.err.println("variable " + n + " already defined");
-        }
-        vars.put(n, this);
+        
+        Program.addVar(n, this);
     }
 
     /**
@@ -118,40 +112,7 @@ public class Variable {
         this(var.getName(), kind, var.getType());
     }
 
-    /**
-     * Generate new variable. Implements singleton pattern.
-     * 
-     * @param name
-     *            name of the variable
-     * @return variable with same name if it exists, new temp variable otherwise
-     */
-    public static Variable get(final String name) {
-        Variable v = vars.get(name);
-        if (v == null) {
-            System.err.println("variable " + name + " not defined");
-        }
-        return v;
-    }
 
-    /**
-     * Generate new variable. Implements singleton pattern.
-     * 
-     * @param name
-     *            name of the variable
-     * @param kind
-     *            io kind of the variable
-     * @param type
-     *            type of the variable
-     * @return variable with same name if it exists, new temp variable otherwise
-     */
-    public static Variable get(final String name, final Kind kind, final Type type) {
-        Variable v = vars.get(name);
-        if (v == null) {
-            v = new Variable(name, kind, type);
-
-        }
-        return v;
-    }
 
     /**
      * @return variable kind, ie, input, output, local or temp
@@ -270,48 +231,5 @@ public class Variable {
         return id + i;
     }
 
-    /**
-     * @param prefix
-     *            of the temporary variable
-     * @param type
-     *            of the new variable
-     * @return new temporary variable
-     */
-    public static Variable getTemp(final String prefix, final Type type) {
-        Integer i = temps.get(prefix);
-        if (i == null) {
-            i = 0;
-        }
-        String temp = prefix + "_" + i;
-        i++;
-        temps.put(prefix, i);
-        Variable v = vars.get(temp);
-        if (v != null) {
-            return v;
-        } else {
-            return new Variable(temp, Kind.LOCAL, type);
-        }
-    }
 
-    /**
-     * Remove temporary variables.
-     * 
-     * @param prefix
-     *            prefix of the variables to reset
-     */
-    public static void destroyTemp(final String prefix) {
-        Integer i = temps.get(prefix);
-        if (i == null) {
-            i = 1;
-        }
-        i--;
-        temps.put(prefix, i);
-    }
-
-    /**
-     * @return number of defined variables
-     */
-    public static int getMax() {
-        return vars.size();
-    }
 }

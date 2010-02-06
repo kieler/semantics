@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.krep.compiler.klp;
 
+import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 import de.cau.cs.kieler.krep.compiler.util.Type;
@@ -49,7 +50,7 @@ public class RegAccess {
     public RegAccess(final VarAccessExpression v) {
         super();
         this.pre = v.isPre();
-        this.var = Variable.get(v.getName());
+        this.var = Program.getVar(v.getName());
     }
 
     @Override

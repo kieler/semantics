@@ -80,7 +80,7 @@ public class Transition {
         if (trigger instanceof VarAccessExpression) {
             r = new RegAccess((VarAccessExpression) trigger);
         } else {
-            Variable v = Variable.get(ssm, Kind.LOCAL, Type.BOOL);
+            Variable v = Program.getVar(ssm, Kind.LOCAL, Type.BOOL);
             res.addAll(trigger.toKlp(v));
             r = new RegAccess(v, false);
         }

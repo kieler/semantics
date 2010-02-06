@@ -139,7 +139,7 @@ public class Lustre {
             res.addEq(eq);
 
             for (de.cau.cs.kieler.krep.compiler.ceq.Equation a : aux) {
-                res.addVar(de.cau.cs.kieler.krep.compiler.ceq.Variable.get(a.getName()));
+                res.addVar(de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(a.getName()));
                 res.addEq(a);
             }
 

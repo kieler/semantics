@@ -64,7 +64,7 @@ public class VarAccessExpression extends Expression {
     public List<Variable> getDeps() {
         List<Variable> res = new ArrayList<Variable>();
         if (pre == 0) {
-            res.add(Variable.get(getName()));
+            res.add(Program.getVar(getName()));
         }
         return res;
     }

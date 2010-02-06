@@ -100,7 +100,7 @@ public class PreExpression extends Expression {
 
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
-                            de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), true));
+                            de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(v.getName()), true));
         } else {
             System.err.println("internal error: found nested pre");
             return null;

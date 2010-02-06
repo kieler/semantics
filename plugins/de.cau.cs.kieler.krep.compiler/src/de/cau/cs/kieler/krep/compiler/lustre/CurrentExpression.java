@@ -89,7 +89,7 @@ public class CurrentExpression extends Expression {
             }
             return res;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
                     .getTemp(basename, getType());
             res.setName(v.getName());
             aux.add(res);

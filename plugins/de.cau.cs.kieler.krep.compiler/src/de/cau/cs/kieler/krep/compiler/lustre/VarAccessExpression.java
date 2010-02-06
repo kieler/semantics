@@ -100,7 +100,7 @@ public class VarAccessExpression extends Expression {
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
-                        de.cau.cs.kieler.krep.compiler.ceq.Variable.get(var.getName()), false));
+                        de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(var.getName()), false));
     }
 
     @Override

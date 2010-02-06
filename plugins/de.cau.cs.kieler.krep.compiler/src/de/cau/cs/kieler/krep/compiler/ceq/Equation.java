@@ -216,29 +216,29 @@ public class Equation {
         instr.add(l);
         if (!useClocks && hasClock()) {
             instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(
-                    Variable.get(clock), false), lInit));
+                    Program.getVar(clock), false), lInit));
             instr.add(new DoneInstruction(l));
             instr.add(lInit);
         }
         if (initialize != null) {
             for (Expression e : es) {
-                instr.addAll(e.toKlp(Variable.get(e.getName())));
+                instr.addAll(e.toKlp(Program.getVar(e.getName())));
                 Debug.low(e.toString());
             }
-            instr.addAll(initialize.toKlp(Variable.get(name)));
+            instr.addAll(initialize.toKlp(Program.getVar(name)));
             es.clear();
             instr.add(new DoneInstruction(lRun));
         }
         instr.add(lRun);
         if (!useClocks && hasClock()) {
             instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(
-                    Variable.get(clock), false), lDone));
+                    Program.getVar(clock), false), lDone));
         }
         for (Expression e : es) {
-            instr.addAll(e.toKlp(Variable.get(e.getName())));
+            instr.addAll(e.toKlp(Program.getVar(e.getName())));
             Debug.low(e.toString());
         }
-        instr.addAll(expression.toKlp(Variable.get(name)));
+        instr.addAll(expression.toKlp(Program.getVar(name)));
         if (!useClocks && hasClock()) {
             instr.add(lDone);
         }

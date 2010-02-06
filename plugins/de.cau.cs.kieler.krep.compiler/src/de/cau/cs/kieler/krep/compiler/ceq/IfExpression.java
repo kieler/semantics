@@ -97,16 +97,16 @@ public class IfExpression extends Expression {
     public LinkedList<AbstractInstruction> toKlp(final Variable r) {
         LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
 
-        LabelInstruction lElse = LabelInstruction.get(TempName.get("L"));
-        LabelInstruction lEnd = LabelInstruction.get(TempName.get("L"));
+        LabelInstruction lElse = LabelInstruction.get(Program.getLabel());
+        LabelInstruction lEnd = LabelInstruction.get(Program.getLabel());
         RegAccess test;
         if (expr1 instanceof VarAccessExpression) {
             test = new RegAccess((VarAccessExpression) expr1);
         } else {
-            Variable v = Variable.getTemp(getName(), Type.BOOL);
+            Variable v = Program.getTemp(getName(), Type.BOOL);
             instr.addAll(expr1.toKlp(v));
             test = new RegAccess(v, false);
-            Variable.destroyTemp(getName());
+            Program.destroyTemp(getName());
         }
         instr.add(new CJmpInstruction(Cond.F, test, lElse));
         instr.addAll(expr2.toKlp(r));

@@ -18,8 +18,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
 import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * CEQ program, eg, a set of CEQ equation and Safe State Machines plus information on inputs and
@@ -39,7 +41,7 @@ public class Program {
     /**
      * all used variables.
      */
-    private HashMap<String, Variable> vars = new HashMap<String, Variable>();
+    private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
 
     /**
      * input signals.
@@ -71,6 +73,14 @@ public class Program {
      */
     private DepGraph depGraph = null;
 
+   // private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
+
+    private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
+   
+    private static  int labels;
+
+  
+    
     /**
      * generate empty program.
      * 
@@ -78,6 +88,9 @@ public class Program {
      *            of the main node
      */
     public Program(final String n) {
+        vars.clear();
+        temps.clear();
+        labels =0;
         this.setName(n);
     }
 
@@ -90,6 +103,9 @@ public class Program {
      *            program to copy.
      */
     public Program(final String n, final Program p) {
+        vars.clear();
+        temps.clear();
+        labels =0;
         this.setName(n);
         this.setVars(p.getVars());
         this.setInputs(p.getInputs());
@@ -320,7 +336,7 @@ public class Program {
             if (expr instanceof VarAccessExpression) {
                 VarAccessExpression v = (VarAccessExpression) expr;
                 if (e.getClock() == null && e.getInit() == null) {
-                    equiv.put(e.getName(), Variable.get(v.getName()));
+                    equiv.put(e.getName(), Program.getVar(v.getName()));
                     Debug.low("\t" + e.getName() + " = " + v.getName());
                 }
 
@@ -348,7 +364,7 @@ public class Program {
                 if (!equiv.containsKey(eq.getName())) {
                     keep.add(eq);
                 } else {
-                    Variable v = Variable.get(eq.getName());
+                    Variable v = Program.getVar(eq.getName());
                     getVars().remove(eq.getName());
                     getLocals().remove(v);
                 }
@@ -426,7 +442,7 @@ public class Program {
         final LinkedList<Equation> keep = new LinkedList<Equation>();
         for (i = 0; i < getEqs().size(); i++) {
             final Equation eq = getEqs().get(i);
-            if (nReader[i] == 1 && getLocals().contains(Variable.get(eq.getName()))) {
+            if (nReader[i] == 1 && getLocals().contains(Program.getVar(eq.getName()))) {
                 Debug.low("replace " + eq.getName());
                 boolean ok = true;
                 for (final Equation e : getEqs()) {
@@ -436,7 +452,7 @@ public class Program {
                     }
                 }
                 if (ok) {
-                    getVars().remove(Variable.get(eq.getName()).getName());
+                    getVars().remove(Program.getVar(eq.getName()).getName());
                 }
             } else {
                 keep.add(eq);
@@ -542,4 +558,101 @@ public class Program {
     protected HashMap<String, Variable> getVars() {
         return vars;
     }
+    
+    /**
+     * Generate new variable. Implements singleton pattern.
+     * 
+     * @param name
+     *            name of the variable
+     * @return variable with same name if it exists, new temp variable otherwise
+     */
+    public static Variable getVar(final String name) {
+        Variable v = vars.get(name);
+        if (v == null) {
+            System.err.println("variable " + name + " not defined");
+        }
+        return v;
+    }
+
+    /**
+     * Generate new, unique variable. 
+     * 
+     * @param name
+     *            name of the variable
+     * @param kind
+     *            io kind of the variable
+     * @param type
+     *            type of the variable
+     * @return variable with same name if it exists, new temp variable otherwise
+     */
+    public static Variable getVar(final String name, final Kind kind, final Type type) {
+        Variable v = vars.get(name);
+        if (v == null) {
+            v = new Variable(name, kind, type);
+
+        }
+        return v;
+    }
+    
+    /**
+     * @param prefix
+     *            of the temporary variable
+     * @param type
+     *            of the new variable
+     * @return new temporary variable
+     */
+    public static Variable getTemp(final String prefix, final Type type) {
+        Integer i = temps.get(prefix);
+        if (i == null) {
+            i = 0;
+        }
+        String temp = prefix + "_" + i;
+        i++;
+        temps.put(prefix, i);
+        Variable v = vars.get(temp);
+        if (v != null) {
+            return v;
+        } else {
+            return new Variable(temp, Kind.LOCAL, type);
+        }
+    }
+
+    /**
+     * Remove temporary variables.
+     * 
+     * @param prefix
+     *            prefix of the variables to reset
+     */
+    public static void destroyTemp(final String prefix) {
+        Integer i = temps.get(prefix);
+        if (i == null) {
+            i = 1;
+        }
+        i--;
+        temps.put(prefix, i);
+    }
+
+    /**
+     * @return number of defined variables
+     */
+    public static int getMax() {
+        return vars.size();
+    }
+
+    public static void addVar(String n, Variable variable) {
+        if (vars.containsKey(n)) {
+            System.err.println("variable " + n + " already defined");
+        }
+        vars.put(n, variable);
+     }
+    
+    /**
+     * Generate a unique label
+     * @return a unique name for a label
+     */
+    public static String getLabel() {
+        labels ++;
+        return "L_" + labels;
+    }
+
 }

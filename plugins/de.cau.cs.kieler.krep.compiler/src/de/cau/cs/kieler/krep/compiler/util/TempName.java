@@ -36,7 +36,7 @@ public final class TempName {
      *            of the unique name
      * @return a unique name of the form prefix_N
      */
-    public static String get(final String prefix) {
+    private static String get(final String prefix) {
         Integer i = names.get(prefix);
         if (i == null) {
             names.put(prefix, 1);

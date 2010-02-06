@@ -209,7 +209,7 @@ public class KlpProgram extends Program {
      * @return number of totally used registers
      */
     public int nReg() {
-        return Variable.getMax();
+        return getMax();
     }
 
 }

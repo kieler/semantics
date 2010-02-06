@@ -78,7 +78,7 @@ public class BinOpExpression extends Expression {
         Debug.low("flatten: " + toString());
         if (!atom1) {
             Expression expr = e1.flatten(name, vars, es);
-            Variable v = Variable.getTemp(name, e1.getType());
+            Variable v = Program.getTemp(name, e1.getType());
             vars.put(v.getName(), v);
             VarAccessExpression t = new VarAccessExpression(v, false);
             expr.setName(t.getName());
@@ -88,7 +88,7 @@ public class BinOpExpression extends Expression {
         }
         if (!atom2) {
             Expression expr = e2.flatten(name, vars, es);
-            Variable v = Variable.getTemp(name, e2.getType());
+            Variable v = Program.getTemp(name, e2.getType());
             vars.put(v.getName(), v);
             VarAccessExpression t = new VarAccessExpression(v, false);
             expr.setName(t.getName());
@@ -96,10 +96,10 @@ public class BinOpExpression extends Expression {
             e2 = t;
         }
         if (!atom1) {
-            Variable.destroyTemp(name);
+            Program.destroyTemp(name);
         }
         if (!atom2) {
-            Variable.destroyTemp(name);
+            Program.destroyTemp(name);
         }
         return this;
     }
@@ -175,17 +175,17 @@ public class BinOpExpression extends Expression {
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r, new RegAccess(r,
                     false), c2.getVal(), op));
         } else {
-            Variable var1 = Variable.getTemp(getName(), e1.getType());
+            Variable var1 = Program.getTemp(getName(), e1.getType());
             VarAccessExpression temp1 = new VarAccessExpression(var1, false);
             instr.addAll(e1.toKlp(var1));
-            Variable var2 = Variable.getTemp(getName(), e2.getType());
+            Variable var2 = Program.getTemp(getName(), e2.getType());
             VarAccessExpression temp2 = new VarAccessExpression(var2, false);
             instr.addAll(e2.toKlp(var2));
 
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(temp1),
                     new RegAccess(temp2), op));
-            Variable.destroyTemp(getName());
-            Variable.destroyTemp(getName());
+            Program.destroyTemp(getName());
+            Program.destroyTemp(getName());
         }
         return instr;
     }

@@ -117,7 +117,7 @@ public class InitExpression extends Expression {
             eq2.setInit(eq1.getExpr());
             // e2.clock = this.clock;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
                     .getTemp(basename, getType());
             if (c != null) {
                 eq1.setClock(c);
@@ -129,7 +129,7 @@ public class InitExpression extends Expression {
         if (stage < STAGE_INIT) { // not inside init
             return eq2;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
                     .getTemp(basename, getType());
             if (c != null) {
                 eq2.setClock(c);

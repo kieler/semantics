@@ -114,14 +114,14 @@ public class WhenExpression extends Expression {
             res.setClock(cName.getName());
             return res;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
                     .getTemp(basename, getType());
 
             res.setName(v.getName());
             aux.add(res);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(), null,
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
-                            de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), false),
+                            de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(v.getName()), false),
                     cName.getName());
         }
     }
