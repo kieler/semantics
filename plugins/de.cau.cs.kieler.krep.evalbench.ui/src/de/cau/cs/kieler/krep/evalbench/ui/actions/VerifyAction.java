@@ -47,7 +47,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.LstAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.ParseException;
@@ -287,7 +287,7 @@ public class VerifyAction extends Action {
         try {
             file = new File(prefix + ".lst");
             if (file.exists()) {
-                res = new KasmAssembler();
+                res = new LstAssembler();
             } else {
                 file = new File(prefix + ".kasm");
                 if (file.exists()) {
