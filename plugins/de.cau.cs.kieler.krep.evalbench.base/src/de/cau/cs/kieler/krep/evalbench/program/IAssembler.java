@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
  * Interface for assemblers that transform assembler files into binary object
@@ -100,7 +99,7 @@ public interface IAssembler {
      * 
      * @return array with hex-code
      */
-    String[] getObj(Config c);
+    String[] getObj(IConfig c);
 
     /**
      * Check whether the Assembler can be executed on the current processor This
@@ -112,7 +111,7 @@ public interface IAssembler {
      * @return null if processor can execute this program. Otherwise a detailed
      *         message why the execution is not possible is returned.
      * */
-    String canExecute(Config c);
+    String canExecute(IConfig c);
 
     /**
      * @return mapping to get signal index for each valid signal in the program

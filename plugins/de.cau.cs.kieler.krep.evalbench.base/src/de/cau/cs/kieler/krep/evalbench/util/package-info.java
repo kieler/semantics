@@ -13,8 +13,6 @@
  */
 
 /**
- * All specific exceptions for the krep, including communication and parsing. 
- * 
- * @author ctr
+ * Helper classes for the krep evalbench.
  */
-package de.cau.cs.kieler.krep.evalbench.exceptions;
+package de.cau.cs.kieler.krep.evalbench.util;

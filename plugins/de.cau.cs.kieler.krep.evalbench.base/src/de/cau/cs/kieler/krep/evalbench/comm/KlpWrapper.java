@@ -20,7 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
+import de.cau.cs.kieler.krep.evalbench.util.EsiLogger;
 
 /**
  * Wrapper to software simulation of the Kiel Lustre Processor.

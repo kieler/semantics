@@ -14,9 +14,8 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.LinkedList;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
-import de.cau.cs.kieler.krep.evalbench.program.Config;
+import de.cau.cs.kieler.krep.evalbench.program.IConfig;
+import de.cau.cs.kieler.krep.evalbench.util.EsiLogger;
 
 /**
  * Connection to software emulation of the processor via java native interfaces.
@@ -26,7 +25,7 @@ import de.cau.cs.kieler.krep.evalbench.program.Config;
  * @author ctr
  * 
  */
-public class JNIConnection implements IConnectionProtocol {
+public class JNIConnection implements IConnection {
 
     private IKrepWrapper krep = null;
 
@@ -179,7 +178,7 @@ public class JNIConnection implements IConnectionProtocol {
 
     private void log(final byte b) {
         if (esi != null) {
-            esi.write("RX(0x" + Integer.toHexString(b & Config.BYTE_MASK) + ");\n");
+            esi.write("RX(0x" + Integer.toHexString(b & IConfig.BYTE_MASK) + ");\n");
         }
     }
 

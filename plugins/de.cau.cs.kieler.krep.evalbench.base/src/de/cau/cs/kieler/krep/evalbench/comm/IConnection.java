@@ -15,7 +15,6 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 /**
  * Interface for connection protocol layers like TCP/IP and RS-232.
@@ -24,7 +23,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  * 
  * @author msp, ctr
  */
-public interface IConnectionProtocol {
+public interface IConnection {
 
 
     

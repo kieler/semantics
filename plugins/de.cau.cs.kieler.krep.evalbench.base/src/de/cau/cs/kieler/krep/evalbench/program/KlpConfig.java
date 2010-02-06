@@ -21,7 +21,7 @@ package de.cau.cs.kieler.krep.evalbench.program;
  * @author ctr 
  * 
  */
-public class KrepConfig implements Config {
+public class KlpConfig implements IConfig {
 
     private final int cores;
 
@@ -43,7 +43,7 @@ public class KrepConfig implements Config {
      * @param nirom
      *            (size of instruction ROM)
      */
-    public KrepConfig(final int ncores, final int nio, final int nregs,
+    public KlpConfig(final int ncores, final int nio, final int nregs,
             final int nirom) {
 
         this.cores = ncores;

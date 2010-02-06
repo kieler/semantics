@@ -20,7 +20,7 @@ package de.cau.cs.kieler.krep.evalbench.program;
  * 
  * @author ctr
  */
-public interface Config {
+public interface IConfig {
 
     /**
      * number of bits in a byte.

@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.krep.evalbench.ui.editors;
 
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
-import de.cau.cs.kieler.krep.evalbench.program.KitAssembler;
+import de.cau.cs.kieler.krep.evalbench.smakc.KitAssembler;
 
 /**
  * An editor SyncCharts files in the kit format that uses the functionality of the abstract

@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 /**
  * Connection that uses sockets from <code>java.net</code>.
@@ -28,7 +27,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  * 
  * @author msp, ctr
  */
-public class SocketConnection extends ConnectionProtocol {
+public class SocketConnection extends Connection {
 
     /** The socket used for connection. */
     private Socket socket;

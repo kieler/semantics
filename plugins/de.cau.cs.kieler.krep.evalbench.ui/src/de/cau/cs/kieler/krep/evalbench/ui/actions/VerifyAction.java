@@ -42,15 +42,15 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
+import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**

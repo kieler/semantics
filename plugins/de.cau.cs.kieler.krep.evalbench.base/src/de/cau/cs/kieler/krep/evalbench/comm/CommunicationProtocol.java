@@ -30,7 +30,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
     private LinkedList<ICommunicationListener> communicationListeners;
 
     /** The currently active connection protocol. */
-    private IConnectionProtocol connection;
+    private IConnection connection;
 
     /**
      * Constructs a new instance of the KEP protocol.
@@ -39,7 +39,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            underlying connection protocol to be used; this protocol instance is expected to
      *            be already initialized
      */
-    protected CommunicationProtocol(final IConnectionProtocol connectionProtocol) {
+    protected CommunicationProtocol(final IConnection connectionProtocol) {
         // create list of communication listeners
         setCommunicationListeners(new LinkedList<ICommunicationListener>());
         // store instance of connection protocol
@@ -119,14 +119,14 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      * @param theConnection
      *            the connection to set
      */
-    protected void setConnection(final IConnectionProtocol theConnection) {
+    protected void setConnection(final IConnection theConnection) {
         this.connection = theConnection;
     }
 
     /**
      * @return the connection
      */
-    protected IConnectionProtocol getConnection() {
+    protected IConnection getConnection() {
         return connection;
     }
 

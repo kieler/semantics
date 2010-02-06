@@ -20,10 +20,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.trace.esi.esiParser;
 import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
 

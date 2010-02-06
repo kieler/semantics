@@ -33,9 +33,9 @@ import org.eclipse.ui.part.EditorPart;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.program.Config;
+import de.cau.cs.kieler.krep.evalbench.program.IConfig;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 
 /**
  * The basic editor for displaying assembler instructions in the evaluation bench. Subclasses of
@@ -268,7 +268,7 @@ public abstract class AssemblerEditor extends EditorPart {
      *            configuration of the current processor
      * @return true if all constraints (e.g., number of signals) are fulfilled
      */
-    public boolean canExecute(final Config krp) {
+    public boolean canExecute(final IConfig krp) {
         return assembler.canExecute(krp) == null;
     }
 }

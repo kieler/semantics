@@ -16,7 +16,6 @@ package de.cau.cs.kieler.krep.evalbench.program;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
  * 

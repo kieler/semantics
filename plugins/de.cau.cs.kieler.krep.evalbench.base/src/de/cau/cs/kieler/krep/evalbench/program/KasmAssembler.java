@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
  * Interface to external assembler to generate object code from the KEP assembler file.
@@ -240,7 +239,7 @@ public final class KasmAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String canExecute(final Config c) {
+    public String canExecute(final IConfig c) {
         // TODO: implement Configuration for KEP
         return "not yet implemented!";
     }
@@ -248,7 +247,7 @@ public final class KasmAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String[] getObj(final Config c) {
+    public String[] getObj(final IConfig c) {
         return obj;
     }
 

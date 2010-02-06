@@ -20,10 +20,8 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
+import de.cau.cs.kieler.krep.evalbench.program.KlpConfig;
 
 /**
  * Implementation of the communication protocol interface that uses the KREP protocol. Currently,
@@ -67,7 +65,7 @@ public class KrepProtocol extends CommunicationProtocol {
             "#IO Registers:              ", "#local Registers            ",
             "#Instructions               ", "#ALU                        " };
 
-    private KrepConfig krp = null;
+    private KlpConfig krp = null;
 
     private static final int MASK_BYTE = 0xFF;
     private static final int BYTE_LENGTH = 8;
@@ -107,7 +105,7 @@ public class KrepProtocol extends CommunicationProtocol {
      *            underlying connection protocol to be used; this protocol instance is expected to
      *            be already initialized
      */
-    public KrepProtocol(final IConnectionProtocol connectionProtocol) {
+    public KrepProtocol(final IConnection connectionProtocol) {
         super(connectionProtocol);
     }
 
@@ -172,7 +170,7 @@ public class KrepProtocol extends CommunicationProtocol {
         int nReg = i.next();
         int nROM = 1 << i.next();
 
-        krp = new KrepConfig(nCores, nIO, nReg, nROM);
+        krp = new KlpConfig(nCores, nIO, nReg, nROM);
         return stringBuffer.toString();
     }
 

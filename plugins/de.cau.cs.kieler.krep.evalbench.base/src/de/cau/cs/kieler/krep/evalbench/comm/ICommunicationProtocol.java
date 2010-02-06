@@ -17,8 +17,6 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**

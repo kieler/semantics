@@ -19,7 +19,6 @@ import java.io.OutputStream; //import java.util.Enumeration;
 import java.util.LinkedList;
 
 //import de.cau.cs.kieler.krep.evalbench.Activator;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 //import gnu.io.*;
 
@@ -28,7 +27,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  * 
  * @author msp
  */
-public class RxtxSerialConnection extends ConnectionProtocol {
+public class RxtxSerialConnection extends Connection {
 
     /** Baud rate used for serial connection */
     // private final static int BAUD_RATE = 115200;

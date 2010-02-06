@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.helpers;
+package de.cau.cs.kieler.krep.evalbench.smakc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.PushbackReader;
 import java.util.HashMap;
 import java.util.Map;
+
 import kiel.util.kit.lexer.Lexer;
 import kiel.util.kit.lexer.LexerException;
 import kiel.util.kit.node.Start;

@@ -53,21 +53,21 @@ import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
 import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
+import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
-import de.cau.cs.kieler.krep.evalbench.comm.IConnectionProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.IConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.KrepProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.LoadException;
 import de.cau.cs.kieler.krep.evalbench.comm.RxtxSerialConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.comm.SocketConnection;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
@@ -89,7 +89,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
 public final class DataComponent extends JSONObjectDataComponent implements
         IAutomatedProducer {
 
-    private IConnectionProtocol connection = null;
+    private IConnection connection = null;
     private CommunicationProtocol protocol = null;
     private IAssembler assembler = null;
 
@@ -389,7 +389,7 @@ public final class DataComponent extends JSONObjectDataComponent implements
      * @return
      * @throws KiemInitializationException
      */
-    private IConnectionProtocol connect(final String protocolType)
+    private IConnection connect(final String protocolType)
             throws KiemInitializationException {
         String type = this.getProperties()[PROP_CONNECTION_TYPE].getValue();
         try {

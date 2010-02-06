@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**
@@ -117,7 +116,7 @@ public class KepProtocol extends CommunicationProtocol {
      *            underlying connection protocol to be used; this protocol instance is expected to
      *            be already initialized
      */
-    public KepProtocol(final IConnectionProtocol connectionProtocol) {
+    public KepProtocol(final IConnection connectionProtocol) {
         super(connectionProtocol);
     }
 

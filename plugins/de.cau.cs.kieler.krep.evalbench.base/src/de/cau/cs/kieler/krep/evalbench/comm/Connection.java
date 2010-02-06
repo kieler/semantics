@@ -20,7 +20,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 /**
  * Abstract superclass for connection protocols that use input and output streams.
@@ -29,7 +28,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  * 
  * @author msp, ctr
  */
-public abstract class ConnectionProtocol implements IConnectionProtocol {
+public abstract class Connection implements IConnection {
 
     /** Timeout in ms for rather short waiting. */
     private static final long SHORT_TIMEOUT = 100;

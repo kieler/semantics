@@ -27,7 +27,6 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrInstruction;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrSigWatchInstruction;
 import de.cau.cs.kieler.krep.evalbench.program.kep.Emit;
@@ -160,7 +159,7 @@ public class KepAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String canExecute(final Config c) {
+    public String canExecute(final IConfig c) {
         if (!c.isKEP()) {
             return "wrong processor";
         }
@@ -199,7 +198,7 @@ public class KepAssembler implements IAssembler {
      * {@inheritDoc}
      * 
      */
-    public String[] getObj(final Config c) {
+    public String[] getObj(final IConfig c) {
         LinkedList<String> obj = new LinkedList<String>();
         if (instructions != null) {
             for (final Instruction i : instructions) {

@@ -21,7 +21,7 @@ package de.cau.cs.kieler.krep.evalbench.program;
  * @author ctr
  * 
  */
-public class KepConfig implements Config {
+public class KepConfig implements IConfig {
 
     /**
      * @return the type

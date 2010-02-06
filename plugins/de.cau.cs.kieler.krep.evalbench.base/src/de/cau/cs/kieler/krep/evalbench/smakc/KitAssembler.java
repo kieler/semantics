@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.program;
+package de.cau.cs.kieler.krep.evalbench.smakc;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,8 +26,10 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.helpers.Tracer;
+import de.cau.cs.kieler.krep.evalbench.program.IConfig;
+import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 
 /**
  * Assembler for Safe State Machines in the Kit format. This is mainly a wrapper for KepAssembler,
@@ -160,7 +162,7 @@ public class KitAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String canExecute(final Config c) {
+    public String canExecute(final IConfig c) {
         if (!c.isKEP()) {
             return "wrong processor";
         }
@@ -190,7 +192,7 @@ public class KitAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String[] getObj(final Config c) {
+    public String[] getObj(final IConfig c) {
         return kasm.getObj(c);
     }
 

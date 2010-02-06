@@ -38,7 +38,6 @@ import de.cau.cs.kieler.krep.editors.klp.klp.SetPC;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
 
 /**
@@ -157,9 +156,9 @@ public class KlpAssembler implements IAssembler {
         } else if (instruction instanceof Jmp) {
             Jmp i = (Jmp) instruction;
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
-            setOpcode(i, Opcode.JMP.getCode(), i.getLabel().getAddr() >> Config.BYTE_LEN, i
+            setOpcode(i, Opcode.JMP.getCode(), i.getLabel().getAddr() >> IConfig.BYTE_LEN, i
                     .getLabel().getAddr()
-                    & Config.BYTE_MASK, 0);
+                    & IConfig.BYTE_MASK, 0);
         } else if (instruction instanceof Move) {
             Move i = (Move) instruction;
             setRegs(i.getTo(), regs);
@@ -271,8 +270,8 @@ public class KlpAssembler implements IAssembler {
             break;
         }
         i.setOpcode3(getOpcode(i.getReg()));
-        i.setOpcode1(i.getLabel().getAddr() >> Config.BYTE_LEN);
-        i.setOpcode2(i.getLabel().getAddr() & Config.BYTE_MASK);
+        i.setOpcode1(i.getLabel().getAddr() >> IConfig.BYTE_LEN);
+        i.setOpcode2(i.getLabel().getAddr() & IConfig.BYTE_MASK);
     }
 
     private void setOpcode(final Binop i) {
@@ -436,11 +435,11 @@ public class KlpAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String canExecute(final Config c) {
-        if (!(c instanceof KrepConfig)) {
+    public String canExecute(final IConfig c) {
+        if (!(c instanceof KlpConfig)) {
             return "wrong processor";
         }
-        final KrepConfig k = (KrepConfig) c;
+        final KlpConfig k = (KlpConfig) c;
         if (k.getIo() < inputs.size() || k.getIo() < outputs.size()) {
             return "not enough IO";
         }
@@ -597,7 +596,7 @@ public class KlpAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public String[] getObj(final Config c) {
+    public String[] getObj(final IConfig c) {
         int j = 0;
         LinkedList<String> obj = new LinkedList<String>();
 
