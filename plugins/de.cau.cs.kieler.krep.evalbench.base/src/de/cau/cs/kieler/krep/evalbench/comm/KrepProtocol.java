@@ -27,7 +27,8 @@ import de.cau.cs.kieler.krep.evalbench.program.KlpConfig;
  * Implementation of the communication protocol interface that uses the KREP protocol. Currently,
  * this is only the KLP. The protocol itself is documented in ctr's thesis.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  */

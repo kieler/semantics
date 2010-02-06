@@ -25,7 +25,8 @@ import de.cau.cs.kieler.krep.evalbench.util.EsiLogger;
 /**
  * Wrapper to software simulation of the Kiel Lustre Processor.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

@@ -16,7 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 /**
  * Generic interface for the processors when connected via JNI.
  * 
- * @kieler.rating 2009-12-10 proposed yellow msp
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

@@ -19,7 +19,8 @@ import java.util.LinkedList;
 /**
  * Interface for connection protocol layers like TCP/IP and RS-232.
  * 
- * @kieler.rating 2009-12-10 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

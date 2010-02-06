@@ -23,7 +23,8 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
  * Interface for assemblers that transform assembler files into binary object
  * code.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

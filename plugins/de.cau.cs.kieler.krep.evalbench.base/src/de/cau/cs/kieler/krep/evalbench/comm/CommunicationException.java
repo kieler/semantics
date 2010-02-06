@@ -18,7 +18,8 @@ import de.cau.cs.kieler.core.KielerException;
 /**
  * Exception used by the communication protocols.
  * 
- * @kieler.rating 2009-12-10 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author msp, ctr
  */

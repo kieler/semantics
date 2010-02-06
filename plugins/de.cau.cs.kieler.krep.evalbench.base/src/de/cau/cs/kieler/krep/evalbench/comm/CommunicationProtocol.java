@@ -20,7 +20,8 @@ import java.util.LinkedList;
 /**
  * Abstract class, implements common protocol features.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author msp, ctr
  */

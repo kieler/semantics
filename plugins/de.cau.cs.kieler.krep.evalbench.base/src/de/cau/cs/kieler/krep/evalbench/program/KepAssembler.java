@@ -42,7 +42,8 @@ import de.cau.cs.kieler.krep.evalbench.program.kep.parser.kepParser;
  * externally defined compiler to transform KEP assembler files into object code, before reading
  * them.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

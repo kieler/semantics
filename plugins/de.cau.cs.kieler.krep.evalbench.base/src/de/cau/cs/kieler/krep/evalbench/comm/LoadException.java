@@ -18,7 +18,8 @@ import de.cau.cs.kieler.core.KielerException;
 /**
  * Exception that is thrown while downloading a program onto a processor.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * */

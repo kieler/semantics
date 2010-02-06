@@ -16,7 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 /**
  * Listener for communication events which occur when data is sent or received.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

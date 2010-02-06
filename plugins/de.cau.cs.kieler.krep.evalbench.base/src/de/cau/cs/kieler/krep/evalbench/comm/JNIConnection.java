@@ -20,7 +20,8 @@ import de.cau.cs.kieler.krep.evalbench.util.EsiLogger;
 /**
  * Connection to software emulation of the processor via java native interfaces.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

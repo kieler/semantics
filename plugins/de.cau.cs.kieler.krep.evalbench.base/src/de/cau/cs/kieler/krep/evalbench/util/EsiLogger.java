@@ -22,7 +22,8 @@ import java.io.IOException;
  * Log communication with the processor to an esi trace file. This can be used for debugging of the
  * processor in E-Studio.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

@@ -26,23 +26,16 @@ import java.util.StringTokenizer;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 /**
- * Interface to external assembler to generate object code from the KEP assembler file.
+ * Read generated KEP lst file, which generated externally, eg, by kasm2kepe.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  */
-public final class KasmAssembler implements IAssembler {
+public final class LstAssembler implements IAssembler {
 
-    /** External command to use for assembler execution (default value). */
-    public static final String KASM2KLST = "/home/esterel/kep/Misc/scripts/kasm2klst";
-
-    /** Parameter to use for KEP - Esterel. */
-    public static final String S_KEPE = "kepe";
-
-    /** Parameter to use for KEP - VHDL. */
-    public static final String S_KEPV = "kepv";
-
+  
     /** Internal list of input signals. */
     private final LinkedList<Signal> inputs;
 
@@ -63,7 +56,7 @@ public final class KasmAssembler implements IAssembler {
     /**
      * Creates a new external assembler instance.
      */
-    public KasmAssembler() {
+    public LstAssembler() {
         inputs = new LinkedList<Signal>();
         outputs = new LinkedList<Signal>();
         signalIndex = new HashMap<String, Integer>();

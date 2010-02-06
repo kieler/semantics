@@ -23,7 +23,8 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  * Implementation of the communication protocol interface that uses the KEP protocol.
  * For details on the processors see Xin's or Malte's theses.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp
  */

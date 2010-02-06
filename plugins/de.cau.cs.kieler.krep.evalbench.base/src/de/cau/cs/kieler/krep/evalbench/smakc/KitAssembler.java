@@ -35,7 +35,8 @@ import de.cau.cs.kieler.krep.evalbench.program.ParseException;
  * Assembler for Safe State Machines in the Kit format. This is mainly a wrapper for KepAssembler,
  * into which SSMs are compiled.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  * 

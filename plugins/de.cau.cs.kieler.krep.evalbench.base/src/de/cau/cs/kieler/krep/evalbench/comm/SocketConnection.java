@@ -23,7 +23,8 @@ import java.net.Socket;
 /**
  * Connection that uses sockets from <code>java.net</code>.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

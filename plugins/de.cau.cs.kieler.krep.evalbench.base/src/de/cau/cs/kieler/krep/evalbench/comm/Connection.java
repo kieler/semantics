@@ -24,7 +24,8 @@ import java.util.LinkedList;
 /**
  * Abstract superclass for connection protocols that use input and output streams.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

@@ -19,7 +19,8 @@ import java.util.HashMap;
 /**
  * Pure or valued signal for the synchronous signal model.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

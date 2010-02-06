@@ -22,7 +22,8 @@ import java.util.LinkedList;
  * Superclass for all assembler instructions. This includes same basic code for displaying an
  * instruction and to convert it into object code.
  * 
- * @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr abstract
  * 

@@ -23,7 +23,8 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  * Interface for communication protocol layers used between the common layer and connection
  * protocols.
  * 
- * @kieler.rating 2009-12-10 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author msp, ctr
  */

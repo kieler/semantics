@@ -16,7 +16,8 @@ package de.cau.cs.kieler.krep.evalbench.program;
 /**
  *  Configuration of the different processors.
  *  
- *  @kieler.rating 2010-01-28 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp
  * 
  * @author ctr
  */
