@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Lustre "not" operator.
@@ -86,7 +86,7 @@ public class Not extends Expression {
             final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.Not(getName(), eq.getExpr()));
+                new de.cau.cs.kieler.krep.compiler.ceq.NotExpression(getName(), eq.getExpr()));
 
     }
 

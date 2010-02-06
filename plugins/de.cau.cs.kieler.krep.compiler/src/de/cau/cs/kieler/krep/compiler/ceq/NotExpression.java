@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.IBinOp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
+import de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * A boolean not.
@@ -31,7 +31,7 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
  *   
  * @author ctr
  */
-public class Not extends Expression {
+public class NotExpression extends Expression {
     private Expression expr;
 
     /**
@@ -40,7 +40,7 @@ public class Not extends Expression {
      * @param e
      *            sub-expression that is negated
      */
-    public Not(final String name, final Expression e) {
+    public NotExpression(final String name, final Expression e) {
         super(name);
         this.expr = e;
     }
@@ -69,7 +69,7 @@ public class Not extends Expression {
             expr = expr.flatten(name, vars, es);
             Variable t = Variable.getTemp(name, expr.getType());
             es.add(expr);
-            return new Not(t.getName(), new VarAccess(t, false));
+            return new NotExpression(t.getName(), new VarAccessExpression(t, false));
         }
     }
 
@@ -79,17 +79,17 @@ public class Not extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(final Variable r) {
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
-        if (!(expr instanceof VarAccess)) {
+    public LinkedList<AbstractInstruction> toKlp(final Variable r) {
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
+        if (!(expr instanceof VarAccessExpression)) {
             // Variable v = Variable.getTemp(name, e.getType());
             // VarAccess va = new VarAccess(v, false);
             instr.addAll(expr.toKlp(r));
-            instr.add(new IBinOp(r, new Read(new VarAccess(r, false)), 1, Operator.XOR));
+            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false)), 1, Operator.XOR));
             // System.err.println("Non trivial not:" + e.toString());
         } else {
-            VarAccess v = (VarAccess) expr;
-            instr.add(new IBinOp(r, new Read(v), 1, Operator.XOR));
+            VarAccessExpression v = (VarAccessExpression) expr;
+            instr.add(new IBinOpInstruction(r, new RegAccess(v), 1, Operator.XOR));
         }
         return instr;
     }
@@ -106,21 +106,21 @@ public class Not extends Expression {
     }
 
     @Override
-    public Const propagateConst(final HashMap<String, Const> con) {
-        Const c = expr.propagateConst(con);
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
+        ConstExpression c = expr.propagateConst(con);
         if (c == null) {
             return null;
         } else {
-            return new Const(c.getName(), c.getVal() == 0 ? 1 : 0);
+            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0);
         }
     }
 
     @Override
     public Expression staticEval() {
         expr = expr.staticEval();
-        if (expr instanceof Const) {
-            Const c = (Const) expr;
-            return new Const(c.getName(), c.getVal() == 0 ? 1 : 0);
+        if (expr instanceof ConstExpression) {
+            ConstExpression c = (ConstExpression) expr;
+            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0);
         } else {
             return this;
         }
@@ -134,7 +134,7 @@ public class Not extends Expression {
 
     @Override
     public int wcrt() {
-        if (expr instanceof VarAccess) {
+        if (expr instanceof VarAccessExpression) {
             return 1;
         } else {
             return 1 + expr.wcrt();

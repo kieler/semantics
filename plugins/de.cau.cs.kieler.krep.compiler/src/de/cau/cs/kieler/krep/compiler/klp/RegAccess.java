@@ -11,11 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
-import de.cau.cs.kieler.krep.compiler.ceq.VarAccess;
+import de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Reading access to a register. Can read either previous or current value.
@@ -24,7 +24,7 @@ import de.cau.cs.kieler.krep.compiler.helper.Type;
  * 
  * @author ctr 
  */
-public class Read {
+public class RegAccess {
     private Variable var;
 
     private boolean pre;
@@ -35,7 +35,7 @@ public class Read {
      * @param isPre
      *            true if previous value should be read
      */
-    public Read(final Variable v, final boolean isPre) {
+    public RegAccess(final Variable v, final boolean isPre) {
         super();
         this.pre = isPre;
         this.var = v;
@@ -45,7 +45,7 @@ public class Read {
      * @param v
      *            CEQ access to a variable
      */
-    public Read(final VarAccess v) {
+    public RegAccess(final VarAccessExpression v) {
         super();
         this.pre = v.isPre();
         this.var = Variable.get(v.getName());

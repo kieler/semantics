@@ -17,13 +17,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
+import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.DoneInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * A clocked equation, consisting of a name, a initial expression, a runtime expression, and a
@@ -194,23 +194,23 @@ public class Equation {
      *            list of all used variables
      * @return list ofKLP instructions to compute the value
      */
-    public LinkedList<Instruction> toKlp(final boolean useClocks, final String scope,
+    public LinkedList<AbstractInstruction> toKlp(final boolean useClocks, final String scope,
             final HashMap<String, Variable> vars) {
         Debug.low("to KLP: " + name);
         Debug.low(toString());
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
         LinkedList<Expression> es = new LinkedList<Expression>();
         // generate labels
-        Label l = Label.get(name + scope);
-        Label lInit = Label.get(name + "_init" + scope);
-        Label lRun = Label.get(name + "_run" + scope);
-        Label lDone = Label.get(name + "_done" + scope);
+        LabelInstruction l = LabelInstruction.get(name + scope);
+        LabelInstruction lInit = LabelInstruction.get(name + "_init" + scope);
+        LabelInstruction lRun = LabelInstruction.get(name + "_run" + scope);
+        LabelInstruction lDone = LabelInstruction.get(name + "_done" + scope);
 
         // init code
         instr.add(l);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmp(CJmp.Cond.T, new Read(Variable.get(clock), false), lInit));
-            instr.add(new Done(l));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(Variable.get(clock), false), lInit));
+            instr.add(new DoneInstruction(l));
             instr.add(lInit);
         }
         if (initialize != null) {
@@ -220,11 +220,11 @@ public class Equation {
             }
             instr.addAll(initialize.toKlp(Variable.get(name)));
             es.clear();
-            instr.add(new Done(lRun));
+            instr.add(new DoneInstruction(lRun));
         }
         instr.add(lRun);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmp(CJmp.Cond.F, new Read(Variable.get(clock), false), lDone));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(Variable.get(clock), false), lDone));
         }
         for (Expression e : es) {
             instr.addAll(e.toKlp(Variable.get(e.getName())));
@@ -249,9 +249,9 @@ public class Equation {
      *            constant values.
      * @return propagate constant values
      */
-    public Const propagateConst(final HashMap<String, Const> con) {
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
         Debug.low("propagate const");
-        Const cInit = null;
+        ConstExpression cInit = null;
         if (initialize != null) {
             cInit = initialize.propagateConst(con);
             if (cInit != null) {
@@ -259,7 +259,7 @@ public class Equation {
             }
         }
 
-        Const c = expression.propagateConst(con);
+        ConstExpression c = expression.propagateConst(con);
         if (c == null) {
             return null;
         } else {

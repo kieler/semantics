@@ -27,8 +27,8 @@ import org.apache.commons.cli.ParseException;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Compile ec file intoclock equations and write them again as Lustre (or ec) files.

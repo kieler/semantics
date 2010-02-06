@@ -11,35 +11,35 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 /**
- * Comment inside the klp program.
+ * 
+ * Prio statement to change the priority of a thread.
  * 
  * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
- * 
+ *
  */
-public class Comment extends Instruction {
+public class PrioInstruction extends AbstractInstruction {
 
-    private String comment;
-    
+    private int prio;
+    private String reg;
+
     /**
-     * @param com to add for this program part.
+     * 
+     * @param register associated with the thread thats priority is changed
+     * @param priority new priority
      */
-    public Comment(final String com) {
-        this.comment = com;
+    public PrioInstruction(final String register, final int priority) {
+        this.reg = register;
+        this.prio = priority;
     }
 
     @Override
     public String toString() {
-        return "";
-    }
-
-    @Override
-    public String getComment() {
-        return "# " + comment;
+        return "  PRIO " + reg + " " + prio;
     }
 
 }

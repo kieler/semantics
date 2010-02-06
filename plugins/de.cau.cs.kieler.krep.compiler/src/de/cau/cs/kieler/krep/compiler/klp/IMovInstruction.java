@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 
@@ -22,7 +22,7 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable;
  * 
  * @author ctr
  */
-public class IMov extends Instruction {
+public class IMovInstruction extends AbstractInstruction {
 
     private Variable to;
     private int value;
@@ -35,7 +35,7 @@ public class IMov extends Instruction {
      * @param val
      *            constant value to move
      */
-    public IMov(final Variable toVar, final int val) {
+    public IMovInstruction(final Variable toVar, final int val) {
         this.to = toVar;
         this.value = val; 
     }
@@ -48,7 +48,7 @@ public class IMov extends Instruction {
      * @param val
      *            constant value to move
      */
-    public IMov(final Variable toVar, final boolean val) {
+    public IMovInstruction(final Variable toVar, final boolean val) {
         this.to = toVar;
         this.value = val ? 1 : 0;
     }

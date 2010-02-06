@@ -18,12 +18,12 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Comment;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.DeclareReg;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.InitReg;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
+import de.cau.cs.kieler.krep.compiler.klp.CommentInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.DeclareRegInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.InitRegInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
 
 /**
  * Implement automaton as part of clocked equations. An automaton contains other automata and
@@ -102,8 +102,8 @@ public class Automaton {
      *            minimal priority that can be used
      * @return klp assembler that implements the automaton
      */
-    public LinkedList<Instruction> compile(final int prioOffset) {
-        LinkedList<Instruction> res = new LinkedList<Instruction>();
+    public LinkedList<AbstractInstruction> compile(final int prioOffset) {
+        LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
         HashMap<String, State> name2state = new HashMap<String, State>();
         for (State s : states) {
             name2state.put(s.getName(), s);
@@ -111,14 +111,14 @@ public class Automaton {
 
         // Controller
         for (State s : states) {
-            res.add(Label.get(name + "_" + s.getName()));
+            res.add(LabelInstruction.get(name + "_" + s.getName()));
             res.getLast().setComment("Controller for state " + s.getName());
             res.addAll(s.compileCtrl(name, name2state, prioOffset));
         }
 
         // State Body
         for (State s : states) {
-            res.add(new Comment("Equations inside " + s.getName()));
+            res.add(new CommentInstruction("Equations inside " + s.getName()));
             res.addAll(s.compileBody());
         }
 
@@ -168,14 +168,14 @@ public class Automaton {
      *            minimal priority that can be used.
      * @return Klp instructions to initialize the register required by the automaton
      */
-    public LinkedList<Instruction> compileInit(final boolean setInputs, final boolean setOutputs,
+    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs, final boolean setOutputs,
             final int prioOffset) {
-        LinkedList<Instruction> res = new LinkedList<Instruction>();
+        LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
         if (setInputs) {
-            res.add(new DeclareReg(name, Kind.LOCAL));
-            res.add(new InitReg(name, Kind.LOCAL, name + "_" + initial.getName(), null));
+            res.add(new DeclareRegInstruction(name, Kind.LOCAL));
+            res.add(new InitRegInstruction(name, Kind.LOCAL, name + "_" + initial.getName(), null));
         }
-        res.add(new Prio(name, initial.getMaxPrio()));
+        res.add(new PrioInstruction(name, initial.getMaxPrio()));
         res.addAll(initial.compileInit(setInputs, setOutputs, prioOffset));
         return res;
     }

@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * CEQ binary operations, this includes comparison, arithmetic and logical operators.
@@ -31,7 +31,7 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
  *   
  * @author ctr
  */
-public class BinOp extends Expression {
+public class BinOpExpression extends Expression {
     private Expression e1, e2;
 
     private Operator op;
@@ -48,7 +48,7 @@ public class BinOp extends Expression {
      * @param operator
      *            Operator
      */
-    public BinOp(final String name, final Expression expr1, final Expression expr2,
+    public BinOpExpression(final String name, final Expression expr1, final Expression expr2,
             final Operator operator) {
         super(name);
         this.e1 = expr1;
@@ -80,7 +80,7 @@ public class BinOp extends Expression {
             Expression expr = e1.flatten(name, vars, es);
             Variable v = Variable.getTemp(name, e1.getType());
             vars.put(v.getName(), v);
-            VarAccess t = new VarAccess(v, false);
+            VarAccessExpression t = new VarAccessExpression(v, false);
             expr.setName(t.getName());
             Debug.low("flatten: " + expr.toString() + "->" + t.getName());
             es.add(expr);
@@ -90,7 +90,7 @@ public class BinOp extends Expression {
             Expression expr = e2.flatten(name, vars, es);
             Variable v = Variable.getTemp(name, e2.getType());
             vars.put(v.getName(), v);
-            VarAccess t = new VarAccess(v, false);
+            VarAccessExpression t = new VarAccessExpression(v, false);
             expr.setName(t.getName());
             es.add(expr);
             e2 = t;
@@ -137,53 +137,53 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(final Variable r) {
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
-        VarAccess v1 = null, v2 = null;
-        Const c1 = null, c2 = null;
-        if (e1 instanceof VarAccess) {
-            v1 = (VarAccess) e1;
-        } else if (e1 instanceof Const) {
-            c1 = (Const) e1;
+    public LinkedList<AbstractInstruction> toKlp(final Variable r) {
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
+        VarAccessExpression v1 = null, v2 = null;
+        ConstExpression c1 = null, c2 = null;
+        if (e1 instanceof VarAccessExpression) {
+            v1 = (VarAccessExpression) e1;
+        } else if (e1 instanceof ConstExpression) {
+            c1 = (ConstExpression) e1;
         }
-        if (e2 instanceof VarAccess) {
-            v2 = (VarAccess) e2;
-        } else if (e2 instanceof Const) {
-            c2 = (Const) e2;
+        if (e2 instanceof VarAccessExpression) {
+            v2 = (VarAccessExpression) e2;
+        } else if (e2 instanceof ConstExpression) {
+            c2 = (ConstExpression) e2;
         }
 
         if (v1 != null && v2 != null) {
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(v1),
-                    new Read(v2), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(v1),
+                    new RegAccess(v2), op));
         } else if (v1 != null && c2 != null) {
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.IBinOp(r, new Read(v1),
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r, new RegAccess(v1),
                     c2.getVal(), op));
         } else if (c1 != null && v2 != null) {
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.IMov(r, c1.getVal()));
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(r,
-                    false), new Read(v2), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.IMovInstruction(r, c1.getVal()));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(r,
+                    false), new RegAccess(v2), op));
         } else if (v1 != null) {
             instr.addAll(e2.toKlp(r));
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(v1),
-                    new Read(r, false), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(v1),
+                    new RegAccess(r, false), op));
         } else if (v2 != null) {
             instr.addAll(e1.toKlp(r));
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(r,
-                    false), new Read(v2), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(r,
+                    false), new RegAccess(v2), op));
         } else if (c2 != null) {
             instr.addAll(e1.toKlp(r));
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.IBinOp(r, new Read(r,
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r, new RegAccess(r,
                     false), c2.getVal(), op));
         } else {
             Variable var1 = Variable.getTemp(getName(), e1.getType());
-            VarAccess temp1 = new VarAccess(var1, false);
+            VarAccessExpression temp1 = new VarAccessExpression(var1, false);
             instr.addAll(e1.toKlp(var1));
             Variable var2 = Variable.getTemp(getName(), e2.getType());
-            VarAccess temp2 = new VarAccess(var2, false);
+            VarAccessExpression temp2 = new VarAccessExpression(var2, false);
             instr.addAll(e2.toKlp(var2));
 
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(temp1),
-                    new Read(temp2), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(temp1),
+                    new RegAccess(temp2), op));
             Variable.destroyTemp(getName());
             Variable.destroyTemp(getName());
         }
@@ -203,9 +203,9 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Const propagateConst(final HashMap<String, Const> con) {
-        Const c1 = e1.propagateConst(con);
-        Const c2 = e2.propagateConst(con);
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
+        ConstExpression c1 = e1.propagateConst(con);
+        ConstExpression c2 = e2.propagateConst(con);
         if (c1 != null) {
             e1 = c1;
         }
@@ -213,7 +213,7 @@ public class BinOp extends Expression {
             e2 = c2;
         }
         if (c1 != null && c2 != null) {
-            return new Const(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
         }
         return null;
 
@@ -222,18 +222,18 @@ public class BinOp extends Expression {
     @Override
     public Expression staticEval() {
         Expression res;
-        Const c1 = null;
-        Const c2 = null;
+        ConstExpression c1 = null;
+        ConstExpression c2 = null;
         e1 = e1.staticEval();
         e2 = e2.staticEval();
-        if (e1 instanceof Const) {
-            c1 = (Const) e1;
+        if (e1 instanceof ConstExpression) {
+            c1 = (ConstExpression) e1;
         }
-        if (e2 instanceof Const) {
-            c2 = (Const) e2;
+        if (e2 instanceof ConstExpression) {
+            c2 = (ConstExpression) e2;
         }
         if (c1 != null && c2 != null) {
-            return new Const(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
         } else if (c1 != null) {
             switch (op) {
             case ADD:
@@ -327,17 +327,17 @@ public class BinOp extends Expression {
     @Override
     public int wcrt() {
         int res = 1;
-        VarAccess v1 = null, v2 = null;
-        Const c1 = null, c2 = null;
-        if (e1 instanceof VarAccess) {
-            v1 = (VarAccess) e1;
-        } else if (e1 instanceof Const) {
-            c1 = (Const) e1;
+        VarAccessExpression v1 = null, v2 = null;
+        ConstExpression c1 = null, c2 = null;
+        if (e1 instanceof VarAccessExpression) {
+            v1 = (VarAccessExpression) e1;
+        } else if (e1 instanceof ConstExpression) {
+            c1 = (ConstExpression) e1;
         }
-        if (e2 instanceof VarAccess) {
-            v2 = (VarAccess) e2;
-        } else if (e2 instanceof Const) {
-            c2 = (Const) e2;
+        if (e2 instanceof VarAccessExpression) {
+            v2 = (VarAccessExpression) e2;
+        } else if (e2 instanceof ConstExpression) {
+            c2 = (ConstExpression) e2;
         }
 
         if (v1 != null && v2 != null) {

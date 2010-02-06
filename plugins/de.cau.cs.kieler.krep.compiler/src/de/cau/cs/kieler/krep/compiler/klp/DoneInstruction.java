@@ -11,40 +11,29 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.helper;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 /**
- * Basic types used in Lustre, CEQs and KLP.
+ * Done instruction to indicate the end of the tick.
  * 
-  * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
  */
-public enum Type {
+public class DoneInstruction extends AbstractInstruction {
+
+    private LabelInstruction label;
+
     /**
-     * integer values (32 Bit).
+     * @param l
+     *            label from where to start in the next tick
      */
-    INT,
-    /**
-     * boolean values.
-     */
-    BOOL,
-    /**
-     * double values (32 Bit).
-     */
-    REAL;
+    public DoneInstruction(final LabelInstruction l) {
+        this.label = l;
+    }
 
     @Override
     public String toString() {
-        switch (this) {
-        case INT:
-            return "int";
-        case BOOL:
-            return "bool";
-        case REAL:
-            return "real";
-        }
-        return "";
+        return "  " + "DONE" + "\t" + label.getName();
     }
 }

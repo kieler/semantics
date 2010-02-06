@@ -18,11 +18,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Mov;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.MovInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 
 /**
@@ -34,7 +34,7 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 * 
  * @author ctr
  */
-public class VarAccess extends Expression {
+public class VarAccessExpression extends Expression {
 
     private Variable var;
     private int pre;
@@ -47,7 +47,7 @@ public class VarAccess extends Expression {
      * @param previous
      *            access current or previous value
      */
-    public VarAccess(final Variable v, final boolean previous) {
+    public VarAccessExpression(final Variable v, final boolean previous) {
         super(v.getName());
         this.var = v;
         this.pre = previous ? 1 : 0;
@@ -94,9 +94,9 @@ public class VarAccess extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(final Variable to) {
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
-        instr.add(new Mov(to, new Read(this)));
+    public LinkedList<AbstractInstruction> toKlp(final Variable to) {
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
+        instr.add(new MovInstruction(to, new RegAccess(this)));
         return instr;
     }
 
@@ -127,7 +127,7 @@ public class VarAccess extends Expression {
     }
 
     @Override
-    public Const propagateConst(final HashMap<String, Const> con) {
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
         return con.get(getName());
     }
 

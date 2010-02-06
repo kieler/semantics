@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 /**
  *  Uncondintional jump.
@@ -20,15 +20,15 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
  * 
  * @author ctr
  */
-public class Jmp extends Instruction {
+public class JmpInstruction extends AbstractInstruction {
 
-    private Label label;
+    private LabelInstruction label;
 
     /**
      * @param l
      *            label to jump to
      */
-    public Jmp(final Label l) {
+    public JmpInstruction(final LabelInstruction l) {
         this.label = l;
     }
 

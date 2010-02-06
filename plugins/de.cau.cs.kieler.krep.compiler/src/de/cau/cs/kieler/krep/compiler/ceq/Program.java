@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * CEQ program, eg, a set of CEQ equation and Safe State Machines plus information on inputs and
@@ -168,17 +168,43 @@ public class Program {
     }
 
     /**
+     * 
      * @return Lustre code for the program
      */
     public String toLustre() {
-        // LinkedList<Variable> local = new LinkedList<Variable>();
         for (Variable v : getVars().values()) {
             if (!v.isInput() && !v.isOutput() && !getLocals().contains(v)) {
                 getLocals().add(v);
             }
         }
 
-        return Ceq.toLustre(getName(), getInputs(), getOutputs(), getLocals(), getEqs(), getSsms());
+        StringBuffer res = new StringBuffer("node " + name + " (\n");
+        for (final Variable v : inputs) {
+            res.append("    " + v.toString() + ";\n");
+        }
+        res.append(") returns (\n");
+        for (final Variable v : outputs) {
+            res.append("    " + v.toString() + ";\n");
+        }
+        res.append(");\n");
+        if (!locals.isEmpty()) {
+            res.append("var\n");
+            for (final Variable v : locals) {
+                res.append("    " + v.toString() + ";\n");
+            }
+        }
+        res.append("let\n");
+        for (final Equation eq : eqs) {
+            res.append("  " + eq.toString());
+        }
+        res.append("\n");
+
+        for (final Automaton ssm : ssms) {
+            res.append(ssm.toString());
+        }
+        res.append("tel\n");
+        return res.toString();
+        
     }
 
     /**
@@ -194,12 +220,12 @@ public class Program {
      * propagate constant values.
      */
     public void propagateConst() {
-        final HashMap<String, Const> con = new HashMap<String, Const>();
+        final HashMap<String, ConstExpression> con = new HashMap<String, ConstExpression>();
         boolean done = false;
         while (!done) {
             done = true;
             for (final Equation e : getEqs()) {
-                final Const c = e.propagateConst(con);
+                final ConstExpression c = e.propagateConst(con);
                 if (c != null && !con.containsKey(e.getName())) {
                     con.put(e.getName(), c);
                     done = false;
@@ -215,7 +241,7 @@ public class Program {
             if (con.containsKey(e.getName()) && !out.contains(e.getName())) {
                 getVars().remove(e.getName());
             } else {
-                Const c = con.get(e.getClock());
+                ConstExpression c = con.get(e.getClock());
                 if (c != null) {
                     e.setClock(null);
                 }
@@ -291,8 +317,8 @@ public class Program {
         HashMap<String, Variable> equiv = new HashMap<String, Variable>();
         for (Equation e : getEqs()) {
             Expression expr = e.getExpr();
-            if (expr instanceof VarAccess) {
-                VarAccess v = (VarAccess) expr;
+            if (expr instanceof VarAccessExpression) {
+                VarAccessExpression v = (VarAccessExpression) expr;
                 if (e.getClock() == null && e.getInit() == null) {
                     equiv.put(e.getName(), Variable.get(v.getName()));
                     Debug.low("\t" + e.getName() + " = " + v.getName());

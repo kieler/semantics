@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Collections;
 
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Dependency graph of the dataflow program.

@@ -9,12 +9,11 @@ Bundle-ClassPath: compiler.jar,
 Export-Package: de.cau.cs.kieler.krep.compiler.ceq,
  de.cau.cs.kieler.krep.compiler.dependencies,
  de.cau.cs.kieler.krep.compiler.exceptions,
- de.cau.cs.kieler.krep.compiler.helper,
  de.cau.cs.kieler.krep.compiler.klp,
- de.cau.cs.kieler.krep.compiler.klp.instructions,
  de.cau.cs.kieler.krep.compiler.lustre,
  de.cau.cs.kieler.krep.compiler.main,
  de.cau.cs.kieler.krep.compiler.parser,
+ de.cau.cs.kieler.krep.compiler.util,
  org.apache.commons.cli
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian Albrechts Universität zu Kiel

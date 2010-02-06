@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Integer constant in a Lustre program.
@@ -92,7 +92,7 @@ public class Number extends Expression {
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.Const(getName(), value));
+                new de.cau.cs.kieler.krep.compiler.ceq.ConstExpression(getName(), value));
     }
 
     @Override

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 
@@ -22,10 +22,10 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable;
  * 
  * @author ctr 
  */
-public class Mov extends Instruction {
+public class MovInstruction extends AbstractInstruction {
 
     private Variable to;
-    private Read from;
+    private RegAccess from;
 
     /**
      * @param toReg
@@ -33,7 +33,7 @@ public class Mov extends Instruction {
      * @param fromReg
      *            source register
      */
-    public Mov(final Variable toReg, final Read fromReg) {
+    public MovInstruction(final Variable toReg, final RegAccess fromReg) {
         this.to = toReg;
         this.from = fromReg; // new Read(Register.get(v.toString()), pre);
     }

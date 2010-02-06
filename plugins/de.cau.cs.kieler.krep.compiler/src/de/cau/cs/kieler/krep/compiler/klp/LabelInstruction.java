@@ -11,11 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import java.util.HashMap;
 
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Label in the assembler code. Connects names and actual addresses.
@@ -25,9 +25,9 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
  * @author ctr
  * 
  */
-public final class Label extends Instruction {
+public final class LabelInstruction extends AbstractInstruction {
 
-    private static HashMap<String, Label> labels = new HashMap<String, Label>();
+    private static HashMap<String, LabelInstruction> labels = new HashMap<String, LabelInstruction>();
 
     private String label;
 
@@ -36,7 +36,7 @@ public final class Label extends Instruction {
      * @param name
      *            unique identifier of the label
      */
-    private Label(final String name) {
+    private LabelInstruction(final String name) {
         label = name;
     }
 
@@ -45,10 +45,10 @@ public final class Label extends Instruction {
      *            of the label
      * @return Label with this name, if it exists, null otherwise
      */
-    public static Label get(final String name) {
-        Label l = labels.get(name);
+    public static LabelInstruction get(final String name) {
+        LabelInstruction l = labels.get(name);
         if (l == null) {
-            l = new Label(name);
+            l = new LabelInstruction(name);
             labels.put(name, l);
             Debug.low("define label " + name);
         } else {

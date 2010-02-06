@@ -23,9 +23,9 @@ import org.antlr.runtime.CommonTokenStream;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.parser.scadeLexer;
 import de.cau.cs.kieler.krep.compiler.parser.scadeParser;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Representation of a Scade program, this extends a ceq program by a parser for Scade files.

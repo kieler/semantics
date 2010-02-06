@@ -15,9 +15,8 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 
 import java.util.HashMap;
 
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.Klp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * A Variable declaration in CEQ. A variable has a name, a type and a scope, i.e., input output,
@@ -242,7 +241,7 @@ public class Variable {
                 break;
             }
             res += "\t" + name;
-            res += "\t" + Label.get(name).getName();
+            res += "\t" + LabelInstruction.get(name).getName();
             res += "\t" + (clock == null ? "" : clock);
         }
         return res;

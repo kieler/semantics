@@ -25,9 +25,9 @@ import org.antlr.runtime.CommonTokenStream;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
 import de.cau.cs.kieler.krep.compiler.parser.lustreLexer;
 import de.cau.cs.kieler.krep.compiler.parser.lustreParser;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Container class to hold parsed lustre or ec file. Contains methods for type and clock inference.

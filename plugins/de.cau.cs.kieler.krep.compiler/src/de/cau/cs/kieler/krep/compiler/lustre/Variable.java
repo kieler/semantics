@@ -15,7 +15,7 @@ package de.cau.cs.kieler.krep.compiler.lustre;
 
 import java.util.HashMap;
 
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * A Lustre variable. This is used both for declaration and access of a variable.

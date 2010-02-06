@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 /**
  * Conditional Jump.
@@ -21,13 +21,13 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
  * @author ctr 
  * 
  */
-public class CJmp extends Instruction {
+public class CJmpInstruction extends AbstractInstruction {
 
-    private Read reg;
+    private RegAccess reg;
 
     private Cond cond;
 
-    private Label label;
+    private LabelInstruction label;
 
     /**
      * @author ctr Condition on which a jump can be based
@@ -59,7 +59,7 @@ public class CJmp extends Instruction {
      * @param l
      *            label of the target
      */
-    public CJmp(final Cond conditional, final Read read, final Label l) {
+    public CJmpInstruction(final Cond conditional, final RegAccess read, final LabelInstruction l) {
         super();
         this.cond = conditional;
         this.reg = read;

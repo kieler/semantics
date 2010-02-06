@@ -25,9 +25,9 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import de.cau.cs.kieler.krep.compiler.ceq.Klp;
 import de.cau.cs.kieler.krep.compiler.ceq.Scade;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.klp.Klp;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Compile Lustre ec-file to KLP assembler.

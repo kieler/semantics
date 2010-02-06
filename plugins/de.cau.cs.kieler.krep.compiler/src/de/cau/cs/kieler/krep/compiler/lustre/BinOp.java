@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  *  Lustre binary expression this excludes when and ->.
@@ -147,7 +147,7 @@ public class BinOp extends Expression {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
                 Expression.STAGE_INIT, clock, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.BinOp(getName(), eq1.getExpr(), eq2.getExpr(),
+                new de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression(getName(), eq1.getExpr(), eq2.getExpr(),
                         oper));
     }
 

@@ -19,14 +19,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.TempName;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Jmp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
+import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.JmpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
+import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction.Cond;
+import de.cau.cs.kieler.krep.compiler.util.TempName;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Conditional: if e1 then e2 else e3.
@@ -37,7 +37,7 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 * 
  * @author ctr
  */
-public class If extends Expression {
+public class IfExpression extends Expression {
     private Expression expr1, expr2, expr3;
 
     /**
@@ -50,7 +50,7 @@ public class If extends Expression {
      * @param e3
      *            expression for else case
      */
-    public If(final String name, final Expression e1, final Expression e2, final Expression e3) {
+    public IfExpression(final String name, final Expression e1, final Expression e2, final Expression e3) {
         super(name);
         this.expr1 = e1;
         this.expr2 = e2;
@@ -94,23 +94,23 @@ public class If extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(final Variable r) {
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
+    public LinkedList<AbstractInstruction> toKlp(final Variable r) {
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
 
-        Label lElse = Label.get(TempName.get("L"));
-        Label lEnd = Label.get(TempName.get("L"));
-        Read test;
-        if (expr1 instanceof VarAccess) {
-            test = new Read((VarAccess) expr1);
+        LabelInstruction lElse = LabelInstruction.get(TempName.get("L"));
+        LabelInstruction lEnd = LabelInstruction.get(TempName.get("L"));
+        RegAccess test;
+        if (expr1 instanceof VarAccessExpression) {
+            test = new RegAccess((VarAccessExpression) expr1);
         } else {
             Variable v = Variable.getTemp(getName(), Type.BOOL);
             instr.addAll(expr1.toKlp(v));
-            test = new Read(v, false);
+            test = new RegAccess(v, false);
             Variable.destroyTemp(getName());
         }
-        instr.add(new CJmp(Cond.F, test, lElse));
+        instr.add(new CJmpInstruction(Cond.F, test, lElse));
         instr.addAll(expr2.toKlp(r));
-        instr.add(new Jmp(lEnd));
+        instr.add(new JmpInstruction(lEnd));
         instr.add(lElse);
         instr.addAll(expr3.toKlp(r));
         instr.add(lEnd);
@@ -132,10 +132,10 @@ public class If extends Expression {
     }
 
     @Override
-    public Const propagateConst(final HashMap<String, Const> con) {
-        Const c1 = expr1.propagateConst(con);
-        Const c2 = expr2.propagateConst(con);
-        Const c3 = expr3.propagateConst(con);
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
+        ConstExpression c1 = expr1.propagateConst(con);
+        ConstExpression c2 = expr2.propagateConst(con);
+        ConstExpression c3 = expr3.propagateConst(con);
 
         if (c2 != null) {
             expr2 = c2;
@@ -157,8 +157,8 @@ public class If extends Expression {
         expr1 = expr1.staticEval();
         expr2 = expr2.staticEval();
         expr3 = expr3.staticEval();
-        if (expr1 instanceof Const) {
-            Const c = (Const) expr1;
+        if (expr1 instanceof ConstExpression) {
+            ConstExpression c = (ConstExpression) expr1;
             if (c.getVal() != 0) {
                 return expr2;
             } else {

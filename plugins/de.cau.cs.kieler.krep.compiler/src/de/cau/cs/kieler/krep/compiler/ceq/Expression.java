@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Abstract superclass for all ceq Expressions. Note that every sub-expression should have a unique
@@ -36,6 +36,7 @@ public abstract class Expression {
     private String name;
 
     /**
+     * Generate new named expression, the actual expression is defined by the actual subclass.
      * 
      * @param n
      *            name of the expression.
@@ -45,6 +46,7 @@ public abstract class Expression {
     }
 
     /**
+     * Return the inferred type of the expression.
      * 
      * @return type of the current expression
      */
@@ -65,6 +67,11 @@ public abstract class Expression {
      */
     public abstract List<Variable> getDeps();
 
+    /**
+     * Show the expression in Lustre syntax.
+     * 
+     * @return textual description of the expression in Lustre
+     */
     @Override
     public abstract String toString();
 
@@ -107,9 +114,11 @@ public abstract class Expression {
      *            Register to store the result
      * @return list of KLP instructions that compute this expression
      */
-    public abstract LinkedList<Instruction> toKlp(Variable to);
+    public abstract LinkedList<AbstractInstruction> toKlp(Variable to);
 
     /**
+     * get unique name of the expression
+     * 
      * @return name of the expression
      */
     public String getName() {
@@ -117,29 +126,41 @@ public abstract class Expression {
     }
 
     /**
+     * Propagate constant values, ie, replace all occurrences of a variable by a constant.
+     * 
      * @param con
      *            mapping variable to constant values, if they can be evaluated
      * @return a constant when the expression can be completely evaluated
      */
-    public abstract Const propagateConst(HashMap<String, Const> con);
+    public abstract ConstExpression propagateConst(HashMap<String, ConstExpression> con);
 
     /**
+     * Perform static evaluation, remove operations on constant values by the result of the
+     * operation.
+     * 
      * @return evaluate static expressions.
      */
     public abstract Expression staticEval();
 
     /**
+     * Replace a variable by another one. This is useful for Scade programs, where each port
+     * corresponds to one variable, but we want to have one variable per wire.
+     * 
      * @param equiv
      *            list of equivalent variables.
      */
     public abstract void replaceVar(HashMap<String, Variable> equiv);
 
     /**
+     * Compute upper bound for the reaction time.
+     * 
      * @return estimated wcrt for the expression.
      */
     public abstract int wcrt();
 
     /**
+     * Replace each occurrence of a variable by an expression.
+     * 
      * @param var
      *            name of the expression to replace
      * @param expr
@@ -149,6 +170,8 @@ public abstract class Expression {
     public abstract Expression replace(String var, Expression expr);
 
     /**
+     * Set the unique name of the expression.
+     * 
      * @param n
      *            the name to set
      */

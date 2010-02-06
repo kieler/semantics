@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Lustre "if" Expression.
@@ -121,7 +121,7 @@ public class If extends Expression {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq3 = expr3.declock(basename,
                 Expression.STAGE_INIT, c, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.If(getName(), eq1.getExpr(), eq2.getExpr(), eq3
+                new de.cau.cs.kieler.krep.compiler.ceq.IfExpression(getName(), eq1.getExpr(), eq2.getExpr(), eq3
                         .getExpr()));
     }
 

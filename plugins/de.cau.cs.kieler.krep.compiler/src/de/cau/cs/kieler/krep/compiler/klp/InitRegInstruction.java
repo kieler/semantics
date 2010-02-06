@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
@@ -22,7 +22,7 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
  * 
  * @author ctr
  */
-public class InitReg extends Instruction {
+public class InitRegInstruction extends AbstractInstruction {
 
     private String reg;
     private String clock;
@@ -38,7 +38,7 @@ public class InitReg extends Instruction {
      * @param clk
      *            clock of the register
      */
-    public InitReg(final String r, final Kind kind, final String l, final String clk) {
+    public InitRegInstruction(final String r, final Kind kind, final String l, final String clk) {
         this.reg = r;
         this.clock = clk;
         this.label = l;
@@ -48,7 +48,7 @@ public class InitReg extends Instruction {
     public String toString() {
         String res = "  SETPC";
         res += "\t" + reg;
-        res += "\t" + Label.get(label).getName();
+        res += "\t" + LabelInstruction.get(label).getName();
         res += "\n";
         if (clock != null) {
             res += "  SETCLK";

@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Implement the possible immediate access to a Lustre variable.
@@ -98,7 +98,7 @@ public class VarAccess extends Expression {
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
+                new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
                         de.cau.cs.kieler.krep.compiler.ceq.Variable.get(var.getName()), false));
     }
 

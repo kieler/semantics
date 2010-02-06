@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
@@ -24,7 +24,7 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
  * @author ctr
  * 
  */
-public class DeclareReg extends Instruction {
+public class DeclareRegInstruction extends AbstractInstruction {
 
     private String reg;
     private Kind kind;
@@ -35,7 +35,7 @@ public class DeclareReg extends Instruction {
      * @param ioKind
      *            input, output, local
      */
-    public DeclareReg(final String r, final Kind ioKind) {
+    public DeclareRegInstruction(final String r, final Kind ioKind) {
         this.reg = r;
         this.kind = ioKind;
     }

@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Implementation of the when operator.
@@ -119,7 +119,7 @@ public class When extends Expression {
             res.setName(v.getName());
             aux.add(res);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(), null,
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
                             de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), false),
                     cName.getName());
         }

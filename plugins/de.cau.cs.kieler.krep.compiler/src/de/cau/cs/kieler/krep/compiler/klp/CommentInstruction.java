@@ -11,29 +11,35 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 /**
- * Done instruction to indicate the end of the tick.
+ * Comment inside the klp program.
  * 
  * @kieler.rating 2010-01-05 proposed yellow ctr
  * 
  * @author ctr
+ * 
  */
-public class Done extends Instruction {
+public class CommentInstruction extends AbstractInstruction {
 
-    private Label label;
-
+    private String comment;
+    
     /**
-     * @param l
-     *            label from where to start in the next tick
+     * @param com to add for this program part.
      */
-    public Done(final Label l) {
-        this.label = l;
+    public CommentInstruction(final String com) {
+        this.comment = com;
     }
 
     @Override
     public String toString() {
-        return "  " + "DONE" + "\t" + label.getName();
+        return "";
     }
+
+    @Override
+    public String getComment() {
+        return "# " + comment;
+    }
+
 }

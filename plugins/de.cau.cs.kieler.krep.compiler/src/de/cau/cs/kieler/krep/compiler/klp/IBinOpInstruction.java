@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp.instructions;
+package de.cau.cs.kieler.krep.compiler.klp;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
@@ -23,10 +23,10 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
  * 
  * @author ctr
  */
-public class IBinOp extends Instruction {
+public class IBinOpInstruction extends AbstractInstruction {
     private Variable to;
 
-    private Read r1;
+    private RegAccess r1;
 
     private int val;
 
@@ -42,7 +42,7 @@ public class IBinOp extends Instruction {
      * @param operator
      *            operation
      */
-    public IBinOp(final Variable toVar, final Read read, final int c, final Operator operator) {
+    public IBinOpInstruction(final Variable toVar, final RegAccess read, final int c, final Operator operator) {
         super();
         this.to = toVar;
         this.r1 = read;

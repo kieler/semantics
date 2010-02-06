@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Lustre previous expression.
@@ -98,7 +98,7 @@ public class Pre extends Expression {
             VarAccess v = (VarAccess) expr;
 
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
                             de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), true));
         } else {
             System.err.println("internal error: found nested pre");

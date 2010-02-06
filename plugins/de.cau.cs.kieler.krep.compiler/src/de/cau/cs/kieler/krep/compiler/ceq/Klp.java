@@ -11,23 +11,19 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.klp;
+package de.cau.cs.kieler.krep.compiler.ceq;
 
 import java.util.Date;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.compiler.ceq.Automaton;
-import de.cau.cs.kieler.krep.compiler.ceq.Equation;
-import de.cau.cs.kieler.krep.compiler.ceq.Program;
-import de.cau.cs.kieler.krep.compiler.ceq.Variable;
+import de.cau.cs.kieler.krep.compiler.klp.DeclareRegInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.DoneInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.InitRegInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.DeclareReg;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.InitReg;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
 /**
  * Klp assembler, extends a program by the compiler from CEQs into actual klp assembler.
@@ -55,7 +51,7 @@ public class Klp extends Program {
      */
     public static final int N_TEMP = 4;
 
-    private LinkedList<Instruction> instr = new LinkedList<Instruction>();
+    private LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
 
     /**
      * @param name
@@ -86,7 +82,7 @@ public class Klp extends Program {
      *            scope, if the equations is in a state
      * @return klp instructions that implement the program
      */
-    public LinkedList<Instruction> compile(final boolean useHWClocks, final String scope) {
+    public LinkedList<AbstractInstruction> compile(final boolean useHWClocks, final String scope) {
         this.useClocks = useHWClocks;
         init();
 
@@ -104,7 +100,7 @@ public class Klp extends Program {
 
         j++;
         for (Equation e : getEqs()) {
-            Label l = Label.get(e.getName() + "_run" + scope);
+            LabelInstruction l = LabelInstruction.get(e.getName() + "_run" + scope);
 
             // if(!useClocks && e.hasClock()){
             // done = Label.get(e.getName() + "_done" + scope);
@@ -114,7 +110,7 @@ public class Klp extends Program {
             // if(!useClocks && e.hasClock()){
             // instr.add(done);
             // }
-            instr.add(new Done(l));
+            instr.add(new DoneInstruction(l));
         }
 
         for (Automaton a : getSsms()) {
@@ -130,7 +126,7 @@ public class Klp extends Program {
         res.append("# compiled: " + new Date().toString() + "\n");
         // Initialize
         res.append("START:\n");
-        for (Instruction i : compileInit(useClocks, "", true, true, 0)) {
+        for (AbstractInstruction i : compileInit(useClocks, "", true, true, 0)) {
             res.append(i.toString() + "\n");
         }
 
@@ -142,7 +138,7 @@ public class Klp extends Program {
         res.append("\n");
         res.append("  DONE START\n\n");
 
-        for (Instruction i : instr) {
+        for (AbstractInstruction i : instr) {
             res.append(i.toString() + i.getComment() + "\n");
         }
 
@@ -178,12 +174,12 @@ public class Klp extends Program {
      * @param prioOffset minimal priority to use
      * @return klp code to initialize the registers 
      */
-    public LinkedList<Instruction> compileInit(final boolean useHWClocks, final String scope,
+    public LinkedList<AbstractInstruction> compileInit(final boolean useHWClocks, final String scope,
             final boolean setInputs, final boolean setOutputs, final int prioOffset) {
-        LinkedList<Instruction> res = new LinkedList<Instruction>();
+        LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
         if (setInputs) {
             for (Variable v : getInputs()) {
-                res.add(new DeclareReg(v.getName(), Kind.INPUT));
+                res.add(new DeclareRegInstruction(v.getName(), Kind.INPUT));
             }
         }
         for (Equation e : getEqs()) {
@@ -193,11 +189,11 @@ public class Klp extends Program {
                 Debug.high("unknown equation " + e.getName());
             } else {
                 if (setOutputs) {
-                    res.add(new DeclareReg(v.getName(), v.getKind()));
+                    res.add(new DeclareRegInstruction(v.getName(), v.getKind()));
                 }
-                res.add(new InitReg(v.getName(), v.getKind(), v.getName() + scope,
+                res.add(new InitRegInstruction(v.getName(), v.getKind(), v.getName() + scope,
                         useHWClocks ? clock : null));
-                res.add(new Prio(v.getName(), prioOffset + e.getPrio()));
+                res.add(new PrioInstruction(v.getName(), prioOffset + e.getPrio()));
             }
         }
 

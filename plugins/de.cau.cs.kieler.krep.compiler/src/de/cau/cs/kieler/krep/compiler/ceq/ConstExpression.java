@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.IMov;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
+import de.cau.cs.kieler.krep.compiler.klp.IMovInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Constant, can either be an integer number or a boolean.
@@ -30,7 +30,7 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
  *   
  * @author ctr
  */
-public class Const extends Expression {
+public class ConstExpression extends Expression {
     private int val;
     private Type type;
 
@@ -42,7 +42,7 @@ public class Const extends Expression {
      * @param value
      *            integer value
      */
-    public Const(final String name, final int value) {
+    public ConstExpression(final String name, final int value) {
         super(name);
         this.val = value;
         type = Type.INT;
@@ -56,7 +56,7 @@ public class Const extends Expression {
      * @param value
      *            boolean value
      */
-    public Const(final String name, final boolean value) {
+    public ConstExpression(final String name, final boolean value) {
         super(name);
         this.val = value ? 1 : 0;
         type = Type.BOOL;
@@ -89,9 +89,9 @@ public class Const extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(final Variable r) {
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
-        instr.add(new IMov(r, val));
+    public LinkedList<AbstractInstruction> toKlp(final Variable r) {
+        LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
+        instr.add(new IMovInstruction(r, val));
         return instr;
     }
 
@@ -113,7 +113,7 @@ public class Const extends Expression {
     }
 
     @Override
-    public Const propagateConst(final HashMap<String, Const> con) {
+    public ConstExpression propagateConst(final HashMap<String, ConstExpression> con) {
         return this;
     }
 

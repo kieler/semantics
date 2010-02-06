@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
+import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
+import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction.Cond;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * A transition in an Safe State Machine, consitiing of a trigger and a target state.
@@ -73,18 +73,18 @@ public class Transition {
      *            additional suffix to allow uniqe transition names
      * @return klp instructions to implement the transitions
      */
-    public LinkedList<Instruction> compile(final String ssm, final String source,
+    public LinkedList<AbstractInstruction> compile(final String ssm, final String source,
             final String suffix) {
-        LinkedList<Instruction> res = new LinkedList<Instruction>();
-        Read r;
-        if (trigger instanceof VarAccess) {
-            r = new Read((VarAccess) trigger);
+        LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
+        RegAccess r;
+        if (trigger instanceof VarAccessExpression) {
+            r = new RegAccess((VarAccessExpression) trigger);
         } else {
             Variable v = Variable.get(ssm, Kind.LOCAL, Type.BOOL);
             res.addAll(trigger.toKlp(v));
-            r = new Read(v, false);
+            r = new RegAccess(v, false);
         }
-        res.add(new CJmp(Cond.T, r, Label.get(source + "2" + target + suffix)));
+        res.add(new CJmpInstruction(Cond.T, r, LabelInstruction.get(source + "2" + target + suffix)));
         return res;
     }
 

@@ -13,7 +13,9 @@
  */
 
 /**
- * Klp program.
+ * Klp instructions. This is a manually designed abstract syntax tree, 
+ * should be replaced by the klp ecore model.
+ * 
  * @author ctr
  */
 package de.cau.cs.kieler.krep.compiler.klp;

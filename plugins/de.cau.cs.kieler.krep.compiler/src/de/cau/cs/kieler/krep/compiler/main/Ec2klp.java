@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
+import de.cau.cs.kieler.krep.compiler.ceq.Klp;
 import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.klp.Klp;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 

@@ -17,13 +17,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
-import de.cau.cs.kieler.krep.compiler.klp.Klp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Comment;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Jmp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
+import de.cau.cs.kieler.krep.compiler.klp.CommentInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.DoneInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.JmpInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
+import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
 
 /**
  * A state in a Safe State Machine, consisting of a name, a flag whether this is an initial state,
@@ -167,7 +166,7 @@ public class State implements Scope {
     /**
      * @return klp code that implements the body of the state
      */
-    public LinkedList<Instruction> compileBody() {
+    public LinkedList<AbstractInstruction> compileBody() {
         final Klp klp = new Klp(name, content);
         return klp.compile(true, name);
     }
@@ -188,37 +187,37 @@ public class State implements Scope {
      *            minimal priority to use
      * @return klp code that implemenst the controller, ie, checks for abortions
      */
-    public LinkedList<Instruction> compileCtrl(final String ssm,
+    public LinkedList<AbstractInstruction> compileCtrl(final String ssm,
             final HashMap<String, State> states, final int prioOffset) {
-        LinkedList<Instruction> res = new LinkedList<Instruction>();
+        LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
 
-        res.add(new Comment("check strong aborts"));
+        res.add(new CommentInstruction("check strong aborts"));
         for (Transition t : saborts) {
             res.addAll(t.compile(ssm, name, "S"));
         }
-        Instruction i = new Prio(ssm, prioOffset + content.getDepGraph().getMaxPrio() + 1);
+        AbstractInstruction i = new PrioInstruction(ssm, prioOffset + content.getDepGraph().getMaxPrio() + 1);
         i.setComment("Execute state");
         res.add(i);
-        res.add(new Prio(ssm, prioOffset));
-        res.add(new Comment("check weak aborts"));
+        res.add(new PrioInstruction(ssm, prioOffset));
+        res.add(new CommentInstruction("check weak aborts"));
         for (Transition t : waborts) {
             res.addAll(t.compile(ssm, name, "W"));
         }
-        res.add(new Done(Label.get(ssm + "_" + name)));
+        res.add(new DoneInstruction(LabelInstruction.get(ssm + "_" + name)));
 
         for (Transition t : saborts) {
-            Label l = Label.get(name + "2" + t.getTarget() + "S");
+            LabelInstruction l = LabelInstruction.get(name + "2" + t.getTarget() + "S");
             l.setComment("strong abort from " + name + " to " + t.getTarget());
             res.add(l);
             res.addAll(states.get(t.getTarget()).compileInit(false, false, prioOffset + 1));
-            res.add(new Jmp(Label.get(ssm + "_" + t.getTarget())));
+            res.add(new JmpInstruction(LabelInstruction.get(ssm + "_" + t.getTarget())));
         }
         for (Transition t : waborts) {
-            Label l = Label.get(name + "2" + t.getTarget() + "W");
+            LabelInstruction l = LabelInstruction.get(name + "2" + t.getTarget() + "W");
             l.setComment("weak abort from " + name + " to " + t.getTarget());
             res.add(l);
             res.addAll(states.get(t.getTarget()).compileInit(false, false, prioOffset + 1));
-            res.add(new Done(Label.get(ssm + "_" + t.getTarget())));
+            res.add(new DoneInstruction(LabelInstruction.get(ssm + "_" + t.getTarget())));
         }
 
         return res;
@@ -233,7 +232,7 @@ public class State implements Scope {
      *            minimal priority to use
      * @return klp instructions to initialize the used registers
      */
-    public LinkedList<Instruction> compileInit(final boolean setInputs, final boolean setOutputs,
+    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs, final boolean setOutputs,
             final int prioOffset) {
         Klp klp = new Klp(name, content);
         return klp.compileInit(true, name, false, setOutputs, prioOffset);

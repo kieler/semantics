@@ -25,8 +25,8 @@ import org.antlr.runtime.*;
 
 import de.cau.cs.kieler.krep.compiler.ceq.*;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 import java.util.Stack;
 import java.util.List;
@@ -1440,7 +1440,7 @@ public class scadeParser extends Parser {
                 state._fsp--;
 
                 for (String s : (e != null ? e.ids : null)) {
-                    eqs.add(new Equation(s, (e != null ? e.expr : null) == null ? new Const("True",
+                    eqs.add(new Equation(s, (e != null ? e.expr : null) == null ? new ConstExpression("True",
                             1) : (e != null ? e.expr : null)));
 
                 }
@@ -2386,7 +2386,7 @@ public class scadeParser extends Parser {
 
                     state._fsp--;
 
-                    expr = new BinOp(expr.toString(), expr, b, op);
+                    expr = new BinOpExpression(expr.toString(), expr, b, op);
 
                 }
                     break;
@@ -2462,7 +2462,7 @@ public class scadeParser extends Parser {
 
                 state._fsp--;
 
-                expr = new Const("NUMBER", n);
+                expr = new ConstExpression("NUMBER", n);
 
             }
                 break;
@@ -2540,7 +2540,7 @@ public class scadeParser extends Parser {
                 // scade.g:223:7: 'true'
             {
                 match(input, 49, FOLLOW_49_in_bool_atom1646);
-                expr = new Const("TRUE", true);
+                expr = new ConstExpression("TRUE", true);
 
             }
                 break;
@@ -2548,7 +2548,7 @@ public class scadeParser extends Parser {
                 // scade.g:224:7: 'false'
             {
                 match(input, 50, FOLLOW_50_in_bool_atom1660);
-                expr = new Const("False", false);
+                expr = new ConstExpression("False", false);
 
             }
                 break;
@@ -2594,7 +2594,7 @@ public class scadeParser extends Parser {
 
                 state._fsp--;
 
-                expr = new VarAccess(v, false);
+                expr = new VarAccessExpression(v, false);
 
             }
                 break;
@@ -2607,7 +2607,7 @@ public class scadeParser extends Parser {
 
                 state._fsp--;
 
-                expr = new VarAccess(v, true);
+                expr = new VarAccessExpression(v, true);
 
             }
                 break;

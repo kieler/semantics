@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
-import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.helper.Type;
+import de.cau.cs.kieler.krep.compiler.util.Debug;
+import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
  * Initialization of Lustre flows.
@@ -123,7 +123,7 @@ public class Init extends Expression {
             }
             eq1.setName(v.getName());
             aux.add(eq1);
-            eq2.setInit(new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(v, false));
+            eq2.setInit(new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
         }
         if (stage < STAGE_INIT) { // not inside init
             return eq2;
@@ -136,7 +136,7 @@ public class Init extends Expression {
             eq2.setName(v.getName());
             aux.add(eq2);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(v, false));
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
         }
     }
 
