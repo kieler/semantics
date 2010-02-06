@@ -22,7 +22,7 @@ import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
+import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 
 /**
  * Compile Lustre ec-file to KLP assembler.
