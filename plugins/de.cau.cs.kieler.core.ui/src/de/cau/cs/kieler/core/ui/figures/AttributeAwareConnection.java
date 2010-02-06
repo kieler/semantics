@@ -22,7 +22,6 @@ import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
 
 import de.cau.cs.kieler.core.ui.util.ICondition;
 import de.cau.cs.kieler.core.util.Pair;
@@ -35,7 +34,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * @author schm
  * @author msp
  */
-public abstract class AttributeAwareConnection extends PolylineConnectionEx
+public abstract class AttributeAwareConnection extends SplineConnection
         implements IAttributeAwareFigure {
 
     /** Container for source and target decoration. */
