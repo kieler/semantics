@@ -7,6 +7,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITreeBranchEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -16,7 +18,7 @@ import de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticEditPolicy;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeBranchEditPart {
 
@@ -93,14 +95,29 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
     /**
      * Creates figure for this edit part.
      * 
-     * Body of this method does not depend on settings in generation model
-     * so you may safely remove <i>generated</i> tag and modify it.
+     * Body of this method does not depend on settings in generation model so
+     * you may safely remove <i>generated</i> tag and modify it.
      * 
-     * @generated
+     * @generated NOT
      */
 
     protected Connection createConnectionFigure() {
-        Connection figure = new TransitionFigure();
+        final TransitionFigure figure = new TransitionFigure();
+        
+        // TODO better way to listen?
+        Object store = getDiagramPreferencesHint().getPreferenceStore();
+        if (store instanceof IPreferenceStore) {
+            figure.setSplineMode(((IPreferenceStore) store)
+                    .getInt(TransitionFigure.PREF_SPLINE_MODE));
+            ((IPreferenceStore) store).addPropertyChangeListener(new IPropertyChangeListener() {
+                @Override
+                public void propertyChange(org.eclipse.jface.util.PropertyChangeEvent event) {
+                    if (event.getProperty().equals(TransitionFigure.PREF_SPLINE_MODE)) {
+                        figure.setSplineMode((Integer) event.getNewValue());
+                    }
+                }
+            });
+        }
 
         if (figure instanceof IAttributeAwareFigure) {
             ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
