@@ -23,11 +23,12 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Lustre previous expression.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */
-public class Pre extends Expression {
+public class PreExpression extends Expression {
     private Expression expr;
 
     /**
@@ -36,7 +37,7 @@ public class Pre extends Expression {
      * @param e
      *            expression which previous value is computed
      */
-    public Pre(final String name, final Expression e) {
+    public PreExpression(final String name, final Expression e) {
         super(name);
         this.expr = e;
     }
@@ -50,7 +51,7 @@ public class Pre extends Expression {
     public Expression propagatePre(final HashMap<String, Expression> eqs) {
         Variable t = Variable.getTemp("pre_", expr.getType(), null);
         eqs.put(t.getName(), expr);
-        return new Pre(t.getName(), new VarAccess(t));
+        return new PreExpression(t.getName(), new VarAccessExpression(t));
     }
 
     @Override
@@ -94,8 +95,8 @@ public class Pre extends Expression {
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        if (expr instanceof VarAccess) {
-            VarAccess v = (VarAccess) expr;
+        if (expr instanceof VarAccessExpression) {
+            VarAccessExpression v = (VarAccessExpression) expr;
 
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
@@ -109,8 +110,8 @@ public class Pre extends Expression {
     @Override
     public Expression liftClock() {
         expr = expr.liftClock();
-        if (expr instanceof When) {
-            When w = (When) expr;
+        if (expr instanceof WhenExpression) {
+            WhenExpression w = (WhenExpression) expr;
             expr = w.getExpression();
             w.setExpression(this);
             return w;
@@ -122,12 +123,12 @@ public class Pre extends Expression {
 
     @Override
     public Expression extractPre(final HashMap<String, Expression> eqs) {
-        if (expr instanceof VarAccess) {
+        if (expr instanceof VarAccessExpression) {
             return this;
         } else {
             Variable v = Variable.getTemp("pre_", expr.getType(), expr.getClock().getClock());
             eqs.put(v.getName(), expr.extractPre(eqs));
-            expr = new VarAccess(v);
+            expr = new VarAccessExpression(v);
             return this;
         }
     }

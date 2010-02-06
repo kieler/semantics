@@ -31,7 +31,7 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * 
  * @kieler.rating 2010-02-05 yellow 
  *   review by cmot, msp, tam
- *   
+ * 
  * @author ctr
  */
 public class Equation {
@@ -80,12 +80,18 @@ public class Equation {
      * @param id
      *            name of the equation
      * @param expr
-     *            expression to compute the equation.
+     *            expres * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tamsion to compute the equation.
      */
     public Equation(final String id, final Expression expr) {
         this(id, null, expr, null);
     }
 
+    /**
+     * Show the equation in Lustre format: v=init -> current(e when c)
+     * 
+     * @return Lustre equation for the clocked equation.
+     */
     @Override
     public String toString() {
         String res = name + " = ";
@@ -209,7 +215,8 @@ public class Equation {
         // init code
         instr.add(l);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(Variable.get(clock), false), lInit));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(
+                    Variable.get(clock), false), lInit));
             instr.add(new DoneInstruction(l));
             instr.add(lInit);
         }
@@ -224,7 +231,8 @@ public class Equation {
         }
         instr.add(lRun);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(Variable.get(clock), false), lDone));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(
+                    Variable.get(clock), false), lDone));
         }
         for (Expression e : es) {
             instr.addAll(e.toKlp(Variable.get(e.getName())));

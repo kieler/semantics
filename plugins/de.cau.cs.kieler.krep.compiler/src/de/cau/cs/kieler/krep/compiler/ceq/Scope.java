@@ -16,9 +16,10 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 import java.util.LinkedList;
 
 /**
- * Scope of a program. This is either  a complete program or a state.
+ * Scope of a program. This is either a Scade program or a state.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */

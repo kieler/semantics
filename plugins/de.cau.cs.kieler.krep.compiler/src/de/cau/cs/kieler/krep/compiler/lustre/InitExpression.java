@@ -22,39 +22,35 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
- *  Lustre binary expression this excludes when and ->.
+ * Initialization of Lustre flows.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */
-public class BinOp extends Expression {
+public class InitExpression extends Expression {
     private Expression expr1, expr2;
 
-    private final Operator oper;
-
     /**
-     * generate new binary operation.
+     * generate new initial operation.
      * 
      * @param name
      *            of the expression
      * @param e1
-     *            first expression
+     *            initial expression
      * @param e2
-     *            second expresssion
-     * @param op
-     *            operator to combine them
+     *            runtime expression
      */
-    public BinOp(final String name, final Expression e1, final Expression e2, final Operator op) {
+    public InitExpression(final String name, final Expression e1, final Expression e2) {
         super(name);
-        this.oper = op;
         this.expr1 = e1;
         this.expr2 = e2;
     }
 
     @Override
     public String toString() {
-        return "(" + expr1.toString() + " " + oper.toString() + " " + expr2.toString() + ")";
+        return "(" + expr1.toString() + " -> " + expr2.toString() + ")";
     }
 
     @Override
@@ -62,53 +58,24 @@ public class BinOp extends Expression {
         return false;
     }
 
+    // @Override
+    // public ceq.Expression toCEQ() {
+    // ceq.Expression res = null;
+    // System.err.println("found nested init in ceq: " + toString());
+    // System.exit(1);
+    // return null;
+    // }
+
     @Override
     protected void inferType() throws TypeException {
         expr1.inferType();
         Type t1 = expr1.getType();
         expr2.inferType();
         Type t2 = expr2.getType();
-        switch (oper) {
-        case ADD:
-        case SUB:
-        case MUL:
-        case DIV:
-        case MOD:
-            if (t1 == Type.INT && t2 == Type.INT) {
-                setType(Type.INT);
-            } else {
-                throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
-            }
-            break;
-        case AND:
-        case OR:
-        case XOR:
-        case IMPL:
-            if (t1 == Type.BOOL && t2 == Type.BOOL) {
-                setType(Type.BOOL);
-            } else {
-                throw new TypeException(this, "BOOL x BOOL", t1.toString() + " x " + t2.toString());
-            }
-            break;
-
-        case GE:
-        case GT:
-        case LE:
-        case LT:
-            if (t1 == Type.INT && t2 == Type.INT) {
-                setType(Type.BOOL);
-            } else {
-                throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
-            }
-            break;
-        case EQ:
-        case NEQ:
-            if ((t1 == Type.INT && t2 == Type.INT) || (t1 == Type.BOOL && t2 == Type.BOOL)) {
-                setType(Type.BOOL);
-            } else {
-                throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
-            }
-            break;
+        if (t1 == t2) {
+            setType(t1);
+        } else {
+            throw new TypeException(this, "T x T", t1.toString() + " x " + t2.toString());
         }
     }
 
@@ -140,24 +107,47 @@ public class BinOp extends Expression {
 
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
-            final int stage, final String clock,
+            final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = expr1.declock(basename,
-                Expression.STAGE_INIT, clock, aux);
+                Expression.STAGE_INIT, c, aux);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
-                Expression.STAGE_INIT, clock, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression(getName(), eq1.getExpr(), eq2.getExpr(),
-                        oper));
+                Expression.STAGE_INIT, c, aux);
+        if (expr1.isAtom()) {
+            eq2.setInit(eq1.getExpr());
+            // e2.clock = this.clock;
+        } else {
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+                    .getTemp(basename, getType());
+            if (c != null) {
+                eq1.setClock(c);
+            }
+            eq1.setName(v.getName());
+            aux.add(eq1);
+            eq2.setInit(new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+        }
+        if (stage < STAGE_INIT) { // not inside init
+            return eq2;
+        } else {
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+                    .getTemp(basename, getType());
+            if (c != null) {
+                eq2.setClock(c);
+            }
+            eq2.setName(v.getName());
+            aux.add(eq2);
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+        }
     }
 
     @Override
     public Expression liftClock() {
         expr1 = expr1.liftClock();
         expr2 = expr2.liftClock();
-        if (expr1 instanceof When && expr2 instanceof When) {
-            When w1 = (When) expr1;
-            When w2 = (When) expr2;
+        if (expr1 instanceof WhenExpression && expr2 instanceof WhenExpression) {
+            WhenExpression w1 = (WhenExpression) expr1;
+            WhenExpression w2 = (WhenExpression) expr2;
             if (w1.sameClock(w2)) {
                 expr1 = w1.getExpression();
                 expr2 = w2.getExpression();
@@ -177,5 +167,4 @@ public class BinOp extends Expression {
         expr2 = expr2.extractPre(eqs);
         return this;
     }
-
 }

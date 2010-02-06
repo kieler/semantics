@@ -19,58 +19,55 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.util.Debug;
-import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
- * Lustre "not" operator.
+ * Lustre clock operator current.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
+ * 
  */
-public class Not extends Expression {
+public class CurrentExpression extends Expression {
     private Expression expr;
 
     /**
      * @param name
-     *            uniue name of the expression
+     *            unique name of this expression
      * @param e
-     *            expression to negate
+     *            body of current expression
      */
-    public Not(final String name, final Expression e) {
+    public CurrentExpression(final String name, final Expression e) {
         super(name);
         this.expr = e;
     }
 
     @Override
     public String toString() {
-        return "(not " + expr.toString() + ")";
-    }
-
-    @Override
-    public Expression propagatePre(final HashMap<String, Expression> eqs) {
-        expr = expr.propagatePre(eqs);
-        return this;
+        return "(current " + expr.toString() + ")";
     }
 
     @Override
     public boolean isAtom() {
-        return false;
+        return true;
     }
 
+    @Override
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        return expr.propagatePre(eqs);
+    }
 
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
         setType(expr.getType());
-        if (getType() != Type.BOOL) {
-            throw new TypeException(expr, Type.BOOL.toString(), expr.getType().toString());
-        }
     }
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        setClock(expr.inferClock(env));
+        setClock(expr.inferClock(env).clone());
+        getClock().removeClock();
         return getClock();
     }
 
@@ -82,25 +79,29 @@ public class Not extends Expression {
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.NotExpression(getName(), eq.getExpr()));
-
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux);
+        if (stage == 0) {
+            if (!(expr instanceof WhenExpression)) {
+                System.err.println("internal error: no when inside current");
+            }
+            return res;
+        } else {
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
+                    .getTemp(basename, getType());
+            res.setName(v.getName());
+            aux.add(res);
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+        }
     }
 
     @Override
     public Expression liftClock() {
         expr = expr.liftClock();
-        if (expr instanceof When) {
-            When w = (When) expr;
-            expr = w.getExpression();
-            w.setExpression(this);
-            return w;
-        } else {
-            return this;
-        }
+        return this;
     }
 
     @Override

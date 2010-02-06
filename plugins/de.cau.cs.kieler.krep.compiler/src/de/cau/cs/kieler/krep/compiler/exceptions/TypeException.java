@@ -13,20 +13,19 @@
  */
 package de.cau.cs.kieler.krep.compiler.exceptions;
 
+import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.krep.compiler.lustre.Expression;
 
 /**
  * Exceptions that is thrown for any error during type inference.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
-public class TypeException extends Exception {
+public class TypeException extends KielerException {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private Expression context;
@@ -42,7 +41,7 @@ public class TypeException extends Exception {
      *            type inferred for the expression
      */
     public TypeException(final Expression ctxt, final String expct, final String act) {
-        super();
+        super("TypeException");
         this.actual = act;
         this.context = ctxt;
         this.expected = expct;

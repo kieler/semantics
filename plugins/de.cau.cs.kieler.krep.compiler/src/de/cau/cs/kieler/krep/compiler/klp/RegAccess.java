@@ -20,7 +20,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Reading access to a register. Can read either previous or current value.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */

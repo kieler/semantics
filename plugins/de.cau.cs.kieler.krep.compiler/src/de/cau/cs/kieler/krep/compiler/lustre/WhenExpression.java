@@ -24,14 +24,15 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Implementation of the when operator.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
-public class When extends Expression {
+public class WhenExpression extends Expression {
     private Expression expr;
 
-    private VarAccess cName;
+    private VarAccessExpression cName;
 
     /**
      * generate new when operator.
@@ -43,7 +44,7 @@ public class When extends Expression {
      * @param c
      *            clock on which the expression runs
      */
-    public When(final String name, final Expression e, final VarAccess c) {
+    public WhenExpression(final String name, final Expression e, final VarAccessExpression c) {
         super(name);
         this.expr = e;
         this.cName = c;
@@ -151,7 +152,7 @@ public class When extends Expression {
      *            another when operator
      * @return true, if both use the same clock.
      */
-    public boolean sameClock(final When w) {
+    public boolean sameClock(final WhenExpression w) {
         return cName.equals(w.cName);
     }
 

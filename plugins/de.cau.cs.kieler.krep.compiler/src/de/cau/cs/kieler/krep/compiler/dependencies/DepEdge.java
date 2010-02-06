@@ -16,13 +16,14 @@ package de.cau.cs.kieler.krep.compiler.dependencies;
 /**
  * An edge in the dependency graph.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
-public class Edge {
+public class DepEdge {
 
-    private Node node;
+    private DepNode node;
     private int delay;
 
     /**
@@ -30,7 +31,7 @@ public class Edge {
      * @param del
      *            of this dependency
      */
-    public Edge(final Node n, final int del) {
+    public DepEdge(final DepNode n, final int del) {
         super();
         this.node = n;
         this.delay = del;
@@ -46,7 +47,7 @@ public class Edge {
     /**
      * @return corresponding node
      */
-    public Node getNode() {
+    public DepNode getNode() {
         return node;
     }
 

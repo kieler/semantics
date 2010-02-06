@@ -13,23 +13,22 @@
  */
 package de.cau.cs.kieler.krep.compiler.exceptions;
 
+import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.krep.compiler.lustre.ClockList;
 import de.cau.cs.kieler.krep.compiler.lustre.Expression;
 
 /**
  * Exception to indicate an error in the clock calculus.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  * 
  * 
  */
-public class ClockException extends Exception {
+public class ClockException extends KielerException {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private Expression context;
@@ -49,7 +48,7 @@ public class ClockException extends Exception {
      *            clock list inferred for the expression
      */
     public ClockException(final Expression ctxt, final ClockList expc, final ClockList act) {
-        super();
+        super("Clock Exception");
         this.context = ctxt;
         this.actual = act;
         this.expected = expc;

@@ -19,7 +19,8 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
  * Declare that a register is used. This implicitly gives the connection of the program to the
  * environment, by connecting registers and io ports.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  * 

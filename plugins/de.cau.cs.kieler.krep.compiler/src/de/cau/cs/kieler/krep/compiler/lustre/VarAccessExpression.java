@@ -23,12 +23,13 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Implement the possible immediate access to a Lustre variable.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  * 
  */
-public class VarAccess extends Expression {
+public class VarAccessExpression extends Expression {
 
     private final Variable var;
 
@@ -36,7 +37,7 @@ public class VarAccess extends Expression {
      * @param name
      *            name of the read variable
      */
-    public VarAccess(final String name) {
+    public VarAccessExpression(final String name) {
         this(Variable.get(name));
     }
 
@@ -44,7 +45,7 @@ public class VarAccess extends Expression {
      * @param v
      *            variable to read
      */
-    public VarAccess(final Variable v) {
+    public VarAccessExpression(final Variable v) {
         super(v.getName());
         this.var = v;
         setType(var.getType());
@@ -68,7 +69,7 @@ public class VarAccess extends Expression {
 
     @Override
     public Expression propagatePre(final HashMap<String, Expression> eqs) {
-        return new Pre("pre_" + this.getName(), this);
+        return new PreExpression("pre_" + this.getName(), this);
     }
 
     @Override
@@ -105,7 +106,7 @@ public class VarAccess extends Expression {
     @Override
     public Expression liftClock() {
         if (!getClock().isBase()) {
-            return new When(this.getName(), this, new VarAccess(Variable.get(getClock().getClock())));
+            return new WhenExpression(this.getName(), this, new VarAccessExpression(Variable.get(getClock().getClock())));
         } else {
             return this;
         }
@@ -113,10 +114,10 @@ public class VarAccess extends Expression {
 
     @Override
     public boolean equals(final Object o) {
-        if (!(o instanceof VarAccess)) {
+        if (!(o instanceof VarAccessExpression)) {
             return false;
         }
-        VarAccess v = (VarAccess) o;
+        VarAccessExpression v = (VarAccessExpression) o;
         return v.var.equals(var);
     }
 

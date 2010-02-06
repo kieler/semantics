@@ -28,11 +28,12 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 /**
  * Klp assembler, extends a program by the compiler from CEQs into actual klp assembler.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr Klp Assembler
  */
-public class Klp extends Program {
+public class KlpProgram extends Program {
 
     private boolean useClocks;
 
@@ -57,7 +58,7 @@ public class Klp extends Program {
      * @param name
      *            name of the main node
      */
-    public Klp(final String name) {
+    public KlpProgram(final String name) {
         super(name);
     }
 
@@ -69,7 +70,7 @@ public class Klp extends Program {
      * @param p
      *            the program
      */
-    public Klp(final String name, final Program p) {
+    public KlpProgram(final String name, final Program p) {
         super(name, p);
     }
 

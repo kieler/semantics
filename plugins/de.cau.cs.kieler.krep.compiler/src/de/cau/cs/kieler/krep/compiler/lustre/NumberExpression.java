@@ -24,11 +24,12 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Integer constant in a Lustre program.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
-public class Number extends Expression {
+public class NumberExpression extends Expression {
     private int value;
 
     /**
@@ -37,7 +38,7 @@ public class Number extends Expression {
      * @param num
      *            constant value
      */
-    public Number(final String name, final int num) {
+    public NumberExpression(final String name, final int num) {
         super(name);
         this.value = num;
         setType(Type.INT);
@@ -49,7 +50,7 @@ public class Number extends Expression {
      * @param val
      *            value of the constant number
      */
-    public Number(final String name, final boolean val) {
+    public NumberExpression(final String name, final boolean val) {
         super(name);
         this.value = val ? 1 : 0;
         setType(Type.BOOL);

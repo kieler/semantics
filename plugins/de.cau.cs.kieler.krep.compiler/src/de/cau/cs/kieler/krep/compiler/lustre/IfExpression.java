@@ -24,11 +24,12 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Lustre "if" Expression.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
-public class If extends Expression {
+public class IfExpression extends Expression {
     private Expression expr1, expr2, expr3;
 
     /**
@@ -41,7 +42,7 @@ public class If extends Expression {
      * @param e3
      *            expression to evaluate in else case
      */
-    public If(final String name, final Expression e1, final Expression e2, final Expression e3) {
+    public IfExpression(final String name, final Expression e1, final Expression e2, final Expression e3) {
         super(name);
         this.expr1 = e1;
         this.expr2 = e2;
@@ -130,10 +131,10 @@ public class If extends Expression {
         expr1 = expr1.liftClock();
         expr2 = expr2.liftClock();
         expr3 = expr3.liftClock();
-        if (expr1 instanceof When && expr2 instanceof When && expr3 instanceof When) {
-            When w1 = (When) expr1;
-            When w2 = (When) expr2;
-            When w3 = (When) expr3;
+        if (expr1 instanceof WhenExpression && expr2 instanceof WhenExpression && expr3 instanceof WhenExpression) {
+            WhenExpression w1 = (WhenExpression) expr1;
+            WhenExpression w2 = (WhenExpression) expr2;
+            WhenExpression w3 = (WhenExpression) expr3;
             if (w1.sameClock(w2) && w1.sameClock(w3)) {
                 expr1 = w1.getExpression();
                 expr2 = w2.getExpression();

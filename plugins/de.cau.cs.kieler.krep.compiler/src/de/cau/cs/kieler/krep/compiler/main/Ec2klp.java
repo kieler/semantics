@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-import de.cau.cs.kieler.krep.compiler.ceq.Klp;
+import de.cau.cs.kieler.krep.compiler.ceq.KlpProgram;
 import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
@@ -27,7 +27,8 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 /**
  * Compile Lustre ec-file to KLP assembler.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -54,7 +55,7 @@ public final class Ec2klp {
 
             Program ceq = lustre.getCEQ();
 
-            Klp prog = new Klp(name, ceq);
+            KlpProgram prog = new KlpProgram(name, ceq);
 
             prog.propagateConst();
 

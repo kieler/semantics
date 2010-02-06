@@ -21,7 +21,8 @@ import de.cau.cs.kieler.krep.compiler.exceptions.ClockException;
 /**
  * List of clocks according to Lustre clock calculus.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */

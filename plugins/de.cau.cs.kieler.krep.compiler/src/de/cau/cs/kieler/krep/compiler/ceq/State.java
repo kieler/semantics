@@ -48,14 +48,14 @@ public class State implements Scope {
 
         this.isInitial = initial;
         this.name = n;
-        content = new Scade(n);
+        content = new ScadeProgram(n);
     }
 
     private boolean isInitial;
 
     private String name;
 
-    private Scade content;
+    private ScadeProgram content;
 
     private LinkedList<Transition> saborts = new LinkedList<Transition>();
     private LinkedList<Transition> waborts = new LinkedList<Transition>();
@@ -167,7 +167,7 @@ public class State implements Scope {
      * @return klp code that implements the body of the state
      */
     public LinkedList<AbstractInstruction> compileBody() {
-        final Klp klp = new Klp(name, content);
+        final KlpProgram klp = new KlpProgram(name, content);
         return klp.compile(true, name);
     }
 
@@ -234,7 +234,7 @@ public class State implements Scope {
      */
     public LinkedList<AbstractInstruction> compileInit(final boolean setInputs, final boolean setOutputs,
             final int prioOffset) {
-        Klp klp = new Klp(name, content);
+        KlpProgram klp = new KlpProgram(name, content);
         return klp.compileInit(true, name, false, setOutputs, prioOffset);
     }
 

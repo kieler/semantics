@@ -22,7 +22,7 @@ import java.util.HashMap;
 import org.antlr.runtime.*;
 
 import de.cau.cs.kieler.krep.compiler.lustre.*;
-import de.cau.cs.kieler.krep.compiler.lustre.Number;
+import de.cau.cs.kieler.krep.compiler.lustre.NumberExpression;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 import java.util.Stack;
@@ -1129,7 +1129,7 @@ public class lustreParser extends Parser {
         Expression expr = null;
 
         Token v = null;
-        Number c = null;
+        NumberExpression c = null;
 
         Expression e = null;
 
@@ -1206,7 +1206,7 @@ public class lustreParser extends Parser {
                 // lustre.g:131:5: v= ID
             {
                 v = (Token) match(input, ID, FOLLOW_ID_in_expression868);
-                expr = new VarAccess((v != null ? v.getText() : null));
+                expr = new VarAccessExpression((v != null ? v.getText() : null));
 
             }
                 break;
@@ -1219,7 +1219,7 @@ public class lustreParser extends Parser {
 
                 state._fsp--;
 
-                expr = new Not(name, e);
+                expr = new NotExpression(name, e);
 
             }
                 break;
@@ -1232,7 +1232,7 @@ public class lustreParser extends Parser {
 
                 state._fsp--;
 
-                expr = new Pre(name, e);
+                expr = new PreExpression(name, e);
 
             }
                 break;
@@ -1245,7 +1245,7 @@ public class lustreParser extends Parser {
 
                 state._fsp--;
 
-                expr = new Current(name, e);
+                expr = new CurrentExpression(name, e);
 
             }
                 break;
@@ -1273,7 +1273,7 @@ public class lustreParser extends Parser {
                 state._fsp--;
 
                 match(input, 21, FOLLOW_21_in_expression1068);
-                expr = new If(name, e1, e2, e3);
+                expr = new IfExpression(name, e1, e2, e3);
 
             }
                 break;
@@ -1385,7 +1385,7 @@ public class lustreParser extends Parser {
 
                 state._fsp--;
 
-                expr = new Init(name, e1, e2);
+                expr = new InitExpression(name, e1, e2);
 
             }
                 break;
@@ -1394,7 +1394,7 @@ public class lustreParser extends Parser {
             {
                 match(input, 23, FOLLOW_23_in_rbinop1228);
                 v = (Token) match(input, ID, FOLLOW_ID_in_rbinop1232);
-                expr = new When(name, e1, new VarAccess((v != null ? v.getText() : null)));
+                expr = new WhenExpression(name, e1, new VarAccessExpression((v != null ? v.getText() : null)));
 
             }
                 break;
@@ -1411,7 +1411,7 @@ public class lustreParser extends Parser {
 
                 state._fsp--;
 
-                expr = new BinOp(name, e1, e2, op);
+                expr = new BinOpExpression(name, e1, e2, op);
 
             }
                 break;
@@ -1652,8 +1652,8 @@ public class lustreParser extends Parser {
     // $ANTLR start "constant"
     // lustre.g:168:1: constant[String name] returns [Number val] : ( 'true' | 'false' | n= NUMBER
     // );
-    public final Number constant(String name) throws RecognitionException {
-        Number val = null;
+    public final NumberExpression constant(String name) throws RecognitionException {
+        NumberExpression val = null;
 
         Token n = null;
 
@@ -1684,7 +1684,7 @@ public class lustreParser extends Parser {
                 // lustre.g:169:5: 'true'
             {
                 match(input, 51, FOLLOW_51_in_constant1480);
-                val = new Number(name, true);
+                val = new NumberExpression(name, true);
 
             }
                 break;
@@ -1692,7 +1692,7 @@ public class lustreParser extends Parser {
                 // lustre.g:170:5: 'false'
             {
                 match(input, 52, FOLLOW_52_in_constant1489);
-                val = new Number(name, false);
+                val = new NumberExpression(name, false);
 
             }
                 break;
@@ -1700,7 +1700,7 @@ public class lustreParser extends Parser {
                 // lustre.g:171:5: n= NUMBER
             {
                 n = (Token) match(input, NUMBER, FOLLOW_NUMBER_in_constant1499);
-                val = new Number(name, Integer.parseInt((n != null ? n.getText() : null)));
+                val = new NumberExpression(name, Integer.parseInt((n != null ? n.getText() : null)));
 
             }
                 break;

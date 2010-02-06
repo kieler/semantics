@@ -21,9 +21,11 @@ import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
- * Abstract superclass for Lustre(ec) expression.
+ * Abstract superclass for Lustre(ec) expression. They are closely related to ceq expression, but
+ * here the clock operators are usual expressions.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -32,7 +34,8 @@ public abstract class Expression {
     private Type type = null;
 
     /**
-     * @param t type of the expression
+     * @param t
+     *            type of the expression
      */
     protected void setType(final Type t) {
         type = t;
@@ -185,14 +188,16 @@ public abstract class Expression {
     }
 
     /**
-     * @param n the name to set
+     * @param n
+     *            the name to set
      */
     protected void setName(final String n) {
         this.name = n;
     }
 
     /**
-     * @param clk the clock to set
+     * @param clk
+     *            the clock to set
      */
     protected void setClock(final ClockList clk) {
         this.clock = clk;

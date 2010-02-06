@@ -131,7 +131,7 @@ public class scadeParser extends Parser {
         return "scade.g";
     }
 
-    Scade main;
+    ScadeProgram main;
 
     LinkedList<Variable> inputs = new LinkedList<Variable>();
 
@@ -143,7 +143,7 @@ public class scadeParser extends Parser {
         return res;
     }
 
-    public void setProg(Scade main) {
+    public void setProg(ScadeProgram main) {
         this.main = main;
     }
 

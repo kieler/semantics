@@ -19,26 +19,27 @@ import java.util.Set;
 /**
  * A node, ie, a variable in the Dependency graph. A node has in- and outgoing edges and a variable.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  * 
  */
-public class Node {
+public class DepNode {
 
     private String name;
 
     private Integer prio = null;
 
     // in- and out-going transitions
-    private Set<Edge> in = new HashSet<Edge>();
-    private Set<Edge> out = new HashSet<Edge>();
+    private Set<DepEdge> in = new HashSet<DepEdge>();
+    private Set<DepEdge> out = new HashSet<DepEdge>();
 
     /**
      * @param n
      *            name of the new node
      */
-    public Node(final String n) {
+    public DepNode(final String n) {
         this.name = n;
     }
 
@@ -46,7 +47,7 @@ public class Node {
      * @param e
      *            new in-going edge
      */
-    public void addIn(final Edge e) {
+    public void addIn(final DepEdge e) {
         in.add(e);
     }
 
@@ -54,14 +55,14 @@ public class Node {
      * @param e
      *            new outgoing edge
      */
-    public void addOut(final Edge e) {
+    public void addOut(final DepEdge e) {
         out.add(e);
     }
 
     /**
      * @return set of ingoing edges
      */
-    public Set<Edge> getIn() {
+    public Set<DepEdge> getIn() {
         return in;
     }
 
@@ -75,7 +76,7 @@ public class Node {
     /**
      * @return set of out-going edges
      */
-    public Set<Edge> getOut() {
+    public Set<DepEdge> getOut() {
         return out;
     }
 
@@ -98,7 +99,7 @@ public class Node {
      *            node to test
      * @return true, if names are equal
      */
-    public boolean isEqual(final Node n) {
+    public boolean isEqual(final DepNode n) {
         return this.name.equals(n.name);
     }
 
@@ -113,7 +114,7 @@ public class Node {
     public int getPrio() {
         if (prio == null) {
             prio = 0;
-            for (final Edge e : in) {
+            for (final DepEdge e : in) {
                 final int p = e.getNode().getPrio();
                 if (prio < p + 1) {
                     prio = p + 1;

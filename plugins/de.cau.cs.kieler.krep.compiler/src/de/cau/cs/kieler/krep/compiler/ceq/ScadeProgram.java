@@ -36,13 +36,13 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * @author ctr
  * 
  */
-public class Scade extends Program implements Scope {
+public class ScadeProgram extends Program implements Scope {
 
     /**
      * @param name
      *            name of the scade program.
      */
-    public Scade(final String name) {
+    public ScadeProgram(final String name) {
         super(name);
     }
 
@@ -58,7 +58,7 @@ public class Scade extends Program implements Scope {
      * @throws TypeException
      *             thrown at errors in type inference
      */
-    public Scade(final InputStream in) throws IOException, ClockException, TypeException {
+    public ScadeProgram(final InputStream in) throws IOException, ClockException, TypeException {
         super("Scade");
 
         scadeLexer lex = new scadeLexer(new ANTLRInputStream(in));

@@ -35,7 +35,7 @@ import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
  * @author ctr
  * 
  */
-public class Automaton {
+public class Automaton{
     private String name;
 
     private State initial;
@@ -47,14 +47,17 @@ public class Automaton {
     private LinkedList<Variable> outputs = new LinkedList<Variable>();
 
     /**
-     * @return all inputs for the automaton
+     * Get all inputs for the automaton.
+     * @return inputs
      */
     public LinkedList<Variable> getInputs() {
         return inputs;
     }
 
     /**
-     * @return all output signals for the automaton
+     * Get all output signals for the automaton.
+     * 
+     * @return outputs 
      */
     public LinkedList<Variable> getOutputs() {
         return outputs;
@@ -71,7 +74,9 @@ public class Automaton {
     }
 
     /**
-     * @return name of the automaton
+     *  Get name of the automaton.
+     *  
+     * @return unique name
      */
     public String getName() {
         return name;
@@ -87,8 +92,10 @@ public class Automaton {
     }
 
     /**
+     * Add a new state to the automaton.
+     * 
      * @param s
-     *            add new state to the automaton
+     *           the new state
      */
     public void add(final State s) {
         states.add(s);
@@ -98,6 +105,8 @@ public class Automaton {
     }
 
     /**
+     * Compile an automaton into KLP assembler.
+     * 
      * @param prioOffset
      *            minimal priority that can be used
      * @return klp assembler that implements the automaton
@@ -136,7 +145,7 @@ public class Automaton {
     }
 
     /**
-     * 
+     * simply the automaton by simplifying each state.
      */
     public void simplify() {
         for (final State s : states) {
@@ -146,7 +155,7 @@ public class Automaton {
     }
 
     /**
-     * extract io of the automaton from the initial state.
+     * Extract io of the automaton from the initial state.
      */
     public void setIO() {
         for (final State s : states) {
@@ -187,6 +196,8 @@ public class Automaton {
     }
 
     /**
+     * Get the dependency graph from the initial state.
+     * 
      * @return dependency graph of the initial state
      */
     public DepGraph getDepGraph() {
@@ -194,6 +205,8 @@ public class Automaton {
     }
 
     /**
+     * Replace a Variable by another, equivalent variable.
+     * 
      * @param equiv
      *            map of equivalent variables
      */

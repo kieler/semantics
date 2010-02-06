@@ -258,13 +258,13 @@ public class Variable {
             i = 0;
             break;
         case OUTPUT:
-            i = Klp.N_IO;
+            i = KlpProgram.N_IO;
             break;
         case LOCAL:
-            i = 2 * Klp.N_IO;
+            i = 2 * KlpProgram.N_IO;
             break;
         case TEMP:
-            i = 2 * Klp.N_IO + Klp.N_LOCAL;
+            i = 2 * KlpProgram.N_IO + KlpProgram.N_LOCAL;
             break;
         }
         return id + i;

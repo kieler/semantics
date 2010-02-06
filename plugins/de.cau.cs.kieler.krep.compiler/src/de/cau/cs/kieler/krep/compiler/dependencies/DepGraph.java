@@ -28,12 +28,13 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Dependency graph of the dataflow program.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr
  */
 public class DepGraph {
-    private final Map<String, Node> nodes = new HashMap<String, Node>();
+    private final Map<String, DepNode> nodes = new HashMap<String, DepNode>();
 
     private HashMap<String, Integer> core = new HashMap<String, Integer>();
 
@@ -51,12 +52,12 @@ public class DepGraph {
         int edges = 0;
         for (final Entry<String, LinkedList<String>> e : eqs.entrySet()) {
             addNode(e.getKey());
-            final Node target = nodes.get(e.getKey());
+            final DepNode target = nodes.get(e.getKey());
             for (final String v : e.getValue()) {
                 addNode(v);
-                final Node source = nodes.get(v);
-                source.addOut(new Edge(target, 0)); // v.getDelay()));
-                target.addIn(new Edge(source, 0)); // v.getDelay()));
+                final DepNode source = nodes.get(v);
+                source.addOut(new DepEdge(target, 0)); // v.getDelay()));
+                target.addIn(new DepEdge(source, 0)); // v.getDelay()));
                 edges++;
             }
         }
@@ -73,10 +74,10 @@ public class DepGraph {
     public void add(final String s, final String t) {
         addNode(s);
         addNode(t);
-        final Node source = nodes.get(s);
-        final Node target = nodes.get(t);
-        source.addOut(new Edge(target, 0));
-        target.addIn(new Edge(source, 0));
+        final DepNode source = nodes.get(s);
+        final DepNode target = nodes.get(t);
+        source.addOut(new DepEdge(target, 0));
+        target.addIn(new DepEdge(source, 0));
     }
 
     /**
@@ -88,7 +89,7 @@ public class DepGraph {
 
     private void addNode(final String n) {
         if (nodes.get(n) == null) {
-            nodes.put(n, new Node(n));
+            nodes.put(n, new DepNode(n));
             core.put(n, 0);
         }
     }
@@ -96,8 +97,8 @@ public class DepGraph {
     private List<String> sortFrom(final String n, final Set<String> toVisit) {
         final ArrayList<String> res = new ArrayList<String>();
         toVisit.remove(n);
-        final Node node = nodes.get(n);
-        for (final Edge e : node.getOut()) {
+        final DepNode node = nodes.get(n);
+        for (final DepEdge e : node.getOut()) {
             if (e.getDelay() == 0 && toVisit.contains(e.getNode().getName())) {
                 res.addAll(sortFrom(e.getNode().getName(), toVisit));
             }
@@ -125,7 +126,7 @@ public class DepGraph {
     public void split(final int n) {
         core.clear();
         Set<String> toVisit = new HashSet<String>(nodes.keySet());
-        for (Node node : nodes.values()) {
+        for (DepNode node : nodes.values()) {
             if (node.isInput()) {
                 core.put(node.getName(), 0);
                 toVisit.remove(node.getName());
@@ -166,13 +167,13 @@ public class DepGraph {
             res.append("digraph G {\n");
             res.append("graph[rankdir=LR]\n\n");
         }
-        for (final Node n : nodes.values()) {
+        for (final DepNode n : nodes.values()) {
             res.append(n.getName() + "[ color = " + colors[core.get(n.getName())] + ",  label=\""
                     + n.getName() + " (" + n.getPrio() + ")\"];\n");
             if (subGraphs.containsKey(n.getName())) {
                 res.append("{" + subGraphs.get(n.getName()).toDot(false) + "}\n");
             }
-            for (final Edge e : n.getOut()) {
+            for (final DepEdge e : n.getOut()) {
                 res.append(n.getName() + " -> " + e.getNode());
                 if (e.getDelay() == 1) {
                     res.append("[style=\"dashed\"]");
@@ -203,7 +204,7 @@ public class DepGraph {
      */
     public int getMaxPrio() {
         if (maxPrio == 0) {
-            for (final Node n : nodes.values()) {
+            for (final DepNode n : nodes.values()) {
                 final int p = n.getPrio();
                 if (p > maxPrio) {
                     maxPrio = p;

@@ -25,14 +25,15 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import de.cau.cs.kieler.krep.compiler.ceq.Klp;
-import de.cau.cs.kieler.krep.compiler.ceq.Scade;
+import de.cau.cs.kieler.krep.compiler.ceq.KlpProgram;
+import de.cau.cs.kieler.krep.compiler.ceq.ScadeProgram;
 import de.cau.cs.kieler.krep.compiler.util.Debug;
 
 /**
  * Compile Lustre ec-file to KLP assembler.
  * 
- * @kieler.rating 2010-01-05 proposed yellow ctr
+ * @kieler.rating 2010-02-05 yellow 
+ *   review by cmot, msp, tam
  * 
  * @author ctr 
  */
@@ -104,7 +105,7 @@ public final class Scade2klp {
         FileWriter dotFile = null;
         FileWriter lusFile = null;
         try {
-            Scade scade = new Scade(new FileInputStream(inputFile));
+            ScadeProgram scade = new ScadeProgram(new FileInputStream(inputFile));
 
             String nodeName = outputFile.substring(outputFile.lastIndexOf('/') + 1);
             nodeName = nodeName.substring(0, nodeName.lastIndexOf('.'));
@@ -112,7 +113,7 @@ public final class Scade2klp {
 
             // Program ceq = lustre.getCEQ();
 
-            Klp prog = new Klp(nodeName, scade);
+            KlpProgram prog = new KlpProgram(nodeName, scade);
 
             prog.propagateConst();
             int wcrt = prog.wcrt();
