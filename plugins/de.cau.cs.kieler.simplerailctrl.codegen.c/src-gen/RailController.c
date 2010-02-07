@@ -175,9 +175,9 @@ void* ThreadFunction2(void* port)
 {
   int secondcounter = 0;
   int outtransition = 0;
-  int state = (int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@17c8a9c (initial: true) (point: [POINT_20, POINT_24], direction: BRANCH)"));
+  int state = (int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@7c26a0ba (initial: true) (point: [POINT_19, POINT_20, POINT_23, POINT_24], direction: BRANCH)"));
   
-  if (DEBUGCONTROLLER) printf("Thread 'org.eclipse.internal.xpand2.type.XpandIterator@1c7c7bc' started.\n");
+  if (DEBUGCONTROLLER) printf("Thread 'org.eclipse.internal.xpand2.type.XpandIterator@432dbb4b' started.\n");
   
   while(1) {
       if (DEBUGCONTROLLER) printf("Entering state %d.\n",state);
@@ -190,9 +190,9 @@ void* ThreadFunction2(void* port)
 	  
       //all states
       if (state == -1) {}
-	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@f74a38 (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_3, IC_ST_4], speed: 100, direction: FWD)")))) {
+	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@73b61aea (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_2, IC_ST_4], speed: 100, direction: FWD)")))) {
 	  		  P(2); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@f74a38 (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_3, IC_ST_4], speed: 100, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@f74a38 (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_3, IC_ST_4], speed: 100, direction: FWD)")));
+              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@73b61aea (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_2, IC_ST_4], speed: 100, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@73b61aea (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_2, IC_ST_4], speed: 100, direction: FWD)")));
 	          //state1 entry code (SET SPEED)
 			  settrack(railway, IC_JCT_0, FWD, 100);
 		      setsignal(railway, IC_JCT_0, FIRST, OFF);
@@ -218,9 +218,9 @@ void* ThreadFunction2(void* port)
 			  settrack(railway, IC_ST_0, FWD, 100);
 		      setsignal(railway, IC_ST_0, FIRST, OFF);
 		      setsignal(railway, IC_ST_0, SECOND, GREEN);
-			  settrack(railway, IC_ST_3, FWD, 100);
-		      setsignal(railway, IC_ST_3, FIRST, OFF);
-		      setsignal(railway, IC_ST_3, SECOND, GREEN);
+			  settrack(railway, IC_ST_2, FWD, 100);
+		      setsignal(railway, IC_ST_2, FIRST, OFF);
+		      setsignal(railway, IC_ST_2, SECOND, GREEN);
 			  settrack(railway, IC_ST_4, FWD, 100);
 		      setsignal(railway, IC_ST_4, FIRST, OFF);
 		      setsignal(railway, IC_ST_4, SECOND, GREEN);
@@ -235,10 +235,10 @@ void* ThreadFunction2(void* port)
 		            if ((DEBUGCONTROLLER)&&(!(secondcounter%10))) printf("Transition wait (%d seconds).\n",secondcounter/10);
 			  		outtransition = 1;
 	          		//test for contact-events
-			  		if ((getcontact_sync(railway,IC_ST_3,FIRST,1) != 0)) {
+			  		if ((getcontact_sync(railway,IC_ST_2,FIRST,1) != 0)) {
 			  		    V(2); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Event-Transition taken.\n");
-			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@13a037e (initial: false) (track: [IC_ST_0, IC_ST_3], speed: 30, direction: FWD)");
+			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@2af590c6 (initial: false) (track: [IC_ST_0, IC_ST_2], speed: 30, direction: FWD)");
 			  			break;
 			  		}
 	  		  		V(2); // RELEASE THE GLOBALLOCK
@@ -274,11 +274,13 @@ void* ThreadFunction2(void* port)
 	          }//end while
 	      }//end if
 	      
-	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@17c8a9c (initial: true) (point: [POINT_20, POINT_24], direction: BRANCH)")))) {
+	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@7c26a0ba (initial: true) (point: [POINT_19, POINT_20, POINT_23, POINT_24], direction: BRANCH)")))) {
 	  		  P(2); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@17c8a9c (initial: true) (point: [POINT_20, POINT_24], direction: BRANCH)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@17c8a9c (initial: true) (point: [POINT_20, POINT_24], direction: BRANCH)")));
+              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@7c26a0ba (initial: true) (point: [POINT_19, POINT_20, POINT_23, POINT_24], direction: BRANCH)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetPointImpl@7c26a0ba (initial: true) (point: [POINT_19, POINT_20, POINT_23, POINT_24], direction: BRANCH)")));
 	          //state2 enty code (SET POINT)
+			  setpoint(railway,  POINT_19, BRANCH);
 			  setpoint(railway,  POINT_20, BRANCH);
+			  setpoint(railway,  POINT_23, BRANCH);
 			  setpoint(railway,  POINT_24, BRANCH);
 	  		  V(2); // RELEASE THE GLOBALLOCK
 	  		  
@@ -291,10 +293,10 @@ void* ThreadFunction2(void* port)
 		            if ((DEBUGCONTROLLER)&&(!(secondcounter%10))) printf("Transition wait (%d seconds).\n",secondcounter/10);
 			  		outtransition = 1;
 	          		//test for wait-events
-			  		if (secondcounter/10 >= 2) {
+			  		if (secondcounter/10 >= 5) {
 			  		    V(2); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Wait-Transition taken.\n");
-			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@f74a38 (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_3, IC_ST_4], speed: 100, direction: FWD)");
+			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@73b61aea (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_2, IC_ST_4], speed: 100, direction: FWD)");
 			  			break;
 			  		}
 			  		
@@ -331,16 +333,16 @@ void* ThreadFunction2(void* port)
 	          }//end while
 	      }//end if
 	      
-	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@13a037e (initial: false) (track: [IC_ST_0, IC_ST_3], speed: 30, direction: FWD)")))) {
+	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@2af590c6 (initial: false) (track: [IC_ST_0, IC_ST_2], speed: 30, direction: FWD)")))) {
 	  		  P(2); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@13a037e (initial: false) (track: [IC_ST_0, IC_ST_3], speed: 30, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@13a037e (initial: false) (track: [IC_ST_0, IC_ST_3], speed: 30, direction: FWD)")));
+              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@2af590c6 (initial: false) (track: [IC_ST_0, IC_ST_2], speed: 30, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@2af590c6 (initial: false) (track: [IC_ST_0, IC_ST_2], speed: 30, direction: FWD)")));
 	          //state3 entry code (SET SPEED)
 			  settrack(railway, IC_ST_0, FWD, 30);
 		      setsignal(railway, IC_ST_0, FIRST, OFF);
 		      setsignal(railway, IC_ST_0, SECOND, YELLOW);
-			  settrack(railway, IC_ST_3, FWD, 30);
-		      setsignal(railway, IC_ST_3, FIRST, OFF);
-		      setsignal(railway, IC_ST_3, SECOND, YELLOW);
+			  settrack(railway, IC_ST_2, FWD, 30);
+		      setsignal(railway, IC_ST_2, FIRST, OFF);
+		      setsignal(railway, IC_ST_2, SECOND, YELLOW);
 	  		  V(2); // RELEASE THE GLOBALLOCK
 	  		  
 	          
@@ -352,10 +354,10 @@ void* ThreadFunction2(void* port)
 		            if ((DEBUGCONTROLLER)&&(!(secondcounter%10))) printf("Transition wait (%d seconds).\n",secondcounter/10);
 			  		outtransition = 1;
 	          		//test for contact-events
-			  		if ((getcontact_sync(railway,IC_ST_3,SECOND,1) != 0)) {
+			  		if ((getcontact_sync(railway,IC_ST_2,SECOND,1) != 0)) {
 			  		    V(2); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Event-Transition taken.\n");
-			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@1bb628c (initial: false) (track: [IC_ST_3], speed: 0, direction: FWD)");
+			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@5ff3cd32 (initial: false) (track: [IC_ST_2], speed: 0, direction: FWD)");
 			  			break;
 			  		}
 	  		  		V(2); // RELEASE THE GLOBALLOCK
@@ -391,13 +393,13 @@ void* ThreadFunction2(void* port)
 	          }//end while
 	      }//end if
 	      
-	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@1bb628c (initial: false) (track: [IC_ST_3], speed: 0, direction: FWD)")))) {
+	  else if (state == ((int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@5ff3cd32 (initial: false) (track: [IC_ST_2], speed: 0, direction: FWD)")))) {
 	  		  P(2); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@1bb628c (initial: false) (track: [IC_ST_3], speed: 0, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@1bb628c (initial: false) (track: [IC_ST_3], speed: 0, direction: FWD)")));
+              if (DEBUGCONTROLLER) printf("State %d (de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@5ff3cd32 (initial: false) (track: [IC_ST_2], speed: 0, direction: FWD)) entered.\n",(int)(HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@5ff3cd32 (initial: false) (track: [IC_ST_2], speed: 0, direction: FWD)")));
 	          //state4 entry code (SET SPEED)
-			  settrack(railway, IC_ST_3, FWD, 0);
-		      setsignal(railway, IC_ST_3, FIRST, OFF);
-		      setsignal(railway, IC_ST_3, SECOND, RED);
+			  settrack(railway, IC_ST_2, FWD, 0);
+		      setsignal(railway, IC_ST_2, FIRST, OFF);
+		      setsignal(railway, IC_ST_2, SECOND, RED);
 	  		  V(2); // RELEASE THE GLOBALLOCK
 	  		  
 	          
@@ -409,10 +411,10 @@ void* ThreadFunction2(void* port)
 		            if ((DEBUGCONTROLLER)&&(!(secondcounter%10))) printf("Transition wait (%d seconds).\n",secondcounter/10);
 			  		outtransition = 1;
 	          		//test for wait-events
-			  		if (secondcounter/10 >= 2) {
+			  		if (secondcounter/10 >= 10) {
 			  		    V(2); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Wait-Transition taken.\n");
-			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@f74a38 (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_3, IC_ST_4], speed: 100, direction: FWD)");
+			  			state = HASH("de.cau.cs.kieler.simplerailctrl.impl.SetSpeedImpl@73b61aea (initial: false) (track: [IC_JCT_0, IC_LN_0, IC_LN_1, IC_LN_2, IC_LN_3, IC_LN_4, IC_LN_5, IC_ST_0, IC_ST_2, IC_ST_4], speed: 100, direction: FWD)");
 			  			break;
 			  		}
 			  		
