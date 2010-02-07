@@ -1,9 +1,21 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+*/
 
-
-«IMPORT simplerailctrlï»
+«IMPORT simplerailctrl»
 
 «DEFINE main FOR RailController-»
-	««FILE "RailController.c"»-»
+	«FILE "RailController.c"-»
 
 /* ==========================================================================
    
@@ -215,9 +227,9 @@ void* ThreadFunction«i.counter1-»(void* port)
       //all states
       if (state == -1) {}
 	  «FOREACH nodes AS nn ITERATOR ii-»
-	  else if (state == ((int)(HASH("«nn«")))) {
+	  else if (state == ((int)(HASH("«nn»")))) {
 	  		  P(«i.counter1-»); // GET THE GLOBALLOCK
-              if (DEBUGCONTROLLER) printf("State %d («nn.toString()«) entered.\n",(int)(HASH("«nn-»")));
+              if (DEBUGCONTROLLER) printf("State %d («nn.toString()») entered.\n",(int)(HASH("«nn-»")));
 	          «IF (nn.metaType.name.matches("simplerailctrl::SetSpeed"))-»
 	          //state«ii.counter1-» entry code (SET SPEED)
 			  «FOREACH ((simplerailctrl::SetSpeed)nn).track AS t-»
@@ -285,7 +297,7 @@ void* ThreadFunction«i.counter1-»(void* port)
 			  		outtransition = 1;
 	          		«IF (ot.metaType.name.matches("simplerailctrl::EventWait"))-»
 	          		//test for wait-events
-			  		if (secondcounter/10 >= «((simplerailctrl::EventWait)ot).seconds«) {
+			  		if (secondcounter/10 >= «((simplerailctrl::EventWait)ot).seconds») {
 			  		    V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Wait-Transition taken.\n");
 			  			state = HASH("«((simplerailctrl::EventWait)ot).destination-»");
@@ -295,7 +307,7 @@ void* ThreadFunction«i.counter1-»(void* port)
 	          		«ENDIF-»
 	          		«IF (ot.metaType.name.matches("simplerailctrl::EventContact"))-»
 	          		//test for contact-events
-			  		if ((getcontact_sync(railway,«((simplerailctrl::EventContact)ot).track«,«((simplerailctrl::EventContact)ot).position«,1) != 0)) {
+			  		if ((getcontact_sync(railway,«((simplerailctrl::EventContact)ot).track»,«((simplerailctrl::EventContact)ot).position»,1) != 0)) {
 			  		    V(«i.counter1-»); // RELEASE THE GLOBALLOCK
 	 	                if (DEBUGCONTROLLER) printf("Event-Transition taken.\n");
 			  			state = HASH("«((simplerailctrl::EventWait)ot).destination-»");
