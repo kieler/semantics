@@ -20,6 +20,8 @@ import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
+import de.cau.cs.kieler.sim.table.TablePlugin;
+
 /**
  * The class TableDataEditing implements the editing support for DataTable entries of the table.
  * Specifically it provides a check box CellEditor for the first (present) column and String
@@ -89,15 +91,24 @@ public class TableDataEditing extends EditingSupport {
      */
     @Override
     protected boolean canEdit(final Object element) {
-        TableData tableData = (TableData) element;
+        boolean allowed = false;
+    	
+    	TableData tableData = (TableData) element;
 
         // allow to edit the present status any time
         if (this.columnIndex == COLUMN_1) {
-            return true;
+            allowed = true;
+        }
+        if (!allowed) {
+        	allowed = !tableData.isPermanent();
+        }
+        
+        if (allowed) {
+        	DataTableView.getInstance().setCurrentlyEditing(true);
         }
         
         //otherwise only allow changes if NOT permanent!
-        return (!tableData.isPermanent());
+        return allowed;
     }
 
     // -------------------------------------------------------------------------

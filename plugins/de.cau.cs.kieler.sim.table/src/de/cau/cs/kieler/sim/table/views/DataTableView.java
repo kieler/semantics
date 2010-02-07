@@ -62,6 +62,9 @@ public class DataTableView extends ViewPart {
     /** The Constant KEYBOARD_DELETE. */
     public static final int KEYBOARD_DELETE = 127;
 
+    /** The Constant KEYBOARD_DELETE. */
+    public static final int KEYBOARD_SPACE = 32;
+
     /** The Constant COLUMN_0_WIDTH. */
     private static final int COLUMN_0_WIDTH = 0;
 
@@ -88,6 +91,9 @@ public class DataTableView extends ViewPart {
 
     /** The action for deleting an entry. */
     private Action actionDelete;
+
+    /** The action for deleting an entry. */
+    private Action actionSignaltoggle;
 
     /** The toggle action for making variables/signals permanent. */
     private Action actionPermanent;
@@ -149,6 +155,7 @@ public class DataTableView extends ViewPart {
      *            true, if user is currently editing an entry
      */
     public void setCurrentlyEditing(final boolean currentlyEditingParam) {
+    	System.out.println("EDDITING: "+currentlyEditingParam);
         this.currentlyEditing = currentlyEditingParam;
     }
 
@@ -200,6 +207,10 @@ public class DataTableView extends ViewPart {
                 // if user pressed delete
                 if (e.keyCode == KEYBOARD_DELETE) {
                     getActionDelete().run();
+                }
+                // if user wants to toggle signal
+                if (e.keyCode == KEYBOARD_SPACE) {
+                    getActionSignaltoggle().run();
                 }
             }
 
@@ -287,6 +298,7 @@ public class DataTableView extends ViewPart {
      */
     private void buildContextMenu(final IMenuManager manager) {
         manager.add(getActionSignal());
+        manager.add(getActionSignaltoggle());
         manager.add(getActionPermanent());
         manager.add(new Separator());
         manager.add(getActionAdd());
@@ -307,6 +319,7 @@ public class DataTableView extends ViewPart {
         toolBarManager.add(getActionDelete());
         toolBarManager.add(new Separator());
         toolBarManager.add(getActionSignal());
+        toolBarManager.add(getActionSignaltoggle());
         toolBarManager.add(getActionPermanent());
     }
 
@@ -366,6 +379,44 @@ public class DataTableView extends ViewPart {
         actionDelete.setToolTipText("Delete Entry");
         actionDelete.setImageDescriptor(TablePlugin.getImageDescriptor("icons/delete.png"));
         return actionDelete;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to toggle presence of signals
+     * 
+     * @return the action delete
+     */
+    private Action getActionSignaltoggle() {
+        if (actionSignaltoggle != null) {
+            return actionSignaltoggle;
+        }
+        actionSignaltoggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                IStructuredSelection selection = (org.eclipse.jface.viewers.StructuredSelection) viewer
+                        .getSelection();
+                // toggle w.r.t first selected value
+                boolean presentValue = !((TableData) ((IStructuredSelection) selection)
+                        .getFirstElement()).isPresent();
+                for (int c = 0; c < selection.size(); c++) {
+                    TableData tableData = (TableData) selection.toArray()[c];
+                    boolean isSignal = tableData.isSignal();
+                    boolean isPresent = tableData.isPresent();
+                    boolean isModified = tableData.isModified();
+                    tableData.setSignal(true);
+                    tableData.setPresent(presentValue);
+                    tableData.setModified(isModified || !isSignal || (isPresent != presentValue));
+                }
+                // viewer.setSelection(null);
+                refreshViewer();
+                updateEnabled();
+            }
+        };
+        actionSignaltoggle.setText("Present/Absent");
+        actionSignaltoggle.setToolTipText("Present/Absent");
+        actionSignaltoggle.setImageDescriptor(TablePlugin.getImageDescriptor("icons/checked.png"));
+        return actionSignaltoggle;
     }
 
     // -------------------------------------------------------------------------
@@ -483,11 +534,13 @@ public class DataTableView extends ViewPart {
             getActionDelete().setEnabled(false);
             getActionPermanent().setEnabled(false);
             getActionSignal().setEnabled(false);
+            getActionSignaltoggle().setEnabled(false);
         } else {
             // object selected
             getActionDelete().setEnabled(true);
             getActionPermanent().setEnabled(true);
             getActionSignal().setEnabled(true);
+            getActionSignaltoggle().setEnabled(true);
             if (((TableData) obj).isPermanent()) {
                 actionPermanent.setChecked(true);
             } else {
@@ -497,6 +550,11 @@ public class DataTableView extends ViewPart {
                 actionSignal.setChecked(true);
             } else {
                 actionSignal.setChecked(false);
+            }
+            if (((TableData) obj).isPresent()) {
+                actionSignaltoggle.setChecked(true);
+            } else {
+                actionSignaltoggle.setChecked(false);
             }
         }
 
