@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
+import de.cau.cs.kieler.sim.esi.trace.ITraceList;
 import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -47,47 +48,45 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * 
  * @author ctr
  */
-public class EsiComponent extends JSONObjectDataComponent implements
-        IAutomatedComponent {
+public class EsiComponent extends JSONObjectDataComponent implements IAutomatedComponent {
 
-    private tracelist tracelist = null;
-    private Iterator<trace> iTrace;
-    private Iterator<tick> iTick;
+    private ITraceList tracelist;
+
+    // private tracelist tracelist = null;
+    /*
+     * private Iterator<trace> iTrace; private Iterator<tick> iTick; private trace trace; private
+     * tick tick; private int nTick;
+     */
 
     private int iteration = 0;
+
     private String traceFile = "";
 
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input)
-            throws KiemExecutionException {
-        trace trace;
-        tick tick;
+    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+
         JSONObject res = new JSONObject();
         if (tracelist != null) {
-            if (!iTick.hasNext() && iTrace.hasNext()) {
+            if (!tracelist.current().hasNext() && tracelist.hasNext()) {
                 // pos += "! reset".length();
-                trace = iTrace.next();
-                iTick = trace.getTicks().iterator();
+                tracelist.next();
             }
-            if (iTick.hasNext()) {
-                tick = iTick.next();
-                // AbstractNode node =
-                // NodeUtil.getNodeAdapter(tick).getParserNode();
+            if (tracelist.current().hasNext()) {
+                tick tick = tracelist.current().next();
                 try {
-                    for (signal s : tick.getInput()) {
+                    for (signal s : tick .getInput()) {
                         if (s.isValued()) {
-                            res.accumulate(s.getName(), JSONSignalValues
-                                    .newValue(s.getVal(), true));
+                            res
+                                    .accumulate(s.getName(), JSONSignalValues.newValue(s.getVal(),
+                                            true));
                         } else {
-                            res.accumulate(s.getName(), JSONSignalValues
-                                    .newValue(true));
+                            res.accumulate(s.getName(), JSONSignalValues.newValue(true));
                         }
                     }
                 } catch (JSONException e) {
-                    throw new KiemExecutionException(
-                            "Error building JSON Object", false, e);
+                    throw new KiemExecutionException("Error building JSON Object", false, e);
                 }
             }
         }
@@ -115,8 +114,7 @@ public class EsiComponent extends JSONObjectDataComponent implements
     @Override
     public KiemProperty[] provideProperties() {
         String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         if (page != null) {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
@@ -132,10 +130,8 @@ public class EsiComponent extends JSONObjectDataComponent implements
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File",
-                new KiemPropertyTypeFile(), traceFile);
-        properties[1] = new KiemProperty("Input Editor",
-                new KiemPropertyTypeEditor(), editorName);
+        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), traceFile);
+        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
 
@@ -145,57 +141,37 @@ public class EsiComponent extends JSONObjectDataComponent implements
     }
 
     @Override
-    public JSONObject provideInitialVariables()
-            throws KiemInitializationException {
+    public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        // if (iteration == 0) {
-        // load new trace
-
-        try {
-            String name = getProperties()[0].getValue();
-            if (traceFile != null) { // Automated run
-                name = traceFile;
-            }
-            tracelist = Helper.loadTrace(getClass(), name);
-        } catch (Exception e) {
-            throw new KiemInitializationException("Cannot open trace file",
-                    true, e);
-        }
-
-        iTrace = tracelist.getTraces().iterator();
-        for (int i = 0; i < iteration && iTrace.hasNext(); i++) {
-            iTrace.next();
-        }
-        // } // iTrace +=iteration;
-        if (iTrace.hasNext()) {
-            iTick = iTrace.next().getTicks().iterator();
-
-            HashSet<String> sigs = new HashSet<String>();
+        if (iteration == 0 || tracelist == null) {
+            // load new trace
             try {
-                for (trace trace : tracelist.getTraces()) {
-                    for (tick tick : trace.getTicks()) {
-                        for (signal s : tick.getInput()) {
-                            if (!sigs.contains(s.getName())) {
-                                sigs.add(s.getName());
-                                signals.accumulate(s.getName(),
-                                        JSONSignalValues.newValue(false));
-                            }
-                        }
-                        for (signal s : tick.getOutput()) {
-                            if (!sigs.contains(s.getName())) {
-                                sigs.add(s.getName());
-                                signals.accumulate(s.getName(),
-                                        JSONSignalValues.newValue(false));
-                            }
+                String name = getProperties()[0].getValue();
+                if (traceFile != null) { // Automated run
+                    name = traceFile;
+                }
+                tracelist = new EsiFile(getClass(), name);
+            } catch (Exception e) {
+                throw new KiemInitializationException("Cannot open trace file", true, e);
+            }
+        }
 
-                        }
-                    }
+        if (tracelist.hasNext()) {
+            tracelist.next();
+
+            try {
+
+                for (String s : tracelist.getInputs()) {
+                    signals.accumulate(s, JSONSignalValues.newValue(false));
+                }
+                for (String s : tracelist.getOutputs()) {
+                    signals.accumulate(s, JSONSignalValues.newValue(false));
+
                 }
             } catch (JSONException e) {
                 // ignore
             }
         }
-
         return signals;
     }
 
@@ -203,10 +179,10 @@ public class EsiComponent extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public boolean wantsAnotherRun() {
-        if (iTrace == null) {
+        if (tracelist == null) {
             return false;
         } else {
-            return iTrace.hasNext();
+            return tracelist.hasNext();
         }
     }
 
@@ -238,20 +214,25 @@ public class EsiComponent extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public boolean wantsNextStep() {
-        return iTick.hasNext();
+        return wantsMoreSteps() > 0;
     }
 
     /**
      * {@inheritDoc}
      */
     public int wantsMoreRuns() {
-        return wantsAnotherRun() ? 1 : 0;
+        return tracelist.getRemaining();
     }
 
     /**
      * {@inheritDoc}
      */
     public int wantsMoreSteps() {
-        return wantsNextStep() ? 1 : 0;
+
+        if (tracelist == null || tracelist.current() == null) {
+            return 0;
+        } else {
+            return tracelist.current().getRemaining();
+        }
     }
 }
