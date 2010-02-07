@@ -22,10 +22,9 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
- *  Lustre binary expression this excludes when and ->.
+ * Lustre binary expression this excludes when and ->.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -46,7 +45,8 @@ public class BinOpExpression extends Expression {
      * @param op
      *            operator to combine them
      */
-    public BinOpExpression(final String name, final Expression e1, final Expression e2, final Operator op) {
+    public BinOpExpression(final String name, final Expression e1, final Expression e2,
+            final Operator op) {
         super(name);
         this.oper = op;
         this.expr1 = e1;
@@ -148,8 +148,8 @@ public class BinOpExpression extends Expression {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
                 Expression.STAGE_INIT, clock, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression(getName(), eq1.getExpr(), eq2.getExpr(),
-                        oper));
+                new de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression(getName(), eq1.getExpr(),
+                        eq2.getExpr(), oper));
     }
 
     @Override

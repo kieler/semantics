@@ -29,13 +29,12 @@ import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
  * Implement automaton as part of clocked equations. An automaton contains other automata and
  * dataflow equations.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  * 
  */
-public class Automaton{
+public class Automaton {
     private String name;
 
     private State initial;
@@ -48,6 +47,7 @@ public class Automaton{
 
     /**
      * Get all inputs for the automaton.
+     * 
      * @return inputs
      */
     public LinkedList<Variable> getInputs() {
@@ -57,7 +57,7 @@ public class Automaton{
     /**
      * Get all output signals for the automaton.
      * 
-     * @return outputs 
+     * @return outputs
      */
     public LinkedList<Variable> getOutputs() {
         return outputs;
@@ -74,8 +74,8 @@ public class Automaton{
     }
 
     /**
-     *  Get name of the automaton.
-     *  
+     * Get name of the automaton.
+     * 
      * @return unique name
      */
     public String getName() {
@@ -95,7 +95,7 @@ public class Automaton{
      * Add a new state to the automaton.
      * 
      * @param s
-     *           the new state
+     *            the new state
      */
     public void add(final State s) {
         states.add(s);
@@ -177,8 +177,8 @@ public class Automaton{
      *            minimal priority that can be used.
      * @return Klp instructions to initialize the register required by the automaton
      */
-    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs, final boolean setOutputs,
-            final int prioOffset) {
+    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs,
+            final boolean setOutputs, final int prioOffset) {
         LinkedList<AbstractInstruction> res = new LinkedList<AbstractInstruction>();
         if (setInputs) {
             res.add(new DeclareRegInstruction(name, Kind.LOCAL));

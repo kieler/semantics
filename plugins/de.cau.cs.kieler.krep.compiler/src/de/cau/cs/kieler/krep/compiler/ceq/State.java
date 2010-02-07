@@ -29,10 +29,9 @@ import de.cau.cs.kieler.krep.compiler.klp.PrioInstruction;
  * and outgoing transitions. Transitions are either weak or strong aborts, normal termination is not
  * supported.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
-
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
+ * 
  * @author ctr
  * 
  */
@@ -195,7 +194,8 @@ public class State implements Scope {
         for (Transition t : saborts) {
             res.addAll(t.compile(ssm, name, "S"));
         }
-        AbstractInstruction i = new PrioInstruction(ssm, prioOffset + content.getDepGraph().getMaxPrio() + 1);
+        AbstractInstruction i = new PrioInstruction(ssm, prioOffset
+                + content.getDepGraph().getMaxPrio() + 1);
         i.setComment("Execute state");
         res.add(i);
         res.add(new PrioInstruction(ssm, prioOffset));
@@ -232,8 +232,8 @@ public class State implements Scope {
      *            minimal priority to use
      * @return klp instructions to initialize the used registers
      */
-    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs, final boolean setOutputs,
-            final int prioOffset) {
+    public LinkedList<AbstractInstruction> compileInit(final boolean setInputs,
+            final boolean setOutputs, final int prioOffset) {
         KlpProgram klp = new KlpProgram(name, content);
         return klp.compileInit(true, name, false, setOutputs, prioOffset);
     }

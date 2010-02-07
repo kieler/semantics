@@ -23,8 +23,7 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Implement the possible immediate access to a Lustre variable.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  * 
@@ -84,7 +83,7 @@ public class VarAccessExpression extends Expression {
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        setClock(var.getClock().clone()); 
+        setClock(var.getClock().clone());
         return new ClockList();
     }
 
@@ -106,7 +105,8 @@ public class VarAccessExpression extends Expression {
     @Override
     public Expression liftClock() {
         if (!getClock().isBase()) {
-            return new WhenExpression(this.getName(), this, new VarAccessExpression(Variable.get(getClock().getClock())));
+            return new WhenExpression(this.getName(), this, new VarAccessExpression(Variable
+                    .get(getClock().getClock())));
         } else {
             return this;
         }

@@ -83,10 +83,7 @@ public class JNIConnection implements IConnection {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     */
+    /** {@inheritDoc} */
     public String hark(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         while (res.length() < n && krep.hasOutput()) {
@@ -95,10 +92,7 @@ public class JNIConnection implements IConnection {
         return res.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     */
+    /** {@inheritDoc} */
     public String receive(final char exit) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         char c;

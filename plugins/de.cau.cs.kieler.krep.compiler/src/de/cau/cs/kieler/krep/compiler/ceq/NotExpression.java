@@ -26,9 +26,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * A boolean not.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  */
 public class NotExpression extends Expression {
@@ -85,7 +84,8 @@ public class NotExpression extends Expression {
             // Variable v = Variable.getTemp(name, e.getType());
             // VarAccess va = new VarAccess(v, false);
             instr.addAll(expr.toKlp(r));
-            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false)), 1, Operator.XOR));
+            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false)), 1,
+                    Operator.XOR));
             // System.err.println("Non trivial not:" + e.toString());
         } else {
             VarAccessExpression v = (VarAccessExpression) expr;

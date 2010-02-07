@@ -24,10 +24,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Lustre "if" Expression.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class IfExpression extends Expression {
     private Expression expr1, expr2, expr3;
@@ -42,7 +41,8 @@ public class IfExpression extends Expression {
      * @param e3
      *            expression to evaluate in else case
      */
-    public IfExpression(final String name, final Expression e1, final Expression e2, final Expression e3) {
+    public IfExpression(final String name, final Expression e1, final Expression e2,
+            final Expression e3) {
         super(name);
         this.expr1 = e1;
         this.expr2 = e2;
@@ -122,8 +122,8 @@ public class IfExpression extends Expression {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq3 = expr3.declock(basename,
                 Expression.STAGE_INIT, c, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.IfExpression(getName(), eq1.getExpr(), eq2.getExpr(), eq3
-                        .getExpr()));
+                new de.cau.cs.kieler.krep.compiler.ceq.IfExpression(getName(), eq1.getExpr(), eq2
+                        .getExpr(), eq3.getExpr()));
     }
 
     @Override
@@ -131,7 +131,8 @@ public class IfExpression extends Expression {
         expr1 = expr1.liftClock();
         expr2 = expr2.liftClock();
         expr3 = expr3.liftClock();
-        if (expr1 instanceof WhenExpression && expr2 instanceof WhenExpression && expr3 instanceof WhenExpression) {
+        if (expr1 instanceof WhenExpression && expr2 instanceof WhenExpression
+                && expr3 instanceof WhenExpression) {
             WhenExpression w1 = (WhenExpression) expr1;
             WhenExpression w2 = (WhenExpression) expr2;
             WhenExpression w3 = (WhenExpression) expr3;

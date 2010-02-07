@@ -25,7 +25,6 @@ import de.cau.cs.kieler.krep.compiler.klp.JmpInstruction;
 import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
 import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
 import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction.Cond;
-import de.cau.cs.kieler.krep.compiler.util.TempName;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
@@ -41,6 +40,8 @@ public class IfExpression extends Expression {
     private Expression expr1, expr2, expr3;
 
     /**
+     * Generate new expression if e1 then e2 else e3.
+     * 
      * @param name
      *            name of the expression
      * @param e1
@@ -50,7 +51,8 @@ public class IfExpression extends Expression {
      * @param e3
      *            expression for else case
      */
-    public IfExpression(final String name, final Expression e1, final Expression e2, final Expression e3) {
+    public IfExpression(final String name, final Expression e1, final Expression e2,
+            final Expression e3) {
         super(name);
         this.expr1 = e1;
         this.expr2 = e2;

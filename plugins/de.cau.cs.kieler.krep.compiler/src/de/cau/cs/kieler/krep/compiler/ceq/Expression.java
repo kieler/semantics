@@ -24,8 +24,7 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * Abstract superclass for all ceq Expressions. Note that every sub-expression should have a unique
  * name.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -117,7 +116,7 @@ public abstract class Expression {
     public abstract LinkedList<AbstractInstruction> toKlp(Variable to);
 
     /**
-     * get unique name of the expression
+     * Get unique name of the expression.
      * 
      * @return name of the expression
      */

@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.krep.compiler.ceq;
 
-import java.util.HashMap;
-
 import de.cau.cs.kieler.krep.compiler.klp.LabelInstruction;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
@@ -22,8 +20,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * A Variable declaration in CEQ. A variable has a name, a type and a scope, i.e., input output,
  * local or temporary. A variable also has a register id.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  */
 public class Variable {
@@ -96,7 +94,7 @@ public class Variable {
         this.io = kind;
         this.type = t;
         id = nValue[getKindId(kind)]++;
-        
+
         Program.addVar(n, this);
     }
 
@@ -111,8 +109,6 @@ public class Variable {
     public Variable(final de.cau.cs.kieler.krep.compiler.lustre.Variable var, final Kind kind) {
         this(var.getName(), kind, var.getType());
     }
-
-
 
     /**
      * @return variable kind, ie, input, output, local or temp
@@ -230,6 +226,5 @@ public class Variable {
         }
         return id + i;
     }
-
 
 }

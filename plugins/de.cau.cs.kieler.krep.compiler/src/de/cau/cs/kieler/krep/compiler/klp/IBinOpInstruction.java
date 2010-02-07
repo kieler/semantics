@@ -19,8 +19,7 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
 /**
  * Immediate binary operation.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -43,7 +42,8 @@ public class IBinOpInstruction extends AbstractInstruction {
      * @param operator
      *            operation
      */
-    public IBinOpInstruction(final Variable toVar, final RegAccess read, final int c, final Operator operator) {
+    public IBinOpInstruction(final Variable toVar, final RegAccess read, final int c,
+            final Operator operator) {
         super();
         this.to = toVar;
         this.r1 = read;

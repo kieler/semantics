@@ -27,9 +27,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * CEQ program, eg, a set of CEQ equation and Safe State Machines plus information on inputs and
  * outputs.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  * */
 public class Program {
@@ -73,14 +72,12 @@ public class Program {
      */
     private DepGraph depGraph = null;
 
-   // private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
+    // private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
 
     private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
-   
-    private static  int labels;
 
-  
-    
+    private static int labels;
+
     /**
      * generate empty program.
      * 
@@ -90,7 +87,7 @@ public class Program {
     public Program(final String n) {
         vars.clear();
         temps.clear();
-        labels =0;
+        labels = 0;
         this.setName(n);
     }
 
@@ -105,7 +102,7 @@ public class Program {
     public Program(final String n, final Program p) {
         vars.clear();
         temps.clear();
-        labels =0;
+        labels = 0;
         this.setName(n);
         this.setVars(p.getVars());
         this.setInputs(p.getInputs());
@@ -220,7 +217,7 @@ public class Program {
         }
         res.append("tel\n");
         return res.toString();
-        
+
     }
 
     /**
@@ -549,7 +546,7 @@ public class Program {
      *            the new variables of the program
      */
     protected void setVars(final HashMap<String, Variable> v) {
-        this.vars = v;
+        Program.vars = v;
     }
 
     /**
@@ -558,7 +555,7 @@ public class Program {
     protected HashMap<String, Variable> getVars() {
         return vars;
     }
-    
+
     /**
      * Generate new variable. Implements singleton pattern.
      * 
@@ -575,7 +572,7 @@ public class Program {
     }
 
     /**
-     * Generate new, unique variable. 
+     * Generate new, unique variable.
      * 
      * @param name
      *            name of the variable
@@ -593,7 +590,7 @@ public class Program {
         }
         return v;
     }
-    
+
     /**
      * @param prefix
      *            of the temporary variable
@@ -644,14 +641,15 @@ public class Program {
             System.err.println("variable " + n + " already defined");
         }
         vars.put(n, variable);
-     }
-    
+    }
+
     /**
-     * Generate a unique label
+     * Generate a unique label.
+     * 
      * @return a unique name for a label
      */
     public static String getLabel() {
-        labels ++;
+        labels++;
         return "L_" + labels;
     }
 

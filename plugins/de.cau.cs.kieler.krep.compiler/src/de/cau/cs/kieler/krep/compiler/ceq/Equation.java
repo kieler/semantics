@@ -29,8 +29,7 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
  * A clocked equation, consisting of a name, a initial expression, a runtime expression, and a
  * clock.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -80,15 +79,15 @@ public class Equation {
      * @param id
      *            name of the equation
      * @param expr
-     *            expres * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tamsion to compute the equation.
+     *            expres * @kieler.rating 2010-02-05 yellow review by cmot, msp, tamsion to compute
+     *            the equation.
      */
     public Equation(final String id, final Expression expr) {
         this(id, null, expr, null);
     }
 
     /**
-     * Show the equation in Lustre format: v=init -> current(e when c)
+     * Show the equation in Lustre format: v=init -> current(e when c).
      * 
      * @return Lustre equation for the clocked equation.
      */
@@ -215,8 +214,8 @@ public class Equation {
         // init code
         instr.add(l);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(
-                    Program.getVar(clock), false), lInit));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.T, new RegAccess(Program
+                    .getVar(clock), false), lInit));
             instr.add(new DoneInstruction(l));
             instr.add(lInit);
         }
@@ -231,8 +230,8 @@ public class Equation {
         }
         instr.add(lRun);
         if (!useClocks && hasClock()) {
-            instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(
-                    Program.getVar(clock), false), lDone));
+            instr.add(new CJmpInstruction(CJmpInstruction.Cond.F, new RegAccess(Program
+                    .getVar(clock), false), lDone));
         }
         for (Expression e : es) {
             instr.addAll(e.toKlp(Program.getVar(e.getName())));

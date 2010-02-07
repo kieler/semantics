@@ -13,7 +13,9 @@
  */
 
 /**
- * Support for the smakc compiler to translate kit files into KEP assembler. This is rather experimental, and could be replaced by an additional backend for the SyncCharts to SC compiler.
+ * Support for the smakc compiler to translate kit files into KEP assembler. This is 
+ * rather experimental, and could be replaced by an additional backend for the SyncCharts to SC compiler.
+ *
  * @author ctr 
  */
 package de.cau.cs.kieler.krep.evalbench.smakc;

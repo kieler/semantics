@@ -20,10 +20,9 @@ import de.cau.cs.kieler.krep.compiler.lustre.Operator;
  * 
  * Binary operation.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class BinOpInstruction extends AbstractInstruction {
     private Variable to;
@@ -40,7 +39,8 @@ public class BinOpInstruction extends AbstractInstruction {
      * @param operator
      *            operator
      */
-    public BinOpInstruction(final Variable toVar, final RegAccess read1, final RegAccess read2, final Operator operator) {
+    public BinOpInstruction(final Variable toVar, final RegAccess read1, final RegAccess read2,
+            final Operator operator) {
         super();
         this.to = toVar;
         this.r1 = read1;
