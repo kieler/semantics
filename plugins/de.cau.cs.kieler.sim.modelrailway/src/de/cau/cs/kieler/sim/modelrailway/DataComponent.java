@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.Platform;
 
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -90,7 +91,13 @@ public class DataComponent extends JSONObjectDataComponent implements
 		try {
 			String path = (org.eclipse.core.runtime.FileLocator
 					.toFileURL(Activator.getDefault().getBundle().getResource(
-							"/lib/railway.dll"))).toString();
+							"/lib/railway32.dll"))).toString();
+			if (Platform.isLinux() || Platform.isSolaris()) {
+	                        path = (org.eclipse.core.runtime.FileLocator
+                                        .toFileURL(Activator.getDefault().getBundle().getResource(
+                                                        "/lib/railway32.so"))).toString();
+			    
+			}
 			path = path.replaceFirst("file:/", "");
 			System.out.println(path);
 			return path;
