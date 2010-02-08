@@ -44,7 +44,10 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * 
  * @author ctr
  */
-public class EsoComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public class EsoComponent extends JSONObjectDataComponent implements
+        IAutomatedProducer {
+
+    private static final String[] SUPPORTED_FILES = { "kasm" };
 
     private tracelist tracelist = null;
     private Iterator<trace> iTrace;
@@ -59,7 +62,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+    public JSONObject step(final JSONObject input)
+            throws KiemExecutionException {
         trace trace;
         tick tick;
         JSONObject res = new JSONObject();
@@ -83,8 +87,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
                                 break;
                             }
                             if (sig.isValued()) {
-                                if ((Integer) (JSONSignalValues.getSignalValue(obj)) != sig
-                                        .getVal()) {
+                                if ((Integer) (JSONSignalValues
+                                        .getSignalValue(obj)) != sig.getVal()) {
                                     valid = false;
                                     break;
                                 }
@@ -115,10 +119,12 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
                     // }
                     // }
                     isValid = isValid && valid;
-                    res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
+                    res.accumulate("valid", JSONSignalValues.newValue(pos,
+                            valid));
 
                 } catch (JSONException e) {
-                    throw new KiemExecutionException("Error building JSON Object", false, e);
+                    throw new KiemExecutionException(
+                            "Error building JSON Object", false, e);
                 }
             }
             pos++;
@@ -131,7 +137,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     // additional methods
     /** {@inheritDoc} */
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject provideInitialVariables()
+            throws KiemInitializationException {
         JSONObject res = new JSONObject();
         try {
             res.accumulate("valid", JSONSignalValues.newValue(true));
@@ -148,7 +155,6 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
             tracelist = Helper.loadTrace(getClass(), traceFile);
             iTrace = tracelist.getTraces().iterator();
             iTick = iTrace.next().getTicks().iterator();
-        }else{
         }
     }
 
@@ -165,7 +171,8 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     @Override
     public KiemProperty[] provideProperties() {
         String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
         if (page != null) {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
@@ -181,9 +188,11 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(),
+        properties[0] = new KiemProperty("Input File",
+                new KiemPropertyTypeFile(),
                 "/home/ctr/runtime-EclipseApplication/test/abro.esi");
-        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
+        properties[1] = new KiemProperty("Input Editor",
+                new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
 
@@ -195,16 +204,10 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     /**
      * {@inheritDoc}
      */
-    public boolean wantsAnotherRun() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public List<KiemProperty> produceInformation() {
         List<KiemProperty> res = new LinkedList<KiemProperty>();
-        res.add(new KiemProperty("valid", new KiemPropertyTypeBool(), String.valueOf(isValid)));
+        res.add(new KiemProperty("valid", new KiemPropertyTypeBool(), String
+                .valueOf(isValid)));
         return res;
     }
 
@@ -227,13 +230,6 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
     /**
      * {@inheritDoc}
      */
-    public boolean wantsNextStep() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public int wantsMoreRuns() {
         return 0;
     }
@@ -243,5 +239,12 @@ public class EsoComponent extends JSONObjectDataComponent implements IAutomatedP
      */
     public int wantsMoreSteps() {
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getSupportedExtensions() {
+        return SUPPORTED_FILES;
     }
 }

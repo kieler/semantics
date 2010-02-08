@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -31,8 +29,6 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
-import de.cau.cs.kieler.sim.esi.esi.trace;
-import de.cau.cs.kieler.sim.esi.esi.tracelist;
 import de.cau.cs.kieler.sim.esi.trace.ITraceList;
 import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -48,7 +44,10 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * 
  * @author ctr
  */
-public class EsiComponent extends JSONObjectDataComponent implements IAutomatedComponent {
+public class EsiComponent extends JSONObjectDataComponent implements
+        IAutomatedComponent {
+
+    private static final String[] SUPPORTED_FILES = { "kasm" };
 
     private ITraceList tracelist;
 
@@ -65,7 +64,8 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+    public JSONObject step(final JSONObject input)
+            throws KiemExecutionException {
 
         JSONObject res = new JSONObject();
         if (tracelist != null) {
@@ -76,17 +76,18 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
             if (tracelist.current().hasNext()) {
                 tick tick = tracelist.current().next();
                 try {
-                    for (signal s : tick .getInput()) {
+                    for (signal s : tick.getInput()) {
                         if (s.isValued()) {
-                            res
-                                    .accumulate(s.getName(), JSONSignalValues.newValue(s.getVal(),
-                                            true));
+                            res.accumulate(s.getName(), JSONSignalValues
+                                    .newValue(s.getVal(), true));
                         } else {
-                            res.accumulate(s.getName(), JSONSignalValues.newValue(true));
+                            res.accumulate(s.getName(), JSONSignalValues
+                                    .newValue(true));
                         }
                     }
                 } catch (JSONException e) {
-                    throw new KiemExecutionException("Error building JSON Object", false, e);
+                    throw new KiemExecutionException(
+                            "Error building JSON Object", false, e);
                 }
             }
         }
@@ -114,7 +115,8 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     @Override
     public KiemProperty[] provideProperties() {
         String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
         if (page != null) {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
@@ -130,8 +132,10 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), traceFile);
-        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
+        properties[0] = new KiemProperty("Input File",
+                new KiemPropertyTypeFile(), traceFile);
+        properties[1] = new KiemProperty("Input Editor",
+                new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
 
@@ -141,7 +145,8 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
     }
 
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject provideInitialVariables()
+            throws KiemInitializationException {
         JSONObject signals = new JSONObject();
         if (iteration == 0 || tracelist == null) {
             // load new trace
@@ -152,7 +157,8 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
                 }
                 tracelist = new EsiFile(getClass(), name);
             } catch (Exception e) {
-                throw new KiemInitializationException("Cannot open trace file", true, e);
+                throw new KiemInitializationException("Cannot open trace file",
+                        true, e);
             }
         }
 
@@ -177,19 +183,11 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws KiemInitializationException
      */
-    public boolean wantsAnotherRun() {
-        if (tracelist == null) {
-            return false;
-        } else {
-            return tracelist.hasNext();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setParameters(final List<KiemProperty> properties) {
+    public void setParameters(final List<KiemProperty> properties)
+            throws KiemInitializationException {
         String model = null;
         for (KiemProperty p : properties) {
             if (p.getKey().equals(MODEL_FILE)) {
@@ -207,20 +205,33 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
 
             traceFile = file.getLocation().toOSString();
             properties.add(new KiemProperty("TRACE", traceFile));
+
+            if (iteration == 0 || tracelist == null) {
+                // FIXME: tracelist has to be available before
+                // initExecution() is called
+                // load new trace
+                try {
+                    String name = getProperties()[0].getValue();
+                    if (traceFile != null) { // Automated run
+                        name = traceFile;
+                    }
+                    tracelist = new EsiFile(getClass(), name);
+                } catch (Exception e) {
+                    throw new KiemInitializationException(
+                            "Can't find trace file", false, e);
+
+                }
+            }
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean wantsNextStep() {
-        return wantsMoreSteps() > 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public int wantsMoreRuns() {
+        if (tracelist == null) {
+            return 0;
+        }
         return tracelist.getRemaining();
     }
 
@@ -234,5 +245,12 @@ public class EsiComponent extends JSONObjectDataComponent implements IAutomatedC
         } else {
             return tracelist.current().getRemaining();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getSupportedExtensions() {
+        return SUPPORTED_FILES;
     }
 }

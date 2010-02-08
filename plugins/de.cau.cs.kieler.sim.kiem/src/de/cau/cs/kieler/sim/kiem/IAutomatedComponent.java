@@ -41,30 +41,20 @@ public interface IAutomatedComponent {
      * 
      * @param properties
      *            some info
+     * @throws KiemInitializationException
+     *             if something went wrong while initializing the component
      */
-    void setParameters(List<KiemProperty> properties);
+    void setParameters(List<KiemProperty> properties)
+            throws KiemInitializationException;
 
     /**
-     * Ask the component if it wants to do another run. This causes the entire
-     * execution to be executed again with an incremented index.
+     * Getter for the list of model file extensions that are supported by the
+     * component. Combinations of model files with execution files that don't
+     * have at least one supporting component will not be executed.
      * 
-     * @return true if the component wants another run.
-     * @deprecated use wantsMoreRuns() instead
+     * @return the list of supported model file extensions
      */
-    @Deprecated
-    boolean wantsAnotherRun();
-
-    /**
-     * Ask the component if it wants to do another step. As soon as all
-     * components answer with false the execution is stopped, the producers are
-     * asked to supply data and the components will be asked if they want
-     * another run.
-     * 
-     * @return true if another step should be performed
-     * @deprecated use wantsMoreSteps() instead
-     */
-    @Deprecated
-    boolean wantsNextStep();
+    String[] getSupportedExtensions();
 
     /**
      * Ask the component if it wants to do more runs. This causes the entire

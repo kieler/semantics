@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -88,6 +89,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
  */
 public final class DataComponent extends JSONObjectDataComponent implements
         IAutomatedProducer {
+
+    private static final String[] SUPPORTED_FILES = { "kasm" };
 
     private IConnection connection = null;
     private CommunicationProtocol protocol = null;
@@ -684,20 +687,6 @@ public final class DataComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    public boolean wantsAnotherRun() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean wantsNextStep() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public int wantsMoreRuns() {
         return 0;
     }
@@ -707,6 +696,13 @@ public final class DataComponent extends JSONObjectDataComponent implements
      */
     public int wantsMoreSteps() {
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getSupportedExtensions() {
+        return SUPPORTED_FILES;
     }
 
 }
