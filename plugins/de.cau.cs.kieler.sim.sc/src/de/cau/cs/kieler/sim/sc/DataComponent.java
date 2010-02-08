@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.lang.annotation.Inherited;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -104,9 +103,11 @@ public class DataComponent extends JSONObjectDataComponent {
 
         String bundleLocation = url.getFile();
         // because of windows vs Linux
+        System.out.println("PATH: " + bundleLocation);
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation.startsWith("\\")) {
-            bundleLocation = bundleLocation.substring(1);
+        System.out.println("PATH: " + bundleLocation);
+        if (bundleLocation.startsWith("\\")){
+        	bundleLocation = bundleLocation.substring(1);
         }
 
         try {
@@ -217,10 +218,6 @@ public class DataComponent extends JSONObjectDataComponent {
         return out;
     }
 
-    @SuppressWarnings("unused")
-    /*
-     * just unused for debugging
-     */
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {
             String[] entries = dir.list();

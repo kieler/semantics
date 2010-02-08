@@ -1,4 +1,4 @@
-#Thu Jan 28 20:20:30 CET 2010
+#Mon Feb 08 23:06:26 CET 2010
 eclipse.preferences.version=1
 encoding//src/sc.mwe=UTF-8
 encoding//src/template/Codegen.xpt=UTF-8
@@ -8,5 +8,6 @@ encoding//src/template/CodegenMisc.xpt=UTF-8
 encoding//src/template/CodegenRegion.xpt=UTF-8
 encoding//src/template/CodegenState.xpt=UTF-8
 encoding//src/template/CodegenTransition.xpt=UTF-8
+encoding//src/template/CodegenTriggerAndEffect.xpt=UTF-8
 encoding//src/template/Helper.ext=UTF-8
 encoding//src/template/SimCodegen.xpt=UTF-8
