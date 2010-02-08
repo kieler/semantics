@@ -38,138 +38,138 @@ package de.cau.cs.kieler.synccharts;
  */
 public interface Transition extends Action {
 	/**
-	 * Returns the value of the '<em><b>Priority</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Priority</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Priority</em>' attribute.
-	 * @see #setPriority(int)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_Priority()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Priority</em>' attribute.
+     * @see #setPriority(int)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_Priority()
+     * @model
+     * @generated
+     */
 	int getPriority();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getPriority <em>Priority</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getPriority <em>Priority</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Priority</em>' attribute.
-	 * @see #getPriority()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Priority</em>' attribute.
+     * @see #getPriority()
+     * @generated
+     */
 	void setPriority(int value);
 
 	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.TransitionType}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Type</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.TransitionType}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.synccharts.TransitionType
-	 * @see #setType(TransitionType)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_Type()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.synccharts.TransitionType
+     * @see #setType(TransitionType)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_Type()
+     * @model required="true"
+     * @generated
+     */
 	TransitionType getType();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getType <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.synccharts.TransitionType
-	 * @see #getType()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.synccharts.TransitionType
+     * @see #getType()
+     * @generated
+     */
 	void setType(TransitionType value);
 
 	/**
-	 * Returns the value of the '<em><b>Target State</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Target State</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target State</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target State</em>' reference.
-	 * @see #setTargetState(State)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_TargetState()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Target State</em>' reference.
+     * @see #setTargetState(State)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_TargetState()
+     * @model required="true"
+     * @generated
+     */
 	State getTargetState();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getTargetState <em>Target State</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getTargetState <em>Target State</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Target State</em>' reference.
-	 * @see #getTargetState()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Target State</em>' reference.
+     * @see #getTargetState()
+     * @generated
+     */
 	void setTargetState(State value);
 
 	/**
-	 * Returns the value of the '<em><b>Source State</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Source State</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Source State</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Source State</em>' container reference.
-	 * @see #setSourceState(State)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_SourceState()
-	 * @see de.cau.cs.kieler.synccharts.State#getOutgoingTransitions
-	 * @model opposite="outgoingTransitions" required="true" transient="false"
-	 * @generated
-	 */
+     * @return the value of the '<em>Source State</em>' container reference.
+     * @see #setSourceState(State)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_SourceState()
+     * @see de.cau.cs.kieler.synccharts.State#getOutgoingTransitions
+     * @model opposite="outgoingTransitions" required="true" transient="false"
+     * @generated
+     */
 	State getSourceState();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getSourceState <em>Source State</em>}' container reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#getSourceState <em>Source State</em>}' container reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Source State</em>' container reference.
-	 * @see #getSourceState()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Source State</em>' container reference.
+     * @see #getSourceState()
+     * @generated
+     */
 	void setSourceState(State value);
 
 	/**
-	 * Returns the value of the '<em><b>Is History</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Is History</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Is History</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is History</em>' attribute.
-	 * @see #setIsHistory(boolean)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_IsHistory()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Is History</em>' attribute.
+     * @see #setIsHistory(boolean)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransition_IsHistory()
+     * @model
+     * @generated
+     */
 	boolean isIsHistory();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#isIsHistory <em>Is History</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Transition#isIsHistory <em>Is History</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is History</em>' attribute.
-	 * @see #isIsHistory()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Is History</em>' attribute.
+     * @see #isIsHistory()
+     * @generated
+     */
 	void setIsHistory(boolean value);
 
 } // Transition

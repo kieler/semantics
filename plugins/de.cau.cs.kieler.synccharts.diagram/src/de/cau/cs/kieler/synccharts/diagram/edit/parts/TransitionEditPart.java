@@ -103,14 +103,13 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
 
     protected Connection createConnectionFigure() {
         final TransitionFigure figure = new TransitionFigure();
-        
+
         // TODO better way to listen?
         Object store = getDiagramPreferencesHint().getPreferenceStore();
         if (store instanceof IPreferenceStore) {
             figure.setSplineMode(((IPreferenceStore) store)
                     .getInt(TransitionFigure.PREF_SPLINE_MODE));
             ((IPreferenceStore) store).addPropertyChangeListener(new IPropertyChangeListener() {
-                @Override
                 public void propertyChange(org.eclipse.jface.util.PropertyChangeEvent event) {
                     if (event.getProperty().equals(TransitionFigure.PREF_SPLINE_MODE)) {
                         figure.setSplineMode((Integer) event.getNewValue());

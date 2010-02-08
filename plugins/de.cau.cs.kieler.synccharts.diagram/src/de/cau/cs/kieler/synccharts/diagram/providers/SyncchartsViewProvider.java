@@ -58,6 +58,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEdit
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyText2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyTextEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
@@ -319,6 +321,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
                         .RGBToInteger(fillRGB));
         Node label5008 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateLabelEditPart.VISUAL_ID));
+        Node label5011 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(StateBodyTextEditPart.VISUAL_ID));
         createCompartment(node, SyncchartsVisualIDRegistry.getType(StateSignalEditPart.VISUAL_ID),
                 true, false, false, false);
         createCompartment(node, SyncchartsVisualIDRegistry
@@ -413,6 +417,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
                         .RGBToInteger(fillRGB));
         Node label5007 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateLabel2EditPart.VISUAL_ID));
+        Node label5010 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(StateBodyText2EditPart.VISUAL_ID));
         createCompartment(node, SyncchartsVisualIDRegistry.getType(StateSignal2EditPart.VISUAL_ID),
                 true, false, false, false);
         createCompartment(node, SyncchartsVisualIDRegistry

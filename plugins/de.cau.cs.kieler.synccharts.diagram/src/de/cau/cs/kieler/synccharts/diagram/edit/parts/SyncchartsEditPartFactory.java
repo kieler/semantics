@@ -39,6 +39,9 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case StateLabelEditPart.VISUAL_ID:
                 return new StateLabelEditPart(view);
 
+            case StateBodyTextEditPart.VISUAL_ID:
+                return new StateBodyTextEditPart(view);
+
             case Region2EditPart.VISUAL_ID:
                 return new Region2EditPart(view);
 
@@ -50,6 +53,9 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
 
             case StateLabel2EditPart.VISUAL_ID:
                 return new StateLabel2EditPart(view);
+
+            case StateBodyText2EditPart.VISUAL_ID:
+                return new StateBodyText2EditPart(view);
 
             case SignalEditPart.VISUAL_ID:
                 return new SignalEditPart(view);

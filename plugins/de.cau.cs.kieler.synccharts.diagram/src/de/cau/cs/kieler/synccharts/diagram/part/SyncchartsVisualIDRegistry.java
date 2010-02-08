@@ -23,6 +23,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEdit
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyText2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyTextEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
@@ -245,6 +247,9 @@ public class SyncchartsVisualIDRegistry {
             if (StateLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
+            if (StateBodyTextEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
             if (StateSignalEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
@@ -274,6 +279,9 @@ public class SyncchartsVisualIDRegistry {
             break;
         case State2EditPart.VISUAL_ID:
             if (StateLabel2EditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateBodyText2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (StateSignal2EditPart.VISUAL_ID == nodeVisualID) {

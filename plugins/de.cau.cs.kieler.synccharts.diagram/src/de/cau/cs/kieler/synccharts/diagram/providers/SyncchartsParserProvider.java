@@ -20,6 +20,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4E
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyText2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyTextEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
@@ -47,6 +49,24 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             stateLabel_5008Parser = parser;
         }
         return stateLabel_5008Parser;
+    }
+
+    /**
+     * @generated
+     */
+    private IParser stateBodyText_5011Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getStateBodyText_5011Parser() {
+        if (stateBodyText_5011Parser == null) {
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_BodyText() };
+            MessageFormatParser parser = new MessageFormatParser(features);
+            stateBodyText_5011Parser = parser;
+        }
+        return stateBodyText_5011Parser;
     }
 
     /**
@@ -83,6 +103,24 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             stateLabel_5007Parser = parser;
         }
         return stateLabel_5007Parser;
+    }
+
+    /**
+     * @generated
+     */
+    private IParser stateBodyText_5010Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getStateBodyText_5010Parser() {
+        if (stateBodyText_5010Parser == null) {
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_BodyText() };
+            MessageFormatParser parser = new MessageFormatParser(features);
+            stateBodyText_5010Parser = parser;
+        }
+        return stateBodyText_5010Parser;
     }
 
     /**
@@ -223,10 +261,14 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
         switch (visualID) {
         case StateLabelEditPart.VISUAL_ID:
             return getStateLabel_5008Parser();
+        case StateBodyTextEditPart.VISUAL_ID:
+            return getStateBodyText_5011Parser();
         case RegionIdEditPart.VISUAL_ID:
             return getRegionId_5009Parser();
         case StateLabel2EditPart.VISUAL_ID:
             return getStateLabel_5007Parser();
+        case StateBodyText2EditPart.VISUAL_ID:
+            return getStateBodyText_5010Parser();
         case SignalNameEditPart.VISUAL_ID:
             return getSignalName_5001Parser();
         case ActionTriggersAndEffectsEditPart.VISUAL_ID:

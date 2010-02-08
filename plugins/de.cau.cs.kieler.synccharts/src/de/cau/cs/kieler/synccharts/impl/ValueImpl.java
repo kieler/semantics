@@ -31,22 +31,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ValueImpl extends ExpressionImpl implements Value {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ValueImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.VALUE;
-	}
+        return SyncchartsPackage.Literals.VALUE;
+    }
 
 } //ValueImpl

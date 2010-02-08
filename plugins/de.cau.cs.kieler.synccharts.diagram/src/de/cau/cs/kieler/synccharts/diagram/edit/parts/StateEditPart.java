@@ -125,6 +125,11 @@ public class StateEditPart extends ShapeNodeEditPart {
                     .getFigureStateNameFigure());
             return true;
         }
+        if (childEditPart instanceof StateBodyTextEditPart) {
+            ((StateBodyTextEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureBodyTextFigure());
+            return true;
+        }
         return false;
     }
 
@@ -133,6 +138,9 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateLabelEditPart) {
+            return true;
+        }
+        if (childEditPart instanceof StateBodyTextEditPart) {
             return true;
         }
         return false;
@@ -335,6 +343,11 @@ public class StateEditPart extends ShapeNodeEditPart {
         /**
          * @generated
          */
+        private WrappingLabel fFigureBodyTextFigure;
+
+        /**
+         * @generated
+         */
         public StateFigure() {
 
             StateLayout layoutThis = new StateLayout();
@@ -365,6 +378,11 @@ public class StateEditPart extends ShapeNodeEditPart {
 
             this.add(polyline0);
 
+            fFigureBodyTextFigure = new WrappingLabel();
+            fFigureBodyTextFigure.setText("");
+
+            this.add(fFigureBodyTextFigure);
+
         }
 
         /**
@@ -391,6 +409,13 @@ public class StateEditPart extends ShapeNodeEditPart {
          */
         public WrappingLabel getFigureStateNameFigure() {
             return fFigureStateNameFigure;
+        }
+
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureBodyTextFigure() {
+            return fFigureBodyTextFigure;
         }
 
     }

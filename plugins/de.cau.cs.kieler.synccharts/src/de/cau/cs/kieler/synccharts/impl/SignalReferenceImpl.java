@@ -41,129 +41,129 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class SignalReferenceImpl extends ExpressionImpl implements SignalReference {
 	/**
-	 * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSignal()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getSignal()
+     * @generated
+     * @ordered
+     */
 	protected Signal signal;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected SignalReferenceImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.SIGNAL_REFERENCE;
-	}
+        return SyncchartsPackage.Literals.SIGNAL_REFERENCE;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal getSignal() {
-		if (signal != null && signal.eIsProxy()) {
-			InternalEObject oldSignal = (InternalEObject)signal;
-			signal = (Signal)eResolveProxy(oldSignal);
-			if (signal != oldSignal) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL, oldSignal, signal));
-			}
-		}
-		return signal;
-	}
+        if (signal != null && signal.eIsProxy()) {
+            InternalEObject oldSignal = (InternalEObject)signal;
+            signal = (Signal)eResolveProxy(oldSignal);
+            if (signal != oldSignal) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL, oldSignal, signal));
+            }
+        }
+        return signal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal basicGetSignal() {
-		return signal;
-	}
+        return signal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setSignal(Signal newSignal) {
-		Signal oldSignal = signal;
-		signal = newSignal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL, oldSignal, signal));
-	}
+        Signal oldSignal = signal;
+        signal = newSignal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL, oldSignal, signal));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
-				if (resolve) return getSignal();
-				return basicGetSignal();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
+                if (resolve) return getSignal();
+                return basicGetSignal();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
-				setSignal((Signal)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
+                setSignal((Signal)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
-				setSignal((Signal)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
+                setSignal((Signal)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
-				return signal != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_REFERENCE__SIGNAL:
+                return signal != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //SignalReferenceImpl

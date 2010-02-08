@@ -21,6 +21,14 @@
         <features
             href="synccharts.ecore#//State/label"/>
       </labelMappings>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping"
+          editorPattern="">
+        <diagramLabel
+            href="synccharts.gmfgraph#BodyText"/>
+        <features
+            href="synccharts.ecore#//State/bodyText"/>
+      </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
           href="synccharts.gmftool#//@palette/@tools.0/@tools.0"/>
