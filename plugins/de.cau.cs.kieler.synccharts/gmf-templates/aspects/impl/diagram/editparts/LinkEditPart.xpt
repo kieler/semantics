@@ -20,6 +20,10 @@
 		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
 			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
 		}
+		«REM»temporary spline code«ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.SplineConnection) {
+			((de.cau.cs.kieler.core.ui.figures.SplineConnection) figure).setSplineMode(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore().getInt(SplineConnection.PREF_SPLINE_MODE));
+		}
 		return figure;
 	}
 
