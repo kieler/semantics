@@ -34,9 +34,10 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 
 /**
- * A special layout for states: If the state is simple, its name is written in the center and the
- * compartments are reduced in size to zero. If the state is complex, the name is written on top and
- * the compartments are laid out in a column below the name.
+ * A special layout for states: If the state is simple, its name is written in
+ * the center and the compartments are reduced in size to zero. If the state is
+ * complex, the name is written on top and the compartments are laid out in a
+ * column below the name.
  * 
  * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
@@ -53,7 +54,7 @@ public class StateLayout extends AbstractHintLayout {
     public static final int COND_HEIGHT = 20;
     /** minimal width for conditional states. */
     public static final int COND_WIDTH = 20;
-    
+
     private static final String REGION_COMP_NAME = "RegionCompartment";
     private static final String SIGNAL_COMP_NAME = "Signal";
     private static final String VARIABLE_COMP_NAME = "Variable";
@@ -76,7 +77,7 @@ public class StateLayout extends AbstractHintLayout {
     public StateLayout() {
         isObservingVisibility = true;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -85,7 +86,8 @@ public class StateLayout extends AbstractHintLayout {
             return;
         }
 
-        // check whether the figure is an attribute aware state and whether it is
+        // check whether the figure is an attribute aware state and whether it
+        // is
         // a simple or a complex state
         if (stateFigure instanceof IAttributeAwareFigure) {
             AttributeAwareStateFigure attrStateFigure = (AttributeAwareStateFigure) stateFigure;
@@ -94,7 +96,7 @@ public class StateLayout extends AbstractHintLayout {
                 State state = (State) modelElement;
                 // check the size of the state and correct it if required
                 checkSize(attrStateFigure, state);
-                
+
                 invalidateLabels(stateFigure);
                 if (checkComplex(state)) {
                     complexLayout(stateFigure, state);
@@ -106,12 +108,13 @@ public class StateLayout extends AbstractHintLayout {
     }
 
     /**
-     * Invalidate all child labels of the given figure. This will cause
-     * all cached size values to be reset. This is necessary because of an
-     * GMF bug that does not invalidate a label when a font has changed.
-     * Hence all minimum and preferred sizes are cached wrongly.
+     * Invalidate all child labels of the given figure. This will cause all
+     * cached size values to be reset. This is necessary because of an GMF bug
+     * that does not invalidate a label when a font has changed. Hence all
+     * minimum and preferred sizes are cached wrongly.
      * 
-     * @param parent figure for which labels are invalidated
+     * @param parent
+     *            figure for which labels are invalidated
      */
     private static void invalidateLabels(final IFigure parent) {
         for (Object child : parent.getChildren()) {
@@ -121,11 +124,12 @@ public class StateLayout extends AbstractHintLayout {
             }
         }
     }
-    
+
     /**
      * Invalidate all child figures of the given figure.
      * 
-     * @param parent figure for which children are invalidated
+     * @param parent
+     *            figure for which children are invalidated
      */
     private static void invalidateChildren(final IFigure parent) {
         for (Object child : parent.getChildren()) {
@@ -139,7 +143,8 @@ public class StateLayout extends AbstractHintLayout {
     /**
      * Check whether the currently watched state is a complex state.
      * 
-     * @param state the checked state
+     * @param state
+     *            the checked state
      * @return {@code true} if complex, {@code false} otherwise
      */
     private boolean checkComplex(final State state) {
@@ -150,16 +155,18 @@ public class StateLayout extends AbstractHintLayout {
         containsInsideActions = state.getInnerActions().size() > 0;
         containsExitActions = state.getExitActions().size() > 0;
         containsSuspensionTrigger = state.getSuspensionTrigger() != null;
-        
-        return (containsRegions || containsSignals || containsVariables
-                || containsEntryActions || containsInsideActions || containsExitActions
-                || containsSuspensionTrigger) && state.getType() != StateType.CONDITIONAL;
+
+        return (containsRegions || containsSignals || containsVariables || containsEntryActions
+                || containsInsideActions || containsExitActions || containsSuspensionTrigger || state
+                .getType() == StateType.TEXTUAL)
+                && state.getType() != StateType.CONDITIONAL;
     }
 
     /**
      * Apply layout for complex states.
      * 
-     * @param stateFigure the state figure
+     * @param stateFigure
+     *            the state figure
      * @parem state the state model object
      */
     private void complexLayout(final IFigure stateFigure, final State state) {
@@ -176,13 +183,13 @@ public class StateLayout extends AbstractHintLayout {
         Rectangle newBounds = new Rectangle();
         int regionSeparatorHeight = 0;
         int i = 0;
+        int wrappingLabelCounter = 0;
         for (IFigure childFigure : children) {
             if (!(childFigure instanceof Polyline)) {
                 Dimension size;
                 // empty compartments are not considered
                 if (childFigure instanceof ResizableCompartmentFigure) {
-                    ResizableCompartmentFigure compartment =
-                        (ResizableCompartmentFigure) childFigure;
+                    ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) childFigure;
                     String compartmentName = getName(compartment);
                     if (compartmentName.equals(REGION_COMP_NAME)) {
                         if (containsRegions) {
@@ -190,22 +197,32 @@ public class StateLayout extends AbstractHintLayout {
                         } else {
                             size = new Dimension();
                         }
-                        // set the y position of the region separator polyline to the current
-                        // calculated total height = y position of region compartment
-                        regionSeparatorHeight = totalHeight;
+                        // set the y position of the region separator polyline
+                        // to the current
+                        // calculated total height = y position of region
+                        // compartment
+                        // regionSeparatorHeight = totalHeight;
                     } else if (isEmptyCompartment(compartmentName) || !compartment.isExpanded()) {
                         size = new Dimension();
                         setTitleVisibility(compartment, false);
                     } else {
-                        size = compartment.getContentPane().getPreferredSize(clientArea.width - 2, -1);
-                        // make title label visible if the compartment is not a region compartment
+                        size = compartment.getContentPane().getPreferredSize(clientArea.width - 2,
+                                -1);
+                        // make title label visible if the compartment is not a
+                        // region compartment
                         // and has more than the title label as content
                         setTitleVisibility(compartment, true);
                     }
                 } else {
                     size = childFigure.getPreferredSize();
+                    if (childFigure instanceof WrappingLabel) {
+                        if (wrappingLabelCounter == 1) {
+                            regionSeparatorHeight = totalHeight;
+                        }
+                        wrappingLabelCounter++;
+                    }
                 }
-    
+
                 // take maximum width and sum of heights
                 prefWidths[i] = size.width;
                 prefHeights[i] = size.height;
@@ -228,6 +245,7 @@ public class StateLayout extends AbstractHintLayout {
         // rest of the space, always using the full available width
         int offsetY = 0;
         i = 0;
+        wrappingLabelCounter = 0;
         for (IFigure childFigure : children) {
             if (childFigure instanceof Polyline) {
                 // handle region separator
@@ -243,8 +261,15 @@ public class StateLayout extends AbstractHintLayout {
                 points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
                 regionSeparator.setPoints(points);
             } else if (childFigure instanceof WrappingLabel) {
-                newBounds.x = clientArea.x + (clientArea.width - prefWidths[i]) / 2;
-                newBounds.y = clientArea.y;
+                // possible labels: State label and State body text
+                // make first centered and all others left aligned
+                if (wrappingLabelCounter == 0) {
+                    newBounds.x = clientArea.x + (clientArea.width - prefWidths[i]) / 2;
+                } else {
+                    newBounds.x = clientArea.x;
+                }
+                wrappingLabelCounter++;
+                newBounds.y = clientArea.y + offsetY;
                 newBounds.width = prefWidths[i];
                 newBounds.height = prefHeights[i];
                 childFigure.setBounds(newBounds);
@@ -270,12 +295,14 @@ public class StateLayout extends AbstractHintLayout {
             i++;
         }
     }
-    
+
     /**
      * Set the visibility of a compartment's title label.
      * 
-     * @param compartment a compartment figure
-     * @param visible true if visible, false otherwise
+     * @param compartment
+     *            a compartment figure
+     * @param visible
+     *            true if visible, false otherwise
      */
     private void setTitleVisibility(final ResizableCompartmentFigure compartment,
             final boolean visible) {
@@ -289,7 +316,8 @@ public class StateLayout extends AbstractHintLayout {
     /**
      * Retrieve the name of a figure by searching for a label.
      * 
-     * @param figure a figure
+     * @param figure
+     *            a figure
      * @return the name of the figure
      */
     private static String getName(final IFigure figure) {
@@ -305,37 +333,44 @@ public class StateLayout extends AbstractHintLayout {
         }
         return "";
     }
-    
+
     /**
      * Checks whether the compartment with given name is empty.
      * 
-     * @param compartmentName name of the compartment
+     * @param compartmentName
+     *            name of the compartment
      * @return true if the compartment has no children
      */
     private boolean isEmptyCompartment(final String compartmentName) {
         return (compartmentName.startsWith(SIGNAL_COMP_NAME) && (!containsSignals))
-            || (compartmentName.startsWith(VARIABLE_COMP_NAME) && (!containsVariables))
-            || (compartmentName.startsWith(ENTRY_ACTION_COMP_NAME) && (!containsEntryActions))
-            || (compartmentName.startsWith(INSIDE_ACTION_COMP_NAME) && (!containsInsideActions))
-            || (compartmentName.startsWith(EXIT_ACTION_COMP_NAME) && (!containsExitActions))
-            || (compartmentName.startsWith(SUSP_COMP_NAME) && (!containsSuspensionTrigger));
+                || (compartmentName.startsWith(VARIABLE_COMP_NAME) && (!containsVariables))
+                || (compartmentName.startsWith(ENTRY_ACTION_COMP_NAME) && (!containsEntryActions))
+                || (compartmentName.startsWith(INSIDE_ACTION_COMP_NAME) && (!containsInsideActions))
+                || (compartmentName.startsWith(EXIT_ACTION_COMP_NAME) && (!containsExitActions))
+                || (compartmentName.startsWith(SUSP_COMP_NAME) && (!containsSuspensionTrigger));
     }
 
     /**
      * Apply layout for simple states.
      * 
-     * @param stateFigure the state figure
-     * @param state the state model object
+     * @param stateFigure
+     *            the state figure
+     * @param state
+     *            the state model object
      */
     private void simpleLayout(final IFigure stateFigure, final State state) {
         @SuppressWarnings("unchecked")
         List<IFigure> children = stateFigure.getChildren();
         Rectangle clientArea = stateFigure.getClientArea();
-        
+
+        // a counter to distinguish between different labels
+        // the first label is the state name, the second is the body Text
+        int wrappingLabelCounter = 0;
+
         int prefWidth = 0;
         int prefHeight = 0;
         for (IFigure childFigure : children) {
-            if (childFigure instanceof WrappingLabel) {
+            if (childFigure instanceof WrappingLabel && wrappingLabelCounter == 0) {
                 Dimension preferredSize = childFigure.getPreferredSize();
                 if (preferredSize.width > prefWidth) {
                     prefWidth = preferredSize.width;
@@ -343,13 +378,15 @@ public class StateLayout extends AbstractHintLayout {
                 if (preferredSize.height > prefHeight) {
                     prefHeight = preferredSize.height;
                 }
+                wrappingLabelCounter++;
             }
         }
 
         // the label is centered in the middle, and the compartments are hidden
         // by setting their size to 0
+        wrappingLabelCounter = 0;
         for (IFigure childFigure : children) {
-            if (childFigure instanceof WrappingLabel) {
+            if (childFigure instanceof WrappingLabel && wrappingLabelCounter == 0) {
                 Rectangle newBounds = new Rectangle();
                 Dimension preferredSize = childFigure.getPreferredSize();
                 newBounds.x = clientArea.x + (clientArea.width / 2) - (preferredSize.width / 2);
@@ -357,7 +394,9 @@ public class StateLayout extends AbstractHintLayout {
                 newBounds.width = preferredSize.width + 2;
                 newBounds.height = preferredSize.height;
                 childFigure.setBounds(newBounds);
-            } else if (childFigure instanceof ResizableCompartmentFigure) {
+                wrappingLabelCounter++;
+            } else if (childFigure instanceof ResizableCompartmentFigure
+                    || (childFigure instanceof WrappingLabel && wrappingLabelCounter > 0)) {
                 Rectangle newBounds = new Rectangle();
                 newBounds.x = clientArea.x;
                 newBounds.y = clientArea.y;
@@ -372,18 +411,23 @@ public class StateLayout extends AbstractHintLayout {
     }
 
     /**
-     * Returns the minimum size of the figure. The minimum size of a simple state
-     * is fixed. The minimum height of complex states is the sum of all its
-     * children's minimum heights, while its minimum width is the maximum of all
-     * its children's minimum sizes. However, empty compartments are not considered.
+     * Returns the minimum size of the figure. The minimum size of a simple
+     * state is fixed. The minimum height of complex states is the sum of all
+     * its children's minimum heights, while its minimum width is the maximum of
+     * all its children's minimum sizes. However, empty compartments are not
+     * considered.
      * 
-     * @param stateFigure the figure on which this layout is installed
-     * @param whint the width hint
-     * @param hhint the height hint
+     * @param stateFigure
+     *            the figure on which this layout is installed
+     * @param whint
+     *            the width hint
+     * @param hhint
+     *            the height hint
      * @return the layout's minimum size
      */
     @Override
-    public Dimension calculateMinimumSize(final IFigure stateFigure, final int whint, final int hhint) {
+    public Dimension calculateMinimumSize(final IFigure stateFigure, final int whint,
+            final int hhint) {
         if (!(stateFigure instanceof IAttributeAwareFigure)) {
             return super.calculateMinimumSize(stateFigure, whint, hhint);
         }
@@ -401,19 +445,23 @@ public class StateLayout extends AbstractHintLayout {
                 for (IFigure childFigure : children) {
                     if (childFigure instanceof ShapeCompartmentFigure) {
                         String compartmentName = getName((ShapeCompartmentFigure) childFigure);
-                        if (compartmentName.equals(REGION_COMP_NAME)) {
-                            // add a default minimum size so that the region compartment
+                        if (compartmentName.equals(REGION_COMP_NAME)
+                                && state.getType() != StateType.TEXTUAL) {
+                            // add a default minimum size so that the region
+                            // compartment
                             // is visible after all
                             minHeight += StateLayout.MIN_HEIGHT;
-                        } else  {
+                        } else {
                             Rectangle childBounds = childFigure.getBounds();
-                            // if we have manually set the bounds to zero, ignore
+                            // if we have manually set the bounds to zero,
+                            // ignore
                             // the bounds for minimal size calculations
                             if (childBounds.height > 0 && childBounds.width > 0) {
                                 Dimension minimumSize = ((ShapeCompartmentFigure) childFigure)
                                         .getContentPane().getMinimumSize();
                                 if (minimumSize.width >= minWidth) {
-                                    // add 1 pixel to avoid scroll bars (this was added
+                                    // add 1 pixel to avoid scroll bars (this
+                                    // was added
                                     // during layout above)
                                     minWidth = minimumSize.width + 2;
                                 }
@@ -432,13 +480,13 @@ public class StateLayout extends AbstractHintLayout {
             } else {
                 for (IFigure childFigure : children) {
                     // set the minimal size of a state with a label
-                    // increase the size a bit such that the text looks proper even
+                    // increase the size a bit such that the text looks proper
+                    // even
                     // for a final state
                     if (childFigure instanceof WrappingLabel) {
                         Dimension preferredSize = childFigure.getPreferredSize();
-                        return new Dimension(
-                                Math.max(preferredSize.width, MIN_WIDTH),
-                                Math.max(preferredSize.height, MIN_HEIGHT));
+                        return new Dimension(Math.max(preferredSize.width, MIN_WIDTH), Math.max(
+                                preferredSize.height, MIN_HEIGHT));
                     }
                 }
             }
@@ -446,30 +494,34 @@ public class StateLayout extends AbstractHintLayout {
         return new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT);
     }
 
-
     /**
      * Calculate the preferred size of the figure.
      * 
-     * @param stateFigure the figure
-     * @param whint the width hint
-     * @param hhint the height hint
+     * @param stateFigure
+     *            the figure
+     * @param whint
+     *            the width hint
+     * @param hhint
+     *            the height hint
      * @return the preferred size
      */
     @Override
-    protected Dimension calculatePreferredSize(final IFigure stateFigure,
-            final int whint, final int hhint) {
+    protected Dimension calculatePreferredSize(final IFigure stateFigure, final int whint,
+            final int hhint) {
         Dimension size = calculateMinimumSize(stateFigure, whint, hhint);
         return size;
     }
-    
+
     /** size of the state figure as cached from the last size check. */
     private Dimension cachedSize;
-    
+
     /**
      * Checks the current size of the state figure.
      * 
-     * @param stateFigure the state figure
-     * @param state the corresponding model element
+     * @param stateFigure
+     *            the state figure
+     * @param state
+     *            the corresponding model element
      */
     private void checkSize(final AttributeAwareStateFigure stateFigure, final State state) {
         Rectangle bounds = stateFigure.getBounds();
@@ -496,13 +548,16 @@ public class StateLayout extends AbstractHintLayout {
             }
         }
     }
-    
+
     /**
      * Checks the new size of the state figure.
      * 
-     * @param stateFigure the state figure
-     * @param state the corresponding model element
-     * @param newBounds the new bounds of the state figure
+     * @param stateFigure
+     *            the state figure
+     * @param state
+     *            the corresponding model element
+     * @param newBounds
+     *            the new bounds of the state figure
      */
     public void checkNewSize(final IFigure stateFigure, final State state, final Rectangle newBounds) {
         if (state.getType() == StateType.CONDITIONAL) {
@@ -515,5 +570,5 @@ public class StateLayout extends AbstractHintLayout {
             }
         }
     }
-    
+
 }

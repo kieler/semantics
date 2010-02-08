@@ -203,7 +203,7 @@ public class StateItemProvider
                  getString("_UI_PropertyDescriptor_description", "_UI_State_bodyText_feature", "_UI_State_type"),
                  SyncchartsPackage.Literals.STATE__BODY_TEXT,
                  true,
-                 false,
+                 true,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,

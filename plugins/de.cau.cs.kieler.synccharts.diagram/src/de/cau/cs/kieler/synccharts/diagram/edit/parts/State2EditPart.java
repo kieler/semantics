@@ -383,6 +383,10 @@ public class State2EditPart extends ShapeNodeEditPart {
 
             fFigureBodyTextFigure = new WrappingLabel();
             fFigureBodyTextFigure.setText("");
+            fFigureBodyTextFigure.setTextWrap(true);
+
+            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
+                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureBodyTextFigure);
 

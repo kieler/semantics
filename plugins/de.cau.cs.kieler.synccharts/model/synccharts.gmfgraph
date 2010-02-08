@@ -38,7 +38,13 @@
         <children
             xsi:type="gmfgraph:Label"
             name="BodyTextFigure"
-            text=""/>
+            text="">
+          <insets
+              top="5"
+              left="10"
+              bottom="5"
+              right="10"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>

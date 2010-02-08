@@ -71,7 +71,6 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
      */
     @Override
     public boolean performOk() {
-        boolean ok = super.performOk();
         IWorkbench wb = PlatformUI.getWorkbench();
         if (wb != null) {
             IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
@@ -89,7 +88,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
                 }
             }
         }
-        return ok;
+        return super.performOk();
     }
 
     /**

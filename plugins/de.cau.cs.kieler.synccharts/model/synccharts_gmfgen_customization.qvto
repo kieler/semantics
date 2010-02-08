@@ -47,6 +47,10 @@ main() {
 	model.diagram.preferences.fontColor := object GenConstantColor{name := DiagramColors::black;};
 	model.diagram.preferences.noteFillColor := object GenConstantColor{name := DiagramColors::yellow;};
 	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
+	
+	// customize state edit parts so it shows textwrap for the interface declaration
+	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap();
+	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap();
 }
 
 mapping inout GenCompartment::compartmentSettings(){
@@ -81,3 +85,16 @@ mapping inout GenCompartment::compartmentSettings(){
 		else "";
 	};
 }
+
+mapping inout InnerClassViewmap::customizeTextWrap(){	
+	// customize the Interface Declaration Label from a State
+    if (self.className = "StateFigure") then {
+        var find := "fFigureBodyTextFigure.setText(\"\");";
+        var pre := self.classBody.substringBefore(find);
+        // setting TextWrap to true enables multi line display and editing
+        var inject := find.+("fFigureBodyTextFigure.setTextWrap(true);\n");
+        var after := self.classBody.substringAfter(find);
+        self.classBody := pre.+(inject).+(after);
+    } endif;
+}
+

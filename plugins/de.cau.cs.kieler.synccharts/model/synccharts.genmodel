@@ -30,6 +30,7 @@
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/NOT"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/VAL"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/PRE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/NE"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/AND"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/OR"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//OperatorType/ADD"/>
@@ -132,7 +133,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//State/parentRegion"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/isFinal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/bodyText"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/bodyText"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/bodyReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/bodyContents"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//Transition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Transition/priority"/>
