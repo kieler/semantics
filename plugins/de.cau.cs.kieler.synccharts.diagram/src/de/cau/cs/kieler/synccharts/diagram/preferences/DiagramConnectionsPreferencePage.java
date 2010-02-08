@@ -2,7 +2,6 @@ package de.cau.cs.kieler.synccharts.diagram.preferences;
 
 import org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor;
 import org.eclipse.gmf.runtime.diagram.ui.preferences.ConnectionsPreferencePage;
-import org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -31,7 +30,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         super.addFieldEditors(composite);
 
         // spline mode
-        splineModeFieldEditor = new ComboFieldEditor(IPreferenceConstants.PREF_SPLINE_MODE,
+        splineModeFieldEditor = new ComboFieldEditor(SplineConnection.PREF_SPLINE_MODE,
                 SPLINE_LABEL, composite, ComboFieldEditor.INT_TYPE, true, 0, 0, true);
         splineModeFieldEditor.autoStorage = true;
         addField(splineModeFieldEditor);
