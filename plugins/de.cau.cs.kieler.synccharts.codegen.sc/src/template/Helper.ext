@@ -51,9 +51,6 @@ int computeWeakThreadPriority(State rootState):
 	JAVA template.Helper.computeWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
-int smallestChildPriority(State state):
-	JAVA template.Helper.smallestChildPriority(de.cau.cs.kieler.synccharts.State)
-;
 
 cached List allSignals(State state):
 	JAVA template.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
@@ -64,6 +61,6 @@ State getInitialState(State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
 ;
 
-int fillStateSignalList(State state):
-	JAVA template.Helper.fillStateSignalList(de.cau.cs.kieler.synccharts.State)
+cached List getStateSignalDependencies(State state):
+	JAVA template.Helper.getStateSignalDependencies(de.cau.cs.kieler.synccharts.State)
 ;

@@ -3,7 +3,6 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-«REM»«fillStateSignalList(this)»«ENDREM»
 
 «IF (this.regions.size >= 1)-»
 	«IF this.regions.size == 1-»

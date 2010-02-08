@@ -30,43 +30,36 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
 import de.cau.cs.kieler.synccharts.codegen.sc.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Graph;
+import de.cau.cs.kieler.synccharts.codegen.sc.StateSignalDependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Tuple;
 
-public class Helper {
+/**
+ * The Helper class provides some helping functions for the generation of code.
+ * 
+ * @author tam
+ * 
+ */
+public final class Helper {
+
+    private Helper() {
+        /*
+         * To avoid the chekstyle warning
+         */
+    }
 
     private static ArrayList<Dependency> stateDependencies = new ArrayList<Dependency>();
-    private static ArrayList<Tuple<State, Integer>> stateListSorted = new ArrayList<Tuple<State, Integer>>();
-    private static ArrayList<Tuple<State, Integer>> realStateList = new ArrayList<Tuple<State, Integer>>();
-    private static ArrayList<Signal> stateSignalList = new ArrayList<Signal>();
-    private static ArrayList<String> childStateList = new ArrayList<String>();
-    private static ArrayList<State> checkedStateList = new ArrayList<State>();
-    private static ArrayList<Signal> allSignalsList = new ArrayList<Signal>();
-    private static final int NORMAL_EDGE = 1;
-    private static final int WEAK_EDGE = -1;
+    private static ArrayList<Tuple<State, Integer>> sortedStates = new ArrayList<Tuple<State, Integer>>();
+    private static ArrayList<Tuple<State, Integer>> realStates = new ArrayList<Tuple<State, Integer>>();
+    private static ArrayList<StateSignalDependency> stateSignalDependencies = new ArrayList<StateSignalDependency>();
+    private static ArrayList<State> childStates = new ArrayList<State>();
+    private static ArrayList<State> checkedStates = new ArrayList<State>();
+    private static ArrayList<Signal> allSignals = new ArrayList<Signal>();
+    private static final int HIERARCHY_EDGE = 1;
+    private static final int CONTROL_FLOW_EDGE = -1;
+    private static final int SIGNAL_FLOW_EDGE = 2;
     private static final int WEAK_STATE = 1;
     private static final int STRONG_STATE = 2;
     private static final int SIMPLE_STATE = 0;
-
-    /**
-     * Computes the smallest priority of all child states in a macro state.
-     * 
-     * @param state
-     *            the state, you want to get the priority for
-     * @return the priority of the state
-     */
-    public static final int smallestChildPriority(final State state) {
-        childStateList.clear();
-        listAllChildThreads(state);
-        int out = stateListSorted.size() + 1;
-        for (String s : childStateList) {
-            if (stateListSorted.contains(s)) {
-                if ((stateListSorted.indexOf(s) + 1) < out) {
-                    out = stateListSorted.indexOf(s) + 1;
-                }
-            }
-        }
-        return out;
-    }
 
     /**
      * Computes a list with all states in the right order of their priority.
@@ -75,37 +68,39 @@ public class Helper {
      *            the root state to start with
      * @return a sorted list (by priority) of states
      */
-    public static final List<Tuple<State, Integer>> computeThreadPriorities(final State state) {
+    public static List<Tuple<State, Integer>> computeThreadPriorities(final State state) {
+        stateSignalDependencies.clear();
         stateDependencies.clear();
-        realStateList.clear();
-        stateListSorted.clear();
+        realStates.clear();
+        sortedStates.clear();
+        fillStateSignalList(state);
         fillDependencyList(state);
         printDependencyList();
         fillSortedThreadList();
         System.out.print("threadListSorted: ");
-        printTupelList(stateListSorted);
-        return stateListSorted;
+        printTupelList(sortedStates);
+        return sortedStates;
     }
 
     /**
-     * Computes the priority of the given state.
+     * Computes the real priority of the given state.
      * 
      * @param state
      *            the state you want to get the priority
      * @return priority of the state
      */
-    public static final int computeRealThreadPriority(final State state) {
+    public static int computeRealThreadPriority(final State state) {
         return computeThreadPriority(state, false);
     }
 
     /**
-     * Computes the priority of the given state.
+     * Computes the weak priority of the given state.
      * 
      * @param state
      *            the state you want to get the priority
      * @return priority of the state
      */
-    public static final int computeWeakThreadPriority(final State state) {
+    public static int computeWeakThreadPriority(final State state) {
         return computeThreadPriority(state, true);
     }
 
@@ -118,8 +113,8 @@ public class Helper {
      * @return a list, sorted by the control flow in the SyncChart
      */
     public static List<State> sortStateControlFlow(final State state) {
-        List<State> sortedStates = new LinkedList<State>();
-        return sortStateControlFlowHelp(sortedStates, state);
+        List<State> listToSort = new LinkedList<State>();
+        return sortStateControlFlowHelp(listToSort, state);
     }
 
     /**
@@ -131,17 +126,68 @@ public class Helper {
      * @return a list of all signals in the states and child-states
      */
     public static List<Signal> allSignals(final State state) {
-        allSignalsList.clear();
+        allSignals.clear();
         allSignalsHelp(state);
-        return allSignalsList;
+        return allSignals;
     }
-    
-    /*
-     * TODO
-    public static List<Signal> stateSignalList(final State state){
-        return fillStateSignalList(state);
+
+    public static List<StateSignalDependency> getStateSignalDependencies(final State state) {
+        stateSignalDependencies.clear();
+        fillStateSignalList(state);
+        return stateSignalDependencies;
     }
-     */
+
+    private static void putSignalDependencies(final State state) {
+        // get signals of the state
+        ArrayList<Signal> stateTriggerSignals = new ArrayList<Signal>();
+        for (StateSignalDependency s : stateSignalDependencies) {
+            if (state.equals(s.getState())) {
+                stateTriggerSignals = s.getTriggerSignals();
+                break;
+            }
+        }
+
+        childStates.clear();
+        listAllChildStates(state.getParentRegion().getParentState());
+        for (State neighborState : childStates) {
+            // get signals of neighbor states and their child states
+            if (!state.equals(neighborState)) {
+                ArrayList<Signal> neighborEffectSignals = new ArrayList<Signal>();
+                for (StateSignalDependency s : stateSignalDependencies) {
+                    if (neighborState.equals(s.getState())) {
+                        neighborEffectSignals = s.getEffectSignals();
+                        break;
+                    }
+                }
+                if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
+                    // in dependency list eintragen
+                    Tuple<State, Integer> firstTuple = getStatePropertyTupel(state);
+                    Tuple<State, Integer> secondTuple = getStatePropertyTupel(neighborState);
+                    Dependency signalDependency = builtDependency(firstTuple, secondTuple,
+                            SIGNAL_FLOW_EDGE);
+                    System.out.println("added " + state.getId() + " -> " + neighborState.getId());
+                    stateDependencies.add(signalDependency);
+                }
+            }
+        }
+    }
+
+    private static boolean disjunkt(final List<Signal> firstList, final List<Signal> secondList) {
+        boolean out = true;
+        if (firstList.isEmpty() || secondList.isEmpty()) {
+            return out;
+        } else {
+            for (Signal firstSignal : firstList) {
+                for (Signal secondSignal : secondList) {
+                    if (firstSignal.equals(secondSignal)) {
+                        out = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return out;
+    }
 
     private static int computeThreadPriority(final State state, final boolean weak) {
         int out = 0;
@@ -151,7 +197,7 @@ public class Helper {
         } else {
             priorityState = getStatePropertyTupel(state);
         }
-        out = stateListSorted.indexOf(priorityState) + 1;
+        out = sortedStates.indexOf(priorityState) + 1;
         return out;
     }
 
@@ -169,33 +215,33 @@ public class Helper {
 
     private static void addSignalsToList(final List<Signal> signalList) {
         for (Signal signal : signalList) {
-            if (!allSignalsList.contains(signal)) {
-                allSignalsList.add(signal);
+            if (!allSignals.contains(signal)) {
+                allSignals.add(signal);
             }
         }
     }
 
-    private static List<State> sortStateControlFlowHelp(final List<State> sortedStates,
-            final State state) {
-        sortedStates.add(state);
+    private static List<State> sortStateControlFlowHelp(final List<State> out, final State state) {
+        out.add(state);
         for (Transition transition : state.getOutgoingTransitions()) {
-            if (!sortedStates.contains(transition.getTargetState())) {
-                sortStateControlFlowHelp(sortedStates, transition.getTargetState());
+            if (!out.contains(transition.getTargetState())) {
+                sortStateControlFlowHelp(out, transition.getTargetState());
             }
         }
-        return sortedStates;
+        return out;
     }
 
-    private static List<String> listAllChildThreads(final State state) {
+    private static void listAllChildStates(final State state) {
         for (Region r : state.getRegions()) {
             for (State s : r.getInnerStates()) {
-                childStateList.add(s.getId());
+                if (!childStates.contains(s)) {
+                    childStates.add(s);
+                }
                 if (!s.getRegions().isEmpty()) {
-                    listAllChildThreads(s);
+                    listAllChildStates(s);
                 }
             }
         }
-        return childStateList;
     }
 
     private static void printTupelList(final ArrayList<Tuple<State, Integer>> list) {
@@ -218,10 +264,12 @@ public class Helper {
             String second = "";
             weakStrongFirst = stateType2String(dependency.getFirstStateTupel().getO2());
             weakStrongSecond = stateType2String(dependency.getSecondStateTupel().getO2());
-            if (dependency.getDependencyType() == WEAK_EDGE) {
-                rel = " <= ";
+            if (dependency.getDependencyType() == CONTROL_FLOW_EDGE) {
+                rel = " <c< ";
+            } else if (dependency.getDependencyType() == HIERARCHY_EDGE) {
+                rel = " <h< ";
             } else {
-                rel = " < ";
+                rel = " <s<";
             }
             first = dependency.getFirstStateTupel().getO1().getId();
             second = dependency.getSecondStateTupel().getO1().getId();
@@ -239,20 +287,23 @@ public class Helper {
 
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
+        if (state.getParentRegion().getParentState() != null) {
+            putSignalDependencies(state);
+        }
         // add state to the checked State list
-        checkedStateList.add(state);
+        checkedStates.add(state);
         Tuple<State, Integer> sourceStateTupel = getStatePropertyTupel(state);
         // add tuple to the real state list
-        realStateList.add(sourceStateTupel);
+        realStates.add(sourceStateTupel);
         for (Transition transition : state.getOutgoingTransitions()) {
             if (!transition.getSourceState().equals(transition.getTargetState())) {
                 State targetState = transition.getTargetState();
                 Tuple<State, Integer> targetStateTupel = getStatePropertyTupel(targetState);
                 Dependency dependency = new Dependency(targetStateTupel, sourceStateTupel,
-                        WEAK_EDGE);
+                        CONTROL_FLOW_EDGE);
                 if (!stateDependencies.contains(dependency)) {
                     stateDependencies.add(dependency);
-                    if (!checkedStateList.contains(targetState)) {
+                    if (!checkedStates.contains(targetState)) {
                         fillDependencyList(targetState);
                     }
                 }
@@ -264,33 +315,33 @@ public class Helper {
                 for (State innerState : region.getInnerStates()) {
                     // not the root state
                     if (state.getParentRegion().getParentState() != null) {
-                        // if (innerState.isIsInitial()) {
                         int innerStateStatus = getStatePropertyTupel(innerState).getO2();
                         // state as weak state
                         putDependencyList(state, WEAK_STATE, innerState, innerStateStatus,
-                                NORMAL_EDGE);
+                                HIERARCHY_EDGE);
                         // state as strong state
                         putDependencyList(innerState, innerStateStatus, state, STRONG_STATE,
-                                NORMAL_EDGE);
+                                HIERARCHY_EDGE);
+
                         // inner state is hierarchical
                         if (innerStateStatus > SIMPLE_STATE) {
+                            // inner state is concurrent
                             if (innerStateStatus == WEAK_STATE) {
                                 // dependency for strong state
                                 putDependencyList(state, WEAK_STATE, innerState, STRONG_STATE,
-                                        NORMAL_EDGE);
+                                        HIERARCHY_EDGE);
                                 putDependencyList(innerState, STRONG_STATE, state, STRONG_STATE,
-                                        NORMAL_EDGE);
+                                        HIERARCHY_EDGE);
                             } else {
                                 // dependency for weak state
                                 putDependencyList(state, WEAK_STATE, innerState, WEAK_STATE,
-                                        NORMAL_EDGE);
+                                        HIERARCHY_EDGE);
                                 putDependencyList(innerState, WEAK_STATE, state, STRONG_STATE,
-                                        NORMAL_EDGE);
+                                        HIERARCHY_EDGE);
                             }
                         }
-                        // }
                     }
-                    if (!checkedStateList.contains(innerState)) {
+                    if (!checkedStates.contains(innerState)) {
                         fillDependencyList(innerState);
                     }
                 }
@@ -358,6 +409,9 @@ public class Helper {
         for (Region region : state.getRegions()) {
             // every state
             for (State innerState : region.getInnerStates()) {
+                StateSignalDependency stateAndSignals = new StateSignalDependency();
+                ArrayList<Signal> triggerSignals = new ArrayList<Signal>();
+                ArrayList<Signal> effectSignals = new ArrayList<Signal>();
                 // every outgoing transition
                 for (Transition transition : innerState.getOutgoingTransitions()) {
                     // simple signals
@@ -365,19 +419,27 @@ public class Helper {
                         // put trigger signal into the list
                         Signal triggerSignal = ((SignalReference) transition.getTrigger())
                                 .getSignal();
-                        if (!stateSignalList.contains(triggerSignal)) {
-                            stateSignalList.add(triggerSignal);
+                        if (!triggerSignals.contains(triggerSignal)) {
+                            triggerSignals.add(triggerSignal);
                         }
                     }
-                    EList<Effect> effectSignals = transition.getEffects();
+                    EList<Effect> tmpEffectSignals = transition.getEffects();
                     // put all effect signals into the list
-                    for (Effect effect : effectSignals) {
+                    for (Effect effect : tmpEffectSignals) {
                         if (effect instanceof Emission) {
                             Signal effectSignal = ((Emission) effect).getSignal();
-                            if (!stateSignalList.contains(effectSignal)) {
-                                stateSignalList.add(effectSignal);
+                            if (!effectSignals.contains(effectSignal)) {
+                                effectSignals.add(effectSignal);
                             }
                         }
+                    }
+                }
+                if (!(triggerSignals.isEmpty() && effectSignals.isEmpty())) {
+                    stateAndSignals.setState(innerState);
+                    stateAndSignals.setTriggerSignals(triggerSignals);
+                    stateAndSignals.setEffectSignals(effectSignals);
+                    if (!stateSignalDependencies.contains(stateAndSignals)) {
+                        stateSignalDependencies.add(stateAndSignals);
                     }
                 }
                 if (!innerState.getRegions().isEmpty()) {
@@ -412,7 +474,10 @@ public class Helper {
             edgeType = dependency.getDependencyType();
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
-            if (edgeType == NORMAL_EDGE) {
+            /*
+             * TODO for control flow edges too, but first handle circles
+             */
+            if (edgeType != CONTROL_FLOW_EDGE) {
                 dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
             }
         }
@@ -424,7 +489,7 @@ public class Helper {
         for (int i = 0; i < threadListTopologicalSorted.size(); i++) {
             int threadInt = threadListTopologicalSorted.get(i);
             Tuple<State, Integer> stateTupel = threadListUnsorted.get(threadInt);
-            stateListSorted.add(stateTupel);
+            sortedStates.add(stateTupel);
         }
     }
 

@@ -549,8 +549,13 @@ _case __LABEL__: (void) 0;						\
 
 //! Helper function (if/else-unsafe)
 #define PRIO_(p)							\
-  deactivate(_cid);							\
-  disable(_cid);							\
+  _parent[p] = _parent[_cid];						\
+  _pid = 0;								\
+  for (_ppid = _descs[_cid]; _ppid > 0; _ppid >>= 1) {			\
+    if (_parent[_pid] == _cid)						\
+      _parent[_pid] = p;						\
+    _pid++;								\
+  }									\
   _descs[p] = _descs[_cid];						\
   _pid = _cid;								\
   while ((_ppid = _parent[_pid]) != _TickEnd) {				\
@@ -558,6 +563,8 @@ _case __LABEL__: (void) 0;						\
     _descs[_ppid] |= u2b(p);						\
     _pid = _ppid;							\
   }									\
+  deactivate(_cid);							\
+  disable(_cid);							\
   _cid = p;								\
   enable(_cid);
 

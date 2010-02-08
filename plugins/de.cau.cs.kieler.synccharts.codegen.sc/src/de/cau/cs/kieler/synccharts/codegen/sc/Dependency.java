@@ -18,8 +18,8 @@ import de.cau.cs.kieler.synccharts.State;
 /**
  * A dependency is a type which contains two tuples and a type. The tuples
  * represents two states (the first and the second one) and the type
- * differentiates between control flow dependencies and hierarchical
- * dependencies.
+ * differentiates between control flow dependencies, hierarchical
+ * dependencies and signal dependencies.
  * 
  * @author tam
  * 
