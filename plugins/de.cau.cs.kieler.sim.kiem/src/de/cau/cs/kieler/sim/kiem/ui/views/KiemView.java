@@ -271,13 +271,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 }
             }
 
-            // update text colors
-            viewer.getTree().getItem(c - disabledCounter).setForeground(currentColor);
-            // enable sub items
-            int subItemCnt = viewer.getTree().getItem(c - disabledCounter).getItemCount();
-            for (int cc = 0; cc < subItemCnt; cc++) {
-                viewer.getTree().getItem(c - disabledCounter).getItem(cc).setForeground(
-                        currentColor);
+            try {
+                // update text colors
+                viewer.getTree().getItem(c - disabledCounter).setForeground(currentColor);
+                // enable sub items
+                int subItemCnt = viewer.getTree().getItem(c - disabledCounter).getItemCount();
+                for (int cc = 0; cc < subItemCnt; cc++) {
+                    viewer.getTree().getItem(c - disabledCounter).getItem(cc).setForeground(
+                            currentColor);
+                }
+            } catch (Exception e) {
+                // catch strange SWT bugs
             }
         }
     }
@@ -874,15 +878,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     protected void updateView(final boolean deselect) {
         // do not update if not necessary
-        if (!viewer.isBusy()) {
-            updateColumnsCollapsed();
-            viewer.refresh();
-            refreshEnabledDisabledTextColors();
-            if (deselect) {
-                viewer.setSelection(null);
+        while (viewer.isBusy()) {
+            // wait
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                // nothing
             }
-            updateEnabled();
         }
+        updateColumnsCollapsed();
+        viewer.refresh();
+        refreshEnabledDisabledTextColors();
+        if (deselect) {
+            viewer.setSelection(null);
+        }
+        updateEnabled();
     }
 
     // -------------------------------------------------------------------------
@@ -1077,7 +1087,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 AddDataComponentDialog addDialog = new AddDataComponentDialog(viewer.getControl()
                         .getShell());
                 addDialog.setComponentWrapperList(kIEMInstance.getDataComponentWrapperList());
-                addDialog.setComponentList(KiemPlugin.getDefault().getRegisteredDataComponentList());
+                addDialog
+                        .setComponentList(KiemPlugin.getDefault().getRegisteredDataComponentList());
                 if (addDialog.open() == 0) {
                     List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
                     if (selected != null) {

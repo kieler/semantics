@@ -334,12 +334,13 @@ public class KiemPlugin extends AbstractUIPlugin {
                     kIEMViewInstance.setAllEnabled(true);
                     kIEMViewInstance
                             .updateEnabledEnabledDisabledUpDownAddDelete();
-                    kIEMViewInstance.updateViewAsync();
                     // update the current file, dirty flag
                     kIEMViewInstance.setCurrentFile(executionFile);
                     kIEMViewInstance.setDirty(false);
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
                     kIEMViewInstance.getAimedStepDurationTextField().update();
+                    // update the KiemView table
+                    kIEMViewInstance.updateViewAsync();
                     if (loadSuccessful) {
                         if (eventManager != null) {
                             eventManager.notify(new KiemEvent(KiemEvent.LOAD,
