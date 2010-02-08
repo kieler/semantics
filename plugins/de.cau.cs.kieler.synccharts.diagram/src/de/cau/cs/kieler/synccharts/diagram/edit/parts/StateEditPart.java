@@ -120,14 +120,14 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabelEditPart) {
-            ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
-            return true;
-        }
         if (childEditPart instanceof StateBodyTextEditPart) {
             ((StateBodyTextEditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureBodyTextFigure());
+            return true;
+        }
+        if (childEditPart instanceof StateLabelEditPart) {
+            ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureStateNameFigure());
             return true;
         }
         return false;
@@ -137,10 +137,10 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabelEditPart) {
+        if (childEditPart instanceof StateBodyTextEditPart) {
             return true;
         }
-        if (childEditPart instanceof StateBodyTextEditPart) {
+        if (childEditPart instanceof StateLabelEditPart) {
             return true;
         }
         return false;

@@ -1,16 +1,27 @@
 package de.cau.cs.kieler.synccharts.diagram.preferences;
 
-import org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor;
 import org.eclipse.gmf.runtime.diagram.ui.preferences.ConnectionsPreferencePage;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.draw2d.Connection;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor;
 import org.eclipse.swt.widgets.Composite;
-
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.ui.figures.SplineConnection;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
 /**
- * @generated NOT
+ * @generated
  */
 public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage {
 
@@ -21,11 +32,18 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 
-    // temporary spline code
+    /**
+     * @generated
+     */
     private String SPLINE_LABEL = "Spline Mode:";
-
+    /**
+     * @generated
+     */
     private ComboFieldEditor splineModeFieldEditor = null;
 
+    /**
+     * @generated
+     */
     protected void addFieldEditors(Composite composite) {
         super.addFieldEditors(composite);
 
@@ -40,8 +58,69 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         splineModeCombo.add("On (cubic sections approximation)");
     }
 
+    /**
+     * @generated
+     */
     public static void initDefaults(IPreferenceStore preferenceStore) {
         ConnectionsPreferencePage.initDefaults(preferenceStore);
         preferenceStore.setDefault(SplineConnection.PREF_SPLINE_MODE, SplineConnection.SPLINE_OFF);
     }
+
+    /**
+     * @generated
+     */
+    @Override
+    public boolean performOk() {
+        boolean ok = super.performOk();
+        IWorkbench wb = PlatformUI.getWorkbench();
+        if (wb != null) {
+            IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
+            if (wbw != null) {
+                IWorkbenchPage wbp = wbw.getActivePage();
+                if (wbp != null) {
+                    IEditorReference[] ers = wbp.getEditorReferences();
+                    for (IEditorReference er : ers) {
+                        IEditorPart editor = er.getEditor(true);
+                        if (editor instanceof SyncchartsDiagramEditor) {
+                            SyncchartsDiagramEditor sde = (SyncchartsDiagramEditor) editor;
+                            applySplineMode(sde.getDiagramEditPart());
+                        }
+                    }
+                }
+            }
+        }
+        return ok;
+    }
+
+    /**
+     * @generated
+     */
+    protected void applySplineMode(EditPart part) {
+        if (part instanceof TransitionEditPart) {
+            Connection c = ((TransitionEditPart) part).getConnectionFigure();
+            if (c instanceof SplineConnection) {
+                ((SplineConnection) c).setSplineMode(getPreferenceStore().getInt(
+                        SplineConnection.PREF_SPLINE_MODE));
+            }
+        }
+        if (part instanceof State2EditPart) {
+            State2EditPart state = (State2EditPart) part;
+            for (Object so : state.getSourceConnections()) {
+                if (so instanceof EditPart) {
+                    applySplineMode((EditPart) so);
+                }
+            }
+            for (Object to : state.getSourceConnections()) {
+                if (to instanceof EditPart) {
+                    applySplineMode((EditPart) to);
+                }
+            }
+        }
+        for (Object child : part.getChildren()) {
+            if (child instanceof EditPart) {
+                applySplineMode((EditPart) child);
+            }
+        }
+    }
+
 }

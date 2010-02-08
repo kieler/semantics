@@ -7,18 +7,18 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITreeBranchEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.util.IPropertyChangeListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
+import de.cau.cs.kieler.core.ui.figures.SplineConnection;
 import de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticEditPolicy;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
 /**
- * @generated NOT
+ * @generated
  */
 public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeBranchEditPart {
 
@@ -98,28 +98,19 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      * Body of this method does not depend on settings in generation model so
      * you may safely remove <i>generated</i> tag and modify it.
      * 
-     * @generated NOT
+     * @generated
      */
 
     protected Connection createConnectionFigure() {
-        final TransitionFigure figure = new TransitionFigure();
-
-        // TODO better way to listen?
-        Object store = getDiagramPreferencesHint().getPreferenceStore();
-        if (store instanceof IPreferenceStore) {
-            figure.setSplineMode(((IPreferenceStore) store)
-                    .getInt(TransitionFigure.PREF_SPLINE_MODE));
-            ((IPreferenceStore) store).addPropertyChangeListener(new IPropertyChangeListener() {
-                public void propertyChange(org.eclipse.jface.util.PropertyChangeEvent event) {
-                    if (event.getProperty().equals(TransitionFigure.PREF_SPLINE_MODE)) {
-                        figure.setSplineMode((Integer) event.getNewValue());
-                    }
-                }
-            });
-        }
+        Connection figure = new TransitionFigure();
 
         if (figure instanceof IAttributeAwareFigure) {
             ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+        }
+
+        if (figure instanceof SplineConnection) {
+            ((SplineConnection) figure).setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
+                    .getPreferenceStore().getInt(SplineConnection.PREF_SPLINE_MODE));
         }
         return figure;
     }
