@@ -12,9 +12,9 @@
 	«ENDIF-»
 «EXPAND CodegenRegion::region FOREACH this.regions-»
 
-«this.id»_main:
+«getStateNameByFlag(this, 3)»_main:
 «ELSE-»
-«this.id-»:
+«getStateNameByFlag(this, 3)-»:
 «ENDIF-»
 «IF this.outgoingTransitions.isEmpty-»
 			«EXPAND CodegenMisc::callJSONState-»
@@ -26,9 +26,9 @@
 			PAUSE;
 		«EXPAND onInside FOR this-»
 		«IF !(this.regions.isEmpty)-»
-			GOTO(«this.id»_main);
+			GOTO(«getStateNameByFlag(this, 3)»_main);
 		«ELSE-»
-			GOTO(«this.id»);
+			GOTO(«getStateNameByFlag(this, 3)»);
 		«ENDIF-»
 	«ENDIF-»
 «ELSE-»
@@ -37,9 +37,9 @@
 	«EXPAND onEntry FOR this-»
 	«EXPAND immediateWeak FOR this-»
 	«IF !(this.regions.isEmpty)-»
-«this.id»_main_intern:
+«getStateNameByFlag(this, 3)»_main_intern:
 	«ELSE-»
-«this.id»_intern:
+«getStateNameByFlag(this, 3)»_intern:
 	«ENDIF-»
 	«EXPAND CodegenMisc::callJSONState-»
 	«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
@@ -55,26 +55,26 @@
 		  PRIO(«computeRealThreadPriority(this)»);
 	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
 		«IF !(this.regions.isEmpty)-»
-			GOTO(«this.id»_main_intern);
+			GOTO(«getStateNameByFlag(this, 3)»_main_intern);
 		«ELSE-»
-			GOTO(«this.id»_intern);
+			GOTO(«getStateNameByFlag(this, 3)»_intern);
 		«ENDIF-»
 	«ENDIF-»
 «ENDIF-»
 «ENDDEFINE»
 
 «DEFINE generateForkOneRegion FOR State-»
-«this.id»:
-			FORK(«getInitialState(this.regions.first()).id-», «computeRealThreadPriority(getInitialState(this.regions.first()))»);
-			FORKE(«this.id»_main);
+«getStateNameByFlag(this, 3)»:
+			FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «computeRealThreadPriority(getInitialState(this.regions.first()))»);
+			FORKE(«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
-«this.id»:
+«getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
-			FORK(«getInitialState(region).id-», «computeRealThreadPriority(getInitialState(region))»);
+			FORK(«getStateNameByFlag(getInitialState(region), 3)-», «computeRealThreadPriority(getInitialState(region))»);
 	«ENDFOREACH»
-			FORKE(«this.id»_main);
+			FORKE(«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE immediateStrong FOR State-»

@@ -60,6 +60,9 @@ public final class Helper {
     private static final int WEAK_STATE = 1;
     private static final int STRONG_STATE = 2;
     private static final int SIMPLE_STATE = 0;
+    private static final int LABEL_ANY_ID = 1;
+    private static final int LABEL_SHORTEST_HIERARCHIE = 2;
+    private static final int LABEL_COMPLETE_HIERARCHIE = 3;
 
     /**
      * Computes a list with all states in the right order of their priority.
@@ -131,18 +134,78 @@ public final class Helper {
         return allSignals;
     }
 
+    /**
+     * Returns unique a label for a state independent on the flag.
+     * 
+     * @param state
+     *            the state for which a label should be generated
+     * @param flag
+     *            what kind of label is desired
+     * @return unique label for a state
+     */
+    public static String getStateNameByFlag(final State state, final Integer flag) {
+        String out = "";
+        switch (flag) {
+        case LABEL_ANY_ID:
+            out = getStateNameAnyID(state);
+            break;
+        case LABEL_COMPLETE_HIERARCHIE:
+            out = getStateNameCompleteHierarchie(state);
+            break;
+        case LABEL_SHORTEST_HIERARCHIE:
+            out = getStateNameShortestHierarchie(state);
+            break;
+        default:
+            out = getStateNameCompleteHierarchie(state);
+            break;
+        }
+        return out;
+    }
+
+    /**
+     * Not used?
+     * 
+     * @param state
+     *            nut used?
+     * @return not used?
+     */
     public static List<StateSignalDependency> getStateSignalDependencies(final State state) {
         stateSignalDependencies.clear();
         fillStateSignalList(state);
         return stateSignalDependencies;
     }
 
+    private static String getStateNameAnyID(final State state) {
+        String out = "";
+        return out;
+    }
+
+    private static String getStateNameCompleteHierarchie(final State state) {
+        String regionPrefix = "";
+        if (state.getParentRegion().getParentState().getRegions().size() > 1) {
+            regionPrefix = state.getParentRegion().getId() + "_";
+        }
+        if (state.getParentRegion().getParentState().getParentRegion().getParentState() != null) {
+            return getStateNameCompleteHierarchie(state.getParentRegion().getParentState()) + "_"
+                    + regionPrefix + state.getId();
+        } else {
+            return regionPrefix + state.getId();
+        }
+    }
+
+    private static String getStateNameShortestHierarchie(final State state) {
+        String out = "";
+        return out;
+    }
+
     private static void putSignalDependencies(final State state) {
         // get signals of the state
         ArrayList<Signal> stateTriggerSignals = new ArrayList<Signal>();
+        ArrayList<Signal> stateEffectSignals = new ArrayList<Signal>();
         for (StateSignalDependency s : stateSignalDependencies) {
             if (state.equals(s.getState())) {
                 stateTriggerSignals = s.getTriggerSignals();
+                stateEffectSignals = s.getEffectSignals();
                 break;
             }
         }
@@ -153,12 +216,15 @@ public final class Helper {
             // get signals of neighbor states and their child states
             if (!state.equals(neighborState)) {
                 ArrayList<Signal> neighborEffectSignals = new ArrayList<Signal>();
+                ArrayList<Signal> neighborTriggerSignals = new ArrayList<Signal>();
                 for (StateSignalDependency s : stateSignalDependencies) {
                     if (neighborState.equals(s.getState())) {
                         neighborEffectSignals = s.getEffectSignals();
+                        neighborTriggerSignals = s.getTriggerSignals();
                         break;
                     }
                 }
+                // one direction
                 if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
                     // in dependency list eintragen
                     Tuple<State, Integer> firstTuple = getStatePropertyTupel(state);
@@ -166,6 +232,16 @@ public final class Helper {
                     Dependency signalDependency = builtDependency(firstTuple, secondTuple,
                             SIGNAL_FLOW_EDGE);
                     System.out.println("added " + state.getId() + " -> " + neighborState.getId());
+                    stateDependencies.add(signalDependency);
+                }
+                // other direction
+                if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
+                    // in dependency list eintragen
+                    Tuple<State, Integer> firstTuple = getStatePropertyTupel(neighborState);
+                    Tuple<State, Integer> secondTuple = getStatePropertyTupel(state);
+                    Dependency signalDependency = builtDependency(firstTuple, secondTuple,
+                            SIGNAL_FLOW_EDGE);
+                    System.out.println("added " + neighborState.getId() + " -> " + state.getId());
                     stateDependencies.add(signalDependency);
                 }
             }

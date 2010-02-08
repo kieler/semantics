@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.annotation.Inherited;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -104,8 +105,8 @@ public class DataComponent extends JSONObjectDataComponent {
         String bundleLocation = url.getFile();
         // because of windows vs Linux
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation.startsWith("\\")){
-        	bundleLocation = bundleLocation.substring(1);
+        if (bundleLocation.startsWith("\\")) {
+            bundleLocation = bundleLocation.substring(1);
         }
 
         try {
@@ -179,15 +180,12 @@ public class DataComponent extends JSONObjectDataComponent {
         // delete temp folder
         File folder = new File(wf.getOutPath());
         if (folder.getAbsolutePath().contains("tmp")) {
-            /* Deleting folder for debugging disabled
-             * 
             boolean folderDeleted = deleteFolder(folder);
             if (folderDeleted) {
                 System.out.println("temp folder " + folder + " successfully deleted");
             } else {
                 System.err.println("error while deleting temp folder: " + folder);
             }
-            */
         }
     }
 
@@ -221,7 +219,7 @@ public class DataComponent extends JSONObjectDataComponent {
 
     @SuppressWarnings("unused")
     /*
-     *  just unused for debugging
+     * just unused for debugging
      */
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {

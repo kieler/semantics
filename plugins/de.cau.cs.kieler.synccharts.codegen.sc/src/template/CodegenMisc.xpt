@@ -20,13 +20,13 @@ const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
 «ENDDEFINE»
 
 «DEFINE generateInputSignal FOR Signal-»
-void «this.parentState.label»_I_«this.name»() {
+void «this.parentState.id»_I_«this.name»() {
 	signals = signals | (1 << «this.name»);
 }
 «ENDDEFINE»
 
 «DEFINE generateOutputSignals FOR Signal»
-void «this.parentState.label»_O_«this.name»(int status){
+void «this.parentState.id»_O_«this.name»(int status){
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	«IF this.type == ValueType::INTEGER-»
@@ -42,7 +42,7 @@ void «this.parentState.label»_O_«this.name»(int status){
 void callOutputs() {
 	«FOREACH this AS signal-»
 		«IF !((Signal)signal).isInput-»
-	  «((Signal)signal).parentState.label»_O_«((Signal)signal).name-»(signals & (1 << «((Signal)signal).name-»));
+	  «((Signal)signal).parentState.id»_O_«((Signal)signal).name-»(signals & (1 << «((Signal)signal).name-»));
 		«ENDIF-»
 	«ENDFOREACH-»
 }

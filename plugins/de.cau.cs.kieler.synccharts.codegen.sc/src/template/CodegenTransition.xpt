@@ -12,7 +12,7 @@
 			«ENDIF-»
 		«ELSE-»
 			«IF this.type == TransitionType::NORMALTERMINATION-»
-			JOINELSE(«this.sourceState.id»_main);
+			JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main);
 			«ENDIF-»
 			«EXPAND transitionEffects FOR this-»
 		«ENDIF-»
@@ -57,7 +57,7 @@
 		«ENDIF-»
 	«ENDIF-»
 	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
-			GOTO(«this.targetState.id»);
+			GOTO(«getStateNameByFlag(this.targetState, 3)»);
 	«ENDIF-»
 «ENDDEFINE»
 

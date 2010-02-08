@@ -3,7 +3,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-	«FILE innerStates.first().label + ".c"-»
+	«FILE innerStates.first().id + ".c"-»
 	
 // generated SC-code //
 	«EXPAND init-»
@@ -33,7 +33,7 @@ int tick(int isInit){
 «ENDDEFINE»
 
 «DEFINE generateInputSignals FOR Signal-»
-void «this.parentState.label»_I_«this.name»(){
+void «this.parentState.id»_I_«this.name»(){
 	signals = signals | (1 << «this.name»);
 }
 «ENDDEFINE»

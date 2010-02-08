@@ -55,9 +55,7 @@ public class WorkflowGenerator {
             int value = random.nextInt(max);
             buffer.append(allowedChars.charAt(value));
         }
-        // return buffer.toString();
-        // for debugging:
-        return "scDebug";
+        return buffer.toString();
     }
 
     public WorkflowGenerator() {
