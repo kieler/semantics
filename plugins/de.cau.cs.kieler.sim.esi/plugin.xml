@@ -23,7 +23,15 @@
      <content
            class="de.cau.cs.kieler.sim.esi.EsoComponent"
            id="de.cau.cs.kieler.sim.esi.verify"
-           name="Esi comperator">
+           name="Esi writer">
+     </content>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+     <content
+           class="de.cau.cs.kieler.sim.esi.OutputValidator"
+           id="de.cau.cs.kieler.sim.esi.TraceValidator"
+           name="Trace validator">
      </content>
   </extension>
 

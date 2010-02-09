@@ -51,12 +51,6 @@ public class EsiComponent extends JSONObjectDataComponent implements
 
     private ITraceList tracelist;
 
-    // private tracelist tracelist = null;
-    /*
-     * private Iterator<trace> iTrace; private Iterator<tick> iTick; private trace trace; private
-     * tick tick; private int nTick;
-     */
-
     private int iteration = 0;
 
     private String traceFile = "";
