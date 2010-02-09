@@ -331,8 +331,8 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
 
     /**
      * This method is intended to check if the properties are set correctly. Here a component may
-     * check for required and optional properties and their settings. Also an {@link:
-     * KiemPropertyError} can be raised if some property prevents the execution of this component.
+     * check for required and optional properties and their settings. Also an KiemPropertyError
+     * can be raised if some property prevents the execution of this component.
      * 
      * @param propertiesParam
      *            the properties with the current user settings
