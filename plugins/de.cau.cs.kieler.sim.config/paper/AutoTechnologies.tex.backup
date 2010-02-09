@@ -1,0 +1,34 @@
+\chapter{Used technologies}
+\label{chapter:AutoTechnologies}
+
+The technologies used in this thesis are basically the same as in
+the first part (see \ref{chapter:ConfTechnology}).
+
+\section{Eclipse WorkbenchJob API}
+\label{section:AutoTechJob}
+Since we don't want the UI to block while we are doing our automated
+execution run we will use the Eclipse Job API to run our
+automated execution thread.
+The Job API is specifically designed to accommodate very long running
+tasks which makes it perfect for our purposes since an execution
+run with several model files and hundreds of trace files might
+a whole night.
+% picture of an SVN commit
+
+
+
+\section{Eclipse Wizards}
+\label{section:AutoTechWizards}
+To allow the user to set up the execution run we will be using the
+Eclipse Wizard API.
+Wizards are used to guide the user through the process of creating complex items by taking
+the information in a structured way and then generating the item from it.
+One example inside the Eclipse Architecture is the Java Class Creation Wizard.
+In theory it is possible to just open a text file and enter all the information manually.
+However if the wizard is used the user only has to select the class he wants to extend
+and the interfaces he wants to implement, activate one check box and then the wizard will
+create the class body, all required methods and comments for each element.
+This makes it very easy for even inexperienced users to create new classes without knowing
+the exact syntax.
+
+% picture of java class creation wizard

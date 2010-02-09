@@ -1,0 +1,82 @@
+\chapter{Problem Statement}
+\label{chapter:ConfTask}
+The objective of this project is to improve the configurability of the
+\ac{KIEM} as outlined in the Diploma-thesis by Christian Motika \cite{cmot-dt}:
+\begin{quote}
+ \ac{KIEM} currently does not have a preference page to save
+additional settings like DataComponent timeouts. Also execution schedulings
+might be similar for a common diagram type.
+
+It may improve the usability further to allow the user to customize execution
+schedulings for specific diagram types. An interface for these kind of settings
+could be realized as an Eclipse preference page.
+\end{quote}
+
+In order to make it more comfortable for the user, preference pages for the Execution Manager could offer the following:
+\begin{itemize}
+ \item Configure a default configuration
+ \item Including timeouts, debug level, scheduling, other settings
+ \item Make these things specific for a diagram type
+ \item Provide a mechanism to access some last used configurations/schedules 
+\end{itemize}
+\section{Configurations}
+Currently every property in the KIEM has a hard coded default value. There is a text box
+for setting the aimed step duration for the currently loaded .execution file but that value
+is lost once a new execution is loaded.
+To solve this problem an extension to the KIEM should attempt to provide the following:
+\begin{enumerate}
+ \item find a way that .execution files can store values like the aimed step duration and the timeout.
+This mechanism should be implemented in a way that ensures that old files can be upgraded and new
+files are still valid in instances of the KIEM that don't use the configuration plugin.
+ \item find a way to load the configurations into the different part of the KIEM as soon as a schedule
+is loaded from the file system.
+ \item ensure that the user can edit all properties and maybe even create his own custom properties.
+This should be implemented in a way that doesn't clutter up the current user interface too much.
+\end{enumerate}
+
+%\begin{itemize}
+% \item different configurable elements in KIEM (Timeout, Aimed step duration)
+% \item currently hard coded
+% \item way that an .execution file can carry their own configuration without making old files invalid
+% \item load/save configurations
+%\end{itemize}
+
+\subsection{Default Configuration}
+\index{Default Configuration}
+The different properties stored in each .execution file might sometimes not suit the users current needs
+and he might want to use a default value for some properties without having to manually set them
+in each new configuration.
+The solution could be implemented in a preference page that contains the following:
+\begin{enumerate}
+ \item a way to set the default properties for all KIEM properties and possibly for user defined properties as well.
+ \item a way to set which of these properties should override the value stored in the .execution file and which
+should only be used if the .execution file doesn't contain one.
+\end{enumerate}
+
+%\begin{itemize}
+% \item don't want to set properties on every current configurations
+% \item default values configurable through a preference page
+% \item override values used in a configuration with defaults
+%\end{itemize}
+
+\section{Easier configuration loading}
+The last objective of this thesis is to make it easier to load .execution files.
+Currently all .execution files are stored in the workspace at a place of the users choice. In a very
+large workspace it can be very hard to find the execution file that you need for your current
+simulation. The list of recently used documents that Eclipse provides is of little use since all
+opened documents are placed there not just execution files.
+This problem results in the following tasks:
+\begin{enumerate}
+ \item Finding a way to track recently used execution files and make it easier for the user to
+load them without having to locate them inside his workspace.
+ \item In addition to tracking recently used execution files the user might want to have a way to have a list
+of execution files that work for the currently active editor. This list should be sorted with the most likely
+candidates at the top to allow less experienced users to select an execution file that will most likely work.
+\end{enumerate}
+
+
+%\begin{itemize}
+% \item track recently used schedules
+% \item load most recently used schedule on startup
+% \item display filtered list based on currently active editors
+%\end{itemize}

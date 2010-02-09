@@ -1,0 +1,418 @@
+
+\chapter{Tipps und Tricks}
+\label{sec:tat}
+
+%% \section{Akronyme}
+%% Mit dem Paket \texttt{acronym} lassen sich auf einfache Art und Weise Akronyme
+%% verwenden. Dabei wird sichergestellt, dass ein Akronym nur beim ersten
+%% Vorkommen ausgeschrieben wird. Alle folgenden Referenzen auf das Akronym
+%% bewirken die verk�rzte Schreibweise. Das Paket bietet eine Reihe von weiteren
+%% Makros zur verschieden formatierte Akronyme.
+
+%% \begin{description}
+%% \item[Beispiel:] \ac{KIEL}, \ac{KIEL}
+%% \item[Dokumentation:] \href{ftp://cam.ctan.org/tex-archive/macros/latex/contrib/acronym/acronym.pdf}{acronym.pdf}
+
+%% \end{description}
+
+
+
+\section{Bibliographische Verweise mit Author und Datum}
+
+Bibliographische Verweise mit Author und Datum erzeugt man mit dem Paket
+\texttt{natbib}. Daf�r benutzt man dann entsprechende \emph{Bibstyles}. F�r
+dieses Dokument wird \texttt{plainnat.bst} verwendet.
+
+\begin{description}
+\item[Beispiele:] \
+  \begin{itemize}
+  \item \citet{AhoHU74}
+  \item \citet[chap. 2]{AhoHU74}
+  \item \citep[see][chap. 2]{AhoHU74}
+  \end{itemize}
+\item[Dokumentation:] \url{http://merkel.zoneo.net/Latex/natbib.php}
+\end{description}
+
+
+\section{Fu�noten f�r Bild- und Tabellenunterschriften}
+\label{sec:footnotecaption}
+
+Der Nachteil dieser Konstruktion\footnote{eine Fu�note} mit
+\lstinline!\footnotemark! und \lstinline!\footnotetext! in
+Abbildung~\ref{fig:footgrafik} ist, dass keine automatischen Verweise im
+PDF-Dokument erzeugt werden.
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.3\textwidth]{abstract-connections.png}
+  \caption[Eine Grafik mit Anmerkung]%
+  {Eine Grafik mit Anmerkung\protect\footnotemark}
+  \label{fig:footgrafik}
+\end{figure}
+\footnotetext{Eine Anmerkung zur Grafik}
+%
+Mit \lstinline!\protect!
+kann \lstinline!\footnote! im Parameter f�r \lstinline!caption! benutzt werden,
+allerdings w�rde die Fu�note dann im Abbildungsverzeichnis auftauchen. Damit
+dem nicht so ist, verwendet man einen optionalen Parameter f�r
+\lstinline!caption!, der in eckige Klammern einzuschlie�en
+ist und dessen Text\footnote{eine weitere Fu�note} nur im Verzeichnis gedruckt wird.
+
+
+\section{Glossar}
+\label{sec:glossary}
+
+Hier wird ein Glossar erstellt: single matrix, \glossary{name={singular
+    matrix},description={A matrix with zero determinant}} $\mathcal{U}$,
+\glossary{name={$\mathcal{U}$},description={The universal set},sort=U}
+$\mathbb{R}$ \glossary{name={$\mathbb{R}$},description={The set of real
+    numbers},sort=R,format=textbf}
+
+
+\section{Grafiken}
+
+Das Einbinden der Bilder erfolgt immer mit includegraphics aus dem Paket
+graphicx. Benutzt man \LaTeX\ werden damit eps-Bilder eingebunden (besser als
+\texttt{PS}, da mit bounding box), PDF\LaTeX\ nimmt Bilder aus \texttt{PDF},
+\texttt{PNG}, \ldots\ (s.~Abb.~\ref{fig:grafik}). PDF\LaTeX\ hat den Vorteil das kein Programmlauf mit
+\texttt{dvips} n�tig wird, der Nachteil ist aber die Konvertierung von
+\texttt{PDF} nach \texttt{PS} vor jedem Druckvorgang. \texttt{PS} und
+\texttt{PDF} sind aber Vektorgraphiken, so dass das Konvertieren verlustfrei
+ist; beim automatischen Konvertieren wird jedoch ein \texttt{PDF}-Dokument
+verkleinert und auch so gedruckt, dagegen wird das \texttt{PS}-Dokument in
+richtiger Gr��e gedruckt.
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.6\textwidth]{abstract-connections.png}
+  \caption{Eine Grafik}
+  \label{fig:grafik}
+\end{figure}
+
+
+\section{Kommutative Diagramme}
+\label{sec:commutative}
+
+F�r dieses Beispiel wird das Paket \lstinline!amscd! verwendet.%
+%
+\begin{equation*}
+  \begin{CD}
+    G @>g>> G^{*} \\
+    @V{f}VV @AA{f^{-1}}A \\
+    H @>g'>> H^{*}
+  \end{CD}
+\end{equation*}
+
+
+\section{Listings}
+
+Mit diesem Mechanismus kann man Programm-Code in einem Dokument abbilden, und
+diesen automatisch mit Hervorhebungen von Schl�sselw�rten versehen lassen
+(s.~Abb.~\ref{fig:listinga}). Damit Hervorhebungen zusammen mit
+\texttt{Typewriter} funktionieren muss luximono geladen werden und der
+entsprechende Font installiert sein (wie z.B. auf Lehrstuhl-Rechnern). Das
+Beispiel~\ref{fig:listingb} zeigt die entsprechende Formatierung dazu. In
+diesem Bsp.\ ist der Text mit einer Proportionalschrift formatiert, dies
+erreicht man durch die Anpassung der listing-Umgebung mit
+\lstinline!columns=flexible!.  Falls der entsprechende Font nicht installiert
+ist sollte man sich nicht f�r\linebreak\lstinline!basicstyle=\ttfamily!
+entscheiden, sondern diese Einstellung einfach weglassen. Ein anderer Weg
+Listings (ohne Highlighting) umzusetzen, wird in Anhang~\ref{sec:code}
+gezeigt.
+
+{\centering
+\lstset{
+  language=Java,
+  columns=flexible,
+  basicstyle=\ttfamily\small   % damit hiermit Hervorhebungen funktionieren muss
+                                % luximono geladen werden und der entsprechende
+                                % Font installiert sein (wie z.B. auf 
+                                % Lehrstuhl-Rechnern)
+}
+\begin{lstlisting}[%
+  language=C++,
+  keywordstyle=\small\bfseries,
+  caption={Programm-Code A},
+  label={fig:listinga}]
+  class Example {
+    
+    static public void main (String[] args) {
+      System.out.println ("Beispiel"); // Kommentar
+    } 
+    
+    static public void noOperation () {
+      while (false) {
+      }
+    } 
+  }
+\end{lstlisting}
+
+\lstset{
+  language=Java,
+}
+
+\begin{lstlisting}[caption={Programm-Code B},label={fig:listingb}]
+  class Example {
+    
+    static public void main (String[] args) {
+      System.out.println ("Beispiel"); // Kommentar
+    } 
+    
+    static public void noOperation () {
+      while (false) {
+      }
+    } 
+  }
+\end{lstlisting}
+}
+
+\noindent\textbf{Dokumentation:} \href{http://www.ctan.org/tex-archive/macros/latex/contrib/listings/listings.pdf}{listings.pdf}
+
+
+\section{Minipages}
+
+
+\begin{minipage}{3cm}
+\raggedright Das ist eine \texttt{Minipage} mit der Breite 3\,cm.
+\begin{itemize}
+\item a
+\item b
+\item c
+\end{itemize}
+\end{minipage}
+
+
+\section{Referenzen}
+\label{sec:ref}
+
+So kann man ein Kapitel referenzieren:~\ref{sec:tat}, ebenso funktioniert das
+mit Abschnitten:~\ref{sec:tab}, Grafiken:~\ref{fig:grafik} und
+Tabellen:~\ref{tab:tabular}. Daneben kann man auch Seiten
+referenzieren:~\pageref{sec:tat}.
+
+
+
+
+\section{Sachwortregister} 
+
+In diesem Abschnitt testen wir das Sachwortregister durch einige Eintr�ge:
+
+Addition\index{Addition}
+Baeq\index{Baeq}
+Baes\index{Baes}
+B�r\index{Baer@B�r}
+Injektion\index{Injektion|see{Addition}}
+Klein\index{Klein}
+klein\index{klein}
+Aachen\index{Aachen}
+zahlen\index{zahlen}
+z.\,B.\index{z. B.@z.\,B.}
+
+Haus\index{Haus}
+Maus\index{Maus}
+Hans\index{Hans}
+Klaus\index{Klaus}
+Saus\index{Saus}
+Laus\index{Laus}
+Caus\index{Caus}
+Daus\index{Daus}
+raus\index{raus}
+
+Zahlen
+7\index{7}
+IV\index{4@IV}
+X\index{10@X}
+MCCL\index{1250@MCCL (1250)}
+1370\index{1370}
+8b\index{8@8b}
+8a\index{8@8a}
+
+Sonderzeichen
+?\index{?}
+!\index{+!}
+Ausruf\index{Ausruf}
+Ausrufezeichen\index{Ausrufezeichen}
+@\index{+@}
+$\otimes$\index{$\otimes$}
+
+gro�es �bles �rgernis
+\index{Aergernis@�rgernis}
+\index{Aergernis@�rgernis!grosses@gro�es}
+\index{Aergernis@�rgernis!uebles@�bles}
+\index{Aergernis@�rgernis!grosses@gro�es!uebles@�bles}
+\index{grosses Aergernis@gro�es �rgernis}
+\index{uebles Aergernis@�bles �rgernis}
+\index{grosses uebles Aergernis@gro�es �bles �rgernis}
+
+�sop\index{Aesop@�sop}
+Masse\index{Masse}
+Ma�e\index{Masse1@Ma�e}
+Schroeder\index{Schroeder}
+Schr�der\index{Schroeder1@Schr�der}
+� 51\index{� 51}
+�� 51--54\index{�� 51--54}
+
+
+\section{Setzen schmaler Spalten in Tabellen}
+\label{sec:tab}
+
+Kurze Texte lassen sich besser im Flattersatz setzen (s.\ rechte Spalte der
+Tabelle~\ref{tab:tabular}). F�r diese L�sung wird das Paket \lstinline!array!
+ben�tigt.
+
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash %
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|>{\PBS\raggedright\hspace{0pt}}p{3cm}|}\hline
+  erste & Zeile & \code{Choice} bzw.\ \code{DynamicChoice} \\
+  zweite & Zeile & \\\hline
+\end{tabular}
+\caption{Allgemeiner Aufbau einer Tabelle}
+\label{tab:tabular}
+\end{table}
+
+
+
+\section{Syntax-Diagramme}
+\label{sec:syntax}
+
+Zum Setzen von Syntax-Diagrammen wurde das Paket \lstinline!syntax.sty!
+entwickelt.  Es bietet die M�glichkeit, Grammatiken in Textform (s.\
+Abbildung~\ref{fig:syntaxtext}) oder graphisch (s.\
+Abbildung~\ref{fig:syntaxgraph}) abzubilden. Leider ist das Paket nicht sehr
+komfortabel, so dass man sich um viele Einstellungen selber k�mmern muss. So
+erkennt \LaTeX\ z.\,B.\ nicht die Breite der \emph{Items}
+(nicht-deterministische Ausdr�cke). Dazu sollte man f�r jede
+\lstinline!grammar!-Umgebung den L�ngen-Parameter \lstinline!grammarindent!
+neu anpassen. F�r das Bsp.\ in Abbildung~\ref{fig:syntaxtext} wurde daf�r die
+L�nge 3\,cm gew�hlt mit \lstset{ language=[LaTeX]TeX,
+  basicstyle=\ttfamily\small }
+
+\begin{lstlisting}
+  \setlength{\grammarindent}{3cm}
+\end{lstlisting}
+
+Will man eine \lstinline!grammar!-Umgebung mittig setzen, bettet man diese in
+einer \lstinline!minipage!-Umgebung ein, deren Breite dem Text in der
+\lstinline!grammar!-Umgebung entspricht. Die \lstinline!minipage!-Umgebung
+kann dann in einer \lstinline!center!-Umgebung mittig gesetzt werden (s.\
+Abbildung~\ref{fig:syntaxtextcentered}).
+
+
+\begin{figure}[htbp]
+  \centering
+\setlength{\grammarindent}{3cm}
+\setlength{\grammarparsep}{8pt}
+\begin{grammar}
+<statement> ::= <ident> `=' <expr>
+  \alt `for' <ident> `=' <expr> `to' <expr> `do' <statement>
+  \alt `{' <stat-list> `}'
+  \alt <empty>
+
+<stat-list> ::= <statement> `;' <stat-list> | <statement>
+\end{grammar}
+  \caption{Grammatik in Textform}
+  \label{fig:syntaxtext}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \centering
+\begin{syntdiag}
+<ident> `('
+ \begin{rep} \begin{stack} \\
+   <type> \begin{stack} \\ <ident> \end{stack}
+ \end{stack} \\ `,' \end{rep}
+\begin{stack} \\ `...' \end{stack} `)'
+\end{syntdiag}
+  \caption{Grammatik in Textform}
+  \label{fig:syntaxgraph}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{minipage}{.8\textwidth}
+      \setlength{\grammarindent}{3cm}
+      \setlength{\grammarparsep}{8pt}
+      \begin{grammar}
+        <statement> ::= <ident> `=' <expr>
+        \alt `for' <ident> `=' <expr> `to' <expr> `do' <statement>
+        \alt `{' <stat-list> `}'
+        \alt <empty>
+        
+        <stat-list> ::= <statement> `;' <stat-list> | <statement>
+      \end{grammar}
+    \end{minipage}
+  \end{center}
+  \caption{Grammatik in Textform}
+  \label{fig:syntaxtextcentered}
+\end{figure}
+
+
+
+
+\section{Tasten/Button}
+\label{sec:tasten}
+
+Mitunter m�chte man die Tasten (-kombinationen) und Button beschreiben, die in
+einer Implementationsarbeit benutzt werden. F�r die artgerechte Abbildung der
+Tasten kann das Paket \lstinline!keystroke.sty! verwendet werden.
+
+\begin{description}
+\item[Beispiel:] \keystroke{F1}, \Ctrl+\keystroke{A}
+\item[Dokumentation:]
+  \href{ftp://ftp.dante.de/tex-archive/macros/latex/contrib/keystroke/key-test.pdf}{key-test.pdf}
+
+\end{description}
+
+
+\section{Das Makro \texttt{todo}}
+\label{sec:todo}
+
+Eine M�glichkeit noch offene Aufgaben im Dokument zu markieren bietet sich mit
+dem \lstinline!\todo{}!. Der Text der im Parameter �bergeben wird, erscheint
+in den Marginalien des Dokumentes. Gleichzeitig wird die Anzahl der gesetzten
+\emph{todo}'s mit \lstinline!\sumtodo! vorgehalten. Beide Makros werden durch
+die im example-Bundle mitgelieferte Datei \lstinline!mystyle.sty!
+bereitgestellt.
+
+\begin{description}
+\item[Verwendung:] \
+  \begin{itemize}
+  \item \lstinline!\todo{Layout}!
+  \item \lstinline!\sumtodo!
+  \end{itemize}
+\end{description}
+\todo{Layout}
+\sumtodo
+
+
+
+\section{Unterabbildungen}
+\label{sec:subfigure}
+
+\begin{figure}[H]
+  \centering
+  \subfigure[Gro�]{\label{fig:subfigure1}\includegraphics[width=.4\textwidth]{ex1}}\quad%
+  \subfigure[Mittel]{\label{fig:subfigure2}\includegraphics[width=.3\textwidth]{ex1}}\quad%
+  \subfigure[Klein]{\label{fig:subfigure3}\includegraphics[width=.2\textwidth]{ex1}}\quad
+  \caption{Verschiedene Unterabbildungen in einer \texttt{figure}-Umgebung}
+  \label{fig:subfigure}
+\end{figure}
+
+Die Abbildungen~\ref{fig:subfigure1}, \ref{fig:subfigure2} und
+\ref{fig:subfigure3} sind Unterabbildungen der Abbildung~\ref{fig:subfigure}.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% ispell-dictionary: "german-latin1"
+%%% flyspell-dictionary "german-latin1"
+%%% End: 

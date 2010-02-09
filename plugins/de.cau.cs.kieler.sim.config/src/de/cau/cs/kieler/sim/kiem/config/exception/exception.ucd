@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="exception1" size="1800,474" id="de.cau.cs.kieler.sim.kiem.config.exception" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D313030302064652E6361752E63732E6B69656C65722E73696D2E6B69656D2E636F6E6669672F736F68">
+  <children xsi:type="editmodel:ClassEditModel" name="ScheduleFileMissingException" location="1228,276" size="552,140" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException">
+    <children xsi:type="editmodel:CompartmentEditModel" size="139,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="serialVersionUID" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException#serialVersionUID"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="529,72">
+      <children xsi:type="editmodel:MethodEditModel" name="ScheduleFileMissingException" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException#ScheduleFileMissingException(Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="ScheduleFileMissingException" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException#ScheduleFileMissingException(Ljava.lang.String;Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="ScheduleFileMissingException" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException#ScheduleFileMissingException(Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getErrorMessage" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException#getErrorMessage()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException&lt;-de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException" source="//@children.0" target="//@children.2/@sourceConnections.0" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="276,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/ScheduleFileMissingException-Standard::Derive->de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException" source="//@children.0" target="//@children.1" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Derive»" size="49,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="78,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="506,176"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.3/@sourceConnections.1 //@children.0/@sourceConnections.1 //@children.2/@sourceConnections.1" name="AbstractKiemException" location="659,50" size="514,176" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException">
+    <children xsi:type="editmodel:CompartmentEditModel" size="139,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="info" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#info"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="serialVersionUID" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#serialVersionUID"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="491,90">
+      <children xsi:type="editmodel:MethodEditModel" name="AbstractKiemException" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#AbstractKiemException(Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="AbstractKiemException" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#AbstractKiemException(Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="AbstractKiemException" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#AbstractKiemException(Ljava.lang.String;Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getErrorMessage" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#getErrorMessage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException#getInfo()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="KiemIllegalArgumentException" location="50,276" size="555,140" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException">
+    <children xsi:type="editmodel:CompartmentEditModel" size="139,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="serialVersionUID" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException#serialVersionUID"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="532,72">
+      <children xsi:type="editmodel:MethodEditModel" name="KiemIllegalArgumentException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException#KiemIllegalArgumentException(Ljava.lang.String;Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="KiemIllegalArgumentException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException#KiemIllegalArgumentException(Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="KiemIllegalArgumentException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException#KiemIllegalArgumentException(Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getErrorMessage" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException#getErrorMessage()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.0/@sourceConnections.0" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException&lt;-de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="465,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,174" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemIllegalArgumentException->Standard::Derive" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Derive»" size="114,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="475,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="8,176"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="KiemPropertyKeyIsNullException" location="635,276" size="563,140" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException">
+    <children xsi:type="editmodel:CompartmentEditModel" size="139,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="serialVersionUID" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException#serialVersionUID"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="540,72">
+      <children xsi:type="editmodel:MethodEditModel" name="KiemPropertyKeyIsNullException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException#KiemPropertyKeyIsNullException(Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="KiemPropertyKeyIsNullException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException#KiemPropertyKeyIsNullException(Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="KiemPropertyKeyIsNullException" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException#KiemPropertyKeyIsNullException(Ljava.lang.String;Ljava.lang.Throwable;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getErrorMessage" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException#getErrorMessage()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException&lt;-de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException" source="//@children.3" target="//@children.2/@sourceConnections.0" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="281,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="de.cau.cs.kieler.sim.kiem.config.exception/KiemPropertyKeyIsNullException-Standard::Derive->de.cau.cs.kieler.sim.kiem.config.exception/AbstractKiemException" source="//@children.3" target="//@children.1" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Derive»" size="49,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="281,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="257,176"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=7;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+</editmodel:ClassDiagramEditModel>

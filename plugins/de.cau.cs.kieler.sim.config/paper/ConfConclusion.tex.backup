@@ -1,0 +1,13 @@
+\chapter{Conclusion}
+\label{chapter:Conclusion}
+\section{Results}
+\begin{itemize}
+ \item trying to dynamically layout preference pages is impossible
+ \item combos grrrrrrrrr
+\end{itemize}
+
+\section{Further improvements}
+\begin{itemize}
+ \item allow Objects (Serializable) to be saved
+ \item improve dynamic layout, combo box visibility without restart
+\end{itemize}

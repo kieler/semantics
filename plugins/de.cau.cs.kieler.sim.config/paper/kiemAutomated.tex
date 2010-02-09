@@ -1,0 +1,79 @@
+\chapter{The Automated Executions Plug-in}
+- new plugin
+- handles the setup, control flow and display of automated execution
+- consists of 3 parts explained in detail below
+- wizard, manager, view
+\section{The wizard}
+\subsection{File selection page}
+- wizard is used to set up the execution run
+- extends ResourceImportWizard for displaying a folder/file structure for selecting files from
+- easily usuable, select whole folders, filter file types
+- can be given an initial selection, on close will save the selection, store it in preference store
+and restore it on load
+- additional dialog for selecting execution files that are not in the workspace but imported
+- for simplicity assume that files ending .execution are execution files and all other selected
+ones are model files, wizard can not check if valid since formats are not known
+- only allow user to proceed if at least one execution and one model file is selected
+\subsection{Property Setting page}
+- set up the additional arguments passed to the execution
+- simple adding and removing of key, value pairs
+- same as file page, on close results are saved to preference store and restored for initial
+selection on next open
+\subsection{Processing the information}
+- gather execution files and model files from file selection page
+- gather properties from property page
+- store information for next open
+- invoke the execution manager
+
+\section{The Execution manager and job}
+- handles control flow during the automation
+- takes information from either call through the API or wizard
+
+\subsection{Execution Manager}
+- handles the overall control flow
+- takes the execution files, model files and properties as argument
+- if progress monitor is registered it is informed about the progress of the evaluation
+- The control flow:
+\begin{itemize}
+ \item iterate over all execution files
+ \item open execution file
+ \item tell view to set up display for the first execution file
+ \item iterate over all model files
+ \item get first model file from list
+ \item ask components how many more runs they need, take maximum and perform runs before asking again
+ \item pass model file, execution file and index of iteration
+ \item initialize the execution
+ \item pass properties to components, at least receive model file and iteration
+ \item start worker thread that listens for monitor canceling, step timing out
+ \item ask components how many more steps they need, take maximum and perform steps before asking again
+ \item perform one step, lock self inside semaphore, stay locked until either worker thread or event listener notifies (step done)
+ \item when no component wants more steps pause
+ \item gather information from all IAutomatedProducers
+ \item tell view to show information for this iteration
+ \item stop execution inside the KIEM and perform cleanup
+ \item proceed to next iteration
+ \item inform monitor of progress
+ \item proceed to next model
+ \item proceed to next execution
+ \item when done inform monitor of done and terminate the job
+\end{itemize}
+
+
+
+\subsection{Execution Job}
+- workbenchjob with progressmonitor
+- used to display the progress in the progress view and a dialog with progress bar
+- long running task, doesn't want to block the rest of the workbench 
+- triggers execution in the manager
+
+\section{The View}
+- displays the information in a structured way
+- start a new table for each execution file
+- one row for each iteration with each model file
+ - prerequisite needed here: always the same outputs throughout the entire execution file
+- first columns display model file name, iteration index and current status
+
+\subsection{Toolbar}
+- button to start the wizard
+- button for clearing the view
+- text field showing the step that was just processed

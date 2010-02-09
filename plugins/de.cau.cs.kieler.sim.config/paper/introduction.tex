@@ -1,0 +1,54 @@
+
+% \part{Erster Teil} % Teile nur bei sehr langen Arbeiten
+
+\chapter{Introduction}
+\label{chapter:introduction}
+\section{Description of KIELER}
+\label{sec:intro/Kieler}
+\begin{itemize}
+ \item layouter, structure based editing
+ \item synchcharts
+ \item simulater
+ \item execution manager
+\end{itemize}
+\section{Description of the KIEM}
+\label{sec:intro/Kiem}
+Execution Manager is used in KIELER as a framework to plug-in DataComponents for various tasks. Examples are:
+\begin{itemize}
+ \item Simulation Engines
+ \item Model Visualizers
+ \item Environment Visualizers
+ \item Validators
+ \item User Input Facilities
+ \item Trace Recording Facilities 
+\end{itemize}
+
+These DataComponents can be executed using a graphical user interface (GUI). 
+The scheduling order can also be defined by this GUI as well as other settings like a step/tick duration and properties of DataComponents.
+For information about \ac{KIEM} see - \url{http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIEM}
+\section{Outline of this Document}
+\label{sec:intro/Outline}
+The first part of this document is about the implemention of the Configuration plugin for the \ac{KIEM}.
+The second part is about the implementation of an Automated Execution plugin for the \ac{KIEM}. Both
+parts will have the same structure described below.
+Each part starts with a detailed outline of the problems that are to be solved by this thesis.
+The next section will be about the technologies used to solve the problem.
+After that there will be a section about the concepts of how to solve the problem and some
+design decisions that were made at a very early stage in the development.
+Sections 5 and 6 are about the actual implementation with section 5 outlining the changes
+that were made to the \ac{KIEM} plug-in itself and section 6 describing the newly created
+\ac{KIEMConfig} plug-in.
+The final section of each part will summarize the results of the thesis and outline
+a few projects that could be based on it.
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 
+

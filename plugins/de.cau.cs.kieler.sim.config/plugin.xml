@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor" name="Default Schedule Contributor" schema="schema/de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor.exsd"/>
+<extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sim.kiem.config.preferences.ConfigurationsPreferencePage"
+            id="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
+            name="Execution Manager">
+      </page>
+      <page
+            category="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
+            class="de.cau.cs.kieler.sim.kiem.config.preferences.SchedulePreferencePage"
+            id="de.cau.cs.kieler.sim.kiem.schedulingConfigPage"
+            name="Scheduling Configurations">
+      </page>
+      <page
+            category="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
+            class="de.cau.cs.kieler.sim.kiem.config.preferences.PropertiesPreferencePage"
+            id="de.cau.cs.kieler.sim.kiem.config.externalConfigurationPage"
+            name="User Defined Properties">
+      </page>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.sim.kiem.config.ConfigurationProvider"
+         name="Configuration Provider"
+         point="de.cau.cs.kieler.sim.kiem.configurationProvider">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.extension.ConfigurationProvider"
+            id="de.cau.cs.kieler.sim.kiem.config.ConfigurationProvider"
+            name="Configuration Provider">
+      </content>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.sim.kiem.config.CurrentConfiguration"
+         name="Current Configuration"
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.data.ConfigDataComponent"
+            id="de.cau.cs.kieler.sim.kiem.config.CurrentConfiguration"
+            name="Current Configuration">
+      </content>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.sim.kiem.config.ToolbarContributor"
+         name="Toolbar Contributor"
+         point="de.cau.cs.kieler.sim.kiem.toolbarContributor">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.extension.ContributionsProvider"
+            id="de.cau.cs.kieler.sim.kiem.config.ToolbarContributor"
+            name="Toolbar Contributor">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener"
+            id="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener"
+            name="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <configurationFile
+            editorId="de.cau.cs.kieler.esterel.Esterel"
+            editorName="Esterel Editor"
+            editorPriority="8"
+            file="icons/noname1.execution">
+      </configurationFile>
+   </extension>
+
+</plugin>

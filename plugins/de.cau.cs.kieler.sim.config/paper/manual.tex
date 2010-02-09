@@ -1,0 +1,77 @@
+\chapter{Bedienungsanleitung}\index{Bedienungsanleitung}
+Um mit der Uhr arbeiten zu k"onnen muss man als erstes eine Batterie
+einlegen. Die Uhr wechselt dann sofort in den Macrozustand \zst{alive}, und
+dort in den Unterzustand \zst{displays}. Von nun an werden Sekunden Minuten
+und Stunden auf dem LCD-Display angezeigt. 
+
+
+\begin{description}
+\item[Dr"ucken von \kn{Knopf d}:]
+M"ochte der Benutzer der Uhr sich nun  das datum ausgeben lassen, dann dr"uckt
+er den \kn{Knopf d}. Die Uhr wechselt nun in den Zustand \zst{date} und das 
+Datum
+erscheint auf der LCD-Anzeige. 
+
+\item[Dr"ucken von \kn{Knopf a}:]
+Um in das uhr-Men"u zu gelangen muss man nur den \kn{Knopf a} dr"ucken. 
+Folgende mehrfachbenutzung ist m"oglich:
+\begin{description}
+\item[Bei einfachem Dr"ucken von\kn{ Knopf a}]
+gelangt man in das Men"u von Alarm1. Mit Hilfe des \kn{Knopfes d} wird der 
+Alarm1
+in den Zustand \zst{on} oder durch erneutes Dr"ucken in den Zustand  \zst{off}
+geschaltet. 
+Befindet sich der Alarm1 im Zustand \zst{on}, dann erscheint eine kleine
+Glocke mit einer 1  oben links in der Ecke der Uhr. 
+Befindet sich nun der Alarm1 im Zustand \zst{off}, dann erlischt die kleine
+Glocke wieder. 
+
+Um den Alarm zu stellen muss der Benutzer den \kn{Knopf c} dr"ucken. Nun kann 
+man mit dem \kn{Knopf d} die Stunden erh"ohen. Ist die gew"unschte einstellung
+vorgenommen, dann gelangt man "uber das dr"ucken von \kn{Knopf c} zum Stellen 
+der Zehnerstelle der Minuten. Nach fertigem einstellen gelangt man wieder "uber
+einen Druck auf \kn{Knopf c} zum Stellen der Minuten. Sind nun alle 
+Einstellungen vorgenommen worden, dann gelangt man mit Hilfe des 
+\kn{Knopfes c} zur"uch ins Men"u von Alarm1. 
+Um wieder in den \zst{time}-Zustand zu gelangen, in dem die Uhrzeit
+angezeigt wird muss man noch viermal den Knopf a dr"ucken. 
+
+\item[Bei zweifachem Dr"ucken von \kn{Knopf a}]
+gelangt man in das Men"u von Alarm2. Das Men"u von Alarm2 ist genauso
+aufgebaut, wie das Men"u von Alarm1 (s.o.). Mit der ausnahme, dass man beim
+verlassen des Zustandes durch dreifaches Dr"ucken in den Zustand \zst{time}
+gelangt. 
+ 
+\item[Bei dreifachem Dr"ucken von \kn{Knopf a}]
+gelangt man in das Men"u des Zustands \zst{Chime}. Mit Hilfe des \kn{Knopfes d}
+kann man nun einstellen, dass die Uhr alle volle Stunde einmal  alarm schlagen
+soll. Durch erneutes Dr"ucken des Knopfes d wird diese Funktion wieder
+ausgeschaltet. Ist der Zustand \zst{Chime} aktiv, dann erscheint auf dem
+Uhr-\eng{display} eine kleine gelbe Glocke. Ist der Zustand inaktiv, dann 
+erlischt sie wieder.  
+Um wieder in den \zst{time}-Zustand zu gelangen muss man noch zweimal den 
+Knopf a dr"ucken. 
+
+\item[Bei vierfachem Dr"ucken von Knopf a] gelangt man in das Stopuhr-Men"u.
+  Die LCD-Anzeige erweitert sich automatisch um die M"oglichkeit nun auch \cs
+  anzeigen zu k"onnen. Durch das Dr"ucken von \kn{Knopf c} startet man die 
+Stopuhr. Um nun die Zeit zu stoppen gen"ugt ein erneutes Dr"ucken des 
+\kn{Knopfes c}.  M"ochte man die Stopuhr wieder auf Null setzen, dann muss 
+man den \kn{Knopf d}  dr"ucken.  In den Zustand \zst{time} gelangt man durch 
+einfaches Dr"ucken  von \kn{Knopf a}.
+\end{description}
+
+\item[Dr"ucken von \kn{Knopf b}:]
+Die LCD-Anzeigen Beleuchtung der Uhr erscheint durch das Dr"ucken von \kn{Knopf
+b}. Wird nun nocheinmal dieser Knopf gedr"uckt, dann erlischt das Licht
+wieder. 
+\item[Batterie:]
+Ist die Batterie der Uhr schwach (Das Signal \signal{Batt\_weakens} wird
+emittiert), dann beginnt die Uhr zu blinken. Wird die Batterie
+herausgenommen oder erlischt, dann bleibt die Uhr stehen. 
+\end{description}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

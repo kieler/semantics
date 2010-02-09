@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.cau.cs.kieler.sim.kiem.config" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="de.cau.cs.kieler.sim.kiem.config" id="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor" name="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor"/>
+      </appInfo>
+      <documentation>
+         &lt;BR&gt;
+This extension point allows for schedules to be created before
+the execution starts. The created schedule will be available to the
+user immediately without having to set it up. This can be used
+to bundle .execution files with the release of an RCA for example.
+&lt;BR&gt;&lt;BR&gt;
+When the application is started the plugin checks if the linked
+execution file does actually exist. A schedule is then created
+as well as an editor provided through the editorID. Neither
+the schedule nor the editor can be removed by the user and the
+properties can only be changed during the current run of the application
+but are reset on the next start up.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="configurationFile"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="configurationFile">
+      <complexType>
+         <attribute name="file" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The .execution file that should be available for the users of this plugin. The schedule created with this file cannot be removed through the preference pages.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="editorId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of any editor. The schedule will be assigned support for this editor with the priority provided in the editorPriority field. This editor cannot be removed through the preference pages.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ui.editors/editor/@id"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="editorName" type="string">
+            <annotation>
+               <documentation>
+                  A humanly readable name for the editor.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="editorPriority" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The priority that will be assigned to the editor through the preference pages. It can be changed by the user for one session but will be reset on the next load. The priority should be greater zero. A value between 1 and 10 is usually a sufficient to distinguish between multiple execution.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.2.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         &lt;p&gt;
+This example shows part of the plugin.xml file and demonstrates
+how to add a file with a default editor and default priority to
+the execution of that plugin.
+&lt;/p&gt;
+&lt;p&gt;
+&lt;pre&gt;
+&lt;extension point=&quot;de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor&quot;&gt;
+&lt;configurationFile
+editorId=&quot;de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID&quot;
+editorName=&quot;Synccharts Diagram Editing&quot;
+editorPriority=&quot;10&quot;
+file=&quot;executions/example0.execution&quot;&gt;
+&lt;/configurationFile&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         Please see the extension point description.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         n/a
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Christian-Albrechts-Universität zu Kiel, Germany
+      </documentation>
+   </annotation>
+
+</schema>

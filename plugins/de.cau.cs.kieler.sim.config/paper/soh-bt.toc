@@ -1,0 +1,84 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Description of KIELER}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Description of the KIEM}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}Outline of this Document}{1}{section.1.3}
+\contentsline {part}{\numberline {I}Configurations in the KIEM}{3}{part.1}
+\contentsline {chapter}{\numberline {2}Problem Statement}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Configurations}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Default Configuration}{5}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}Easier configuration loading}{6}{section.2.2}
+\contentsline {chapter}{\numberline {3}Used technologies}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}Eclipse}{7}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Plug-ins}{7}{subsection.3.1.1}
+\contentsline {subsubsection}{Extension point mechanism}{7}{section*.4}
+\contentsline {subsection}{\numberline {3.1.2}Preference Pages}{7}{subsection.3.1.2}
+\contentsline {subsubsection}{Preference Store}{7}{section*.5}
+\contentsline {chapter}{\numberline {4}Concepts}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}Configurations}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Default Configuration}{9}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Easier Configuration loading}{10}{section.4.2}
+\contentsline {chapter}{\numberline {5}Code changes in the \ac {KIEM}}{13}{chapter.5}
+\contentsline {section}{\numberline {5.1}Schema files and Interfaces}{14}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Toolbar Contribution Provider}{14}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Configuration provider}{15}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Event Manager}{15}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}KIEMPlugin.java}{16}{section.5.2}
+\contentsline {section}{\numberline {5.3}KIEMView}{17}{section.5.3}
+\contentsline {chapter}{\numberline {6}KiemConfigurationPlugin}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Implementation of extension point}{19}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}The implementing classes}{19}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Manager classes}{19}{subsection.6.1.2}
+\contentsline {subsubsection}{Abstract manager superclass}{19}{section*.8}
+\contentsline {subsubsection}{Schedule manager}{19}{section*.9}
+\contentsline {subsubsection}{Configuration manager}{20}{section*.10}
+\contentsline {subsubsection}{Editor Manager}{20}{section*.11}
+\contentsline {subsubsection}{other managers}{20}{section*.12}
+\contentsline {subsection}{\numberline {6.1.3}Utility and Data classes}{20}{subsection.6.1.3}
+\contentsline {subsubsection}{ConfigDataComponent}{20}{section*.13}
+\contentsline {subsubsection}{ScheduleData}{21}{section*.14}
+\contentsline {subsubsection}{other data classes}{21}{section*.15}
+\contentsline {subsubsection}{Tools}{21}{section*.16}
+\contentsline {section}{\numberline {6.2}Preference pages}{22}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Configuration page}{22}{subsection.6.2.1}
+\contentsline {subsubsection}{User defined properties page}{23}{section*.18}
+\contentsline {subsubsection}{Property usage dialog}{23}{section*.19}
+\contentsline {subsection}{\numberline {6.2.2}Scheduling page}{23}{subsection.6.2.2}
+\contentsline {subsubsection}{Adding and removing editors, Selecting a default editor}{24}{section*.20}
+\contentsline {chapter}{\numberline {7}Conclusion}{27}{chapter.7}
+\contentsline {section}{\numberline {7.1}Results}{27}{section.7.1}
+\contentsline {section}{\numberline {7.2}Further improvements}{27}{section.7.2}
+\contentsline {part}{\numberline {II}Automated Execution in the KIEM}{29}{part.2}
+\contentsline {chapter}{\numberline {8}Problem Statement}{31}{chapter.8}
+\contentsline {section}{\numberline {8.1}Setting up an Automated Run}{31}{section.8.1}
+\contentsline {section}{\numberline {8.2}Input for the Automation}{31}{section.8.2}
+\contentsline {section}{\numberline {8.3}Automate the execution}{32}{section.8.3}
+\contentsline {section}{\numberline {8.4}Output of the results of the execution}{32}{section.8.4}
+\contentsline {chapter}{\numberline {9}Used technologies}{33}{chapter.9}
+\contentsline {section}{\numberline {9.1}Eclipse WorkbenchJob API}{33}{section.9.1}
+\contentsline {section}{\numberline {9.2}Eclipse Wizards}{33}{section.9.2}
+\contentsline {chapter}{\numberline {10}Concepts}{37}{chapter.10}
+\contentsline {section}{\numberline {10.1}Setting up an Automated Run}{37}{section.10.1}
+\contentsline {section}{\numberline {10.2}Input for the Automation}{38}{section.10.2}
+\contentsline {section}{\numberline {10.3}Automate the execution}{38}{section.10.3}
+\contentsline {section}{\numberline {10.4}Output of the results of the execution}{38}{section.10.4}
+\contentsline {chapter}{\numberline {11}Code changes in KIEMPlugin}{41}{chapter.11}
+\contentsline {section}{\numberline {11.1}Schema files and Interfaces}{41}{section.11.1}
+\contentsline {section}{\numberline {11.2}Automated Component}{41}{section.11.2}
+\contentsline {subsection}{\numberline {11.2.1}provideProperties()}{41}{subsection.11.2.1}
+\contentsline {subsection}{\numberline {11.2.2}wantAnotherStep()}{41}{subsection.11.2.2}
+\contentsline {subsection}{\numberline {11.2.3}wantsAnotherRun()}{42}{subsection.11.2.3}
+\contentsline {section}{\numberline {11.3}Automated Producer}{42}{section.11.3}
+\contentsline {chapter}{\numberline {12}The Automated Executions Plug-in}{43}{chapter.12}
+\contentsline {section}{\numberline {12.1}The wizard}{43}{section.12.1}
+\contentsline {subsection}{\numberline {12.1.1}File selection page}{43}{subsection.12.1.1}
+\contentsline {subsection}{\numberline {12.1.2}Property Setting page}{43}{subsection.12.1.2}
+\contentsline {subsection}{\numberline {12.1.3}Processing the information}{43}{subsection.12.1.3}
+\contentsline {section}{\numberline {12.2}The Execution manager and job}{43}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}Execution Manager}{43}{subsection.12.2.1}
+\contentsline {subsection}{\numberline {12.2.2}Execution Job}{44}{subsection.12.2.2}
+\contentsline {section}{\numberline {12.3}The View}{45}{section.12.3}
+\contentsline {subsection}{\numberline {12.3.1}Toolbar}{45}{subsection.12.3.1}
+\contentsline {chapter}{\numberline {13}Conclusion}{47}{chapter.13}
+\contentsline {section}{\numberline {13.1}Results}{47}{section.13.1}
+\contentsline {section}{\numberline {13.2}Further improvements}{47}{section.13.2}
+\contentsline {chapter}{Bibliography}{51}{appendix*.22}

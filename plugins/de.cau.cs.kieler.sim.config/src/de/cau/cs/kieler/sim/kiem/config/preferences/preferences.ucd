@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="preferences" size="699,3440" id="de.cau.cs.kieler.sim.kiem.config.preferences" metadata="uml2-1.0" initialized="true" zoom="0.25" tag="1000" key="32303037303533312D313030302064652E6361752E63732E6B69656C65722E73696D2E6B69656D2E636F6E6669672F736F68">
+  <children xsi:type="editmodel:ClassEditModel" name="ConfigurationsPreferencePage" location="598,630" size="412,668" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage" runTimeClassModel="saveProperties(),performOk(),de.cau.cs.kieler.sim.kiem.config.preferences.ConfigurationsPreferencePage.KiemIntegerPropertyInputField,de.cau.cs.kieler.sim.kiem.config.preferences.ConfigurationsPreferencePage.ConfigPageListener,performApply(),tEXT_BOX_LIMIT,init(Lorg.eclipse.ui.IWorkbench;),checkButtonStatus(),ConfigurationsPreferencePage(),propertiesGroup,matchingCheck,alwaysUseDefaultsButton,createContents(Lorg.eclipse.swt.widgets.Composite;),inputs,page,doLayout(),performDefaults(),advancedCheck,recentCheck,buildPage(Lorg.eclipse.swt.widgets.Composite;),toggleCombo(IZ)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="261,144">
+      <children xsi:type="editmodel:AttributeEditModel" name="advancedCheck" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#advancedCheck"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="alwaysUseDefaultsButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#alwaysUseDefaultsButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="inputs" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#inputs"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="matchingCheck" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#matchingCheck"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="page" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#page"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="propertiesGroup" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#propertiesGroup"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="recentCheck" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#recentCheck"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tEXT_BOX_LIMIT" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#tEXT_BOX_LIMIT"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="300,198">
+      <children xsi:type="editmodel:MethodEditModel" name="ConfigurationsPreferencePage" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#ConfigurationsPreferencePage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="buildPage" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#buildPage(Lorg.eclipse.swt.widgets.Composite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkButtonStatus" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#checkButtonStatus()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createContents" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#createContents(Lorg.eclipse.swt.widgets.Composite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="doLayout" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#doLayout()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="init" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#init(Lorg.eclipse.ui.IWorkbench;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performApply" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#performApply()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performDefaults" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#performDefaults()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performOk" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#performOk()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="saveProperties" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#saveProperties()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="toggleCombo" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage#toggleCombo(IZ)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="389,266">
+      <children xsi:type="editmodel:ClassEditModel" name="ConfigPageListener" size="204,68" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$ConfigPageListener" runTimeClassModel="handleEvent(Lorg.eclipse.swt.widgets.Event;)">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="181,18">
+          <children xsi:type="editmodel:MethodEditModel" name="handleEvent" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$ConfigPageListener#handleEvent(Lorg.eclipse.swt.widgets.Event;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" name="KiemIntegerPropertyInputField" size="389,194" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField" runTimeClassModel="save(),create(),text,KiemIntegerPropertyInputField(Lde.cau.cs.kieler.sim.kiem.properties.KiemProperty;),sPACES,update(),label,property">
+        <children xsi:type="editmodel:CompartmentEditModel" size="143,72">
+          <children xsi:type="editmodel:AttributeEditModel" name="label" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#label"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="property" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#property"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="sPACES" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#sPACES"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="text" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#text"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="366,72">
+          <children xsi:type="editmodel:MethodEditModel" name="KiemIntegerPropertyInputField" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#KiemIntegerPropertyInputField(Lde.cau.cs.kieler.sim.kiem.properties.KiemProperty;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="create" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#create()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="save" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#save()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="update" id="de.cau.cs.kieler.sim.kiem.config.preferences/ConfigurationsPreferencePage$KiemIntegerPropertyInputField#update()"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="KiemTableComparator" location="598,1348" size="365,68" id="de.cau.cs.kieler.sim.kiem.config.preferences/KiemTableComparator" runTimeClassModel="compare(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="342,18">
+      <children xsi:type="editmodel:MethodEditModel" name="compare" id="de.cau.cs.kieler.sim.kiem.config.preferences/KiemTableComparator#compare(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PropertiesPreferencePage" location="1078,628" size="297,472" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage" runTimeClassModel="PropertiesPreferencePage(),performOk(),removeButton,performApply(),init(Lorg.eclipse.ui.IWorkbench;),tableProvider,propertiesTable,checkButtonStatus(),propertiesGroup,rEMOVE_PROPERTY_TOOLTIP,alwaysUseDefaultsButton,addProperty(),createContents(Lorg.eclipse.swt.widgets.Composite;),page,addButton,focusLost(Lorg.eclipse.swt.events.FocusEvent;),removeProperty(),de.cau.cs.kieler.sim.kiem.config.preferences.PropertiesPreferencePage.ConfigPageListener,buildPage(Lorg.eclipse.swt.widgets.Composite;),focusGained(Lorg.eclipse.swt.events.FocusEvent;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="226,144">
+      <children xsi:type="editmodel:AttributeEditModel" name="addButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#addButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="alwaysUseDefaultsButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#alwaysUseDefaultsButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="page" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#page"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="propertiesGroup" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#propertiesGroup"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="propertiesTable" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#propertiesTable"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rEMOVE_PROPERTY_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#rEMOVE_PROPERTY_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="removeButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#removeButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tableProvider" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#tableProvider"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="274,198">
+      <children xsi:type="editmodel:MethodEditModel" name="PropertiesPreferencePage" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#PropertiesPreferencePage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addProperty" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#addProperty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="buildPage" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#buildPage(Lorg.eclipse.swt.widgets.Composite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkButtonStatus" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#checkButtonStatus()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createContents" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#createContents(Lorg.eclipse.swt.widgets.Composite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="focusGained" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#focusGained(Lorg.eclipse.swt.events.FocusEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="focusLost" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#focusLost(Lorg.eclipse.swt.events.FocusEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="init" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#init(Lorg.eclipse.ui.IWorkbench;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performApply" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#performApply()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performOk" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#performOk()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeProperty" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage#removeProperty()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="204,70">
+      <children xsi:type="editmodel:ClassEditModel" name="ConfigPageListener" size="204,68" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage$ConfigPageListener" runTimeClassModel="handleEvent(Lorg.eclipse.swt.widgets.Event;)">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="181,18">
+          <children xsi:type="editmodel:MethodEditModel" name="handleEvent" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesPreferencePage$ConfigPageListener#handleEvent(Lorg.eclipse.swt.widgets.Event;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PropertiesTableProvider" location="58,1214" size="461,248" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider" runTimeClassModel="PropertiesTableProvider(Lorg.eclipse.jface.viewers.TableViewer;[Ljava.lang.String;),refresh(),getElements(Ljava.lang.Object;),priorityTableViewer,getColumnText(Ljava.lang.Object;I),getValue(Ljava.lang.Object;Ljava.lang.String;),tableHeaders,inputChanged(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;),getColumnImage(Ljava.lang.Object;I),canModify(Ljava.lang.Object;Ljava.lang.String;),modify(Ljava.lang.Object;Ljava.lang.String;Ljava.lang.Object;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="196,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="priorityTableViewer" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#priorityTableViewer"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tableHeaders" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#tableHeaders"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="438,162">
+      <children xsi:type="editmodel:MethodEditModel" name="PropertiesTableProvider" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#PropertiesTableProvider(Lorg.eclipse.jface.viewers.TableViewer;[Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="canModify" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#canModify(Ljava.lang.Object;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getColumnImage" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#getColumnImage(Ljava.lang.Object;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getColumnText" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#getColumnText(Ljava.lang.Object;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getElements" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#getElements(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValue" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#getValue(Ljava.lang.Object;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="inputChanged" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#inputChanged(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="modify" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#modify(Ljava.lang.Object;Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="refresh" id="de.cau.cs.kieler.sim.kiem.config.preferences/PropertiesTableProvider#refresh()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SchedulePreferencePage" location="50,50" size="491,1120" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage" runTimeClassModel="performOk(),columns,init(Lorg.eclipse.ui.IWorkbench;),mAX_EDITORS_NAME_LENGTH,eventDispatched(Lde.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;),removeEditorButton,getImage(Ljava.lang.Object;),selectDefaultEditor(),widgetDefaultSelected(Lorg.eclipse.swt.events.SelectionEvent;),removeEditor(),widgetSelected(Lorg.eclipse.swt.events.SelectionEvent;),cellEditors,firstFreeIndex,focusGained(Lorg.eclipse.swt.events.FocusEvent;),savePriorities(),prioritiesTable,parent,removeSchedule(),displayDialog([Lde.cau.cs.kieler.sim.kiem.config.data.EditorDefinition;Ljava.lang.String;),addEditorButton,createContents(Lorg.eclipse.swt.widgets.Composite;),removeSchedule,SchedulePreferencePage(),getSelectedSchedule(),addListener(Lorg.eclipse.jface.viewers.ILabelProviderListener;),focusLost(Lorg.eclipse.swt.events.FocusEvent;),layout(),checkFreeIndex(),removeListener(Lorg.eclipse.jface.viewers.ILabelProviderListener;),fillData(Ljava.util.List;),data,addEditor(),columnProperties,rEMOVE_SCHEDULE_TOOLTIP,checkButtonStatus(),rEMOVE_EDITOR_TOOLTIP,priorityTableViewer,performDefaults(),eDIT_SCHEDULE_TOOLTIP,getAbbrev(Ljava.lang.String;),editorArray,de.cau.cs.kieler.sim.kiem.config.preferences.SchedulePreferencePage.SelectListener,tableEntries,selectDefaultEditorButton,sELECT_DEFAULT_EDITOR_TOOLTIP,isLabelProperty(Ljava.lang.Object;Ljava.lang.String;),prioritiesGroup,performApply(),doInitialLayout(),aDD_EDITOR_TOOLTIP,pUFFER_SIZE,checkDefaultEditor(),getText(Ljava.lang.Object;),editScheduleButton,scheduleDataList">
+    <children xsi:type="editmodel:CompartmentEditModel" size="245,432">
+      <children xsi:type="editmodel:AttributeEditModel" name="aDD_EDITOR_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#aDD_EDITOR_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="addEditorButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#addEditorButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="cellEditors" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#cellEditors"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="columnProperties" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#columnProperties"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="columns" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#columns"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="data" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#data"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="eDIT_SCHEDULE_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#eDIT_SCHEDULE_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="editScheduleButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#editScheduleButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="editorArray" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#editorArray"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="firstFreeIndex" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#firstFreeIndex"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mAX_EDITORS_NAME_LENGTH" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#mAX_EDITORS_NAME_LENGTH"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pUFFER_SIZE" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#pUFFER_SIZE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="parent" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#parent"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="prioritiesGroup" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#prioritiesGroup"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="prioritiesTable" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#prioritiesTable"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="priorityTableViewer" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#priorityTableViewer"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rEMOVE_EDITOR_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#rEMOVE_EDITOR_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rEMOVE_SCHEDULE_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#rEMOVE_SCHEDULE_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="removeEditorButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#removeEditorButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="removeSchedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#removeSchedule"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sELECT_DEFAULT_EDITOR_TOOLTIP" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#sELECT_DEFAULT_EDITOR_TOOLTIP"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="scheduleDataList" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#scheduleDataList"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="selectDefaultEditorButton" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#selectDefaultEditorButton"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tableEntries" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#tableEntries"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="468,540">
+      <children xsi:type="editmodel:MethodEditModel" name="SchedulePreferencePage" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#SchedulePreferencePage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addEditor" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#addEditor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addListener" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#addListener(Lorg.eclipse.jface.viewers.ILabelProviderListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkButtonStatus" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#checkButtonStatus()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkDefaultEditor" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#checkDefaultEditor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkFreeIndex" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#checkFreeIndex()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createContents" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#createContents(Lorg.eclipse.swt.widgets.Composite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="displayDialog" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#displayDialog([Lde.cau.cs.kieler.sim.kiem.config.data.EditorDefinition;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="doInitialLayout" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#doInitialLayout()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="eventDispatched" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#eventDispatched(Lde.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="fillData" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#fillData(Ljava.util.List;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="focusGained" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#focusGained(Lorg.eclipse.swt.events.FocusEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="focusLost" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#focusLost(Lorg.eclipse.swt.events.FocusEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAbbrev" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#getAbbrev(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getImage" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#getImage(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSelectedSchedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#getSelectedSchedule()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getText" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#getText(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="init" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#init(Lorg.eclipse.ui.IWorkbench;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isLabelProperty" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#isLabelProperty(Ljava.lang.Object;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="layout" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#layout()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performApply" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#performApply()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performDefaults" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#performDefaults()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="performOk" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#performOk()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeEditor" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#removeEditor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeListener" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#removeListener(Lorg.eclipse.jface.viewers.ILabelProviderListener;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeSchedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#removeSchedule()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="savePriorities" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#savePriorities()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="selectDefaultEditor" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#selectDefaultEditor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="widgetDefaultSelected" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#widgetDefaultSelected(Lorg.eclipse.swt.events.SelectionEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="widgetSelected" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage#widgetSelected(Lorg.eclipse.swt.events.SelectionEvent;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="287,88">
+      <children xsi:type="editmodel:ClassEditModel" name="SelectListener" size="287,86" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage$SelectListener" runTimeClassModel="widgetDefaultSelected(Lorg.eclipse.swt.events.SelectionEvent;),widgetSelected(Lorg.eclipse.swt.events.SelectionEvent;)">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="264,36">
+          <children xsi:type="editmodel:MethodEditModel" name="widgetDefaultSelected" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage$SelectListener#widgetDefaultSelected(Lorg.eclipse.swt.events.SelectionEvent;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="widgetSelected" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePreferencePage$SelectListener#widgetSelected(Lorg.eclipse.swt.events.SelectionEvent;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SchedulePriorityTableProvider" location="598,48" size="572,544" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider" runTimeClassModel="dispose(),sCHEDULES_PROPERTY,de.cau.cs.kieler.sim.kiem.config.preferences.SchedulePriorityTableProvider.DataEntry,lockedImage,canModify(Ljava.lang.Object;Ljava.lang.String;),modify(Ljava.lang.Object;Ljava.lang.String;Ljava.lang.Object;),calcMaxIndex(I),refresh(),getElements(Ljava.lang.Object;),priorityTableViewer,SchedulePriorityTableProvider(Lorg.eclipse.jface.viewers.TableViewer;Ljava.util.List;),getValue(Ljava.lang.Object;Ljava.lang.String;),getColumnText(Ljava.lang.Object;I),inputChanged(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;),entries,getColumnImage(Ljava.lang.Object;I),activeImage,maxIndices">
+    <children xsi:type="editmodel:CompartmentEditModel" size="202,108">
+      <children xsi:type="editmodel:AttributeEditModel" name="activeImage" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#activeImage"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="entries" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#entries"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="lockedImage" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#lockedImage"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="maxIndices" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#maxIndices"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="priorityTableViewer" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#priorityTableViewer"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sCHEDULES_PROPERTY" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#sCHEDULES_PROPERTY"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="549,198">
+      <children xsi:type="editmodel:MethodEditModel" name="SchedulePriorityTableProvider" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#SchedulePriorityTableProvider(Lorg.eclipse.jface.viewers.TableViewer;Ljava.util.List;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calcMaxIndex" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#calcMaxIndex(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="canModify" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#canModify(Ljava.lang.Object;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dispose" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#dispose()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getColumnImage" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#getColumnImage(Ljava.lang.Object;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getColumnText" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#getColumnText(Ljava.lang.Object;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getElements" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#getElements(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValue" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#getValue(Ljava.lang.Object;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="inputChanged" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#inputChanged(Lorg.eclipse.jface.viewers.Viewer;Ljava.lang.Object;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="modify" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#modify(Ljava.lang.Object;Ljava.lang.String;Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="refresh" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider#refresh()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="287,178">
+      <children xsi:type="editmodel:ClassEditModel" name="DataEntry" size="287,176" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry" runTimeClassModel="priorities,schedule,setPriorities([I),getSchedule(),setSchedule(Lde.cau.cs.kieler.sim.kiem.config.data.ScheduleData;),toString(),getPriorities()">
+        <children xsi:type="editmodel:CompartmentEditModel" size="153,36">
+          <children xsi:type="editmodel:AttributeEditModel" name="priorities" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#priorities"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="schedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#schedule"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="264,90">
+          <children xsi:type="editmodel:MethodEditModel" name="getPriorities" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#getPriorities()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getSchedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#getSchedule()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="setPriorities" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#setPriorities([I)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="setSchedule" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#setSchedule(Lde.cau.cs.kieler.sim.kiem.config.data.ScheduleData;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="toString" id="de.cau.cs.kieler.sim.kiem.config.preferences/SchedulePriorityTableProvider$DataEntry#toString()"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=1;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+</editmodel:ClassDiagramEditModel>

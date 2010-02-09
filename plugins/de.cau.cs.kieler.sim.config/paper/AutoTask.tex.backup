@@ -1,0 +1,67 @@
+\chapter{Problem Statement}
+\label{chapter:AutoTask}
+
+In order to do validations or recording automatically in a batch like mode, 
+the Execution Manager needs to be extended by an Eclipse Plug-in that some kind of 
+remote controls it (API) and has/supports for example: 
+\begin{itemize}
+ \item An own eclipse view (GUI) 
+ \item Loading and saving batch files 
+ \item Some way to specify batch jobs (e.g., a special notation language) 
+ \item Possibly a way to do all this from the command line
+\end{itemize}
+
+
+Currently the KIEM works in a way that you select an execution file and then
+press play. The components then have to gather all information they need
+themselves like model files, trace files and so on. The execution runs until
+the user or a component stops it. The user then has to manually set up another
+execution run, possibly even rewriting his components if the model files
+and trace files are hard coded.
+This is very unsatisfactory if you have a large number of model files that
+should be tested with a one or more execution files and several trace files.
+% ask ctr for screenshot of directory perhaps
+
+The problem can be broken down in 4 parts which are explained in detail in
+the following sections.
+
+\section{Setting up an Automated Run}
+\label{section:AutoTaskSetup}
+The first objective is to find a way for the user to efficiently set up an
+automated run. This involves selecting the model files and execution files
+needed for the automation as well as entering initial properties.
+
+
+\section{Input for the Automation}
+\label{section:AutoTaskInput}
+The second objective is to enable the components to receive inputs.
+Each component should receive all information it needs prior to each execution
+run in order to move away from having to hard code the locations of model files
+and trace files into the component.
+We will have to define an API for this information passing process as well as
+an API to trigger an automated execution from other plug-ins.
+
+\section{Automate the execution}
+\label{section:AutoTaskExecution}
+The third objective is to automate the process of execution itself. This would
+involve the following:
+\begin{enumerate}
+  \item loading an execution file
+  \item providing the components with the information needed for their run
+  \item stepping the execution to the required step
+  \item gather the information produced by the components
+  \item properly shut down the execution so that a new one can be started
+\end{enumerate}
+
+
+\section{Output of the results of the execution}
+\label{section:AutoTaskOutput}
+The last objective is to display the information in a meaningful way.
+This should involve at least two methods of output:
+\begin{enumerate}
+  \item A formatted string possibly in an XML fashion that can be parsed and
+  used by other plug-ins for automatic analysis.
+  \item Some graphic component that will display the information in way that is
+  easy to read for most users.
+\end{enumerate}
+

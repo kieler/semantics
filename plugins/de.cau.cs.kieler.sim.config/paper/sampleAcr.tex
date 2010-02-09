@@ -1,0 +1,47 @@
+\documentclass[a4paper]{report}
+
+\usepackage[colorlinks,plainpages=false]{hyperref}
+\usepackage[style=long,toc]{glossaries}
+
+\makeglossaries
+
+\newacronym{svm}% label
+{svm}% abbreviation
+{support vector machine}% long form
+
+\newacronym{ksvm}{ksvm}{kernel support vector machine}
+
+\newacronym{rna}{rna}{ribonukleins\"aure}
+
+\begin{document}
+\tableofcontents
+
+\chapter{Support Vector Machines}
+
+\Glspl{svm} are used widely in the area of pattern recognition.
+
+This is the text produced without a link: \glsentrytext{svm}.
+This is the text produced on first use without a link:
+\glsentryfirst{svm}. This is the entry's description without
+a link: \glsentrydesc{svm}.
+
+This is the entry in uppercase: \GLS{svm}.
+
+\chapter{Kernel Support Vector Machines}
+
+The \gls{ksvm} is \ifglsused{svm}{an}{a} \gls{svm} that uses
+the so called ``kernel trick''. Plural: \glspl{ksvm}.
+
+\glsresetall
+Possessive: \gls{ksvm}['s].
+Make the glossary entry number bold for this
+one \gls[format=hyperbf]{svm}.
+
+\chapter{Another chapter}
+
+You don't need to worry about makeindex's special characters:
+\gls{rna}.
+
+\printglossary[title={Acronyms}]
+
+\end{document}

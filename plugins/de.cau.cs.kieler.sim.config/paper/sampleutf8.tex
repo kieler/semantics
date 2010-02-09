@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[xindy,nonumberlist,style=listgroup]{glossaries}
+
+\makeglossaries
+
+\newglossaryentry{elite}{name={{é}lite},
+description={select group or class}}
+
+\newglossaryentry{elephant}{name=elephant,
+description={large animal with trunk and tusks}}
+
+\newglossaryentry{elk}{name=elk,
+description=large deer}
+
+\newglossaryentry{mannerly}{name=mannerly,
+description=polite}
+
+\newglossaryentry{manoeuvre}{name={manœuvre},
+description=planned and controlled movement}
+
+\newglossaryentry{manor}{name=manor,
+description=large landed estate or its house}
+
+\newglossaryentry{odometer}{name=odometer,
+description=instrument for measuring distance travelled by
+a wheeled vehicle}
+
+\newglossaryentry{oesophagus}{name={{œ}sophagus},
+description={canal from mouth to stomach}}
+
+\newglossaryentry{ogre}{name=ogre,
+description=man-eating giant}
+
+\begin{document}
+\null % ensure that the first run produces some output
+\glsaddall
+
+\printglossaries
+
+\end{document}

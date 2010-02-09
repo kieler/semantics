@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="config" size="712,392" id="de.cau.cs.kieler.sim.kiem.config" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D313030302064652E6361752E63732E6B69656C65722E73696D2E6B69656D2E636F6E6669672F736F68">
+  <children xsi:type="editmodel:ClassEditModel" name="KiemConfigurationPlugin" location="15,15" size="252,248" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin" runTimeClassModel="getLockedImage(),getActiveEditor(),KiemConfigurationPlugin(),lOCKED_IMAGE_PATH,getDefault(),pLUGIN_ID,stop(Lorg.osgi.framework.BundleContext;),aCTIVE_IMAGE_PATH,getActiveImage(),start(Lorg.osgi.framework.BundleContext;),plugin">
+    <children xsi:type="editmodel:CompartmentEditModel" size="194,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="pLUGIN_ID" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#pLUGIN_ID"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="plugin" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#plugin"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="aCTIVE_IMAGE_PATH" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#aCTIVE_IMAGE_PATH"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="lOCKED_IMAGE_PATH" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#lOCKED_IMAGE_PATH"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="229,126">
+      <children xsi:type="editmodel:MethodEditModel" name="KiemConfigurationPlugin" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#KiemConfigurationPlugin()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDefault" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#getDefault()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="start" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#start(Lorg.osgi.framework.BundleContext;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stop" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#stop(Lorg.osgi.framework.BundleContext;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getActiveEditor" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#getActiveEditor()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getActiveImage" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#getActiveImage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLockedImage" id="de.cau.cs.kieler.sim.kiem.config/KiemConfigurationPlugin#getLockedImage()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=1;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+</editmodel:ClassDiagramEditModel>

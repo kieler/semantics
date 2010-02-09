@@ -1,0 +1,19 @@
+
+%% Abbreviations
+\newacronym{KIEL}{KIEL}{Kiel Integrated Environment for Layout}
+\newacronym{KIELER}{KIELER}{KIEL for the Eclipse Rich Client Platform}
+\newacronym{KIEM}{KIEM}{KIELER Execution Manager}
+\newacronym{KIEMConfig}{KIEMConfig}{Configurations for the KIEM}
+\newacronym{KIEMAuto}{KIEMAuto}{Automated Executions for the KIEM}
+\begin{acronym}
+ \acro{KIEM1}{KIEM2}{KIEM3}
+\end{acronym}
+
+
+\printglossaries
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

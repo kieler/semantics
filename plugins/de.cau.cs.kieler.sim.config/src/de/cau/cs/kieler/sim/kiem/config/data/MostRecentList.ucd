@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="MostRecentList" size="715,552" id="de.cau.cs.kieler.sim.kiem.config.data" metadata="uml2-1.0" initialized="true" scrolledY="-25" tag="1000" key="32303037303533312D313030302064652E6361752E63732E6B69656C65722E73696D2E6B69656D2E636F6E6669672F736F68">
+  <children xsi:type="editmodel:ClassEditModel" name="MostRecentList" size="300,482" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList">
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="capacity" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#capacity"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="dEFAULT_CAPACITY" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#dEFAULT_CAPACITY"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="data" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#data"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="serialVersionUID" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#serialVersionUID"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="277,360">
+      <children xsi:type="editmodel:MethodEditModel" name="MostRecentList" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#MostRecentList(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MostRecentList" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#MostRecentList()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="add" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#add(LT;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addAll" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#addAll(Ljava.util.Collection;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="cleanList" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#cleanList()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clear" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#clear()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clone" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#clone()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="contains" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#contains(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="containsAll" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#containsAll(Ljava.util.Collection;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="get" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#get(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isEmpty" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#isEmpty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="iterator" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#iterator()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pushItem" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#pushItem(LT;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#remove(Ljava.lang.Object;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeAll" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#removeAll(Ljava.util.Collection;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="retainAll" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#retainAll(Ljava.util.Collection;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="size" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#size()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="toArray" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#toArray([LType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="toArray" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#toArray()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="toString" id="de.cau.cs.kieler.sim.kiem.config.data/MostRecentList#toString()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" interactive="false" properties="open=de.cau.cs.kieler.sim.kiem.config.data/MostRecentList;wireOptions=7;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" showMethodsParameterKinds="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
+</editmodel:ClassDiagramEditModel>

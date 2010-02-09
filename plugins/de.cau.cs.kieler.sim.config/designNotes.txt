@@ -1,0 +1,117 @@
+    //TODO: tooltips
+    //TODO: check for runtime exceptions
+    //TODO: integrate exceptions into eclipse error handling
+    //TODO: externalize strings
+    
+- delete default editor? if last editor?
+- hide config component through preference page
+- experten modus, selbst anfügen, sonst über addToComponentWrapperList hinzufügen.
+- expert mode warning?
+
+extension points:
+	event listener:
+		use KiemEvent
+		add numbers for load/save
+		supply URI as info
+		add the listener to a list and notify() 
+		notify(KiemEvent)
+		extension point implements IEventListener
+	configuration changer:
+		String getValue(String key)
+	toolbar contribution:
+		ControlContribution[] getToolbarContributions(Object info)
+		
+interface to main kiem plugin:
+	saving:
+		listener type interface
+		whenever a schedule is saved notify listeners:
+			pass save location URI
+		method triggering a save
+		
+			
+	loading:
+		method just passes schedule URI
+			main plugin should save dirty editor
+			main plugin needs routine to open a file from URI
+		notify listener if a schedule is loaded manually
+    
+changed editor:
+	only one editor ID per editor name
+	new editor preference page
+	create editors
+	editor list
+	remove editor
+	edit editor
+
+    
+    
+comboboxes:
+display two boxes:
+	matching schedules: contains all schedules that support the active editorID
+	recent: contains the most recently used schedules (5?)
+	comboboxes updated on selection change/editor open
+
+schedule loading:
+	get selected schedule from combo
+	load schedule from file system
+	
+schedule saving:
+	if selected in combobox: save to location in schedule data
+	if "New..." selected: open save dialog and enter name dialog
+		create new schedule data with location and priorities
+
+manager classes for all data:
+	keep size of KiemPlugin class down
+	only delegate methods to manager classes
+
+configuration loading:
+most specialized value should be used first
+  1. try current configuration (unless key is on ignored list, always use default value)
+		should be simple to globally change values.
+  2. try default configuration
+  3. try supplied default value
+  4. error
+
+use the extension point for JSonDataComponents
+  easily registers the configuration component
+  adds one on startup, no need to check for null pointers / create component
+  configuration component is automatically saved when view is saved
+  
+  
+preference page:
+  main page
+   table for defining properties
+	easily accessible
+	add/remove properties, select which ones should always use default
+	 either use checkbox in table:
+		modify table, add checkbox column, use wrapper class for the KiemProperty array
+		convert back and forth
+	 open dialog with select list.
+		used selection page from kieler.ksbase.viewmanagement
+		easier to code and easier to use.
+	
+  scheduling page
+   table from de.cau.cs.kieler.kiml.ui
+	rows: schedules
+	cols: diagram types (use editorIDs instead, semantics)
+	priority for different schedules, which schedule for which diagram
+	backend:
+	 maintain list of diagram types (Strings?, pluginIDs?)
+	 maintain list of schedules:
+		save location
+		name
+		schedule ID (how to generate unique ID? use save location? simple solution, definately unique)
+		list of diagram types with priority
+		 initialize with 0 except for diagram type where schedule was created
+
+  saving preferences:
+	 use extension point, example in kiml
+	 IEclipsePreference, preference scope with plugin ID
+	 convert items to strings to put() them
+	 accessed by the preference pages Ok/Apply buttons
+	 override performOk() / performApply()
+	 
+  hide the configuration component in the view
+	 just hide it in view/ui part
+	 and part for adding new components
+	 done by cmot

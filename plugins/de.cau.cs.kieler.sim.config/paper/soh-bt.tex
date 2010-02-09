@@ -1,0 +1,109 @@
+\documentclass[11pt,a4paper,BCOR10mm,bibtotocnumbered]{scrbook}
+
+%% \usepackage{abstract}          % typesetting of a abstract environment
+
+\usepackage{acronym}          % acronyms
+\usepackage{amscd}            % Kommutative Diagramme
+\usepackage{amsmath}          % mathematics
+\usepackage{amsfonts}         % mathematics
+\usepackage{array}            % tabels
+\usepackage{fancyvrb}         % Umgebung f�r Programm-Listings
+\usepackage{float}            % mehr Positionen von Float-Umgebungen
+\usepackage[T1]{fontenc}      % Fonteinstellung
+\usepackage{graphicx}         % Laden von Bildern
+%\usepackage{glossary}         % Erstellen eines Glossars DONT EVER USE THIS
+\usepackage[nonumberlist]{glossaries}
+\usepackage{hyperref}         % Querreferenzen und Links
+\usepackage[latin1]{inputenc} % Zeichenkodierung
+\usepackage{keystroke}        % Tastendarstellung
+\usepackage{lscape}           % Landscape 
+\usepackage{makeidx}          % Indexerstellung
+\usepackage{mflogo}           % LaTeX-Logos
+\usepackage{multicol}         % mehrspaltiger Satz
+\usepackage{multirow}
+\usepackage[numbers]{natbib}  % Autor-Datum Zitierungen
+%\usepackage{ngerman}          % Zur Verwendung der deutschen Sprache
+\usepackage{rotating}         % Rotieren von Bildern und Texten
+\usepackage{syntax}           % Syntax-Diagramme
+\usepackage{typearea}         % Satzspiegelberechnung
+\usepackage{url}              % Hyperlinks
+\usepackage{xspace}           % Korrekter Leerraum nach Befehlen
+\usepackage{listings}         % Auflistung von Ausschnitten von Programm-Code
+\usepackage[T1]{fontenc}      % ben�tigt von luximono
+\usepackage{subfigure}        % Unterabbildungen
+\usepackage{textcomp}         % Verschiedene Zeichen im textmode
+\usepackage{xcolor}
+\usepackage{courier}
+ 
+
+
+\usepackage[bachelorproject,english]{rtsstud}          % Lehrstuhl-Spezifikationen
+\usepackage{rtsabstr}         % Zusammenfassung
+
+\usepackage{mystyle}          % eigene LaTeX-Spezifikationen
+  
+
+\title{Configurations and Automated Execution in the KIELER Execution Manager}
+\subtitle{~}
+\author{cand.~inform.~S\"oren Hansen}
+\date{\today}
+\advisor{%
+  \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+  Christian Motika\\
+}
+
+% {%
+% \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+% \protect\footnotemark
+% \footnotetext[1]{Das ist eine Anmerkung zur Person.}
+% }
+
+\makeindex
+
+
+\begin{document}
+
+\frontmatter
+\maketitle
+% \assertion
+% \include{abstract}
+\include{indexes}
+% \include{acronyms}
+
+\mainmatter
+\include{introduction}
+
+\part{Configurations in the KIEM}
+\include{ConfTask}
+\include{ConfTechnologies}
+\include{ConfConcepts}
+\include{ConfKiemChanges}
+\include{kiemConfig}
+\include{ConfConclusion}
+
+\part{Automated Execution in the KIEM}
+\include{AutoTask}
+\include{AutoTechnologies}
+\include{AutoConcepts}
+\include{AutoKiemChanges}
+\include{kiemAutomated}
+\include{AutoConclusion}
+
+
+
+\appendix
+
+\backmatter
+%\include{glossary}
+\include{index}
+\include{bibliography}
+%\include{manual}
+%\include{code}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: pdflatex
+%%% TeX-master: paper.tex
+%%% End: 

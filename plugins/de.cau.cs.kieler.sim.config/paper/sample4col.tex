@@ -1,0 +1,24 @@
+\documentclass[a4paper]{article}
+
+\usepackage[style=long4colheaderborder]{glossaries}
+
+\makeglossaries
+
+\newglossaryentry{w}{name={$w$},
+sort=w,
+description={width},
+symbol=m}
+
+\newglossaryentry{M}{name={$M$},
+sort=M,
+description={mass},
+symbol=kg}
+
+\begin{document}
+
+\printglossaries
+
+The width, \gls{w}, is measured in meters. The mass, \gls{M} is
+measured in kilograms.
+
+\end{document}

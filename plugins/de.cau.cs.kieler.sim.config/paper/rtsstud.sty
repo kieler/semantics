@@ -1,0 +1,124 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{rtsstud}[2005/03/022 v0.8 rtsstud, Steffen H. Prochnow]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{graphicx}
+
+
+\typeout{} 
+\typeout{rtsstud.sty: The style to typeset the titlepage and
+  speciality for the Real-Time and Embedded Systems Group.} 
+\typeout{}
+
+
+
+\DeclareOption{english}{%
+  \AtBeginDocument{%
+    \def\@titlehead{Christian-Albrechts-Universit{\"a}t zu Kiel}
+    \def\@advicedby{Advised by}
+    \def\@seminarname{Preparation of a seminar talk}
+    \def\@internshipname{Internship report}
+    \def\@studentresearchprojectname{Student Research Project}
+    \def\@projectworkname{Project Work}
+    \def\@diplomathesisname{Diploma Thesis}
+    \def\@bachelorprojectname{Bachelor Project}
+    \def\@masterthesisname{Master Thesis}
+    \def\@institut{Department of Computer Science}
+    \def\@group{Real-Time and Embedded Systems Group}
+    \def\abstractname{Abstract}
+  }
+}
+
+\DeclareOption{german}{%
+  \AtBeginDocument{%
+    \def\@titlehead{Christian-Albrechts-Universit{\"a}t zu Kiel}
+    \def\@advicedby{betreut durch}
+    \def\@seminarname{Ausarbeitung eines Seminarvortrags}
+    \def\@internshipname{Praktikumsbericht}
+    \def\@studentresearchprojectname{Studienarbeit}
+    \def\@projectworkname{Projektarbeit}
+    \def\@diplomathesisname{Diplomarbeit}
+    \def\@bachelorprojectname{Bachelor-Projekt}
+    \def\@masterthesisname{Masterarbeit}
+    \def\@institut{Institut f{\"u}r Informatik}
+    \def\@group{Lehrstuhl f{\"u}r Echtzeitsysteme und Eingebettete Systeme}
+    \def\abstractname{Zusammenfassung}
+  }
+}
+
+\def\@subject{}
+\DeclareOption{seminar}{\renewcommand{\@subject}{\@seminarname}}
+\DeclareOption{internship}{\renewcommand{\@subject}{\@internshipname}}
+\DeclareOption{studentresearchproject}{\renewcommand{\@subject}{\@studentresearchprojectname}}
+\DeclareOption{projectwork}{\renewcommand{\@subject}{\@projectworkname}}
+\DeclareOption{diplomathesis}{\renewcommand{\@subject}{\@diplomathesisname}}
+\DeclareOption{bachelorproject}{\renewcommand{\@subject}{\@bachelorprojectname}}
+\DeclareOption{masterthesis}{\renewcommand{\@subject}{\@masterthesisname}}
+
+%% option defaults
+\ExecuteOptions{english,diplomathesis}
+
+%% Execute Code for selected option
+\ProcessOptions\relax
+
+
+\newcommand{\@subtitle}{}
+\newcommand{\subtitle}[1]{\renewcommand{\@subtitle}{#1}}
+\subtitle{~}
+\newcommand{\@lecturer}{}
+\newcommand{\lecturer}[1]{\renewcommand{\@lecturer}{#1}}
+\lecturer{Prof.~Dr.~Reinhard von Hanxleden}
+\newcommand{\@advisor}{}
+\newcommand{\advisor}[2][\@advicedby:]{\renewcommand{\@advisor}{#1\par#2}}
+\newcommand{\@logo}{\includegraphics[width=25mm]{christine}}
+
+
+\renewcommand{\maketitle}
+  {
+    \thispagestyle{empty}
+    \begin{center}
+      \Large
+      \textsc{\@titlehead}\\
+      \vfill
+      \@subject\\
+      \vfill
+      {\huge\sffamily\bfseries\@title}\\
+      \vspace{3mm}
+      {\Large\sffamily\bfseries\@subtitle}\\
+      \vfill
+      \@author\\
+      \vfill
+      \@date\\
+      \vfill
+%%       \@logo\\
+%%       \vfill
+      \@institut\\
+      \@group\\
+      \vfill
+      \@lecturer\\
+      \vfill
+      \@advisor
+    \end{center}
+    \cleardoublepage
+  }
+
+
+\newcommand{\assertionname}{Eidesstattliche Erkl{\"a}rung}
+\newcommand{\assertion}{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \hskip 0mm
+  \vfill
+  \begin{center}\sffamily\bfseries\Large
+    \assertionname
+  \end{center}
+  \bigskip\noindent Hiermit erkl{\"a}re ich an Eides statt, dass
+  ich die vorliegende Arbeit selbstst{\"a}ndig verfasst und keine
+  anderen als die angegebenen Hilfsmittel verwendet habe.\par
+  \bigskip\noindent Kiel, %\datum\par
+  \vskip 10mm
+  \hfill\hrulefill
+}
+
+
+\endinput

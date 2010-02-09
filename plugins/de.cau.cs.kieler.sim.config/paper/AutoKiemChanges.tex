@@ -1,0 +1,58 @@
+\chapter{Code changes in KIEMPlugin}
+\label{chapter:AutoKiemChanges}
+\begin{itemize}
+ \item interfaces and API changes to allow access to execution
+ \item changes to load values rather than hard coded defaults
+\end{itemize}
+
+\section{Schema files and Interfaces}
+\begin{itemize}
+ \item event listener mentioned in part I, for listening to KIEM execution
+ events
+ \item interfaces added to KIEM itself to avoid components breaking when
+ automated plug-in is not loaded
+\end{itemize}
+
+\section{Automated Component}
+An automated component is any DataComponent that wants to interact with
+the automated execution plug-in. As seen in the diagram automated components
+have to implement three methods:
+
+\subsection{provideProperties()}
+This method enables components to receive information prior to each execution
+run. The list is implemented as an array of key, value pairs stored inside
+KiemProperty objects.
+At the every least the list contains the location of the model file and the
+index of the currently running iteration (that is how many time the current
+model has already been executed with the current execution file).
+This allows components to load additional files that are always in the
+same path as the execution file and determine which of those to load
+based on the iteration index.
+
+\subsection{wantAnotherStep()}
+This method is called after every step of the execution manager.
+All components are asked if they want to perform another step and if
+one components answers with TRUE the execution manager will perform another
+step.
+This makes it unnecessary to know the exact number of steps needed for
+the execution before the execution starts.
+
+\subsection{wantsAnotherRun()}
+This method is the equivalent for the wantAnotherStep() method in the context
+of entire execution runs.
+After no component wants to perform another step all components are asked
+if they want to perform another run. If one component answers with TRUE
+the entire simulation is stopped and then started again with the same
+model file and execution file but an incremented iteration index.
+This can for example be used to execute the same model with a different
+set of trace files by just naming the trace files the same way as the
+model files with a number at the end.
+
+\section{Automated Producer}
+This interface extends the AutomatedComponent interface.
+In addition to the inherited methods it provided one additional method.
+This method is called after an iteration has finished and asks the components
+if they want to publish any information about the results of their execution.
+This information is gathered by the plug-in and the accumulated results
+are either passed to the calling plug-in or displayed in the
+specially designed view (see chapter about the view).
