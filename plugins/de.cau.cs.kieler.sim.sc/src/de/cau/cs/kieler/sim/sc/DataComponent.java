@@ -3,6 +3,7 @@ package de.cau.cs.kieler.sim.sc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -103,11 +104,9 @@ public class DataComponent extends JSONObjectDataComponent {
 
         String bundleLocation = url.getFile();
         // because of windows vs Linux
-        System.out.println("PATH: " + bundleLocation);
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        System.out.println("PATH: " + bundleLocation);
-        if (bundleLocation.startsWith("\\")){
-        	bundleLocation = bundleLocation.substring(1);
+        if (bundleLocation.startsWith("\\")) {
+            bundleLocation = bundleLocation.substring(1);
         }
 
         try {
@@ -119,9 +118,19 @@ public class DataComponent extends JSONObjectDataComponent {
                     + "simulation -lm -Dexternflags";
             System.out.println(compile);
             process = Runtime.getRuntime().exec(compile);
-            process.waitFor();
+            
+            InputStream stderr = process.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stderr);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            System.out.println("<ERROR>");
+            while ( (line = br.readLine()) != null)
+                System.out.println(line);
+            System.out.println("</ERROR>");
 
-            if (process.exitValue() != 0) {
+            int exitValue = process.waitFor();
+
+            if (exitValue != 0) {
                 StringBuffer b = new StringBuffer();
                 InputStreamReader err = new InputStreamReader(process.getErrorStream(), "UTF8");
 
@@ -217,6 +226,7 @@ public class DataComponent extends JSONObjectDataComponent {
         out = tmp.toArray(new String[tmp.size()]);
         return out;
     }
+
 
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {
