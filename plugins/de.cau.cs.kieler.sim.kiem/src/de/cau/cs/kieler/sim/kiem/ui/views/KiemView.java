@@ -282,6 +282,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 }
             } catch (Exception e) {
                 // catch strange SWT bugs
+                // see Ticket #615 (new defect)
             }
         }
     }
@@ -878,7 +879,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     protected void updateView(final boolean deselect) {
         // do not update if not necessary
-        while (viewer.isBusy()) {
+        if (!viewer.isBusy()) {
             // wait
             try {
                 Thread.sleep(2);
