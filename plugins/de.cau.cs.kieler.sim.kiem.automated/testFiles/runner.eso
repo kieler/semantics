@@ -1,0 +1,17270 @@
+! reset;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+
+% Output:
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: RUN
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: RUN
+;
+
+% Output: RUN
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: RUN
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: RUN
+;
+
+% Output: RUN
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: RUN
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+MORNING 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+SECOND 
+% Output: GO_TO_HOSPITAL
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+HEART_BEAT SECOND 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+LAP 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+METER 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+MORNING 
+% Output: WALK
+;
+! reset;
+
+% Output:
+;
+
