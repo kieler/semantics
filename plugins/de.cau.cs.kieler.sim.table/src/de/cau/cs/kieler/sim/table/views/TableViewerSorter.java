@@ -81,7 +81,7 @@ public class TableViewerSorter extends ViewerSorter {
      * @param reversedParam
      *            the new reversed
      */
-    public void setReversed(boolean reversedParam) {
+    public void setReversed(final boolean reversedParam) {
         this.reversed = reversedParam;
     }
 
