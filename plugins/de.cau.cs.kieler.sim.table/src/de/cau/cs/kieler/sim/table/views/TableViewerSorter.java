@@ -152,7 +152,7 @@ public class TableViewerSorter extends ViewerSorter {
      * 
      * @return the int
      */
-    private int compareStrings(String name1, String name2) {
+    private int compareStrings(final String name1, final String name2) {
         @SuppressWarnings("unchecked")
         Comparator<String> comp = getComparator();
         return comp.compare(name2, name1);
