@@ -91,9 +91,6 @@ public class Execution extends Job {
      */
     private long steps;
 
-    /** The step when to pause execution. -1 if never pause */
-    private long stepToPause;
-
     /** Indicates paused command. */
     private boolean pausedCommand;
 
@@ -193,7 +190,6 @@ public class Execution extends Job {
         this.stop = false;
         this.pausedCommand = false;
         this.steps = NO_STEPS; // == paused
-        this.stepToPause = -1;
         this.dataComponentWrapperList = dataComponentWrapperListParam;
         this.dataPool = new JSONDataPool();
         // start the timeout worker thread
@@ -416,7 +412,6 @@ public class Execution extends Job {
                 this.steps = NO_STEPS;
             }
             // run (forward steps) until step is reached
-            this.stepToPause = step;
             this.runExecutionSync();
             // update the GUI
             KiemPlugin.getDefault().updateViewAsync();
@@ -462,8 +457,6 @@ public class Execution extends Job {
                 return this.stepExecutionSync();
             }
 
-            // run (forward steps) until step is reached
-            this.stepToPause = step;
             this.runExecutionSync();
             // update the GUI
             KiemPlugin.getDefault().updateViewAsync();
@@ -647,7 +640,6 @@ public class Execution extends Job {
         // not synchronized to stop immediately w/o queuing
         this.steps = NO_STEPS;
         this.stop = true;
-        this.stepToPause = -1;
 
         synchronized (this) {
             // notify components
@@ -972,44 +964,6 @@ public class Execution extends Job {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks all DataComponents for a pause flag. If any pause flag is found, this leads to a
-     * paused execution.
-     */
-    private void checkForPauseFlag() {
-        // pause if pause step is reached
-        if (this.stepCounter == this.stepToPause) {
-            // cancel stepPause
-            this.stepToPause = -1;
-            this.pauseExecutionSync();
-            // update the GUI
-            KiemPlugin.getDefault().updateViewAsync();
-            return;
-        }
-
-        // test only if we have to make a step (1) or if we are
-        // in running mode (-1)
-        if ((steps == INFINITY_STEPS) || (steps > NO_STEPS)) {
-            // iff any isPauseFlag() returns true, pause execution
-            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                timeout.timeout(getTimeout(), "isEnabled, isPauseFlag", dataComponentWrapper, this);
-                if (dataComponentWrapper.isEnabled() && dataComponentWrapper.isPauseFlag()) {
-                    // cancel stepPause
-                    this.stepToPause = -1;
-                    this.pauseExecutionSync();
-                    // update the GUI
-                    KiemPlugin.getDefault().updateViewAsync();
-                    timeout.abortTimeout();
-                    return;
-                }
-                timeout.abortTimeout();
-            }
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * {@inheritDoc}
      */
     protected IStatus run(final IProgressMonitor monitor) {
@@ -1029,9 +983,6 @@ public class Execution extends Job {
             long endtime = System.currentTimeMillis();
 
             synchronized (this) {
-                // iff *ANY* isPauseFlag() returns true, pause execution
-                checkForPauseFlag();
-
                 // test if we have to make a step (1) or if we are
                 // in running mode (-1)
                 // System.out.println("steps = "+steps);
@@ -1336,10 +1287,6 @@ public class Execution extends Job {
 
             }
 
-            if (steps == NO_STEPS) {
-                // cancel stepPause
-                this.stepToPause = -1;
-            }
 
             // stop if monitor is cancelled
             if (monitor.isCanceled()) {

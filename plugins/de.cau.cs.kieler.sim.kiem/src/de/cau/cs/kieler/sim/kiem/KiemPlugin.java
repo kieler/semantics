@@ -784,57 +784,6 @@ public class KiemPlugin extends AbstractUIPlugin {
         return true;
     }
 
-    private boolean distributeInterfaceKeys() {
-        // DEPRECATED PART FOLLOWING -------------------------------------------
-        // Handling interface keys as a list of strings turned out to be not
-        // sufficient
-        // for example when data components want to provide variables with
-        // special
-        // initial values (e.g., mark variables as signals using a convention on
-        // their
-        // values).
-        // This part may be removed in future releases. Do not use interface key
-        // methods
-        // in DataComponent implementations any further!
-
-        // get all InterfaceKeys from (enabled) data producer
-        // and combine them into globalInterfaceKeys
-        List<String> globalInterfaceKeys = new LinkedList<String>();
-        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
-                    .get(c);
-            if (dataComponentWrapper.isEnabled()) {
-                try {
-                    String[] localInterfaceKeys = dataComponentWrapper
-                            .provideInterfaceKeys();
-                    if (localInterfaceKeys != null) {
-                        for (int cc = 0; cc < localInterfaceKeys.length; cc++) {
-                            String localInterfaceVariable = localInterfaceKeys[cc];
-                            globalInterfaceKeys.add(localInterfaceVariable);
-                        } // next cc
-                    } // end if not null
-                } catch (Exception e) {
-                    KiemPlugin.getDefault().handleComponentError(
-                            dataComponentWrapper.getDataComponent(), e);
-                    return false;
-                }
-            } // if enabled
-        } // next c
-
-        // distribute union of InterfaceKeys to all enabled components
-        for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
-                    .get(c);
-            if (dataComponentWrapper.isEnabled()) {
-                dataComponentWrapper
-                        .setInterfaceKeys((String[]) globalInterfaceKeys
-                                .toArray(new String[0]));
-            } // end if enabled
-        } // next c
-
-        // DEPRECATED PART END -------------------------------------------------
-        return true;
-    }
 
     private JSONObject distributeInitialKeys() throws Exception {
         JSONObject globalInitialVariables = new JSONObject();
@@ -923,11 +872,6 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
 
         if (!testForKiemPropertyError()) {
-            this.kIEMViewInstance.setAllEnabled(true);
-            return false;
-        }
-
-        if (!distributeInterfaceKeys()) {
             this.kIEMViewInstance.setAllEnabled(true);
             return false;
         }

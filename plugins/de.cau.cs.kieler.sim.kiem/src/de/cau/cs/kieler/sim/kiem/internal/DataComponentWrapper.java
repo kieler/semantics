@@ -364,24 +364,6 @@ public class DataComponentWrapper implements Serializable {
     // -------------------------------------------------------------------------
 
     /**
-     * This method is implemented by the DataComponent if it provides a String[] array of interface
-     * variables.
-     * 
-     * @return the String[] array of interface variables
-     * 
-     * @throws KiemInitializationException
-     *             the KIEM initialization exception
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#provideInterfaceKeys()
-     */
-    @Deprecated
-    public String[] provideInterfaceKeys() throws KiemInitializationException {
-        return this.component.provideInterfaceKeys();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * This method is implemented by the DataComponent if it provides a JSONObject of initial
      * variables.
      * 
@@ -496,19 +478,6 @@ public class DataComponentWrapper implements Serializable {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is pause flag.
-     * 
-     * @return true, if is pause flag
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isPauseFlag()
-     */
-    public boolean isPauseFlag() {
-        return this.component.isPauseFlag();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Checks if is a macro step is finished.
      * 
      * @return true, if checks if is macro step done
@@ -535,22 +504,6 @@ public class DataComponentWrapper implements Serializable {
      */
     public void checkProperties(final KiemProperty[] propertiesParam) throws KiemPropertyException {
         this.component.checkProperties(propertiesParam);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the global interface variable keys. This method is called by the execution manager after
-     * it collects the union of interface variable keys of all DataComponents.
-     * 
-     * @param globalInterfaceKeys
-     *            all interface variable keys
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#setInterfaceKeys(String[])
-     */
-    @Deprecated
-    public void setInterfaceKeys(final String[] globalInterfaceKeys) {
-        this.component.setInterfaceKeys(globalInterfaceKeys);
     }
 
     // -------------------------------------------------------------------------
