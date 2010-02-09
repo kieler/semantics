@@ -48,10 +48,10 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
     private static final ICondition COND_CONDITIONAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.CONDITIONAL);
-//    private static final ICondition COND_REFERENCE = new FeatureValueCondition(
-//            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.REFERENCE);
-//    private static final ICondition COND_TEXTUAL = new FeatureValueCondition(
-//            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.TEXTUAL);
+    private static final ICondition COND_REFERENCE = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.REFERENCE);
+    private static final ICondition COND_TEXTUAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_Type(), StateType.TEXTUAL);
 
     private static final ICondition COND_INITIAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_IsInitial(), true);
@@ -91,6 +91,10 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         IFigure initialFigure = createInitialFigure();
         IFigure finalFigure = createFinalFigure();
         IFigure conditionalFigure = new ConditionalStateFigure();
+        /* create even more normal figures to trigger layoutmanager via 
+         * notifyChanged if statetype changed */
+        IFigure referenceFigure = createNormalFigure();
+        IFigure textualfigure = createNormalFigure();
 
         // Set default and current figure
         setDefaultFigure(normalFigure);
@@ -101,6 +105,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         addConditionalFigure(initialFigure, COND_INITIAL);
         addConditionalFigure(finalFigure, COND_SIMPLE_FINAL);
         addConditionalFigure(finalFigure, COND_FINAL);
+        addConditionalFigure(referenceFigure, COND_REFERENCE);
+        addConditionalFigure(textualfigure, COND_TEXTUAL);
         addConditionalFigure(normalFigure, COND_SIMPLE);
     }
     

@@ -158,7 +158,7 @@ public class StateLayout extends AbstractHintLayout {
 
         return (containsRegions || containsSignals || containsVariables || containsEntryActions
                 || containsInsideActions || containsExitActions || containsSuspensionTrigger || state
-                .getType() == StateType.TEXTUAL)
+                .getType() == StateType.TEXTUAL || state.getType() == StateType.REFERENCE)
                 && state.getType() != StateType.CONDITIONAL;
     }
 
