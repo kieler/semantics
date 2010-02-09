@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.table.views;
 
+import java.util.Comparator;
+
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 
@@ -23,10 +25,21 @@ import org.eclipse.jface.viewers.ViewerSorter;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class TableViewerSorter extends ViewerSorter {
-    
+
+    /** The column index. */
     private int column;
+
+    /** The reversed flag. */
     private boolean reversed;
-    
+
+    /** The Constant COLUMN_1. */
+    private static final int COLUMN_1 = 1;
+
+    /** The Constant COLUMN_3. */
+    private static final int COLUMN_3 = 3;
+
+    // -------------------------------------------------------------------------
+
     /**
      * Instantiates a new table viewer sorter.
      * 
@@ -35,29 +48,35 @@ public class TableViewerSorter extends ViewerSorter {
      */
     public TableViewerSorter(final int columnParam) {
         this.column = columnParam;
-        reversed = false; 
+        reversed = false;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Gets the column.
+     * Gets the column index.
      * 
      * @return the column
      */
     public int getColumn() {
         return column;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Gets the reversed.
+     * Gets the reversed flag.
      * 
      * @return the reversed
      */
     public boolean getReversed() {
         return reversed;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Sets the reversed.
+     * Sets the reversed flag.
      * 
      * @param reversedParam
      *            the new reversed
@@ -65,7 +84,9 @@ public class TableViewerSorter extends ViewerSorter {
     public void setReversed(boolean reversedParam) {
         this.reversed = reversedParam;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Removes the star.
      * 
@@ -83,44 +104,58 @@ public class TableViewerSorter extends ViewerSorter {
         }
         return inString;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Compare.
+     * Compare two TableData values.
      * 
      * @param viewer
      *            the viewer
-     * @param t1
-     *            the t1
-     * @param t2
-     *            the t2
+     * @param o1
+     *            the o1
+     * @param o2
+     *            the o2
      * 
      * @return the int
      */
     @Override
     public int compare(final Viewer viewer, final Object o1, final Object o2) {
-        TableData t1 = ((TableData)o1);
-        TableData t2 = ((TableData)o2);
+        TableData t1 = ((TableData) o1);
+        TableData t2 = ((TableData) o2);
         String name1 = removeStar(t1.getKey());
         String name2 = removeStar(t2.getKey());
-        if (column == 3) {
-            //values
+        if (column == COLUMN_3) {
+            // values
             name1 = t1.getValue();
             name2 = t2.getValue();
-        }
-        else if (column == 1) {
-            //signals vs non-signals
-            name1 = "" + (!t1.isSignal()); 
+        } else if (column == COLUMN_1) {
+            // signals vs non-signals
+            name1 = "" + (!t1.isSignal());
             name2 = "" + (!t2.isSignal());
         }
         if (reversed) {
-            return getComparator().compare(name2, name1);
+            return compareStrings(name1, name2);
         }
-        return getComparator().compare(name1, name2);
-     }
+        return compareStrings(name2, name1);
+    }
 
-    
-//    public boolean isSorterProperty(Object element, String property) {
-//        return true;
-//    }    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compare two Strings.
+     * 
+     * @param name1
+     *            the name1
+     * @param name2
+     *            the name2
+     * 
+     * @return the int
+     */
+    private int compareStrings(String name1, String name2) {
+        @SuppressWarnings("unchecked")
+        Comparator<String> comp = getComparator();
+        return comp.compare(name2, name1);
+    }
 
 }

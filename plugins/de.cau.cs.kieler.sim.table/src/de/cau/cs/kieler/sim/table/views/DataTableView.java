@@ -30,7 +30,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.events.KeyEvent;
@@ -155,7 +154,6 @@ public class DataTableView extends ViewPart {
      *            true, if user is currently editing an entry
      */
     public void setCurrentlyEditing(final boolean currentlyEditingParam) {
-    	System.out.println("EDDITING: "+currentlyEditingParam);
         this.currentlyEditing = currentlyEditingParam;
     }
 
@@ -384,7 +382,7 @@ public class DataTableView extends ViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action to toggle presence of signals
+     * Gets the action to toggle presence of signals.
      * 
      * @return the action delete
      */

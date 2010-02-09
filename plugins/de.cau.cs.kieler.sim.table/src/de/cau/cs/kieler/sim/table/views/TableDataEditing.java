@@ -20,8 +20,6 @@ import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
-import de.cau.cs.kieler.sim.table.TablePlugin;
-
 /**
  * The class TableDataEditing implements the editing support for DataTable entries of the table.
  * Specifically it provides a check box CellEditor for the first (present) column and String
@@ -39,16 +37,16 @@ public class TableDataEditing extends EditingSupport {
 
     /** The column index. */
     private int columnIndex;
-    
+
     /** The Constant COLUMN_0. */
-    //private static final int COLUMN_0 = 0;
-    
+    // private static final int COLUMN_0 = 0;
+
     /** The Constant COLUMN_1. */
     private static final int COLUMN_1 = 1;
-    
+
     /** The Constant COLUMN_2. */
     private static final int COLUMN_2 = 2;
-    
+
     /** The Constant COLUMN_3. */
     private static final int COLUMN_3 = 3;
 
@@ -92,22 +90,22 @@ public class TableDataEditing extends EditingSupport {
     @Override
     protected boolean canEdit(final Object element) {
         boolean allowed = false;
-    	
-    	TableData tableData = (TableData) element;
+
+        TableData tableData = (TableData) element;
 
         // allow to edit the present status any time
         if (this.columnIndex == COLUMN_1) {
             allowed = true;
         }
         if (!allowed) {
-        	allowed = !tableData.isPermanent();
+            allowed = !tableData.isPermanent();
         }
-        
+
         if (allowed) {
-        	DataTableView.getInstance().setCurrentlyEditing(true);
+            DataTableView.getInstance().setCurrentlyEditing(true);
         }
-        
-        //otherwise only allow changes if NOT permanent!
+
+        // otherwise only allow changes if NOT permanent!
         return allowed;
     }
 
@@ -167,7 +165,7 @@ public class TableDataEditing extends EditingSupport {
     protected void setValue(final Object element, final Object value) {
         TableData tableData = (TableData) element;
 
-        //only allow to modify present status of permanent entries (for convenience)
+        // only allow to modify present status of permanent entries (for convenience)
         if (!tableData.isPermanent()) {
             switch (this.columnIndex) {
             case COLUMN_1:
