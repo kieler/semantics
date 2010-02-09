@@ -43,7 +43,7 @@ public final class Helper {
 
     private Helper() {
         /*
-         * To avoid the chekstyle warning
+         * To avoid the chekstyle warning we need a private constructor
          */
     }
 
@@ -63,6 +63,7 @@ public final class Helper {
     private static final int LABEL_ANY_ID = 1;
     private static final int LABEL_SHORTEST_HIERARCHIE = 2;
     private static final int LABEL_COMPLETE_HIERARCHIE = 3;
+    private static final int MAX_PRIORITY = 256;
 
     /**
      * Computes a list with all states in the right order of their priority.
@@ -169,10 +170,41 @@ public final class Helper {
      *            nut used?
      * @return not used?
      */
-    public static List<StateSignalDependency> getStateSignalDependencies(final State state) {
+    public static List<StateSignalDependency> getStateSignals(final State state) {
         stateSignalDependencies.clear();
         fillStateSignalList(state);
         return stateSignalDependencies;
+    }
+
+    /**
+     * Computes the priority to change the thread priority depending on signal dependencies.
+     * 
+     * @param state
+     *            the state for the priority
+     * @return priority to change
+     */
+    public static int getChangePriority(final State state) {
+        int out = MAX_PRIORITY;
+        int newPrio = 0;
+        ArrayList<Tuple<State, Integer>> dependentStates = getSignalDependentStates(state);
+        for (Tuple<State, Integer> tuple : dependentStates) {
+            newPrio = sortedStates.indexOf(tuple);
+            if (newPrio < out) {
+                out = newPrio;
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Computes if the given state has signal dependent states.
+     * 
+     * @param state
+     *            state to search for dependencies
+     * @return true if the state has signal dependencies otherwise false
+     */
+    public static boolean hasDependentState(final State state) {
+        return (!getSignalDependentStates(state).isEmpty());
     }
 
     private static String getStateNameAnyID(final State state) {
@@ -195,6 +227,17 @@ public final class Helper {
 
     private static String getStateNameShortestHierarchie(final State state) {
         String out = "";
+        return out;
+    }
+
+    private static ArrayList<Tuple<State, Integer>> getSignalDependentStates(final State state) {
+        ArrayList<Tuple<State, Integer>> out = new ArrayList<Tuple<State, Integer>>();
+        for (Dependency dep : stateDependencies) {
+            if (dep.getSecondStateTupel().getO1().equals(state)
+                    && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
+                out.add(dep.getFirstStateTupel());
+            }
+        }
         return out;
     }
 
@@ -551,7 +594,7 @@ public final class Helper {
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
             /*
-             * TODO for control flow edges too, but first handle circles
+             * TODO for control flow edges too?, but first handle circles
              */
             if (edgeType != CONTROL_FLOW_EDGE) {
                 dependencyGraph.addEdge(sourceInt, targetInt, edgeType);

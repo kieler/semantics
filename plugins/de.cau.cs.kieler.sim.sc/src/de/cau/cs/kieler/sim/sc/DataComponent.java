@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -25,6 +26,8 @@ import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
@@ -36,6 +39,7 @@ public class DataComponent extends JSONObjectDataComponent {
     private PrintWriter toSC;
     private BufferedReader fromSC;
     private BufferedReader error;
+    private String outPath;
 
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
@@ -88,9 +92,6 @@ public class DataComponent extends JSONObjectDataComponent {
     }
 
     public void initialize() throws KiemInitializationException {
-        // generate Code from SyncChart
-        // true sets the flag for simulation
-        wf.invokeWorkflow(true);
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
@@ -109,22 +110,27 @@ public class DataComponent extends JSONObjectDataComponent {
             bundleLocation = bundleLocation.substring(1);
         }
 
+        outPath = (getProperties()[1]).getValue();
+
+        // generate Code from SyncChart
+        // true sets the flag for simulation
+        wf.invokeWorkflow(true, outPath);
+        
         try {
             // compile
             String compiler = (getProperties()[0]).getValue();
-            String compile = compiler + " " + wf.getOutPath() + "sim.c " + wf.getOutPath()
-                    + "sim_data.c " + wf.getOutPath() + "misc.c " + bundleLocation + "cJSON.c "
-                    + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
-                    + "simulation -lm -Dexternflags";
+            String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
+                    + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I " + bundleLocation
+                    + " " + "-o " + outPath + "simulation -lm -Dexternflags";
             System.out.println(compile);
             process = Runtime.getRuntime().exec(compile);
-            
+
             InputStream stderr = process.getErrorStream();
             InputStreamReader isr = new InputStreamReader(stderr);
             BufferedReader br = new BufferedReader(isr);
             String line = null;
             System.out.println("<ERROR>");
-            while ( (line = br.readLine()) != null)
+            while ((line = br.readLine()) != null)
                 System.out.println(line);
             System.out.println("</ERROR>");
 
@@ -144,7 +150,7 @@ public class DataComponent extends JSONObjectDataComponent {
             }
 
             // start compiled sc code
-            String executable = wf.getOutPath() + "simulation ";
+            String executable = outPath + "simulation ";
             System.out.println("start: " + executable);
 
             process = Runtime.getRuntime().exec(executable);
@@ -178,8 +184,18 @@ public class DataComponent extends JSONObjectDataComponent {
 
     @Override
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("compiler", "gcc");
+        KiemProperty[] properties = new KiemProperty[2];
+        KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+        properties[0] = new KiemProperty("compiler", compilerFile, "/usr/bin/gcc");
+        // properties[0] = new KiemProperty("compiler", "gcc");
+        // default location in tmp folder
+        String tempDir = System.getProperty("java.io.tmpdir");
+        // for Windows (tmpdir ends with backslash)
+        if (tempDir.endsWith("\\")) {
+            tempDir = tempDir.substring(0, tempDir.length() - 1);
+        }
+        String path = tempDir + File.separator + randomString() + File.separator;
+        properties[1] = new KiemProperty("file location", path);
         return properties;
     }
 
@@ -188,7 +204,7 @@ public class DataComponent extends JSONObjectDataComponent {
         // client.close();
         process.destroy();
         // delete temp folder
-        File folder = new File(wf.getOutPath());
+        File folder = new File(outPath);
         if (folder.getAbsolutePath().contains("tmp")) {
             boolean folderDeleted = deleteFolder(folder);
             if (folderDeleted) {
@@ -201,6 +217,7 @@ public class DataComponent extends JSONObjectDataComponent {
 
     @Override
     public JSONObject provideInitialVariables() {
+
         JSONObject returnObj = new JSONObject();
         EObject myModel = wf.getModel();
         List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
@@ -212,6 +229,18 @@ public class DataComponent extends JSONObjectDataComponent {
             }
         }
         return returnObj;
+    }
+
+    private static String randomString() {
+        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        int max = allowedChars.length();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < 16; i++) {
+            int value = random.nextInt(max);
+            buffer.append(allowedChars.charAt(value));
+        }
+        return buffer.toString();
     }
 
     private String[] getSignals() {
@@ -226,7 +255,6 @@ public class DataComponent extends JSONObjectDataComponent {
         out = tmp.toArray(new String[tmp.size()]);
         return out;
     }
-
 
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {

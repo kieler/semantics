@@ -27,6 +27,9 @@
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
 	«EXPAND transitionEffects FOR this-»
+	«IF hasDependentState(this.sourceState)-»
+		PRIO(«getChangePriority(this.sourceState)»);
+	«ENDIF-»
 		}
 «ENDDEFINE»
 

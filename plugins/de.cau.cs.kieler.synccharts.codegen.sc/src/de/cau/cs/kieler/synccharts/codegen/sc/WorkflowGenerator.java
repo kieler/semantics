@@ -36,29 +36,12 @@ public class WorkflowGenerator {
     private IEditorPart editor = null;
     private URI uri = null;
 
-    private static String part2Location(final IEditorPart editor) {
-        String out = null;
-
-        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-        String outName = uri.getName();
-        out = uri.getURI().getRawPath().replace(outName, "");
-
-        return out;
-    }
-
-    private static String randomString() {
-        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
-        Random random = new Random();
-        int max = allowedChars.length();
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < 16; i++) {
-            int value = random.nextInt(max);
-            buffer.append(allowedChars.charAt(value));
-        }
-        return buffer.toString();
-    }
-
+    /**
+     * The constructor sets the location in the KIELER workspace to save the sc files if you just
+     * generate sc code without simulation. It also sets the variables for the EMF reader.
+     */
     public WorkflowGenerator() {
+        // location for the sc file in the KIELER workspace
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
 
@@ -74,7 +57,7 @@ public class WorkflowGenerator {
         }
     }
 
-    public void invokeWorkflow(final boolean sim) {
+    public void invokeWorkflow(final boolean sim, String path) {
         // EMF reader
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
@@ -84,12 +67,7 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
-        	String tempDir = System.getProperty("java.io.tmpdir");
-        	// for Windows (tmpdir ends with backslash)
-        	if (tempDir.endsWith("\\")) {
-				tempDir = tempDir.substring(0, tempDir.length() - 1);
-			}
-            outPath = tempDir + File.separator + randomString() + File.separator;
+            outPath = path;
         }
 
         // Outlet
@@ -136,18 +114,39 @@ public class WorkflowGenerator {
                 StatusManager.LOG);
     }
 
+    private static String part2Location(final IEditorPart editor) {
+        String out = null;
+
+        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
+        String outName = uri.getName();
+        out = uri.getURI().getRawPath().replace(outName, "");
+
+        return out;
+    }
+
+    /**
+     * Returns the model.
+     * 
+     * @return model
+     */
     public EObject getModel() {
         return myModel;
     }
 
+    /**
+     * Returns the uri.
+     * 
+     * @return uri
+     */
     public URI getURI() {
         return uri;
     }
 
-    public String getOutPath() {
-        return outPath;
-    }
-
+    /**
+     * Returns the name of the file.
+     * 
+     * @return filename
+     */
     public String getFileName() {
         String out = "";
         out = uri.lastSegment().replace("." + uri.fileExtension(), "");

@@ -61,8 +61,16 @@ State getInitialState(State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
 ;
 
-cached List getStateSignalDependencies(State state):
-	JAVA template.Helper.getStateSignalDependencies(de.cau.cs.kieler.synccharts.State)
+cached List getStateSignals(State state):
+	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
+;
+
+int getChangePriority(State state):
+	JAVA template.Helper.getChangePriority(de.cau.cs.kieler.synccharts.State)
+;
+
+boolean hasDependentState(State state):
+	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.State)
 ;
 
 String getStateNameByFlag(State state, int flag):
