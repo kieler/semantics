@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.sim.abro;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -54,6 +55,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     /** The name of the state variable to output. */
     private String stateName;
+    
+    private boolean visible;
 
     // -------------------------------------------------------------------------
 
@@ -61,6 +64,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * Instantiates a new data component.
      */
     public DataComponent() {
+        visible = true;
     }
 
     // -------------------------------------------------------------------------
@@ -180,6 +184,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * {@inheritDoc}
      */
     public void wrapup() {
+        visible = !visible;
     }
 
     // -------------------------------------------------------------------------
@@ -221,18 +226,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      */
     @Override
     public boolean isMaster() {
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
-     */
-    @Override
-    public boolean isPauseFlag() {
         return false;
     }
 
@@ -308,4 +301,36 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         }
     }
 
+    // -------------------------------------------------------------------------
+    
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#provideEventOfInterest()
+     */
+    @Override
+    public KiemEvent provideEventOfInterest() {
+        int[] events = {KiemEvent.LOAD, KiemEvent.SAVE};
+        KiemEvent event = new KiemEvent(events);
+        System.out.println(event.getEventCodesAsList());
+        return (event);
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#provideEventOfInterest()
+     */
+    @Override
+    public void notifyEvent(final KiemEvent event) {
+        return;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isInvisible()
+     */
+    @Override
+    public boolean isInvisible() {
+        return false;
+    }
 }
