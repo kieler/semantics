@@ -141,6 +141,10 @@ context Transition if (isImmediate)
 context Transition if (type == TransitionType::NORMALTERMINATION)
    	ERROR "Normal termination may not have a trigger!" :
    	(trigger == null);   
+   	
+context Transition if (type == TransitionType::NORMALTERMINATION)
+   	ERROR "Normal termination must have the lowest priority!" :
+   	(!sourceState.outgoingTransitions.exists(t|t.priority > this.priority));  
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
 	ERROR "Simple states may not have a normal termination transition" :
