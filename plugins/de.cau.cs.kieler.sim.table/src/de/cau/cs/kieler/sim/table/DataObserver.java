@@ -192,15 +192,18 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
         // bring Table view to front
         bringToFront();
 
-        // make an entry of all global interface variables/signals
-        String[] variableKeys = this.getInterfaceKeys();
-        for (int c = 0; c < variableKeys.length; c++) {
-            String key = variableKeys[c];
-            String value = "";
-            // add to list
-            TableDataList.getInstance().add(
-                    new TableData(TableDataList.getInstance(), false, key, value));
-        }
+        
+// DEPRECATED CODE FOLLOWING        
+//        // make an entry of all global interface variables/signals
+//        String[] variableKeys = this.getInitialVariables()
+//        .getInterfaceKeys();
+//        for (int c = 0; c < variableKeys.length; c++) {
+//            String key = variableKeys[c];
+//            String value = "";
+//            // add to list
+//            TableDataList.getInstance().add(
+//                    new TableData(TableDataList.getInstance(), false, key, value));
+//        }
         
         // consider global variable initializations
         step(this.getInitialVariables());
