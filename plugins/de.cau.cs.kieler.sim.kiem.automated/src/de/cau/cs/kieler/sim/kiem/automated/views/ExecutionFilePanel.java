@@ -71,7 +71,7 @@ public class ExecutionFilePanel {
     private LinkedList<TableColumn> columns;
 
     /** The displayed name of this execution. */
-    private String execName;
+    private IPath execName;
 
     // --------------------------------------------------------------------------
 
@@ -85,8 +85,8 @@ public class ExecutionFilePanel {
      */
     public ExecutionFilePanel(final IPath name, final Composite panel) {
         execPanel = new Group(panel, SWT.BORDER);
-        this.execName = getName(name);
-        execPanel.setText(execName);
+        this.execName = name;
+        execPanel.setText(getName(execName));
         execPanel.setLayout(new GridLayout(1, false));
         execPanel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING,
                 false, false));
@@ -129,10 +129,23 @@ public class ExecutionFilePanel {
         }
 
         for (IterationResult result : resultsParam) {
-            results.add(result);
+            if (!results.contains(result)) {
+                results.add(result);
+            }
         }
 
         refresh();
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Getter for the execName.
+     * 
+     * @return the execName
+     */
+    public IPath getExecName() {
+        return this.execName;
     }
 
     // --------------------------------------------------------------------------
@@ -267,7 +280,7 @@ public class ExecutionFilePanel {
      */
     public PanelData getData() {
         PanelData result = new PanelData(results.size(), columns.size());
-        result.setExecFileName(execName);
+        result.setExecFileName(getName(execName));
         for (int j = 0; j < columns.size(); j++) {
             result.getHeaders()[j] = columns.get(j).getText();
         }

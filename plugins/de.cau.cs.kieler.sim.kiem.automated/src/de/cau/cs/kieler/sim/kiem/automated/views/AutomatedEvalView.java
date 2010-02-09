@@ -144,12 +144,30 @@ public class AutomatedEvalView extends ViewPart implements ControlListener {
      */
     public List<PanelData> getData() {
         List<PanelData> result = new LinkedList<PanelData>();
-        if (panels != null && !panels.isEmpty()) {
-
+        if (!isEmpty()) {
             for (ExecutionFilePanel execPanel : panels) {
                 result.add(execPanel.getData());
             }
         }
         return result;
     }
+
+    /**
+     * Getter for the panels.
+     * 
+     * @return the panels
+     */
+    public List<ExecutionFilePanel> getPanels() {
+        return this.panels;
+    }
+
+    /**
+     * Determine whether or not the view is empty.
+     * 
+     * @return true if the view is empty
+     */
+    public boolean isEmpty() {
+        return panels == null || panels.isEmpty();
+    }
+
 }

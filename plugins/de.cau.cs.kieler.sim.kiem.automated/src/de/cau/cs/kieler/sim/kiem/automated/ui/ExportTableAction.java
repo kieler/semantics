@@ -63,6 +63,34 @@ public class ExportTableAction implements IViewActionDelegate,
         CSV,
         /** Latex format. */
         LATEX;
+
+        /**
+         * Getter for the suggested file extension.
+         * 
+         * @return the extension
+         */
+        public String extension() {
+            switch (this) {
+            case LATEX:
+                return "tex";
+
+            case CSV:
+            default:
+                return "txt";
+            }
+        }
+
+        @Override
+        public String toString() {
+            switch (this) {
+            case LATEX:
+                return "Latex";
+            case CSV:
+                return "CSV";
+            default:
+                return "Unknown";
+            }
+        }
     }
 
     /**
@@ -76,7 +104,7 @@ public class ExportTableAction implements IViewActionDelegate,
      */
     public void run(final IAction action) {
         AutomatedEvalView view = KiemAutomatedPlugin.getAutomatedEvalView();
-        if (view != null) {
+        if (view != null && !view.isEmpty()) {
             Shell shell = view.getViewSite().getShell();
 
             // create the dialog
@@ -93,10 +121,14 @@ public class ExportTableAction implements IViewActionDelegate,
                 String selectedPath = "";
 
                 for (ExportType type : types) {
-                    String title = "Save " + type.name() + " to...";
+                    String title = "Save " + type.toString() + " to...";
+                    String suggestedName = view.getPanels().get(0)
+                            .getExecName().removeFileExtension()
+                            .addFileExtension(type.extension()).lastSegment();
 
                     FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
                     fileDialog.setFilterPath(selectedPath);
+                    fileDialog.setFileName(suggestedName);
                     fileDialog.setText(title);
 
                     selectedPath = fileDialog.open();
