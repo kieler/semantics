@@ -81,7 +81,7 @@ public final class CancelManager {
      * Cancel the currently running iteration.
      */
     public void cancelIteration() {
-        if (ExecutionManager.getInstance().isRunning()) {
+        if (AutomationManager.getInstance().isRunning()) {
             userCanceledIteration = true;
         }
     }
@@ -108,7 +108,7 @@ public final class CancelManager {
      * Cancel the currently running model file.
      */
     public void cancelModelFile() {
-        if (ExecutionManager.getInstance().isRunning()) {
+        if (AutomationManager.getInstance().isRunning()) {
             userCanceledModelFile = true;
         }
     }
@@ -135,7 +135,7 @@ public final class CancelManager {
      * Cancel the currently running execution file.
      */
     public void cancelExecutionFile() {
-        if (ExecutionManager.getInstance().isRunning()) {
+        if (AutomationManager.getInstance().isRunning()) {
             userCanceledExecutionFile = true;
         }
     }
@@ -162,7 +162,7 @@ public final class CancelManager {
      * Cancel the currently running execution.
      */
     public void cancelExecution() {
-        if (ExecutionManager.getInstance().isRunning()) {
+        if (AutomationManager.getInstance().isRunning()) {
             userCanceledExecution = true;
         }
     }
@@ -253,7 +253,7 @@ public final class CancelManager {
                 }
             }
             if (!canceled) {
-                ExecutionManager.getInstance().notifyOnStepFinished();
+                AutomationManager.getInstance().notifyOnStepFinished();
             }
         }
 

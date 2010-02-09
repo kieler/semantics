@@ -19,7 +19,7 @@ import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
 
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
-import de.cau.cs.kieler.sim.kiem.automated.execution.ExecutionManager;
+import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
 import de.cau.cs.kieler.sim.kiem.automated.ui.AutomatedExecutionButton;
 import de.cau.cs.kieler.sim.kiem.automated.ui.ClearViewButton;
 
@@ -71,7 +71,7 @@ public class ToolbarContributor extends AbstractContributionFactory implements
     public void createContributionItems(final IServiceLocator serviceLocator,
             final IContributionRoot additions) {
         // for directly adding to the views toolbar
-        additions.addContributionItem(ExecutionManager.getInstance()
+        additions.addContributionItem(AutomationManager.getInstance()
                 .getStepTextField(), null);
         additions.addContributionItem(new ClearViewButton("ClearViewButton1"),
                 null);

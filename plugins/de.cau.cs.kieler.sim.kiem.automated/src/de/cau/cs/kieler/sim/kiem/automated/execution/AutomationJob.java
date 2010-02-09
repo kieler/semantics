@@ -35,7 +35,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @author soh
  * @kieler.rating 2010-02-01 proposed yellow
  */
-public class ExecutionJob extends WorkbenchJob {
+public class AutomationJob extends WorkbenchJob {
 
     /** The list of execution files for the execution. */
     private IPath[] executionFiles;
@@ -48,7 +48,7 @@ public class ExecutionJob extends WorkbenchJob {
 
     /**
      * 
-     * Creates a new ExecutionJob.
+     * Creates a new AutomationJob.
      * 
      * @param executionFilesParam
      *            list of execution files
@@ -57,7 +57,7 @@ public class ExecutionJob extends WorkbenchJob {
      * @param propertiesParam
      *            list of properties
      */
-    public ExecutionJob(final IPath[] executionFilesParam,
+    public AutomationJob(final IPath[] executionFilesParam,
             final List<IPath> modelFilesParam,
             final List<KiemProperty> propertiesParam) {
         super("Automated execution");
@@ -97,11 +97,11 @@ public class ExecutionJob extends WorkbenchJob {
             @Override
             public void run() {
                 try {
-                    List<IterationResult> results = ExecutionManager
+                    List<IterationResult> results = AutomationManager
                             .getInstance().doAutomatedExecution(executionFiles,
                                     modelFiles, properties, monitor);
 
-                    ExecutionManager.getInstance().notifyExecutionFinished(
+                    AutomationManager.getInstance().notifyExecutionFinished(
                             results);
                 } catch (RuntimeException e0) {
                     e0.printStackTrace();

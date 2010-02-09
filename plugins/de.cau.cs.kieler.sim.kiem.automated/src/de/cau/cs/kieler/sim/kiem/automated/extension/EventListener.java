@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sim.kiem.automated.extension;
 
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
-import de.cau.cs.kieler.sim.kiem.automated.execution.ExecutionManager;
+import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
 
 /**
  * The event listener listens to events coming from the KIEM that are related to
@@ -37,7 +37,7 @@ public class EventListener implements IKiemEventListener {
      * {@inheritDoc}
      */
     public void notifyEvent(final KiemEvent event) {
-        if (ExecutionManager.getInstance().isRunning()) {
+        if (AutomationManager.getInstance().isRunning()) {
             // don't want to block notifier
             Thread worker = new WorkerThread(event);
             worker.start();
@@ -79,19 +79,19 @@ public class EventListener implements IKiemEventListener {
         @Override
         public void run() {
             if (event.isEvent(KiemEvent.STEP_DONE)) {
-                ExecutionManager.getInstance().notifyOnStepFinished();
+                AutomationManager.getInstance().notifyOnStepFinished();
             }
             if (event.isEvent(KiemEvent.CMD_STOP)) {
-                ExecutionManager.getInstance().notifyOnUserStop();
+                AutomationManager.getInstance().notifyOnUserStop();
             }
             if (event.isEvent(KiemEvent.CMD_PAUSE)) {
-                ExecutionManager.getInstance().notifyOnUserPause();
+                AutomationManager.getInstance().notifyOnUserPause();
             }
             if (event.isEvent(KiemEvent.ERROR_STOP)) {
-                ExecutionManager.getInstance().notifyOnErrorStop();
+                AutomationManager.getInstance().notifyOnErrorStop();
             }
             if (event.isEvent(KiemEvent.ERROR_PAUSE)) {
-                ExecutionManager.getInstance().notifyOnErrorPause();
+                AutomationManager.getInstance().notifyOnErrorPause();
             }
         }
 

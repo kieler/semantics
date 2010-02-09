@@ -53,10 +53,10 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * @author soh
  * @kieler.rating 2010-02-01 proposed yellow
  */
-public final class ExecutionManager implements StatusListener {
+public final class AutomationManager implements StatusListener {
 
-    /** The singleton instance of the ExecutionManager. */
-    private static ExecutionManager instance = null;
+    /** The singleton instance of the AutomationManager. */
+    private static AutomationManager instance = null;
 
     /**
      * The panel where the currently running execution should display its
@@ -98,7 +98,7 @@ public final class ExecutionManager implements StatusListener {
     // --------------------------------------------------------------------------
 
     /** Singleton pattern. */
-    private ExecutionManager() {
+    private AutomationManager() {
         stepTextField = new StepTextField();
     }
 
@@ -109,9 +109,9 @@ public final class ExecutionManager implements StatusListener {
      * 
      * @return the instance.
      */
-    public static synchronized ExecutionManager getInstance() {
+    public static synchronized AutomationManager getInstance() {
         if (instance == null) {
-            instance = new ExecutionManager();
+            instance = new AutomationManager();
         }
         return instance;
     }
@@ -599,7 +599,7 @@ public final class ExecutionManager implements StatusListener {
     public void executeAsync(final IPath[] executionFiles,
             final List<IPath> modelFiles, final List<KiemProperty> properties) {
 
-        ExecutionJob job = new ExecutionJob(executionFiles, modelFiles,
+        AutomationJob job = new AutomationJob(executionFiles, modelFiles,
                 properties);
         job.schedule();
     }

@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.automated.execution.ExecutionManager;
+import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
@@ -98,7 +98,7 @@ public class AutomatedExecutionButton extends ControlContribution {
             }
 
             // start the execution
-            ExecutionManager.getInstance().executeAsync(executionFiles,
+            AutomationManager.getInstance().executeAsync(executionFiles,
                     modelFiles, properties);
         }
     }

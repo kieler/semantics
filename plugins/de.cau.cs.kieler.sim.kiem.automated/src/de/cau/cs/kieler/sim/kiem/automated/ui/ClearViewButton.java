@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
-import de.cau.cs.kieler.sim.kiem.automated.execution.ExecutionManager;
+import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
 
 /**
  * This button is responsible for clearing the results view.
@@ -75,7 +75,7 @@ public class ClearViewButton extends ControlContribution implements
      * {@inheritDoc}
      */
     public void widgetSelected(final SelectionEvent e) {
-        if (e.widget == button && !ExecutionManager.getInstance().isRunning()) {
+        if (e.widget == button && !AutomationManager.getInstance().isRunning()) {
             KiemAutomatedPlugin.getAutomatedEvalView().clear();
         }
     }
