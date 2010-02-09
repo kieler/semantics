@@ -64,7 +64,7 @@ public class EsoComponent extends JSONObjectDataComponent {
                         }
                     }
                 }
-                eso.write("%Output:");
+                eso.write(" %Output:");
                 for (String o : outputs) {
                     if (input.has(o)) {
                         JSONObject obj;
@@ -96,9 +96,10 @@ public class EsoComponent extends JSONObjectDataComponent {
     /** {@inheritDoc} */
     public void initialize() throws KiemInitializationException {
         String fileName = this.getProperties()[0].getFilePath();
-        if (fileName == null || fileName.isEmpty()) {
+        if (fileName != null && !fileName.isEmpty()) {
             try {
-                eso = new BufferedWriter(new FileWriter(fileName));
+                eso = new BufferedWriter(new FileWriter(fileName, true));
+                eso.write("!reset;\n");
             } catch (IOException e) {
                 throw new KiemInitializationException("cannot open file", true, e);
             }
