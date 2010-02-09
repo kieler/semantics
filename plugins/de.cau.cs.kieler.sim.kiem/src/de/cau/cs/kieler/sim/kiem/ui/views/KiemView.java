@@ -751,7 +751,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 getActionDown().setEnabled(false);
             }
         } else {
-            DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) ((org.eclipse.jface.viewers.StructuredSelection) viewer
+            DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) 
+            ((org.eclipse.jface.viewers.StructuredSelection) viewer
                     .getSelection()).getFirstElement();
             if (!getActionEnableDisable().isEnabled()) {
                 getActionEnableDisable().setEnabled(true);
@@ -770,7 +771,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
 
             // find index of top most and bottom most selection
-            ITreeSelection selections = (ITreeSelection) (org.eclipse.jface.viewers.StructuredSelection) viewer
+            ITreeSelection selections = (ITreeSelection)
+            (org.eclipse.jface.viewers.StructuredSelection) viewer
                     .getSelection();
             int listIndexMostTop = -1;
             int listIndexMostBottom = -1;
@@ -910,7 +912,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if ((obj instanceof KiemProperty)
                         || ((obj instanceof DataComponentWrapper)
                                 && (((DataComponentWrapper) obj).getProperties() != null)
-                                && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
+                                && (((DataComponentWrapper) obj).getProperties().length > 0) 
+                                && (((DataComponentWrapper) obj)
                                 .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false);
@@ -1170,11 +1173,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 }
                 // this may not always be applicable e.g., if a property is selected
                 try {
-                    DataComponentWrapper firstDataComponentWrapper = (DataComponentWrapper) ((org.eclipse.jface.viewers.StructuredSelection) viewer
+                    DataComponentWrapper firstDataComponentWrapper = (DataComponentWrapper) 
+                    ((org.eclipse.jface.viewers.StructuredSelection) viewer
                             .getSelection()).getFirstElement();
                     boolean enabledDisabled = !firstDataComponentWrapper.isEnabled();
 
-                    IStructuredSelection selection = (org.eclipse.jface.viewers.StructuredSelection) viewer
+                    IStructuredSelection selection = 
+                        (org.eclipse.jface.viewers.StructuredSelection) viewer
                             .getSelection();
                     for (int c = 0; c < selection.size(); c++) {
                         DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selection
@@ -1208,7 +1213,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         actionUp = new Action() {
             public void run() {
-                ITreeSelection selections = (ITreeSelection) (org.eclipse.jface.viewers.StructuredSelection) viewer
+                ITreeSelection selections = (ITreeSelection)
+                (org.eclipse.jface.viewers.StructuredSelection) viewer
                         .getSelection();
                 // go thru list from up to down!
                 for (int c = 0; c < selections.size(); c++) {
@@ -1251,7 +1257,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         actionDown = new Action() {
             public void run() {
-                ITreeSelection selections = (ITreeSelection) (org.eclipse.jface.viewers.StructuredSelection) viewer
+                ITreeSelection selections = (ITreeSelection) 
+                (org.eclipse.jface.viewers.StructuredSelection) viewer
                         .getSelection();
                 // go thru list from down to up!
                 for (int c = selections.size() - 1; c >= 0; c--) {

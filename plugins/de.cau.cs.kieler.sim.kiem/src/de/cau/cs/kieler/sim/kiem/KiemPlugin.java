@@ -803,7 +803,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                         globalInitialVariables = merged;
                     } // end if not null
                 } catch (Exception e) {
-                    KiemPlugin.getDefault().handleComponentError(
+                    KiemPlugin.handleComponentError(
                             dataComponentWrapper.getDataComponent(), e);
                     throw e;
                 }
@@ -833,7 +833,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                     dataComponentWrapper.getDataComponent().initialize();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    KiemPlugin.getDefault().handleComponentError(
+                    KiemPlugin.handleComponentError(
                             dataComponentWrapper.getDataComponent(), e);
                     return false;
                 }

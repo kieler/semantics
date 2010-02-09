@@ -20,7 +20,6 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
