@@ -14,13 +14,16 @@
 
 package de.cau.cs.kieler.xkev.ui;
 
+import java.awt.Checkbox;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -65,10 +68,20 @@ public class OpenWizard extends Wizard {
 
     /** The actual wizard page that will be shown. */
     private OpenImageWizardPage page;
-    /** A map of predefined images (Names) to their URLs. This map will be generated from extensions. */
-    private Map<String, URL> imageUrlMap;
+
+    /** A map of predefined images (Names) to their URLs. This map will be generated from extensions. 
+     * It is used for a sorted list of images 
+     */
+    private TreeMap<String, String> imageTreeMap;
+
     /** Text field for the file url. */
     private Text resourceNameField;
+    
+    /** The load at startup checkbox */
+    private Button checkBox;
+    
+    /** The actual bundleentry path to the "examples" folder */
+    private String examplePath; 
 
     /**
      * Parent dialog to have access to window controls, e.g. closing the dialog (by double click in
@@ -132,8 +145,17 @@ public class OpenWizard extends Wizard {
     }
 
     private void savePreferences() {
+        String path = resourceNameField.getText();
+        //If the actual image is an example image from bundle path, we have to save only the filename
+        if (path.contains("bundleentry")) {
+            while (path.contains("/")) {
+                path = path.substring(path.indexOf("/")+1);
+            }
+        } //otherwise we save the whole path and file
+        
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        preferenceStore.setValue(OpenWizard.DEFAULT_IMAGE, resourceNameField.getText());
+        preferenceStore.setValue(OpenWizard.DEFAULT_IMAGE, path);
+        preferenceStore.setValue(OpenWizard.LOAD_STARTUP, checkBox.getSelection());
     }
 
     private class OpenImageWizardPage extends WizardPage implements SelectionListener,
@@ -169,20 +191,36 @@ public class OpenWizard extends Wizard {
                     | SWT.V_SCROLL);
             imagesList.setLayoutData(data1);
 
-            // imageUrlMap = getImageURLs(); //old Version
-            imageUrlMap = new HashMap<String, URL>();
-
-            // Load images from Plugin "example" Folder
+            checkBox = new Button(composite, SWT.CHECK);
+            checkBox.setText("Load default image at startup");
+            
+            //Create a new treemap for a sorted list of mapping files
+            imageTreeMap = new TreeMap<String, String>();
+            
+            // Load images from Plugin "examples" Folder
             Bundle b = Platform.getBundle(Activator.PLUGIN_ID);
+            
+            //Set the current bundle path
+            if (b.getEntry("examples") != null) {
+                examplePath = b.getEntry("examples").toString();
+            }
+            
             Enumeration e = b.findEntries("examples", "*.mapping", false);
             while (e.hasMoreElements()) {
                 URL url = (URL) e.nextElement();
-                imageUrlMap.put(url.toString(), url);
+                String fileName = url.getPath();
+                while (fileName.contains("/")) {
+                    fileName = fileName.substring(fileName.indexOf("/")+1);
+                    System.out.println(fileName);
+                }
+                //TreeMap contains two identical strings. It's only used for sorting.
+                imageTreeMap.put(fileName, fileName);
             }
-
-            for (String imageName : imageUrlMap.keySet()) {
+            
+            for (String imageName : imageTreeMap.navigableKeySet()) {
                 imagesList.add(imageName);
             }
+            
             imagesList.addSelectionListener(this);
             imagesList.addMouseListener(this);
 
@@ -205,9 +243,14 @@ public class OpenWizard extends Wizard {
             IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
             String last = preferences.getString(DEFAULT_IMAGE);
             if (last != null && !last.trim().equals("")) {
-                resourceNameField.setText(last);
+                if (!last.contains("/")) { //It must be an bundleentry
+                    resourceNameField.setText(examplePath + last);
+                } else { // It must be a file which is located on disk 
+                    resourceNameField.setText(last);
+                }
             }
-
+            checkBox.setSelection(preferences.getBoolean(LOAD_STARTUP));
+            
             Button resourceButton = new Button(resourceComposite, SWT.NONE);
             resourceButton.setText("Browse...");
             resourceButton.addSelectionListener(this);
@@ -279,11 +322,10 @@ public class OpenWizard extends Wizard {
                 List list = (List) e.getSource();
 
                 for (int i = 0; i < list.getSelection().length; i++) {
-                    URL url = imageUrlMap.get(list.getSelection()[i]);
-                    String URLstring = url.toString();
+                    String imageName = imageTreeMap.get(list.getSelection()[i]);
                     // only one selected element makes sense
                     if (i == 0) {
-                        resourceNameField.setText(URLstring);
+                        resourceNameField.setText(examplePath+imageName);
                     }
                 }
             } else if (e.getSource() instanceof Button) { // Browse Button was pressed

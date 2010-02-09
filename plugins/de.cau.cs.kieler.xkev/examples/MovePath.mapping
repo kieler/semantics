@@ -12,5 +12,6 @@
   <svgElement id="rocket4">
     <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="water" anchor_point="0,5" auto_orientation="true" />
   </svgElement>
-  
+
+
 </mapping:SVGFile>

@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.batik.swing.JSVGCanvas;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -24,12 +25,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.internal.ViewSite;
 import org.eclipse.ui.part.ViewPart;
+import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.actions.OpenWizardAction;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.xkev.ui.OpenWizard;
 
 /**
@@ -81,11 +85,18 @@ public class KevView extends ViewPart {
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         String defaultFile = preferenceStore.getString(OpenWizard.DEFAULT_IMAGE);
         boolean load = preferenceStore.getBoolean(OpenWizard.LOAD_STARTUP);
-        if ((defaultFile != null) && (!defaultFile.trim().equals("")) && load) {
+        if ((defaultFile != null) && (!defaultFile.trim().equals("")) && load && Activator.getKevView().getComposite().getSVGURI() == null) {
             try {
-                svg.setSVGFile(new URL(defaultFile));
-            } catch (MalformedURLException e) {
-                Activator.reportErrorMessage("Could not load default image file: ", e);
+                //Set the ExecutionManager view active, for initialization
+                Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                        .showView("de.cau.cs.kieler.sim.kiem.view");
+            } catch (PartInitException e) {
+                Activator.reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) can't be initialized!");
+            }
+            if (!defaultFile.contains("/")) { //It must be an bundleentry
+                Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, true));
+            } else {
+                Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, false));
             }
         }
     }

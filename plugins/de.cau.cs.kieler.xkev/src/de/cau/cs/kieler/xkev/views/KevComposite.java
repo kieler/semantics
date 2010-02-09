@@ -331,6 +331,11 @@ public class KevComposite extends Composite implements ISelectionListener {
         }
 
     }
+    
+    /** Returns th uri to the actual svg file if exists */ 
+    public URI getSVGURI() {
+        return svgURI;
+    }
 
     public void paintSVGFile() {
         try {

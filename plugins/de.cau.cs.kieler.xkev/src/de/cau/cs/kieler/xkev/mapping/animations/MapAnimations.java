@@ -277,15 +277,16 @@ public class MapAnimations {
                 Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
             }
         }
-        //Wait until loading was successful or an Errorstatus occurs (status < 2) or timeout has reached (approx. after 10 seconds)
-        int timeoutCounter = 0;
-        while ((loadingStatusListener.getLoadingStatus() < SVGLoadingStatusListener.LOADING_COMPLETED) || timeoutCounter == 100) {
+        //Wait until loading was successful or an Errorstatus occurs (status < 2) or timeout has reached (approx. after 5 seconds)
+        int timeoutCounter = 1;
+        while ((loadingStatusListener.getLoadingStatus() < SVGLoadingStatusListener.LOADING_COMPLETED) && timeoutCounter < 50) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 //Thread has been interrupted
+            } finally {
+                timeoutCounter++;
             }
-            timeoutCounter++;
         }
         if (url != null) {
             //Set the uri of the current svg file (needed for the refresh)
