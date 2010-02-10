@@ -27,7 +27,6 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
@@ -40,56 +39,6 @@ public class DataComponent extends JSONObjectDataComponent {
     private BufferedReader fromSC;
     private BufferedReader error;
     private String outPath;
-
-    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
-        JSONObject out = null;
-        try {
-            jSONObject.remove("state");
-
-            System.out.println("jSONObject: " + jSONObject.toString());
-
-            toSC.write(jSONObject.toString() + "\n");
-            toSC.flush();
-            while (error.ready()) {
-                System.out.print(error.read());
-            }
-
-            String receivedMessage = fromSC.readLine();
-            // print and delete debug information
-            receivedMessage = printDebugInfos(receivedMessage);
-            System.out.println("in:  " + receivedMessage);
-            while (error.ready()) {
-                System.err.print(error.readLine());
-            }
-
-            out = new JSONObject(receivedMessage);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            process.destroy();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            process.destroy();
-        }
-
-        try {
-            JSONArray stateArray = out.getJSONArray("state");
-            String allStates = "";
-
-            for (int i = 0; i < stateArray.length(); i++) {
-                allStates += stateArray.opt(i) + ",";
-            }
-            allStates = allStates.substring(0, allStates.length() - 1);
-            out.remove("state");
-            out.put("state", allStates);
-            System.out.println("out:" + out);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            System.err.println(e.getMessage());
-            process.destroy();
-        }
-
-        return out;
-    }
 
     public void initialize() throws KiemInitializationException {
         // building path to bundle
@@ -110,12 +59,6 @@ public class DataComponent extends JSONObjectDataComponent {
             bundleLocation = bundleLocation.substring(1);
         }
 
-        outPath = (getProperties()[1]).getValue();
-
-        // generate Code from SyncChart
-        // true sets the flag for simulation
-        wf.invokeWorkflow(true, outPath);
-        
         try {
             // compile
             String compiler = (getProperties()[0]).getValue();
@@ -167,6 +110,58 @@ public class DataComponent extends JSONObjectDataComponent {
         }
 
     }
+    
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        JSONObject out = null;
+        try {
+            jSONObject.remove("state");
+
+            System.out.println("jSONObject: " + jSONObject.toString());
+
+            toSC.write(jSONObject.toString() + "\n");
+            toSC.flush();
+            while (error.ready()) {
+                System.out.print(error.read());
+            }
+
+            String receivedMessage = fromSC.readLine();
+            // print and delete debug information
+            receivedMessage = printDebugInfos(receivedMessage);
+            System.out.println("in:  " + receivedMessage);
+            while (error.ready()) {
+                System.err.print(error.readLine());
+            }
+
+            out = new JSONObject(receivedMessage);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            process.destroy();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            process.destroy();
+        }
+
+        try {
+            JSONArray stateArray = out.getJSONArray("state");
+            String allStates = "";
+
+            for (int i = 0; i < stateArray.length(); i++) {
+                allStates += stateArray.opt(i) + ",";
+            }
+            allStates = allStates.substring(0, allStates.length() - 1);
+            out.remove("state");
+            out.put("state", allStates);
+            System.out.println("out:" + out);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            System.err.println(e.getMessage());
+            process.destroy();
+        }
+
+        return out;
+    }
+
+
 
     public boolean isObserver() {
         return true;
@@ -177,7 +172,6 @@ public class DataComponent extends JSONObjectDataComponent {
     }
 
     public String[] provideInterfaceKeys() {
-        wf = new WorkflowGenerator();
         String[] signals = getSignals();
         return signals;
     }
@@ -186,9 +180,7 @@ public class DataComponent extends JSONObjectDataComponent {
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
-        properties[0] = new KiemProperty("compiler", compilerFile, "/usr/bin/gcc");
-        // properties[0] = new KiemProperty("compiler", "gcc");
-        // default location in tmp folder
+        properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
         String tempDir = System.getProperty("java.io.tmpdir");
         // for Windows (tmpdir ends with backslash)
         if (tempDir.endsWith("\\")) {
@@ -219,6 +211,13 @@ public class DataComponent extends JSONObjectDataComponent {
     public JSONObject provideInitialVariables() {
 
         JSONObject returnObj = new JSONObject();
+        
+        outPath = (getProperties()[1]).getValue();
+
+        wf = new WorkflowGenerator();
+        // generate Code from SyncChart
+        // true sets the flag for simulation
+        wf.invokeWorkflow(true, outPath);
         EObject myModel = wf.getModel();
         List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
         for (int i = 0; i < signalList.size(); i++) {
