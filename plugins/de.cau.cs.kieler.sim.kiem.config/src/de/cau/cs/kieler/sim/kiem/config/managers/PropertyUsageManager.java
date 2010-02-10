@@ -107,13 +107,14 @@ public final class PropertyUsageManager extends Manager {
                 }
             }
 
-            if (ignoredKeys == null
-                    && !ContributionManager.getInstance().isInAdvancedMode()) {
+            if (ignoredKeys == null) {
                 ignoredKeys = new LinkedList<KiemPropertyKeyWrapper>();
-                ignoredKeys.add(Tools.DEFAULT_EDITOR_KEY);
-                ignoredKeys.add(Tools.DEFAULT_EDITOR_NAME_KEY);
-                ignoredKeys.add(Tools.DEFAULT_PRIORITY_KEY);
-                ignoredKeys.add(Tools.RECENT_CAPACITY_KEY);
+                if (!ContributionManager.getInstance().isInAdvancedMode()) {
+                    ignoredKeys.add(Tools.DEFAULT_EDITOR_KEY);
+                    ignoredKeys.add(Tools.DEFAULT_EDITOR_NAME_KEY);
+                    ignoredKeys.add(Tools.DEFAULT_PRIORITY_KEY);
+                    ignoredKeys.add(Tools.RECENT_CAPACITY_KEY);
+                }
             }
         }
     }

@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecke
 import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
 import de.cau.cs.kieler.sim.kiem.automated.views.ExecutionFilePanel;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
@@ -233,6 +234,10 @@ public final class AutomationManager implements StatusListener {
             monitor.beginTask(taskName, executionlength);
         }
 
+        // store the currently opened file.
+        IPath currentFile = KiemPlugin.getDefault().getKIEMViewInstance()
+                .getCurrentFile();
+
         // register as error listener to avoid pop-ups during run
         KiemAutomatedPlugin.addErrorListener(this);
         try {
@@ -255,6 +260,15 @@ public final class AutomationManager implements StatusListener {
             running = false;
             KiemAutomatedPlugin.removeErrorListener(this);
             monitor.done();
+            if (currentFile != null) {
+                try {
+                    KiemPlugin.getDefault().openFile(currentFile, false);
+                } catch (IOException e0) {
+                    // couldn't restore file
+                    Tools.showWarning("Couldn't restore file.", e0, false);
+                }
+            }
+
             refreshView();
         }
         return results;
@@ -276,7 +290,7 @@ public final class AutomationManager implements StatusListener {
             final List<KiemProperty> properties,
             final List<IterationResult> results, final IPath execution) {
         try {
-            KiemPlugin.getDefault().openFile(execution);
+            KiemPlugin.getDefault().openFile(execution, true);
         } catch (IOException e0) {
             // execution file not found, write to error log
             KiemPlugin.getDefault().showError("Execution file missing.",

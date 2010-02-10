@@ -521,15 +521,10 @@ public final class ScheduleManager extends Manager implements
     public void loadSchedule(final ScheduleData schedule)
             throws ScheduleFileMissingException {
 
-        if (KiemPlugin.getDefault().getKIEMViewInstance().isDirty()) {
-            // if editor is dirty save it first
-            KiemEventListener.getInstance().setSaveImminent();
-            KiemPlugin.getDefault().getKIEMViewInstance().doSave(null);
-        }
-
         KiemEventListener.getInstance().setLoadImminent();
         try {
-            KiemPlugin.getDefault().openFile(schedule.getLocation());
+            KiemPlugin.getDefault().openFile(schedule.getLocation(),
+                    schedule.isLocked());
         } catch (IOException e0) {
             // loading failed due to missing .execution file
             throw new ScheduleFileMissingException(e0, schedule);
