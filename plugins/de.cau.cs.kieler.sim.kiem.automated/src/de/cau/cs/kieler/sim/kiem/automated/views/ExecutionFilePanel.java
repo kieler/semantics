@@ -104,15 +104,17 @@ public class ExecutionFilePanel {
      *            the result that should be added
      */
     public void addResult(final IterationResult iterationResult) {
-        if (results == null) {
-            results = new LinkedList<IterationResult>();
-            doInitialLayout(iterationResult);
-        }
-        if (!results.contains(iterationResult)) {
-            results.add(iterationResult);
-        }
+        if (iterationResult.getResults() != null) {
+            if (results == null) {
+                results = new LinkedList<IterationResult>();
+                doInitialLayout(iterationResult);
+            }
+            if (!results.contains(iterationResult)) {
+                results.add(iterationResult);
+            }
 
-        refresh();
+            refresh();
+        }
     }
 
     /**
