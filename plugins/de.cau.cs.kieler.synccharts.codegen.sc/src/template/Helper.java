@@ -32,6 +32,7 @@ import de.cau.cs.kieler.synccharts.codegen.sc.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Graph;
 import de.cau.cs.kieler.synccharts.codegen.sc.StateSignalDependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Tuple;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
  * The Helper class provides some helping functions for the generation of code.
@@ -106,6 +107,29 @@ public final class Helper {
      */
     public static int computeWeakThreadPriority(final State state) {
         return computeThreadPriority(state, true);
+    }
+
+    /**
+     * A simple method to print debug information.
+     * 
+     * @param s
+     *            debug information
+     */
+    public static void debug(final String s) {
+        System.out.println(s);
+        // return s;
+    }
+    
+    /**
+     * A method to throw an error.
+     * 
+     * @param s
+     *            error information
+     * @throws KiemInitializationException 
+     */
+    public static void error(final String s) throws KiemInitializationException {
+        System.out.println("hier");
+        throw new KiemInitializationException("Error while generating SC code", true, new Exception(s));
     }
 
     /**
@@ -214,10 +238,12 @@ public final class Helper {
 
     private static String getStateNameCompleteHierarchie(final State state) {
         String regionPrefix = "";
-        if (state.getParentRegion().getParentState().getRegions().size() > 1) {
-            regionPrefix = state.getParentRegion().getId() + "_";
+        if (state.getParentRegion().getParentState() != null) {
+            if (state.getParentRegion().getParentState().getRegions().size() > 1) {
+                regionPrefix = state.getParentRegion().getId() + "_";
+            }
         }
-        if (state.getParentRegion().getParentState().getParentRegion().getParentState() != null) {
+        if (state.getParentRegion().getParentState() != null) {
             return getStateNameCompleteHierarchie(state.getParentRegion().getParentState()) + "_"
                     + regionPrefix + state.getId();
         } else {
@@ -406,6 +432,7 @@ public final class Helper {
 
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
+        System.out.println(state.getId());
         if (state.getParentRegion().getParentState() != null) {
             putSignalDependencies(state);
         }
@@ -432,32 +459,29 @@ public final class Helper {
         if (sourceStateTupel.getO2() > SIMPLE_STATE) {
             for (Region region : state.getRegions()) {
                 for (State innerState : region.getInnerStates()) {
-                    // not the root state
-                    if (state.getParentRegion().getParentState() != null) {
-                        int innerStateStatus = getStatePropertyTupel(innerState).getO2();
-                        // state as weak state
-                        putDependencyList(state, WEAK_STATE, innerState, innerStateStatus,
-                                HIERARCHY_EDGE);
-                        // state as strong state
-                        putDependencyList(innerState, innerStateStatus, state, STRONG_STATE,
-                                HIERARCHY_EDGE);
+                    int innerStateStatus = getStatePropertyTupel(innerState).getO2();
+                    // state as weak state
+                    putDependencyList(state, WEAK_STATE, innerState, innerStateStatus,
+                            HIERARCHY_EDGE);
+                    // state as strong state
+                    putDependencyList(innerState, innerStateStatus, state, STRONG_STATE,
+                            HIERARCHY_EDGE);
 
-                        // inner state is hierarchical
-                        if (innerStateStatus > SIMPLE_STATE) {
-                            // inner state is concurrent
-                            if (innerStateStatus == WEAK_STATE) {
-                                // dependency for strong state
-                                putDependencyList(state, WEAK_STATE, innerState, STRONG_STATE,
-                                        HIERARCHY_EDGE);
-                                putDependencyList(innerState, STRONG_STATE, state, STRONG_STATE,
-                                        HIERARCHY_EDGE);
-                            } else {
-                                // dependency for weak state
-                                putDependencyList(state, WEAK_STATE, innerState, WEAK_STATE,
-                                        HIERARCHY_EDGE);
-                                putDependencyList(innerState, WEAK_STATE, state, STRONG_STATE,
-                                        HIERARCHY_EDGE);
-                            }
+                    // inner state is hierarchical
+                    if (innerStateStatus > SIMPLE_STATE) {
+                        // inner state is concurrent
+                        if (innerStateStatus == WEAK_STATE) {
+                            // dependency for strong state
+                            putDependencyList(state, WEAK_STATE, innerState, STRONG_STATE,
+                                    HIERARCHY_EDGE);
+                            putDependencyList(innerState, STRONG_STATE, state, STRONG_STATE,
+                                    HIERARCHY_EDGE);
+                        } else {
+                            // dependency for weak state
+                            putDependencyList(state, WEAK_STATE, innerState, WEAK_STATE,
+                                    HIERARCHY_EDGE);
+                            putDependencyList(innerState, WEAK_STATE, state, STRONG_STATE,
+                                    HIERARCHY_EDGE);
                         }
                     }
                     if (!checkedStates.contains(innerState)) {

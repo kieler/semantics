@@ -3,16 +3,20 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-	«computeThreadPriorities(this.innerStates.first())»
-	«FILE "sim.c"-»
+	«IF this.innerStates.isEmpty-»
+		«error("There is no SyncChart to generate code for!")»
+	«ELSE-»
+		«computeThreadPriorities(this.innerStates.first())»
+		«FILE "sim.c"-»
 	
 // generated SC-code //
-	«EXPAND init-»
-	«EXPAND start-»
-	«EXPAND finish-»
-	«ENDFILE-»
-	«EXPAND CodegenData::main»
-	«EXPAND CodegenHeader::main»
+		«EXPAND init-»
+		«EXPAND start-»
+		«EXPAND finish-»
+		«ENDFILE-»
+		«EXPAND CodegenData::main»
+		«EXPAND CodegenHeader::main»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
@@ -38,10 +42,11 @@ int valSigInt[valSigIntCnt];
 int tick(int isInit){
 
 			TICKSTART(isInit, «computeMainTreadPriority(this.innerStates.first())-»);
+			//«debug(this.innerStates.first().id)»
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»
-	«EXPAND CodegenRegion::region FOR this.innerStates.first().regions.first()-»
+	«EXPAND CodegenRegion::region FOR this-»
 «ENDDEFINE»
 
 «DEFINE finish FOR Region-»

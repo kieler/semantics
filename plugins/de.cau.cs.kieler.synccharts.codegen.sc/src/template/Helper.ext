@@ -40,7 +40,7 @@ cached List computeThreadPriorities(State rootState):
 ;
 
 cached int computeMainTreadPriority(State rootState):
-	computeRealThreadPriority(getInitialState(rootState))
+	computeRealThreadPriority(rootState)
 ;
 
 int computeRealThreadPriority(State state):
@@ -75,4 +75,12 @@ boolean hasDependentState(State state):
 
 String getStateNameByFlag(State state, int flag):
 	JAVA template.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
+;
+
+Void debug(String s):
+	JAVA template.Helper.debug(java.lang.String)
+;
+
+Void error(String s):
+	JAVA template.Helper.error(java.lang.String)
 ;

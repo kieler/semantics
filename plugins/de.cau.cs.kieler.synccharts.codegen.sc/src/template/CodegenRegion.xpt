@@ -3,7 +3,11 @@
 «EXTENSION template::Helper»
 
 «DEFINE region FOR Region-»
-«FOREACH sortStateControlFlow(this.innerStates.select(s|s.isInitial).first()) AS innerState-»
-	«EXPAND CodegenState::state FOR (State)innerState-»
-«ENDFOREACH-»
+	«IF this.parentState != null-»
+		«FOREACH sortStateControlFlow(this.innerStates.select(s|s.isInitial).first()) AS innerState-»
+			«EXPAND CodegenState::state FOR (State)innerState-»
+		«ENDFOREACH-»
+	«ELSE-»
+		«EXPAND CodegenState::state FOR this.innerStates.first()-»
+	«ENDIF-»
 «ENDDEFINE»

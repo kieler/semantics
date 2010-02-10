@@ -59,9 +59,7 @@
 			PRIO(«computeRealThreadPriority(this.targetState)»);
 		«ENDIF-»
 	«ENDIF-»
-	«IF ((this.targetState != this.sourceState) || !(this.sourceState.regions.isEmpty))-»
 			GOTO(«getStateNameByFlag(this.targetState, 3)»);
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE valuedSignal FOR Emission-»
