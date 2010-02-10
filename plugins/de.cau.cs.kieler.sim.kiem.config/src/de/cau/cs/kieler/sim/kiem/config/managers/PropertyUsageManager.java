@@ -114,6 +114,7 @@ public final class PropertyUsageManager extends Manager {
                     ignoredKeys.add(Tools.DEFAULT_EDITOR_NAME_KEY);
                     ignoredKeys.add(Tools.DEFAULT_PRIORITY_KEY);
                     ignoredKeys.add(Tools.RECENT_CAPACITY_KEY);
+                    ignoredKeys.add(Tools.TIMEOUT_KEY);
                 }
             }
         }
