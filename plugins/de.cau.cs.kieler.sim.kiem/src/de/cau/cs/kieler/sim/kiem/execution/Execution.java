@@ -604,8 +604,9 @@ public class Execution extends Job {
 
     /**
      * Runs the execution. The pausedCommand flag is set to false and the steps are being set to
-     * infinity, which is interpreted by the {@link #run()} method. Before that is done the
-     * DataComponents are informed about the run command.
+     * infinity, which is interpreted by the
+     * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#run(IProgressMonitor)} method. Before
+     * that is done the DataComponents are informed about the run command.
      */
     public synchronized void runExecutionSync() {
         pausedCommand = false;
@@ -820,8 +821,7 @@ public class Execution extends Job {
                 } catch (KiemInitializationException e) {
                     timeout.abortTimeout();
                     if (!quietmode) {
-                        KiemPlugin.handleComponentError(
-                                dataComponentWrapper.getDataComponent(), e);
+                        KiemPlugin.handleComponentError(dataComponentWrapper.getDataComponent(), e);
                     }
                 }
                 timeout.abortTimeout();
@@ -929,8 +929,7 @@ public class Execution extends Job {
                         .step(oldData);
             } catch (KiemExecutionException e) {
                 timeout.abortTimeout();
-                KiemPlugin.handleComponentError(
-                        dataComponentWrapper.getDataComponent(), e);
+                KiemPlugin.handleComponentError(dataComponentWrapper.getDataComponent(), e);
             }
 
             // only put in data pool if no history step
@@ -945,8 +944,7 @@ public class Execution extends Job {
                         .step(oldData.toString());
             } catch (KiemExecutionException e) {
                 timeout.abortTimeout();
-                KiemPlugin.handleComponentError(
-                        dataComponentWrapper.getDataComponent(), e);
+                KiemPlugin.handleComponentError(dataComponentWrapper.getDataComponent(), e);
             }
             JSONObject newJsonData = null;
             if (newData != null && newData != "") {
@@ -1233,7 +1231,7 @@ public class Execution extends Job {
                     if (eventManager != null) {
                         eventManager.notify(new KiemEvent(KiemEvent.STEP_DONE));
                     }
-                    
+
                 } // end if - make a step
 
                 // got async pause command!
@@ -1286,7 +1284,6 @@ public class Execution extends Job {
                 }
 
             }
-
 
             // stop if monitor is cancelled
             if (monitor.isCanceled()) {

@@ -269,7 +269,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
 
     /**
      * Returns the properties associated with this component. These are set in the constructor and
-     * may be overridden by {@link #provideProperties}.
+     * may be overridden by {@link #provideProperties()}.
      * 
      * @return KiemProperty[] array of properties
      */
