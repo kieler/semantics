@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sim.esi;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -32,6 +33,8 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
@@ -44,27 +47,31 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  */
 public class OutputValidator extends JSONObjectDataComponent implements IAutomatedProducer {
 
-    private static final String[] SUPPORTED_FILES = { "kasm" };
+    private static final String[] SUPPORTED_FILES = {};
 
     // private tracelist tracelist = null;
     // private Iterator<trace> iTrace;
     // private Iterator<tick> iTick;
 
     private int pos = 0;
+    private int errorPos = 0;
 
-    private boolean isValid;
+    private boolean isValid = true;
 
     private ITraceList tracelist;
 
-    private String traceFile = "";
+    private Set<String> outputs = null;
 
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject input) throws KiemExecutionException {
+
         JSONObject res = new JSONObject();
         if (tracelist != null) {
-
+            if (outputs == null) {
+                outputs = tracelist.getOutputs();
+            }
             if (tracelist.current() == null || !tracelist.current().hasNext()
                     && tracelist.hasNext()) {
                 // pos += "! reset".length();
@@ -76,9 +83,11 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
                 try {
                     // Everything in the trace is emitted
                     for (signal sig : tick.getOutput()) {
+                        System.out.println("Expect " + sig.getName());
                         if (input.has(sig.getName())) {
                             Object obj = input.get(sig.getName());
                             if (!JSONSignalValues.isPresent(obj)) {
+                                System.out.println("absent");
                                 valid = false;
                                 break;
                             }
@@ -91,6 +100,8 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
                             }
                         } else {
                             valid = false;
+                            System.out.println("not there");
+
                             break;
                         }
                     }
@@ -114,8 +125,13 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
                     // }
                     // }
                     // }
-                    isValid = isValid && valid;
+                    if (isValid && !valid) {
+                        isValid = false;
+                        errorPos = pos;
+                    }
                     res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
+                    res.accumulate("not valid", JSONSignalValues.newValue(pos, !valid));
+                    res.accumulate("traceValid", JSONSignalValues.newValue(errorPos, isValid));
 
                 } catch (JSONException e) {
                     throw new KiemExecutionException("Error building JSON Object", false, e);
@@ -133,6 +149,19 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject res = new JSONObject();
+        tracelist = null;
+        for (DataComponentWrapper component : KiemPlugin.getDefault().getDataComponentWrapperList()) {
+            if (component.getDataComponent() instanceof ITraceProvider) {
+                tracelist = ((ITraceProvider) component.getDataComponent()).getTrace();
+                break;
+            }
+        }
+
+        if (tracelist == null) {
+            throw new KiemInitializationException(
+                    "Need at least one trace provider in the Execution.", true, null);
+        }
+
         try {
             res.accumulate("valid", JSONSignalValues.newValue(true));
         } catch (JSONException e) {
@@ -143,52 +172,19 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
 
     /** {@inheritDoc} */
     public void initialize() throws KiemInitializationException {
-        if (tracelist == null) {
-            // load new trace
-            try {
-                String name = getProperties()[0].getValue();
-                if (traceFile != null) { // Automated run
-                    name = traceFile;
-                }
-                tracelist = new EsiFile(getClass(), name);
-            } catch (Exception e) {
-                throw new KiemInitializationException("Cannot open trace file", true, e);
-            }
-        }
-    }
-
-    /** {@inheritDoc} */
-    public boolean isProducer() {
-        return true;
+        // tracelist = null;
+        /*
+         * if (tracelist == null) { // load new trace try { String name =
+         * getProperties()[0].getValue(); if (traceFile != null) { // Automated run name =
+         * traceFile; } tracelist = new EsiFile(getClass(), name); } catch (Exception e) { throw new
+         * KiemInitializationException("Cannot open trace file", true, e); } }
+         */
+        isValid = true;
     }
 
     /** {@inheritDoc} */
     public boolean isObserver() {
         return true;
-    }
-
-    @Override
-    public KiemProperty[] provideProperties() {
-        String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        if (page != null) {
-            IEditorReference[] editors = page.getEditorReferences();
-            if (editors != null) {
-                for (IEditorReference e : editors) {
-                    IEditorPart ed = e.getEditor(false);
-                    if (ed instanceof XtextEditor) {
-                        editorName = e.getTitle() + " (" + e.getId() + ")";
-                        break;
-                    }
-
-                }
-            }
-        }
-
-        KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), "");
-        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
-        return properties;
     }
 
     /** {@inheritDoc} */
@@ -209,16 +205,6 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
      * {@inheritDoc}
      */
     public void setParameters(final List<KiemProperty> properties) {
-        String trace = null;
-        for (KiemProperty p : properties) {
-            if (p.getKey().equals("TRACE")) {
-                trace = p.getValue();
-            }
-        }
-        if (trace != null) {
-            traceFile = trace;
-        }
-
     }
 
     /**
@@ -240,5 +226,12 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
      */
     public String[] getSupportedExtensions() {
         return SUPPORTED_FILES;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isProducer() {
+        return true;
     }
 }

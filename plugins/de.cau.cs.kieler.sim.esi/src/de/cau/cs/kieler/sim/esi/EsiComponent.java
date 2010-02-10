@@ -45,7 +45,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * @author ctr
  */
 public class EsiComponent extends JSONObjectDataComponent implements
-        IAutomatedComponent {
+        IAutomatedComponent, ITraceProvider {
 
     private static final String[] SUPPORTED_FILES = { "kasm" };
 
@@ -53,7 +53,7 @@ public class EsiComponent extends JSONObjectDataComponent implements
 
     private int iteration = 0;
 
-    private String traceFile = "";
+    private String traceFile = null;
 
     /**
      * {@inheritDoc}
@@ -246,5 +246,12 @@ public class EsiComponent extends JSONObjectDataComponent implements
      */
     public String[] getSupportedExtensions() {
         return SUPPORTED_FILES;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ITraceList getTrace() {
+        return tracelist;
     }
 }

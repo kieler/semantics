@@ -29,6 +29,9 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.sim.esi.esi.signal;
+import de.cau.cs.kieler.sim.esi.esi.tick;
+import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
 import de.cau.cs.kieler.sim.esi.trace.ITrace;
 import de.cau.cs.kieler.sim.esi.trace.ITraceList;
@@ -117,14 +120,32 @@ public class EsiFile implements ITraceList {
      * {@inheritDoc}
      */
     public Set<String> getInputs() {
-        return new HashSet<String>();
+        HashSet<String> res = new HashSet<String>();
+        for(trace t: this.traceList.getTraces()){
+            for(tick tick: t.getTicks()){
+                for(signal s: tick.getInput()){
+                    res.add(s.getName());
+                }
+            }
+        }
+        
+        return res;
     }
 
     /**
      * {@inheritDoc}
      */
     public Set<String> getOutputs() {
-        return new HashSet<String>();
+        HashSet<String> res = new HashSet<String>();
+        for(trace t: this.traceList.getTraces()){
+            for(tick tick: t.getTicks()){
+                for(signal s: tick.getOutput()){
+                    res.add(s.getName());
+                }
+            }
+        }
+        
+        return res;
     }
 
 }
