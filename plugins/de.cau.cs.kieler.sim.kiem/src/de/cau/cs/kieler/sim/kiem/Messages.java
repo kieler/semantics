@@ -260,6 +260,9 @@ public class Messages extends NLS {
     /** The Warning loading data component. */
     public static String mWarningLoadingDataComponent;
 
+    /** The Warning loading data component property. */
+    public static String mWarningLoadingDataComponentProperty;
+
     /** The Error KIEM master exception. */
     public static String mErrorKiemMasterException;
 

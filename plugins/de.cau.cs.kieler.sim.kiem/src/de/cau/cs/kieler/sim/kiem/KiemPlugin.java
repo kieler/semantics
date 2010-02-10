@@ -631,7 +631,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             updateEventManager();
             if (!componentRestored) {
-                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
+                this.showWarning(Messages.mWarningLoadingDataComponentProperty.replace("%COMPONENTNAME",
                         componentId), null, null, false);
             } // end if - failed
 
