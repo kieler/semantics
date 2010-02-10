@@ -47,8 +47,9 @@ public class IterationResult extends AbstractResult {
                 modelFile));
         super.addResult(new KiemProperty(IAutomatedComponent.ITERATION,
                 iteration + ""));
-        super.addResult(new KiemProperty(IAutomatedComponent.STATUS, IterationStatus
-                .labelOf(IterationStatus.CREATED)));
+        super.addResult(new KiemProperty(IAutomatedComponent.STATUS,
+                IterationStatus.labelOf(IterationStatus.CREATED)));
+        this.status = IterationStatus.CREATED;
     }
 
     // --------------------------------------------------------------------------

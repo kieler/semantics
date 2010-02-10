@@ -118,7 +118,8 @@ public class AutomatedExecutionButton extends ControlContribution {
          * {@inheritDoc}
          */
         public void handleEvent(final Event event) {
-            if (event.widget == button) {
+            if (event.widget == button
+                    && !AutomationManager.getInstance().isRunning()) {
                 try {
                     openExecutionWizard();
                 } catch (RuntimeException e0) {

@@ -375,7 +375,7 @@ public final class AutomationManager implements StatusListener {
             currentResult = new IterationResult(model.toOSString(), iteration);
             results.add(currentResult);
 
-            if (!firstModelFirstRun) {
+            if (!result) {
                 // add result to panel unless first run where table columns have
                 // to be initialized
                 addResultToPanel();
@@ -394,14 +394,14 @@ public final class AutomationManager implements StatusListener {
                     // iteration completed normally
                     currentResult.setStatus(IterationStatus.DONE);
                 }
-                if (firstModelFirstRun) {
+                if (result) {
                     // add after run to ensure that all columns
                     // contributed by producers are filled
                     addResultToPanel();
                     result = false;
                 }
             } else {
-                if (firstModelFirstRun) {
+                if (result) {
                     cachedResults.add(currentResult);
                 }
             }
