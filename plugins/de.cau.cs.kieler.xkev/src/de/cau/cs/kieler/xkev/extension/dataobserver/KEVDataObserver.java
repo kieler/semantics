@@ -109,7 +109,7 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
             }
         } else {
             // Disable OpenWizardButton during execution
-            Activator.getKevView().disableButton(3);
+            Activator.getKevView().disableButton(1);
 
         }
         // Only go one, if a valid svg document already exists.

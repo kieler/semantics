@@ -71,6 +71,7 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -78,6 +79,7 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -173,77 +175,80 @@ public class KevComposite extends Composite implements ISelectionListener {
                 while (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
                   //Do nothing until the single instance is successfully created
                 }
-            } else {//Otherwise set the sourcepath to the current document uri
-                setSVGURI(URI.create(EclipseJSVGCanvas.getInstance().getSVGDocument().getURL()));
-            }
-            
-            //Get the single instance of the EclipseJSVGCanvas
-            svgCanvas = EclipseJSVGCanvas.getInstance();
-//            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
-            svgCanvas.setLayout(new BorderLayout());
+                //Get the single instance of the EclipseJSVGCanvas
+                svgCanvas = EclipseJSVGCanvas.getInstance();
+//                svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
+                svgCanvas.setLayout(new BorderLayout());
 
-            // taken from original modelgui
-            svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
-            svgCanvas.setDoubleBufferedRendering(false);
-            svgCanvas.setDisableInteractions(true);
-            // svgCanvas.enableInputMethods(false);
-            // this.canvas.setAnimationLimitingCPU(0.5f);
-            // svgCanvas.setDoubleBuffered(true);
+                // taken from original modelgui
+                svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
+                svgCanvas.setDoubleBufferedRendering(false);
+                svgCanvas.setDisableInteractions(true);
+                // svgCanvas.enableInputMethods(false);
+                // this.canvas.setAnimationLimitingCPU(0.5f);
+                // svgCanvas.setDoubleBuffered(true);
 
-            // Set the JSVGCanvas listeners. (NOT USED HERE ANYMORE @see de.cau.cs.kieler.xkev.mapping.animations#SVGLoadingStatusListener)
-//            svgCanvas.addSVGDocumentLoaderListener(loadingStatusListener);
-//            svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
-//                public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
-//                    System.out.println("Loading svg file...");
-//                }
-//
-//                public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
-//                    System.out.println("Loading svg file... complete!");
-//                }
-//                
-//                public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
-//                    System.out.println("Loading svg file... cancelled!");
-//
-//                }
-//                
-//                public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
-//                    System.out.println("Loading svg file... failed!");
-//                }                
-//            });
+                // Set the JSVGCanvas listeners. (NOT USED HERE ANYMORE @see de.cau.cs.kieler.xkev.mapping.animations#SVGLoadingStatusListener)
+//                svgCanvas.addSVGDocumentLoaderListener(loadingStatusListener);
+//                svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
+//                    public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
+//                        System.out.println("Loading svg file...");
+//                    }
+    //
+//                    public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+//                        System.out.println("Loading svg file... complete!");
+//                    }
+//                    
+//                    public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+//                        System.out.println("Loading svg file... cancelled!");
+    //
+//                    }
+//                    
+//                    public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
+//                        System.out.println("Loading svg file... failed!");
+//                    }                
+//                });
 
-            svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
-                public void gvtBuildStarted(GVTTreeBuilderEvent e) {
-                }
-
-                public void gvtBuildCompleted(GVTTreeBuilderEvent e) {
-                }
-            });
-
-            svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter() {
-                public void gvtRenderingPrepare(GVTTreeRendererEvent e) {
-                }
-
-                public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
-                    //Here we can receive the updatemanager
-                    //updateManager = svgCanvas.getUpdateManager();
-                }
-            });
-            
-            svgCanvas.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    System.out.println("Canvas Width: "+svgCanvas.getWidth() +" Canvas Height: "+ svgCanvas.getHeight());
-                    int onmask = MouseEvent.CTRL_DOWN_MASK | MouseEvent.SHIFT_DOWN_MASK;
-                    if ((e.getModifiersEx() & onmask) == onmask) {
-                        //Only save current SVGDocument to file, if CTRL+SHIFT+Right-Mousebutton is clicked
-                        if (e.getButton() == MouseEvent.BUTTON3) {
-                            SaveSVGDocument();
-                        }
+                svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
+                    public void gvtBuildStarted(GVTTreeBuilderEvent e) {
                     }
-                    System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XOnScreenPos: "+ e.getXOnScreen() + " YOnScreenPos: "+ e.getYOnScreen());
-                }
-                
 
-            });
+                    public void gvtBuildCompleted(GVTTreeBuilderEvent e) {
+                    }
+                });
+
+                svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter() {
+                    public void gvtRenderingPrepare(GVTTreeRendererEvent e) {
+                    }
+
+                    public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
+                        //Here we can receive the updatemanager
+                        //updateManager = svgCanvas.getUpdateManager();
+                    }
+                });
+                
+                svgCanvas.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        System.out.println("Canvas Width: "+svgCanvas.getWidth() +" Canvas Height: "+ svgCanvas.getHeight());
+                        int onmask = MouseEvent.CTRL_DOWN_MASK | MouseEvent.SHIFT_DOWN_MASK;
+                        if ((e.getModifiersEx() & onmask) == onmask) {
+                            //Only save current SVGDocument to file, if CTRL+SHIFT+Right-Mousebutton is clicked
+                            if (e.getButton() == MouseEvent.BUTTON3) {
+                                SaveSVGDocument();
+                            }
+                        }
+                        System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY() +" XOnScreenPos: "+ e.getXOnScreen() + " YOnScreenPos: "+ e.getYOnScreen());
+                    }
+                    
+
+                });
+            } else {//Otherwise set the sourcepath to the current document uri
+                svgCanvas = EclipseJSVGCanvas.getInstance();
+                //If svgDocument already exists, set the current svgURI for the refresh button
+                if (svgCanvas.getSVGDocument() != null) {
+                    setSVGURI(URI.create(svgCanvas.getSVGDocument().getURL()));
+                }
+            }
 
             frame = SWT_AWT.new_Frame(this);
 
@@ -271,6 +276,7 @@ public class KevComposite extends Composite implements ISelectionListener {
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
             updater = new SVGResourceChangeListener();
             workspace.addResourceChangeListener(updater);
+        
         } catch (Throwable t) {
             Status s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, t.getMessage(), t);
             StatusManager.getManager().handle(s, StatusManager.SHOW);
@@ -278,6 +284,7 @@ public class KevComposite extends Composite implements ISelectionListener {
             // ErrorDialog d = new
             // ErrorDialog(this.getShell(),"Error",t.getMessage(),s,IStatus.ERROR);
         }
+            
     }
 
     public void dispose() {
@@ -369,7 +376,7 @@ public class KevComposite extends Composite implements ISelectionListener {
                         if (path.getFileExtension().equals("svg") //$NON-NLS-1$
                                 || path.getFileExtension().equals("svgz")) { //$NON-NLS-1$
                             if (svgFile == null || !(svgFile.equals(f))) {
-                                setSVGFile(f);
+                                //setSVGFile(f);
                             }
                         }
                     }
@@ -441,38 +448,61 @@ public class KevComposite extends Composite implements ISelectionListener {
     
     /**
      * Helper function for saving current-status of svg-file
+     * This function creates an Eclipse Project with an "images" folder, where all svg-files are saved to.
+     * To save the image simple press CTRL+SHIFT+RIGHT_MOUSE_BUTTON on the current svg-document
      */
     public void SaveSVGDocument() {
-        try {
-            TranscoderInput input = new TranscoderInput(Activator.getKevView().getSVGCanvas().getSVGDocument());
-
-            FileWriter writer;
-//            Calendar calendar = Calendar.getInstance();
-//            Timestamp ct = new Timestamp(calendar.getTime().getTime());
-            String s = "C:\\SVGFileDump[";
-            s += Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+".";
-            s += Calendar.getInstance().get(Calendar.MONTH+1)+".";
-            s += Calendar.getInstance().get(Calendar.YEAR)+"_";
-            s += Calendar.getInstance().get(Calendar.HOUR)+"-";
-            s += Calendar.getInstance().get(Calendar.MINUTE)+"-";
-            s += Calendar.getInstance().get(Calendar.SECOND)+"-";
-            s += Calendar.getInstance().get(Calendar.MILLISECOND)+"].svg";
-
-            //writer = new FileWriter("C:\\SVGFileDump["+ct.toString()+"].svg");
-            writer = new FileWriter(s);
-           
-            TranscoderOutput output = new TranscoderOutput(writer);
-            SVGTranscoder t = new SVGTranscoder();
-
-            t.transcode(input, output);
-            writer.flush();
-            writer.close();
-        } catch (TranscoderException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+        
+        if (Activator.getKevView().getSVGCanvas().getSVGDocument() != null) {
+            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            IProject project = root.getProject("KEV_SVG_FILEDUMP");//Project name
+            IFolder imageFolder = project.getFolder("images");//Folder name
+            try {
+                if (!project.exists()) {//Create project if it doesn't exists
+                    project.create(null);
+                }
+                project.open(null);
+                
+                if (!imageFolder.exists()) { //Create folder if it doesn't exists
+                    imageFolder.create(false, true, null);
+                }
+            } catch (CoreException ce) {
+                // TODO Auto-generated catch block
+                ce.printStackTrace();
+            }
+            try {
+                TranscoderInput input = new TranscoderInput(Activator.getKevView().getSVGCanvas().getSVGDocument());
+    
+                FileWriter writer;
+                Calendar now = Calendar.getInstance();
+    
+                String fileName;
+                fileName = imageFolder.getLocation().toString();//Get fullpath to "images" folder
+                fileName += "/SVGFileDump[";
+                fileName += now.get(Calendar.YEAR)+"-";
+                fileName += now.get(Calendar.MONTH)+1 < 10 ? "0"+(now.get(Calendar.MONTH)+1)+"-" : (now.get(Calendar.MONTH)+1)+"-";
+                fileName += now.get(Calendar.DAY_OF_MONTH) < 10 ? "0"+now.get(Calendar.DAY_OF_MONTH)+"_" : now.get(Calendar.DAY_OF_MONTH)+"-";
+                fileName += now.getTimeInMillis()+"].svg";
+    
+                writer = new FileWriter(fileName);
+               
+                TranscoderOutput output = new TranscoderOutput(writer);
+                SVGTranscoder t = new SVGTranscoder();
+    
+                t.transcode(input, output);
+                writer.flush();
+                writer.close();
+                imageFolder.refreshLocal(IFolder.DEPTH_ONE, null);//Refresh the "images" folder to show the saved file
+            } catch (TranscoderException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (CoreException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

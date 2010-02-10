@@ -211,7 +211,6 @@ public class OpenWizard extends Wizard {
                 String fileName = url.getPath();
                 while (fileName.contains("/")) {
                     fileName = fileName.substring(fileName.indexOf("/")+1);
-                    System.out.println(fileName);
                 }
                 //TreeMap contains two identical strings. It's only used for sorting.
                 imageTreeMap.put(fileName, fileName);
