@@ -653,31 +653,36 @@ public final class ScheduleManager extends Manager implements
                         Bundle bundle = Platform.getBundle(element
                                 .getContributor().getName());
                         URL url = FileLocator.find(bundle, location, null);
-                        IPath path = Path.fromOSString(url.toString());
 
-                        if (path.toOSString().startsWith("bundleentry:/")) {
-                            // test if the file is valid before adding it
-                            try {
-                                String urlPath = path.toOSString()
-                                        .replaceFirst("bundleentry:/",
-                                                "bundleentry://");
-                                URL pathUrl = new URL(urlPath);
+                        if (url != null) {
+                            IPath path = Path.fromOSString(url.toString());
 
-                                InputStream inputStream = pathUrl.openStream();
-                                inputStream.close();
-                            } catch (IOException e0) {
-                                // file not found, don't add
-                                throw new ScheduleFileMissingException(e0, path);
+                            if (path.toOSString().startsWith("bundleentry:/")) {
+                                // test if the file is valid before adding it
+                                try {
+                                    String urlPath = path.toOSString()
+                                            .replaceFirst("bundleentry:/",
+                                                    "bundleentry://");
+                                    URL pathUrl = new URL(urlPath);
+
+                                    InputStream inputStream = pathUrl
+                                            .openStream();
+                                    inputStream.close();
+                                } catch (IOException e0) {
+                                    // file not found, don't add
+                                    throw new ScheduleFileMissingException(e0,
+                                            path);
+                                }
                             }
-                        }
 
-                        // add the editor and schedule
-                        EditorDefinition editor = EditorManager.getInstance()
-                                .addEditor(
-                                        new EditorDefinition(editorName,
-                                                wrapper));
-                        editor.setLocked(true);
-                        addSchedule(editor, path, priority);
+                            // add the editor and schedule
+                            EditorDefinition editor = EditorManager
+                                    .getInstance().addEditor(
+                                            new EditorDefinition(editorName,
+                                                    wrapper));
+                            editor.setLocked(true);
+                            addSchedule(editor, path, priority);
+                        }
                     }
                 } catch (NumberFormatException e0) {
                     // not a number in editorId, ignore this extension
