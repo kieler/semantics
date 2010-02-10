@@ -290,10 +290,12 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IO_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_12">
-    <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-12" opacity="1, 0.3"/>
+    <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation" key="point-12" opacity="1"/>
+    <animation xsi:type="mapping:Opacity" input="P_TURN__simulation" key="point-12" opacity="0.3"/>
   </svgElement>
   <svgElement id="point_turn_12">
-    <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-12" opacity="0.3, 1"/>
+    <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation" key="point-12" opacity="0.3"/>
+    <animation xsi:type="mapping:Opacity" input="P_TURN__simulation" key="point-12" opacity="1"/>
   </svgElement>
   <svgElement id="t_point_12">
     <animation xsi:type="mapping:Text" key="point-text-12"/>
