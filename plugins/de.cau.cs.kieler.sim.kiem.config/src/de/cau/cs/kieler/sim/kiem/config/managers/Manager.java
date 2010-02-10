@@ -97,24 +97,6 @@ public abstract class Manager {
                     listener.eventDispatched(event);
                 }
             }
-            /*
-            } catch (RuntimeException e0) {
-
-            KiemConfigurationPlugin.getDefault().getWorkbench()
-                    .getDisplay().syncExec(new Runnable() {
-
-                        public void run() {
-
-                            for (IKiemConfigEventListener listener : listeners) {
-                                if (listener != null) {
-                                    listener.eventDispatched(event);
-                                }
-                            }
-
-                        }
-                    });
-            }
-            */
         }
     }
 

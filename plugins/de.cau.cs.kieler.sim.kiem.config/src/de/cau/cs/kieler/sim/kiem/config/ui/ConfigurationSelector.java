@@ -354,10 +354,7 @@ public class ConfigurationSelector extends ControlContribution implements
             combo.getDisplay().syncExec(new Runnable() {
 
                 public void run() {
-                    if (!event.isEvent(KiemConfigEvent.PREFERENCES_LOADED)) {
-                        setupCombo(false);
-                    }
-
+                    setupCombo(false);
                 }
             });
 
