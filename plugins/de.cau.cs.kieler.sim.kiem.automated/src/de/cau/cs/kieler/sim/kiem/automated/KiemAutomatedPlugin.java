@@ -44,6 +44,8 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 public class KiemAutomatedPlugin extends AbstractUIPlugin {
 
     /** path to the icon for active schedules and default editor. */
+    private static final String AUTO_IMAGE_PATH = "icons/kiemAutomated.png";
+    /** path to the icon for active schedules and default editor. */
     private static final String TRUE_IMAGE_PATH = "icons/happy.jpeg";
     /** path to the icon for locked schedules and editors. */
     private static final String FALSE_IMAGE_PATH = "icons/sad.jpeg";
@@ -145,23 +147,33 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     // --------------------------------------------------------------------------
 
     /**
-     * Getter for the image for the image for displaying a true state.
+     * Getter for the image for this plug-in.
+     * 
+     * @return the image
+     */
+    public static Image getAutoImage() {
+        return imageDescriptorFromPlugin(PLUGIN_ID, AUTO_IMAGE_PATH)
+                .createImage();
+    }
+
+    /**
+     * Getter for the image for displaying a true state.
      * 
      * @return the image
      */
     public static Image getTrueImage() {
-        return imageDescriptorFromPlugin(KiemAutomatedPlugin.PLUGIN_ID,
-                TRUE_IMAGE_PATH).createImage();
+        return imageDescriptorFromPlugin(PLUGIN_ID, TRUE_IMAGE_PATH)
+                .createImage();
     }
 
     /**
-     * Getter for the image for the image for displaying a false state.
+     * Getter for the image for displaying a false state.
      * 
      * @return the image
      */
     public static Image getFalseImage() {
-        return imageDescriptorFromPlugin(KiemAutomatedPlugin.PLUGIN_ID,
-                FALSE_IMAGE_PATH).createImage();
+        return imageDescriptorFromPlugin(PLUGIN_ID, FALSE_IMAGE_PATH)
+                .createImage();
     }
 
     // --------------------------------------------------------------------------

@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
@@ -65,7 +66,9 @@ public class AutomatedExecutionButton extends ControlContribution {
     protected Control createControl(final Composite parent) {
         parentComponent = parent;
         button = new Button(parent, SWT.BORDER);
-        button.setText("Automated...");
+        // button.setText("Automated...");
+        button.setImage(KiemAutomatedPlugin.getAutoImage());
+        button.setToolTipText("Launch an Automated Execution.");
         SelectionListener listener = new SelectionListener();
         button.addListener(SWT.Selection, listener);
         return button;
@@ -124,9 +127,9 @@ public class AutomatedExecutionButton extends ControlContribution {
                     openExecutionWizard();
                 } catch (RuntimeException e0) {
                     e0.printStackTrace();
+                    throw e0;
                 }
             }
         }
-
     }
 }

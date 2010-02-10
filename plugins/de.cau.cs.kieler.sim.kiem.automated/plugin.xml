@@ -24,7 +24,7 @@
             allowMultiple="true"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView"
-            icon="icons/ve_running.gif"
+            icon="icons/kiemAutomated.png"
             id="de.cau.cs.kieler.sim.kiem.automated.aebView"
             name="Automated EvalBench"
             restorable="true">
