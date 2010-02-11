@@ -14,11 +14,11 @@ class JSONClient {
 		socket = new Socket("localhost", 12345);
 	}
 	
-	public JSONClient(int port) throws IOException {
+	public JSONClient(final int port) throws IOException {
 		socket = new Socket("localhost", port);
 	}
 
-	void sndMessage(String msg) throws IOException {
+	void sndMessage(final String msg) throws IOException {
 		OutputStreamWriter out = new OutputStreamWriter(socket
 				.getOutputStream());
 		PrintWriter printWriter = new PrintWriter(out);

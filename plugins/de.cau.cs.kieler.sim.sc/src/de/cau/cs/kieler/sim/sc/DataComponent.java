@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
@@ -73,8 +74,9 @@ public class DataComponent extends JSONObjectDataComponent {
             BufferedReader br = new BufferedReader(isr);
             String line = null;
             System.out.println("<ERROR>");
-            while ((line = br.readLine()) != null)
+            while ((line = br.readLine()) != null) {
                 System.out.println(line);
+            }
             System.out.println("</ERROR>");
 
             int exitValue = process.waitFor();
@@ -110,7 +112,7 @@ public class DataComponent extends JSONObjectDataComponent {
         }
 
     }
-    
+
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
         try {
@@ -161,8 +163,6 @@ public class DataComponent extends JSONObjectDataComponent {
         return out;
     }
 
-
-
     public boolean isObserver() {
         return true;
     }
@@ -178,7 +178,7 @@ public class DataComponent extends JSONObjectDataComponent {
 
     @Override
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
+        KiemProperty[] properties = new KiemProperty[3];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
         properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
         String tempDir = System.getProperty("java.io.tmpdir");
@@ -188,6 +188,10 @@ public class DataComponent extends JSONObjectDataComponent {
         }
         String path = tempDir + File.separator + randomString() + File.separator;
         properties[1] = new KiemProperty("file location", path);
+        String[] items = { "complete hierarchie", "shortest hierarchie", "unique incremental name" };
+        KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
+        properties[2] = new KiemProperty("label names for SC code", choice, items[0]);
+
         return properties;
     }
 
@@ -211,7 +215,7 @@ public class DataComponent extends JSONObjectDataComponent {
     public JSONObject provideInitialVariables() {
 
         JSONObject returnObj = new JSONObject();
-        
+
         outPath = (getProperties()[1]).getValue();
 
         wf = new WorkflowGenerator();
@@ -266,7 +270,7 @@ public class DataComponent extends JSONObjectDataComponent {
         return dir.delete();
     }
 
-    private String printDebugInfos(String s) {
+    private String printDebugInfos(final String s) {
         String out = "";
         String[] debugInfos = s.split("DEBUGEND");
         for (String string : debugInfos[0].split("INFO")) {
