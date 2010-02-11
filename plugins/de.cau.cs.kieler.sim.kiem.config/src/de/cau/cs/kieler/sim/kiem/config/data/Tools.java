@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kiem.config.managers;
+package de.cau.cs.kieler.sim.kiem.config.data;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,12 +29,10 @@ import org.eclipse.ui.dialogs.ListDialog;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
-import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * Contains a number of useful tools.
- * <p>
+ * Contains a number of useful tools. <BR>
  * Also contains a number of Strings needed in more than one class.
  * 
  * @author soh
@@ -71,7 +69,7 @@ public final class Tools {
             + "mode the user can add, remove and modify the currently running "
             + "ConfigurationDataComponent.";
     /** the name of the application. */
-    public static final String APPLICATION_NAME = "Eclipse - KIELER";
+    public static final String APPLICATION_NAME = "KIELER";
     /** title string for confirmation boxes. */
     public static final String ARE_YOU_SURE = "Are you sure?";
 
@@ -129,7 +127,7 @@ public final class Tools {
             + " can't be null.";
     /** the hint for the property key field. */
     public static final String PROPERTY_KEY_HINT = "The " + PROPERTY_KEY_NAME
-            + " of a property." + " Has to be non-null and unique.";
+            + " of a property. Has to be non-null and unique.";
 
     /** identifier for the schedule configuration. */
     public static final String SCHEDULE_CONFIGURATION_KEY = "SCHEDULE_CONFIGURATION";
@@ -219,45 +217,6 @@ public final class Tools {
     // --------------------------------------------------------------------------
 
     /**
-     * Converts an array to a list.
-     * 
-     * @param <Type>
-     *            the type of element in the array.
-     * @param array
-     *            the array.
-     * @return the resulting list.
-     */
-    public static <Type> List<Type> arrayToList(final Type[] array) {
-        if (array != null) {
-            List<Type> result = new ArrayList<Type>(array.length);
-            for (Type property : array) {
-                result.add(property);
-            }
-            return result;
-        }
-        return null;
-    }
-
-    /**
-     * Convert a list to an array.
-     * 
-     * @param <Type>
-     *            the type of the elements in the list.
-     * @param list
-     *            the list.
-     * @param array
-     *            the array where to put the entries.
-     * @return the resulting array.
-     */
-    public static <Type> Type[] listToArray(final List<Type> list,
-            final Type[] array) {
-        if (list != null && array != null) {
-            return list.toArray(array);
-        }
-        return null;
-    }
-
-    /**
      * Convert a list to a KiemProperty array.
      * 
      * @param list
@@ -266,7 +225,7 @@ public final class Tools {
      */
     public static KiemProperty[] listToKiemPropertyArray(
             final List<KiemProperty> list) {
-        return listToArray(list, new KiemProperty[list.size()]);
+        return list.toArray(new KiemProperty[list.size()]);
     }
 
     /**
@@ -283,9 +242,9 @@ public final class Tools {
     public static <Type> Type[] removeFromArray(final Type[] array,
             final int index) {
         if (array != null && index > 0 && index < array.length) {
-            List<Type> list = arrayToList(array);
+            List<Type> list = Arrays.asList(array);
             list.remove(index);
-            return listToArray(list, array);
+            return list.toArray(array);
         }
         return array;
     }
@@ -459,7 +418,7 @@ public final class Tools {
      * Get a list of values from an input string.
      * 
      * @param key
-     *            the key to look for.
+     *            the key to look for each individual element in the list
      * @param input
      *            the input string
      * @return the value or null

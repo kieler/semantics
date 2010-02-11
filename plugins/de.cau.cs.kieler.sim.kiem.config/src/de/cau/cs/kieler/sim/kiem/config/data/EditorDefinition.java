@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sim.kiem.config.data;
 
 import java.io.Serializable;
 
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 
 /**
  * Definition class for the editor. Contains the name of the editor and an

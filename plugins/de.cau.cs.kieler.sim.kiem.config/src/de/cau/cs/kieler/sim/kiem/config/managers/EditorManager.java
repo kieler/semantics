@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sim.kiem.config.data.EditorDefinition;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class EditorManager extends Manager {
+public final class EditorManager extends AbstractManager {
 
     /** the default editor id. */
     public static final String CODED_DEFAULT_EDITOR_ID = "de.cau.cs.kieler."

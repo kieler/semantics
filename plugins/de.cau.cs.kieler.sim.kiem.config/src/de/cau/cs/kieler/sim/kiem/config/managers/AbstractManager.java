@@ -37,15 +37,15 @@ import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public abstract class Manager {
+public abstract class AbstractManager {
 
     /** The list of listeners on this manager. */
     private List<IKiemConfigEventListener> listeners;
 
     // --------------------------------------------------------------------------
 
-    /** Creates a new Manager. */
-    public Manager() {
+    /** Creates a new AbstractManager. */
+    public AbstractManager() {
 
     }
 

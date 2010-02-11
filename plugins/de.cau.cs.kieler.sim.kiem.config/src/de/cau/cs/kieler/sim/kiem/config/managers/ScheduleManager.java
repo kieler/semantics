@@ -44,6 +44,7 @@ import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
 import de.cau.cs.kieler.sim.kiem.config.data.MostRecentCollection;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener;
@@ -55,7 +56,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class ScheduleManager extends Manager implements
+public final class ScheduleManager extends AbstractManager implements
         IRefactoringHistoryListener {
 
     /** the default capacity for the recent list. */

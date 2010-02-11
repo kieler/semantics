@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.jface.action.ControlContribution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.ui.ConfigurationSelector;
 
 /**
@@ -27,7 +28,7 @@ import de.cau.cs.kieler.sim.kiem.config.ui.ConfigurationSelector;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class ContributionManager extends Manager {
+public final class ContributionManager extends AbstractManager {
 
     /** The Singleton instance of this manager. */
     private static ContributionManager instance = null;
@@ -108,7 +109,7 @@ public final class ContributionManager extends Manager {
             list.add(matchingCombo);
         }
 
-        return Tools.listToArray(list, new ControlContribution[list.size()]);
+        return list.toArray(new ControlContribution[list.size()]);
     }
 
     // --------------------------------------------------------------------------

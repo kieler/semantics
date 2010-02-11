@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 
 /**
  * Manages a list of keys for the properties where the default property should
@@ -26,7 +27,7 @@ import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class PropertyUsageManager extends Manager {
+public final class PropertyUsageManager extends AbstractManager {
 
     /** The singleton instance of the manager. */
     private static PropertyUsageManager instance = null;

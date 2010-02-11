@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**

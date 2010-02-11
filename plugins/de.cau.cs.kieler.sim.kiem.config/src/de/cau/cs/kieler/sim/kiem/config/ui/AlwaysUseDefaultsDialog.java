@@ -26,9 +26,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 
 import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.PropertyUsageManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 
 /**
  * Open a dialog where the user can select the keys that should be taken from

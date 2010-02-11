@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.config.managers;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.ConfigDataComponent;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -32,7 +34,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class ConfigurationManager extends Manager {
+public final class ConfigurationManager extends AbstractManager {
 
     /** The list of keys for the properties that have a default value. */
     private static final KiemPropertyKeyWrapper[] DEFAULT_KEYS = {
@@ -165,29 +167,33 @@ public final class ConfigurationManager extends Manager {
      * @return the array of properties.
      */
     public KiemProperty[] getExternalDefaultProperties() {
-        List<KiemProperty> list = Tools.arrayToList(getDefaultConfig()
-                .getProperties());
+        KiemProperty[] properties = getDefaultConfig().getProperties();
 
-        for (KiemProperty property : getInternalDefaultProperties()) {
-            list.remove(property);
-            list.remove(null);
+        if (properties != null) {
+            List<KiemProperty> list = Arrays.asList(properties);
+
+            for (KiemProperty property : getInternalDefaultProperties()) {
+                list.remove(property);
+                list.remove(null);
+            }
+
+            try {
+                list.remove(getDefaultConfig().findProperty(
+                        Tools.DEFAULT_EDITOR_KEY));
+                list.remove(getDefaultConfig().findProperty(
+                        Tools.DEFAULT_EDITOR_NAME_KEY));
+            } catch (KiemPropertyException e0) {
+                // do nothing, property keys are present
+            }
+
+            // add an example to show the user the concept
+            if (list.isEmpty()) {
+                list.add(new KiemProperty("EXAMPLE_KEY", "Example values"));
+            }
+
+            return Tools.listToKiemPropertyArray(list);
         }
-
-        try {
-            list.remove(getDefaultConfig().findProperty(
-                    Tools.DEFAULT_EDITOR_KEY));
-            list.remove(getDefaultConfig().findProperty(
-                    Tools.DEFAULT_EDITOR_NAME_KEY));
-        } catch (KiemPropertyException e0) {
-            // do nothing, property keys are present
-        }
-
-        // add an example to show the user the concept
-        if (list.isEmpty()) {
-            list.add(new KiemProperty("EXAMPLE_KEY", "Example values"));
-        }
-
-        return Tools.listToKiemPropertyArray(list);
+        return properties;
     }
 
     /**

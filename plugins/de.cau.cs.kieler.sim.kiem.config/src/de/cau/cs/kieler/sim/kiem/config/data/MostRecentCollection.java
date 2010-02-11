@@ -82,6 +82,17 @@ public class MostRecentCollection<T> implements Collection<T>, RandomAccess,
      * 
      * @param list
      *            the new list
+     */
+    public MostRecentCollection(final List<T> list) {
+        this.data = list;
+        this.capacity = Integer.MAX_VALUE - 2;
+    }
+
+    /**
+     * Creates a new handler for a given list with a maximum capacity.
+     * 
+     * @param list
+     *            the new list
      * @param capacityParam
      *            the maximum capacity of the list
      */

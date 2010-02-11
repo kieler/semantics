@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.Path;
 
 import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**

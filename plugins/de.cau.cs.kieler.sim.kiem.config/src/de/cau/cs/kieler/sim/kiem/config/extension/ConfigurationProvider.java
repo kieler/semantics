@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sim.kiem.config.extension;
 import de.cau.cs.kieler.sim.kiem.IKiemConfigurationProvider;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**

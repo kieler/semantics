@@ -57,11 +57,11 @@ import de.cau.cs.kieler.sim.kiem.config.data.EditorDefinition;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.IKiemConfigEventListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleComparator;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.config.preferences.SchedulePriorityTableProvider.DataEntry;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 

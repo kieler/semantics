@@ -38,7 +38,7 @@ import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecke
 import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
 import de.cau.cs.kieler.sim.kiem.automated.views.ExecutionFilePanel;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;

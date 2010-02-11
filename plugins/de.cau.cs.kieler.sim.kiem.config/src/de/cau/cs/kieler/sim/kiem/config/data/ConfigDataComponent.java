@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.config.data;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,6 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
@@ -47,7 +47,7 @@ public class ConfigDataComponent extends JSONObjectDataComponent {
     public static final String CONFIG_ID = ".config";
 
     /** The wrapper for this component. */
-    private transient DataComponentWrapper wrapper;
+    private DataComponentWrapper wrapper;
 
     // --------------------------------------------------------------------------
 
@@ -141,18 +141,22 @@ public class ConfigDataComponent extends JSONObjectDataComponent {
      *            the key to look for.
      */
     public final void removeProperty(final KiemPropertyKeyWrapper key) {
-        List<KiemProperty> properties = Tools.arrayToList(getPropertyArray());
+        KiemProperty[] oldProperties = getPropertyArray();
 
-        Iterator<KiemProperty> iterator = properties.iterator();
+        if (oldProperties != null) {
+            List<KiemProperty> properties = Arrays.asList(oldProperties);
 
-        while (iterator.hasNext()) {
-            KiemProperty property = iterator.next();
-            if (key.equals(new KiemPropertyKeyWrapper(property.getKey()))) {
-                iterator.remove();
+            Iterator<KiemProperty> iterator = properties.iterator();
+
+            while (iterator.hasNext()) {
+                KiemProperty property = iterator.next();
+                if (key.equals(new KiemPropertyKeyWrapper(property.getKey()))) {
+                    iterator.remove();
+                }
             }
-        }
 
-        setPropertyArray(Tools.listToKiemPropertyArray(properties));
+            setPropertyArray(Tools.listToKiemPropertyArray(properties));
+        }
     }
 
     /**
@@ -177,8 +181,7 @@ public class ConfigDataComponent extends JSONObjectDataComponent {
         } catch (KiemPropertyException e0) {
             prop = new KiemProperty(key.getString(), value);
             // get the array of properties from super class and convert to list
-            List<KiemProperty> properties = Tools
-                    .arrayToList(getPropertyArray());
+            List<KiemProperty> properties = Arrays.asList(getPropertyArray());
             // add the new property
             properties.add(prop);
             // convert back to array and set

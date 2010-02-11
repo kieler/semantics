@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sim.kiem.config.ui;
 
 import org.eclipse.swt.widgets.Shell;
 
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**

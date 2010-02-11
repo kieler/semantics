@@ -36,8 +36,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
+import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
-import de.cau.cs.kieler.sim.kiem.config.managers.Tools;
 import de.cau.cs.kieler.sim.kiem.config.ui.AlwaysUseDefaultsDialog;
 import de.cau.cs.kieler.sim.kiem.config.ui.NewPropertyDialog;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
