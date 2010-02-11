@@ -1,48 +1,54 @@
-«IMPORT de::cau::cs::kieler::synccharts::dsl::ui::wizard»
+Â«IMPORT de::cau::cs::kieler::synccharts::dsl::ui::wizardÂ»
 
-«DEFINE main FOR KitsProjectInfo»
-«EXPAND model FOR this»
-«EXPAND workflow FOR this»
-«ENDDEFINE»
+Â«DEFINE main FOR KitsProjectInfoÂ»
+Â«EXPAND model FOR thisÂ»
+Â«EXPAND workflow FOR thisÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE model FOR KitsProjectInfo»
-«FILE "src/ABRO.kits"-»
+Â«DEFINE model FOR KitsProjectInfoÂ»
+Â«FILE "src/ABRO.kits"-Â»
 /*
- * This is ABRO in KITS
+ * ABRO in KITS
  */
 region ABRO
 //--- IO declaration ---//
-input A
-input B
-input R
-output O
+input A ;
+input B ;
+input R ;
+output O ;
 //--- inner states ---//
-	init ABO 
-	     {
-	      init Wait_A_and_B {
-	      	init wB
-	      	--> dB with B;
-	      	final dB
-	        ||
-	        init wA
-	        --> dA with A;
-	        final dA
-	        } >-> done;
-	      final done
-	      } o-> ABO with R;
+init ABO {
+  init Wait_A_and_B {
+    
+    init wB
+    --> dB with B ;
+    
+    final dB
+    
+    ||
+    
+    init wA
+    --> dA with A ;
+    
+    final dA
+  }
+  >-> done ;
+  final done
+}
+o-> ABO with R ;
 
 
 
-«ENDFILE»
-«ENDDEFINE»
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE workflow FOR KitsProjectInfo»
-«FILE "src/Generator.mwe"-»
+Â«DEFINE workflow FOR KitsProjectInfoÂ»
+Â«FILE "src/Generator.mwe"-Â»
 <workflow>
 	<property name="modelFile" value="ABRO.kits"/>
 	<property name="targetDir" value="../src-gen"/>
 
 	<workflow file="workflow/KitsGenerator.mwe"/>
 </workflow>
-«ENDFILE»
-«ENDDEFINE»
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
