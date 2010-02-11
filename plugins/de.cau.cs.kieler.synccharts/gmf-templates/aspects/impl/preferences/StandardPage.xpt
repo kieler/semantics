@@ -56,6 +56,7 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
     «EXPAND xpt::Common::generatedMemberComment»
     @Override
     public boolean performOk() {
+        boolean ok = super.performOk();
         org.eclipse.ui.IWorkbench wb = PlatformUI.getWorkbench();
         if (wb != null) {
             org.eclipse.ui.IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
@@ -73,7 +74,7 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
                 }
             }
         }
-        return super.performOk();
+        return ok;
     }
 
 	«EXPAND xpt::Common::generatedMemberComment»
@@ -85,8 +86,8 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
                         de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE));
             }
         }
-        if (part instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart) {
-            State2EditPart state = (de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart) part;
+        if (part instanceof org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart) {
+            org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart state = (org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart) part;
             for (Object so : state.getSourceConnections()) {
                 if (so instanceof org.eclipse.gef.EditPart) {
                     applySplineMode((org.eclipse.gef.EditPart) so);
