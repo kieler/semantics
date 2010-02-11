@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="textualsynccharts"
+    nsURI="http://kieler.cs.cau.de/textualsynccharts" nsPrefix="textualsynccharts">
+  <eClassifiers xsi:type="ecore:EClass" name="TextualState" eSuperTypes="../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextualTransition" eSuperTypes="../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Transition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetStateProxy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="makeFinal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="makeConditional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
+</ecore:EPackage>
