@@ -1,0 +1,12 @@
+«IMPORT interfaceDecl»
+
+«EXTENSION templates::Extensions»
+
+«DEFINE main FOR Entity-»
+«FILE name+".txt"-»
+The entity : «name» contains «properties.size» properties:
+«FOREACH this.properties.sortBy(e|e.name) AS e ITERATOR iter-»
+«iter.counter1») '«e.name»' of type '«e.type.name»'
+«ENDFOREACH-»
+«ENDFILE-»
+«ENDDEFINE»
