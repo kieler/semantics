@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="interfaceDecl"
+    nsURI="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl"
+    nsPrefix="interfaceDecl">
+  <eClassifiers xsi:type="ecore:EClass" name="StateExtend">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputSignals" upperBound="-1"
+        eType="#//InputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputSignals" upperBound="-1"
+        eType="#//OutputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inOutputSignals" upperBound="-1"
+        eType="#//InOutputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="#//Signals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//RegionSignalDec" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RegionSignalDec">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Variable"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Signals">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputSignals">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputSignals">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InOutputSignals">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

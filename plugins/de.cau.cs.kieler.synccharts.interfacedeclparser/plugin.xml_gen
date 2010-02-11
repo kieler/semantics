@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl" 
+       class = "de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage"
+       genModel = "de/cau/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl.genmodel" /> 
+	
+  </extension>
+
+
+
+
+</plugin>
