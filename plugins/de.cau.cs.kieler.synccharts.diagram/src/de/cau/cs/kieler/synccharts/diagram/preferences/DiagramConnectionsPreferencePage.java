@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.synccharts.diagram.preferences;
 
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.preferences.ConnectionsPreferencePage;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -15,7 +16,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.ui.figures.SplineConnection;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
@@ -71,6 +71,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
      */
     @Override
     public boolean performOk() {
+        boolean ok = super.performOk();
         IWorkbench wb = PlatformUI.getWorkbench();
         if (wb != null) {
             IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
@@ -88,7 +89,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
                 }
             }
         }
-        return super.performOk();
+        return ok;
     }
 
     /**
@@ -102,8 +103,8 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
                         SplineConnection.PREF_SPLINE_MODE));
             }
         }
-        if (part instanceof State2EditPart) {
-            State2EditPart state = (State2EditPart) part;
+        if (part instanceof ShapeNodeEditPart) {
+            ShapeNodeEditPart state = (ShapeNodeEditPart) part;
             for (Object so : state.getSourceConnections()) {
                 if (so instanceof EditPart) {
                     applySplineMode((EditPart) so);
