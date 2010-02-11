@@ -63,36 +63,36 @@
        <transformation
              icon="icons/upgrade.gif"
              keyboardShortcut="M1+R U"
-             name="UpgradeState"
+             name="Add Region"
              transformation="upgradeState"
              transformationId="de.cau.cs.kieler.ksbase.upgradeState">
        </transformation>
        <transformation
              icon="icons/downgrade.gif"
              keyboardShortcut="M1+R D"
-             name="Downgrade State"
+             name="Remove All Regions"
              transformation="downgradeState"
              transformationId="de.cau.cs.kieler.ksbase.downgradeState"
              validation="isRegionState">
        </transformation>
        <transformation
              icon="icons/self_loop.gif"
-             keyboardShortcut="M1 + R O"
+             keyboardShortcut="M1+R O"
              name="Add Self Loop"
              transformation="addSelfLoop"
              transformationId="de.cau.cs.kieler.ksbase.selfLoop">
        </transformation>
        <transformation
              icon="icons/encapsulate.gif"
-             keyboardShortcut="M1 + R E"
+             keyboardShortcut="M1+R E"
              name="Encapsulate Regions"
              transformation="encapsulateRegions"
              transformationId="de.cau.cs.kieler.ksbase.encapsulate">
        </transformation>
        <transformation
              icon="icons/flatten.gif"
-             keyboardShortcut="M1 + R A"
-             name="Flatten State"
+             keyboardShortcut="M1+R A"
+             name="Extract State"
              transformation="flattenState"
              transformationId="de.cau.cs.kieler.ksbase.flattenState">
        </transformation>
