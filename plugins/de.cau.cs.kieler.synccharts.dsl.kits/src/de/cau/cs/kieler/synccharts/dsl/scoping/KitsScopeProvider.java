@@ -30,216 +30,213 @@ import de.cau.cs.kieler.synccharts.Transition;
  * 
  */
 public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
-    /**
-     * This declarative function calcualtes the scope of target states
-     * 
-     * @param context
-     *            the context
-     * @param reference
-     *            the reference
-     * @return new scope for target states
-     */
-    IScope scope_Transition_targetState(Transition context, EReference reference) {
-        State sourceState = null;
-        if (context.eContainer() != null
-                && context.eContainer() instanceof State) {
-            sourceState = (State) context.eContainer();
-        }
-        Region parentRegion = null;
-        if (sourceState.getParentRegion() != null) {
-            parentRegion = sourceState.getParentRegion();
-        }
+	/**
+	 * This declarative function calcualtes the scope of target states
+	 * 
+	 * @param context
+	 *            the context
+	 * @param reference
+	 *            the reference
+	 * @return new scope for target states
+	 */
+	IScope scope_Transition_targetState(Transition context, EReference reference) {
+		State sourceState = null;
+		if (context.eContainer() != null
+				&& context.eContainer() instanceof State) {
+			sourceState = (State) context.eContainer();
+		}
+		Region parentRegion = null;
+		if (sourceState.getParentRegion() != null) {
+			parentRegion = sourceState.getParentRegion();
+		}
 
-        ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
-        if (!(parentRegion.getInnerStates().isEmpty())) {
-            for (State innerState : parentRegion.getInnerStates()) {
-                // if the inner state has a label then add its label
-                if (innerState.getLabel() != null) {
-                    IEObjectDescription elem = EObjectDescription.create(
-                            innerState.getLabel(), innerState);
-                    scopeElems.add(elem);
-                }
-                // else if the inner state has an id then add its id
-                else if (innerState.getId() != null) {
-                    IEObjectDescription elem = EObjectDescription.create(
-                            innerState.getId(), innerState);
-                    scopeElems.add(elem);
-                }
-            }
-        }
-        return new SimpleScope(scopeElems);
-    }
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
+		if (!(parentRegion.getInnerStates().isEmpty())) {
+			for (State innerState : parentRegion.getInnerStates()) {
+				// if the inner state has a label then add its label
+				if (innerState.getLabel() != null) {
+					IEObjectDescription elem = EObjectDescription.create(
+							innerState.getLabel(), innerState);
+					scopeElems.add(elem);
+				}
+				// else if the inner state has an id then add its id
+				else if (innerState.getId() != null) {
+					IEObjectDescription elem = EObjectDescription.create(
+							innerState.getId(), innerState);
+					scopeElems.add(elem);
+				}
+			}
+		}
+		return new SimpleScope(scopeElems);
+	}
 
-    /**
-     * This declarative function calculates the scope of signals in emissions
-     * 
-     * @param context
-     *            the context
-     * @param reference
-     *            the reference
-     * @return new scope for signals in emissions
-     */
+	/**
+	 * This declarative function calculates the scope of signals in emissions
+	 * 
+	 * @param context
+	 *            the context
+	 * @param reference
+	 *            the reference
+	 * @return new scope for signals in emissions
+	 */
 
-    IScope scope_Emission_signal(Emission context, EReference reference) {
-        ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
-        Action a = null;
-        // this is my transition
-        if (context.getParentEAction() != null) {
-            a = context.getParentEAction();
-        } else {
-            System.out
-                    .println("DEBUG ERROR: No parent action found for Emission");
-        }
-        // assert a != null;
-        State currentState = findParentState(a);
-        // has the current state declared any signals?
-        scopeElems.addAll(getStateSignals(currentState));
-        // has the parent region of the current state declared any signals?
-        Region r = currentState.getParentRegion();
-        gatherSignals(r, scopeElems);
-        return new SimpleScope(scopeElems);
-    }
+	IScope scope_Emission_signal(Emission context, EReference reference) {
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
+		Action a = null;
+		// this is my transition
+		if (context.getParentEAction() != null) {
+			a = context.getParentEAction();
+		} else {
+			System.out
+					.println("DEBUG ERROR: No parent action found for Emission");
+		}
+		// assert a != null;
+		State currentState = findParentState(a);
+		// has the current state declared any signals?
+		scopeElems.addAll(getStateSignals(currentState));
+		// has the parent region of the current state declared any signals?
+		Region r = currentState.getParentRegion();
+		gatherSignals(r, scopeElems);
+		return new SimpleScope(scopeElems);
+	}
 
-    /**
-     * * Helper to gather all signals in a region
-     * 
-     * @param r
-     * @param scopeElems
-     * @return all signals in a region and its inner states
-     */
-    private void gatherSignals(Region r,
-            ArrayList<IEObjectDescription> scopeElems) {
-        // ArrayList<IEObjectDescription> elems = new
-        // ArrayList<IEObjectDescription>();
-        State currentState = null;
-        scopeElems.addAll(getRegionSignals(r));
-        if (r.getParentState() != null) {
-            currentState = r.getParentState();
-            scopeElems.addAll(getStateSignals(currentState));
-            // assert currentState.getParentRegion() != null;
-            gatherSignals(currentState.getParentRegion(), scopeElems);
-        }
-        // return scopeElems;
-    }
+	/**
+	 * * Helper to gather all signals in a region
+	 * 
+	 * @param r
+	 * @param scopeElems
+	 * @return all signals in a region and its inner states
+	 */
+	private void gatherSignals(Region r,
+			ArrayList<IEObjectDescription> scopeElems) {
+		State currentState = null;
+		scopeElems.addAll(getRegionSignals(r));
+		if (r.getParentState() != null) {
+			currentState = r.getParentState();
+			scopeElems.addAll(getStateSignals(currentState));
+			// assert currentState.getParentRegion() != null;
+			gatherSignals(currentState.getParentRegion(), scopeElems);
+		}
+		// return scopeElems;
+	}
 
-    /**
-     * @param state
-     *            the state to be searched for signal declarations
-     * @return signals that the state has declared
-     */
-    private ArrayList<IEObjectDescription> getStateSignals(State state) {
-        ArrayList<IEObjectDescription> stateSignals = new ArrayList<IEObjectDescription>();
-        if (state.getSignals() != null) {
-            for (Signal sig : state.getSignals()) {
-                stateSignals.add(EObjectDescription.create(sig.getName(), sig));
-                // System.out.println("=================================");
-                // System.out.println("Source state signal: " + sig.getName());
-                // System.out.println("=================================");
-            }
-        }
-        return stateSignals;
-    }
+	/**
+	 * @param state
+	 *            the state to be searched for signal declarations
+	 * @return signals that the state has declared
+	 */
+	private ArrayList<IEObjectDescription> getStateSignals(State state) {
+		ArrayList<IEObjectDescription> stateSignals = new ArrayList<IEObjectDescription>();
+		if (state.getSignals() != null) {
+			for (Signal sig : state.getSignals()) {
+				stateSignals.add(EObjectDescription.create(sig.getName(), sig));
+				// System.out.println("=================================");
+				// System.out.println("Source state signal: " + sig.getName());
+				// System.out.println("=================================");
+			}
+		}
+		return stateSignals;
+	}
 
-    /**
-     * 
-     * @param region
-     *            the region to be searched for signal declarations
-     * @return signals that the region has declared
-     */
-    private ArrayList<IEObjectDescription> getRegionSignals(Region region) {
-        ArrayList<IEObjectDescription> regionSignals = new ArrayList<IEObjectDescription>();
-        if (region.getSignals() != null) {
-            for (Signal sig : region.getSignals()) {
-                regionSignals
-                        .add(EObjectDescription.create(sig.getName(), sig));
-                // System.out.println("=================================");
-                // System.out.println("Source state signal: " + sig.getName());
-                // System.out.println("=================================");
-            }
-        }
-        return regionSignals;
-    }
+	/**
+	 * 
+	 * @param region
+	 *            the region to be searched for signal declarations
+	 * @return signals that the region has declared
+	 */
+	private ArrayList<IEObjectDescription> getRegionSignals(Region region) {
+		ArrayList<IEObjectDescription> regionSignals = new ArrayList<IEObjectDescription>();
+		if (region.getSignals() != null) {
+			for (Signal sig : region.getSignals()) {
+				regionSignals
+						.add(EObjectDescription.create(sig.getName(), sig));
+				// System.out.println("=================================");
+				// System.out.println("Source state signal: " + sig.getName());
+				// System.out.println("=================================");
+			}
+		}
+		return regionSignals;
+	}
 
-    /**
-     * @param a
-     *            the Action that holds the Emission in which our Signal
-     *            reference is
-     * @return the state in which the Signal has been referenced
-     * 
-     */
-    private State findParentState(Action a) {
-        State s = null;
-        if (a instanceof Transition) {
-            Transition t = (Transition) a;
-            s = t.getSourceState();
-        }
-        if (a.getParentStateEntryAction() != null) {
-            s = a.getParentStateEntryAction();
-        }
-        if (a.getParentStateExitAction() != null) {
-            s = a.getParentStateExitAction();
-        }
-        if (a.getParentStateInnerAction() != null) {
-            s = a.getParentStateInnerAction();
-        }
-        if (a.getParentStateSuspension() != null) {
-            s = a.getParentStateSuspension();
-        }
-        return s;
+	/**
+	 * @param a
+	 *            the Action that holds the Emission in which our Signal
+	 *            reference is
+	 * @return the state in which the Signal has been referenced
+	 * 
+	 */
+	private State findParentState(Action a) {
+		State s = null;
+		if (a instanceof Transition) {
+			Transition t = (Transition) a;
+			s = t.getSourceState();
+		}
+		if (a.getParentStateEntryAction() != null) {
+			s = a.getParentStateEntryAction();
+		}
+		if (a.getParentStateExitAction() != null) {
+			s = a.getParentStateExitAction();
+		}
+		if (a.getParentStateInnerAction() != null) {
+			s = a.getParentStateInnerAction();
+		}
+		if (a.getParentStateSuspension() != null) {
+			s = a.getParentStateSuspension();
+		}
+		return s;
 
-    }
+	}
 
-    /**
-     * This declarative function calculates the scope of signals in signal
-     * references
-     * 
-     * @param context
-     *            the context
-     * @param reference
-     *            the reference
-     * @return new scope for signals in signal references
-     */
-    IScope scope_SignalReference_signal(SignalReference context,
-            EReference reference) {
+	/**
+	 * This declarative function calculates the scope of signals in signal
+	 * references
+	 * 
+	 * @param context
+	 *            the context
+	 * @param reference
+	 *            the reference
+	 * @return new scope for signals in signal references
+	 */
+	IScope scope_SignalReference_signal(SignalReference context,
+			EReference reference) {
 
-        ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
-        // this is my expression
-        Expression exp = context;
-        if (exp.getParentExpression() != null
-                && exp.getParentExpression() instanceof ComplexExpression) {
-            findParentExpression(exp);
-        }
-        Action a = null;
-        // this is my transition
-        if (exp.getParentAction() != null) {
-            a = exp.getParentAction();
-        } else {
-            System.out
-                    .println("DEBUG ERROR: No parent action found for Expression");
-        }
-        // assert a != null;
-        State currentState = findParentState(a);
-        // has the current state declared any signals?
-        scopeElems.addAll(getStateSignals(currentState));
-        // has the parent region of the current state declared any signals?
-        Region r = currentState.getParentRegion();
-        gatherSignals(r, scopeElems);
+		ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
+		// TODO Test with complex expressions who are not direct children of
+		// transitions
+		Action action = null;
+		if (context.getParentExpression() != null
+				&& context.getParentExpression() instanceof ComplexExpression) {
+			action = findParentTransition(context.getParentExpression());
+		} else {
+			action = context.getParentAction();
+		}
 
-        return new SimpleScope(scopeElems);
+		// this is my transition
+		assert (action != null && action instanceof Action) : "No parent action found for Signal Reference "
+				+ context.getSignal().getName();
 
-    }
+		// assert a != null;
+		State currentState = findParentState(action);
+		// has the current state declared any signals?
+		scopeElems.addAll(getStateSignals(currentState));
+		// has the parent region of the current state declared any signals?
+		Region r = currentState.getParentRegion();
+		gatherSignals(r, scopeElems);
 
-    /**
-     * @param context
-     * @param exp
-     * @return
-     */
-    private void findParentExpression(Expression exp) {
-        exp = exp.getParentExpression();
-        if (exp.getParentExpression() instanceof ComplexExpression) {
-            findParentExpression(exp);
-        }
-        // return exp;
-    }
+		return new SimpleScope(scopeElems);
+
+	}
+
+	/**
+	 * @param context
+	 * @param exp
+	 * @return
+	 */
+	private Action findParentTransition(ComplexExpression exp) {
+		if (exp.getParentExpression() instanceof ComplexExpression) {
+			findParentTransition(exp.getParentExpression());
+		}
+		return exp.getParentAction();
+	}
 
 }
