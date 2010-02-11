@@ -70,7 +70,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * Shape of line bounds.
      */
     private static final Rectangle LINEBOUNDS = Rectangle.SINGLETON;
-    
+
     /**
      * Temporary preference key.
      */
@@ -95,13 +95,19 @@ public class SplineConnection extends PolylineConnectionEx {
         }
 
         if (getSplineMode() == SPLINE_CUBIC) {
+            PointList points = getPoints();
             int i = 1;
             for (; i < getPoints().size() - 2; i += SplineUtilities.CUBIC_DEGREE) {
-                // more efficient if individual bounds are checked for each
-                // segment first
-                if (SplineUtilities.distanceFromSpline(getPoints().getPoint(i - 1), getPoints()
-                        .getPoint(i), getPoints().getPoint(i + 1), getPoints().getPoint(i + 2),
-                        new Point(x, y)) < calculatedTolerance * calculatedTolerance) {
+                // check individual spline bounds
+                Point start = points.getPoint(i - 1);
+                Point c1 = points.getPoint(i);
+                Point c2 = points.getPoint(i + 1);
+                Point end = points.getPoint(i + 2);
+                Rectangle splineBound = new Rectangle(start, end);
+                splineBound = splineBound.getUnion(new Rectangle(c1, c2));
+                splineBound.expand(calculatedTolerance, calculatedTolerance);
+                if (splineBound.contains(x, y) && SplineUtilities.distanceFromSpline(start, c1,
+                        c2, end, new Point(x, y)) < calculatedTolerance) {
                     return true;
                 }
             }
@@ -111,7 +117,7 @@ public class SplineConnection extends PolylineConnectionEx {
                 if (SplineUtilities.distanceFromSpline(getPoints().getPoint(
                         getPoints().size() - SplineUtilities.CUBIC_DEGREE), getPoints().getPoint(
                         getPoints().size() - 2), getPoints().getPoint(getPoints().size() - 1),
-                        new Point(x, y)) < calculatedTolerance * calculatedTolerance) {
+                        new Point(x, y)) < calculatedTolerance) {
                     return true;
                 }
             } else if (i == getPoints().size() - 1) {
