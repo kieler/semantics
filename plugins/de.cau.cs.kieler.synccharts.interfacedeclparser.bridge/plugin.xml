@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.parse"
+               label="Parse Interface Declaration"
+               style="push"
+               tooltip="Parse all signals and variables of the interface declaration into their internal represantation.">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.serialize"
+               label="Serialize Interface Declaration"
+               style="push"
+               tooltip="Serializes the interface declaration in a canonical way, theres are no formatting information kept.">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.InterfaceDeclHandler"
+            description="Parse Signals and Vars"
+            id="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.parse"
+            name="Parse Signals and Vars">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.InterfaceDeclHandler"
+            description="Serialize Signals"
+            id="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.serialize"
+            name="Serialize">
+      </command>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.TriggerListenerChangedInterfaceDecl">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.TriggerListenerChangedSignal">
+      </triggerListener>
+   </extension>
+</plugin>
