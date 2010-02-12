@@ -78,7 +78,7 @@ but are reset on the next start up.
 
    <element name="editor">
       <complexType>
-         <attribute name="editorId" type="string" use="required">
+         <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
                   The id of any editor. The schedule will be assigned support for this editor with the priority provided in the editorPriority field. This editor cannot be removed through the preference pages.
@@ -88,14 +88,14 @@ but are reset on the next start up.
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="editorName" type="string">
+         <attribute name="name" type="string">
             <annotation>
                <documentation>
                   A humanly readable name for the editor.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="editorPriority" type="string" use="required">
+         <attribute name="priority" type="string" use="required">
             <annotation>
                <documentation>
                   The priority that will be assigned to the editor through the preference pages. It can be changed by the user for one session but will be reset on the next load. The priority should be greater zero. A value between 1 and 10 is usually a sufficient to distinguish between multiple execution.

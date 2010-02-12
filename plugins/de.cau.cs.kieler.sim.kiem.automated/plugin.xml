@@ -47,7 +47,10 @@
          <editor
                editorId="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
                editorName="KASM Editor"
-               editorPriority="9">
+               editorPriority="9"
+               id="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
+               name="KASM Editor"
+               priority="8">
          </editor>
       </configurationFile>
    </extension>

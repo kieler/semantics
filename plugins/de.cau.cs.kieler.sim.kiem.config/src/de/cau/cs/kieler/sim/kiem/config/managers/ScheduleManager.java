@@ -666,33 +666,37 @@ public final class ScheduleManager extends AbstractManager implements
                         if (children != null && children.length > 0) {
 
                             for (IConfigurationElement child : children) {
-                                String editorId = child
-                                        .getAttribute("editorId");
-                                String editorPriority = child
-                                        .getAttribute("editorPriority");
-                                String editorName = child
-                                        .getAttribute("editorName");
 
-                                if (editorId != null && !editorId.equals("")) {
-                                    int priority = Integer
-                                            .parseInt(editorPriority);
-                                    EditorIdWrapper wrapper = new EditorIdWrapper(
-                                            editorId);
+                                try {
+                                    String editorId = child.getAttribute("id");
+                                    String editorPriority = child
+                                            .getAttribute("priority");
+                                    String editorName = child
+                                            .getAttribute("name");
 
-                                    // add the editor and schedule
-                                    EditorDefinition editor = EditorManager
-                                            .getInstance()
-                                            .addEditor(
-                                                    new EditorDefinition(
-                                                            editorName, wrapper));
-                                    editor.setLocked(true);
-                                    addSchedule(editor, path, priority);
+                                    if (editorId != null
+                                            && !editorId.equals("")) {
+                                        int priority = Integer
+                                                .parseInt(editorPriority);
+                                        EditorIdWrapper wrapper = new EditorIdWrapper(
+                                                editorId);
+
+                                        // add the editor and schedule
+                                        EditorDefinition editor = EditorManager
+                                                .getInstance().addEditor(
+                                                        new EditorDefinition(
+                                                                editorName,
+                                                                wrapper));
+                                        editor.setLocked(true);
+                                        addSchedule(editor, path, priority);
+                                    }
+                                } catch (NumberFormatException e0) {
+                                    // not a number in editorId, ignore this
+                                    // editor
                                 }
                             }
                         }
                     }
-                } catch (NumberFormatException e0) {
-                    // not a number in editorId, ignore this extension
                 } catch (ScheduleFileMissingException e0) {
                     // editor file is not there anymore, ignored this extension
                 }
