@@ -248,13 +248,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.krep"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.krep.compiler"
          download-size="0"
          install-size="0"
@@ -335,6 +328,20 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.krep.evalbench.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.krep.sim"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.krep.editors.klp.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
