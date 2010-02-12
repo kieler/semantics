@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.properties;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.CellEditor;
@@ -208,8 +210,25 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
          */
         @Override
         protected Object openDialogBox(final Control cellEditorWindow) {
-
             FileDialog dlg = new FileDialog(cellEditorWindow.getShell(), SWT.SINGLE);
+            // if we have a value, then take this to set the file name
+            Object object = this.getValue();
+            if (object != null && object instanceof String) {
+                try {
+                    // set the default directory to the one the current file comes from
+                    String fileName = (String) object;
+                    String filePath  = (new File(fileName)).getParentFile().getAbsolutePath();
+                    if (filePath.endsWith("/")) { 
+                        filePath = filePath.substring(0, filePath.length());
+                    }
+                    if (filePath.endsWith("\\")) { 
+                        filePath = filePath.substring(0, filePath.length());
+                    }
+                    dlg.setFilterPath(filePath);
+                } catch (Exception e) {
+                   // ignore false paths
+                }
+            }
             dlg.setOverwrite(true);
             String fn = dlg.open();
             if (fn != null) {

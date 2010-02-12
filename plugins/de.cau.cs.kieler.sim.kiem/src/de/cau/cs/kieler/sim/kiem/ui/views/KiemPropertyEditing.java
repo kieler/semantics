@@ -115,6 +115,7 @@ public class KiemPropertyEditing extends EditingSupport {
                 KiemPropertyType type = property.getType();
                 type.setCellEditor(tree);
                 ce = type.getCellEditor();
+                ce.setValue(property);
             }
         } catch (Exception e) {
             // hide any errors
