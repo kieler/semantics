@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/elevator.svg">
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/elevator.svg">
 
   <svgElement id="elevator">
    <animation xsi:type="mapping:Move" input="0..100" x_range="54..54" y_range="92..-150"/>

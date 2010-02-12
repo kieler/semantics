@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/backhoe.svg">
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/backhoe.svg">
   <svgElement id="boom">
     <animation xsi:type="mapping:Rotate" input="0..100" angle_range="20..-70" key="boom" anchor_point="2.29,60.59"  />
   </svgElement>
