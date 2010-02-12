@@ -14,7 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.config.data;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -144,7 +143,7 @@ public class ConfigDataComponent extends JSONObjectDataComponent {
         KiemProperty[] oldProperties = getPropertyArray();
 
         if (oldProperties != null) {
-            List<KiemProperty> properties = Arrays.asList(oldProperties);
+            List<KiemProperty> properties = Tools.arrayToList(oldProperties);
 
             Iterator<KiemProperty> iterator = properties.iterator();
 

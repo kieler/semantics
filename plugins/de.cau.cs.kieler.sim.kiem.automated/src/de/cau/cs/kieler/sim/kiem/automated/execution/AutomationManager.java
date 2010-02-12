@@ -840,11 +840,12 @@ public final class AutomationManager implements StatusListener {
         String pluginId = statusAdapter.getStatus().getPlugin();
 
         // those are probably really bad... don't want to filter
+        // furthermore those hopefully were not triggered due to the execution
         if (!pluginId.contains("org.eclipse")) {
             error = true;
             return StatusManager.LOG;
         }
-        return StatusManager.NONE;
+        return StatusListener.DONT_CARE;
     }
 
     /**

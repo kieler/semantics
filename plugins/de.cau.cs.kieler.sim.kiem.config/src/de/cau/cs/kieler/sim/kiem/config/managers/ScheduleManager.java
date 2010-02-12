@@ -528,9 +528,11 @@ public final class ScheduleManager extends AbstractManager implements
                     schedule.isLocked());
         } catch (IOException e0) {
             // loading failed due to missing .execution file
+            KiemEventListener.getInstance().resetLoadImminent();
             throw new ScheduleFileMissingException(e0, schedule);
         } catch (IllegalArgumentException e0) {
             // file not in workspace
+            KiemEventListener.getInstance().resetLoadImminent();
             throw new ScheduleFileMissingException(e0, schedule);
         }
 

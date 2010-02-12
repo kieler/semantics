@@ -134,10 +134,24 @@ public final class KiemEventListener implements IKiemEventListener {
     }
 
     /**
+     * Notify the listener that the load failed and it should not expect it.
+     */
+    public void resetLoadImminent() {
+        this.loadImminent = false;
+    }
+
+    /**
      * Notify the listener that the plugin will report a save soon but the
      * listener should ignore it as it was plugin-triggered.
      */
     public void setSaveImminent() {
         this.saveImminent = true;
+    }
+
+    /**
+     * Notify the listener that the save failed and it should not expect it.
+     */
+    public void resetSaveImminent() {
+        this.saveImminent = false;
     }
 }

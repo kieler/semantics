@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -117,10 +116,6 @@ public class PropertiesPreferencePage extends PreferencePage implements
         if (configuration.getExternalDefaultProperties() != null
                 && configuration.getExternalDefaultProperties().length > 0) {
             // construct the configuration table
-            Label tableHeaderLabel = new Label(propertiesGroup, SWT.WRAP);
-            GridData labelLayoutData = new GridData(SWT.LEFT, SWT.FILL, false,
-                    false);
-            tableHeaderLabel.setLayoutData(labelLayoutData);
             propertiesTable = new Table(propertiesGroup, SWT.BORDER);
             String[] headers = { Tools.PROPERTY_KEY_NAME,
                     Tools.PROPERTY_VALUE_NAME };
@@ -164,7 +159,6 @@ public class PropertiesPreferencePage extends PreferencePage implements
             }
             propertiesTable.pack();
             propertiesTable.addFocusListener(this);
-            labelLayoutData.widthHint = propertiesTable.getSize().x;
         }
 
         // button for adding properties
@@ -286,7 +280,6 @@ public class PropertiesPreferencePage extends PreferencePage implements
                         ConfigurationManager.getInstance().removeProperty(
                                 wrapper);
                     }
-
                 }
             }
         }

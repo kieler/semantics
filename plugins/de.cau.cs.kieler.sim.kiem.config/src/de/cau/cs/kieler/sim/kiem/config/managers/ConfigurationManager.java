@@ -476,7 +476,7 @@ public final class ConfigurationManager extends AbstractManager {
                         .toArray(new KiemProperty[properties.size()]));
             }
         } catch (ClassCircularityError e0) {
-            // if the user invoked the method on the default config,
+            // if the method was invoked on the default config,
             // do nothing
         }
     }

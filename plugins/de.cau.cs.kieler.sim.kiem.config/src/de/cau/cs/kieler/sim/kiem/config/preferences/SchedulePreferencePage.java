@@ -44,7 +44,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -206,12 +205,6 @@ public class SchedulePreferencePage extends PreferencePage implements
             }
 
             // construct the priorities table
-            Label tableHeaderLabel = new Label(prioritiesGroup, SWT.WRAP);
-            tableHeaderLabel.setText("Priorities table");
-            GridData labelLayoutData = new GridData(SWT.LEFT, SWT.FILL, false,
-                    false);
-            tableHeaderLabel.setLayoutData(labelLayoutData);
-
             int numberOfColumns = editors.size() + 1 + PUFFER_SIZE;
             firstFreeIndex = editors.size() + 1;
             editorArray = new EditorDefinition[numberOfColumns];
@@ -264,8 +257,6 @@ public class SchedulePreferencePage extends PreferencePage implements
 
             prioritiesTable.addFocusListener(this);
             prioritiesTable.addSelectionListener(this);
-
-            labelLayoutData.widthHint = prioritiesTable.getSize().x;
         }
 
         prioritiesGroup.setLayout(new GridLayout(1, false));

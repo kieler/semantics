@@ -64,22 +64,13 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <configurationFile
-            editorId="de.cau.cs.kieler.esterel.Esterel"
-            editorName="Esterel Editor"
-            editorPriority="8"
             file="icons/noname1.execution">
          <editor
-               editorId="de.cau.cs.kieler.esterel.Esterel"
-               editorName="Esterel Editor"
-               editorPriority="7"
                id="de.cau.cs.kieler.esterel.Esterel"
                name="Esterel Editor"
                priority="3">
          </editor>
          <editor
-               editorId="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
-               editorName="KASM Editor"
-               editorPriority="2"
                id="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
                name="KASM Editor"
                priority="7">
