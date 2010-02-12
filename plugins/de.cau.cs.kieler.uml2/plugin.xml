@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
+      <option
+            class="org.eclipse.uml2.diagram.activity.edit.parts.PackageEditPart"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Activity"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Activity"
+            option="de.cau.cs.kieler.layout.options.layoutDirection"
+            value="DOWN">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Activity"
+            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            value="20.0">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Activity"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="25.0">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Generalization"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="GENERALIZATION">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Association"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="ASSOCIATION">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Dependency"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="DEPENDENCY">
+      </option>
+   </extension>
+
+</plugin>
