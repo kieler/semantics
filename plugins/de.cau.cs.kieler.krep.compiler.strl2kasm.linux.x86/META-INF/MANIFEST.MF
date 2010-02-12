@@ -3,6 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Strl2kasm
 Bundle-SymbolicName: de.cau.cs.kieler.krep.compiler.strl2kasm
 Bundle-Version: 0.1.0.qualifier
-Fragment-Host: de.cau.cs.kieler.sim.krep;bundle-version="0.0.1.qualifier"
+Fragment-Host: de.cau.cs.kieler.krep.sim;bundle-version="0.0.1.qualifier"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-PlatformFilter: (&(osgi.os=linux) (| (osgi.arch=x86) (osgi.arch=x86_64)))
