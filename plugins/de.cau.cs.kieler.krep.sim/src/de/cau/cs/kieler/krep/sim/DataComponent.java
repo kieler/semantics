@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.krep;
+package de.cau.cs.kieler.krep.sim;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

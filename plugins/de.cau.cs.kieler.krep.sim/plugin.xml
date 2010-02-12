@@ -5,7 +5,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.krep.DataComponent"
+            class="de.cau.cs.kieler.krep.sim.DataComponent"
             id="de.cau.cs.kieler.sim.krep"
             name="Krep">
       </content>

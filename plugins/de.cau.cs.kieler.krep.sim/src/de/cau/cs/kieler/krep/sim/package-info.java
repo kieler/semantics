@@ -18,4 +18,4 @@
  * @author ctr
  * 
  */
-package de.cau.cs.kieler.sim.krep;
+package de.cau.cs.kieler.krep.sim;

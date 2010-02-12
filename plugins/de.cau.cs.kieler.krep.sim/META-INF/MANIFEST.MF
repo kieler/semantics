@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Krep
 Bundle-SymbolicName: de.cau.cs.kieler.krep.sim;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Activator: de.cau.cs.kieler.sim.krep.Activator
+Bundle-Activator: de.cau.cs.kieler.krep.sim.Activator
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
  de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0",
