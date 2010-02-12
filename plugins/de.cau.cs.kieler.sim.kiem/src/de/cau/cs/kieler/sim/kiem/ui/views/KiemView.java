@@ -1630,8 +1630,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
                     // otherwise default implementation
                     if (kIEMInstance.getExecution() != null) {
-                        kIEMInstance.getExecution().stopExecutionSync();
-
                         // get results
                         executionTime = kIEMInstance.getExecution().getExecutionDuration();
                         minStepDuration = kIEMInstance.getExecution().getMinimumStepDuration();
@@ -1641,6 +1639,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         maxStepDuration = kIEMInstance.getExecution().getMaximumStepDuration();
                         steps = kIEMInstance.getExecution().getMaximumSteps();
                         aimedStepDuration = kIEMInstance.getExecution().getAimedStepDuration();
+
+                        kIEMInstance.getExecution().stopExecutionSync();
                     }
 
                     kIEMInstance.setExecution(null);
