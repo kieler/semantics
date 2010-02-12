@@ -48,6 +48,7 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * TODO: Augment by more useful error messages customized to KIELER users.
  * 
  * @author haf
+ * @kieler.rating 2010-02-12 proposed yellow
  */
 public class GenericErrorHandler extends WorkbenchErrorHandler {
 
@@ -67,15 +68,16 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
     // errors.
     private static final String MSG_OUT_OF_MEMORY_ERROR = Messages.GenericErrorHandler_OutOfMemoryError;
 
-    private static final String MSG_STACK_OVERFLOW_ERROR = Messages.GenericErrorHandler_StackOverflowError;
+    private static final String MSG_STACK_OVERFLOW_ERR = Messages.GenericErrorHandler_StackOverflowError;
 
-    private static final String MSG_VIRTUAL_MACHINE_ERROR = Messages.GenericErrorHandler_VirtualMachineError;
+    private static final String MSG_VM_ERROR = Messages.GenericErrorHandler_VirtualMachineError;
 
     private static final String MSG_SWT_ERROR = Messages.GenericErrorHandler_SWTError;
 
     private static final String MSG_FATAL_ERROR = Messages.GenericErrorHandler_FatalError;
 
-    private static final String MSG_FATAL_ERROR_RECURSIVE = Messages.GenericErrorHandler_FatalRecursiveError;
+    /** Message for the recursive error. */
+    private static final String MSG_FATAL_REC_ERROR = Messages.GenericErrorHandler_FatalRecursiveError;
 
     private static final String MSG_FATAL_ERROR_TITLE = Messages.GenericErrorHandler_FatalErrorTitle;
 
@@ -109,15 +111,20 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
             super.handle(statusAdapter, style | StatusManager.BLOCK);
         } else {
             int shownStyle = 0;
+            boolean noOneCares = true;
+
             if (listeners != null && !listeners.isEmpty()) {
                 for (StatusListener listener : listeners) {
                     // ask all components for the style they want
                     int requestedStyle = listener.reroute(statusAdapter, style);
-                    shownStyle = shownStyle | requestedStyle;
+                    if (requestedStyle != StatusListener.DONT_CARE) {
+                        shownStyle = shownStyle | requestedStyle;
+                        noOneCares = false;
+                    }
                 }
 
             }
-            if (shownStyle == 0) {
+            if (noOneCares) {
                 // no component cared about the style, use default one
                 shownStyle = style;
             }
@@ -171,7 +178,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
             exceptionCount++;
             if (exceptionCount > 1) {
                 dialog.updateMessage(MessageFormat.format(MSG_FATAL_ERROR,
-                        new Object[] { MSG_FATAL_ERROR_RECURSIVE }));
+                        new Object[] { MSG_FATAL_REC_ERROR }));
                 dialog.getShell().forceActive();
             } else {
                 if (openQuestionDialog(t)) {
@@ -197,9 +204,9 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
             if (t instanceof OutOfMemoryError) {
                 msg = MSG_OUT_OF_MEMORY_ERROR;
             } else if (t instanceof StackOverflowError) {
-                msg = MSG_STACK_OVERFLOW_ERROR;
+                msg = MSG_STACK_OVERFLOW_ERR;
             } else if (t instanceof VirtualMachineError) {
-                msg = MSG_VIRTUAL_MACHINE_ERROR;
+                msg = MSG_VM_ERROR;
             } else if (t instanceof SWTError) {
                 msg = MSG_SWT_ERROR;
             } else {
@@ -377,15 +384,22 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
      * {@link StatusManager#LOG} {@link StatusManager#NONE}
      * 
      * @author soh
+     * @kieler.rating 2010-02-12 proposed yellow
      */
     public interface StatusListener {
+
+        /**
+         * Indicates that the component doesn't care about the style of the
+         * error.
+         */
+        int DONT_CARE = -1;
 
         /**
          * Reroute the exception to the given listener. If the listener wants to
          * modify the style it should return the style that it wants the
          * exception to have. If the component doesn't care about that
-         * particular exception it should return the {@link StatusManager#NONE}
-         * style.
+         * particular exception it should return the
+         * {@link StatusListener#DONT_CARE} style.
          * 
          * @param statusAdapter
          *            the status adapter
