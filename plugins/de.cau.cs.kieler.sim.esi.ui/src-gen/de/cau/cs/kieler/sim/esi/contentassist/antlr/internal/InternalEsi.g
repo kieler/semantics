@@ -328,9 +328,16 @@ rule__Trace__Group__1
     }
 :
 (
+(
+{ before(grammarAccess.getTraceAccess().getTicksAssignment_1()); }
+(rule__Trace__TicksAssignment_1)
+{ after(grammarAccess.getTraceAccess().getTicksAssignment_1()); }
+)
+(
 { before(grammarAccess.getTraceAccess().getTicksAssignment_1()); }
 (rule__Trace__TicksAssignment_1)*
 { after(grammarAccess.getTraceAccess().getTicksAssignment_1()); }
+)
 )
 
 ;

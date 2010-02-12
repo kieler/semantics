@@ -44,8 +44,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * 
  * @author ctr
  */
-public class EsiComponent extends JSONObjectDataComponent implements
-        IAutomatedComponent, ITraceProvider {
+public class EsiComponent extends JSONObjectDataComponent implements IAutomatedComponent,
+        ITraceProvider {
 
     private static final String[] SUPPORTED_FILES = { "kasm" };
 
@@ -58,31 +58,30 @@ public class EsiComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input)
-            throws KiemExecutionException {
+    public JSONObject step(final JSONObject input) throws KiemExecutionException {
 
         JSONObject res = new JSONObject();
         if (tracelist != null) {
-            if (!tracelist.current().hasNext() && tracelist.hasNext()) {
+            if (tracelist.current() == null && tracelist.hasNext()) {
+                tracelist.next();
+            } else if (!tracelist.current().hasNext() && tracelist.hasNext()) {
                 // pos += "! reset".length();
                 tracelist.next();
-            }
+            } 
             if (tracelist.current().hasNext()) {
-                tick tick = tracelist.current().next();
-                try {
-                    for (signal s : tick.getInput()) {
-                        if (s.isValued()) {
-                            res.accumulate(s.getName(), JSONSignalValues
-                                    .newValue(s.getVal(), true));
-                        } else {
-                            res.accumulate(s.getName(), JSONSignalValues
-                                    .newValue(true));
-                        }
+                tracelist.current().next();
+            }
+            tick tick = tracelist.current().current();
+            try {
+                for (signal s : tick.getInput()) {
+                    if (s.isValued()) {
+                        res.accumulate(s.getName(), JSONSignalValues.newValue(s.getVal(), true));
+                    } else {
+                        res.accumulate(s.getName(), JSONSignalValues.newValue(true));
                     }
-                } catch (JSONException e) {
-                    throw new KiemExecutionException(
-                            "Error building JSON Object", false, e);
                 }
+            } catch (JSONException e) {
+                throw new KiemExecutionException("Error building JSON Object", false, e);
             }
         }
 
@@ -109,8 +108,7 @@ public class EsiComponent extends JSONObjectDataComponent implements
     @Override
     public KiemProperty[] provideProperties() {
         String editorName = "";
-        IWorkbenchPage page = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         if (page != null) {
             IEditorReference[] editors = page.getEditorReferences();
             if (editors != null) {
@@ -126,10 +124,8 @@ public class EsiComponent extends JSONObjectDataComponent implements
         }
 
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Input File",
-                new KiemPropertyTypeFile(), traceFile);
-        properties[1] = new KiemProperty("Input Editor",
-                new KiemPropertyTypeEditor(), editorName);
+        properties[0] = new KiemProperty("Input File", new KiemPropertyTypeFile(), traceFile);
+        properties[1] = new KiemProperty("Input Editor", new KiemPropertyTypeEditor(), editorName);
         return properties;
     }
 
@@ -139,8 +135,7 @@ public class EsiComponent extends JSONObjectDataComponent implements
     }
 
     @Override
-    public JSONObject provideInitialVariables()
-            throws KiemInitializationException {
+    public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
         if (iteration == 0 || tracelist == null) {
             // load new trace
@@ -151,26 +146,24 @@ public class EsiComponent extends JSONObjectDataComponent implements
                 }
                 tracelist = new EsiFile(getClass(), name);
             } catch (Exception e) {
-                throw new KiemInitializationException("Cannot open trace file",
-                        true, e);
+                throw new KiemInitializationException("Cannot open trace file", true, e);
             }
         }
 
-        if (tracelist.hasNext()) {
-            tracelist.next();
+        // if (tracelist.hasNext()) {
+        // tracelist.next();
 
-            try {
+        try {
 
-                for (String s : tracelist.getInputs()) {
-                    signals.accumulate(s, JSONSignalValues.newValue(false));
-                }
-                for (String s : tracelist.getOutputs()) {
-                    signals.accumulate(s, JSONSignalValues.newValue(false));
-
-                }
-            } catch (JSONException e) {
-                // ignore
+            for (String s : tracelist.getInputs()) {
+                signals.accumulate(s, JSONSignalValues.newValue(false));
             }
+            for (String s : tracelist.getOutputs()) {
+                signals.accumulate(s, JSONSignalValues.newValue(false));
+            }
+        } catch (JSONException e) {
+            // ignore
+            // }
         }
         return signals;
     }
@@ -211,8 +204,7 @@ public class EsiComponent extends JSONObjectDataComponent implements
                     }
                     tracelist = new EsiFile(getClass(), name);
                 } catch (Exception e) {
-                    throw new KiemInitializationException(
-                            "Can't find trace file", false, e);
+                    throw new KiemInitializationException("Can't find trace file", false, e);
 
                 }
             }

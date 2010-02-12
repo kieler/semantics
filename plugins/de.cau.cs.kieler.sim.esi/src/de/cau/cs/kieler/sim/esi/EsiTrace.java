@@ -27,9 +27,10 @@ public class EsiTrace implements ITrace {
 
     private tick current = null;
 
-    private int pos = 0;
+    private int pos;
 
     public EsiTrace(trace t) {
+        pos = 0;
         this.trace = t;
     }
 
@@ -44,8 +45,7 @@ public class EsiTrace implements ITrace {
      * {@inheritDoc}
      */
     public int getRemaining() {
-        // TODO Auto-generated method stub
-        return trace.getTicks().size() - pos-1;
+        return trace.getTicks().size() - pos;
     }
 
     /**
@@ -61,9 +61,9 @@ public class EsiTrace implements ITrace {
      */
     public tick next() {
 
-        pos++;
         if (trace.getTicks().size() > pos) {
             current = trace.getTicks().get(pos);
+            pos++;
             return current;
         } else {
             return null;

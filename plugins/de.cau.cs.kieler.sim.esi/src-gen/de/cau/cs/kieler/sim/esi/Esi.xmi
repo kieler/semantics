@@ -34,7 +34,7 @@
           <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//trace"/>
         </type>
       </tokens>
-      <tokens xsi:type="xtext:Assignment" cardinality="*" feature="ticks" operator="+=">
+      <tokens xsi:type="xtext:Assignment" cardinality="+" feature="ticks" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.2"/>
       </tokens>
     </alternatives>

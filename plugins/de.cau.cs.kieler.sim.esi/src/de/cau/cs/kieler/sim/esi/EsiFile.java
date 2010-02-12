@@ -97,7 +97,7 @@ public class EsiFile implements ITraceList {
      * {@inheritDoc}
      */
     public int getRemaining() {
-        return traceList.getTraces().size() - pos - 1;
+        return traceList.getTraces().size() - pos;
     }
 
     /**
@@ -111,8 +111,8 @@ public class EsiFile implements ITraceList {
      * {@inheritDoc}
      */
     public ITrace next() {
-        pos++;
         current = new EsiTrace(traceList.getTraces().get(pos));
+        pos++;
         return current;
     }
 
@@ -121,14 +121,14 @@ public class EsiFile implements ITraceList {
      */
     public Set<String> getInputs() {
         HashSet<String> res = new HashSet<String>();
-        for(trace t: this.traceList.getTraces()){
-            for(tick tick: t.getTicks()){
-                for(signal s: tick.getInput()){
+        for (trace t : this.traceList.getTraces()) {
+            for (tick tick : t.getTicks()) {
+                for (signal s : tick.getInput()) {
                     res.add(s.getName());
                 }
             }
         }
-        
+
         return res;
     }
 
@@ -137,14 +137,14 @@ public class EsiFile implements ITraceList {
      */
     public Set<String> getOutputs() {
         HashSet<String> res = new HashSet<String>();
-        for(trace t: this.traceList.getTraces()){
-            for(tick tick: t.getTicks()){
-                for(signal s: tick.getOutput()){
+        for (trace t : this.traceList.getTraces()) {
+            for (tick tick : t.getTicks()) {
+                for (signal s : tick.getOutput()) {
                     res.add(s.getName());
                 }
             }
         }
-        
+
         return res;
     }
 

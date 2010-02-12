@@ -68,16 +68,16 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTicksTickParserRuleCall_1_0 = (RuleCall)cTicksAssignment_1.eContents().get(0);
 		
 		//trace:
-		//  {trace} ticks+=tick*;
+		//  {trace} ticks+=tick+;
 		public ParserRule getRule() { return rule; }
 
-		//{trace} ticks+=tick*
+		//{trace} ticks+=tick+
 		public Group getGroup() { return cGroup; }
 
 		//{trace}
 		public Action getTraceAction_0() { return cTraceAction_0; }
 
-		//ticks+=tick*
+		//ticks+=tick+
 		public Assignment getTicksAssignment_1() { return cTicksAssignment_1; }
 
 		//tick
@@ -224,7 +224,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//trace:
-	//  {trace} ticks+=tick*;
+	//  {trace} ticks+=tick+;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}

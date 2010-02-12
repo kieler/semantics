@@ -17,11 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.ui.core.editor.XtextEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,8 +32,6 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
 /**
  * Data-component to read traces in esi format.
@@ -72,22 +65,20 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
             if (outputs == null) {
                 outputs = tracelist.getOutputs();
             }
-            if (tracelist.current() == null || !tracelist.current().hasNext()
-                    && tracelist.hasNext()) {
-                // pos += "! reset".length();
-                tracelist.next();
-            }
-            if (tracelist.current().hasNext()) {
-                tick tick = tracelist.current().next();
+            // if (tracelist.current() == null || !tracelist.current().hasNext()
+            // && tracelist.hasNext()) {
+            // // pos += "! reset".length();
+            // tracelist.next();
+            // }
+            if (tracelist.current() != null) {
+                tick tick = tracelist.current().current();
                 boolean valid = true;
                 try {
                     // Everything in the trace is emitted
                     for (signal sig : tick.getOutput()) {
-                        System.out.println("Expect " + sig.getName());
                         if (input.has(sig.getName())) {
                             Object obj = input.get(sig.getName());
                             if (!JSONSignalValues.isPresent(obj)) {
-                                System.out.println("absent");
                                 valid = false;
                                 break;
                             }
@@ -100,7 +91,6 @@ public class OutputValidator extends JSONObjectDataComponent implements IAutomat
                             }
                         } else {
                             valid = false;
-                            System.out.println("not there");
 
                             break;
                         }

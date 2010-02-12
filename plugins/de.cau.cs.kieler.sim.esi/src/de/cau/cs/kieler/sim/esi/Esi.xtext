@@ -13,7 +13,7 @@ tracelist:
    ;
 
 trace: 
-   {trace} ((ticks+=tick )*)
+   {trace} ((ticks+=tick )+)
    ;
   
 tick:

@@ -267,11 +267,11 @@ protected class Tracelist_TracesAssignment_1_3 extends AssignmentToken  {
 /************ begin Rule trace ****************
  *
  * trace:
- *   {trace} ticks+=tick*;
+ *   {trace} ticks+=tick+;
  *
  **/
 
-// {trace} ticks+=tick*
+// {trace} ticks+=tick+
 protected class Trace_Group extends GroupToken {
 	
 	public Trace_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -287,7 +287,6 @@ protected class Trace_Group extends GroupToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Trace_TicksAssignment_1(parent, this, 0, inst);
-			case 1: return new Trace_TraceAction_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -327,7 +326,7 @@ protected class Trace_TraceAction_0 extends ActionToken  {
 	}
 }
 
-// ticks+=tick*
+// ticks+=tick+
 protected class Trace_TicksAssignment_1 extends AssignmentToken  {
 	
 	public Trace_TicksAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -349,7 +348,7 @@ protected class Trace_TicksAssignment_1 extends AssignmentToken  {
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("ticks",false)) == null) return null;
+		if((value = current.getConsumable("ticks",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("ticks");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);

@@ -202,7 +202,7 @@ ruletrace returns [EObject current=null]
 	    }
 
 )
-)*)
+)+)
 ;
 
 
