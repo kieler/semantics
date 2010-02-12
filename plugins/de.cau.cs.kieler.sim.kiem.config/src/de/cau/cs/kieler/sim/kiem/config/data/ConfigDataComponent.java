@@ -181,7 +181,8 @@ public class ConfigDataComponent extends JSONObjectDataComponent {
         } catch (KiemPropertyException e0) {
             prop = new KiemProperty(key.getString(), value);
             // get the array of properties from super class and convert to list
-            List<KiemProperty> properties = Arrays.asList(getPropertyArray());
+            List<KiemProperty> properties = Tools
+                    .arrayToList(getPropertyArray());
             // add the new property
             properties.add(prop);
             // convert back to array and set

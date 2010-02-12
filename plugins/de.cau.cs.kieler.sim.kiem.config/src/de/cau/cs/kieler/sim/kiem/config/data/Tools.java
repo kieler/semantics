@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kiem.config.data;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -217,6 +217,26 @@ public final class Tools {
     // --------------------------------------------------------------------------
 
     /**
+     * Converts an array to a list.
+     * 
+     * @param array
+     *            the array to convert
+     * @return the resulting list
+     * @param <T>
+     *            the type of the list
+     */
+    public static <T> List<T> arrayToList(final T[] array) {
+        if (array == null) {
+            return null;
+        }
+        List<T> result = new ArrayList<T>();
+        for (T t : array) {
+            result.add(t);
+        }
+        return result;
+    }
+
+    /**
      * Convert a list to a KiemProperty array.
      * 
      * @param list
@@ -242,7 +262,7 @@ public final class Tools {
     public static <Type> Type[] removeFromArray(final Type[] array,
             final int index) {
         if (array != null && index > 0 && index < array.length) {
-            List<Type> list = Arrays.asList(array);
+            List<Type> list = Tools.arrayToList(array);
             list.remove(index);
             return list.toArray(array);
         }

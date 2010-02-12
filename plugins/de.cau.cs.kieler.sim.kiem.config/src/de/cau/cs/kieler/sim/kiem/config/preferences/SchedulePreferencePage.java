@@ -183,7 +183,7 @@ public class SchedulePreferencePage extends PreferencePage implements
         ScheduleManager scheduleManager = ScheduleManager.getInstance();
 
         // get schedules from back end
-        scheduleDataList = scheduleManager.getScheduleData();
+        scheduleDataList = scheduleManager.getAllSchedules();
         Collections.sort(scheduleDataList, new ScheduleComparator());
         int scheduleCount = scheduleDataList.size();
 

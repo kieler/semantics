@@ -131,7 +131,7 @@ public final class EditorManager extends AbstractManager {
      *            the name of the editor to look for
      * @return the editor that was found or null
      */
-    public EditorDefinition getEditorByName(final String name) {
+    public EditorDefinition findEditorByName(final String name) {
         EditorDefinition result = null;
 
         for (EditorDefinition editor : getEditors()) {
@@ -160,7 +160,7 @@ public final class EditorManager extends AbstractManager {
 
             // remove the editor from all schedules
             for (ScheduleData data : ScheduleManager.getInstance()
-                    .getScheduleData()) {
+                    .getAllSchedules()) {
                 data.removeEditor(editor.getEditorId());
             }
 

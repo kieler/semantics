@@ -43,13 +43,12 @@
             editorId="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
             editorName="KASM Editor"
             editorPriority="8"
-            file="testFiles/test.execution">
-      </configurationFile>
-      <configurationFile
-            editorId="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
-            editorName="KASM Editor"
-            editorPriority="8"
             file="testFiles/krep.execution">
+         <editor
+               editorId="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
+               editorName="KASM Editor"
+               editorPriority="9">
+         </editor>
       </configurationFile>
    </extension>
    <extension

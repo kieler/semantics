@@ -105,7 +105,7 @@ public final class ScheduleManager extends AbstractManager implements
     public List<ScheduleData> getImportedSchedules() {
         List<ScheduleData> result = new LinkedList<ScheduleData>();
 
-        for (ScheduleData schedule : getScheduleData()) {
+        for (ScheduleData schedule : getAllSchedules()) {
             if (schedule.isLocked()) {
                 result.add(schedule);
             }
@@ -142,7 +142,7 @@ public final class ScheduleManager extends AbstractManager implements
                 EditorManager.getInstance().addEditor(matchingEditor);
             }
 
-            for (ScheduleData data : getScheduleData()) {
+            for (ScheduleData data : getAllSchedules()) {
                 // only add schedules that have a positive priority
                 if (data.getSupportedPriority(editorID) > ScheduleData.MIN_PRIORITY) {
                     result.add(data);
@@ -198,7 +198,7 @@ public final class ScheduleManager extends AbstractManager implements
      * 
      * @return the list of all saved schedules.
      */
-    public List<ScheduleData> getScheduleData() {
+    public List<ScheduleData> getAllSchedules() {
         loadSchedules();
         return scheduleData;
     }
@@ -215,7 +215,7 @@ public final class ScheduleManager extends AbstractManager implements
 
         if (location != null) {
 
-            for (ScheduleData data : getScheduleData()) {
+            for (ScheduleData data : getAllSchedules()) {
 
                 if (data != null && location.equals(data.getLocation())) {
                     result = data;
@@ -236,7 +236,7 @@ public final class ScheduleManager extends AbstractManager implements
     public ScheduleData getScheduleData(final String id) {
         ScheduleData result = null;
 
-        for (ScheduleData data : getScheduleData()) {
+        for (ScheduleData data : getAllSchedules()) {
 
             if (data != null && data.getId().equals(id)) {
                 result = data;
@@ -419,7 +419,7 @@ public final class ScheduleManager extends AbstractManager implements
      *            the schedule to be removed
      */
     public void removeSchedule(final ScheduleData schedule) {
-        getScheduleData().remove(schedule);
+        getAllSchedules().remove(schedule);
         // remove id from recent ids
         getRecentScheduleIds().remove(schedule.getId());
         // notify listeners of deletion
@@ -434,7 +434,7 @@ public final class ScheduleManager extends AbstractManager implements
      */
     public void removeSchedule(final String scheduleId) {
 
-        Iterator<ScheduleData> iterator = getScheduleData().iterator();
+        Iterator<ScheduleData> iterator = getAllSchedules().iterator();
         while (iterator.hasNext()) {
             ScheduleData data = iterator.next();
             if (data.getId().equals(scheduleId)) {
@@ -634,50 +634,61 @@ public final class ScheduleManager extends AbstractManager implements
                 try {
                     // get information from extension point
                     String fileName = element.getAttribute("file");
-                    String editorId = element.getAttribute("editorId");
-                    String editorPriority = element
-                            .getAttribute("editorPriority");
-                    String editorName = element.getAttribute("editorName");
 
-                    if (editorId != null && !editorId.equals("")) {
-                        // convert values
-                        IPath location = Path.fromOSString(fileName);
-                        int priority = Integer.parseInt(editorPriority);
-                        EditorIdWrapper wrapper = new EditorIdWrapper(editorId);
+                    IPath location = Path.fromOSString(fileName);
+                    // convert path into the desired format
+                    Bundle bundle = Platform.getBundle(element.getContributor()
+                            .getName());
+                    URL url = FileLocator.find(bundle, location, null);
 
-                        // convert path into the desired format
-                        Bundle bundle = Platform.getBundle(element
-                                .getContributor().getName());
-                        URL url = FileLocator.find(bundle, location, null);
+                    if (url != null) {
+                        IPath path = Path.fromOSString(url.toString());
 
-                        if (url != null) {
-                            IPath path = Path.fromOSString(url.toString());
+                        if (path.toOSString().startsWith("bundleentry:/")) {
+                            // test if the file is valid before adding it
+                            try {
+                                String urlPath = path.toOSString()
+                                        .replaceFirst("bundleentry:/",
+                                                "bundleentry://");
+                                URL pathUrl = new URL(urlPath);
 
-                            if (path.toOSString().startsWith("bundleentry:/")) {
-                                // test if the file is valid before adding it
-                                try {
-                                    String urlPath = path.toOSString()
-                                            .replaceFirst("bundleentry:/",
-                                                    "bundleentry://");
-                                    URL pathUrl = new URL(urlPath);
+                                InputStream inputStream = pathUrl.openStream();
+                                inputStream.close();
+                            } catch (IOException e0) {
+                                // file not found, don't add
+                                throw new ScheduleFileMissingException(e0, path);
+                            }
+                        }
 
-                                    InputStream inputStream = pathUrl
-                                            .openStream();
-                                    inputStream.close();
-                                } catch (IOException e0) {
-                                    // file not found, don't add
-                                    throw new ScheduleFileMissingException(e0,
-                                            path);
+                        IConfigurationElement[] children = element
+                                .getChildren();
+
+                        if (children != null && children.length > 0) {
+
+                            for (IConfigurationElement child : children) {
+                                String editorId = child
+                                        .getAttribute("editorId");
+                                String editorPriority = child
+                                        .getAttribute("editorPriority");
+                                String editorName = child
+                                        .getAttribute("editorName");
+
+                                if (editorId != null && !editorId.equals("")) {
+                                    int priority = Integer
+                                            .parseInt(editorPriority);
+                                    EditorIdWrapper wrapper = new EditorIdWrapper(
+                                            editorId);
+
+                                    // add the editor and schedule
+                                    EditorDefinition editor = EditorManager
+                                            .getInstance()
+                                            .addEditor(
+                                                    new EditorDefinition(
+                                                            editorName, wrapper));
+                                    editor.setLocked(true);
+                                    addSchedule(editor, path, priority);
                                 }
                             }
-
-                            // add the editor and schedule
-                            EditorDefinition editor = EditorManager
-                                    .getInstance().addEditor(
-                                            new EditorDefinition(editorName,
-                                                    wrapper));
-                            editor.setLocked(true);
-                            addSchedule(editor, path, priority);
                         }
                     }
                 } catch (NumberFormatException e0) {
@@ -731,7 +742,7 @@ public final class ScheduleManager extends AbstractManager implements
     public void save() {
 
         // save the schedules
-        if (!getScheduleData().isEmpty()) {
+        if (!getAllSchedules().isEmpty()) {
             StringBuilder builder = new StringBuilder();
             for (ScheduleData data : scheduleData) {
                 if (!data.getId().contains("bundleentry:")) {

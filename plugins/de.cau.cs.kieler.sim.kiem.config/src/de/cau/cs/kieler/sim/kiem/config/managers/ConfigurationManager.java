@@ -14,7 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.config.managers;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -170,7 +169,7 @@ public final class ConfigurationManager extends AbstractManager {
         KiemProperty[] properties = getDefaultConfig().getProperties();
 
         if (properties != null) {
-            List<KiemProperty> list = Arrays.asList(properties);
+            List<KiemProperty> list = Tools.arrayToList(properties);
 
             for (KiemProperty property : getInternalDefaultProperties()) {
                 list.remove(property);

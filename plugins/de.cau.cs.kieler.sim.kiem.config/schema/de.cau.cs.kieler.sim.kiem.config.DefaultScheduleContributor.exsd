@@ -14,8 +14,8 @@ to bundle .execution files with the release of an RCA for example.
 &lt;BR&gt;&lt;BR&gt;
 When the application is started the plugin checks if the linked
 execution file does actually exist. A schedule is then created
-as well as an editor provided through the editorID. Neither
-the schedule nor the editor can be removed by the user and the
+as well as all provided editors. Neither
+the schedule nor the editors can be removed by the user and the
 properties can only be changed during the current run of the application
 but are reset on the next start up.
       </documentation>
@@ -60,6 +60,9 @@ but are reset on the next start up.
 
    <element name="configurationFile">
       <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="editor"/>
+         </sequence>
          <attribute name="file" type="string" use="required">
             <annotation>
                <documentation>
@@ -70,6 +73,11 @@ but are reset on the next start up.
                </appInfo>
             </annotation>
          </attribute>
+      </complexType>
+   </element>
+
+   <element name="editor">
+      <complexType>
          <attribute name="editorId" type="string" use="required">
             <annotation>
                <documentation>
