@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.xkev/src"
-    modelPluginID="de.cau.cs.kieler.xkev" modelName="Mapping" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kev/src"
+    modelPluginID="de.cau.cs.kieler.kev" modelName="Mapping" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
   <foreignModel>Mapping.ecore</foreignModel>
-  <genPackages prefix="Mapping" basePackage="de.cau.cs.kieler.xkev" disposableProviderFactory="true"
+  <genPackages prefix="Mapping" basePackage="de.cau.cs.kieler.kev" disposableProviderFactory="true"
       ecorePackage="Mapping.ecore#/">
     <genClasses ecoreClass="Mapping.ecore#//SVGFile">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//SVGFile/filename"/>
@@ -16,25 +16,45 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//SVGElement/id"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Mapping.ecore#//Animation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Animation/port"/>
-      <genOperations ecoreOperation="Mapping.ecore#//Animation/animate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Animation/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Animation/accessID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Animation/key"/>
+      <genOperations ecoreOperation="Mapping.ecore#//Animation/getActualJSONValue">
+        <genParameters ecoreParameter="Mapping.ecore#//Animation/getActualJSONValue/jsonObject"/>
+        <genParameters ecoreParameter="Mapping.ecore#//Animation/getActualJSONValue/svgElementID"/>
+      </genOperations>
+      <genOperations ecoreOperation="Mapping.ecore#//Animation/apply">
+        <genParameters ecoreParameter="Mapping.ecore#//Animation/apply/jsonObject"/>
+        <genParameters ecoreParameter="Mapping.ecore#//Animation/apply/svgElementID"/>
+      </genOperations>
+      <genOperations ecoreOperation="Mapping.ecore#//Animation/initialize"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Opacity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Opacity/opacity"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//MovePath">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//MovePath/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//MovePath/anchor_point"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//MovePath/auto_orientation"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Rotate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Rotate/angle_range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Rotate/anchor_point"/>
     </genClasses>
     <genClasses ecoreClass="Mapping.ecore#//Move">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/input"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/x_range"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/y_range"/>
     </genClasses>
     <genClasses ecoreClass="Mapping.ecore#//Colorize">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/input"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/color"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/fill_color"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/stroke_color"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/stroke_width"/>
     </genClasses>
-    <genClasses ecoreClass="Mapping.ecore#//Textbox">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/visible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border_style"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border_color"/>
+    <genClasses ecoreClass="Mapping.ecore#//Text">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Text/text_value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Text/font_size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Text/font_family"/>
     </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//MoveTo"/>
   </genPackages>
 </genmodel:GenModel>
