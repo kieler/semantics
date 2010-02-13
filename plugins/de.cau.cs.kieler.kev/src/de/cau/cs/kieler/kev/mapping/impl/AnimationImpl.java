@@ -335,5 +335,22 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * <!-- begin-user-doc -->
+     * This method checks whether the given SVGElementID is a clone or not.
+     * Cloned elements must begin with an underscore ("_").
+     * <!-- end-user-doc -->
+     */
+    public boolean isClonedElement(String svgElementID) {
+        //If the first character of the svgElementID is an underscore ("_"), it must be a clone 
+        if (svgElementID.indexOf("_") == 0) {
+            return true;  
+        } else {
+            return false;
+        }  
+    }
+
+    
+
 
 } //AnimationImpl

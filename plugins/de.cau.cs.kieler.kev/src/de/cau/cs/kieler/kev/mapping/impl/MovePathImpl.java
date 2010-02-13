@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGLocatable;
 import org.w3c.dom.svg.SVGPoint;
@@ -328,6 +329,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                 anchorPoint.setLocation(Float.parseFloat(anchorPointValues[0]),Float.parseFloat(anchorPointValues[1]));
             }
         }
+        
     }
   
     private String computeAngle(SVGPoint p1, SVGPoint p2) {
@@ -367,13 +369,14 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             return;
         }    
         
+        //Only initialize the hashMapList once with the values for xPos, yPos and angle
         SVGDocument doc = EclipseJSVGCanvas.getInstance().getSVGDocument();
-        if (hashMapList == null) {
+        if (hashMapList == null && doc != null) {
             hashMapList = new HashMap<String, HashMap<String,String>>();
             SVGOMPathElement path;
             path = (SVGOMPathElement) doc.getElementById(getPath());
             if (path == null) {
-                Activator.reportDebugMessage("The svg-path element with id[" + svgElementID + "] does not exists.");
+                Activator.reportDebugMessage("The SVG path-element with id[" + getPath()+ "] does not exists.");
                 return;
             }
             ArrayList<String> inputArray, xPos, yPos, angle;
@@ -403,12 +406,30 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             hashMapList.put("yPos",mapAnimation.mapInputToOutput(inputArray, yPos));
             hashMapList.put("angle",mapAnimation.mapInputToOutput(inputArray, angle));
             
-        }
-        
+        } 
+
         RunnableAnimation runnableAnimation = new RunnableAnimation((JSONObject) jsonObject, svgElementID) {
             
             public void run() {
                 Element elem = getSVGElement();
+                //Check whether the Element is a clone and not already created
+                if (elem == null && isClonedElement(getSVGElementID())) {
+                    SVGDocument doc = EclipseJSVGCanvas.getInstance().getSVGDocument();
+                    String originalID = getSVGElementID().substring(1,getSVGElementID().lastIndexOf("_"));
+                    
+                    System.out.println("Original: "+originalID+ " Clone: "+getSVGElementID());
+                    
+                    Element original, clone;
+                    original = doc.getElementById(originalID);
+                    clone = (Element) original.cloneNode(true);//We need a deep clone with all child elements if exists (see the text-element for example)
+                    clone.setAttribute("id", getSVGElementID());//Now the new id of the Element needs to be set
+                    
+                    Node parentNode = original.getParentNode();
+                    parentNode.appendChild(clone);//Append the new Element to the DOM-Tree
+                    
+                    elem = clone;//Set the pointer to the cloned element
+                }
+                
                 String jsonValue = getActualJSONValue(getJSONObject(), getSVGElementID());
                 if (jsonValue != null) {
                     //Now apply the animation

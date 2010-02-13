@@ -19,4 +19,10 @@
     <animation xsi:type="mapping:Colorize" key="color" input="on" fill_color="$cRed"/>
     <animation xsi:type="mapping:Colorize" key="pGreen.value" input="off" fill_color="#626262"/>
   </svgElement>
+  
+  <svgElement id="pGreen">
+    <animation xsi:type="mapping:Colorize" key="color" input="on" fill_color="$cRed"/>
+    <animation xsi:type="mapping:Colorize" key="pGreen.value" input="off" fill_color="#626262"/>
+  </svgElement>
+  
 </mapping:SVGFile>

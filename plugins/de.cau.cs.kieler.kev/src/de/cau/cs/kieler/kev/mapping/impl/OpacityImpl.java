@@ -187,6 +187,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     //Computes the range values
     private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
         ArrayList<String> range = new ArrayList<String>();
+        value = value.replaceAll("\\s","");//Delete any whitespace character
         if (Pattern.matches("[-]?\\d+[.]{2,3}[-]?\\d+", value)) {
             Scanner sc = new Scanner(value).useDelimiter("[.]+");
             //We have exactly two values
@@ -215,7 +216,6 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 range.add(value);
             }
         } //else we have invalid values for move x_range and y_range
-//        System.out.println("Range size:"+ range.size());
         return range;
     }
 
@@ -270,11 +270,11 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         ArrayList<String> inputArray, opacityRange;
         inputArray = mapAnimation.attributeParser(getInput(), true);
         opacityRange = computeRange(getOpacity(), inputArray.size());
-//        System.out.println("Input: "+inputArray);
-//        System.out.println("Output: "+opacityRange);
+        System.out.println("Input: "+inputArray);
+        System.out.println("Output: "+opacityRange);
         
         hashMapOpacityRange = mapAnimation.mapInputToOutput(inputArray, opacityRange);
-//        System.out.println(hashMapOpacityRange);
+        System.out.println(hashMapOpacityRange);
     }
 
 } //OpacityImpl

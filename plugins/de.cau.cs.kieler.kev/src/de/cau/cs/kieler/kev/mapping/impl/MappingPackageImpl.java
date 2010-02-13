@@ -574,6 +574,9 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         addEOperation(animationEClass, null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+        op = addEOperation(animationEClass, ecorePackage.getEBoolean(), "isClonedElement", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "svgElementID", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(opacityEClass, Opacity.class, "Opacity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOpacity_Opacity(), ecorePackage.getEString(), "opacity", null, 0, 1, Opacity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

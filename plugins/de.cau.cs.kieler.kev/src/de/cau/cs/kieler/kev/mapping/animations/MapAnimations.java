@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -65,8 +66,8 @@ public class MapAnimations {
     /**
      * The HashMap with SVG element id's as the keys and a list of animations as values.
      */
-    private Map<String, EList<Animation>> svgElementsHashMap = null;
-
+    private HashMap<String, EList<Animation>> svgElementsHashMap = null;
+    
     /**
      * The default constructor.
      */
@@ -301,7 +302,10 @@ public class MapAnimations {
      * 
      */
     private synchronized void createHashMap(final SVGFile mappingFile) {
-        this.svgElementsHashMap = new HashMap<String, EList<Animation>>();
+        //Create a new clonemap with all cloned elements (if exists)
+        HashMap<String, ArrayList<String>> cloneMap = new HashMap<String, ArrayList<String>>();
+                
+        svgElementsHashMap = new HashMap<String, EList<Animation>>();
         Iterator<SVGElement> elementIterator = mappingFile.getSvgElement().iterator();
         SVGElement svgElement;
         Iterator<Animation> animationIterator;
@@ -312,7 +316,23 @@ public class MapAnimations {
             while (animationIterator.hasNext()) {
                 animationIterator.next().initialize();
             }
-            this.svgElementsHashMap.put(svgElement.getId(), svgElement.getAnimation());
+            //If an Element already exists in the hashmap, we add new clone of this element to the hashmap
+            //and add the new clone name to the clone list
+            if (svgElementsHashMap.containsKey(svgElement.getId())) {
+                ArrayList<String> clones = cloneMap.get(svgElement.getId());
+                String cloneName;
+                if (clones != null) {
+                    cloneName = "_" + svgElement.getId() + "_" + (clones.size()+1);
+                } else {
+                    clones = new ArrayList<String>();
+                    cloneName = "_" + svgElement.getId() + "_1";
+                }
+                clones.add(cloneName);
+                cloneMap.put(svgElement.getId(), clones);
+                svgElementsHashMap.put(cloneName, svgElement.getAnimation());
+            } else {
+                svgElementsHashMap.put(svgElement.getId(), svgElement.getAnimation());
+            }
         }
     }
 
@@ -477,12 +497,11 @@ public class MapAnimations {
         String pattern;
         // Allow all chars, except these ","
         pattern = "[^,]+";
-        
         if (input != null) {
             if (Pattern.matches("([^,]+[,])*[^,]+", input)) {
                 // Correct brackets for a valid list
                 // System.out.println("Korrekte Liste: "+input);//delimeter is , + whitespace
-                Scanner inputScanner = new Scanner(input).useDelimiter("\\s*,\\s*");
+                Scanner inputScanner = new Scanner(input).useDelimiter("\\s*[,]\\s*");
                 while (inputScanner.hasNext()) {
                     // This means a range plus a distance between [number1]:[number2]
                     if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {// Test if the

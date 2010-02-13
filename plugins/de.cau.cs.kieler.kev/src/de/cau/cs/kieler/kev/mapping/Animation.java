@@ -134,4 +134,12 @@ public interface Animation extends EObject {
      */
     void initialize();
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    boolean isClonedElement(String svgElementID);
+
 } // RunnableAnimation
