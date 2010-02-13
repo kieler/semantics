@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.krep.editors.rif/src-gen"
+    editDirectory="/de.cau.cs.kieler.krep.editors.rif.edit/src" editorDirectory="/de.cau.cs.kieler.krep.editors.rif.editor/src"
+    modelPluginID="de.cau.cs.kieler.krep.editors.rif" forceOverwrite="true" modelName="Rif"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.krep.editors.rif.edit"
+    editorPluginID="de.cau.cs.kieler.krep.editors.rif.editor">
+  <genPackages prefix="Rif" basePackage="de.cau.cs.kieler.krep.editors.rif" disposableProviderFactory="true"
+      ecorePackage="Rif.ecore#/">
+    <genClasses ecoreClass="Rif.ecore#//Trace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Trace/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Trace/outputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Trace/local"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Trace/tick"/>
+    </genClasses>
+    <genClasses ecoreClass="Rif.ecore#//decl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//decl/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//decl/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Rif.ecore#//Tick">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Tick/nr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Tick/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Tick/output"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Tick/local"/>
+    </genClasses>
+    <genClasses ecoreClass="Rif.ecore#//Data">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/intVal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/true"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/false"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

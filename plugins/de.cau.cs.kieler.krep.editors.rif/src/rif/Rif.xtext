@@ -1,0 +1,26 @@
+
+grammar de.cau.cs.kieler.krep.editors.rif.Rif with org.eclipse.xtext.common.Terminals
+
+generate rif "http://www.cau.de/cs/kieler/krep/editors/rif/Rif"
+
+
+Trace: '#@inputs' inputs+=decl*  '@#'
+       '#@outputs' outputs+=decl* '@#' 
+       '#@locals' local+=decl*  '@#' tick+=Tick+ ;
+
+
+decl: '"' name=ID  '":' type=Type;
+
+Type :  'bool' 
+        | 'int';
+  
+Tick : {Tick} '#step'  nr=INT  
+         input+=Data* 
+         '#outs' output+=Data* 
+         '#locs' local+=Data* ;
+
+Data:   intVal=INT
+        | true?='T' 
+        | false?='F' 
+        ;
+        
