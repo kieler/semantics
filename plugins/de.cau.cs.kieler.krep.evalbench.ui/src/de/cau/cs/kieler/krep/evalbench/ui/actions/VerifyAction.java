@@ -46,6 +46,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.KlpProtocol;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.LstAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
@@ -185,8 +186,12 @@ public class VerifyAction extends Action {
                             s[ROM_COMMENT] = "no trace found";
                         } else {
 
-                            ICommunicationProtocol krep = new KepProtocol(new JNIConnection(
-                                    protocol, logFile));
+                            ICommunicationProtocol krep;
+                            if (protocol.equals(ICommunicationProtocol.P_KEP)) {
+                                krep = new KepProtocol(new JNIConnection(protocol, logFile));
+                            } else {
+                                krep = new KlpProtocol(new JNIConnection(protocol, logFile));
+                            }
                             if (krepView != null) {
                                 krep.addCommunicationListener(krepView);
                             }
