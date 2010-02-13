@@ -29,7 +29,7 @@ Decl returns klp::Decl : scope=Scope reg= Reg;
 SetClk returns klp::SetClk : 'SETCLK' reg=Reg clk= Reg;
 SetPC returns klp::SetPC : 'SETPC' reg=Reg label= Label;
 Prio returns klp::Prio : 'PRIO' reg=Reg? prio=INT;
-Done returns klp::Done : 'DONE' pc=Label?;
+Done returns klp::Done :  'DONE' pc=Label;
 Binop returns klp::Binop : op = Operator to=Reg arg1= Read (arg2=Read | val=INT );
 Jmp returns klp::Jmp : 'JMP' label=Label; 
 CJmp returns klp::CJmp : cond = JumpKind reg=Read label=Label;
