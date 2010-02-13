@@ -18,6 +18,7 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.services.InterfaceDeclGra
  * example
  * 
  * @author uru
+ * @author car
  */
 public class InterfaceDeclFormatter extends AbstractDeclarativeFormatter {
 
@@ -47,7 +48,12 @@ public class InterfaceDeclFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(ga.getOutputSignalsAccess().getCommaKeyword_0_1_0());
         c.setNoSpace().before(ga.getInOutputSignalsAccess().getCommaKeyword_0_1_0());
         c.setNoSpace().before(ga.getSignalsAccess().getCommaKeyword_0_1_0());
-        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_2_0_2_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_2_1_2_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_0_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_0_3_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_1_0());
+        c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_1_3_0());
         // as well as semicolon
         c.setNoSpace().before(ga.getInputSignalsAccess().getSemicolonKeyword_1());
         c.setNoSpace().before(ga.getOutputSignalsAccess().getSemicolonKeyword_1());

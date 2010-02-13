@@ -222,7 +222,8 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
                 resource.save(outputStream, saveOptions);
             }
 
-            //System.out.println("######Serialized result: " + outputStream.toString());
+            // System.out.println("######Serialized result: " +
+            // outputStream.toString());
 
             // set the interface declaration string
             String result = outputStream.toString();
@@ -269,6 +270,8 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             serializeLogic.handleSignalModify(se, changedSignal, searchForName);
         } else if (occurredChange == NEW) {
             serializeLogic.handleNewSignal(se, changedSignal);
+        } else if (occurredChange == NAME) {
+            serializeLogic.handleSignalModify(se, changedSignal, searchForName);
         } else if (occurredChange == INPUT) {
             serializeLogic.handleInputChange(se, changedSignal, searchForName);
         } else if (occurredChange == OUTPUT) {

@@ -38,8 +38,15 @@ StateExtend:
 	;
 
 RegionSignalDec:
-	region = [synccharts::Region|ID] ":" ("signal" signals += Signal | vars += Variable) 
-	("," ("signal" signals += Signal | vars += Variable))* ";"
+	region = [synccharts::Region|ID] ":" (
+	("var" vars+=Variable ("," (vars+=Variable))*) |
+	("signal" signals+=Signal ("," (signals+=Signal))*) 	
+	)
+	(
+	("," "var" vars+=Variable ("," (vars+=Variable))*) |
+	("," "signal" signals+=Signal ("," (signals+=Signal))*) 	
+	)* 
+	";"
 	;
 
 Signals:
@@ -58,13 +65,12 @@ InOutputSignals:
 	(signals+=Signal ("," (signals+=Signal))*) ";"
 	;
 
-
 //==============================================================================
 // synccharts elements as needed
 //==============================================================================
 
 Signal returns synccharts::Signal:
-	
+ 
 	(
 	name=ID |
 	name=ID (":=" initialValue=STRING) |
@@ -78,9 +84,7 @@ Signal returns synccharts::Signal:
 	;
 		
 	
-	// not working correctly yet
 Variable returns synccharts::Variable:
-	"var"
 	name=ID
 	(":=" initialValue=STRING)?
 	(type=ValueType)?

@@ -18,8 +18,8 @@
     </genClasses>
     <genClasses ecoreClass="InterfaceDecl.ecore#//RegionSignalDec">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/region"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/vars"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/signals"/>
     </genClasses>
     <genClasses ecoreClass="InterfaceDecl.ecore#//Signals">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//Signals/signals"/>

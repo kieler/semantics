@@ -37,8 +37,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl#getRegion <em>Region</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl#getVars <em>Vars</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl#getSignals <em>Signals</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,16 +57,6 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
   protected Region region;
 
   /**
-   * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSignals()
-   * @generated
-   * @ordered
-   */
-  protected EList<Signal> signals;
-
-  /**
    * The cached value of the '{@link #getVars() <em>Vars</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -75,6 +65,16 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<Variable> vars;
+
+  /**
+   * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignals()
+   * @generated
+   * @ordered
+   */
+  protected EList<Signal> signals;
 
   /**
    * <!-- begin-user-doc -->
@@ -145,20 +145,6 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Signal> getSignals()
-  {
-    if (signals == null)
-    {
-      signals = new EObjectContainmentEList<Signal>(Signal.class, this, InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS);
-    }
-    return signals;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Variable> getVars()
   {
     if (vars == null)
@@ -173,15 +159,29 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Signal> getSignals()
+  {
+    if (signals == null)
+    {
+      signals = new EObjectContainmentEList<Signal>(Signal.class, this, InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS);
+    }
+    return signals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
-        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__VARS:
         return ((InternalEList<?>)getVars()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
+        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -199,10 +199,10 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__REGION:
         if (resolve) return getRegion();
         return basicGetRegion();
-      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
-        return getSignals();
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__VARS:
         return getVars();
+      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
+        return getSignals();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,13 +221,13 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__REGION:
         setRegion((Region)newValue);
         return;
-      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
-        getSignals().clear();
-        getSignals().addAll((Collection<? extends Signal>)newValue);
-        return;
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__VARS:
         getVars().clear();
         getVars().addAll((Collection<? extends Variable>)newValue);
+        return;
+      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
+        getSignals().clear();
+        getSignals().addAll((Collection<? extends Signal>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -246,11 +246,11 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__REGION:
         setRegion((Region)null);
         return;
-      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
-        getSignals().clear();
-        return;
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__VARS:
         getVars().clear();
+        return;
+      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
+        getSignals().clear();
         return;
     }
     super.eUnset(featureID);
@@ -268,10 +268,10 @@ public class RegionSignalDecImpl extends MinimalEObjectImpl.Container implements
     {
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__REGION:
         return region != null;
-      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
-        return signals != null && !signals.isEmpty();
       case InterfaceDeclPackage.REGION_SIGNAL_DEC__VARS:
         return vars != null && !vars.isEmpty();
+      case InterfaceDeclPackage.REGION_SIGNAL_DEC__SIGNALS:
+        return signals != null && !signals.isEmpty();
     }
     return super.eIsSet(featureID);
   }

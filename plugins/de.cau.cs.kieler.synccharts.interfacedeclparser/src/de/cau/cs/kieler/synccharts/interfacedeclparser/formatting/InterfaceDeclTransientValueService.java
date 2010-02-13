@@ -29,6 +29,7 @@ import de.cau.cs.kieler.synccharts.ValueType;
  * be serialized even though it's set.
  * 
  * @author uru
+ * @author car
  * 
  */
 public class InterfaceDeclTransientValueService extends DefaultTransientValueService {

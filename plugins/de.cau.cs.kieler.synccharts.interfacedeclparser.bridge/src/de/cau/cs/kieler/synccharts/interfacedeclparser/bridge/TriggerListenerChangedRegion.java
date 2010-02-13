@@ -74,7 +74,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      */
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        System.out.println("RegionTrigger: " + notification);
+        // System.out.println("RegionTrigger: " + notification);
         // either signal or variable
         ValuedObject vo = (ValuedObject) notification.getNotifier();
         if (!(vo.eContainer() instanceof Region)) {

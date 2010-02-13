@@ -143,22 +143,22 @@ public interface InterfaceDeclPackage extends EPackage
   int REGION_SIGNAL_DEC__REGION = 0;
 
   /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REGION_SIGNAL_DEC__SIGNALS = 1;
-
-  /**
    * The feature id for the '<em><b>Vars</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REGION_SIGNAL_DEC__VARS = 2;
+  int REGION_SIGNAL_DEC__VARS = 1;
+
+  /**
+   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION_SIGNAL_DEC__SIGNALS = 2;
 
   /**
    * The number of structural features of the '<em>Region Signal Dec</em>' class.
@@ -369,17 +369,6 @@ public interface InterfaceDeclPackage extends EPackage
   EReference getRegionSignalDec_Region();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals <em>Signals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals()
-   * @see #getRegionSignalDec()
-   * @generated
-   */
-  EReference getRegionSignalDec_Signals();
-
-  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getVars <em>Vars</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -389,6 +378,17 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    */
   EReference getRegionSignalDec_Vars();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals <em>Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Signals</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals()
+   * @see #getRegionSignalDec()
+   * @generated
+   */
+  EReference getRegionSignalDec_Signals();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals <em>Signals</em>}'.
@@ -566,20 +566,20 @@ public interface InterfaceDeclPackage extends EPackage
     EReference REGION_SIGNAL_DEC__REGION = eINSTANCE.getRegionSignalDec_Region();
 
     /**
-     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REGION_SIGNAL_DEC__SIGNALS = eINSTANCE.getRegionSignalDec_Signals();
-
-    /**
      * The meta object literal for the '<em><b>Vars</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference REGION_SIGNAL_DEC__VARS = eINSTANCE.getRegionSignalDec_Vars();
+
+    /**
+     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REGION_SIGNAL_DEC__SIGNALS = eINSTANCE.getRegionSignalDec_Signals();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.SignalsImpl <em>Signals</em>}' class.

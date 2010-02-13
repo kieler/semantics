@@ -23,8 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getRegion <em>Region</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getVars <em>Vars</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec#getSignals <em>Signals</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,22 +61,6 @@ public interface RegionSignalDec extends EObject
   void setRegion(Region value);
 
   /**
-   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.synccharts.Signal}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Signals</em>' containment reference list.
-   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage#getRegionSignalDec_Signals()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Signal> getSignals();
-
-  /**
    * Returns the value of the '<em><b>Vars</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.synccharts.Variable}.
    * <!-- begin-user-doc -->
@@ -91,5 +75,21 @@ public interface RegionSignalDec extends EObject
    * @generated
    */
   EList<Variable> getVars();
+
+  /**
+   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.Signal}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signals</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage#getRegionSignalDec_Signals()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Signal> getSignals();
 
 } // RegionSignalDec

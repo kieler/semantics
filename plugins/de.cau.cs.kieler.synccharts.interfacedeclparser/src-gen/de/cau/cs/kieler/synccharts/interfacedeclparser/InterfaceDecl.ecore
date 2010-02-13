@@ -18,10 +18,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegionSignalDec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Variable"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Variable"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signals">

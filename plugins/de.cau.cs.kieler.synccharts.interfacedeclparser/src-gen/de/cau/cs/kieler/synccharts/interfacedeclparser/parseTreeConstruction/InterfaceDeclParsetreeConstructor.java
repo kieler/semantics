@@ -59,6 +59,22 @@ protected class ThisRootNode extends RootToken {
  * //==============================================================================
  * // "Buckets" containing the Signals / Regions with Signals
  * //==============================================================================
+ * 
+ * 
+ * 	
+ * 	    
+ * 	
+ * 	    
+ * 	
+ * 	       
+ * 	
+ * 	    	
+ * 
+ * 	
+ * 	
+ * 	
+ * 
+ * // also allow lists of signals and vars ?
  *
  **/
 
@@ -534,13 +550,17 @@ protected class StateExtend_RegionsAssignment_4 extends AssignmentToken  {
 /************ begin Rule RegionSignalDec ****************
  *
  * RegionSignalDec:
- *   region=[synccharts::Region] ":" ("signal" signals+=Signal|vars+=Variable) ("," (
- *   "signal" signals+=Signal|vars+=Variable))* ";";
+ *   region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
+ *   signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)*
+ *   |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"; 
+ * 
+ * // also allow lists of signals and vars ?
  *
  **/
 
-// region=[synccharts::Region] ":" ("signal" signals+=Signal|vars+=Variable) ("," (
-// "signal" signals+=Signal|vars+=Variable))* ";"
+// region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
+// signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)*
+// |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"
 protected class RegionSignalDec_Group extends GroupToken {
 	
 	public RegionSignalDec_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -625,7 +645,8 @@ protected class RegionSignalDec_ColonKeyword_1 extends KeywordToken  {
 		
 }
 
-// "signal" signals+=Signal|vars+=Variable
+// "var" vars+=Variable ("," vars+=Variable)*|"signal" signals+=Signal ("," signals+=
+// Signal)*
 protected class RegionSignalDec_Alternatives_2 extends AlternativesToken {
 
 	public RegionSignalDec_Alternatives_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -641,14 +662,14 @@ protected class RegionSignalDec_Alternatives_2 extends AlternativesToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new RegionSignalDec_Group_2_0(parent, this, 0, inst);
-			case 1: return new RegionSignalDec_VarsAssignment_2_1(parent, this, 1, inst);
+			case 1: return new RegionSignalDec_Group_2_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// "signal" signals+=Signal
+// "var" vars+=Variable ("," vars+=Variable)*
 protected class RegionSignalDec_Group_2_0 extends GroupToken {
 	
 	public RegionSignalDec_Group_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -663,7 +684,192 @@ protected class RegionSignalDec_Group_2_0 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new RegionSignalDec_SignalsAssignment_2_0_1(parent, this, 0, inst);
+			case 0: return new RegionSignalDec_Group_2_0_2(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_VarsAssignment_2_0_1(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "var"
+protected class RegionSignalDec_VarKeyword_2_0_0 extends KeywordToken  {
+	
+	public RegionSignalDec_VarKeyword_2_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getVarKeyword_2_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_ColonKeyword_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class RegionSignalDec_VarsAssignment_2_0_1 extends AssignmentToken  {
+	
+	public RegionSignalDec_VarsAssignment_2_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("vars",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("vars");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_2_0_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new RegionSignalDec_VarKeyword_2_0_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("," vars+=Variable)*
+protected class RegionSignalDec_Group_2_0_2 extends GroupToken {
+	
+	public RegionSignalDec_Group_2_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_2_0_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_VarsAssignment_2_0_2_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class RegionSignalDec_CommaKeyword_2_0_2_0 extends KeywordToken  {
+	
+	public RegionSignalDec_CommaKeyword_2_0_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_0_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_2_0_2(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_VarsAssignment_2_0_1(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class RegionSignalDec_VarsAssignment_2_0_2_1 extends AssignmentToken  {
+	
+	public RegionSignalDec_VarsAssignment_2_0_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("vars",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("vars");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_2_0_2_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new RegionSignalDec_CommaKeyword_2_0_2_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+// "signal" signals+=Signal ("," signals+=Signal)*
+protected class RegionSignalDec_Group_2_1 extends GroupToken {
+	
+	public RegionSignalDec_Group_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_2_1_2(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_SignalsAssignment_2_1_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -671,15 +877,15 @@ protected class RegionSignalDec_Group_2_0 extends GroupToken {
 }
 
 // "signal"
-protected class RegionSignalDec_SignalKeyword_2_0_0 extends KeywordToken  {
+protected class RegionSignalDec_SignalKeyword_2_1_0 extends KeywordToken  {
 	
-	public RegionSignalDec_SignalKeyword_2_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public RegionSignalDec_SignalKeyword_2_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getSignalKeyword_2_0_0();
+		return grammarAccess.getRegionSignalDecAccess().getSignalKeyword_2_1_0();
 	}
 
     @Override
@@ -693,15 +899,15 @@ protected class RegionSignalDec_SignalKeyword_2_0_0 extends KeywordToken  {
 }
 
 // signals+=Signal
-protected class RegionSignalDec_SignalsAssignment_2_0_1 extends AssignmentToken  {
+protected class RegionSignalDec_SignalsAssignment_2_1_1 extends AssignmentToken  {
 	
-	public RegionSignalDec_SignalsAssignment_2_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public RegionSignalDec_SignalsAssignment_2_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_2_0_1();
+		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_2_1_1();
 	}
 
     @Override
@@ -720,7 +926,7 @@ protected class RegionSignalDec_SignalsAssignment_2_0_1 extends AssignmentToken 
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_2_0_1_0(); 
+				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_2_1_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -732,76 +938,28 @@ protected class RegionSignalDec_SignalsAssignment_2_0_1 extends AssignmentToken 
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new RegionSignalDec_SignalKeyword_2_0_0(parent, next, actIndex, consumed);
+			case 0: return new RegionSignalDec_SignalKeyword_2_1_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
-
-// vars+=Variable
-protected class RegionSignalDec_VarsAssignment_2_1 extends AssignmentToken  {
+// ("," signals+=Signal)*
+protected class RegionSignalDec_Group_2_1_2 extends GroupToken {
 	
-	public RegionSignalDec_VarsAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("vars",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("vars");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_2_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new RegionSignalDec_ColonKeyword_1(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-// ("," ("signal" signals+=Signal|vars+=Variable))*
-protected class RegionSignalDec_Group_3 extends GroupToken {
-	
-	public RegionSignalDec_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public RegionSignalDec_Group_2_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getGroup_3();
+		return grammarAccess.getRegionSignalDecAccess().getGroup_2_1_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new RegionSignalDec_Alternatives_3_1(parent, this, 0, inst);
+			case 0: return new RegionSignalDec_SignalsAssignment_2_1_2_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -809,89 +967,22 @@ protected class RegionSignalDec_Group_3 extends GroupToken {
 }
 
 // ","
-protected class RegionSignalDec_CommaKeyword_3_0 extends KeywordToken  {
+protected class RegionSignalDec_CommaKeyword_2_1_2_0 extends KeywordToken  {
 	
-	public RegionSignalDec_CommaKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public RegionSignalDec_CommaKeyword_2_1_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0();
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_1_2_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new RegionSignalDec_Group_3(parent, this, 0, inst);
-			case 1: return new RegionSignalDec_Alternatives_2(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "signal" signals+=Signal|vars+=Variable
-protected class RegionSignalDec_Alternatives_3_1 extends AlternativesToken {
-
-	public RegionSignalDec_Alternatives_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Alternatives getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getAlternatives_3_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new RegionSignalDec_Group_3_1_0(parent, this, 0, inst);
-			case 1: return new RegionSignalDec_VarsAssignment_3_1_1(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "signal" signals+=Signal
-protected class RegionSignalDec_Group_3_1_0 extends GroupToken {
-	
-	public RegionSignalDec_Group_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getGroup_3_1_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new RegionSignalDec_SignalsAssignment_3_1_0_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "signal"
-protected class RegionSignalDec_SignalKeyword_3_1_0_0 extends KeywordToken  {
-	
-	public RegionSignalDec_SignalKeyword_3_1_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getSignalKeyword_3_1_0_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new RegionSignalDec_CommaKeyword_3_0(parent, this, 0, inst);
+			case 0: return new RegionSignalDec_Group_2_1_2(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_SignalsAssignment_2_1_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -899,15 +990,15 @@ protected class RegionSignalDec_SignalKeyword_3_1_0_0 extends KeywordToken  {
 }
 
 // signals+=Signal
-protected class RegionSignalDec_SignalsAssignment_3_1_0_1 extends AssignmentToken  {
+protected class RegionSignalDec_SignalsAssignment_2_1_2_1 extends AssignmentToken  {
 	
-	public RegionSignalDec_SignalsAssignment_3_1_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public RegionSignalDec_SignalsAssignment_2_1_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_0_1();
+		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_2_1_2_1();
 	}
 
     @Override
@@ -920,13 +1011,13 @@ protected class RegionSignalDec_SignalsAssignment_3_1_0_1 extends AssignmentToke
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("signals",true)) == null) return null;
+		if((value = current.getConsumable("signals",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("signals");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_3_1_0_1_0(); 
+				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_2_1_2_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -938,23 +1029,117 @@ protected class RegionSignalDec_SignalsAssignment_3_1_0_1 extends AssignmentToke
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new RegionSignalDec_SignalKeyword_3_1_0_0(parent, next, actIndex, consumed);
+			case 0: return new RegionSignalDec_CommaKeyword_2_1_2_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
 
-// vars+=Variable
-protected class RegionSignalDec_VarsAssignment_3_1_1 extends AssignmentToken  {
+
+
+// ("," "var" vars+=Variable ("," vars+=Variable)*|"," "signal" signals+=Signal (","
+// signals+=Signal)*)*
+protected class RegionSignalDec_Alternatives_3 extends AlternativesToken {
+
+	public RegionSignalDec_Alternatives_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
 	
-	public RegionSignalDec_VarsAssignment_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	@Override
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getAlternatives_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_3_0(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_Group_3_1(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "," "var" vars+=Variable ("," vars+=Variable)*
+protected class RegionSignalDec_Group_3_0 extends GroupToken {
+	
+	public RegionSignalDec_Group_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_3_0_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_VarsAssignment_3_0_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class RegionSignalDec_CommaKeyword_3_0_0 extends KeywordToken  {
+	
+	public RegionSignalDec_CommaKeyword_3_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Alternatives_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_Alternatives_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "var"
+protected class RegionSignalDec_VarKeyword_3_0_1 extends KeywordToken  {
+	
+	public RegionSignalDec_VarKeyword_3_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getVarKeyword_3_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_CommaKeyword_3_0_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class RegionSignalDec_VarsAssignment_3_0_2 extends AssignmentToken  {
+	
+	public RegionSignalDec_VarsAssignment_3_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_1_1();
+		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_0_2();
 	}
 
     @Override
@@ -973,7 +1158,7 @@ protected class RegionSignalDec_VarsAssignment_3_1_1 extends AssignmentToken  {
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_3_1_1_0(); 
+				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_3_0_2_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -985,11 +1170,310 @@ protected class RegionSignalDec_VarsAssignment_3_1_1 extends AssignmentToken  {
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new RegionSignalDec_CommaKeyword_3_0(parent, next, actIndex, consumed);
+			case 0: return new RegionSignalDec_VarKeyword_3_0_1(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
+
+// ("," vars+=Variable)*
+protected class RegionSignalDec_Group_3_0_3 extends GroupToken {
+	
+	public RegionSignalDec_Group_3_0_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_3_0_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_VarsAssignment_3_0_3_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class RegionSignalDec_CommaKeyword_3_0_3_0 extends KeywordToken  {
+	
+	public RegionSignalDec_CommaKeyword_3_0_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_3_0_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_VarsAssignment_3_0_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class RegionSignalDec_VarsAssignment_3_0_3_1 extends AssignmentToken  {
+	
+	public RegionSignalDec_VarsAssignment_3_0_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_0_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("vars",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("vars");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_3_0_3_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new RegionSignalDec_CommaKeyword_3_0_3_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+// "," "signal" signals+=Signal ("," signals+=Signal)*
+protected class RegionSignalDec_Group_3_1 extends GroupToken {
+	
+	public RegionSignalDec_Group_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_3_1_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_SignalsAssignment_3_1_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class RegionSignalDec_CommaKeyword_3_1_0 extends KeywordToken  {
+	
+	public RegionSignalDec_CommaKeyword_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Alternatives_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_Alternatives_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "signal"
+protected class RegionSignalDec_SignalKeyword_3_1_1 extends KeywordToken  {
+	
+	public RegionSignalDec_SignalKeyword_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getSignalKeyword_3_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_CommaKeyword_3_1_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// signals+=Signal
+protected class RegionSignalDec_SignalsAssignment_3_1_2 extends AssignmentToken  {
+	
+	public RegionSignalDec_SignalsAssignment_3_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Signal_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("signals",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("signals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_3_1_2_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new RegionSignalDec_SignalKeyword_3_1_1(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("," signals+=Signal)*
+protected class RegionSignalDec_Group_3_1_3 extends GroupToken {
+	
+	public RegionSignalDec_Group_3_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getGroup_3_1_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_SignalsAssignment_3_1_3_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class RegionSignalDec_CommaKeyword_3_1_3_0 extends KeywordToken  {
+	
+	public RegionSignalDec_CommaKeyword_3_1_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new RegionSignalDec_Group_3_1_3(parent, this, 0, inst);
+			case 1: return new RegionSignalDec_SignalsAssignment_3_1_2(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// signals+=Signal
+protected class RegionSignalDec_SignalsAssignment_3_1_3_1 extends AssignmentToken  {
+	
+	public RegionSignalDec_SignalsAssignment_3_1_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Signal_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("signals",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("signals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_3_1_3_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new RegionSignalDec_CommaKeyword_3_1_3_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
 
 
 
@@ -1008,7 +1492,7 @@ protected class RegionSignalDec_SemicolonKeyword_4 extends KeywordToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new RegionSignalDec_Group_3(parent, this, 0, inst);
+			case 0: return new RegionSignalDec_Alternatives_3(parent, this, 0, inst);
 			case 1: return new RegionSignalDec_Alternatives_2(parent, this, 1, inst);
 			default: return null;
 		}	
@@ -1692,7 +2176,6 @@ protected class OutputSignals_SemicolonKeyword_1 extends KeywordToken  {
  * 	      
  * 	
  * 
- * 
  * //==============================================================================
  * // synccharts elements as needed
  * //==============================================================================
@@ -1924,27 +2407,9 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
  *   =CombineOperator)|name=ID ("combine" hostType=STRING "with" hostCombineOperator=
  *   STRING); 
  * 
- * 
  * //==============================================================================
  * // synccharts elements as needed
  * //==============================================================================
- * 
- *     
- * 	
- * 	
- * 	  
- * 	      
- * 	        
- * 	               
- * 	        
- * 	               
- * 	          
- * 	        
- * 	
- * 	
- * 		
- * 	
- * 	// not working correctly yet
  *
  **/
 
@@ -3425,14 +3890,11 @@ protected class Signal_HostCombineOperatorAssignment_7_1_3 extends AssignmentTok
 /************ begin Rule Variable ****************
  *
  * Variable returns synccharts::Variable:
- *   "var" name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?; 
- * 		
- * 	
- * 	// not working correctly yet
+ *   name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?;
  *
  **/
 
-// "var" name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?
+// name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?
 protected class Variable_Group extends GroupToken {
 	
 	public Variable_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3447,10 +3909,10 @@ protected class Variable_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group_4(parent, this, 0, inst);
-			case 1: return new Variable_TypeAssignment_3(parent, this, 1, inst);
-			case 2: return new Variable_Group_2(parent, this, 2, inst);
-			case 3: return new Variable_NameAssignment_1(parent, this, 3, inst);
+			case 0: return new Variable_Group_3(parent, this, 0, inst);
+			case 1: return new Variable_TypeAssignment_2(parent, this, 1, inst);
+			case 2: return new Variable_Group_1(parent, this, 2, inst);
+			case 3: return new Variable_NameAssignment_0(parent, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -3462,16 +3924,16 @@ protected class Variable_Group extends GroupToken {
 	}
 }
 
-// "var"
-protected class Variable_VarKeyword_0 extends KeywordToken  {
+// name=ID
+protected class Variable_NameAssignment_0 extends AssignmentToken  {
 	
-	public Variable_VarKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_NameAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getVarKeyword_0();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getNameAssignment_0();
 	}
 
     @Override
@@ -3481,35 +3943,13 @@ protected class Variable_VarKeyword_0 extends KeywordToken  {
 		}	
 	}	
 		
-}
-
-// name=ID
-protected class Variable_NameAssignment_1 extends AssignmentToken  {
-	
-	public Variable_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getNameAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_VarKeyword_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("name",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("name");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0();
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -3518,21 +3958,21 @@ protected class Variable_NameAssignment_1 extends AssignmentToken  {
 }
 
 // (":=" initialValue=STRING)?
-protected class Variable_Group_2 extends GroupToken {
+protected class Variable_Group_1 extends GroupToken {
 	
-	public Variable_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getVariableAccess().getGroup_2();
+		return grammarAccess.getVariableAccess().getGroup_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_InitialValueAssignment_2_1(parent, this, 0, inst);
+			case 0: return new Variable_InitialValueAssignment_1_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3540,21 +3980,21 @@ protected class Variable_Group_2 extends GroupToken {
 }
 
 // ":="
-protected class Variable_ColonEqualsSignKeyword_2_0 extends KeywordToken  {
+protected class Variable_ColonEqualsSignKeyword_1_0 extends KeywordToken  {
 	
-	public Variable_ColonEqualsSignKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_ColonEqualsSignKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_2_0();
+		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_NameAssignment_1(parent, this, 0, inst);
+			case 0: return new Variable_NameAssignment_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3562,21 +4002,21 @@ protected class Variable_ColonEqualsSignKeyword_2_0 extends KeywordToken  {
 }
 
 // initialValue=STRING
-protected class Variable_InitialValueAssignment_2_1 extends AssignmentToken  {
+protected class Variable_InitialValueAssignment_1_1 extends AssignmentToken  {
 	
-	public Variable_InitialValueAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_InitialValueAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getInitialValueAssignment_2_1();
+		return grammarAccess.getVariableAccess().getInitialValueAssignment_1_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_ColonEqualsSignKeyword_2_0(parent, this, 0, inst);
+			case 0: return new Variable_ColonEqualsSignKeyword_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3587,7 +4027,7 @@ protected class Variable_InitialValueAssignment_2_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getInitialValueSTRINGTerminalRuleCall_2_1_0();
+			element = grammarAccess.getVariableAccess().getInitialValueSTRINGTerminalRuleCall_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3597,22 +4037,22 @@ protected class Variable_InitialValueAssignment_2_1 extends AssignmentToken  {
 
 
 // type=ValueType?
-protected class Variable_TypeAssignment_3 extends AssignmentToken  {
+protected class Variable_TypeAssignment_2 extends AssignmentToken  {
 	
-	public Variable_TypeAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_TypeAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getTypeAssignment_3();
+		return grammarAccess.getVariableAccess().getTypeAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group_2(parent, this, 0, inst);
-			case 1: return new Variable_NameAssignment_1(parent, this, 1, inst);
+			case 0: return new Variable_Group_1(parent, this, 0, inst);
+			case 1: return new Variable_NameAssignment_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -3623,7 +4063,7 @@ protected class Variable_TypeAssignment_3 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("type");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_3_0();
+			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -3632,21 +4072,21 @@ protected class Variable_TypeAssignment_3 extends AssignmentToken  {
 }
 
 // ("host" hostType=STRING)?
-protected class Variable_Group_4 extends GroupToken {
+protected class Variable_Group_3 extends GroupToken {
 	
-	public Variable_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getVariableAccess().getGroup_4();
+		return grammarAccess.getVariableAccess().getGroup_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_HostTypeAssignment_4_1(parent, this, 0, inst);
+			case 0: return new Variable_HostTypeAssignment_3_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3654,23 +4094,23 @@ protected class Variable_Group_4 extends GroupToken {
 }
 
 // "host"
-protected class Variable_HostKeyword_4_0 extends KeywordToken  {
+protected class Variable_HostKeyword_3_0 extends KeywordToken  {
 	
-	public Variable_HostKeyword_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_HostKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getHostKeyword_4_0();
+		return grammarAccess.getVariableAccess().getHostKeyword_3_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_TypeAssignment_3(parent, this, 0, inst);
-			case 1: return new Variable_Group_2(parent, this, 1, inst);
-			case 2: return new Variable_NameAssignment_1(parent, this, 2, inst);
+			case 0: return new Variable_TypeAssignment_2(parent, this, 0, inst);
+			case 1: return new Variable_Group_1(parent, this, 1, inst);
+			case 2: return new Variable_NameAssignment_0(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	
@@ -3678,21 +4118,21 @@ protected class Variable_HostKeyword_4_0 extends KeywordToken  {
 }
 
 // hostType=STRING
-protected class Variable_HostTypeAssignment_4_1 extends AssignmentToken  {
+protected class Variable_HostTypeAssignment_3_1 extends AssignmentToken  {
 	
-	public Variable_HostTypeAssignment_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_HostTypeAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getHostTypeAssignment_4_1();
+		return grammarAccess.getVariableAccess().getHostTypeAssignment_3_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_HostKeyword_4_0(parent, this, 0, inst);
+			case 0: return new Variable_HostKeyword_3_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3703,7 +4143,7 @@ protected class Variable_HostTypeAssignment_4_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_4_1_0();
+			element = grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_3_1_0();
 			return obj;
 		}
 		return null;

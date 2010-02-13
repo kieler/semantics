@@ -78,7 +78,7 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
-        System.out.println("SignalTrigger: " + notification);
+        // System.out.println("SignalTrigger: " + notification);
         if (notification.getNotifier() instanceof Variable) {
             // case is handled within different trigger listener
             return null;

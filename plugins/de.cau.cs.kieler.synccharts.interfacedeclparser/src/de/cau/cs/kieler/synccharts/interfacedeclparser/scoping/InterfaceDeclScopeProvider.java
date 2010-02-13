@@ -24,6 +24,7 @@ import de.cau.cs.kieler.synccharts.State;
  * how and when to use it
  * 
  * @author uru
+ * @author car
  * 
  */
 public class InterfaceDeclScopeProvider extends AbstractDeclarativeScopeProvider {
