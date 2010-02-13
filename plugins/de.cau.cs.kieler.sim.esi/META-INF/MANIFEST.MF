@@ -28,13 +28,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.5.0",
  org.json;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sim.esi,
- de.cau.cs.kieler.sim.esi.services,
  de.cau.cs.kieler.sim.esi.esi,
  de.cau.cs.kieler.sim.esi.esi.impl,
  de.cau.cs.kieler.sim.esi.esi.util,
  de.cau.cs.kieler.sim.esi.parseTreeConstruction,
  de.cau.cs.kieler.sim.esi.parser.antlr,
- de.cau.cs.kieler.sim.esi.validation,
- de.cau.cs.kieler.sim.esi.parser.antlr.internal
+ de.cau.cs.kieler.sim.esi.parser.antlr.internal,
+ de.cau.cs.kieler.sim.esi.services,
+ de.cau.cs.kieler.sim.esi.trace,
+ de.cau.cs.kieler.sim.esi.validation
 Import-Package: org.apache.log4j,
  org.eclipse.ui.part
