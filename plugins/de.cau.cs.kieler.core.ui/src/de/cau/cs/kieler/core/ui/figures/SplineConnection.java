@@ -25,6 +25,7 @@ import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Path;
 
@@ -42,6 +43,10 @@ public class SplineConnection extends PolylineConnectionEx {
      * Mode for spline drawing.
      */
     private int splineMode = 0;
+    /**
+     * Remember if advanced graphics support is available, assume yes at first.
+     */
+    private boolean advancedGraphics = true;
     /**
      * Don't draw splines.
      */
@@ -94,10 +99,11 @@ public class SplineConnection extends PolylineConnectionEx {
             return false;
         }
 
+        // CHECKSTYLEOFF MagicNumber
         if (getSplineMode() == SPLINE_CUBIC) {
             PointList points = getPoints();
             int i = 1;
-            for (; i < getPoints().size() - 2; i += SplineUtilities.CUBIC_DEGREE) {
+            for (; i < getPoints().size() - 2; i += 3) {
                 // check individual spline bounds
                 Point start = points.getPoint(i - 1);
                 Point c1 = points.getPoint(i);
@@ -106,8 +112,8 @@ public class SplineConnection extends PolylineConnectionEx {
                 Rectangle splineBound = new Rectangle(start, end);
                 splineBound = splineBound.getUnion(new Rectangle(c1, c2));
                 splineBound.expand(calculatedTolerance, calculatedTolerance);
-                if (splineBound.contains(x, y) && SplineUtilities.distanceFromSpline(start, c1,
-                        c2, end, new Point(x, y)) < calculatedTolerance) {
+                if (splineBound.contains(x, y) && SplineUtilities.distanceFromSpline(start, c1, c2,
+                        end, new Point(x, y)) < calculatedTolerance) {
                     return true;
                 }
             }
@@ -115,7 +121,7 @@ public class SplineConnection extends PolylineConnectionEx {
             if (i == getPoints().size() - 2) {
                 // quad left
                 if (SplineUtilities.distanceFromSpline(getPoints().getPoint(
-                        getPoints().size() - SplineUtilities.CUBIC_DEGREE), getPoints().getPoint(
+                        getPoints().size() - 3), getPoints().getPoint(
                         getPoints().size() - 2), getPoints().getPoint(getPoints().size() - 1),
                         new Point(x, y)) < calculatedTolerance) {
                     return true;
@@ -129,13 +135,14 @@ public class SplineConnection extends PolylineConnectionEx {
             }
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             int[] ints = SplineUtilities.approximateSpline(getPoints()).toIntArray();
-            for (int index = 0; index < ints.length - SplineUtilities.CUBIC_DEGREE; index++) {
+            for (int index = 0; index < ints.length - 3; index++) {
                 if (lineContainsPoint(ints[index++], ints[index], ints[index + 1], ints[index + 2],
                         x, y, isFeedbackLayer)) {
                     return true;
                 }
             }
         }
+        // CHECKSTYLEON MagicNumber
 
         return super.containsPoint(x, y);
     }
@@ -243,12 +250,18 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Gets the spline mode for this connection.
+     * Gets the spline mode for this connection. Fall back to approximation if
+     * smooth splines are selected but no advanced graphics support is available
      * 
      * @return spline mode
      */
     public int getSplineMode() {
-        return splineMode;
+        if (splineMode == SPLINE_CUBIC && !advancedGraphics) {
+            // fall back to approximation
+            return SPLINE_CUBIC_APPROX;
+        } else {
+            return splineMode;
+        }
     }
 
     /*
@@ -271,11 +284,13 @@ public class SplineConnection extends PolylineConnectionEx {
 
                 // draw cubic sections
                 int pI = 1;
-                for (; pI < size - 2; pI += SplineUtilities.CUBIC_DEGREE) {
+                // CHECKSTYLEOFF MagicNumber
+                for (; pI < size - 2; pI += 3) {
                     p.cubicTo(getPoints().getPoint(pI).x, getPoints().getPoint(pI).y, getPoints()
                             .getPoint(pI + 1).x, getPoints().getPoint(pI + 1).y, getPoints()
                             .getPoint(pI + 2).x, getPoints().getPoint(pI + 2).y);
                 }
+                // CHECKSTYLEON MagicNumber
 
                 // draw remaining sections, won't happen if DOT was applied
                 // size-1: one straight line
@@ -291,8 +306,12 @@ public class SplineConnection extends PolylineConnectionEx {
                 }
 
                 g.drawPath(p);
+                p.dispose();
             } catch (SWTException e) {
-                System.out.println("no advanced graphics support"); // FIXME
+                // Exception due to no advanced graphics?
+                if (e.code == SWT.ERROR_NO_GRAPHICS_LIBRARY) {
+                    advancedGraphics = false;
+                }
                 g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
             }
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
@@ -333,7 +352,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * @author mmu
      * 
      */
-    public class ArrowLocatorEx extends ArrowLocator {
+    public static class ArrowLocatorEx extends ArrowLocator {
 
         /**
          * 
@@ -351,8 +370,8 @@ public class SplineConnection extends PolylineConnectionEx {
          * {@link RotatableDecoration}) at either the start or end of the
          * connection.
          * 
-         * If the connection is a PolylineConnectionEx with spline mode enabled
-         * the angle is computed from the spline itself, not from the draggable
+         * If the connection is a SplineConnection with spline mode enabled the
+         * angle is computed from the spline itself, not from the draggable
          * points.
          * 
          * @param target
@@ -363,18 +382,15 @@ public class SplineConnection extends PolylineConnectionEx {
             RotatableDecoration arrow = (RotatableDecoration) target;
             arrow.setLocation(getLocation(points));
 
-            // TODO check for spline mode
             if (getConnection() instanceof SplineConnection) {
                 SplineConnection spline = (SplineConnection) getConnection();
                 if (spline.getSplineMode() == SplineConnection.SPLINE_CUBIC) {
                     int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
-                    Point reference = null;
                     if (getAlignment() == SOURCE) {
-                        reference = SplineUtilities.sourcePoint(points, size);
+                        arrow.setReferencePoint(SplineUtilities.sourcePoint(points, size));
                     } else if (getAlignment() == TARGET) {
-                        reference = SplineUtilities.targetPoint(points, size);
+                        arrow.setReferencePoint(SplineUtilities.targetPoint(points, size));
                     }
-                    arrow.setReferencePoint(reference);
                 } else if (spline.getSplineMode() == SplineConnection.SPLINE_CUBIC_APPROX) {
                     points = SplineUtilities.approximateSpline(points);
                     if (getAlignment() == SOURCE) {

@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.PrecisionPoint;
+import org.eclipse.gmf.runtime.draw2d.ui.geometry.LineSeg;
 
 import de.cau.cs.kieler.core.util.KielerMath;
 
@@ -31,10 +32,21 @@ import de.cau.cs.kieler.core.util.KielerMath;
 public final class SplineUtilities {
 
     /**
-     * Number of additional points per cubic section to stop Checkstyle from
-     * whining.
+     * Experimental value to determine the number of bend points for
+     * approximation based on the estimated bendiness of the spline.
      */
-    public static final int CUBIC_DEGREE = 3;
+    private static final int BEND_POINT_FACTOR = 20;
+
+    /**
+     * Minimum number of bend points for approximation: start and end points,
+     * two bend points.
+     */
+    private static final int BEND_POINT_MINIMUM = 4;
+    
+    /**
+     * Maximum number of bend points for approximation.
+     */
+    private static final int BEND_POINT_MAXIMUM = 25;
 
     private SplineUtilities() {
 
@@ -45,14 +57,16 @@ public final class SplineUtilities {
      * 
      * @param control
      *            list of control points
-     * @return approximated bendpoints
+     * @return approximated bend points
      */
     public static PointList approximateSpline(final PointList control) {
         PointList points = new PointList();
         points.addPoint(control.getFirstPoint());
         int i = 1;
-        for (; i < control.size() - 2; i += CUBIC_DEGREE) {
-            List<KielerMath.Point> spline = new ArrayList<KielerMath.Point>(CUBIC_DEGREE + 1);
+        // CHECKSTYLEOFF MagicNumber
+        // code needs lots of 3s and 4s for splines consisting of 3/4 points
+        for (; i < control.size() - 2; i += 3) {
+            List<KielerMath.Point> spline = new ArrayList<KielerMath.Point>(4);
             spline.add(new KielerMath.Point(control.getPoint(i - 1).x, control.getPoint(i - 1).y));
             spline.add(new KielerMath.Point(control.getPoint(i).x, control.getPoint(i).y));
             spline.add(new KielerMath.Point(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
@@ -66,45 +80,44 @@ public final class SplineUtilities {
             points.addPoint(control.getPoint(i));
             break;
         case 2:
-            List<KielerMath.Point> spline = new ArrayList<KielerMath.Point>(CUBIC_DEGREE);
+            List<KielerMath.Point> spline = new ArrayList<KielerMath.Point>(3);
             spline.add(new KielerMath.Point(control.getPoint(i - 1).x, control.getPoint(i - 1).y));
             spline.add(new KielerMath.Point(control.getPoint(i).x, control.getPoint(i).y));
             spline.add(new KielerMath.Point(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
             for (KielerMath.Point p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
                 points.addPoint(new Point(p.x, p.y));
             }
+            break;
+        default: // nothing
         }
+        // CHECKSTYLEON MagicNumber
         return points;
     }
 
     /**
-     * Calculate number of approximation points for given spline. The longer the
-     * spline, the more points to be used.
+     * Calculate number of approximation points for given spline. The more bendy
+     * the spline, the more points to be used.
      * 
      * @param spline
      * @return
      */
     private static int approxCount(final List<KielerMath.Point> spline) {
-        double count = 2; // minimum: start, end
-        double distance = 0;
-        for (int i = 0; i < spline.size() - 1; i++) {
-            double tmp = spline.get(i).x - spline.get(i + 1).x;
-            if (tmp < 0) {
-                distance -= tmp;
-            } else {
-                distance += tmp;
-            }
-
-            tmp = spline.get(i).y - spline.get(i + 1).y;
-            if (tmp < 0) {
-                distance -= tmp;
-            } else {
-                distance += tmp;
-            }
+        int count = BEND_POINT_MINIMUM;
+        long distance = 0;
+        KielerMath.Point start = spline.get(0);
+        KielerMath.Point end = spline.get(spline.size() - 1);
+        LineSeg line = new LineSeg(new Point(start.x, start.y), new Point(end.x, end.y));
+        for (int i = 1; i < spline.size() - 1; i++) {
+            KielerMath.Point k = spline.get(i);
+            distance += line.distanceToPoint((int) k.x, (int) k.y);
         }
-        count += distance / 25; // TODO figure out a proper way to determine
-        // number of additional points
-        return (int) count;
+        System.out.println(distance);
+        count += distance / BEND_POINT_FACTOR;
+        if (count < BEND_POINT_MAXIMUM) {
+            return count;
+        } else {
+            return BEND_POINT_MAXIMUM;
+        }
     }
 
     /**
@@ -117,6 +130,7 @@ public final class SplineUtilities {
      * @return reference point
      */
     public static Point sourcePoint(final PointList points, final int distance) {
+        // CHECKSTYLEOFF MagicNumber
         if (points.size() < 3) { // line
             return points.getLastPoint();
         }
@@ -136,6 +150,7 @@ public final class SplineUtilities {
             SplineUtilities.nearestPointOnSpline(points.getPoint(0), points.getPoint(1), points
                     .getPoint(2), scaledPoint, splinePoint);
         }
+        // CHECKSTYLEON MagicNumber
         return splinePoint;
 
     }
@@ -150,7 +165,8 @@ public final class SplineUtilities {
      * @return reference point
      */
     public static Point targetPoint(final PointList points, final int distance) {
-        if (points.size() < CUBIC_DEGREE) {
+        // CHECKSTYLEOFF MagicNumber
+        if (points.size() < 3) {
             return points.getFirstPoint();
         }
 
@@ -173,6 +189,7 @@ public final class SplineUtilities {
         } else { // straight section
             return points.getPoint(size - 2);
         }
+        // CHECKSTYLEON MagicNumber
         return splinePoint;
     }
 
@@ -181,9 +198,8 @@ public final class SplineUtilities {
     private static final int DEGREE = 3; // Cubic Bezier curve
     private static final int W_DEGREE = 5; // Degree of equation to find roots
     // of
-    private static final double[][] CUBIC_Z = {
-    /* Precomputed "z" for cubics */
-    { 1.0, 0.6, 0.3, 0.1 }, { 0.4, 0.6, 0.6, 0.4 }, { 0.1, 0.3, 0.6, 1.0 }, };
+    private static final double[][] CUBIC_Z = { { 1.0, 0.6, 0.3, 0.1 }, { 0.4, 0.6, 0.6, 0.4 },
+            { 0.1, 0.3, 0.6, 1.0 }, }; // Precomputed "z" for cubics
 
     /**
      * Calculate the distance from quadratic spline curve to point needle.
@@ -224,8 +240,10 @@ public final class SplineUtilities {
         // bump quadratic spline up to cubic spline
         // new control points are two thirds of the way from start (end) to the
         // single control point of the quadratic spline
+        // CHECKSTYLEOFF MagicNumber
         Point c1 = new Point((start.x + 2 * c.x) / 3, (start.y + 2 * c.y) / 3);
         Point c2 = new Point((end.x + 2 * c.x) / 3, (end.y + 2 * c.y) / 3);
+        // CHECKSTYLEON MagicNumber
         return nearestPointOnSpline(start, c1, c2, end, needle, nearest);
     }
 
@@ -341,6 +359,7 @@ public final class SplineUtilities {
                 return 1;
             }
             break;
+        default: // nothing
         }
 
         // Otherwise, solve recursively after
@@ -352,7 +371,10 @@ public final class SplineUtilities {
         double[] leftT = new double[W_DEGREE + 1]; // Solutions from kids
         double[] rightT = new double[W_DEGREE + 1];
 
+        // CHECKSTYLEOFF MagicNumber
+        // start in the middle of the bezier curve, t=0.5
         bezier(w, degree, 0.5, left, right);
+        // CHECKSTYLEON MagicNumber
         int leftCount = findRoots(left, degree, leftT, depth + 1);
         int rightCount = findRoots(right, degree, rightT, depth + 1);
 
@@ -382,7 +404,8 @@ public final class SplineUtilities {
 
         PrecisionPoint[] c = new PrecisionPoint[DEGREE + 1]; // v(i) - pa
         PrecisionPoint[] d = new PrecisionPoint[DEGREE]; // v(i+1) - v(i)
-        double[][] cdTable = new double[3][4]; // Dot product of c, d
+        double[][] cdTable = new double[DEGREE][DEGREE + 1]; // Dot product of
+        // c, d
         PrecisionPoint[] w = new PrecisionPoint[W_DEGREE + 1]; // Ctl pts of
         // 5th-degree
         // curve
@@ -395,7 +418,7 @@ public final class SplineUtilities {
 
         // Determine the d's -- these are vectors created by subtracting
         // each control point from the next
-        double s = 3;
+        double s = DEGREE;
         for (int i = 0; i <= DEGREE - 1; i++) {
             d[i] = new PrecisionPoint(s * (v[i + 1].preciseX - v[i].preciseX), s
                     * (v[i + 1].preciseY - v[i].preciseY));
@@ -528,7 +551,7 @@ public final class SplineUtilities {
         double leftIntercept = Math.min(intercept1, intercept2);
         double rightIntercept = Math.max(intercept1, intercept2);
 
-        double error = 0.5 * (rightIntercept - leftIntercept);
+        double error = (rightIntercept - leftIntercept) / 2;
 
         return error < EPSILON;
     }
