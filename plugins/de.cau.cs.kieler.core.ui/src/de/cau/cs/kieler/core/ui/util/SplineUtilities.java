@@ -111,7 +111,6 @@ public final class SplineUtilities {
             KielerMath.Point k = spline.get(i);
             distance += line.distanceToPoint((int) k.x, (int) k.y);
         }
-        System.out.println(distance);
         count += distance / BEND_POINT_FACTOR;
         if (count < BEND_POINT_MAXIMUM) {
             return count;
@@ -129,7 +128,7 @@ public final class SplineUtilities {
      *            distance from source
      * @return reference point
      */
-    public static Point sourcePoint(final PointList points, final int distance) {
+    public static Point sourceReferencePoint(final PointList points, final int distance) {
         // CHECKSTYLEOFF MagicNumber
         if (points.size() < 3) { // line
             return points.getLastPoint();
@@ -164,7 +163,7 @@ public final class SplineUtilities {
      *            distance from target
      * @return reference point
      */
-    public static Point targetPoint(final PointList points, final int distance) {
+    public static Point targetReferencePoint(final PointList points, final int distance) {
         // CHECKSTYLEOFF MagicNumber
         if (points.size() < 3) {
             return points.getFirstPoint();

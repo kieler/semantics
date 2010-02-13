@@ -387,9 +387,9 @@ public class SplineConnection extends PolylineConnectionEx {
                 if (spline.getSplineMode() == SplineConnection.SPLINE_CUBIC) {
                     int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
                     if (getAlignment() == SOURCE) {
-                        arrow.setReferencePoint(SplineUtilities.sourcePoint(points, size));
+                        arrow.setReferencePoint(SplineUtilities.sourceReferencePoint(points, size));
                     } else if (getAlignment() == TARGET) {
-                        arrow.setReferencePoint(SplineUtilities.targetPoint(points, size));
+                        arrow.setReferencePoint(SplineUtilities.targetReferencePoint(points, size));
                     }
                 } else if (spline.getSplineMode() == SplineConnection.SPLINE_CUBIC_APPROX) {
                     points = SplineUtilities.approximateSpline(points);
