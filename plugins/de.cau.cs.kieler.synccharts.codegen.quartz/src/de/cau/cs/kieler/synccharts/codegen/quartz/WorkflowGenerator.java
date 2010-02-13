@@ -43,9 +43,6 @@ public class WorkflowGenerator {
         return out;
     }
 
-    public WorkflowGenerator() {
-    }
-
     public void invokeWorkflow() {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();

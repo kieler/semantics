@@ -88,16 +88,21 @@ end module
   «ENDIF» 
 «ENDDEFINE»
 
-
-«DEFINE Effect FOR Emission»emit «this.signal.name»;«ENDDEFINE»
-
-«DEFINE Effect FOR Effect»//effects«ENDDEFINE»
-
-
-«DEFINE Trigger FOR Expression»//TODO  expression«ENDDEFINE»
-
-«DEFINE Trigger FOR Value»«this.toString()»«ENDDEFINE»
-
+«DEFINE Effect FOR Emission»emit «signal.name»;«ENDDEFINE»
+«DEFINE Effect FOR Assignment»«variable» := «expression»;«ENDDEFINE»
+«DEFINE Effect FOR HostCode»«code»;«ENDDEFINE»
+«DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
+«REM» Trigger «ENDREM»
+«DEFINE Trigger FOR Value»«toString()»«ENDDEFINE»
+«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
 «DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+«DEFINE Trigger FOR ComplexExpression»
+  («FOREACH subExpressions AS sub SEPARATOR operator.toString()»«EXPAND Trigger FOR sub»«ENDFOREACH»)
+«ENDDEFINE»
+«DEFINE Trigger FOR HostCode»«code»«ENDDEFINE»
+«DEFINE Trigger FOR Expression»//ERROR: unknown expression«ENDDEFINE»
 
-«DEFINE Trigger FOR ComplexExpression»//TODO complex expression«ENDDEFINE» 
+
+
+
+
