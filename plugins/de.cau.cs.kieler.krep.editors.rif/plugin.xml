@@ -10,6 +10,14 @@
        genModel = "de/cau/cs/kieler/krep/editors/rif/Rif.genmodel" /> 
 	
   </extension>
+  <extension
+        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+     <content
+           class="de.cau.cs.kieler.krep.editors.rif.JSONObjectDataComponent1"
+           id="de.cau.cs.kieler.krep.editors.rif.content1"
+           name="de.cau.cs.kieler.krep.editors.rif.content1">
+     </content>
+  </extension>
 
 
 
