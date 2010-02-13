@@ -27,12 +27,11 @@ import de.cau.cs.kieler.krep.evalbench.program.KlpConfig;
  * Implementation of the communication protocol interface that uses the KREP protocol. Currently,
  * this is only the KLP. The protocol itself is documented in ctr's thesis.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp
  * 
  * @author ctr
  */
-public class KrepProtocol extends CommunicationProtocol {
+public class KlpProtocol extends CommunicationProtocol {
 
     private static final byte VERIFY_COMMAND = 'V';
 
@@ -64,12 +63,10 @@ public class KrepProtocol extends CommunicationProtocol {
     private static final String[] INFO_DESC = { "KIND:                   ",
             "Version:                    ", "#Cores:                     ",
             "#IO Registers:              ", "#local Registers            ",
-            "#Instructions               ", "#ALU                        " };
+            "#Instructions               ", "#ALU                        ",
+            "UseClock                    ", "UsePriorities               " };
 
     private KlpConfig krp = null;
-
-    private static final int MASK_BYTE = 0xFF;
-    private static final int BYTE_LENGTH = 8;
 
     // The currently used assembler
     private IAssembler asm = null;
@@ -106,7 +103,7 @@ public class KrepProtocol extends CommunicationProtocol {
      *            underlying connection protocol to be used; this protocol instance is expected to
      *            be already initialized
      */
-    public KrepProtocol(final IConnection connectionProtocol) {
+    public KlpProtocol(final IConnection connectionProtocol) {
         super(connectionProtocol);
     }
 
@@ -125,15 +122,15 @@ public class KrepProtocol extends CommunicationProtocol {
     public int[] getExecutionTrace() throws CommunicationException {
         notifyComment("getTrace");
         ArrayList<Integer> trace = new ArrayList<Integer>();
-        int bytes = (krp.getIrom()) / BYTE_LENGTH;
+        int bytes = (krp.getIrom()) / KlpConfig.BYTE_LEN;
         sendCmd(TRACE_COMMAND);
         LinkedList<Integer> t = receiveByte(bytes);
         for (int i = 0; i < bytes; i++) {
             int b = t.get(i);
             int mask = 1;
-            for (int j = 0; j < BYTE_LENGTH; j++) {
+            for (int j = 0; j < KlpConfig.BYTE_LEN; j++) {
                 if ((b & mask) != 0) {
-                    trace.add(BYTE_LENGTH * i + j);
+                    trace.add(KlpConfig.BYTE_LEN * i + j);
                 }
                 mask = (mask << 1);
             }
@@ -193,7 +190,7 @@ public class KrepProtocol extends CommunicationProtocol {
                 for (int j = 0; j < b.length; j++) {
                     String t = s.substring(2 * j, 2 * (j + 1));
                     int i = Integer.parseInt(t, BASE_NUM);
-                    b[j] = (byte) (i & MASK_BYTE);
+                    b[j] = (byte) (i & KlpConfig.BYTE_MASK);
                 }
                 send(b);
                 LinkedList<Integer> i = receiveByte(1);
@@ -257,8 +254,8 @@ public class KrepProtocol extends CommunicationProtocol {
             if (s.isValued()) {
                 int v = (Integer) s.getValue();
                 for (int j = 0; j < msg.length - 1; j++) {
-                    msg[j + 1] = (byte) (v & MASK_BYTE);
-                    v = v >> BYTE_LENGTH;
+                    msg[j + 1] = (byte) (v & KlpConfig.BYTE_MASK);
+                    v = v >> KlpConfig.BYTE_LEN;
                 }
             } else {
                 if (s.getPresent()) {
@@ -305,7 +302,7 @@ public class KrepProtocol extends CommunicationProtocol {
         long tmp = 0;
         LinkedList<Integer> bytes = receiveByte(wordSize);
         for (Integer b : bytes) {
-            tmp = tmp << BYTE_LENGTH;
+            tmp = tmp << KlpConfig.BYTE_LEN;
             tmp += b;
         }
         // check for overflow

@@ -30,7 +30,7 @@ public class JNIConnection implements IConnection {
 
     private IKrepWrapper krep = null;
 
-    private EsiLogger esi;
+   // private EsiLogger esi;
 
     /**
      * {@inheritDoc}
@@ -61,9 +61,9 @@ public class JNIConnection implements IConnection {
         if (krep != null) {
             krep.terminate();
         }
-        if (esi != null) {
-            esi = null;
-        }
+        //if (esi != null) {
+       //     esi = null;
+        //}
         try {
             if (protocol.equals(ICommunicationProtocol.P_KEP)) {
                 name = "kep";
@@ -74,9 +74,9 @@ public class JNIConnection implements IConnection {
             } else {
                 krep = null;
             }
-            if (logFile != null) {
-                esi = new EsiLogger(logFile);
-            }
+           // if (logFile != null) {
+            //    esi = new EsiLogger(logFile);
+            //}
         } catch (final Throwable t) {
             throw new CommunicationException("Error generating " + name + "\n" + t.getMessage()
                     + "\nLibrary path: " + System.getProperty("java.library.path"));
@@ -99,7 +99,7 @@ public class JNIConnection implements IConnection {
         do {
             while (!krep.hasOutput()) {
                 krep.step();
-                log(";");
+                //log(";");
             }
             c = (char) krep.getOutput();
             res.append(c);
@@ -115,7 +115,7 @@ public class JNIConnection implements IConnection {
         StringBuffer res = new StringBuffer();
         while (res.length() < n) {
             krep.step();
-            log(";");
+            //log(";");
             if (krep.hasOutput()) {
                 res.append((char) krep.getOutput());
             }
@@ -130,7 +130,7 @@ public class JNIConnection implements IConnection {
     public void send(final String data) throws CommunicationException {
         for (byte b : data.getBytes()) {
             krep.send(b);
-            log(b);
+           // log(b);
         }
     }
 
@@ -140,7 +140,7 @@ public class JNIConnection implements IConnection {
      */
     public void send(final byte data) throws CommunicationException {
         krep.send(data);
-        log(data);
+        //log(data);
     }
 
     /**
@@ -152,7 +152,6 @@ public class JNIConnection implements IConnection {
         final int maskByte = 0xFF;
         while (res.size() < n) {
             krep.step();
-            log(";");
             if (krep.hasOutput()) {
                 res.add(((int) krep.getOutput()) & maskByte);
             }
@@ -167,11 +166,11 @@ public class JNIConnection implements IConnection {
     public void send(final byte[] data) throws CommunicationException {
         for (byte b : data) {
             krep.send(b);
-            log(b);
+           // log(b);
         }
     }
 
-    private void log(final byte b) {
+   /* private void log(final byte b) {
         if (esi != null) {
             esi.write("RX(0x" + Integer.toHexString(b & IConfig.BYTE_MASK) + ");\n");
         }
@@ -181,5 +180,5 @@ public class JNIConnection implements IConnection {
         if (esi != null) {
             esi.write(s + "\n");
         }
-    }
+    }*/
 }

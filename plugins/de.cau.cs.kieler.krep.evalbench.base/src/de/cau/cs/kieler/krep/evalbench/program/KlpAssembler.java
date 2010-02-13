@@ -43,8 +43,7 @@ import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
 /**
  * Read and assembler a assembler file for the KLP.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp
  * 
  * @author ctr
  */
@@ -128,13 +127,18 @@ public class KlpAssembler implements IAssembler {
     }
 
     private void initialize(final Instruction instruction,
-            final HashMap<String, Integer> label2addr, final HashMap<String, Integer> regs) {
+            final HashMap<String, Integer> label2addr, final HashMap<String, Integer> regs)
+            throws ParseException {
 
         if (instruction instanceof Done) {
             Done i = (Done) instruction;
             i.setOpcode0(Opcode.DONE.getCode());
             if (i.getPc() != null) {
-                i.getPc().setAddr(label2addr.get(i.getPc().getName()));
+                Integer addr = label2addr.get(i.getPc().getName());
+                if (addr == null) {
+                    throw new ParseException("Label " + i.getPc().getName() + " not defined!");
+                }
+                i.getPc().setAddr(addr);
                 i.setOpcode1(i.getPc().getAddr());
             }
         } else if (instruction instanceof Decl) {
@@ -407,31 +411,6 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
-    /*
-     * public void assemble(final String name, final Reader program) throws ParseException {
-     * this.name = name; boolean error = false; String errorMsg; clear();
-     * 
-     * try { final klpLexer lex = new klpLexer(new ANTLRReaderStream(program)); final
-     * CommonTokenStream tokens = new CommonTokenStream(lex);
-     * 
-     * final klpParser parser = new klpParser(tokens);
-     * 
-     * instructions = parser.prog(); error = parser.getError(); errorMsg = parser.getErrorMsg(); if
-     * (error) { MessageView.print(errorMsg); } } catch (final IOException e) { throw new
-     * ParseException(e.getMessage()); } catch (RecognitionException e) { throw new
-     * ParseException(e.getMessage()); } if (error) { throw new ParseException(errorMsg); } if
-     * (instructions == null) { throw new ParseException("unknown error"); } if (!error) { size = 0;
-     * int iIndex = 0; HashMap<String, Integer> label2addr = new HashMap<String, Integer>(); for
-     * (final Instruction i : instructions) { for (String s : i.getLabels()) { label2addr.put(s,
-     * iIndex); } if (i.writeObj() != null) { iIndex++; } } iIndex = 0; for (final Instruction i :
-     * instructions) { i.asmLabel(label2addr); if (i.writeObj() != null) { size++; } if (i
-     * instanceof Decl) { final Decl io = (Decl) i; final Signal s = io.getSignal(); if
-     * (io.isInput()) { inputs.add(s); index.put(s.getName(), iIndex); iIndex++; } else if
-     * (io.isOutput()) { outputs.add(s); index.put(s.getName(), iIndex); iIndex++; } } } } }
-     * 
-     * public void assemble(final String name, final String program) throws ParseException { final
-     * StringReader in = new StringReader(program); assemble(name, in); }
-     */
 
     /**
      * {@inheritDoc}
@@ -674,7 +653,6 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public int getTickLen() {
-
         return Integer.MAX_VALUE;
     }
 

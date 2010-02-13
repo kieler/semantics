@@ -58,6 +58,7 @@ public class EsiLogger {
         if (esi != null) {
             try {
                 esi.write("!reset;\n");
+                esi.flush();
             } catch (IOException e) {
                 e.printStackTrace();
                 esi = null;
@@ -94,6 +95,7 @@ public class EsiLogger {
 
                 esi.write(comment);
                 esi.write('\n');
+                esi.flush();
             } catch (IOException e) {
                 e.printStackTrace();
                 esi = null;
