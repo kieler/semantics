@@ -60,7 +60,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.IConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
-import de.cau.cs.kieler.krep.evalbench.comm.KrepProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.KlpProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.LoadException;
 import de.cau.cs.kieler.krep.evalbench.comm.RxtxSerialConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
@@ -438,7 +438,7 @@ public final class DataComponent extends JSONObjectDataComponent implements
         String lus2ec = "lus2ec";
 
         connection = connect(ICommunicationProtocol.P_KREP);
-        protocol = new KrepProtocol(connection);
+        protocol = new KlpProtocol(connection);
         KlpAssembler klpAsm = new KlpAssembler();
 
         assembler = klpAsm;
@@ -490,7 +490,7 @@ public final class DataComponent extends JSONObjectDataComponent implements
             throws CommunicationException, CoreException,
             KiemInitializationException, ParseException {
         connection = connect(ICommunicationProtocol.P_KREP);
-        protocol = new KrepProtocol(connection);
+        protocol = new KlpProtocol(connection);
         assembler = new KlpAssembler();
         InputStream in = file.getContents();
 
