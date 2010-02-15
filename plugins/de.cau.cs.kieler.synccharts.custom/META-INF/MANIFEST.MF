@@ -21,5 +21,7 @@ Import-Package: org.eclipse.draw2d,
  org.eclipse.emf.ecore.impl,
  org.eclipse.gef,
  org.eclipse.gmf.runtime.notation
-Export-Package: de.cau.cs.kieler.synccharts.custom
+Export-Package: de.cau.cs.kieler.synccharts.custom,
+ de.cau.cs.kieler.synccharts.custom.contentassist.example,
+ de.cau.cs.kieler.synccharts.custom.contentassist.part
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
