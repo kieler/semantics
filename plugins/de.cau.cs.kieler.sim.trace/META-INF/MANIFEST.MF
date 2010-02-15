@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.sim.trace
+Bundle-SymbolicName: de.cau.cs.kieler.sim.trace;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sim.trace.Activator
+Bundle-Vendor: Christian Albrechts Universität zu Kiel
+Require-Bundle: org.eclipse.core.runtime,
+ org.json;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.sim.trace

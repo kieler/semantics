@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.sim.trace.traceprovider" name="Trace Provider" schema="schema/de.cau.cs.kieler.sim.trace.traceprovider.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.trace.TraceReader"
+            id="de.cau.cs.kieler.sim.trace.tracereader"
+            name="Trace Reader">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.trace.TraceValidator"
+            id="de.cau.cs.kieler.sim.trace.tracevalidator"
+            name="Trace Validator">
+      </content>
+   </extension>
+
+</plugin>
