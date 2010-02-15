@@ -252,12 +252,12 @@ public class MapAnimations {
                 // setSVGFile(url);
                 // KevComposite.getInstance().setSVGFile(url);
                 svgCanvas.loadSVGDocument(url.toExternalForm());
-                // Sometimes on first load, the fileloading get's cancelled, don't know why and from
-                // whom, so try again
-                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
-                    // KevComposite.getInstance().paintSVGFile();
-                    svgCanvas.loadSVGDocument(url.toExternalForm());
-                }
+//                // Sometimes on first load, the fileloading get's cancelled, don't know why and from
+//                // whom, so try again
+//                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
+//                    // KevComposite.getInstance().paintSVGFile();
+//                    svgCanvas.loadSVGDocument(url.toExternalForm());
+//                }
             } else {
                 Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
                 return;
@@ -271,10 +271,10 @@ public class MapAnimations {
                 svgCanvas.loadSVGDocument(url.toExternalForm());
                 // Sometimes on first load, the fileloading get's cancelled, don't know why and from
                 // whom so try again
-                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
-                    // KevComposite.getInstance().paintSVGFile();
-                    svgCanvas.loadSVGDocument(url.toExternalForm());
-                }
+//                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
+//                    // KevComposite.getInstance().paintSVGFile();
+//                    svgCanvas.loadSVGDocument(url.toExternalForm());
+//                }
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
@@ -316,7 +316,7 @@ public class MapAnimations {
             while (animationIterator.hasNext()) {
                 animationIterator.next().initialize();
             }
-            //If an Element already exists in the hashmap, we add new clone of this element to the hashmap
+            //If an Element already exists in the hashmap, we add a clone of this element to the hashmap
             //and add the new clone name to the clone list
             if (svgElementsHashMap.containsKey(svgElement.getId())) {
                 ArrayList<String> clones = cloneMap.get(svgElement.getId());
@@ -371,122 +371,12 @@ public class MapAnimations {
         }
     }    
     
-    
-//    /**
-//     * Applies the Animations for all JSON-Keys which exists in the mapping file.
-//     * 
-//     * @param jsonObject
-//     */
-//    public void doAnimations(final JSONObject jsonObject) {
-//        // Check whether the HashMap has been created
-//        if (this.svgElementsHashMap == null) {
-//            System.out.println("HashMap is not initialized!");
-//            return;
-//        }
-//        
-//        try {
-////            System.out.println(jsonObject.toString());
-//            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
-//            JSONObject flatJSONObject = makeItFlat(jsonObject);
-////            System.out.println(flatJSONObject.toString());
-//            //For each svg element id we need to check if all any animation can be applied. 
-//            Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
-//            while (svgElementIDIterator.hasNext()) {
-//                String svgElementID = svgElementIDIterator.next();
-//                // Get all animations for each SVG element
-//                Iterator<RunnableAnimation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
-//
-//                RunnableAnimation animation;
-//                while (animationIterator.hasNext()) {
-//                    animation = animationIterator.next();
-//
-//                    // We need to apply all animations for each SVG element
-//                    if (animation instanceof Colorize) {
-//                        Colorize colorizeAnimation = (Colorize) animation;
-//                        colorizeAnimation.applyAnimation(flatJSONObject, svgElementID);
-//                    } else if (animation instanceof Move) {
-//                        Move moveAnimation = (Move) animation;
-//                        moveAnimation.applyAnimation(flatJSONObject, svgElementID);
-//                    } else if (animation instanceof Text) {
-//                        Text textAnimation = (Text) animation;
-//                        textAnimation.applyAnimation(flatJSONObject, svgElementID);
-//                    } else if (animation instanceof Rotate) {
-//                        Rotate rotateAnimation = (Rotate) animation;
-//                        rotateAnimation.applyAnimation(flatJSONObject, svgElementID);
-//                    } else {
-//                        System.out.println("RunnableAnimation " + animation.getClass().getSimpleName()
-//                                + " does not exists!");
-//                    }
-//
-//                }
-//            }
-//            // Now we still need to apply all animations to the SVG document
-//            updateSVGGraphik();
-//        } catch (JSONException e) {
-//            //Something went wrong with the JSONObject.
-//        }
-//    }
-    
-    //OLD VERSION DOES ONLY ANIMATIONS IF THE JSON KEY EQUALS THE SVG ELEMENT ID
-    //------------------------------------------------------------------------------------------
-//    /**
-//     * Applies the Animations for all JSON-Keys which exists in the mapping file.
-//     * 
-//     * @param jsonObject
-//     */
-//    public void doAnimations(JSONObject jsonObject) {
-//        // Check whether the HashMap has been created
-//        if (this.svgElementsHashMap == null) {
-//            System.out.println("HashMap is not initialized!");
-//            return;
-//        }
-//        
-//        try {
-//            System.out.println(jsonObject.toString());
-//            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
-//            JSONObject flatJSONObject = makeItFlat(jsonObject);
-//            System.out.println(flatJSONObject.toString());
-//            // Get all JSON-Key-Names from the flatJSONobject
-//            String[] keys = JSONObject.getNames(flatJSONObject);
-//            for (String key : keys) {
-//                // Now we need to check for each JSON-Key if there exists a SVGElement-Tag in the
-//                // Mapping-HashMap
-//                if (this.svgElementsHashMap.containsKey(key)) {
-//                    // Get all animations for each SVG element
-//                    Iterator<RunnableAnimation> animationIterator = svgElementsHashMap.get(key).iterator();
-//    
-//                    RunnableAnimation animation;
-//                    while (animationIterator.hasNext()) {
-//                        animation = animationIterator.next();
-//    
-//                        // We need to apply all animations for each SVG element
-//                        if (animation instanceof Colorize) {
-//                            Colorize colorizeAnimation = (Colorize) animation;
-//                            colorizeAnimation.applyAnimation(flatJSONObject, key);
-//                        } else if (animation instanceof Move) {
-//                            Move moveAnimation = (Move) animation;
-//                            moveAnimation.applyAnimation(flatJSONObject, key);
-//                        } else if (animation instanceof Textbox) {
-//                            Textbox textboxAnimation = (Textbox) animation;
-//                            textboxAnimation.applyAnimation(flatJSONObject, key);
-//                        } else {
-//                            System.out.println("RunnableAnimation " + animation.getClass().getSimpleName()
-//                                    + " does not exists!");
-//                        }
-//    
-//                    }
-//                }
-//            }
-//            // Now we still need to apply all animations to the SVG document
-//            updateSVGGraphik();
-//        } catch (JSONException e) {
-//            //Something went wrong with the JSONObject.
-//        }
-//    }
-// --------------------------------------------------------------------------------------------------
     /**
      * This function is intensively used by the mapInputToOutput() method. It simply creates an
      * ArrayList with no duplicates of the inputstring.
+     * @return An ArrayList with all parsed values
+     * @param input String to parse
+     * @param isInputAttribute true if 
      * 
      */
     public ArrayList<String> attributeParser(final String input,
