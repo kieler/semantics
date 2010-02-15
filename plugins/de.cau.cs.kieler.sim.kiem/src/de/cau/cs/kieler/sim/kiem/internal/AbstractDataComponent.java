@@ -736,12 +736,15 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * wants to listen to.<BR>
      * <BR>
      * A KiemEvent can be a combination of several events. The simplest way to register for two
-     * events that e.g., indicate a step-command and the removal of the component is to have the
+     * events that e.g., indicate a step-command and the save event is to have the
      * following code:<BR>
      * <BR>
      * public KiemEvent provideEventOfInterest() { <BR>
-     * return new KiemEvent(CMD_STEP+DELETED); <BR>
-     * }<BR>
+     *        int[] events = {KiemEvent.CMD_STEP, KiemEvent.SAVE}; <BR>
+     *        KiemEvent event = new KiemEvent(events); <BR>
+     *        System.out.println(event.getEventCodesAsList()); <BR>
+     *        return (event); <BR>
+     * }     * }<BR>
      * <BR>
      * NOTE: The provision of event types is only read by KIEM once before the execution starts.
      * Hence, changes during the execution are not having any effect. In doubt, this method should
