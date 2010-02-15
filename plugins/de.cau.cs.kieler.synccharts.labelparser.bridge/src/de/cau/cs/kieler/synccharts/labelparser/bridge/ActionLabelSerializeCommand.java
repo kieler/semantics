@@ -21,6 +21,7 @@ import de.cau.cs.kieler.synccharts.Action;
 public class ActionLabelSerializeCommand extends AbstractCommand {
 
     private Action action;
+    private String oldLabel;
     
     public ActionLabelSerializeCommand(final Action theAction) {
         this.action = theAction;
@@ -41,12 +42,19 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
             // notifications in any case (required to trigger the parser again)
             newLabel = action.getTriggersAndEffects();
         }
+        oldLabel = action.getTriggersAndEffects();
         action.setTriggersAndEffects(newLabel);
     }
 
     public void redo() {
         execute();
     }
+    
+    @Override
+    public void undo() {
+        action.setTriggersAndEffects(oldLabel);
+    }
 
+    
     
 }

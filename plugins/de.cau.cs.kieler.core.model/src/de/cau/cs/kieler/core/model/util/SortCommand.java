@@ -14,10 +14,13 @@
 package de.cau.cs.kieler.core.model.util;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * Command to sort an EList using a given Comparator.
@@ -31,6 +34,7 @@ public class SortCommand<T> extends AbstractCommand {
 
     private EList<T> list;
     private Comparator<T> comparator;
+    Map<T, Integer> oldIndices = new HashMap<T, Integer>();
 
     /**
      * Constructor, taking the list to sort and the comparator to use for
@@ -50,6 +54,11 @@ public class SortCommand<T> extends AbstractCommand {
      * {@inheritDoc}
      */
     public void execute() {
+        int i = 0;
+        for (T obj : list) {
+            oldIndices.put(obj, i);
+            i++;
+        }
         ECollections.sort(list, comparator);
     }
 
@@ -58,6 +67,16 @@ public class SortCommand<T> extends AbstractCommand {
      */
     public void redo() {
         execute();
+    }
+
+    @Override
+    public void undo() {
+        for (T obj : oldIndices.keySet()) {
+            int oldIndex = oldIndices.get(obj);
+            if (oldIndex >= 0 && oldIndex < list.size()) {
+                list.move(oldIndex, obj);
+            }
+        }
     }
 
     /**

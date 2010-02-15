@@ -31,6 +31,7 @@ public class SetIndexCommand<T extends EObject> extends AbstractCommand {
     private EList<T> list;
     private EStructuralFeature feature;
     private int offset;
+    private int[] oldValues;
 
     /**
      * @param theList
@@ -51,8 +52,10 @@ public class SetIndexCommand<T extends EObject> extends AbstractCommand {
      * {@inheritDoc}
      */
     public void execute() {
+        oldValues = new int[getList().size()];
         for (int i = 0; i < getList().size(); i++) {
             T obj = getList().get(i);
+            oldValues[i] = (Integer) obj.eGet(feature);
             obj.eSet(feature, i + offset);
         }
     }
@@ -62,6 +65,16 @@ public class SetIndexCommand<T extends EObject> extends AbstractCommand {
      */
     public void redo() {
         execute();
+    }
+
+    @Override
+    public void undo() {
+        for (int i = 0; i < getList().size(); i++) {
+            if (i < oldValues.length) {
+                T obj = getList().get(i);
+                obj.eSet(feature, oldValues[i]);
+            }
+        }
     }
 
     /**

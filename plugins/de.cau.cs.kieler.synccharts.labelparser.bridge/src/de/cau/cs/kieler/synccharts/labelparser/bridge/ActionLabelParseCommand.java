@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,8 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Effect;
+import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
@@ -131,7 +134,26 @@ public class ActionLabelParseCommand extends AbstractCommand {
     public void redo() {
         execute();
     }
+    
+    @Override
+    public void undo() {
+        if(element != null && element instanceof Action){
+            Action action = (Action) element;
+            action.setDelay(oldDelay);
+            action.setIsImmediate(oldImmediate);
+            action.setTrigger(oldTrigger);
+            action.setTriggersAndEffects(oldTriggersAndEffects);
+            action.getEffects().clear();
+            action.getEffects().addAll(oldEffects);
+        }
+    }
 
+    private Expression oldTrigger;
+    private List<Effect> oldEffects;
+    private int oldDelay;
+    private boolean oldImmediate;
+    private String oldTriggersAndEffects;
+    
     /**
      * Run the actual parse operation with the element and new string set by the
      * constructor before.
@@ -145,6 +167,14 @@ public class ActionLabelParseCommand extends AbstractCommand {
         Action action = (Action) element;
         assert action != null;
 
+        // save old values to be able to undo
+        oldTrigger = action.getTrigger();
+        oldEffects = new ArrayList<Effect>();
+        oldEffects.addAll(action.getEffects());
+        oldDelay = action.getDelay();
+        oldImmediate = action.isIsImmediate();
+        oldTriggersAndEffects = action.getTriggersAndEffects();
+        
         action.setTriggersAndEffects(newString);
         // set some default values
         action.setTrigger(null);
