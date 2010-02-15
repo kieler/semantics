@@ -40,13 +40,13 @@ public class DataComponent extends JSONObjectDataComponent implements
 	public interface Railway extends Library {
 		Railway INSTANCE = (Railway) Native.loadLibrary(DataComponent
 				.getLibLocation(), Railway.class);
-		
-		static final int OFF  = 0;
+
+		static final int OFF = 0;
 		static final int RED = 1;
 		static final int YELLOW = 2;
 		static final int GREEN = 4;
 
-		static final int ON  = 1;
+		static final int ON = 1;
 		static final int FWD = 1;
 		static final int REV = 2;
 		static final int BRAKE = 3;
@@ -57,7 +57,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		static final int UP = 1;
 
 		static final int NONE = 0;
-		static final int  UNI = 3;
+		static final int UNI = 3;
 
 		static final int STRAIGHT = 0;
 		static final int BRANCH = 1;
@@ -75,28 +75,35 @@ public class DataComponent extends JSONObjectDataComponent implements
 		String getTrackName(int tracknum);
 
 		void settrack(int invalid, int track, int mode, int target);
+
 		void setsignal(int invalid, int track, int signal, int lights);
+
 		void setpoint(int invalid, int point, int state);
-		
+
 		int getSimulationTick();
+
 		int getcontact(int invalid, int block, int contact, int clear);
-		//int scancontact(int invalid, int *block, int *contact, int clear);
-		
+
+		// int scancontact(int invalid, int *block, int *contact, int clear);
+
 		int trackused(int invalid, int track);
+
 		int getspeed(int invalid, int track);
+
 		void clearcontact(int invalid, int block, int contact);
 	}
 
 	public static String getLibLocation() {
 		try {
+			URL url = Activator.getDefault().getBundle().getResource(
+			"/lib/railway.dll");
 			String path = (org.eclipse.core.runtime.FileLocator
-					.toFileURL(Activator.getDefault().getBundle().getResource(
-							"/lib/railway32.dll"))).toString();
+					.toFileURL(url)).toString();
 			if (Platform.isLinux() || Platform.isSolaris()) {
-	                        path = (org.eclipse.core.runtime.FileLocator
-                                        .toFileURL(Activator.getDefault().getBundle().getResource(
-                                                        "/lib/railway32.so"))).toString();
-			    
+				path = (org.eclipse.core.runtime.FileLocator
+						.toFileURL(Activator.getDefault().getBundle()
+								.getResource("/lib/railway.so"))).toString();
+
 			}
 			path = path.replaceFirst("file:/", "");
 			System.out.println(path);
@@ -130,17 +137,26 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	// -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent#step(org.json.JSONObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent#step(org.json.JSONObject
+	 * )
 	 */
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent#step(org.json.JSONObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent#step(org.json.JSONObject
+	 * )
 	 */
 	public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
 		try {
 			// speeds and signals
 			for (int track = 0; track < 48; track++) {
-				String keySpeed = "SetSpeed_" + DataComponent.getTrackName(track);
+				String keySpeed = "SetSpeed_"
+						+ DataComponent.getTrackName(track);
 				if (jSONObject.has(keySpeed)) {
 					Object object = jSONObject.get(keySpeed);
 					// if not a signal, we just consider the speed value as-is
@@ -151,13 +167,15 @@ public class DataComponent extends JSONObjectDataComponent implements
 					// if we have a signal, consider present=50 and absent=0
 					if (object instanceof JSONObject) {
 						if (JSONSignalValues.isPresent(object)) {
-							Railway.INSTANCE.settrack(0, track, Railway.FWD, 50);
+							Railway.INSTANCE
+									.settrack(0, track, Railway.FWD, 50);
 						} else if (JSONSignalValues.isSignalValue(object)) {
 							Railway.INSTANCE.settrack(0, track, Railway.FWD, 0);
 						}
 					}
 				}
-				String keySignal0 = "SetSignal0_" + DataComponent.getTrackName(track);
+				String keySignal0 = "SetSignal0_"
+						+ DataComponent.getTrackName(track);
 				if (jSONObject.has(keySignal0)) {
 					Object object = jSONObject.get(keySignal0);
 					// if not a signal, we just consider the color value as-is
@@ -165,16 +183,20 @@ public class DataComponent extends JSONObjectDataComponent implements
 						int value = ((Integer) object);
 						Railway.INSTANCE.setsignal(0, track, 0, value);
 					}
-					// if we have a signal, consider present=green and absent=red
+					// if we have a signal, consider present=green and
+					// absent=red
 					if (object instanceof JSONObject) {
 						if (JSONSignalValues.isPresent(object)) {
-							Railway.INSTANCE.setsignal(0, track, 0, Railway.GREEN);
+							Railway.INSTANCE.setsignal(0, track, 0,
+									Railway.GREEN);
 						} else if (JSONSignalValues.isSignalValue(object)) {
-							Railway.INSTANCE.setsignal(0, track, 0, Railway.RED);
+							Railway.INSTANCE
+									.setsignal(0, track, 0, Railway.RED);
 						}
 					}
 				}
-				String keySignal1 = "SetSignal1_" + DataComponent.getTrackName(track);
+				String keySignal1 = "SetSignal1_"
+						+ DataComponent.getTrackName(track);
 				if (jSONObject.has(keySignal1)) {
 					Object object = jSONObject.get(keySignal1);
 					// if not a signal, we just consider the color value as-is
@@ -182,12 +204,15 @@ public class DataComponent extends JSONObjectDataComponent implements
 						int value = ((Integer) object);
 						Railway.INSTANCE.setsignal(0, track, 1, value);
 					}
-					// if we have a signal, consider present=green and absent=red
+					// if we have a signal, consider present=green and
+					// absent=red
 					if (object instanceof JSONObject) {
 						if (JSONSignalValues.isPresent(object)) {
-							Railway.INSTANCE.setsignal(0, track, 1, Railway.GREEN);
+							Railway.INSTANCE.setsignal(0, track, 1,
+									Railway.GREEN);
 						} else if (JSONSignalValues.isSignalValue(object)) {
-							Railway.INSTANCE.setsignal(0, track, 1, Railway.RED);
+							Railway.INSTANCE
+									.setsignal(0, track, 1, Railway.RED);
 						}
 					}
 				}
@@ -196,17 +221,21 @@ public class DataComponent extends JSONObjectDataComponent implements
 					String keyPoint = "SetPoint_" + point;
 					if (jSONObject.has(keyPoint)) {
 						Object object = jSONObject.get(keyPoint);
-						// if not a signal, we just consider the branch value as-is
+						// if not a signal, we just consider the branch value
+						// as-is
 						if (object instanceof Integer) {
 							int value = ((Integer) object);
 							Railway.INSTANCE.setpoint(0, point, value);
 						}
-						// if we have a signal, consider present=branch and absent=straight
+						// if we have a signal, consider present=branch and
+						// absent=straight
 						if (object instanceof JSONObject) {
 							if (JSONSignalValues.isPresent(object)) {
-								Railway.INSTANCE.setpoint(0, point, Railway.BRANCH);
+								Railway.INSTANCE.setpoint(0, point,
+										Railway.BRANCH);
 							} else if (JSONSignalValues.isSignalValue(object)) {
-								Railway.INSTANCE.setpoint(0, point, Railway.STRAIGHT);
+								Railway.INSTANCE.setpoint(0, point,
+										Railway.STRAIGHT);
 							}
 						}
 					}
@@ -216,7 +245,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 			e.printStackTrace();
 		}
 
-		// --------------------- C A L C U L A T I O N  -------------------- //
+		// --------------------- C A L C U L A T I O N -------------------- //
 		// make simulation step
 		Railway.INSTANCE.stepSimulation();
 
@@ -272,21 +301,24 @@ public class DataComponent extends JSONObjectDataComponent implements
 		}
 
 		System.out.println(this.flatten(points));
-		
+
 		// now synthesize xkev values
 		JSONObject railwayData = new JSONObject();
 
 		try {
 			for (c = 0; c < 48; c++) {
 				String trackID = Railway.INSTANCE.getTrackName(c).trim();
-				railwayData.accumulate("engine-" + trackID, this.startPosition[c]);
-				railwayData.accumulate("trailer-" + trackID, this.endPosition[c]);
-				railwayData.accumulate("track-"+trackID, this.motorModes[c]);
-				railwayData.accumulate("text-"+trackID, this.blockErrors[c]);
+				railwayData.accumulate("engine-" + trackID,
+						this.startPosition[c]);
+				railwayData.accumulate("trailer-" + trackID,
+						this.endPosition[c]);
+				railwayData.accumulate("track-" + trackID, this.motorModes[c]);
+				railwayData.accumulate("text-" + trackID, this.blockErrors[c]);
 			}
 			for (int point = 0; point < 29; point++) {
-				railwayData.accumulate("point-"+point, this.points[point] );
-				railwayData.accumulate("point-text-"+point, this.pointErrors[point]);
+				railwayData.accumulate("point-" + point, this.points[point]);
+				railwayData.accumulate("point-text-" + point,
+						this.pointErrors[point]);
 			}
 
 		} catch (Exception e) {
@@ -294,18 +326,21 @@ public class DataComponent extends JSONObjectDataComponent implements
 					"ModelRailway simulation cannot make a step.", false, e);
 		}
 
-		// ---------------------- C O N T R O L L E R  --------------------- //
+		// ---------------------- C O N T R O L L E R --------------------- //
 		try {
-		for (int track = 0; track < 47; track++) {
-			String trackID = Railway.INSTANCE.getTrackName(track).trim();
-			int contact0 = Railway.INSTANCE.getcontact(0, track, 0, 1);
-			int contact1 = Railway.INSTANCE.getcontact(0, track, 1, 1);
-			int occupied = Railway.INSTANCE.trackused(0, track);
-			
-			railwayData.accumulate("EventContact0_"+trackID, JSONSignalValues.newValue("", contact0 == 1));
-			railwayData.accumulate("EventContact1_"+trackID, JSONSignalValues.newValue("", contact1 == 1));
-			railwayData.accumulate("EventOccupied_"+trackID, JSONSignalValues.newValue("", occupied == 1));
-		}
+			for (int track = 0; track < 47; track++) {
+				String trackID = Railway.INSTANCE.getTrackName(track).trim();
+				int contact0 = Railway.INSTANCE.getcontact(0, track, 0, 1);
+				int contact1 = Railway.INSTANCE.getcontact(0, track, 1, 1);
+				int occupied = Railway.INSTANCE.trackused(0, track);
+
+				railwayData.accumulate("EventContact0_" + trackID,
+						JSONSignalValues.newValue("", contact0 == 1));
+				railwayData.accumulate("EventContact1_" + trackID,
+						JSONSignalValues.newValue("", contact1 == 1));
+				railwayData.accumulate("EventOccupied_" + trackID,
+						JSONSignalValues.newValue("", occupied == 1));
+			}
 		} catch (Exception e) {
 			throw new KiemExecutionException(
 					"ModelRailway simulation cannot make a step.", false, e);
@@ -398,8 +433,13 @@ public class DataComponent extends JSONObjectDataComponent implements
 	public KiemProperty[] provideProperties() {
 		KiemProperty[] properties = new KiemProperty[48];
 		for (int c = 0; c < 48; c++) {
-			properties[c] = new KiemProperty(Railway.INSTANCE.getTrackName(c)
-					.trim(), false);
+			try {
+				String trackName = Railway.INSTANCE.getTrackName(c).trim();
+				properties[c] = new KiemProperty(trackName, false);
+			} catch (Exception e) {
+				// ignore
+			}
+
 		}
 		return properties;
 	}
