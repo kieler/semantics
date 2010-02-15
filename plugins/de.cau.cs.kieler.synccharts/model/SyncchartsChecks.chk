@@ -37,17 +37,18 @@ context State if (parentRegion != null && parentRegion.parentState != null && is
   ERROR "Not reachable state! Every state needs at least one incoming transition!" :
   (parentRegion.innerStates.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
 
-context State if ( label == null || label.matches("\\s*"))
-	ERROR "Anonymous states (= no label) need an ID." : 
-	(id != null && id.length>0);
+context State
+	ERROR "States need an ID. The tool gives IDs automatically to states. So if a state has no ID, something went wrong. Rename or recreate the state and send a bug report, please!" : 
+	(id != null && !id.matches("\\s*"));
 
-context State if (label != null && !label.matches("\\s*"))
-	ERROR "States within a region need to have different labels." :
-	parentRegion.innerStates.forAll(s| (s.label != label) || (s == this));
+context State if (id != null && !id.matches("\\s*"))
+	ERROR "States within a region need to have different IDs (which are created from their labels)." :
+	parentRegion.innerStates.forAll(s| (s.id != id) || (s == this));
 
 context State
-	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
-	(id.matches("\\w*") && label.matches("\\w*"));
+	ERROR "IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	(id.matches("\\w*"));
+//	 && label.matches("\\w*"));
 
 context State if(outgoingTransitions.size > 1) 
   ERROR "A state can only have one outgoing normal termination!" :
@@ -88,7 +89,7 @@ context Region if (parentState != null) // not checked for root state
 	(innerStates.select(s|s.isInitial).size == 1);
 
 context Region
-	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	ERROR "IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
 	id.matches("\\w*");
 	
 context Region if ((parentState.parentRegion.parentState != null) && 
@@ -100,6 +101,10 @@ context Region if ((parentState.parentRegion.parentState != null) &&
 context Region 
 	ERROR "An empty Region does not make sense! Remove the Region or add States to it!" : 
 	(innerStates.size > 0);
+
+context Region if(parentState != null && parentState.regions.size > 1)
+	ERROR "Regions in a state need to have unique IDs within that state." :
+	(id!= null && !id.matches("\\s*") && parentState.regions.forAll(r| (r.id != id) || (r == this)));
 
 // ================================================================================================
 // Signals
@@ -123,7 +128,7 @@ context Variable
 	;
 
 context ValuedObject
-	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	ERROR "Variable and Signal names should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
 	(name.matches("\\w*"));
 	
 // ================================================================================================

@@ -5,7 +5,6 @@ import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.Transaction;
-import org.eclipse.emf.transaction.TriggerListener;
 
 /**
  * A TriggerListener that executes the trigger only once for a given
@@ -15,7 +14,7 @@ import org.eclipse.emf.transaction.TriggerListener;
  * 
  * @author haf
  */
-public abstract class FireOnceTriggerListener extends TriggerListener {
+public abstract class FireOnceTriggerListener extends FailSafeTriggerListener {
 
     protected Transaction transaction;
 

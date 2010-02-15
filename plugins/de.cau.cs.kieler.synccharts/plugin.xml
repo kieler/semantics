@@ -55,6 +55,9 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerChoice">
       </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerDebug">
+      </triggerListener>
    </extension>
 
 </plugin>
