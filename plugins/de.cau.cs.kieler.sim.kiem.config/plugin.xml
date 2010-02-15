@@ -61,21 +61,5 @@
             name="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener">
       </content>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <configurationFile
-            file="icons/noname1.execution">
-         <editor
-               id="de.cau.cs.kieler.esterel.Esterel"
-               name="Esterel Editor"
-               priority="3">
-         </editor>
-         <editor
-               id="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
-               name="KASM Editor"
-               priority="7">
-         </editor>
-      </configurationFile>
-   </extension>
 
 </plugin>
