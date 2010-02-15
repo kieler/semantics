@@ -3,88 +3,52 @@
 «EXTENSION template::Helper»
 
 «DEFINE transition FOR Transition-»
+	«IF this.type == TransitionType::NORMALTERMINATION-»
+			JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main_intern);
+	«ENDIF-»
 	«IF !(this.triggersAndEffects == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
 					«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
-					«EXPAND complexTrigger FOR this-»
+					«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
-			«IF this.type == TransitionType::NORMALTERMINATION-»
-			JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main);
-			«ENDIF-»
-			«EXPAND transitionEffects FOR this-»
+			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
+			«EXPAND stateAbortion FOR this-»
 		«ENDIF-»
 	«ELSE»
-		«EXPAND transitionWithoutTriggersAndEffects FOR this»
-	«ENDIF-»
-	«IF this.type == TransitionType::STRONGABORT-»
+		«EXPAND stateAbortion FOR this-»
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
-	«EXPAND transitionEffects FOR this-»
+	«EXPAND CodegenTriggerAndEffect::effects FOR this-»
+	«EXPAND stateAbortion FOR this-»
 	«IF hasDependentState(this.sourceState)-»
-		PRIO(«getChangePriority(this.sourceState)»);
+		  PRIO(«getChangePriority(this.sourceState)»);
 	«ENDIF-»
 		}
 «ENDDEFINE»
 
-«DEFINE complexTrigger FOR Transition-»
-//>>>> TODO complex Trigger
-«ENDDEFINE»
-
-«DEFINE transitionEffects FOR Transition-»
-	«FOREACH this.effects AS effect-»
-		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
-			«EXPAND valuedSignal FOR ((Emission)effect)-»
-		«ELSE-»
-			EMIT(«((Emission)effect).signal.name-»);
+«DEFINE stateAbortion FOR Transition-»
+	«IF this.type != TransitionType::NORMALTERMINATION-»
+		«IF !(this.sourceState.regions.isEmpty)-»
+			«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
+			«IF this.type != TransitionType::STRONGABORT-»
+			PRIO(«computeRealThreadPriority(this.targetState)»);
+			«ENDIF-»
+			ABORT;
+			«IF this.type == TransitionType::STRONGABORT-»
+			PRIO(«computeRealThreadPriority(this.targetState)»);
+			«ENDIF-»
 		«ENDIF-»
-	«ENDFOREACH-»
-	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
+		«EXPAND transitionWithoutTriggersAndEffects FOR this»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
-	«IF !(this.sourceState.regions.isEmpty)-»
-		«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
-		«IF this.type != TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
-		«ENDIF-»
-			ABORT;
-		«IF this.type == TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
-		«ENDIF-»
-	«ENDIF-»
 			GOTO(«getStateNameByFlag(this.targetState, 3)»);
-«ENDDEFINE»
-
-«DEFINE valuedSignal FOR Emission-»
-	«IF this.signal.combineOperator == CombineOperator::NONE-»
-		  EMITINT(«EXPAND signalAndValue FOR this-»);
-	«ELSEIF this.signal.combineOperator == CombineOperator::MULT-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMUL(«EXPAND signalAndValue FOR this-»);
-	«ELSEIF this.signal.combineOperator == CombineOperator::ADD-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTADD(«EXPAND signalAndValue FOR this-»);
-	«ELSEIF this.signal.combineOperator == CombineOperator::MAX-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMAX(«EXPAND signalAndValue FOR this-»);
-	«ELSEIF this.signal.combineOperator == CombineOperator::MIN-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMIN(«EXPAND signalAndValue FOR this-»);
-	«ENDIF-»
-	«IF this.signal.combineOperator == CombineOperator::MULT || this.signal.combineOperator == CombineOperator::ADD || this.signal.combineOperator == CombineOperator::MAX || this.signal.combineOperator == CombineOperator::MIN-»
-		  } else {
-		    EMITINT(«EXPAND signalAndValue FOR this-»);
-		  }
-	«ENDIF»
-«ENDDEFINE»
-
-«DEFINE signalAndValue FOR Emission-»
-«this.signal.name», «((IntValue)this.newValue).value-»
 «ENDDEFINE»

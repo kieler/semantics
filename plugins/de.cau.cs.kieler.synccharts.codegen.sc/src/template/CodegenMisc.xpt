@@ -3,10 +3,12 @@
 «EXTENSION template::Helper»
 
 «DEFINE generateSigType FOR List-»
+	«IF !this.isEmpty-»
 typedef enum {«FOREACH this AS signal SEPARATOR ", "-»
 «((Signal)signal).name-»
 «ENDFOREACH-»} signaltype;
 
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE generateSigArray FOR List-»

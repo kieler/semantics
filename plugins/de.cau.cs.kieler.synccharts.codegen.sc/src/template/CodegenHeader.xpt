@@ -16,7 +16,7 @@
 #define MISC_H_
 
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
-	extern const char *s2signame[];
+extern const char *s2signame[];
 	
 // Define valued int signals
 #define valSigIntCnt «allSignals(this.innerStates.first()).size»
