@@ -44,7 +44,6 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
      * Constructor. Create filter for every element of a Signal
      */
     public TriggerListenerChangedSignal() {
-        // TODO add variable support
         super(NotificationFilter.createFeatureFilter(
                 SyncchartsPackage.eINSTANCE.getValuedObject_Name()).or(
                 NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
@@ -64,7 +63,6 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
                 NotificationFilter.createFeatureFilter(
                         SyncchartsPackage.eINSTANCE.getState_Signals()).and(
                         NotificationFilter.createEventTypeFilter(Notification.REMOVE))));
-
     }
 
     /**
@@ -78,7 +76,7 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
-        // System.out.println("SignalTrigger: " + notification);
+        // System.out.println(this.getClass().getSimpleName() + ": " + notification);
         if (notification.getNotifier() instanceof Variable) {
             // case is handled within different trigger listener
             return null;

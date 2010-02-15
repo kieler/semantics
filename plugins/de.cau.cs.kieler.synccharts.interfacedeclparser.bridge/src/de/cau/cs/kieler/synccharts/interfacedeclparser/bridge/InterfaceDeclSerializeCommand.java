@@ -100,13 +100,16 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
     // serialization logic
     private InterfaceDeclSerializerLogic serializeLogic;
+    
+    // support for undo
+    private String oldInterfaceDecl;
 
     /**
      * Constructor being used if the name of a signal has changed or a new
      * signal was created.
      * 
      * @param theRootState
-     *            the root state containing the ifdecl.
+     *            the root state containing the interface declaration.
      * @param changedSignalOrVariable
      *            either the changed signal or the variable.
      * @param theResource
@@ -176,9 +179,15 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     @Override
     public void redo() {
         execute();
-
     }
-
+    
+    @Override 
+    public void undo() { 
+        if (rootState != null) {
+            ((State) rootState).setInterfaceDeclaration(oldInterfaceDecl);
+        }
+    } 
+    
     /**
      * {@inheritDoc}
      */
@@ -225,10 +234,11 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             // System.out.println("######Serialized result: " +
             // outputStream.toString());
 
-            // set the interface declaration string
+            oldInterfaceDecl = ((State) rootState).getInterfaceDeclaration();
+            
+            // set the interface declaration string            
             String result = outputStream.toString();
             ((State) rootState).setInterfaceDeclaration(result);
-
         } catch (IOException e) {
             throw new KielerModelException(e.getMessage(), rootState);
         }

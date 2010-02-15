@@ -24,16 +24,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.AbstractCommand;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.parser.IParseResult;
@@ -43,12 +35,10 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
-import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InOutputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InputSignals;
@@ -111,6 +101,11 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
         execute();
     }
 
+    @Override 
+    public void undo() { 
+      // this is done by the serialize command
+    } 
+    
     /**
      * {@inheritDoc}
      */
