@@ -11,12 +11,11 @@
 	
   </extension>
   <extension
-        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-     <content
-           class="de.cau.cs.kieler.krep.editors.rif.JSONObjectDataComponent1"
-           id="de.cau.cs.kieler.krep.editors.rif.content1"
-           name="de.cau.cs.kieler.krep.editors.rif.content1">
-     </content>
+        point="de.cau.cs.kieler.sim.trace.traceprovider">
+     <provider
+           class="de.cau.cs.kieler.krep.editors.rif.RifFile"
+           id="de.cau.cs.kieler.krep.editors.rif.provider1">
+     </provider>
   </extension>
 
 

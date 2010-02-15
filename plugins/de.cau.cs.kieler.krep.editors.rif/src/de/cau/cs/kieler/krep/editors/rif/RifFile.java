@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -30,30 +31,27 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.krep.editors.rif.rif.Trace;
-import de.cau.cs.kieler.sim.esi.esi.signal;
-import de.cau.cs.kieler.sim.esi.esi.tick;
-import de.cau.cs.kieler.sim.esi.esi.trace;
-import de.cau.cs.kieler.sim.esi.esi.tracelist;
-import de.cau.cs.kieler.sim.esi.trace.ITrace;
-import de.cau.cs.kieler.sim.esi.trace.ITraceList;
+import de.cau.cs.kieler.sim.trace.ITrace;
+import de.cau.cs.kieler.sim.trace.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
  * @author ctr
  * 
  */
-public class RifFile implements ITraceList {
+public class RifFile implements ITraceProvider {
+
+    private final static String[] EXTENSIONS = { "rif" };
 
     private RifTrace trace;
     private int pos = 0;
 
-    RifFile(final Object classpathURIContext, final String fileName)
-            throws KiemInitializationException {
-
+    public LinkedList<RifTrace> loadTrace(final String fileName) throws KiemInitializationException {
+        LinkedList<RifTrace> res = new LinkedList<RifTrace>();
         ISetup setup = new RifStandaloneSetup();
         Injector injector = setup.createInjectorAndDoEMFRegistration();
         XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-        rs.setClasspathURIContext(classpathURIContext);
+        rs.setClasspathURIContext(getClass());
 
         IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
         // setup.doSetup();
@@ -78,12 +76,22 @@ public class RifFile implements ITraceList {
                 throw new KiemInitializationException("Parse error: "
                         + parseResult.getParseErrors().get(0).toString(), true, null);
             }
-            //trace = RifTrace((Trace) parseResult.getRootASTElement());
+            res.add(RifTrace((Trace) parseResult.getRootASTElement()));
         } catch (FileNotFoundException e) {
             throw new KiemInitializationException("File not found", false, e);
             // } catch (Exception e) {
             // throw new KiemInitializationException("Unknown error", false, e);
         }
+        return res;
+    }
+
+    /**
+     * @param rootASTElement
+     * @return
+     */
+    private RifTrace RifTrace(Trace rootASTElement) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     /**
@@ -130,6 +138,13 @@ public class RifFile implements ITraceList {
         HashSet<String> res = new HashSet<String>();
 
         return res;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getExtensions() {
+        return EXTENSIONS;
     }
 
 }

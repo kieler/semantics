@@ -13,11 +13,13 @@
  */
 package de.cau.cs.kieler.krep.editors.rif;
 
+import java.util.HashSet;
+import java.util.Set;
 
 import de.cau.cs.kieler.krep.editors.rif.rif.Tick;
 import de.cau.cs.kieler.krep.editors.rif.rif.Trace;
-import de.cau.cs.kieler.sim.esi.esi.tick;
-import de.cau.cs.kieler.sim.esi.trace.ITrace;
+import de.cau.cs.kieler.krep.editors.rif.rif.decl;
+import de.cau.cs.kieler.sim.trace.ITrace;
 
 /**
  * @author ctr
@@ -39,8 +41,8 @@ public class RifTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
-    public tick current() {
-        return null;
+    public RifTick current() {
+        return new RifTick(current);
     }
 
     /**
@@ -61,7 +63,7 @@ public class RifTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
-    public tick next() {
+    public RifTick next() {
 
         if (trace.getTick().size() > pos) {
             current = trace.getTick().get(pos);
@@ -80,5 +82,18 @@ public class RifTrace implements ITrace {
         current = null;
     }
 
-}
+    /**
+     * {@inheritDoc}
+     */
+    public Set<String> getSignals() {
+        Set<String> res = new HashSet<String>();
+        for (decl d : trace.getInputs()) {
+            res.add(d.getName());
+        }
+        for (decl d : trace.getOutputs()) {
+            res.add(d.getName());
+        }
+        return res;
+    }
 
+}
