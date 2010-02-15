@@ -35,7 +35,19 @@
 «DEFINE getManager(diagram : gmfgen::GenDiagram) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.gef.tools.DirectEditManager getManager() {
+	
+	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
+		de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameProvider.INSTANCE.init(getEditingDomain());
+	«ENDIF»
 		if (manager == null) {
+	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
+			// creates a new ContentProposalProvider for the ContentProposalAdapter
+			de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameContentProposalProvider provider = new de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameContentProposalProvider();
+			// instantiate the modified constructor in LabelDirectEditManager
+			setManager(new de.cau.cs.kieler.synccharts.custom.contentassist.part.LabelDirectEditManager(this, org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager
+					.getTextCellEditorClass(this), «diagram.getEditPartFactoryQualifiedClassName()»
+					.getTextCellEditorLocator(this), provider));
+	«ELSE»
 			«REM» (haf)
 			Manually set class of editor here to wrapping type, because of Eclipse bug #286072
 			original code:
@@ -46,6 +58,7 @@
 			setManager(new org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager(this,
 				org.eclipse.gmf.runtime.gef.ui.internal.parts.WrapTextCellEditor.class,
 				«diagram.getEditPartFactoryQualifiedClassName()».getTextCellEditorLocator(this)));
+	«ENDIF»
 		}
 		return manager;
 	}
