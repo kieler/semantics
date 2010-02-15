@@ -241,7 +241,7 @@ public final class CancelManager {
             boolean aborted = false;
             while (!aborted) {
                 long dif = System.currentTimeMillis() - startTime;
-                aborted = CancelManager.getInstance().isIterationCanceled()
+                aborted = CancelManager.getInstance().isExecutionCanceled()
                         || canceled || dif > timeout;
 
                 try {
