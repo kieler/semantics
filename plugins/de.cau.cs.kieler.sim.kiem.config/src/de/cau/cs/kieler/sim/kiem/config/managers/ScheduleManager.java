@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener;
+import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**
@@ -419,11 +420,32 @@ public final class ScheduleManager extends AbstractManager implements
      *            the schedule to be removed
      */
     public void removeSchedule(final ScheduleData schedule) {
+        // check whether the schedule removed was the currently active one
+        MostRecentCollection<String> recent = getRecentScheduleIds();
+        boolean loadNext = false;
+        if (recent != null && !recent.isEmpty()) {
+            loadNext = recent.get(0).equals(schedule.getId());
+        }
+
         getAllSchedules().remove(schedule);
         // remove id from recent ids
         getRecentScheduleIds().remove(schedule.getId());
         // notify listeners of deletion
         notifyListeners(new KiemConfigEvent(KiemConfigEvent.DELETED, schedule));
+
+        if (loadNext) {
+            List<ScheduleData> newRecent = getRecentSchedules();
+            if (newRecent != null && !newRecent.isEmpty()) {
+                try {
+                    openSchedule(newRecent.get(0));
+                } catch (ScheduleFileMissingException e0) {
+                    ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
+                            KiemConfigurationPlugin.getShell(), newRecent
+                                    .get(0));
+                    dialog.open();
+                }
+            }
+        }
     }
 
     /**
@@ -519,7 +541,7 @@ public final class ScheduleManager extends AbstractManager implements
      * @throws ScheduleFileMissingException
      *             if the location in the schedule is no longer valid
      */
-    public void loadSchedule(final ScheduleData schedule)
+    public void openSchedule(final ScheduleData schedule)
             throws ScheduleFileMissingException {
 
         KiemEventListener.getInstance().setLoadImminent();
@@ -598,10 +620,9 @@ public final class ScheduleManager extends AbstractManager implements
             if (input != null) {
                 String[] array = Tools.getValueList(Tools.LOCATION_NAME, input);
                 if (array != null) {
-                    for (String s : array) {
-                        if (s != null) {
-                            recentScheduleIds.add(s);
-                        }
+                    // add in reverse order, to keep order in list
+                    for (int i = array.length - 1; i >= 0; i--) {
+                        recentScheduleIds.add(array[i]);
                     }
                 }
             }

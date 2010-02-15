@@ -17,26 +17,28 @@ package de.cau.cs.kieler.sim.kiem.ui;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 
 /**
- * The Class AimedStepDurationTextField. This is the GUI component that shows the currently set
- * aimed step duration for the execution. It can also be used to edit this duration.
+ * The Class AimedStepDurationTextField. This is the GUI component that shows
+ * the currently set aimed step duration for the execution. It can also be used
+ * to edit this duration.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
-public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
-        FocusListener {
+public class AimedStepDurationTextField extends ControlContribution implements
+        KeyListener, FocusListener {
 
     /** The SWT text field. */
     private Text textfield;
@@ -63,8 +65,8 @@ public class AimedStepDurationTextField extends ControlContribution implements K
     // -------------------------------------------------------------------------
 
     /**
-     * Enables or disables the text field. Only sets the status if there already is a text field
-     * created by the GUI createControl.
+     * Enables or disables the text field. Only sets the status if there already
+     * is a text field created by the GUI createControl.
      * 
      * @param enabledParam
      *            the new status of the enableness
@@ -151,49 +153,56 @@ public class AimedStepDurationTextField extends ControlContribution implements K
      */
     public void focusLost(final FocusEvent e) {
         updateDuration();
-        textfield.setText("" + kIEM.getAimedStepDuration() + Messages.mDurationTextFieldSuffix);
+        textfield.setText("" + kIEM.getAimedStepDuration()
+                + Messages.mDurationTextFieldSuffix);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the step duration. This methods also checks the bounds and it checks if a valid
-     * integer has been entered. In case the bounds are not met or the user entered an invalid
-     * integer number, the duration is not updated and the text field is set back to the initial
-     * value.
+     * Updates the step duration. This methods also checks the bounds and it
+     * checks if a valid integer has been entered. In case the bounds are not
+     * met or the user entered an invalid integer number, the duration is not
+     * updated and the text field is set back to the initial value.
      */
     private void updateDuration() {
         if (textfield == null) {
             return;
         }
         try {
-            int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
+            String text = textfield.getText().trim();
+            text = text.replaceAll("ms", "");
+
+            int aimedStepDuration = Integer.parseInt(text.trim());
             if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN) {
-                throw (new NumberFormatException(Messages.mWarningDurationTooSmall
-                        + KiemPlugin.AIMED_STEP_DURATION_MIN + Messages.mDurationTextFieldSuffix
-                        + "!"));
+                throw (new NumberFormatException(
+                        Messages.mWarningDurationTooSmall
+                                + KiemPlugin.AIMED_STEP_DURATION_MIN
+                                + Messages.mDurationTextFieldSuffix + "!"));
             }
             if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) {
-                throw (new NumberFormatException(Messages.mWarningDurationTooLarge
-                        + KiemPlugin.AIMED_STEP_DURATION_MAX + Messages.mDurationTextFieldSuffix
-                        + "!"));
+                throw (new NumberFormatException(
+                        Messages.mWarningDurationTooLarge
+                                + KiemPlugin.AIMED_STEP_DURATION_MAX
+                                + Messages.mDurationTextFieldSuffix + "!"));
             }
             kIEM.setAimedStepDuration(aimedStepDuration);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            textfield.setText(kIEM.getAimedStepDuration() + "ms");
         }
     }
 
     // -------------------------------------------------------------------------
-    
+
     @Override
     public void update() {
         // reserve some amount of space and declare default value
         textfield.setText(KiemPlugin.getDefault().getAimedStepDuration()
-                + Messages.mDurationTextFieldSuffix + Messages.mDurationTextFieldReserveSpace);
+                + Messages.mDurationTextFieldSuffix
+                + Messages.mDurationTextFieldReserveSpace);
         super.update();
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**

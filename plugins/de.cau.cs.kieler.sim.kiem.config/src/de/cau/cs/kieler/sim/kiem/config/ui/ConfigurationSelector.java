@@ -26,8 +26,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbenchWindow;
 
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
@@ -48,8 +46,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @kieler.rating 2010-01-27 proposed yellow
  */
 public class ConfigurationSelector extends ControlContribution implements
-        SelectionListener, FocusListener, IKiemConfigEventListener,
-        IWindowListener {
+        SelectionListener, FocusListener, IKiemConfigEventListener {
 
     /** string display for the matching schedules entry. */
     private static final String MATCHING_HEADER = "Matching schedules";
@@ -68,9 +65,6 @@ public class ConfigurationSelector extends ControlContribution implements
     /** list of all schedule data in the currently displayed combo. */
     private List<ScheduleData> data;
 
-    /** True if the initial load has happened. */
-    private boolean hasInitialLoadHappened = false;
-
     /** The list to use. either RECENT_COMBO or MATCHING_COMBO. */
     private int listType;
 
@@ -83,9 +77,6 @@ public class ConfigurationSelector extends ControlContribution implements
 
     /** True if the combo is in the process of refreshing. */
     private boolean refreshing = false;
-
-    /** true if the component should be visible, false if not. */
-    private boolean visible = true;
 
     // --------------------------------------------------------------------------
 
@@ -100,12 +91,6 @@ public class ConfigurationSelector extends ControlContribution implements
         super("ConfigurationSelectorBox");
         this.listType = type;
         this.data = new LinkedList<ScheduleData>();
-
-        ScheduleManager.getInstance().addEventListener(this);
-        ContributionManager.getInstance().addEventListener(this);
-        EditorManager.getInstance().addEventListener(this);
-        KiemConfigurationPlugin.getDefault().getWorkbench().addWindowListener(
-                this);
     }
 
     // --------------------------------------------------------------------------
@@ -119,6 +104,10 @@ public class ConfigurationSelector extends ControlContribution implements
         this.parentComponent = parent;
         createCombo();
         setupCombo(true);
+
+        ScheduleManager.getInstance().addEventListener(this);
+        ContributionManager.getInstance().addEventListener(this);
+        EditorManager.getInstance().addEventListener(this);
         return combo;
     }
 
@@ -235,6 +224,16 @@ public class ConfigurationSelector extends ControlContribution implements
      * {@inheritDoc}
      */
     @Override
+    public void dispose() {
+        ScheduleManager.getInstance().removeEventListener(this);
+        ContributionManager.getInstance().removeEventListener(this);
+        EditorManager.getInstance().removeEventListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update() {
         setupCombo(false);
     }
@@ -273,22 +272,11 @@ public class ConfigurationSelector extends ControlContribution implements
     // --------------------------------------------------------------------------
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override
     public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVisible(final boolean visibleParam) {
-        this.visible = visibleParam;
-        setupCombo(false);
+        return true;
     }
 
     // --------------------------------------------------------------------------
@@ -316,7 +304,7 @@ public class ConfigurationSelector extends ControlContribution implements
         ScheduleData selected = getSelection();
         if (selected != null) {
             try {
-                ScheduleManager.getInstance().loadSchedule(selected);
+                ScheduleManager.getInstance().openSchedule(selected);
             } catch (ScheduleFileMissingException e0) {
                 ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
                         parentComponent.getShell(), selected);
@@ -358,37 +346,6 @@ public class ConfigurationSelector extends ControlContribution implements
                 }
             });
 
-        }
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowActivated(final IWorkbenchWindow window) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowClosed(final IWorkbenchWindow window) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowDeactivated(final IWorkbenchWindow window) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowOpened(final IWorkbenchWindow window) {
-        if (!hasInitialLoadHappened
-                && listType == ContributionManager.RECENT_COMBO) {
-            hasInitialLoadHappened = true;
-            loadSelected();
         }
     }
 

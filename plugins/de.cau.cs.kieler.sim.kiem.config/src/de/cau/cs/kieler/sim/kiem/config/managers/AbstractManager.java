@@ -53,6 +53,19 @@ public abstract class AbstractManager {
     // --------------------------------------------------------------------------
 
     /**
+     * Save all managers.
+     */
+    public static void saveAll() {
+        ScheduleManager.getInstance().save();
+        ConfigurationManager.getInstance().save();
+        EditorManager.getInstance().save();
+        PropertyUsageManager.getInstance().save();
+        ContributionManager.getInstance().save();
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
      * Adds a new listener to this manager.
      * 
      * @param listener

@@ -97,7 +97,6 @@ public final class ContributionManager extends AbstractManager {
             if (recentCombo == null) {
                 recentCombo = new ConfigurationSelector(RECENT_COMBO);
             }
-            recentCombo.setVisible(true);
             list.add(recentCombo);
         }
 
@@ -105,7 +104,6 @@ public final class ContributionManager extends AbstractManager {
             if (matchingCombo == null) {
                 matchingCombo = new ConfigurationSelector(MATCHING_COMBO);
             }
-            matchingCombo.setVisible(true);
             list.add(matchingCombo);
         }
 
@@ -170,8 +168,7 @@ public final class ContributionManager extends AbstractManager {
         }
 
         // update the visibility of the boxes in the KIEM view
-        KiemPlugin.getDefault().getKIEMViewInstance()
-                .checkForSingleEnabledMaster(true);
+        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
 
         save();
     }

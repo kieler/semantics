@@ -130,32 +130,8 @@ public class AutomatedExecutionWizard extends Wizard {
 
                 if (!selection.isEmpty()) {
                     // create the structured selection
-                    IStructuredSelection loadedSelection = new IStructuredSelection() {
-
-                        public boolean isEmpty() {
-                            return selection.isEmpty();
-                        }
-
-                        public List<IResource> toList() {
-                            return selection;
-                        }
-
-                        public Object[] toArray() {
-                            return selection.toArray();
-                        }
-
-                        public int size() {
-                            return selection.size();
-                        }
-
-                        public Iterator<IResource> iterator() {
-                            return selection.iterator();
-                        }
-
-                        public Object getFirstElement() {
-                            return selection.get(0);
-                        }
-                    };
+                    IStructuredSelection loadedSelection = new Selection(
+                            selection);
 
                     fileSelectionPage = new FileSelectionPage(loadedSelection);
                 }
@@ -263,6 +239,52 @@ public class AutomatedExecutionWizard extends Wizard {
      */
     public List<KiemProperty> getProperties() {
         return properties;
+    }
+
+    /**
+     * Manages the selection for the wizard.
+     * 
+     * @author soh
+     * @kieler.rating 2010-02-15 proposed yellow
+     */
+    private static class Selection implements IStructuredSelection {
+
+        /** The selection. */
+        private List<IResource> selection;
+
+        /**
+         * Creates a new structured selection.
+         * 
+         * @param selectionParam
+         *            the selection
+         */
+        public Selection(final List<IResource> selectionParam) {
+            this.selection = selectionParam;
+        }
+
+        public boolean isEmpty() {
+            return selection.isEmpty();
+        }
+
+        public List<IResource> toList() {
+            return selection;
+        }
+
+        public Object[] toArray() {
+            return selection.toArray();
+        }
+
+        public int size() {
+            return selection.size();
+        }
+
+        public Iterator<IResource> iterator() {
+            return selection.iterator();
+        }
+
+        public Object getFirstElement() {
+            return selection.get(0);
+        }
     }
 
 }

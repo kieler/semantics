@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sim.kiem.config;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
@@ -21,6 +22,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -85,6 +88,18 @@ public class KiemConfigurationPlugin extends AbstractUIPlugin {
     // --------------------------------------------------------------------------
 
     /**
+     * Getter for the main shell of the active workbench.
+     * 
+     * @return the active shell
+     */
+    public static Shell getShell() {
+        return getDefault().getWorkbench().getActiveWorkbenchWindow()
+                .getShell();
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
      * Get the currently active editor.
      * 
      * @return the currently active editor, or null
@@ -125,6 +140,7 @@ public class KiemConfigurationPlugin extends AbstractUIPlugin {
      */
     @Override
     public void stop(final BundleContext context) throws Exception {
+        AbstractManager.saveAll();
         plugin = null;
         super.stop(context);
     }

@@ -39,6 +39,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
@@ -50,14 +52,12 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
- * This activator class controls the life cycle of the KiemPlugin. It also provides the access to
- * the one and only instance of this class and hence a way to access the execution thread. For the
- * execution thread it allows to access the KiemView for updating or refreshing the table or the
- * step information text field.
+ * This activator class controls the life cycle of the KiemPlugin. It also
+ * provides the access to the one and only instance of this class and hence a
+ * way to access the execution thread. For the execution thread it allows to
+ * access the KiemView for updating or refreshing the table or the step
+ * information text field.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
  * @kieler.rating 2009-01-15 yellow
@@ -66,20 +66,20 @@ import org.json.JSONObject;
 public class KiemPlugin extends AbstractUIPlugin {
 
     /**
-     * The Constant AIMED_STEP_DURATION_DEFAULT. Default value of the AimedStepDuration text field
-     * in ms.
+     * The Constant AIMED_STEP_DURATION_DEFAULT. Default value of the
+     * AimedStepDuration text field in ms.
      */
     public static final int AIMED_STEP_DURATION_DEFAULT = 500;
 
     /**
-     * The Constant AIMED_STEP_DURATION_MIN. Minimum value of the AimedStepDuration text field in
-     * ms.
+     * The Constant AIMED_STEP_DURATION_MIN. Minimum value of the
+     * AimedStepDuration text field in ms.
      */
     public static final int AIMED_STEP_DURATION_MIN = 1;
 
     /**
-     * The Constant AIMED_STEP_DURATION_MAX. Maximum value of the AimedStepDuration text field in
-     * ms.
+     * The Constant AIMED_STEP_DURATION_MAX. Maximum value of the
+     * AimedStepDuration text field in ms.
      */
     public static final int AIMED_STEP_DURATION_MAX = 3600000;
 
@@ -116,9 +116,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor if the KIEM plug-in. A default DataComponentWrapperList is created. It
-     * contains all DataComponents in the default order ( {@link #getDefaultComponentWrapperList()}
-     * ). The execution is null by default. The KIEMViewInstance is set, in the constructor of the.
+     * The constructor if the KIEM plug-in. A default DataComponentWrapperList
+     * is created. It contains all DataComponents in the default order (
+     * {@link #getDefaultComponentWrapperList()} ). The execution is null by
+     * default. The KIEMViewInstance is set, in the constructor of the.
      * 
      * @see de.cau.cs.kieler.sim.kiem.ui.views.KiemView
      */
@@ -142,7 +143,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             eventManager = new EventManager();
         }
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = this.dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = this.dataComponentWrapperList
+                    .get(c);
             eventManager.add(dataComponentWrapper);
         }
     }
@@ -150,7 +152,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the execution. The use of this method is only recommended for remote controlling KIEM.
+     * Gets the execution. The use of this method is only recommended for remote
+     * controlling KIEM.
      * 
      * @return the execution
      */
@@ -161,7 +164,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the execution. The use of this method is only recommended for remote controlling KIEM.
+     * Sets the execution. The use of this method is only recommended for remote
+     * controlling KIEM.
      * 
      * @param executionParam
      *            the execution param
@@ -199,8 +203,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance of the KIEM plug-in. This is mainly used by the execution thread
-     * to access the view of the KIELER Execution Manager or the other way round.
+     * Returns the shared instance of the KIEM plug-in. This is mainly used by
+     * the execution thread to access the view of the KIELER Execution Manager
+     * or the other way round.
      * 
      * @return the one and only shared instance of this KIEM plug-in
      */
@@ -211,23 +216,26 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Opens an Execution File (*.execution) and tries to update the dataComponentWrapperList
-     * according to this file. If the components or properties loaded do not exist in the
-     * environment (e.g., the according plug-ins where not loaded) then an error message will bring
-     * this to the user's attention. <BR>
+     * Opens an Execution File (*.execution) and tries to update the
+     * dataComponentWrapperList according to this file. If the components or
+     * properties loaded do not exist in the environment (e.g., the according
+     * plug-ins where not loaded) then an error message will bring this to the
+     * user's attention. <BR>
      * <BR>
-     * This method is called from the KiemProxyEditor that acts as a proxy for passing the
-     * editoInput from the Workbench to the KiemView.
+     * This method is called from the KiemProxyEditor that acts as a proxy for
+     * passing the editoInput from the Workbench to the KiemView.
      * 
      * @param editorInput
      *            the file editor input to open
      */
     public void openFile(final IEditorInput editorInput) {
         if (!(editorInput instanceof IFileEditorInput)) {
-            throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
+            throw new RuntimeException(
+                    "Invalid Input: Must be IFileEditorInput");
         }
 
-        IPath executionFile = ((IFileEditorInput) editorInput).getFile().getFullPath();
+        IPath executionFile = ((IFileEditorInput) editorInput).getFile()
+                .getFullPath();
         try {
             openFile(executionFile, false);
         } catch (IOException e0) {
@@ -238,28 +246,33 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Opens an Execution File (*.execution) and tries to update the dataComponentWrapperList
-     * according to this file. If the components or properties loaded do not exist in the
-     * environment (e.g., the according plug-ins where not loaded) then an error message will bring
-     * this to the user's attention. <BR>
+     * Opens an Execution File (*.execution) and tries to update the
+     * dataComponentWrapperList according to this file. If the components or
+     * properties loaded do not exist in the environment (e.g., the according
+     * plug-ins where not loaded) then an error message will bring this to the
+     * user's attention. <BR>
      * <BR>
-     * This method can be called from another plug-in and is part of the KIEM API.
+     * This method can be called from another plug-in and is part of the KIEM
+     * API.
      * 
      * @param executionFile
      *            the execution file to open
      * @param readOnly
-     *            the readonly flag indicates that the file is locked for writing
+     *            the readonly flag indicates that the file is locked for
+     *            writing
      * 
      * @throws IOException
      *             if the file was not found
      */
-    public void openFile(final IPath executionFile, final boolean readOnly) throws IOException {
+    public void openFile(final IPath executionFile, final boolean readOnly)
+            throws IOException {
         String fileString = executionFile.toOSString();
 
         final InputStream inputStream;
 
         if (fileString.startsWith("bundleentry:/")) {
-            String urlPath = fileString.replaceFirst("bundleentry:/", "bundleentry://");
+            String urlPath = fileString.replaceFirst("bundleentry:/",
+                    "bundleentry://");
 
             URL pathUrl = new URL(urlPath);
             inputStream = pathUrl.openStream();
@@ -277,7 +290,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (execution != null) {
                     // stop any running execution
                     KiemPlugin.getDefault().execution.stopExecutionSync();
-                    showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID, null, false);
+                    showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID,
+                            null, false);
                     return;
                 }
 
@@ -289,7 +303,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     List<DataComponentWrapper> dataComponentWrapperListTemp = null;
                     // try to load the components into a temporary list
                     try {
-                        ObjectInputStream in = new ObjectInputStream(inputStream);
+                        ObjectInputStream in = new ObjectInputStream(
+                                inputStream);
                         Object object;
                         try {
                             object = in.readObject();
@@ -321,20 +336,24 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // reset the KIEM view (in cases it hangs because
                     // of faulty components)
                     kIEMViewInstance.setAllEnabled(true);
-                    kIEMViewInstance.updateEnabledEnabledDisabledUpDownAddDelete();
+                    kIEMViewInstance
+                            .updateEnabledEnabledDisabledUpDownAddDelete();
                     // update the current file, dirty flag
                     kIEMViewInstance.setCurrentFile(executionFile);
-                    kIEMViewInstance.setDirty(false);
                     kIEMViewInstance.checkForSingleEnabledMaster(false);
                     kIEMViewInstance.getAimedStepDurationTextField().update();
                     // update the KiemView table
                     kIEMViewInstance.updateViewAsync();
+                    kIEMViewInstance.setDirty(false);
                     if (loadSuccessful) {
                         if (eventManager != null) {
-                            eventManager.notify(new KiemEvent(KiemEvent.LOAD, executionFile));
+                            eventManager.notify(new KiemEvent(KiemEvent.LOAD,
+                                    executionFile));
                         }
-                        // if the file is read-only, then set current file to null
-                        // this ensures that the save-as dialog will popup whenever the
+                        // if the file is read-only, then set current file to
+                        // null
+                        // this ensures that the save-as dialog will popup
+                        // whenever the
                         // user clicks to save the schedule
                         if (readOnly) {
                             kIEMViewInstance.setCurrentFile(null);
@@ -348,8 +367,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Notify all configuration providers that a property in the currently loaded configuration has
-     * changed.
+     * Notify all configuration providers that a property in the currently
+     * loaded configuration has changed.
      * 
      * author: soh
      * 
@@ -358,9 +377,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param value
      *            the value of the property.
      */
-    public void notifyConfigurationProviders(final String propertyId, final String value) {
+    public void notifyConfigurationProviders(final String propertyId,
+            final String value) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.configurationProvider");
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.configurationProvider");
 
         for (IConfigurationElement element : contributors) {
             try {
@@ -377,8 +398,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Get a new property value from one of the configuration providers. Will get the first value of
-     * any provider that doesn't throw an exception when the request is made.
+     * Get a new property value from one of the configuration providers. Will
+     * get the first value of any provider that doesn't throw an exception when
+     * the request is made.
      * 
      * author: soh
      * 
@@ -388,7 +410,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public String getPropertyValueFromProviders(final String propertyId) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.configurationProvider");
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.configurationProvider");
 
         String result = null;
         for (IConfigurationElement element : contributors) {
@@ -412,8 +435,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Get a new property value from one of the configuration providers. Will get the first value of
-     * any provider that doesn't throw an exception when the request is made.
+     * Get a new property value from one of the configuration providers. Will
+     * get the first value of any provider that doesn't throw an exception when
+     * the request is made.
      * 
      * author: soh
      * 
@@ -435,8 +459,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Get a new property value from one of the configuration providers. Will get the first value of
-     * any provider that doesn't throw an exception when the request is made.
+     * Get a new property value from one of the configuration providers. Will
+     * get the first value of any provider that doesn't throw an exception when
+     * the request is made.
      * 
      * author: soh
      * 
@@ -460,8 +485,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the view of the KiemView table asynchronously. This method is used to update the
-     * KiemView table from within the execution thread.
+     * Updates the view of the KiemView table asynchronously. This method is
+     * used to update the KiemView table from within the execution thread.
      */
     public void updateViewAsync() {
         if (this.kIEMViewInstance != null) {
@@ -471,8 +496,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Updates the steps in the Step text field asynchronously. This method is used to update the
-     * KiemView steps from within the execution thread.
+     * Updates the steps in the Step text field asynchronously. This method is
+     * used to update the KiemView steps from within the execution thread.
      */
     public void updateStepsAsync() {
         if (this.kIEMViewInstance != null) {
@@ -484,8 +509,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the view focus to the KiemView instance. This method is called by the AimedStepDuration
-     * text field if the used wants to leave its focus by pressing [ENTER].
+     * Sets the view focus to the KiemView instance. This method is called by
+     * the AimedStepDuration text field if the used wants to leave its focus by
+     * pressing [ENTER].
      */
     public void setViewFocus() {
         if (this.kIEMViewInstance != null) {
@@ -507,9 +533,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the KIEM view instance. This method is called by the constructor of the Class
-     * {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemView} so that this plug-in (or the execution
-     * thread) is able to trigger updates on the view.
+     * Sets the KIEM view instance. This method is called by the constructor of
+     * the Class {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemView} so that
+     * this plug-in (or the execution thread) is able to trigger updates on the
+     * view.
      * 
      * @param kIEMViewInstanceParam
      *            the one and only KiemView instance
@@ -539,8 +566,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the aimed step duration. This method sets the aimed step duration and also passes-on the
-     * value to the execution thread if that exists.
+     * Sets the aimed step duration. This method sets the aimed step duration
+     * and also passes-on the value to the execution thread if that exists.
      * 
      * author: soh
      * 
@@ -554,7 +581,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             this.execution.setAimedStepDuration(aimedStepDuration);
         }
         this.getKIEMViewInstance().updateViewAsync();
-        notifyConfigurationProviders(AIMED_STEP_DURATION_ID, aimedStepDurationi + "");
+        notifyConfigurationProviders(AIMED_STEP_DURATION_ID, aimedStepDurationi
+                + "");
     }
 
     // -------------------------------------------------------------------------
@@ -581,25 +609,28 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Tries to restore the data component list. If an item was not found it will be deleted and an
-     * error message is shown.
+     * Tries to restore the data component list. If an item was not found it
+     * will be deleted and an error message is shown.
      * 
      * @param dataComponentWrapperListParam
-     *            a temporary (partial) DataComponentWrapperList to restore the full one from
+     *            a temporary (partial) DataComponentWrapperList to restore the
+     *            full one from
      */
     private void restoreDataComponentWrapperList(
             final List<DataComponentWrapper> dataComponentWrapperListParam) {
         List<AbstractDataComponent> dataComponentListTmp = getRegisteredDataComponentList();
 
         for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam
+                    .get(c);
             String componentId = dataComponentWrapper.getComponentId();
             KiemProperty[] properties = dataComponentWrapper.getProperties();
 
             boolean componentRestored = false;
 
             for (int cc = 0; cc < dataComponentListTmp.size(); cc++) {
-                AbstractDataComponent dataComponent = dataComponentListTmp.get(cc);
+                AbstractDataComponent dataComponent = dataComponentListTmp
+                        .get(cc);
                 String vglComponentId = dataComponent.getDataComponentId();
 
                 if (vglComponentId.equals(componentId)) {
@@ -607,8 +638,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     if (properties != null) {
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
-                                properties[ccc].setType(dataComponent.getProperties()[ccc]
-                                        .getType());
+                                properties[ccc].setType(dataComponent
+                                        .getProperties()[ccc].getType());
                             } catch (Exception e) {
                                 // warnings with unusable properties can
                                 // only occur if this is intended, i.e., the
@@ -622,7 +653,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // set the loaded properties
                     addedDataComponentWrapper.setProperties(properties);
                     // set enabled disabled
-                    addedDataComponentWrapper.setEnabled(dataComponentWrapper.isEnabled());
+                    addedDataComponentWrapper.setEnabled(dataComponentWrapper
+                            .isEnabled());
                     // everything restored correctly
                     componentRestored = true;
                     break;
@@ -631,8 +663,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             updateEventManager();
             if (!componentRestored) {
-                this.showWarning(Messages.mWarningLoadingDataComponentProperty.replace("%COMPONENTNAME",
-                        componentId), null, null, false);
+                this.showWarning(Messages.mWarningLoadingDataComponentProperty
+                        .replace("%COMPONENTNAME", componentId), null, null,
+                        false);
             } // end if - failed
 
         } // next c
@@ -641,15 +674,16 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * This initializes the DataComponentList with all registered and loaded plug-ins that extend
-     * the following two extension points:<BR>
+     * This initializes the DataComponentList with all registered and loaded
+     * plug-ins that extend the following two extension points:<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
-     * If a DataComponent is registered but cannot be instantiated because of an error this will
-     * result in a warning only so that all other fully functional DataComponents are still loaded.
-     * This method remembers its list thru the whole life-cycle of this plug-in and always returns
-     * the same list. All DataComponents that cannot be instantiated due to errors will not occur in
-     * the list.
+     * If a DataComponent is registered but cannot be instantiated because of an
+     * error this will result in a warning only so that all other fully
+     * functional DataComponents are still loaded. This method remembers its
+     * list thru the whole life-cycle of this plug-in and always returns the
+     * same list. All DataComponents that cannot be instantiated due to errors
+     * will not occur in the list.
      * 
      * @return the DataComponentList
      */
@@ -664,14 +698,16 @@ public class KiemPlugin extends AbstractUIPlugin {
         // linked==needed any more)
         System.gc();
         // get the available interfaces and initialize them
-        IConfigurationElement[] jsonComponents = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(Messages.extensionPointIDjsoncomponent);
+        IConfigurationElement[] jsonComponents = Platform
+                .getExtensionRegistry().getConfigurationElementsFor(
+                        Messages.extensionPointIDjsoncomponent);
 
-        IConfigurationElement[] stringComponents = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(Messages.extensionPointIDstringcomponent);
+        IConfigurationElement[] stringComponents = Platform
+                .getExtensionRegistry().getConfigurationElementsFor(
+                        Messages.extensionPointIDstringcomponent);
 
-        dataComponentList = new ArrayList<AbstractDataComponent>(jsonComponents.length
-                + stringComponents.length);
+        dataComponentList = new ArrayList<AbstractDataComponent>(
+                jsonComponents.length + stringComponents.length);
 
         for (int i = 0; i < jsonComponents.length; i++) {
             try {
@@ -684,8 +720,9 @@ public class KiemPlugin extends AbstractUIPlugin {
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
-                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        jsonComponents[i].getContributor().getName()), null, e, false);
+                this.showWarning(Messages.mWarningLoadingDataComponent.replace(
+                        "%COMPONENTNAME", jsonComponents[i].getContributor()
+                                .getName()), null, e, false);
             }
         }
         for (int i = 0; i < stringComponents.length; i++) {
@@ -700,8 +737,9 @@ public class KiemPlugin extends AbstractUIPlugin {
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
-                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        stringComponents[i].getContributor().getName()), null, e, false);
+                this.showWarning(Messages.mWarningLoadingDataComponent.replace(
+                        "%COMPONENTNAME", stringComponents[i].getContributor()
+                                .getName()), null, e, false);
             }
         }
         return dataComponentList;
@@ -714,7 +752,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         int countEnabledProducer = 0;
         int countEnabledObserver = 0;
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(c);
             if (dataComponentWrapper.isEnabled()) {
                 if (dataComponentWrapper.isProducer()) {
                     countEnabledProducer++;
@@ -726,11 +765,13 @@ public class KiemPlugin extends AbstractUIPlugin {
         } // next c
         if (countEnabledProducer < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null, false);
+            this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID,
+                    null, false);
             return false;
         } else if (countEnabledObserver < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null, false);
+            showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID,
+                    null, false);
             return false;
         }
         return true;
@@ -739,7 +780,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     private boolean testForKiemPropertyError() {
         // now check if properties are OK hence no KiemPropertyError is thrown
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(c);
             KiemProperty[] properties = dataComponentWrapper.getProperties();
             try {
                 if (dataComponentWrapper.isEnabled()) {
@@ -747,7 +789,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                 }
             } catch (Exception e) {
                 this.showError(null, dataComponentWrapper.getDataComponent()
-                        .getConfigurationElement().getContributor().getName(), e, false);
+                        .getConfigurationElement().getContributor().getName(),
+                        e, false);
                 return false;
             }
         }
@@ -759,19 +802,21 @@ public class KiemPlugin extends AbstractUIPlugin {
         // get all InitialValues from (enabled) data producer
         // and combine them into globalInitialVariables
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(c);
             if (dataComponentWrapper.isEnabled()) {
                 try {
                     JSONObject localInitialVariables = dataComponentWrapper
                             .provideInitialVariables();
                     if (localInitialVariables != null) {
                         JSONMerger jsonMerger = new JSONMerger();
-                        JSONObject merged = jsonMerger.mergeObjects(globalInitialVariables,
-                                localInitialVariables);
+                        JSONObject merged = jsonMerger.mergeObjects(
+                                globalInitialVariables, localInitialVariables);
                         globalInitialVariables = merged;
                     } // end if not null
                 } catch (Exception e) {
-                    KiemPlugin.handleComponentError(dataComponentWrapper.getDataComponent(), e);
+                    KiemPlugin.handleComponentError(dataComponentWrapper
+                            .getDataComponent(), e);
                     throw e;
                 }
             } // if enabled
@@ -779,9 +824,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         // distribute union of globalInitialVariables to all enabled components
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(c);
             if (dataComponentWrapper.isEnabled()) {
-                dataComponentWrapper.setInitialVariables(globalInitialVariables);
+                dataComponentWrapper
+                        .setInitialVariables(globalInitialVariables);
             } // end if enabled
         } // next c
 
@@ -791,13 +838,15 @@ public class KiemPlugin extends AbstractUIPlugin {
     private boolean initializeDataComponents() {
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentWrapperList.size(); c++) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(c);
             if (dataComponentWrapper.isEnabled()) {
                 try {
                     dataComponentWrapper.getDataComponent().initialize();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    KiemPlugin.handleComponentError(dataComponentWrapper.getDataComponent(), e);
+                    KiemPlugin.handleComponentError(dataComponentWrapper
+                            .getDataComponent(), e);
                     return false;
                 }
             } // end if enabled
@@ -806,8 +855,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Initializes the Execution. This is one of the heart-methods of this plug-in. It does the
-     * following tasks: <BR>
+     * Initializes the Execution. This is one of the heart-methods of this
+     * plug-in. It does the following tasks: <BR>
      * <BR>
      * (1) Check if there are any (enabled) DataProducers or DataConsumers.<BR>
      * (2) Check if all DataComponent's properties are set correctly<BR>
@@ -816,8 +865,9 @@ public class KiemPlugin extends AbstractUIPlugin {
      * (5) Initialize the DataComponents<BR>
      * (6) Create an run the Execution thread<BR>
      * <BR>
-     * This method returns true if the execution is successfully initialized or if the execution
-     * thread already exists, hence the {@link #execution} is not null.
+     * This method returns true if the execution is successfully initialized or
+     * if the execution thread already exists, hence the {@link #execution} is
+     * not null.
      * 
      * @return true, if successful
      */
@@ -872,25 +922,29 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Add a DataComponent instance to the {@link #dataComponentWrapperList}. This will clone the
-     * DataComponent and add an executable extension. It then creates a new DataComponentWrapper
-     * instance that encapsulates the just created DataComponent (and offers additional information
-     * and methods). The latter will be added then to the DataComponentList.
+     * Add a DataComponent instance to the {@link #dataComponentWrapperList}.
+     * This will clone the DataComponent and add an executable extension. It
+     * then creates a new DataComponentWrapper instance that encapsulates the
+     * just created DataComponent (and offers additional information and
+     * methods). The latter will be added then to the DataComponentList.
      * 
      * @param component
      *            the component
      * 
      * @return the added dataComponentWrapper component
      */
-    public DataComponentWrapper addTodataComponentWrapperList(final AbstractDataComponent component) {
-        IConfigurationElement componentConfigEle = component.getConfigurationElement();
+    public DataComponentWrapper addTodataComponentWrapperList(
+            final AbstractDataComponent component) {
+        IConfigurationElement componentConfigEle = component
+                .getConfigurationElement();
         AbstractDataComponent componentClone;
         try {
             componentClone = (AbstractDataComponent) componentConfigEle
                     .createExecutableExtension("class");
             componentClone.setConfigurationElemenet(componentConfigEle);
 
-            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(componentClone);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(
+                    componentClone);
             this.dataComponentWrapperList.add(dataComponentWrapper);
             return dataComponentWrapper;
         } catch (CoreException e) {
@@ -902,14 +956,15 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the default ComponentWrapperList. This will contain all registered DataComponents
-     * that extend one the following extension points:<BR>
+     * Returns the default ComponentWrapperList. This will contain all
+     * registered DataComponents that extend one the following extension points:<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
-     * They will be ordered in the "natural" way, meaning that the (pure) data producers are
-     * scheduled before the data observer & producers which are themselves scheduled before the
-     * (pure) data observers. Although DataComponents may be multiple instantiable, by default,
-     * there will be exactly one instance per DataComponent in the list.
+     * They will be ordered in the "natural" way, meaning that the (pure) data
+     * producers are scheduled before the data observer & producers which are
+     * themselves scheduled before the (pure) data observers. Although
+     * DataComponents may be multiple instantiable, by default, there will be
+     * exactly one instance per DataComponent in the list.
      * 
      * @return the default DataComponentWrapperList
      */
@@ -918,36 +973,42 @@ public class KiemPlugin extends AbstractUIPlugin {
         // remove any DataComponent threads still running (but not
         // linked==needed any more)
         System.gc();
-        List<AbstractDataComponent> list = this.getRegisteredDataComponentList();
+        List<AbstractDataComponent> list = this
+                .getRegisteredDataComponentList();
         List<DataComponentWrapper> returnList = new LinkedList<DataComponentWrapper>();
         // first add initialization components
         for (int c = 0; c < list.size(); c++) {
-            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
-            if ((!dataComponentWrapper.isProducer()) && !dataComponentWrapper.isObserver()) {
+            AbstractDataComponent dataComponent = list.get(c);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(
+                    dataComponent);
+            if ((!dataComponentWrapper.isProducer())
+                    && !dataComponentWrapper.isObserver()) {
                 returnList.add(dataComponentWrapper);
             }
         }
         // then add pure producer
         for (int c = 0; c < list.size(); c++) {
-            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            AbstractDataComponent dataComponent = list.get(c);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(
+                    dataComponent);
             if (dataComponentWrapper.isProducerOnly()) {
                 returnList.add(dataComponentWrapper);
             }
         }
         // then add observer & producer
         for (int c = 0; c < list.size(); c++) {
-            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            AbstractDataComponent dataComponent = list.get(c);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(
+                    dataComponent);
             if (dataComponentWrapper.isProducerObserver()) {
                 returnList.add(dataComponentWrapper);
             }
         }
         // then add pure observer
         for (int c = 0; c < list.size(); c++) {
-            AbstractDataComponent dataComponent = (AbstractDataComponent) list.get(c);
-            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(dataComponent);
+            AbstractDataComponent dataComponent = list.get(c);
+            DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(
+                    dataComponent);
             if (dataComponentWrapper.isObserverOnly()) {
                 returnList.add(dataComponentWrapper);
             }
@@ -965,7 +1026,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             return;
         }
         while (this.dataComponentWrapperList.size() > 0) {
-            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(0);
+            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                    .get(0);
             dataComponentWrapper.getDataComponent().finalize();
             dataComponentWrapperList.remove(dataComponentWrapper);
             // remove from event manager
@@ -980,10 +1042,11 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the current DataComponentWrapper-List that is held by the KIEM plug-in directly. Any
-     * modification on this list is persistent in this one and only plug-in instance. The
-     * DataComponentWrapperList holds a list of DataComponents, selected from all registered (and
-     * loaded) plug-ins that extend the following extension points:<BR>
+     * Returns the current DataComponentWrapper-List that is held by the KIEM
+     * plug-in directly. Any modification on this list is persistent in this one
+     * and only plug-in instance. The DataComponentWrapperList holds a list of
+     * DataComponents, selected from all registered (and loaded) plug-ins that
+     * extend the following extension points:<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent}<BR>
      * - {@link de.cau.cs.kieler.sim.kiem.JSONStringDataComponent}<BR>
      * 
@@ -996,23 +1059,25 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * This method handles errors or warnings within the execution of DataComponents. It
-     * specifically handles the following two types or errors:<BR>
+     * This method handles errors or warnings within the execution of
+     * DataComponents. It specifically handles the following two types or
+     * errors:<BR>
      * - {@link KiemExecutionException}<BR>
      * - {@link KiemExecutionException}<BR>
-     * If the mustStop flag is set, then the execution is immediately stopped. Note that all threads
-     * will be advised to stop in the
-     * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()} method. But there is
-     * no guarantee that they really stop. The links to these threads will be cut down, so that
-     * there is the possibility of zombie threads.
+     * If the mustStop flag is set, then the execution is immediately stopped.
+     * Note that all threads will be advised to stop in the
+     * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()}
+     * method. But there is no guarantee that they really stop. The links to
+     * these threads will be cut down, so that there is the possibility of
+     * zombie threads.
      * 
      * @param dataComponent
      *            the DataComponent that caused the error or warning
      * @param exception
      *            the Exception if any, or null
      */
-    public static void handleComponentError(final AbstractDataComponent dataComponent,
-            final Exception exception) {
+    public static void handleComponentError(
+            final AbstractDataComponent dataComponent, final Exception exception) {
 
         boolean mustStop = false;
         boolean mustPause = false;
@@ -1030,18 +1095,20 @@ public class KiemPlugin extends AbstractUIPlugin {
         // show error or warning message dialog
         if (mustStop) {
             // notify components
-            KiemPlugin.getDefault().getEventManager().notify(new KiemEvent(KiemEvent.ERROR_STOP));
+            KiemPlugin.getDefault().getEventManager().notify(
+                    new KiemEvent(KiemEvent.ERROR_STOP));
 
             // first terminate the execution
             if (KiemPlugin.getDefault().execution != null) {
                 KiemPlugin.getDefault().execution.errorTerminate();
             }
             // then show modal error dialog
-            KiemPlugin.getDefault().showError(null, dataComponent.getPluginId(), exception, silent);
+            KiemPlugin.getDefault().showError(null,
+                    dataComponent.getPluginId(), exception, silent);
         } else {
             // show non modal warning dialog
-            KiemPlugin.getDefault().showWarning(null, dataComponent.getPluginId(), exception,
-                    silent);
+            KiemPlugin.getDefault().showWarning(null,
+                    dataComponent.getPluginId(), exception, silent);
             // must pause makes only sense for running executions!
             if (mustPause) {
                 // notify components
@@ -1057,8 +1124,8 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the single EventManager that handles notification of DataComponents when KiemEvents
-     * occur.
+     * Gets the single EventManager that handles notification of DataComponents
+     * when KiemEvents occur.
      * 
      * @return the event manager
      */
@@ -1068,8 +1135,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    private String getErrorWarningMessage(final String textMessage, final String pluginID,
-            final Exception exception) {
+    private String getErrorWarningMessage(final String textMessage,
+            final String pluginID, final Exception exception) {
         String message = "";
 
         if (textMessage != null) {
@@ -1104,11 +1171,12 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Shows a warning dialog using the StatusAdapter. This dialog will *NOT* be modal, so that the
-     * user is notified but the current work is not interrupted. <BR>
-     * Additionally the information will be logged in the error log so that the user has the
-     * opportunity to e.g., access the error stack trace. The plug-in id is required, textMessage
-     * and exception are optional.
+     * Shows a warning dialog using the StatusAdapter. This dialog will *NOT* be
+     * modal, so that the user is notified but the current work is not
+     * interrupted. <BR>
+     * Additionally the information will be logged in the error log so that the
+     * user has the opportunity to e.g., access the error stack trace. The
+     * plug-in id is required, textMessage and exception are optional.
      * 
      * @param textMessage
      *            the text message
@@ -1117,37 +1185,42 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the exception
      * @param silent
-     *            the silent tag indicates that only logging occurs, no message dialog is displayed
+     *            the silent tag indicates that only logging occurs, no message
+     *            dialog is displayed
      */
     public void showWarning(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         try {
-            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String message = getErrorWarningMessage(textMessage, pluginID,
+                    exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
-                status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
+                status = new Status(IStatus.WARNING, pluginID2,
+                        IStatus.WARNING, message, exception);
             } else {
                 try {
-                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                            exception.getCause());
+                    status = new Status(IStatus.WARNING, pluginID2,
+                            IStatus.WARNING, message, exception.getCause());
                 } catch (Exception e) {
-                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                            exception);
+                    status = new Status(IStatus.WARNING, pluginID2,
+                            IStatus.WARNING, message, exception);
                 }
             }
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
-            statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
-                    .currentTimeMillis());
+            statusAdapter.setProperty(
+                    IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
+                            .currentTimeMillis());
 
             // use status manager (log and (optionally) show)
             if (!silent) {
                 StatusManager.getManager().handle(statusAdapter,
                         StatusManager.LOG | StatusManager.SHOW);
             } else {
-                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.LOG);
             }
 
         } catch (Exception e) {
@@ -1158,10 +1231,11 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Shows an error dialog using the StatusAdapter. This dialog will be modal, so that the user
-     * has to click OK to end it. Additionally the information will be logged in the error log so
-     * that the user has the opportunity to e.g., access the error stack trace. The plug-in id is
-     * required, textMessage and exception are optional.
+     * Shows an error dialog using the StatusAdapter. This dialog will be modal,
+     * so that the user has to click OK to end it. Additionally the information
+     * will be logged in the error log so that the user has the opportunity to
+     * e.g., access the error stack trace. The plug-in id is required,
+     * textMessage and exception are optional.
      * 
      * @param textMessage
      *            the optional text message
@@ -1170,38 +1244,46 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the exception if any, null otherwise
      * @param silent
-     *            the silent tag indicates that only logging occurs, no message dialog is displayed
+     *            the silent tag indicates that only logging occurs, no message
+     *            dialog is displayed
      */
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         try {
-            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String message = getErrorWarningMessage(textMessage, pluginID,
+                    exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
-                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
+                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR,
+                        message, exception);
             } else {
                 try {
-                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception
-                            .getCause());
+                    status = new Status(IStatus.ERROR, pluginID2,
+                            IStatus.ERROR, message, exception.getCause());
                 } catch (Exception e) {
-                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
+                    status = new Status(IStatus.ERROR, pluginID2,
+                            IStatus.ERROR, message, exception);
                 }
             }
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
-            statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
-                    .currentTimeMillis());
+            statusAdapter.setProperty(
+                    IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
+                            .currentTimeMillis());
 
             // use status manager (log and show)
             // BLOCK = modal window, force the user to act!
             // use status manager (log and (optionally) show)
             if (!silent) {
-                StatusManager.getManager().handle(statusAdapter,
-                        StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
+                StatusManager.getManager().handle(
+                        statusAdapter,
+                        StatusManager.BLOCK | StatusManager.LOG
+                                | StatusManager.SHOW);
             } else {
-                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.LOG);
             }
 
         } catch (Exception e) {

@@ -13,11 +13,17 @@
  */
 package de.cau.cs.kieler.sim.kiem.config.extension;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.IPath;
 
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
+import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
+import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
+import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 
 /**
  * Listens to all events from the main KIEM Plugin and handles file related
@@ -29,7 +35,8 @@ import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 public final class KiemEventListener implements IKiemEventListener {
 
     /** The list of supported KiemEvent constants for this listener. */
-    private static final int[] EVENTS = { KiemEvent.LOAD, KiemEvent.SAVE };
+    private static final int[] EVENTS = { KiemEvent.LOAD, KiemEvent.SAVE,
+            KiemEvent.VIEW_DONE };
 
     /**
      * The last created instance of the event listener.
@@ -83,6 +90,21 @@ public final class KiemEventListener implements IKiemEventListener {
         }
         if (event.isEvent(KiemEvent.SAVE)) {
             handleSave(event.getInfo());
+        }
+        if (event.isEvent(KiemEvent.VIEW_DONE)) {
+            List<ScheduleData> schedules = ScheduleManager.getInstance()
+                    .getRecentSchedules();
+            if (schedules != null && !schedules.isEmpty()) {
+                try {
+                    ScheduleManager.getInstance()
+                            .openSchedule(schedules.get(0));
+                } catch (ScheduleFileMissingException e0) {
+                    ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
+                            KiemConfigurationPlugin.getShell(), schedules
+                                    .get(0));
+                    dialog.open();
+                }
+            }
         }
     }
 

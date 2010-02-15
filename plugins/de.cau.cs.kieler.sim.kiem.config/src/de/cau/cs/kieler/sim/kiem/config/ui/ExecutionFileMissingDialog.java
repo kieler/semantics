@@ -123,7 +123,7 @@ public class ExecutionFileMissingDialog {
             ScheduleManager.getInstance().save();
             if (tryToOpen) {
                 try {
-                    ScheduleManager.getInstance().loadSchedule(schedule);
+                    ScheduleManager.getInstance().openSchedule(schedule);
                     return NEW_LOCATION;
                 } catch (ScheduleFileMissingException e0) {
                     return open();

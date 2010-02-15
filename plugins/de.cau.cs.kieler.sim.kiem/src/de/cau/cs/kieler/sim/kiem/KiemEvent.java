@@ -143,6 +143,12 @@ public class KiemEvent {
      */
     public static final int ERROR_PAUSE = 17;
 
+    /**
+     * This constant is triggered when the Execution Manager finished building
+     * the view.
+     */
+    public static final int VIEW_DONE = 100;
+
     // -------------------------------------------------------------------------
 
     /**
