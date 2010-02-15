@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -33,21 +35,26 @@ import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
-import de.cau.cs.kieler.sim.esi.trace.ITrace;
-import de.cau.cs.kieler.sim.esi.trace.ITraceList;
+import de.cau.cs.kieler.sim.trace.ITrace;
+import de.cau.cs.kieler.sim.trace.ITraceList;
+import de.cau.cs.kieler.sim.trace.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
  * @author ctr
  * 
  */
-public class EsiFile implements ITraceList {
+public class EsiFile implements ITraceProvider {
 
+    private final static String[] EXTENSIONS = {"esi", "eso"};
+    
     private tracelist traceList = null;
     private EsiTrace current = null;
     private int pos = 0;
 
-    EsiFile(final Object classpathURIContext, final String fileName)
+   
+    
+    /*EsiFile(final Object classpathURIContext, final String fileName)
             throws KiemInitializationException {
 
         ISetup setup = new EsiStandaloneSetup();
@@ -84,7 +91,7 @@ public class EsiFile implements ITraceList {
             // } catch (Exception e) {
             // throw new KiemInitializationException("Unknown error", false, e);
         }
-    }
+    }*/
 
     /**
      * {@inheritDoc}
@@ -148,4 +155,58 @@ public class EsiFile implements ITraceList {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getExtensions() {
+        return EXTENSIONS;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws KiemInitializationException
+     */
+    public List<EsiTrace> loadTrace(String fileName) throws KiemInitializationException {
+        ISetup setup = new EsiStandaloneSetup();
+        Injector injector = setup.createInjectorAndDoEMFRegistration();
+        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+        rs.setClasspathURIContext(getClass());
+
+        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+        // setup.doSetup();
+        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); // Activator.PLUGIN_ID);
+        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
+        rs.getResources().add(resource);
+
+        InputStream in;
+        try {
+
+            if (fileName != null && fileName.length() > 0) {
+                in = new FileInputStream(fileName);
+            } else {
+                throw new KiemInitializationException(
+                        "EsiComponent is activated but no trace file is set", false, null);
+            }
+
+            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
+            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
+            IParseResult parseResult = parser.parse(in);
+            if (!parseResult.getParseErrors().isEmpty()) {
+                throw new KiemInitializationException("Parse error: "
+                        + parseResult.getParseErrors().get(0).toString(), true, null);
+            }
+            traceList = (tracelist) parseResult.getRootASTElement();
+        } catch (FileNotFoundException e) {
+            throw new KiemInitializationException("File not found", false, e);
+            // } catch (Exception e) {
+            // throw new KiemInitializationException("Unknown error", false, e);
+        }
+
+        LinkedList<EsiTrace> res = new LinkedList<EsiTrace>();
+        for (trace trace : traceList.getTraces()) {
+            res.add(new EsiTrace(trace));
+        }
+        return res;
+    }
 }

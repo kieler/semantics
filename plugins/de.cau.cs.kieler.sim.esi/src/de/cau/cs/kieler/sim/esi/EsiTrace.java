@@ -13,9 +13,13 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
-import de.cau.cs.kieler.sim.esi.trace.ITrace;
+import de.cau.cs.kieler.sim.trace.ITrace;
 
 /**
  * @author ctr
@@ -37,8 +41,8 @@ public class EsiTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
-    public tick current() {
-        return current;
+    public EsiTick current() {
+        return new EsiTick(current);
     }
 
     /**
@@ -59,12 +63,12 @@ public class EsiTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
-    public tick next() {
+    public EsiTick next() {
 
         if (trace.getTicks().size() > pos) {
             current = trace.getTicks().get(pos);
             pos++;
-            return current;
+            return new EsiTick(current);
         } else {
             return null;
         }
@@ -76,6 +80,22 @@ public class EsiTrace implements ITrace {
     public void reset() {
         pos = 0;
         current = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Set<String> getSignals() {
+        Set<String> res = new HashSet<String>();
+        for (tick t : this.trace.getTicks()) {
+            for (signal s : t.getInput()) {
+                res.add(s.getName());
+            }
+            for (signal s : t.getOutput()) {
+                res.add(s.getName());
+            }
+        }
+        return res;
     }
 
 }
