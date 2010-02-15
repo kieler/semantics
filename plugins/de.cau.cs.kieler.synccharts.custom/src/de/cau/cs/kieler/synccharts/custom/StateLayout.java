@@ -197,10 +197,8 @@ public class StateLayout extends AbstractHintLayout {
                         } else {
                             size = new Dimension();
                         }
-                        // set the y position of the region separator polyline
-                        // to the current
-                        // calculated total height = y position of region
-                        // compartment
+                        // set the y position of the region separator polyline to the current
+                        // calculated total height = y position of region compartment
                         // regionSeparatorHeight = totalHeight;
                     } else if (isEmptyCompartment(compartmentName) || !compartment.isExpanded()) {
                         size = new Dimension();
@@ -246,6 +244,8 @@ public class StateLayout extends AbstractHintLayout {
         int offsetY = 0;
         i = 0;
         wrappingLabelCounter = 0;
+        WrappingLabel bodyTextLabel = null;
+        int bodyTextIndex = 0;
         for (IFigure childFigure : children) {
             if (childFigure instanceof Polyline) {
                 // handle region separator
@@ -254,8 +254,14 @@ public class StateLayout extends AbstractHintLayout {
                 int left = 1;
                 int right = totalWidth - 1;
                 if (state.isIsFinal()) {
+                    // decrease line width by the final state border width
                     left += DoubleRoundedRectangle.BORDER_WIDTH;
                     right -= DoubleRoundedRectangle.BORDER_WIDTH;
+                }
+                if (regionSeparatorHeight < MIN_HEIGHT) {
+                    // decrease line width a bit if the header labels are empty
+                    left += 1;
+                    right -= 1;
                 }
                 points.addPoint(new Point(left, regionSeparatorHeight));
                 points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
@@ -265,30 +271,45 @@ public class StateLayout extends AbstractHintLayout {
                 // make first centered and all others left aligned
                 if (wrappingLabelCounter == 0) {
                     newBounds.x = clientArea.x + (clientArea.width - prefWidths[i]) / 2;
+                    newBounds.y = clientArea.y + offsetY;
+                    newBounds.width = prefWidths[i];
+                    newBounds.height = prefHeights[i];
+                    childFigure.setBounds(newBounds);
                 } else {
-                    newBounds.x = clientArea.x;
+                    bodyTextLabel = (WrappingLabel) childFigure;
+                    bodyTextIndex = i;
+                    offsetY -= prefHeights[i];
                 }
                 wrappingLabelCounter++;
-                newBounds.y = clientArea.y + offsetY;
-                newBounds.width = prefWidths[i];
-                newBounds.height = prefHeights[i];
-                childFigure.setBounds(newBounds);
             } else if (childFigure instanceof ShapeCompartmentFigure) {
-                // leave a little border so that transition anchors
-                // can be moved freely by the user
-                newBounds.x = clientArea.x + 1;
-                newBounds.y = clientArea.y + offsetY;
+                if (i == (numChildren - 1)) {
+                    // insert the body text just before the last compartment
+                    if (bodyTextLabel != null) {
+                        newBounds.x = clientArea.x;
+                        newBounds.y = clientArea.y + offsetY;
+                        newBounds.width = prefWidths[bodyTextIndex];
+                        if (bodyTextLabel.getText().length() == 0) {
+                            newBounds.height = 0;
+                        } else {
+                            newBounds.height = prefHeights[bodyTextIndex];
+                        }
+                        bodyTextLabel.setBounds(newBounds);
+                        offsetY += newBounds.height;
+                    }
+                    // stretch the last element over the remaining space
+                    newBounds.height = totalHeight - offsetY;
+                } else {
+                    newBounds.height = prefHeights[i];
+                }
                 if (prefWidths[i] == 0) {
                     newBounds.width = 0;
                 } else {
                     newBounds.width = totalWidth - 2;
                 }
-                // stretch the last element over the remaining space
-                if (i == (numChildren - 1)) {
-                    newBounds.height = totalHeight - offsetY;
-                } else {
-                    newBounds.height = prefHeights[i];
-                }
+                // leave a little border so that transition anchors
+                // can be moved freely by the user
+                newBounds.x = clientArea.x + 1;
+                newBounds.y = clientArea.y + offsetY;
                 childFigure.setBounds(newBounds);
             }
             offsetY += prefHeights[i];
@@ -448,21 +469,18 @@ public class StateLayout extends AbstractHintLayout {
                         if (compartmentName.equals(REGION_COMP_NAME)
                                 && state.getType() != StateType.TEXTUAL) {
                             // add a default minimum size so that the region
-                            // compartment
-                            // is visible after all
+                            // compartment is visible at all
                             minHeight += StateLayout.MIN_HEIGHT;
                         } else {
                             Rectangle childBounds = childFigure.getBounds();
                             // if we have manually set the bounds to zero,
-                            // ignore
-                            // the bounds for minimal size calculations
+                            // ignore the bounds for minimal size calculations
                             if (childBounds.height > 0 && childBounds.width > 0) {
                                 Dimension minimumSize = ((ShapeCompartmentFigure) childFigure)
                                         .getContentPane().getMinimumSize();
                                 if (minimumSize.width >= minWidth) {
                                     // add 1 pixel to avoid scroll bars (this
-                                    // was added
-                                    // during layout above)
+                                    // was added during layout above)
                                     minWidth = minimumSize.width + 2;
                                 }
                                 minHeight += minimumSize.height;
@@ -476,13 +494,12 @@ public class StateLayout extends AbstractHintLayout {
                         minHeight += preferredSize.height;
                     }
                 }
-                return new Dimension(minWidth, minHeight);
+                return new Dimension(minWidth, Math.max(minHeight, MIN_HEIGHT));
             } else {
                 for (IFigure childFigure : children) {
                     // set the minimal size of a state with a label
                     // increase the size a bit such that the text looks proper
-                    // even
-                    // for a final state
+                    // even for a final state
                     if (childFigure instanceof WrappingLabel) {
                         Dimension preferredSize = childFigure.getPreferredSize();
                         return new Dimension(Math.max(preferredSize.width, MIN_WIDTH), Math.max(
