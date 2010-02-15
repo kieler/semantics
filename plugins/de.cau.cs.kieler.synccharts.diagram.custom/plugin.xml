@@ -326,12 +326,10 @@
             contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+R I">
-      </key>
-      <key
-            commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addVariable"
-            contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+R V">
+         <parameter
+               id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+               value="Signal">
+         </parameter>
       </key>
    </extension>
    <extension
