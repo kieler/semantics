@@ -20,7 +20,7 @@ import org.eclipse.jface.action.ControlContribution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.Tools;
-import de.cau.cs.kieler.sim.kiem.config.ui.ConfigurationSelector;
+import de.cau.cs.kieler.sim.kiem.config.ui.ScheduleSelector;
 
 /**
  * Holds both combo boxes for selecting a configuration.
@@ -58,10 +58,10 @@ public final class ContributionManager extends AbstractManager {
      * combo box holding the schedule Ids matching the currently selected
      * editor.
      */
-    private ConfigurationSelector matchingCombo;
+    private ScheduleSelector matchingCombo;
 
     /** combo box holding the most recent schedule Ids. */
-    private ConfigurationSelector recentCombo;
+    private ScheduleSelector recentCombo;
 
     // --------------------------------------------------------------------------
 
@@ -95,14 +95,14 @@ public final class ContributionManager extends AbstractManager {
 
         if (isRecentVisible) {
             if (recentCombo == null) {
-                recentCombo = new ConfigurationSelector(RECENT_COMBO);
+                recentCombo = new ScheduleSelector(RECENT_COMBO);
             }
             list.add(recentCombo);
         }
 
         if (isMatchingVisible) {
             if (matchingCombo == null) {
-                matchingCombo = new ConfigurationSelector(MATCHING_COMBO);
+                matchingCombo = new ScheduleSelector(MATCHING_COMBO);
             }
             list.add(matchingCombo);
         }
@@ -117,7 +117,7 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @return the matchingCombo
      */
-    public ConfigurationSelector getMatchingCombo() {
+    public ScheduleSelector getMatchingCombo() {
         return this.matchingCombo;
     }
 
@@ -126,7 +126,7 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @return the recentCombo
      */
-    public ConfigurationSelector getRecentCombo() {
+    public ScheduleSelector getRecentCombo() {
         return this.recentCombo;
     }
 

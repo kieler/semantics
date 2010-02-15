@@ -231,7 +231,7 @@ public class PropertySettingPage extends WizardPage implements
          */
         public PropertyPanel(final String initKey, final String initValue) {
             propertyGroup = new Group(mainGroup, SWT.NONE);
-            propertyGroup.setLayout(new GridLayout(NUM_OF_COLS, true));
+            propertyGroup.setLayout(new GridLayout(NUM_OF_COLS, false));
             propertyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
                     true));
 

@@ -187,7 +187,7 @@ public final class ConfigurationManager extends AbstractManager {
 
             // add an example to show the user the concept
             if (list.isEmpty()) {
-                list.add(new KiemProperty("EXAMPLE_KEY", "Example values"));
+                list.add(new KiemProperty("EXAMPLE_KEY", "Example value"));
             }
 
             return Tools.listToKiemPropertyArray(list);

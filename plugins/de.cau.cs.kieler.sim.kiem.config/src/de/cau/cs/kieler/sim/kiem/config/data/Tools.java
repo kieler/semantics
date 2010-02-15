@@ -94,8 +94,8 @@ public final class Tools {
     public static final String IGNORED_KEYS_KEY = "IGNORED_KEYS";
     /** the tooltip for the always use defaults dialog. */
     public static final String IGNORED_KEYS_BUTTON_TOOLTIP = "A dialog where "
-            + "you can select those properties where the default value of the property should\n"
-            + "be used rather than the one saved in the configuration of each schedule.";
+            + "you can select those properties\n where the default value of the property should "
+            + "be used\n rather than the one saved in the configuration of each schedule.";
 
     /** identifier for the recent combo. */
     public static final String IS_RECENT_VISIBLE_NAME = "IS_RECENT_VISIBLE";

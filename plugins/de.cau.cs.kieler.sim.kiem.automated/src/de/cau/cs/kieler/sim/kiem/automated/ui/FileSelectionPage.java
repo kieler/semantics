@@ -33,13 +33,14 @@ import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
- * This page displays the current workspace and asks the user to select the execution and model
- * files.
+ * This page displays the current workspace and asks the user to select the
+ * execution and model files.
  * 
  * @author soh
  * @kieler.rating 2010-01-29 proposed yellow
  */
-public class FileSelectionPage extends WizardExportResourcesPage implements SelectionListener {
+public class FileSelectionPage extends WizardExportResourcesPage implements
+        SelectionListener {
 
     /** The list of selected execution files. */
     private LinkedList<IPath> executionFiles;
@@ -50,7 +51,10 @@ public class FileSelectionPage extends WizardExportResourcesPage implements Sele
     /** The list of selected model files. */
     private LinkedList<IPath> modelFiles;
 
-    /** The button for selecting additional schedules from the list of imported ones. */
+    /**
+     * The button for selecting additional schedules from the list of imported
+     * ones.
+     */
     private Button importButton;
 
     /** The parent component for this page. */
@@ -110,10 +114,9 @@ public class FileSelectionPage extends WizardExportResourcesPage implements Sele
      */
     @Override
     protected void createDestinationGroup(final Composite parent) {
-        super.setDescription("Select model and Execution files");
         super.setTitle("Select all model and execution files that "
                 + "should be used for the execution.");
-        
+
         this.parentComponent = parent;
     }
 
@@ -161,8 +164,9 @@ public class FileSelectionPage extends WizardExportResourcesPage implements Sele
     // --------------------------------------------------------------------------
 
     /**
-     * Fill the two lists with the appropriate elements from the user selection. All .execution
-     * files will be added to the list of execution files, all other files to the list of models.
+     * Fill the two lists with the appropriate elements from the user selection.
+     * All .execution files will be added to the list of execution files, all
+     * other files to the list of models.
      * 
      */
     @SuppressWarnings("unchecked")
@@ -193,6 +197,27 @@ public class FileSelectionPage extends WizardExportResourcesPage implements Sele
                     modelFiles.add(resourcePath);
                 }
             }
+        }
+
+        displayError();
+
+    }
+
+    /**
+     * Displays an error marker if files are missing.
+     */
+    private void displayError() {
+        if (modelFiles.isEmpty() || executionFiles.isEmpty()) {
+            StringBuilder errBuilder = new StringBuilder();
+            if (executionFiles.isEmpty()) {
+                errBuilder.append("No execution files selected. ");
+            }
+            if (modelFiles.isEmpty()) {
+                errBuilder.append("No model files selected.");
+            }
+            super.setErrorMessage(errBuilder.toString());
+        } else {
+            super.setMessage("");
         }
     }
 
@@ -229,18 +254,19 @@ public class FileSelectionPage extends WizardExportResourcesPage implements Sele
      */
     public void widgetSelected(final SelectionEvent e) {
         if (e.widget == importButton) {
-            List<ScheduleData> imported = ScheduleManager.getInstance().getImportedSchedules();
+            List<ScheduleData> imported = ScheduleManager.getInstance()
+                    .getImportedSchedules();
 
             if (imported.isEmpty()) {
-                MessageDialog.openInformation(parentComponent.getShell(), "Nothing imported",
-                        "No schedules were imported.");
+                MessageDialog.openInformation(parentComponent.getShell(),
+                        "Nothing imported", "No schedules were imported.");
             } else {
-                SelectImportedDialog dlg = new SelectImportedDialog(imported, parentComponent
-                        .getShell());
+                SelectImportedDialog dlg = new SelectImportedDialog(imported,
+                        parentComponent.getShell());
 
                 this.importedFiles = dlg.displayDialog();
                 fillLists();
-                
+
                 super.updatePageCompletion();
             }
         }

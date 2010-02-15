@@ -34,7 +34,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
-import de.cau.cs.kieler.sim.kiem.config.ui.AlwaysUseDefaultsDialog;
+import de.cau.cs.kieler.sim.kiem.config.ui.PropertyUsageDialog;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
@@ -232,8 +232,8 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
      * Toggle either of the combo boxes.
      * 
      * @param comboId
-     *            either ConfigurationSelector.RECENT_COMBO or
-     *            ConfigurationSelector.MATCHING_COMBO
+     *            either ContributionManager.RECENT_COMBO or
+     *            ContributionManager.MATCHING_COMBO
      * @param enabled
      *            true if the combo should be enabled, false if not
      */
@@ -271,7 +271,7 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
                             advancedCheck.getSelection());
                 }
                 if (event.widget == alwaysUseDefaultsButton) {
-                    AlwaysUseDefaultsDialog.displayDialog(page.getShell());
+                    PropertyUsageDialog.displayDialog(page.getShell());
                 }
                 checkButtonStatus();
                 // do layout

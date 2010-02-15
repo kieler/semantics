@@ -37,10 +37,10 @@ import de.cau.cs.kieler.sim.kiem.config.managers.PropertyUsageManager;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class AlwaysUseDefaultsDialog {
+public final class PropertyUsageDialog {
 
     /** Does nothing. */
-    private AlwaysUseDefaultsDialog() {
+    private PropertyUsageDialog() {
 
     }
 

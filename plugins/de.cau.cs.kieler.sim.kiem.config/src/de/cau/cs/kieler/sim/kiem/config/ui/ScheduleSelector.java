@@ -45,7 +45,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public class ConfigurationSelector extends ControlContribution implements
+public class ScheduleSelector extends ControlContribution implements
         SelectionListener, FocusListener, IKiemConfigEventListener {
 
     /** string display for the matching schedules entry. */
@@ -84,10 +84,11 @@ public class ConfigurationSelector extends ControlContribution implements
      * Creates a new configuration selection box.
      * 
      * @param type
-     *            the type of the selector. either RECENT_COMBO or
-     *            MATCHING_COMBO.
+     *            the type of the selector. either
+     *            ContributionManager.RECENT_COMBO or
+     *            ContributionManager.MATCHING_COMBO.
      */
-    public ConfigurationSelector(final int type) {
+    public ScheduleSelector(final int type) {
         super("ConfigurationSelectorBox");
         this.listType = type;
         this.data = new LinkedList<ScheduleData>();
