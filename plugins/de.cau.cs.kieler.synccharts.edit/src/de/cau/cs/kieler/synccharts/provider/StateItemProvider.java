@@ -81,8 +81,11 @@ public class StateItemProvider
     /**
      * This adds a property descriptor for the Id feature.
      * <!-- begin-user-doc -->
+     * Set isSetable flag to false in order to disable manual editing of
+     * the id attribute of a State.
+     * @author haf
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     protected void addIdPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
@@ -92,7 +95,7 @@ public class StateItemProvider
                  getString("_UI_State_id_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_State_id_feature", "_UI_State_type"),
                  SyncchartsPackage.Literals.STATE__ID,
-                 true,
+                 false /* isSetable */,
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
