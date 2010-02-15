@@ -27,9 +27,6 @@
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
 	«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 	«EXPAND stateAbortion FOR this-»
-	«IF hasDependentState(this.sourceState)-»
-		  PRIO(«getChangePriority(this.sourceState)»);
-	«ENDIF-»
 		}
 «ENDDEFINE»
 
@@ -45,6 +42,7 @@
 			PRIO(«computeRealThreadPriority(this.targetState)»);
 			«ENDIF-»
 		«ENDIF-»
+		«EXPAND CodegenPriority::priorityReduction FOR this-»
 		«EXPAND transitionWithoutTriggersAndEffects FOR this»
 	«ENDIF-»
 «ENDDEFINE»

@@ -20,6 +20,7 @@
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
 	«EXPAND effects FOR this-»
+	«EXPAND CodegenPriority::priorityReduction FOR (Transition)this.eRootContainer-»
 		}
 «ENDDEFINE»
 

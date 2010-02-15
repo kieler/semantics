@@ -1,0 +1,9 @@
+«IMPORT synccharts»
+
+«EXTENSION template::Helper»
+
+«DEFINE priorityReduction FOR Transition-»
+	«IF hasDependentState(this.sourceState)-»
+		  PRIO(«getChangePriority(this.sourceState)»);
+	«ENDIF-»
+«ENDDEFINE»

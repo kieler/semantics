@@ -303,8 +303,11 @@ public final class Helper {
                     Tuple<State, Integer> firstTuple = getStatePropertyTupel(state);
                     Tuple<State, Integer> secondTuple = getStatePropertyTupel(neighborState);
                     signalDependency = builtDependency(firstTuple, secondTuple, SIGNAL_FLOW_EDGE);
-                    System.out.println("added " + state.getId() + " -> " + neighborState.getId());
-                    stateDependencies.add(signalDependency);
+                    if (!stateDependencies.contains(signalDependency)) {
+                        System.out.println("added " + state.getId() + " -> "
+                                + neighborState.getId());
+                        stateDependencies.add(signalDependency);
+                    }
                 }
                 // other direction
                 if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
@@ -312,8 +315,11 @@ public final class Helper {
                     Tuple<State, Integer> firstTuple = getStatePropertyTupel(neighborState);
                     Tuple<State, Integer> secondTuple = getStatePropertyTupel(state);
                     signalDependency = builtDependency(firstTuple, secondTuple, SIGNAL_FLOW_EDGE);
-                    System.out.println("added " + neighborState.getId() + " -> " + state.getId());
-                    stateDependencies.add(signalDependency);
+                    if (!stateDependencies.contains(signalDependency)) {
+                        System.out.println("added " + neighborState.getId() + " -> "
+                                + state.getId());
+                        stateDependencies.add(signalDependency);
+                    }
                 }
             }
         }
@@ -397,7 +403,7 @@ public final class Helper {
             }
         }
     }
-    
+
     private static ArrayList<State> getChildStates(final State state) {
         ArrayList<State> out = new ArrayList<State>();
         for (Region region : state.getRegions()) {
@@ -433,7 +439,7 @@ public final class Helper {
             } else if (dependency.getDependencyType() == HIERARCHY_EDGE) {
                 rel = " <h< ";
             } else {
-                rel = " <s<";
+                rel = " <s< ";
             }
             first = dependency.getFirstStateTupel().getO1().getId();
             second = dependency.getSecondStateTupel().getO1().getId();
