@@ -158,6 +158,10 @@ context Transition if (type == TransitionType::NORMALTERMINATION)
 context Transition if(sourceState.outgoingTransitions.size > 1) 
     ERROR "Priorities of outgoing transitions need to be distinct!" :
     (sourceState.outgoingTransitions.forAll(t| (priority != t.priority || this == t)));
+    
+context Transition
+	ERROR "SyncCharts do not support inter-level transitions!\nOnly use transitions between states in the same region!\nYou can use final states and normal termination transitions to emulate inter-level transition behavior.":
+	(sourceState.parentRegion == targetState.parentRegion);
 
 // ================================================================================================
 // Expressions
