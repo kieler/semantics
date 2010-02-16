@@ -53,7 +53,7 @@
       <content
             class="de.cau.cs.kieler.sim.kiem.automated.data.AutoTestComponent"
             id="de.cau.cs.kieler.sim.kiem.automated.testComp"
-            name="Test Component">
+            name="Trace Compare">
       </content>
    </extension>
    <extension

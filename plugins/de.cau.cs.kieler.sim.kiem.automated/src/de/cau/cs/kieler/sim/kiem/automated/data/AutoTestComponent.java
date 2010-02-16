@@ -34,11 +34,13 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public class AutoTestComponent extends JSONObjectDataComponent implements
         IAutomatedProducer {
 
+    private static final double RND_VALID = 0.2;
+
     /** The number of iterations this component wants to execute. */
-    private static final int MAX_ITERATION = 3;
+    private int maxIteration;
 
     /** The number of steps this component wants to execute. */
-    private static final int MAX_STEP = 7;
+    private int maxStep;
 
     /** The index of the current iteration. */
     private int iteration = 0;
@@ -53,8 +55,9 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
      */
     public List<KiemProperty> produceInformation() {
         List<KiemProperty> result = new LinkedList<KiemProperty>();
-        result.add(new KiemProperty("Iteration", iteration + ""));
-        result.add(new KiemProperty("Step finished", stepCounter + ""));
+        boolean valid = Math.random() > RND_VALID
+                && !(stepCounter == (2 * 2) && iteration == 2);
+        result.add(new KiemProperty("valid", valid));
         return result;
     }
 
@@ -67,6 +70,8 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
                 iteration = Integer.parseInt(prop.getValue());
             }
         }
+        maxIteration = (int) (Math.random() * 2 * 2) + 2;
+        maxStep = (int) (Math.random() * 2 * 2 * 2 + 2 + 2 + 2);
         stepCounter = 0;
     }
 
@@ -78,7 +83,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
         stepCounter++;
-        if (stepCounter == 2 && iteration == 2) {
+        if (stepCounter == (2 * 2) && iteration == 2) {
             throw new KiemExecutionException("", false, null);
         }
         return null;
@@ -116,21 +121,21 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public int wantsMoreRuns() {
-        return MAX_ITERATION - iteration;
+        return maxIteration - iteration;
     }
 
     /**
      * {@inheritDoc}
      */
     public int wantsMoreSteps() {
-        return MAX_STEP - stepCounter;
+        return maxStep - stepCounter;
     }
 
     /**
      * {@inheritDoc}
      */
     public String[] getSupportedExtensions() {
-        String[] result = { "strl", "kids" };
+        String[] result = { "strl", "kids", "kasm" };
         return result;
     }
     // --------------------------------------------------------------------------

@@ -46,9 +46,9 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     /** path to the icon for active schedules and default editor. */
     private static final String AUTO_IMAGE_PATH = "icons/kiemAutomated.png";
     /** path to the icon for active schedules and default editor. */
-    private static final String TRUE_IMAGE_PATH = "icons/happy.jpeg";
+    private static final String TRUE_IMAGE_PATH = "icons/true.gif";
     /** path to the icon for locked schedules and editors. */
-    private static final String FALSE_IMAGE_PATH = "icons/sad.jpeg";
+    private static final String FALSE_IMAGE_PATH = "icons/false.gif";
     /** The plug-in id. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.automated";
 

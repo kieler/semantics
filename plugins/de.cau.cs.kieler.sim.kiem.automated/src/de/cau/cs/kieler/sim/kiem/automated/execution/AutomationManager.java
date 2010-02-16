@@ -26,7 +26,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
@@ -439,8 +438,6 @@ public final class AutomationManager implements StatusListener {
 
             // call to KIEM to initialize
             if (kIEMInstance.initExecution()) {
-                waitForErrorHandler();
-
                 currentResult.setStatus(IterationStatus.RUNNING);
                 refreshView();
                 exec = kIEMInstance.getExecution();
@@ -455,7 +452,6 @@ public final class AutomationManager implements StatusListener {
 
                         // call to KIEM for stepping
                         exec.stepExecutionSync();
-                        waitForErrorHandler();
                         // wait for step done event to be dispatched
                         stepDoneMutex.acquire();
                     } catch (InterruptedException e0) {
@@ -473,8 +469,6 @@ public final class AutomationManager implements StatusListener {
         } catch (RuntimeException e0) {
             // something bad happened, try to continue
             e0.printStackTrace();
-            currentResult.setStatus(IterationStatus.ERROR);
-        } catch (KiemExecutionException e0) {
             currentResult.setStatus(IterationStatus.ERROR);
         } finally {
             // setup results
@@ -842,29 +836,10 @@ public final class AutomationManager implements StatusListener {
         // those are probably really bad... don't want to filter
         // furthermore those hopefully were not triggered due to the execution
         if (!pluginId.contains("org.eclipse")) {
-            error = true;
+            CancelManager.getInstance().cancelIteration();
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;
-    }
-
-    /**
-     * Wait a few milliseconds in order for the error handler to catch up and
-     * transmit an error if it happened.
-     * 
-     * @throws KiemExecutionException
-     *             if an error happened
-     */
-    private void waitForErrorHandler() throws KiemExecutionException {
-        try {
-            Thread.sleep(CancelManager.DISPLACEMENT);
-        } catch (InterruptedException e0) {
-            e0.printStackTrace();
-        }
-        if (error) {
-            error = false;
-            throw new KiemExecutionException("Error", false, null);
-        }
     }
 
     // --------------------------------------------------------------------------

@@ -56,7 +56,7 @@ public class ExportTableAction implements IViewActionDelegate,
      * The different types of formats for export.
      * 
      * @author soh
-     * 
+     * @kieler.rating 2010-02-16 proposed yellow
      */
     private enum ExportType {
         /** Comma separated values. */
@@ -93,11 +93,16 @@ public class ExportTableAction implements IViewActionDelegate,
         }
     }
 
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public void init(final IViewPart view) {
     }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -161,6 +166,9 @@ public class ExportTableAction implements IViewActionDelegate,
         }
     }
 
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
     /**
      * Save an exported string to a file.
      * 
@@ -200,6 +208,9 @@ public class ExportTableAction implements IViewActionDelegate,
         }
 
     }
+
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -272,5 +283,8 @@ public class ExportTableAction implements IViewActionDelegate,
      */
     public void removeListener(final ILabelProviderListener listener) {
     }
+
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
 
 }

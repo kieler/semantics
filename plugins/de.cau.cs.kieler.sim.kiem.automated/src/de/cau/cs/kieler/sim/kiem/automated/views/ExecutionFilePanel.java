@@ -159,58 +159,59 @@ public class ExecutionFilePanel {
      *            the first result that is to be added.
      */
     private void doInitialLayout(final IterationResult iterationResult) {
+        if (iterationResult != null && iterationResult.getResults() != null) {
+            // get column names from keys in the parent results
+            List<String> columnNamesList = new LinkedList<String>();
+            for (KiemProperty prop : iterationResult.getResults()) {
+                columnNamesList.add(prop.getKey());
+            }
 
-        // get column names from keys in the parent results
-        List<String> columnNamesList = new LinkedList<String>();
-        for (KiemProperty prop : iterationResult.getResults()) {
-            columnNamesList.add(prop.getKey());
-        }
+            List<AbstractResult> children = iterationResult.getChildren();
 
-        List<AbstractResult> children = iterationResult.getChildren();
+            if (children != null && !children.isEmpty()) {
+                // get column names from the keys in the children results
+                for (AbstractResult child : children) {
+                    if (child instanceof ComponentResult) {
+                        ComponentResult comp = (ComponentResult) child;
 
-        if (children != null && !children.isEmpty()) {
-            // get column names from the keys in the children results
-            for (AbstractResult child : children) {
-                if (child instanceof ComponentResult) {
-                    ComponentResult comp = (ComponentResult) child;
+                        String name = comp.getName();
 
-                    String name = comp.getName();
+                        List<KiemProperty> properties = comp.getResults();
 
-                    List<KiemProperty> properties = comp.getResults();
-
-                    if (properties != null && !properties.isEmpty()) {
-                        for (KiemProperty prop : properties) {
-                            columnNamesList.add(name + ":" + prop.getKey());
+                        if (properties != null && !properties.isEmpty()) {
+                            for (KiemProperty prop : properties) {
+                                columnNamesList.add(name + ":" + prop.getKey());
+                            }
                         }
                     }
                 }
             }
+
+            columnNames = columnNamesList.toArray(new String[columnNamesList
+                    .size()]);
+
+            // create table
+            table = new Table(execPanel, SWT.NONE);
+            columns = new LinkedList<TableColumn>();
+            for (int i = 0; i < columnNamesList.size(); i++) {
+                TableColumn column = new TableColumn(table, SWT.NONE, i);
+                column.setText(columnNames[i]);
+                columns.add(column);
+            }
+
+            table.setLinesVisible(true);
+            table.setHeaderVisible(true);
+
+            // create table tableViewer
+            tableViewer = new TableViewer(table);
+            tableViewer.setColumnProperties(columnNames);
+
+            // create table label and input provider
+            TableProvider provider = new TableProvider();
+            tableViewer.setContentProvider(provider);
+            tableViewer.setLabelProvider(provider);
+            tableViewer.setInput(results);
         }
-
-        columnNames = columnNamesList
-                .toArray(new String[columnNamesList.size()]);
-
-        // create table
-        table = new Table(execPanel, SWT.NONE);
-        columns = new LinkedList<TableColumn>();
-        for (int i = 0; i < columnNamesList.size(); i++) {
-            TableColumn column = new TableColumn(table, SWT.NONE, i);
-            column.setText(columnNames[i]);
-            columns.add(column);
-        }
-
-        table.setLinesVisible(true);
-        table.setHeaderVisible(true);
-
-        // create table tableViewer
-        tableViewer = new TableViewer(table);
-        tableViewer.setColumnProperties(columnNames);
-
-        // create table label and input provider
-        TableProvider provider = new TableProvider();
-        tableViewer.setContentProvider(provider);
-        tableViewer.setLabelProvider(provider);
-        tableViewer.setInput(results);
     }
 
     /**
