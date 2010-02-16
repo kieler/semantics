@@ -22,6 +22,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
@@ -366,6 +371,59 @@ public final class ScheduleManager extends AbstractManager implements
         schedule.setLocation(destination);
 
         getRecentScheduleIds().replace(oldId, schedule.getId());
+    }
+
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
+    /**
+     * Import all files in the workspace into the manager.
+     * 
+     */
+    public void importAllFilesInWorkspace() {
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+        try {
+            for (IResource resource : root.members()) {
+                recImport(resource);
+            }
+        } catch (CoreException e0) {
+            throw new RuntimeException("", e0);
+        }
+    }
+
+    /**
+     * Import all files into the workspace recursively.
+     * 
+     * @param resource
+     *            the container or file
+     * @throws CoreException
+     *             if the import failed
+     */
+    private void recImport(final IResource resource) throws CoreException {
+        String extension = resource.getFileExtension();
+
+        if (extension != null && extension.equals("execution")) {
+            IPath path = resource.getFullPath();
+            ScheduleData schedule = getScheduleData(path.toOSString());
+            if (schedule == null) {
+                updateSchedule(path);
+            }
+            return;
+        }
+
+        switch (resource.getType()) {
+        case IResource.FILE:
+            return;
+        case IResource.FOLDER:
+        case IResource.PROJECT:
+        case IResource.ROOT:
+            IContainer container = (IContainer) resource;
+
+            for (IResource res : container.members()) {
+                recImport(res);
+            }
+        }
     }
 
     // --------------------------------------------------------------------------

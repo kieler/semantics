@@ -83,7 +83,9 @@ public class SchedulePreferencePage extends PreferencePage implements
     /** the tooltip for the edit schedule button. */
     private static final String EDIT_SCHEDULE_TOOLTIP = "Edit the location of"
             + " the currently selected schedule.";
-
+    /** the tooltip for the import all button. */
+    private static final String IMPORT_TOOLTIP = "Import all execution files"
+            + " located in the currently active workspace";
     /** maximum length of displayed editor names. */
     private static final int MAX_EDITORS_NAME_LENGTH = 7;
     /** number of invisible columns held in reserve. */
@@ -125,6 +127,8 @@ public class SchedulePreferencePage extends PreferencePage implements
     private Button removeSchedule;
     /** button for selecting a default editor. */
     private Button selectDefaultEditorButton;
+    /** button for importing all files inside the workspace. */
+    private Button importFilesInWorkspaceButton;
 
     /** data matrix: rows represent schedules, columns represent editors. */
     private int[][] data;
@@ -188,21 +192,10 @@ public class SchedulePreferencePage extends PreferencePage implements
 
         // check if there are any schedules at all
         if (scheduleCount > 0) {
+            fillTableInfo();
             // get editors
             List<EditorDefinition> editors = EditorManager.getInstance()
                     .getEditors();
-
-            fillData(editors);
-
-            tableEntries = new LinkedList<DataEntry>();
-
-            int i = 0;
-            for (ScheduleData scheduleData : scheduleDataList) {
-                DataEntry entry = new DataEntry();
-                entry.setSchedule(scheduleData);
-                entry.setPriorities(data[i++]);
-                tableEntries.add(entry);
-            }
 
             // construct the priorities table
             int numberOfColumns = editors.size() + 1 + PUFFER_SIZE;
@@ -248,7 +241,7 @@ public class SchedulePreferencePage extends PreferencePage implements
             priorityTableViewer.setInput(tableEntries);
 
             for (int index = 0; index < columns.length; index++) {
-                TableColumn column = columns[i];
+                TableColumn column = columns[index];
                 column.pack();
             }
             prioritiesTable.setLayoutData(new GridData(SWT.LEFT, SWT.TOP,
@@ -290,12 +283,45 @@ public class SchedulePreferencePage extends PreferencePage implements
         selectDefaultEditorButton.addSelectionListener(listener);
         selectDefaultEditorButton.setToolTipText(SELECT_DEFAULT_EDITOR_TOOLTIP);
 
+        importFilesInWorkspaceButton = new Button(prioritiesGroup, SWT.BORDER);
+        importFilesInWorkspaceButton.setText("Import workspace");
+        importFilesInWorkspaceButton.addSelectionListener(listener);
+        importFilesInWorkspaceButton.setToolTipText(IMPORT_TOOLTIP);
+
         prioritiesGroup.pack();
         checkDefaultEditor();
         checkButtonStatus();
     }
 
     // --------------------------------------------------------------------------
+
+    /**
+     * Fills the list that is responsible for the table input.
+     */
+    private void fillTableInfo() {
+        scheduleDataList = ScheduleManager.getInstance().getAllSchedules();
+        Collections.sort(scheduleDataList, new ScheduleComparator());
+        int scheduleCount = scheduleDataList.size();
+
+        // check if there are any schedules at all
+        if (scheduleCount > 0) {
+            // get editors
+            List<EditorDefinition> editors = EditorManager.getInstance()
+                    .getEditors();
+
+            fillData(editors);
+
+            tableEntries = new LinkedList<DataEntry>();
+
+            int i = 0;
+            for (ScheduleData scheduleData : scheduleDataList) {
+                DataEntry entry = new DataEntry();
+                entry.setSchedule(scheduleData);
+                entry.setPriorities(data[i++]);
+                tableEntries.add(entry);
+            }
+        }
+    }
 
     /**
      * Fill the data table. Add a few extra columns to allow dynamic adding of
@@ -397,6 +423,8 @@ public class SchedulePreferencePage extends PreferencePage implements
      */
     private void layout() {
         if (priorityTableViewer != null) {
+            fillTableInfo();
+            priorityTableViewer.setInput(tableEntries);
             checkDefaultEditor();
             priorityTableViewer.refresh();
             columns[0].pack();
@@ -521,11 +549,6 @@ public class SchedulePreferencePage extends PreferencePage implements
                         if (!schedule.isLocked()) {
                             ScheduleManager.getInstance().removeSchedule(
                                     schedule);
-
-                            tableProvider.remove(entry);
-                            priorityTableViewer.remove(entry);
-                            priorityTableViewer.refresh();
-                            prioritiesTable.redraw();
                         }
                     }
                 }
@@ -784,27 +807,34 @@ public class SchedulePreferencePage extends PreferencePage implements
          * {@inheritDoc}
          */
         public void widgetSelected(final SelectionEvent e) {
-            if (e.widget == removeSchedule) {
-                removeSchedule();
-            }
-            if (e.widget == addEditorButton) {
-                addEditor();
-            }
-            if (e.widget == removeEditorButton) {
-                removeEditor();
-            }
-            if (e.widget == selectDefaultEditorButton) {
-                selectDefaultEditor();
-            }
-            if (e.widget == editScheduleButton) {
-                ScheduleData result = getSelectedSchedule();
-                if (result != null) {
-                    ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                            parent.getShell(), result);
-                    dialog.enterNewLocation(false);
+            try {
+                if (e.widget == removeSchedule) {
+                    removeSchedule();
                 }
+                if (e.widget == addEditorButton) {
+                    addEditor();
+                }
+                if (e.widget == removeEditorButton) {
+                    removeEditor();
+                }
+                if (e.widget == selectDefaultEditorButton) {
+                    selectDefaultEditor();
+                }
+                if (e.widget == editScheduleButton) {
+                    ScheduleData result = getSelectedSchedule();
+                    if (result != null) {
+                        ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
+                                parent.getShell(), result);
+                        dialog.enterNewLocation(false);
+                    }
+                }
+                if (e.widget == importFilesInWorkspaceButton) {
+                    ScheduleManager.getInstance().importAllFilesInWorkspace();
+                }
+                layout();
+            } catch (RuntimeException e0) {
+                Tools.showErrorWithStackTrace(e0, getShell());
             }
-            layout();
         }
     }
 
@@ -931,8 +961,6 @@ public class SchedulePreferencePage extends PreferencePage implements
                 }
                 return value1.compareTo(value2);
             }
-
         }
     }
-
 }
