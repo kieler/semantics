@@ -62,5 +62,11 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.TriggerListenerChangedSignal">
       </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.TriggerListenerChangedRegion">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.TriggerListenerChangedState">
+      </triggerListener>
    </extension>
 </plugin>

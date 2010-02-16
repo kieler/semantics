@@ -54,7 +54,7 @@ public class TriggerListenerChangedInterfaceDecl extends FireOnceTriggerListener
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
-
+        // System.out.println("INTERFACE DECL " + notification);
         // notification is triggered by interface declaration so
         // the notifier has to be a signal
         State state = (State) notification.getNotifier();

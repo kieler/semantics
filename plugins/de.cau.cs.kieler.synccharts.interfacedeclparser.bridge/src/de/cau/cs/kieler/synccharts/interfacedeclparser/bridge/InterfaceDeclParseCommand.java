@@ -175,11 +175,11 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
                 if (r.getSignals().size() == 1) {
                     r.getSignals().add(SyncchartsFactory.eINSTANCE.createSignal());
                 }
-                r.getSignals().retainAll(Collections.EMPTY_LIST);
+                r.getSignals().clear();
                 if (r.getVariables().size() == 1) {
                     r.getVariables().add(SyncchartsFactory.eINSTANCE.createVariable());
                 }
-                r.getVariables().retainAll(Collections.EMPTY_LIST);
+                r.getVariables().clear();
             }
 
         } catch (Exception e) {

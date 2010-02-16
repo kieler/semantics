@@ -193,6 +193,36 @@ public class InterfaceDeclProcessorWrapper {
         }
     }
 
+    public Command getCanonialSerializeCommand(final State s) {
+        return new CanonialSerializationCommand(s);
+    }
+
+    private class CanonialSerializationCommand extends AbstractCommand {
+        private State state;
+        InterfaceDeclSerializeCommand cmd;
+
+        public CanonialSerializationCommand(final State theState) {
+            this.state = theState;
+            this.cmd = new InterfaceDeclSerializeCommand(state, injector);
+            this.isExecutable = true;
+        }
+
+        @Override
+        public void execute() {
+            cmd.processCanonicalSerialization();
+        }
+
+        @Override
+        public void redo() {
+            execute();
+        }
+
+        @Override
+        protected boolean prepare() {
+            return true;
+        }
+    }
+
     /**
      * Command needed for the manual parsing to be executed on the command
      * stack.
