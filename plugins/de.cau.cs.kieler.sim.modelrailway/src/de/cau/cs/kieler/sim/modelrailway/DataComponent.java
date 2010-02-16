@@ -100,9 +100,21 @@ public class DataComponent extends JSONObjectDataComponent implements
 			String path = (org.eclipse.core.runtime.FileLocator
 					.toFileURL(url)).toString();
 			if (Platform.isLinux() || Platform.isSolaris()) {
-				path = (org.eclipse.core.runtime.FileLocator
+				path = "/" + (org.eclipse.core.runtime.FileLocator
 						.toFileURL(Activator.getDefault().getBundle()
 								.getResource("/lib/railway.so"))).toString();
+
+			} else
+			if (Platform.isMac()) {
+				if (Platform.is64Bit()) {
+				path = "/" + (org.eclipse.core.runtime.FileLocator
+						.toFileURL(Activator.getDefault().getBundle()
+								.getResource("/lib/railway.dylib64"))).toString();
+				} else {
+					path = "/" + (org.eclipse.core.runtime.FileLocator
+						.toFileURL(Activator.getDefault().getBundle()
+								.getResource("/lib/railway.dylib"))).toString();
+				} 
 
 			}
 			path = path.replaceFirst("file:/", "");
