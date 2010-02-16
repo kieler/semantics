@@ -1,4 +1,5 @@
 import synccharts;
+import utilities;
 ///////////////////////////////////////////
 //More ore less usefull transformations ///
 ///////////////////////////////////////////
@@ -18,15 +19,9 @@ Void addSuccessorStates(List[State] states):
 //Adds a predecessor to the given state
 Void addPredecessorState(State target):
 let source = new State:
-//Temporary fix for priority assignment:
-let transition = new Transition:
- transition.setSourceState(source) ->
- transition.setTargetState(target) ->
- transition.setPriority(1) ->
- target.parentRegion.innerStates.add(source) ->
- setSelection(source)
-//End of fix
-//connectStates(source,target)
+connectStates(source,target) ->
+target.parentRegion.innerStates.add(source) ->
+setSelection(source)
 ;
 
 //Adds a choice to the given state
