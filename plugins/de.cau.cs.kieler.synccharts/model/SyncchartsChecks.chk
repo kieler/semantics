@@ -61,10 +61,6 @@ context State if(outgoingTransitions.size > 1)
 context State if (signals.size>0)
   ERROR "Signalname may not be empty!" :
    this.signals.forAll(s| s.name.length>0);
-   
-context State
-  WARNING "For gode generation every state must have an ID." :
-   this.id != "";
 
 
 // Root state
