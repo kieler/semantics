@@ -216,6 +216,9 @@ public class StateLayout extends AbstractHintLayout {
                     if (childFigure instanceof WrappingLabel) {
                         if (wrappingLabelCounter == 1) {
                             regionSeparatorHeight = totalHeight;
+                            if(((WrappingLabel) childFigure).getText().isEmpty()){
+                            	size = new Dimension();
+                            }
                         }
                         wrappingLabelCounter++;
                     }
