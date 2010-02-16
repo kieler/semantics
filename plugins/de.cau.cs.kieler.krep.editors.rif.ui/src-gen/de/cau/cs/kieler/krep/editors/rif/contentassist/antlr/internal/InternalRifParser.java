@@ -21,16 +21,20 @@ import java.util.ArrayList;
 
 public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'bool'", "'int'", "'#@inputs'", "'@#'", "'#@outputs'", "'#@locals'", "'\"'", "'\":'", "'#step'", "'#outs'", "'#locs'", "'T'", "'F'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_INT", "RULE_STRING", "RULE_WS", "RULE_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "'bool'", "'int'", "'@#'", "':'", "'#step'", "'#outs'", "'#locs'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'", "'T'", "'F'"
     };
-    public static final int RULE_ID=4;
-    public static final int RULE_STRING=6;
-    public static final int RULE_ANY_OTHER=10;
-    public static final int RULE_INT=5;
+    public static final int RULE_LOCALS=6;
+    public static final int RULE_ID=11;
+    public static final int RULE_STRING=8;
+    public static final int RULE_ANY_OTHER=14;
+    public static final int RULE_OUTPUTS=5;
+    public static final int RULE_INPUTS=4;
+    public static final int RULE_INT=7;
+    public static final int RULE_COMMENT=10;
     public static final int RULE_WS=9;
-    public static final int RULE_SL_COMMENT=8;
+    public static final int RULE_SL_COMMENT=13;
     public static final int EOF=-1;
-    public static final int RULE_ML_COMMENT=7;
+    public static final int RULE_ML_COMMENT=12;
 
         public InternalRifParser(TokenStream input) {
             super(input);
@@ -436,38 +440,113 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end ruleData
 
 
+    // $ANTLR start entryRuleStatus
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:200:1: entryRuleStatus : ruleStatus EOF ;
+    public final void entryRuleStatus() throws RecognitionException {
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:201:1: ( ruleStatus EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:202:1: ruleStatus EOF
+            {
+             before(grammarAccess.getStatusRule()); 
+            pushFollow(FOLLOW_ruleStatus_in_entryRuleStatus366);
+            ruleStatus();
+            _fsp--;
+
+             after(grammarAccess.getStatusRule()); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStatus373); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end entryRuleStatus
+
+
+    // $ANTLR start ruleStatus
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:209:1: ruleStatus : ( ( rule__Status__Group__0 ) ) ;
+    public final void ruleStatus() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:213:2: ( ( ( rule__Status__Group__0 ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:214:1: ( ( rule__Status__Group__0 ) )
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:214:1: ( ( rule__Status__Group__0 ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:215:1: ( rule__Status__Group__0 )
+            {
+             before(grammarAccess.getStatusAccess().getGroup()); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:216:1: ( rule__Status__Group__0 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:216:2: rule__Status__Group__0
+            {
+            pushFollow(FOLLOW_rule__Status__Group__0_in_ruleStatus400);
+            rule__Status__Group__0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getStatusAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end ruleStatus
+
+
     // $ANTLR start rule__Type__Alternatives
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:200:1: rule__Type__Alternatives : ( ( 'bool' ) | ( 'int' ) );
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:228:1: rule__Type__Alternatives : ( ( 'bool' ) | ( 'int' ) );
     public final void rule__Type__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:204:1: ( ( 'bool' ) | ( 'int' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:232:1: ( ( 'bool' ) | ( 'int' ) )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
-            if ( (LA1_0==11) ) {
+            if ( (LA1_0==15) ) {
                 alt1=1;
             }
-            else if ( (LA1_0==12) ) {
+            else if ( (LA1_0==16) ) {
                 alt1=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("200:1: rule__Type__Alternatives : ( ( 'bool' ) | ( 'int' ) );", 1, 0, input);
+                    new NoViableAltException("228:1: rule__Type__Alternatives : ( ( 'bool' ) | ( 'int' ) );", 1, 0, input);
 
                 throw nvae;
             }
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:205:1: ( 'bool' )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:233:1: ( 'bool' )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:205:1: ( 'bool' )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:206:1: 'bool'
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:233:1: ( 'bool' )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:234:1: 'bool'
                     {
                      before(grammarAccess.getTypeAccess().getBoolKeyword_0()); 
-                    match(input,11,FOLLOW_11_in_rule__Type__Alternatives376); 
+                    match(input,15,FOLLOW_15_in_rule__Type__Alternatives437); 
                      after(grammarAccess.getTypeAccess().getBoolKeyword_0()); 
 
                     }
@@ -476,13 +555,13 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:213:6: ( 'int' )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:241:6: ( 'int' )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:213:6: ( 'int' )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:214:1: 'int'
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:241:6: ( 'int' )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:242:1: 'int'
                     {
                      before(grammarAccess.getTypeAccess().getIntKeyword_1()); 
-                    match(input,12,FOLLOW_12_in_rule__Type__Alternatives396); 
+                    match(input,16,FOLLOW_16_in_rule__Type__Alternatives457); 
                      after(grammarAccess.getTypeAccess().getIntKeyword_1()); 
 
                     }
@@ -508,13 +587,13 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Data__Alternatives
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:226:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:254:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );
     public final void rule__Data__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:230:1: ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:258:1: ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) )
             int alt2=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -522,35 +601,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 alt2=1;
                 }
                 break;
-            case 22:
+            case 27:
                 {
                 alt2=2;
                 }
                 break;
-            case 23:
+            case 28:
                 {
                 alt2=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("226:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );", 2, 0, input);
+                    new NoViableAltException("254:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );", 2, 0, input);
 
                 throw nvae;
             }
 
             switch (alt2) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:231:1: ( ( rule__Data__IntValAssignment_0 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__IntValAssignment_0 ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:231:1: ( ( rule__Data__IntValAssignment_0 ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:232:1: ( rule__Data__IntValAssignment_0 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__IntValAssignment_0 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:260:1: ( rule__Data__IntValAssignment_0 )
                     {
                      before(grammarAccess.getDataAccess().getIntValAssignment_0()); 
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:233:1: ( rule__Data__IntValAssignment_0 )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:233:2: rule__Data__IntValAssignment_0
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:1: ( rule__Data__IntValAssignment_0 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:2: rule__Data__IntValAssignment_0
                     {
-                    pushFollow(FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives430);
+                    pushFollow(FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives491);
                     rule__Data__IntValAssignment_0();
                     _fsp--;
 
@@ -565,16 +644,16 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:237:6: ( ( rule__Data__TrueAssignment_1 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:265:6: ( ( rule__Data__TrueAssignment_1 ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:237:6: ( ( rule__Data__TrueAssignment_1 ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:238:1: ( rule__Data__TrueAssignment_1 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:265:6: ( ( rule__Data__TrueAssignment_1 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:266:1: ( rule__Data__TrueAssignment_1 )
                     {
                      before(grammarAccess.getDataAccess().getTrueAssignment_1()); 
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:239:1: ( rule__Data__TrueAssignment_1 )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:239:2: rule__Data__TrueAssignment_1
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:267:1: ( rule__Data__TrueAssignment_1 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:267:2: rule__Data__TrueAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives448);
+                    pushFollow(FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives509);
                     rule__Data__TrueAssignment_1();
                     _fsp--;
 
@@ -589,16 +668,16 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:243:6: ( ( rule__Data__FalseAssignment_2 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:271:6: ( ( rule__Data__FalseAssignment_2 ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:243:6: ( ( rule__Data__FalseAssignment_2 ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:244:1: ( rule__Data__FalseAssignment_2 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:271:6: ( ( rule__Data__FalseAssignment_2 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:272:1: ( rule__Data__FalseAssignment_2 )
                     {
                      before(grammarAccess.getDataAccess().getFalseAssignment_2()); 
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:245:1: ( rule__Data__FalseAssignment_2 )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:245:2: rule__Data__FalseAssignment_2
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:273:1: ( rule__Data__FalseAssignment_2 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:273:2: rule__Data__FalseAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives466);
+                    pushFollow(FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives527);
                     rule__Data__FalseAssignment_2();
                     _fsp--;
 
@@ -630,25 +709,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__0
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:256:1: rule__Trace__Group__0 : ( '#@inputs' ) rule__Trace__Group__1 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:284:1: rule__Trace__Group__0 : ( RULE_INPUTS ) rule__Trace__Group__1 ;
     public final void rule__Trace__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:260:1: ( ( '#@inputs' ) rule__Trace__Group__1 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:1: ( '#@inputs' ) rule__Trace__Group__1
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:288:1: ( ( RULE_INPUTS ) rule__Trace__Group__1 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:289:1: ( RULE_INPUTS ) rule__Trace__Group__1
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:1: ( '#@inputs' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:262:1: '#@inputs'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:289:1: ( RULE_INPUTS )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:290:1: RULE_INPUTS
             {
-             before(grammarAccess.getTraceAccess().getInputsKeyword_0()); 
-            match(input,13,FOLLOW_13_in_rule__Trace__Group__0502); 
-             after(grammarAccess.getTraceAccess().getInputsKeyword_0()); 
+             before(grammarAccess.getTraceAccess().getINPUTSTerminalRuleCall_0()); 
+            match(input,RULE_INPUTS,FOLLOW_RULE_INPUTS_in_rule__Trace__Group__0562); 
+             after(grammarAccess.getTraceAccess().getINPUTSTerminalRuleCall_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0512);
+            pushFollow(FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0570);
             rule__Trace__Group__1();
             _fsp--;
 
@@ -671,35 +750,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:276:1: rule__Trace__Group__1 : ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:302:1: rule__Trace__Group__1 : ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2 ;
     public final void rule__Trace__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:280:1: ( ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:281:1: ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:306:1: ( ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:307:1: ( ( rule__Trace__InputsAssignment_1 )* ) rule__Trace__Group__2
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:281:1: ( ( rule__Trace__InputsAssignment_1 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:282:1: ( rule__Trace__InputsAssignment_1 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:307:1: ( ( rule__Trace__InputsAssignment_1 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:308:1: ( rule__Trace__InputsAssignment_1 )*
             {
              before(grammarAccess.getTraceAccess().getInputsAssignment_1()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:283:1: ( rule__Trace__InputsAssignment_1 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:309:1: ( rule__Trace__InputsAssignment_1 )*
             loop3:
             do {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==17) ) {
+                if ( (LA3_0==RULE_STRING) ) {
                     alt3=1;
                 }
 
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:283:2: rule__Trace__InputsAssignment_1
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:309:2: rule__Trace__InputsAssignment_1
             	    {
-            	    pushFollow(FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1540);
+            	    pushFollow(FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1598);
             	    rule__Trace__InputsAssignment_1();
             	    _fsp--;
 
@@ -716,7 +795,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1550);
+            pushFollow(FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1608);
             rule__Trace__Group__2();
             _fsp--;
 
@@ -739,25 +818,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__2
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:294:1: rule__Trace__Group__2 : ( '@#' ) rule__Trace__Group__3 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:320:1: rule__Trace__Group__2 : ( '@#' ) rule__Trace__Group__3 ;
     public final void rule__Trace__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:298:1: ( ( '@#' ) rule__Trace__Group__3 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:299:1: ( '@#' ) rule__Trace__Group__3
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:324:1: ( ( '@#' ) rule__Trace__Group__3 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:325:1: ( '@#' ) rule__Trace__Group__3
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:299:1: ( '@#' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:300:1: '@#'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:325:1: ( '@#' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:326:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2()); 
-            match(input,14,FOLLOW_14_in_rule__Trace__Group__2579); 
+            match(input,17,FOLLOW_17_in_rule__Trace__Group__2637); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2589);
+            pushFollow(FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2647);
             rule__Trace__Group__3();
             _fsp--;
 
@@ -780,25 +859,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__3
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:314:1: rule__Trace__Group__3 : ( '#@outputs' ) rule__Trace__Group__4 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:340:1: rule__Trace__Group__3 : ( RULE_OUTPUTS ) rule__Trace__Group__4 ;
     public final void rule__Trace__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:318:1: ( ( '#@outputs' ) rule__Trace__Group__4 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:319:1: ( '#@outputs' ) rule__Trace__Group__4
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:344:1: ( ( RULE_OUTPUTS ) rule__Trace__Group__4 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:345:1: ( RULE_OUTPUTS ) rule__Trace__Group__4
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:319:1: ( '#@outputs' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:320:1: '#@outputs'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:345:1: ( RULE_OUTPUTS )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:346:1: RULE_OUTPUTS
             {
-             before(grammarAccess.getTraceAccess().getOutputsKeyword_3()); 
-            match(input,15,FOLLOW_15_in_rule__Trace__Group__3618); 
-             after(grammarAccess.getTraceAccess().getOutputsKeyword_3()); 
+             before(grammarAccess.getTraceAccess().getOUTPUTSTerminalRuleCall_3()); 
+            match(input,RULE_OUTPUTS,FOLLOW_RULE_OUTPUTS_in_rule__Trace__Group__3675); 
+             after(grammarAccess.getTraceAccess().getOUTPUTSTerminalRuleCall_3()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__4_in_rule__Trace__Group__3628);
+            pushFollow(FOLLOW_rule__Trace__Group__4_in_rule__Trace__Group__3683);
             rule__Trace__Group__4();
             _fsp--;
 
@@ -821,35 +900,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__4
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:334:1: rule__Trace__Group__4 : ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:358:1: rule__Trace__Group__4 : ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5 ;
     public final void rule__Trace__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:338:1: ( ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:339:1: ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:362:1: ( ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:363:1: ( ( rule__Trace__OutputsAssignment_4 )* ) rule__Trace__Group__5
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:339:1: ( ( rule__Trace__OutputsAssignment_4 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:340:1: ( rule__Trace__OutputsAssignment_4 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:363:1: ( ( rule__Trace__OutputsAssignment_4 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:364:1: ( rule__Trace__OutputsAssignment_4 )*
             {
              before(grammarAccess.getTraceAccess().getOutputsAssignment_4()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:341:1: ( rule__Trace__OutputsAssignment_4 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:365:1: ( rule__Trace__OutputsAssignment_4 )*
             loop4:
             do {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==17) ) {
+                if ( (LA4_0==RULE_STRING) ) {
                     alt4=1;
                 }
 
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:341:2: rule__Trace__OutputsAssignment_4
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:365:2: rule__Trace__OutputsAssignment_4
             	    {
-            	    pushFollow(FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4656);
+            	    pushFollow(FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4711);
             	    rule__Trace__OutputsAssignment_4();
             	    _fsp--;
 
@@ -866,7 +945,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__5_in_rule__Trace__Group__4666);
+            pushFollow(FOLLOW_rule__Trace__Group__5_in_rule__Trace__Group__4721);
             rule__Trace__Group__5();
             _fsp--;
 
@@ -889,25 +968,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__5
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:352:1: rule__Trace__Group__5 : ( '@#' ) rule__Trace__Group__6 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:376:1: rule__Trace__Group__5 : ( '@#' ) rule__Trace__Group__6 ;
     public final void rule__Trace__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:356:1: ( ( '@#' ) rule__Trace__Group__6 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:357:1: ( '@#' ) rule__Trace__Group__6
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:380:1: ( ( '@#' ) rule__Trace__Group__6 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:381:1: ( '@#' ) rule__Trace__Group__6
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:357:1: ( '@#' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:358:1: '@#'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:381:1: ( '@#' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:382:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5()); 
-            match(input,14,FOLLOW_14_in_rule__Trace__Group__5695); 
+            match(input,17,FOLLOW_17_in_rule__Trace__Group__5750); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__6_in_rule__Trace__Group__5705);
+            pushFollow(FOLLOW_rule__Trace__Group__6_in_rule__Trace__Group__5760);
             rule__Trace__Group__6();
             _fsp--;
 
@@ -930,25 +1009,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__6
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:372:1: rule__Trace__Group__6 : ( '#@locals' ) rule__Trace__Group__7 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:396:1: rule__Trace__Group__6 : ( RULE_LOCALS ) rule__Trace__Group__7 ;
     public final void rule__Trace__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:376:1: ( ( '#@locals' ) rule__Trace__Group__7 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:377:1: ( '#@locals' ) rule__Trace__Group__7
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:400:1: ( ( RULE_LOCALS ) rule__Trace__Group__7 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:401:1: ( RULE_LOCALS ) rule__Trace__Group__7
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:377:1: ( '#@locals' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:378:1: '#@locals'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:401:1: ( RULE_LOCALS )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:402:1: RULE_LOCALS
             {
-             before(grammarAccess.getTraceAccess().getLocalsKeyword_6()); 
-            match(input,16,FOLLOW_16_in_rule__Trace__Group__6734); 
-             after(grammarAccess.getTraceAccess().getLocalsKeyword_6()); 
+             before(grammarAccess.getTraceAccess().getLOCALSTerminalRuleCall_6()); 
+            match(input,RULE_LOCALS,FOLLOW_RULE_LOCALS_in_rule__Trace__Group__6788); 
+             after(grammarAccess.getTraceAccess().getLOCALSTerminalRuleCall_6()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__7_in_rule__Trace__Group__6744);
+            pushFollow(FOLLOW_rule__Trace__Group__7_in_rule__Trace__Group__6796);
             rule__Trace__Group__7();
             _fsp--;
 
@@ -971,35 +1050,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__7
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:392:1: rule__Trace__Group__7 : ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:414:1: rule__Trace__Group__7 : ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8 ;
     public final void rule__Trace__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:396:1: ( ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:397:1: ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:418:1: ( ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:419:1: ( ( rule__Trace__LocalAssignment_7 )* ) rule__Trace__Group__8
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:397:1: ( ( rule__Trace__LocalAssignment_7 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:398:1: ( rule__Trace__LocalAssignment_7 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:419:1: ( ( rule__Trace__LocalAssignment_7 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:420:1: ( rule__Trace__LocalAssignment_7 )*
             {
              before(grammarAccess.getTraceAccess().getLocalAssignment_7()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:399:1: ( rule__Trace__LocalAssignment_7 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:421:1: ( rule__Trace__LocalAssignment_7 )*
             loop5:
             do {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( (LA5_0==17) ) {
+                if ( (LA5_0==RULE_STRING) ) {
                     alt5=1;
                 }
 
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:399:2: rule__Trace__LocalAssignment_7
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:421:2: rule__Trace__LocalAssignment_7
             	    {
-            	    pushFollow(FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7772);
+            	    pushFollow(FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7824);
             	    rule__Trace__LocalAssignment_7();
             	    _fsp--;
 
@@ -1016,7 +1095,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__8_in_rule__Trace__Group__7782);
+            pushFollow(FOLLOW_rule__Trace__Group__8_in_rule__Trace__Group__7834);
             rule__Trace__Group__8();
             _fsp--;
 
@@ -1039,25 +1118,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__8
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:410:1: rule__Trace__Group__8 : ( '@#' ) rule__Trace__Group__9 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:432:1: rule__Trace__Group__8 : ( '@#' ) rule__Trace__Group__9 ;
     public final void rule__Trace__Group__8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:414:1: ( ( '@#' ) rule__Trace__Group__9 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:415:1: ( '@#' ) rule__Trace__Group__9
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:436:1: ( ( '@#' ) rule__Trace__Group__9 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:437:1: ( '@#' ) rule__Trace__Group__9
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:415:1: ( '@#' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:416:1: '@#'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:437:1: ( '@#' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:438:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8()); 
-            match(input,14,FOLLOW_14_in_rule__Trace__Group__8811); 
+            match(input,17,FOLLOW_17_in_rule__Trace__Group__8863); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Trace__Group__9_in_rule__Trace__Group__8821);
+            pushFollow(FOLLOW_rule__Trace__Group__9_in_rule__Trace__Group__8873);
             rule__Trace__Group__9();
             _fsp--;
 
@@ -1080,26 +1159,26 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__Group__9
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:430:1: rule__Trace__Group__9 : ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:452:1: rule__Trace__Group__9 : ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) ) rule__Trace__Group__10 ;
     public final void rule__Trace__Group__9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:434:1: ( ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:435:1: ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:456:1: ( ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) ) rule__Trace__Group__10 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:457:1: ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) ) rule__Trace__Group__10
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:435:1: ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:436:1: ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:457:1: ( ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:458:1: ( ( rule__Trace__TickAssignment_9 ) ) ( ( rule__Trace__TickAssignment_9 )* )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:436:1: ( ( rule__Trace__TickAssignment_9 ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:437:1: ( rule__Trace__TickAssignment_9 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:458:1: ( ( rule__Trace__TickAssignment_9 ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:459:1: ( rule__Trace__TickAssignment_9 )
             {
              before(grammarAccess.getTraceAccess().getTickAssignment_9()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:438:1: ( rule__Trace__TickAssignment_9 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:438:2: rule__Trace__TickAssignment_9
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:460:1: ( rule__Trace__TickAssignment_9 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:460:2: rule__Trace__TickAssignment_9
             {
-            pushFollow(FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9851);
+            pushFollow(FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9903);
             rule__Trace__TickAssignment_9();
             _fsp--;
 
@@ -1110,11 +1189,11 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:441:1: ( ( rule__Trace__TickAssignment_9 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:442:1: ( rule__Trace__TickAssignment_9 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:463:1: ( ( rule__Trace__TickAssignment_9 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:464:1: ( rule__Trace__TickAssignment_9 )*
             {
              before(grammarAccess.getTraceAccess().getTickAssignment_9()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:443:1: ( rule__Trace__TickAssignment_9 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:465:1: ( rule__Trace__TickAssignment_9 )*
             loop6:
             do {
                 int alt6=2;
@@ -1127,9 +1206,9 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:443:2: rule__Trace__TickAssignment_9
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:465:2: rule__Trace__TickAssignment_9
             	    {
-            	    pushFollow(FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9863);
+            	    pushFollow(FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9915);
             	    rule__Trace__TickAssignment_9();
             	    _fsp--;
 
@@ -1149,6 +1228,10 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
+            pushFollow(FOLLOW_rule__Trace__Group__10_in_rule__Trace__Group__9927);
+            rule__Trace__Group__10();
+            _fsp--;
+
 
             }
 
@@ -1167,26 +1250,92 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__Trace__Group__9
 
 
+    // $ANTLR start rule__Trace__Group__10
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:477:1: rule__Trace__Group__10 : ( ( ruleStatus )? ) ;
+    public final void rule__Trace__Group__10() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:481:1: ( ( ( ruleStatus )? ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:482:1: ( ( ruleStatus )? )
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:482:1: ( ( ruleStatus )? )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:483:1: ( ruleStatus )?
+            {
+             before(grammarAccess.getTraceAccess().getStatusParserRuleCall_10()); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:484:1: ( ruleStatus )?
+            int alt7=2;
+            int LA7_0 = input.LA(1);
+
+            if ( (LA7_0==22) ) {
+                alt7=1;
+            }
+            switch (alt7) {
+                case 1 :
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:484:3: ruleStatus
+                    {
+                    pushFollow(FOLLOW_ruleStatus_in_rule__Trace__Group__10956);
+                    ruleStatus();
+                    _fsp--;
+
+
+                    }
+                    break;
+
+            }
+
+             after(grammarAccess.getTraceAccess().getStatusParserRuleCall_10()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Trace__Group__10
+
+
     // $ANTLR start rule__Decl__Group__0
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:474:1: rule__Decl__Group__0 : ( '\"' ) rule__Decl__Group__1 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:516:1: rule__Decl__Group__0 : ( ( rule__Decl__NameAssignment_0 ) ) rule__Decl__Group__1 ;
     public final void rule__Decl__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:478:1: ( ( '\"' ) rule__Decl__Group__1 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:479:1: ( '\"' ) rule__Decl__Group__1
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:520:1: ( ( ( rule__Decl__NameAssignment_0 ) ) rule__Decl__Group__1 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:521:1: ( ( rule__Decl__NameAssignment_0 ) ) rule__Decl__Group__1
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:479:1: ( '\"' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:480:1: '\"'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:521:1: ( ( rule__Decl__NameAssignment_0 ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:522:1: ( rule__Decl__NameAssignment_0 )
             {
-             before(grammarAccess.getDeclAccess().getQuotationMarkKeyword_0()); 
-            match(input,17,FOLLOW_17_in_rule__Decl__Group__0921); 
-             after(grammarAccess.getDeclAccess().getQuotationMarkKeyword_0()); 
+             before(grammarAccess.getDeclAccess().getNameAssignment_0()); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:523:1: ( rule__Decl__NameAssignment_0 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:523:2: rule__Decl__NameAssignment_0
+            {
+            pushFollow(FOLLOW_rule__Decl__NameAssignment_0_in_rule__Decl__Group__01013);
+            rule__Decl__NameAssignment_0();
+            _fsp--;
+
 
             }
 
-            pushFollow(FOLLOW_rule__Decl__Group__1_in_rule__Decl__Group__0931);
+             after(grammarAccess.getDeclAccess().getNameAssignment_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Decl__Group__1_in_rule__Decl__Group__01022);
             rule__Decl__Group__1();
             _fsp--;
 
@@ -1209,34 +1358,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Decl__Group__1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:494:1: rule__Decl__Group__1 : ( ( rule__Decl__NameAssignment_1 ) ) rule__Decl__Group__2 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:534:1: rule__Decl__Group__1 : ( ':' ) rule__Decl__Group__2 ;
     public final void rule__Decl__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:498:1: ( ( ( rule__Decl__NameAssignment_1 ) ) rule__Decl__Group__2 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:499:1: ( ( rule__Decl__NameAssignment_1 ) ) rule__Decl__Group__2
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:538:1: ( ( ':' ) rule__Decl__Group__2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:539:1: ( ':' ) rule__Decl__Group__2
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:499:1: ( ( rule__Decl__NameAssignment_1 ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:500:1: ( rule__Decl__NameAssignment_1 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:539:1: ( ':' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:540:1: ':'
             {
-             before(grammarAccess.getDeclAccess().getNameAssignment_1()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:501:1: ( rule__Decl__NameAssignment_1 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:501:2: rule__Decl__NameAssignment_1
-            {
-            pushFollow(FOLLOW_rule__Decl__NameAssignment_1_in_rule__Decl__Group__1959);
-            rule__Decl__NameAssignment_1();
-            _fsp--;
-
+             before(grammarAccess.getDeclAccess().getColonKeyword_1()); 
+            match(input,18,FOLLOW_18_in_rule__Decl__Group__11051); 
+             after(grammarAccess.getDeclAccess().getColonKeyword_1()); 
 
             }
 
-             after(grammarAccess.getDeclAccess().getNameAssignment_1()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Decl__Group__2_in_rule__Decl__Group__1968);
+            pushFollow(FOLLOW_rule__Decl__Group__2_in_rule__Decl__Group__11061);
             rule__Decl__Group__2();
             _fsp--;
 
@@ -1259,27 +1399,32 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Decl__Group__2
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:512:1: rule__Decl__Group__2 : ( '\":' ) rule__Decl__Group__3 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:554:1: rule__Decl__Group__2 : ( ( rule__Decl__TypeAssignment_2 ) ) ;
     public final void rule__Decl__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:516:1: ( ( '\":' ) rule__Decl__Group__3 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:517:1: ( '\":' ) rule__Decl__Group__3
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:558:1: ( ( ( rule__Decl__TypeAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:559:1: ( ( rule__Decl__TypeAssignment_2 ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:517:1: ( '\":' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:518:1: '\":'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:559:1: ( ( rule__Decl__TypeAssignment_2 ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:560:1: ( rule__Decl__TypeAssignment_2 )
             {
-             before(grammarAccess.getDeclAccess().getQuotationMarkColonKeyword_2()); 
-            match(input,18,FOLLOW_18_in_rule__Decl__Group__2997); 
-             after(grammarAccess.getDeclAccess().getQuotationMarkColonKeyword_2()); 
+             before(grammarAccess.getDeclAccess().getTypeAssignment_2()); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:561:1: ( rule__Decl__TypeAssignment_2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:561:2: rule__Decl__TypeAssignment_2
+            {
+            pushFollow(FOLLOW_rule__Decl__TypeAssignment_2_in_rule__Decl__Group__21089);
+            rule__Decl__TypeAssignment_2();
+            _fsp--;
+
 
             }
 
-            pushFollow(FOLLOW_rule__Decl__Group__3_in_rule__Decl__Group__21007);
-            rule__Decl__Group__3();
-            _fsp--;
+             after(grammarAccess.getDeclAccess().getTypeAssignment_2()); 
+
+            }
 
 
             }
@@ -1299,68 +1444,22 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__Decl__Group__2
 
 
-    // $ANTLR start rule__Decl__Group__3
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:532:1: rule__Decl__Group__3 : ( ( rule__Decl__TypeAssignment_3 ) ) ;
-    public final void rule__Decl__Group__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:536:1: ( ( ( rule__Decl__TypeAssignment_3 ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:537:1: ( ( rule__Decl__TypeAssignment_3 ) )
-            {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:537:1: ( ( rule__Decl__TypeAssignment_3 ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:538:1: ( rule__Decl__TypeAssignment_3 )
-            {
-             before(grammarAccess.getDeclAccess().getTypeAssignment_3()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:539:1: ( rule__Decl__TypeAssignment_3 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:539:2: rule__Decl__TypeAssignment_3
-            {
-            pushFollow(FOLLOW_rule__Decl__TypeAssignment_3_in_rule__Decl__Group__31035);
-            rule__Decl__TypeAssignment_3();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getDeclAccess().getTypeAssignment_3()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Decl__Group__3
-
-
     // $ANTLR start rule__Tick__Group__0
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:557:1: rule__Tick__Group__0 : ( () ) rule__Tick__Group__1 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:577:1: rule__Tick__Group__0 : ( () ) rule__Tick__Group__1 ;
     public final void rule__Tick__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:561:1: ( ( () ) rule__Tick__Group__1 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:562:1: ( () ) rule__Tick__Group__1
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:581:1: ( ( () ) rule__Tick__Group__1 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:582:1: ( () ) rule__Tick__Group__1
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:562:1: ( () )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:563:1: ()
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:582:1: ( () )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:583:1: ()
             {
              before(grammarAccess.getTickAccess().getTickAction_0()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:564:1: ()
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:566:1: 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:584:1: ()
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:586:1: 
             {
             }
 
@@ -1368,7 +1467,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01087);
+            pushFollow(FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01139);
             rule__Tick__Group__1();
             _fsp--;
 
@@ -1391,25 +1490,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:577:1: rule__Tick__Group__1 : ( '#step' ) rule__Tick__Group__2 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:597:1: rule__Tick__Group__1 : ( '#step' ) rule__Tick__Group__2 ;
     public final void rule__Tick__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:581:1: ( ( '#step' ) rule__Tick__Group__2 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:582:1: ( '#step' ) rule__Tick__Group__2
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:601:1: ( ( '#step' ) rule__Tick__Group__2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:602:1: ( '#step' ) rule__Tick__Group__2
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:582:1: ( '#step' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:583:1: '#step'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:602:1: ( '#step' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:603:1: '#step'
             {
              before(grammarAccess.getTickAccess().getStepKeyword_1()); 
-            match(input,19,FOLLOW_19_in_rule__Tick__Group__11116); 
+            match(input,19,FOLLOW_19_in_rule__Tick__Group__11168); 
              after(grammarAccess.getTickAccess().getStepKeyword_1()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11126);
+            pushFollow(FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11178);
             rule__Tick__Group__2();
             _fsp--;
 
@@ -1432,23 +1531,23 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__2
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:597:1: rule__Tick__Group__2 : ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:617:1: rule__Tick__Group__2 : ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3 ;
     public final void rule__Tick__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:601:1: ( ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:602:1: ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:621:1: ( ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:622:1: ( ( rule__Tick__NrAssignment_2 ) ) rule__Tick__Group__3
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:602:1: ( ( rule__Tick__NrAssignment_2 ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:603:1: ( rule__Tick__NrAssignment_2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:622:1: ( ( rule__Tick__NrAssignment_2 ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:623:1: ( rule__Tick__NrAssignment_2 )
             {
              before(grammarAccess.getTickAccess().getNrAssignment_2()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:604:1: ( rule__Tick__NrAssignment_2 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:604:2: rule__Tick__NrAssignment_2
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:624:1: ( rule__Tick__NrAssignment_2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:624:2: rule__Tick__NrAssignment_2
             {
-            pushFollow(FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21154);
+            pushFollow(FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21206);
             rule__Tick__NrAssignment_2();
             _fsp--;
 
@@ -1459,7 +1558,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21163);
+            pushFollow(FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21215);
             rule__Tick__Group__3();
             _fsp--;
 
@@ -1482,35 +1581,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__3
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:615:1: rule__Tick__Group__3 : ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:635:1: rule__Tick__Group__3 : ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4 ;
     public final void rule__Tick__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:619:1: ( ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:620:1: ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:639:1: ( ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:640:1: ( ( rule__Tick__InputAssignment_3 )* ) rule__Tick__Group__4
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:620:1: ( ( rule__Tick__InputAssignment_3 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:621:1: ( rule__Tick__InputAssignment_3 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:640:1: ( ( rule__Tick__InputAssignment_3 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:641:1: ( rule__Tick__InputAssignment_3 )*
             {
              before(grammarAccess.getTickAccess().getInputAssignment_3()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:622:1: ( rule__Tick__InputAssignment_3 )*
-            loop7:
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:642:1: ( rule__Tick__InputAssignment_3 )*
+            loop8:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt8=2;
+                int LA8_0 = input.LA(1);
 
-                if ( (LA7_0==RULE_INT||(LA7_0>=22 && LA7_0<=23)) ) {
-                    alt7=1;
+                if ( (LA8_0==RULE_INT||(LA8_0>=27 && LA8_0<=28)) ) {
+                    alt8=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:622:2: rule__Tick__InputAssignment_3
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:642:2: rule__Tick__InputAssignment_3
             	    {
-            	    pushFollow(FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31191);
+            	    pushFollow(FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31243);
             	    rule__Tick__InputAssignment_3();
             	    _fsp--;
 
@@ -1519,7 +1618,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop8;
                 }
             } while (true);
 
@@ -1527,7 +1626,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31201);
+            pushFollow(FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31253);
             rule__Tick__Group__4();
             _fsp--;
 
@@ -1550,25 +1649,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__4
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:633:1: rule__Tick__Group__4 : ( '#outs' ) rule__Tick__Group__5 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:653:1: rule__Tick__Group__4 : ( '#outs' ) rule__Tick__Group__5 ;
     public final void rule__Tick__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:637:1: ( ( '#outs' ) rule__Tick__Group__5 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:638:1: ( '#outs' ) rule__Tick__Group__5
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:657:1: ( ( '#outs' ) rule__Tick__Group__5 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:658:1: ( '#outs' ) rule__Tick__Group__5
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:638:1: ( '#outs' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:639:1: '#outs'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:658:1: ( '#outs' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:659:1: '#outs'
             {
              before(grammarAccess.getTickAccess().getOutsKeyword_4()); 
-            match(input,20,FOLLOW_20_in_rule__Tick__Group__41230); 
+            match(input,20,FOLLOW_20_in_rule__Tick__Group__41282); 
              after(grammarAccess.getTickAccess().getOutsKeyword_4()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41240);
+            pushFollow(FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41292);
             rule__Tick__Group__5();
             _fsp--;
 
@@ -1591,35 +1690,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__5
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:653:1: rule__Tick__Group__5 : ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:673:1: rule__Tick__Group__5 : ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6 ;
     public final void rule__Tick__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:657:1: ( ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:658:1: ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:677:1: ( ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:678:1: ( ( rule__Tick__OutputAssignment_5 )* ) rule__Tick__Group__6
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:658:1: ( ( rule__Tick__OutputAssignment_5 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:659:1: ( rule__Tick__OutputAssignment_5 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:678:1: ( ( rule__Tick__OutputAssignment_5 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:679:1: ( rule__Tick__OutputAssignment_5 )*
             {
              before(grammarAccess.getTickAccess().getOutputAssignment_5()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:660:1: ( rule__Tick__OutputAssignment_5 )*
-            loop8:
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:680:1: ( rule__Tick__OutputAssignment_5 )*
+            loop9:
             do {
-                int alt8=2;
-                int LA8_0 = input.LA(1);
+                int alt9=2;
+                int LA9_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_INT||(LA8_0>=22 && LA8_0<=23)) ) {
-                    alt8=1;
+                if ( (LA9_0==RULE_INT||(LA9_0>=27 && LA9_0<=28)) ) {
+                    alt9=1;
                 }
 
 
-                switch (alt8) {
+                switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:660:2: rule__Tick__OutputAssignment_5
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:680:2: rule__Tick__OutputAssignment_5
             	    {
-            	    pushFollow(FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51268);
+            	    pushFollow(FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51320);
             	    rule__Tick__OutputAssignment_5();
             	    _fsp--;
 
@@ -1628,7 +1727,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop9;
                 }
             } while (true);
 
@@ -1636,7 +1735,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__6_in_rule__Tick__Group__51278);
+            pushFollow(FOLLOW_rule__Tick__Group__6_in_rule__Tick__Group__51330);
             rule__Tick__Group__6();
             _fsp--;
 
@@ -1659,25 +1758,25 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__6
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:671:1: rule__Tick__Group__6 : ( '#locs' ) rule__Tick__Group__7 ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:691:1: rule__Tick__Group__6 : ( '#locs' ) rule__Tick__Group__7 ;
     public final void rule__Tick__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:675:1: ( ( '#locs' ) rule__Tick__Group__7 )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:676:1: ( '#locs' ) rule__Tick__Group__7
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:695:1: ( ( '#locs' ) rule__Tick__Group__7 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:696:1: ( '#locs' ) rule__Tick__Group__7
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:676:1: ( '#locs' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:677:1: '#locs'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:696:1: ( '#locs' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:697:1: '#locs'
             {
              before(grammarAccess.getTickAccess().getLocsKeyword_6()); 
-            match(input,21,FOLLOW_21_in_rule__Tick__Group__61307); 
+            match(input,21,FOLLOW_21_in_rule__Tick__Group__61359); 
              after(grammarAccess.getTickAccess().getLocsKeyword_6()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Tick__Group__7_in_rule__Tick__Group__61317);
+            pushFollow(FOLLOW_rule__Tick__Group__7_in_rule__Tick__Group__61369);
             rule__Tick__Group__7();
             _fsp--;
 
@@ -1700,35 +1799,35 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__Group__7
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:691:1: rule__Tick__Group__7 : ( ( rule__Tick__LocalAssignment_7 )* ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:711:1: rule__Tick__Group__7 : ( ( rule__Tick__LocalAssignment_7 )* ) ;
     public final void rule__Tick__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:695:1: ( ( ( rule__Tick__LocalAssignment_7 )* ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:696:1: ( ( rule__Tick__LocalAssignment_7 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:715:1: ( ( ( rule__Tick__LocalAssignment_7 )* ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:716:1: ( ( rule__Tick__LocalAssignment_7 )* )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:696:1: ( ( rule__Tick__LocalAssignment_7 )* )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:697:1: ( rule__Tick__LocalAssignment_7 )*
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:716:1: ( ( rule__Tick__LocalAssignment_7 )* )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:717:1: ( rule__Tick__LocalAssignment_7 )*
             {
              before(grammarAccess.getTickAccess().getLocalAssignment_7()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:698:1: ( rule__Tick__LocalAssignment_7 )*
-            loop9:
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:718:1: ( rule__Tick__LocalAssignment_7 )*
+            loop10:
             do {
-                int alt9=2;
-                int LA9_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( (LA9_0==RULE_INT||(LA9_0>=22 && LA9_0<=23)) ) {
-                    alt9=1;
+                if ( (LA10_0==RULE_INT||(LA10_0>=27 && LA10_0<=28)) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt9) {
+                switch (alt10) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:698:2: rule__Tick__LocalAssignment_7
+            	    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:718:2: rule__Tick__LocalAssignment_7
             	    {
-            	    pushFollow(FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71345);
+            	    pushFollow(FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71397);
             	    rule__Tick__LocalAssignment_7();
             	    _fsp--;
 
@@ -1737,7 +1836,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop9;
+            	    break loop10;
                 }
             } while (true);
 
@@ -1763,21 +1862,304 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__Tick__Group__7
 
 
+    // $ANTLR start rule__Status__Group__0
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:744:1: rule__Status__Group__0 : ( 'The' ) rule__Status__Group__1 ;
+    public final void rule__Status__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:748:1: ( ( 'The' ) rule__Status__Group__1 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:749:1: ( 'The' ) rule__Status__Group__1
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:749:1: ( 'The' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:750:1: 'The'
+            {
+             before(grammarAccess.getStatusAccess().getTheKeyword_0()); 
+            match(input,22,FOLLOW_22_in_rule__Status__Group__01449); 
+             after(grammarAccess.getStatusAccess().getTheKeyword_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__1_in_rule__Status__Group__01459);
+            rule__Status__Group__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__0
+
+
+    // $ANTLR start rule__Status__Group__1
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:764:1: rule__Status__Group__1 : ( 'execution' ) rule__Status__Group__2 ;
+    public final void rule__Status__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:768:1: ( ( 'execution' ) rule__Status__Group__2 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:769:1: ( 'execution' ) rule__Status__Group__2
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:769:1: ( 'execution' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:770:1: 'execution'
+            {
+             before(grammarAccess.getStatusAccess().getExecutionKeyword_1()); 
+            match(input,23,FOLLOW_23_in_rule__Status__Group__11488); 
+             after(grammarAccess.getStatusAccess().getExecutionKeyword_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__2_in_rule__Status__Group__11498);
+            rule__Status__Group__2();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__1
+
+
+    // $ANTLR start rule__Status__Group__2
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:784:1: rule__Status__Group__2 : ( 'lasted' ) rule__Status__Group__3 ;
+    public final void rule__Status__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:788:1: ( ( 'lasted' ) rule__Status__Group__3 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:789:1: ( 'lasted' ) rule__Status__Group__3
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:789:1: ( 'lasted' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:790:1: 'lasted'
+            {
+             before(grammarAccess.getStatusAccess().getLastedKeyword_2()); 
+            match(input,24,FOLLOW_24_in_rule__Status__Group__21527); 
+             after(grammarAccess.getStatusAccess().getLastedKeyword_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__3_in_rule__Status__Group__21537);
+            rule__Status__Group__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__2
+
+
+    // $ANTLR start rule__Status__Group__3
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:804:1: rule__Status__Group__3 : ( RULE_INT ) rule__Status__Group__4 ;
+    public final void rule__Status__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:808:1: ( ( RULE_INT ) rule__Status__Group__4 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:809:1: ( RULE_INT ) rule__Status__Group__4
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:809:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:810:1: RULE_INT
+            {
+             before(grammarAccess.getStatusAccess().getINTTerminalRuleCall_3()); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Status__Group__31565); 
+             after(grammarAccess.getStatusAccess().getINTTerminalRuleCall_3()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__4_in_rule__Status__Group__31573);
+            rule__Status__Group__4();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__3
+
+
+    // $ANTLR start rule__Status__Group__4
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:822:1: rule__Status__Group__4 : ( '.' ) rule__Status__Group__5 ;
+    public final void rule__Status__Group__4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:826:1: ( ( '.' ) rule__Status__Group__5 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:827:1: ( '.' ) rule__Status__Group__5
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:827:1: ( '.' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:828:1: '.'
+            {
+             before(grammarAccess.getStatusAccess().getFullStopKeyword_4()); 
+            match(input,25,FOLLOW_25_in_rule__Status__Group__41602); 
+             after(grammarAccess.getStatusAccess().getFullStopKeyword_4()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__5_in_rule__Status__Group__41612);
+            rule__Status__Group__5();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__4
+
+
+    // $ANTLR start rule__Status__Group__5
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:842:1: rule__Status__Group__5 : ( RULE_INT ) rule__Status__Group__6 ;
+    public final void rule__Status__Group__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:846:1: ( ( RULE_INT ) rule__Status__Group__6 )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:847:1: ( RULE_INT ) rule__Status__Group__6
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:847:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:848:1: RULE_INT
+            {
+             before(grammarAccess.getStatusAccess().getINTTerminalRuleCall_5()); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Status__Group__51640); 
+             after(grammarAccess.getStatusAccess().getINTTerminalRuleCall_5()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Status__Group__6_in_rule__Status__Group__51648);
+            rule__Status__Group__6();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__5
+
+
+    // $ANTLR start rule__Status__Group__6
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:860:1: rule__Status__Group__6 : ( 'second.' ) ;
+    public final void rule__Status__Group__6() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:864:1: ( ( 'second.' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:865:1: ( 'second.' )
+            {
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:865:1: ( 'second.' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:866:1: 'second.'
+            {
+             before(grammarAccess.getStatusAccess().getSecondKeyword_6()); 
+            match(input,26,FOLLOW_26_in_rule__Status__Group__61677); 
+             after(grammarAccess.getStatusAccess().getSecondKeyword_6()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Status__Group__6
+
+
     // $ANTLR start rule__Trace__InputsAssignment_1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:724:1: rule__Trace__InputsAssignment_1 : ( ruledecl ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:893:1: rule__Trace__InputsAssignment_1 : ( ruledecl ) ;
     public final void rule__Trace__InputsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:728:1: ( ( ruledecl ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:729:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:897:1: ( ( ruledecl ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:898:1: ( ruledecl )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:729:1: ( ruledecl )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:730:1: ruledecl
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:898:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:899:1: ruledecl
             {
              before(grammarAccess.getTraceAccess().getInputsDeclParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruledecl_in_rule__Trace__InputsAssignment_11396);
+            pushFollow(FOLLOW_ruledecl_in_rule__Trace__InputsAssignment_11726);
             ruledecl();
             _fsp--;
 
@@ -1804,20 +2186,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__OutputsAssignment_4
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:739:1: rule__Trace__OutputsAssignment_4 : ( ruledecl ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:908:1: rule__Trace__OutputsAssignment_4 : ( ruledecl ) ;
     public final void rule__Trace__OutputsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:743:1: ( ( ruledecl ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:744:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:912:1: ( ( ruledecl ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:913:1: ( ruledecl )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:744:1: ( ruledecl )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:745:1: ruledecl
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:913:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:914:1: ruledecl
             {
              before(grammarAccess.getTraceAccess().getOutputsDeclParserRuleCall_4_0()); 
-            pushFollow(FOLLOW_ruledecl_in_rule__Trace__OutputsAssignment_41427);
+            pushFollow(FOLLOW_ruledecl_in_rule__Trace__OutputsAssignment_41757);
             ruledecl();
             _fsp--;
 
@@ -1844,20 +2226,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__LocalAssignment_7
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:754:1: rule__Trace__LocalAssignment_7 : ( ruledecl ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:923:1: rule__Trace__LocalAssignment_7 : ( ruledecl ) ;
     public final void rule__Trace__LocalAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:758:1: ( ( ruledecl ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:759:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:927:1: ( ( ruledecl ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:928:1: ( ruledecl )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:759:1: ( ruledecl )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:760:1: ruledecl
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:928:1: ( ruledecl )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:929:1: ruledecl
             {
              before(grammarAccess.getTraceAccess().getLocalDeclParserRuleCall_7_0()); 
-            pushFollow(FOLLOW_ruledecl_in_rule__Trace__LocalAssignment_71458);
+            pushFollow(FOLLOW_ruledecl_in_rule__Trace__LocalAssignment_71788);
             ruledecl();
             _fsp--;
 
@@ -1884,20 +2266,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Trace__TickAssignment_9
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:769:1: rule__Trace__TickAssignment_9 : ( ruleTick ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:938:1: rule__Trace__TickAssignment_9 : ( ruleTick ) ;
     public final void rule__Trace__TickAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:773:1: ( ( ruleTick ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:774:1: ( ruleTick )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:942:1: ( ( ruleTick ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:943:1: ( ruleTick )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:774:1: ( ruleTick )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:775:1: ruleTick
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:943:1: ( ruleTick )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:944:1: ruleTick
             {
              before(grammarAccess.getTraceAccess().getTickTickParserRuleCall_9_0()); 
-            pushFollow(FOLLOW_ruleTick_in_rule__Trace__TickAssignment_91489);
+            pushFollow(FOLLOW_ruleTick_in_rule__Trace__TickAssignment_91819);
             ruleTick();
             _fsp--;
 
@@ -1923,22 +2305,22 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__Trace__TickAssignment_9
 
 
-    // $ANTLR start rule__Decl__NameAssignment_1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:784:1: rule__Decl__NameAssignment_1 : ( RULE_ID ) ;
-    public final void rule__Decl__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start rule__Decl__NameAssignment_0
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:953:1: rule__Decl__NameAssignment_0 : ( RULE_STRING ) ;
+    public final void rule__Decl__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:788:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:789:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:957:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:958:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:789:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:790:1: RULE_ID
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:958:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:959:1: RULE_STRING
             {
-             before(grammarAccess.getDeclAccess().getNameIDTerminalRuleCall_1_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Decl__NameAssignment_11520); 
-             after(grammarAccess.getDeclAccess().getNameIDTerminalRuleCall_1_0()); 
+             before(grammarAccess.getDeclAccess().getNameSTRINGTerminalRuleCall_0_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Decl__NameAssignment_01850); 
+             after(grammarAccess.getDeclAccess().getNameSTRINGTerminalRuleCall_0_0()); 
 
             }
 
@@ -1957,28 +2339,28 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Decl__NameAssignment_1
+    // $ANTLR end rule__Decl__NameAssignment_0
 
 
-    // $ANTLR start rule__Decl__TypeAssignment_3
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:799:1: rule__Decl__TypeAssignment_3 : ( ruleType ) ;
-    public final void rule__Decl__TypeAssignment_3() throws RecognitionException {
+    // $ANTLR start rule__Decl__TypeAssignment_2
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:968:1: rule__Decl__TypeAssignment_2 : ( ruleType ) ;
+    public final void rule__Decl__TypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:803:1: ( ( ruleType ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:804:1: ( ruleType )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:972:1: ( ( ruleType ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:973:1: ( ruleType )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:804:1: ( ruleType )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:805:1: ruleType
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:973:1: ( ruleType )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:974:1: ruleType
             {
-             before(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_3_0()); 
-            pushFollow(FOLLOW_ruleType_in_rule__Decl__TypeAssignment_31551);
+             before(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_2_0()); 
+            pushFollow(FOLLOW_ruleType_in_rule__Decl__TypeAssignment_21881);
             ruleType();
             _fsp--;
 
-             after(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_3_0()); 
+             after(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_2_0()); 
 
             }
 
@@ -1997,24 +2379,24 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Decl__TypeAssignment_3
+    // $ANTLR end rule__Decl__TypeAssignment_2
 
 
     // $ANTLR start rule__Tick__NrAssignment_2
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:814:1: rule__Tick__NrAssignment_2 : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:983:1: rule__Tick__NrAssignment_2 : ( RULE_INT ) ;
     public final void rule__Tick__NrAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:818:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:819:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:987:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:988:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:819:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:820:1: RULE_INT
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:988:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:989:1: RULE_INT
             {
              before(grammarAccess.getTickAccess().getNrINTTerminalRuleCall_2_0()); 
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Tick__NrAssignment_21582); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Tick__NrAssignment_21912); 
              after(grammarAccess.getTickAccess().getNrINTTerminalRuleCall_2_0()); 
 
             }
@@ -2038,20 +2420,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__InputAssignment_3
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:829:1: rule__Tick__InputAssignment_3 : ( ruleData ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:998:1: rule__Tick__InputAssignment_3 : ( ruleData ) ;
     public final void rule__Tick__InputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:833:1: ( ( ruleData ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:834:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1002:1: ( ( ruleData ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1003:1: ( ruleData )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:834:1: ( ruleData )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:835:1: ruleData
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1003:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1004:1: ruleData
             {
              before(grammarAccess.getTickAccess().getInputDataParserRuleCall_3_0()); 
-            pushFollow(FOLLOW_ruleData_in_rule__Tick__InputAssignment_31613);
+            pushFollow(FOLLOW_ruleData_in_rule__Tick__InputAssignment_31943);
             ruleData();
             _fsp--;
 
@@ -2078,20 +2460,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__OutputAssignment_5
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:844:1: rule__Tick__OutputAssignment_5 : ( ruleData ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1013:1: rule__Tick__OutputAssignment_5 : ( ruleData ) ;
     public final void rule__Tick__OutputAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:848:1: ( ( ruleData ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:849:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1017:1: ( ( ruleData ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1018:1: ( ruleData )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:849:1: ( ruleData )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:850:1: ruleData
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1018:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1019:1: ruleData
             {
              before(grammarAccess.getTickAccess().getOutputDataParserRuleCall_5_0()); 
-            pushFollow(FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51644);
+            pushFollow(FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51974);
             ruleData();
             _fsp--;
 
@@ -2118,20 +2500,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Tick__LocalAssignment_7
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:859:1: rule__Tick__LocalAssignment_7 : ( ruleData ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1028:1: rule__Tick__LocalAssignment_7 : ( ruleData ) ;
     public final void rule__Tick__LocalAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:863:1: ( ( ruleData ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:864:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1032:1: ( ( ruleData ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1033:1: ( ruleData )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:864:1: ( ruleData )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:865:1: ruleData
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1033:1: ( ruleData )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1034:1: ruleData
             {
              before(grammarAccess.getTickAccess().getLocalDataParserRuleCall_7_0()); 
-            pushFollow(FOLLOW_ruleData_in_rule__Tick__LocalAssignment_71675);
+            pushFollow(FOLLOW_ruleData_in_rule__Tick__LocalAssignment_72005);
             ruleData();
             _fsp--;
 
@@ -2158,20 +2540,20 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Data__IntValAssignment_0
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:874:1: rule__Data__IntValAssignment_0 : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1043:1: rule__Data__IntValAssignment_0 : ( RULE_INT ) ;
     public final void rule__Data__IntValAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:878:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:879:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1047:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1048:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:879:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:880:1: RULE_INT
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1048:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1049:1: RULE_INT
             {
              before(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); 
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_01706); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_02036); 
              after(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); 
 
             }
@@ -2195,24 +2577,24 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Data__TrueAssignment_1
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:889:1: rule__Data__TrueAssignment_1 : ( ( 'T' ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1058:1: rule__Data__TrueAssignment_1 : ( ( 'T' ) ) ;
     public final void rule__Data__TrueAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:893:1: ( ( ( 'T' ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:894:1: ( ( 'T' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1062:1: ( ( ( 'T' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1063:1: ( ( 'T' ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:894:1: ( ( 'T' ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:895:1: ( 'T' )
-            {
-             before(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:896:1: ( 'T' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:897:1: 'T'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1063:1: ( ( 'T' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1064:1: ( 'T' )
             {
              before(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
-            match(input,22,FOLLOW_22_in_rule__Data__TrueAssignment_11742); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1065:1: ( 'T' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1066:1: 'T'
+            {
+             before(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
+            match(input,27,FOLLOW_27_in_rule__Data__TrueAssignment_12072); 
              after(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
 
             }
@@ -2240,24 +2622,24 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Data__FalseAssignment_2
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:912:1: rule__Data__FalseAssignment_2 : ( ( 'F' ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1081:1: rule__Data__FalseAssignment_2 : ( ( 'F' ) ) ;
     public final void rule__Data__FalseAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:916:1: ( ( ( 'F' ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:917:1: ( ( 'F' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1085:1: ( ( ( 'F' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1086:1: ( ( 'F' ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:917:1: ( ( 'F' ) )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:918:1: ( 'F' )
-            {
-             before(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:919:1: ( 'F' )
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:920:1: 'F'
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1086:1: ( ( 'F' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1087:1: ( 'F' )
             {
              before(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
-            match(input,23,FOLLOW_23_in_rule__Data__FalseAssignment_21786); 
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1088:1: ( 'F' )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1089:1: 'F'
+            {
+             before(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
+            match(input,28,FOLLOW_28_in_rule__Data__FalseAssignment_22116); 
              after(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
 
             }
@@ -2301,64 +2683,80 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleData_in_entryRuleData305 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleData312 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__Alternatives_in_ruleData339 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_rule__Type__Alternatives376 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_rule__Type__Alternatives396 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives448 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives466 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_rule__Trace__Group__0502 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1540 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1550 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__Trace__Group__2579 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Trace__Group__3618 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__4_in_rule__Trace__Group__3628 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4656 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__5_in_rule__Trace__Group__4666 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__Trace__Group__5695 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__6_in_rule__Trace__Group__5705 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Trace__Group__6734 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__7_in_rule__Trace__Group__6744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7772 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__8_in_rule__Trace__Group__7782 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__Trace__Group__8811 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_rule__Trace__Group__9_in_rule__Trace__Group__8821 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9851 = new BitSet(new long[]{0x0000000000080002L});
-    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9863 = new BitSet(new long[]{0x0000000000080002L});
-    public static final BitSet FOLLOW_17_in_rule__Decl__Group__0921 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__Decl__Group__1_in_rule__Decl__Group__0931 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Decl__NameAssignment_1_in_rule__Decl__Group__1959 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_rule__Decl__Group__2_in_rule__Decl__Group__1968 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Decl__Group__2997 = new BitSet(new long[]{0x0000000000001800L});
-    public static final BitSet FOLLOW_rule__Decl__Group__3_in_rule__Decl__Group__21007 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Decl__TypeAssignment_3_in_rule__Decl__Group__31035 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01087 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_rule__Tick__Group__11116 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11126 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21154 = new BitSet(new long[]{0x0000000000D00020L});
-    public static final BitSet FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21163 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31191 = new BitSet(new long[]{0x0000000000D00020L});
-    public static final BitSet FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31201 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rule__Tick__Group__41230 = new BitSet(new long[]{0x0000000000E00020L});
-    public static final BitSet FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41240 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51268 = new BitSet(new long[]{0x0000000000E00020L});
-    public static final BitSet FOLLOW_rule__Tick__Group__6_in_rule__Tick__Group__51278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__Tick__Group__61307 = new BitSet(new long[]{0x0000000000C00022L});
-    public static final BitSet FOLLOW_rule__Tick__Group__7_in_rule__Tick__Group__61317 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71345 = new BitSet(new long[]{0x0000000000C00022L});
-    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__InputsAssignment_11396 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__OutputsAssignment_41427 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__LocalAssignment_71458 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTick_in_rule__Trace__TickAssignment_91489 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Decl__NameAssignment_11520 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleType_in_rule__Decl__TypeAssignment_31551 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Tick__NrAssignment_21582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleData_in_rule__Tick__InputAssignment_31613 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51644 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleData_in_rule__Tick__LocalAssignment_71675 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_01706 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_rule__Data__TrueAssignment_11742 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_rule__Data__FalseAssignment_21786 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatus_in_entryRuleStatus366 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStatus373 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Status__Group__0_in_ruleStatus400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__Type__Alternatives437 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__Type__Alternatives457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives491 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives509 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives527 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INPUTS_in_rule__Trace__Group__0562 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0570 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1598 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1608 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Trace__Group__2637 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2647 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_OUTPUTS_in_rule__Trace__Group__3675 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__4_in_rule__Trace__Group__3683 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4711 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__5_in_rule__Trace__Group__4721 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Trace__Group__5750 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Trace__Group__6_in_rule__Trace__Group__5760 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_LOCALS_in_rule__Trace__Group__6788 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__7_in_rule__Trace__Group__6796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7824 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__Group__8_in_rule__Trace__Group__7834 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Trace__Group__8863 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_rule__Trace__Group__9_in_rule__Trace__Group__8873 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9903 = new BitSet(new long[]{0x0000000000480002L});
+    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9915 = new BitSet(new long[]{0x0000000000480002L});
+    public static final BitSet FOLLOW_rule__Trace__Group__10_in_rule__Trace__Group__9927 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatus_in_rule__Trace__Group__10956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Decl__NameAssignment_0_in_rule__Decl__Group__01013 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_rule__Decl__Group__1_in_rule__Decl__Group__01022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__Decl__Group__11051 = new BitSet(new long[]{0x0000000000018000L});
+    public static final BitSet FOLLOW_rule__Decl__Group__2_in_rule__Decl__Group__11061 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Decl__TypeAssignment_2_in_rule__Decl__Group__21089 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01139 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_rule__Tick__Group__11168 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11178 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21206 = new BitSet(new long[]{0x0000000018100080L});
+    public static final BitSet FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21215 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31243 = new BitSet(new long[]{0x0000000018100080L});
+    public static final BitSet FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31253 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_rule__Tick__Group__41282 = new BitSet(new long[]{0x0000000018200080L});
+    public static final BitSet FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41292 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51320 = new BitSet(new long[]{0x0000000018200080L});
+    public static final BitSet FOLLOW_rule__Tick__Group__6_in_rule__Tick__Group__51330 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_rule__Tick__Group__61359 = new BitSet(new long[]{0x0000000018000082L});
+    public static final BitSet FOLLOW_rule__Tick__Group__7_in_rule__Tick__Group__61369 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71397 = new BitSet(new long[]{0x0000000018000082L});
+    public static final BitSet FOLLOW_22_in_rule__Status__Group__01449 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_rule__Status__Group__1_in_rule__Status__Group__01459 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_rule__Status__Group__11488 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_rule__Status__Group__2_in_rule__Status__Group__11498 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__Status__Group__21527 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__Status__Group__3_in_rule__Status__Group__21537 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__31565 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_rule__Status__Group__4_in_rule__Status__Group__31573 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rule__Status__Group__41602 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__Status__Group__5_in_rule__Status__Group__41612 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__51640 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_rule__Status__Group__6_in_rule__Status__Group__51648 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_rule__Status__Group__61677 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__InputsAssignment_11726 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__OutputsAssignment_41757 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruledecl_in_rule__Trace__LocalAssignment_71788 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTick_in_rule__Trace__TickAssignment_91819 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Decl__NameAssignment_01850 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleType_in_rule__Decl__TypeAssignment_21881 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Tick__NrAssignment_21912 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleData_in_rule__Tick__InputAssignment_31943 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51974 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleData_in_rule__Tick__LocalAssignment_72005 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_02036 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__Data__TrueAssignment_12072 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Data__FalseAssignment_22116 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -74,9 +74,9 @@ public class RifFile implements ITraceProvider {
             IParseResult parseResult = parser.parse(in);
             if (!parseResult.getParseErrors().isEmpty()) {
                 throw new KiemInitializationException("Parse error: "
-                        + parseResult.getParseErrors().get(0).toString(), true, null);
+                        + parseResult.getParseErrors().get(0).getMessage(), true, null);
             }
-            res.add(RifTrace((Trace) parseResult.getRootASTElement()));
+            res.add(new RifTrace((Trace) parseResult.getRootASTElement()));
         } catch (FileNotFoundException e) {
             throw new KiemInitializationException("File not found", false, e);
             // } catch (Exception e) {
@@ -85,14 +85,7 @@ public class RifFile implements ITraceProvider {
         return res;
     }
 
-    /**
-     * @param rootASTElement
-     * @return
-     */
-    private RifTrace RifTrace(Trace rootASTElement) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+
 
     /**
      * {@inheritDoc}

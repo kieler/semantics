@@ -22,7 +22,7 @@ public class RifParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
 		TokenSource tokenSource = createLexer(in);
 		XtextTokenStream tokenStream = createTokenStream(tokenSource);
-		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
 		de.cau.cs.kieler.krep.editors.rif.parser.antlr.internal.InternalRifParser parser = createParser(tokenStream);
 		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
 		try {

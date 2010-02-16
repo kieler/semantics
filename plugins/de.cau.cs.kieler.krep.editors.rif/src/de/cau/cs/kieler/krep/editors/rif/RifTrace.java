@@ -42,7 +42,7 @@ public class RifTrace implements ITrace {
      * {@inheritDoc}
      */
     public RifTick current() {
-        return new RifTick(current);
+        return new RifTick(trace.getInputs(), trace.getOutputs(), current);
     }
 
     /**
@@ -68,7 +68,7 @@ public class RifTrace implements ITrace {
         if (trace.getTick().size() > pos) {
             current = trace.getTick().get(pos);
             pos++;
-            return null;
+            return new RifTick(trace.getInputs(), trace.getOutputs(), current);
         } else {
             return null;
         }

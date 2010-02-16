@@ -48,13 +48,13 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Trace ****************
  *
  * Trace:
- *   "#@inputs" inputs+=decl* "@#" "#@outputs" outputs+=decl* "@#" "#@locals" local+=decl*
- *   "@#" tick+=Tick+;
+ *   INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
+ *   + Status?;
  *
  **/
 
-// "#@inputs" inputs+=decl* "@#" "#@outputs" outputs+=decl* "@#" "#@locals" local+=decl*
-// "@#" tick+=Tick+
+// INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
+// + Status?
 protected class Trace_Group extends GroupToken {
 	
 	public Trace_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -69,7 +69,8 @@ protected class Trace_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Trace_TickAssignment_9(parent, this, 0, inst);
+			case 0: return new Trace_StatusParserRuleCall_10(parent, this, 0, inst);
+			case 1: return new Trace_TickAssignment_9(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -81,16 +82,16 @@ protected class Trace_Group extends GroupToken {
 	}
 }
 
-// "#@inputs"
-protected class Trace_InputsKeyword_0 extends KeywordToken  {
-	
-	public Trace_InputsKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// INPUTS
+protected class Trace_INPUTSTerminalRuleCall_0 extends UnassignedTextToken {
+
+	public Trace_INPUTSTerminalRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTraceAccess().getInputsKeyword_0();
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTraceAccess().getINPUTSTerminalRuleCall_0();
 	}
 
     @Override
@@ -143,7 +144,7 @@ protected class Trace_InputsAssignment_1 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Trace_InputsAssignment_1(parent, next, actIndex, consumed);
-			case 1: return new Trace_InputsKeyword_0(parent, next, actIndex, consumed);
+			case 1: return new Trace_INPUTSTerminalRuleCall_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -165,23 +166,23 @@ protected class Trace_CommercialAtNumberSignKeyword_2 extends KeywordToken  {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Trace_InputsAssignment_1(parent, this, 0, inst);
-			case 1: return new Trace_InputsKeyword_0(parent, this, 1, inst);
+			case 1: return new Trace_INPUTSTerminalRuleCall_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// "#@outputs"
-protected class Trace_OutputsKeyword_3 extends KeywordToken  {
-	
-	public Trace_OutputsKeyword_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// OUTPUTS
+protected class Trace_OUTPUTSTerminalRuleCall_3 extends UnassignedTextToken {
+
+	public Trace_OUTPUTSTerminalRuleCall_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTraceAccess().getOutputsKeyword_3();
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTraceAccess().getOUTPUTSTerminalRuleCall_3();
 	}
 
     @Override
@@ -235,7 +236,7 @@ protected class Trace_OutputsAssignment_4 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Trace_OutputsAssignment_4(parent, next, actIndex, consumed);
-			case 1: return new Trace_OutputsKeyword_3(parent, next, actIndex, consumed);
+			case 1: return new Trace_OUTPUTSTerminalRuleCall_3(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -257,23 +258,23 @@ protected class Trace_CommercialAtNumberSignKeyword_5 extends KeywordToken  {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Trace_OutputsAssignment_4(parent, this, 0, inst);
-			case 1: return new Trace_OutputsKeyword_3(parent, this, 1, inst);
+			case 1: return new Trace_OUTPUTSTerminalRuleCall_3(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// "#@locals"
-protected class Trace_LocalsKeyword_6 extends KeywordToken  {
-	
-	public Trace_LocalsKeyword_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// LOCALS
+protected class Trace_LOCALSTerminalRuleCall_6 extends UnassignedTextToken {
+
+	public Trace_LOCALSTerminalRuleCall_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTraceAccess().getLocalsKeyword_6();
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTraceAccess().getLOCALSTerminalRuleCall_6();
 	}
 
     @Override
@@ -327,7 +328,7 @@ protected class Trace_LocalAssignment_7 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Trace_LocalAssignment_7(parent, next, actIndex, consumed);
-			case 1: return new Trace_LocalsKeyword_6(parent, next, actIndex, consumed);
+			case 1: return new Trace_LOCALSTerminalRuleCall_6(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -349,7 +350,7 @@ protected class Trace_CommercialAtNumberSignKeyword_8 extends KeywordToken  {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Trace_LocalAssignment_7(parent, this, 0, inst);
-			case 1: return new Trace_LocalsKeyword_6(parent, this, 1, inst);
+			case 1: return new Trace_LOCALSTerminalRuleCall_6(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -403,6 +404,28 @@ protected class Trace_TickAssignment_9 extends AssignmentToken  {
 	}	
 }
 
+// Status?
+protected class Trace_StatusParserRuleCall_10 extends UnassignedTextToken {
+
+	public Trace_StatusParserRuleCall_10(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getTraceAccess().getStatusParserRuleCall_10();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Trace_TickAssignment_9(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
 
 /************ end Rule Trace ****************/
 
@@ -410,11 +433,11 @@ protected class Trace_TickAssignment_9 extends AssignmentToken  {
 /************ begin Rule decl ****************
  *
  * decl:
- *   "\"" name=ID "\":" type=Type;
+ *   name=STRING ":" type=Type;
  *
  **/
 
-// "\"" name=ID "\":" type=Type
+// name=STRING ":" type=Type
 protected class Decl_Group extends GroupToken {
 	
 	public Decl_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -429,7 +452,7 @@ protected class Decl_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Decl_TypeAssignment_3(parent, this, 0, inst);
+			case 0: return new Decl_TypeAssignment_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -441,16 +464,16 @@ protected class Decl_Group extends GroupToken {
 	}
 }
 
-// "\""
-protected class Decl_QuotationMarkKeyword_0 extends KeywordToken  {
+// name=STRING
+protected class Decl_NameAssignment_0 extends AssignmentToken  {
 	
-	public Decl_QuotationMarkKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Decl_NameAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getDeclAccess().getQuotationMarkKeyword_0();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getDeclAccess().getNameAssignment_0();
 	}
 
     @Override
@@ -460,35 +483,13 @@ protected class Decl_QuotationMarkKeyword_0 extends KeywordToken  {
 		}	
 	}	
 		
-}
-
-// name=ID
-protected class Decl_NameAssignment_1 extends AssignmentToken  {
-	
-	public Decl_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getDeclAccess().getNameAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Decl_QuotationMarkKeyword_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("name",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("name");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getDeclAccess().getNameIDTerminalRuleCall_1_0();
+			element = grammarAccess.getDeclAccess().getNameSTRINGTerminalRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -496,22 +497,22 @@ protected class Decl_NameAssignment_1 extends AssignmentToken  {
 
 }
 
-// "\":"
-protected class Decl_QuotationMarkColonKeyword_2 extends KeywordToken  {
+// ":"
+protected class Decl_ColonKeyword_1 extends KeywordToken  {
 	
-	public Decl_QuotationMarkColonKeyword_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Decl_ColonKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getDeclAccess().getQuotationMarkColonKeyword_2();
+		return grammarAccess.getDeclAccess().getColonKeyword_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Decl_NameAssignment_1(parent, this, 0, inst);
+			case 0: return new Decl_NameAssignment_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -519,21 +520,21 @@ protected class Decl_QuotationMarkColonKeyword_2 extends KeywordToken  {
 }
 
 // type=Type
-protected class Decl_TypeAssignment_3 extends AssignmentToken  {
+protected class Decl_TypeAssignment_2 extends AssignmentToken  {
 	
-	public Decl_TypeAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Decl_TypeAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getDeclAccess().getTypeAssignment_3();
+		return grammarAccess.getDeclAccess().getTypeAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Decl_QuotationMarkColonKeyword_2(parent, this, 0, inst);
+			case 0: return new Decl_ColonKeyword_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -544,7 +545,7 @@ protected class Decl_TypeAssignment_3 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("type");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.DRC;
-			element = grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_3_0();
+			element = grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -1004,5 +1005,6 @@ protected class Data_FalseAssignment_2 extends AssignmentToken  {
 
 
 /************ end Rule Data ****************/
+
 
 }

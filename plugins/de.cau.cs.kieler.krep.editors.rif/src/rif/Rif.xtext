@@ -1,15 +1,15 @@
 
-grammar de.cau.cs.kieler.krep.editors.rif.Rif with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.krep.editors.rif.Rif with org.eclipse.xtext.common.Terminals hidden (WS, COMMENT) 
 
 generate rif "http://www.cau.de/cs/kieler/krep/editors/rif/Rif"
 
 
-Trace: '#@inputs' inputs+=decl*  '@#'
-       '#@outputs' outputs+=decl* '@#' 
-       '#@locals' local+=decl*  '@#' tick+=Tick+ ;
+Trace: INPUTS inputs+=decl*  '@#'
+       OUTPUTS outputs+=decl* '@#' 
+       LOCALS local+=decl*  '@#' tick+=Tick+ Status?;
 
 
-decl: '"' name=ID  '":' type=Type;
+decl: name=STRING ':' type=Type;
 
 Type :  'bool' 
         | 'int';
@@ -23,4 +23,14 @@ Data:   intVal=INT
         | true?='T' 
         | false?='F' 
         ;
-        
+
+Status:
+  'The' 'execution' 'lasted' INT '.' INT  'second.';
+
+terminal INPUTS: '#@inputs';
+terminal OUTPUTS: '#@outputs';
+terminal LOCALS: '#@locals';
+
+terminal WS :  '\t' | ' ' | '\r' | '\n';
+
+terminal COMMENT : '# ' -> '\n' ;

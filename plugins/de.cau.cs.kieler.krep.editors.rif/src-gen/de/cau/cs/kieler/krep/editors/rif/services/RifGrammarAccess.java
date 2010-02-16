@@ -20,32 +20,33 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	public class TraceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Trace");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cInputsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cINPUTSTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cInputsDeclParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
 		private final Keyword cCommercialAtNumberSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cOutputsKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final RuleCall cOUTPUTSTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		private final Assignment cOutputsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cOutputsDeclParserRuleCall_4_0 = (RuleCall)cOutputsAssignment_4.eContents().get(0);
 		private final Keyword cCommercialAtNumberSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Keyword cLocalsKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final RuleCall cLOCALSTerminalRuleCall_6 = (RuleCall)cGroup.eContents().get(6);
 		private final Assignment cLocalAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cLocalDeclParserRuleCall_7_0 = (RuleCall)cLocalAssignment_7.eContents().get(0);
 		private final Keyword cCommercialAtNumberSignKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		private final Assignment cTickAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cTickTickParserRuleCall_9_0 = (RuleCall)cTickAssignment_9.eContents().get(0);
+		private final RuleCall cStatusParserRuleCall_10 = (RuleCall)cGroup.eContents().get(10);
 		
 		//Trace:
-		//  "#@inputs" inputs+=decl* "@#" "#@outputs" outputs+=decl* "@#" "#@locals" local+=decl*
-		//  "@#" tick+=Tick+;
+		//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
+		//  + Status?;
 		public ParserRule getRule() { return rule; }
 
-		//"#@inputs" inputs+=decl* "@#" "#@outputs" outputs+=decl* "@#" "#@locals" local+=decl*
-		//"@#" tick+=Tick+
+		//INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
+		//+ Status?
 		public Group getGroup() { return cGroup; }
 
-		//"#@inputs"
-		public Keyword getInputsKeyword_0() { return cInputsKeyword_0; }
+		//INPUTS
+		public RuleCall getINPUTSTerminalRuleCall_0() { return cINPUTSTerminalRuleCall_0; }
 
 		//inputs+=decl*
 		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
@@ -56,8 +57,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		//"@#"
 		public Keyword getCommercialAtNumberSignKeyword_2() { return cCommercialAtNumberSignKeyword_2; }
 
-		//"#@outputs"
-		public Keyword getOutputsKeyword_3() { return cOutputsKeyword_3; }
+		//OUTPUTS
+		public RuleCall getOUTPUTSTerminalRuleCall_3() { return cOUTPUTSTerminalRuleCall_3; }
 
 		//outputs+=decl*
 		public Assignment getOutputsAssignment_4() { return cOutputsAssignment_4; }
@@ -68,8 +69,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		//"@#"
 		public Keyword getCommercialAtNumberSignKeyword_5() { return cCommercialAtNumberSignKeyword_5; }
 
-		//"#@locals"
-		public Keyword getLocalsKeyword_6() { return cLocalsKeyword_6; }
+		//LOCALS
+		public RuleCall getLOCALSTerminalRuleCall_6() { return cLOCALSTerminalRuleCall_6; }
 
 		//local+=decl*
 		public Assignment getLocalAssignment_7() { return cLocalAssignment_7; }
@@ -85,42 +86,41 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Tick
 		public RuleCall getTickTickParserRuleCall_9_0() { return cTickTickParserRuleCall_9_0; }
+
+		//Status?
+		public RuleCall getStatusParserRuleCall_10() { return cStatusParserRuleCall_10; }
 	}
 
 	public class DeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "decl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cQuotationMarkKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cQuotationMarkColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTypeTypeParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameSTRINGTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
 		
 		//decl:
-		//  "\"" name=ID "\":" type=Type;
+		//  name=STRING ":" type=Type;
 		public ParserRule getRule() { return rule; }
 
-		//"\"" name=ID "\":" type=Type
+		//name=STRING ":" type=Type
 		public Group getGroup() { return cGroup; }
 
-		//"\""
-		public Keyword getQuotationMarkKeyword_0() { return cQuotationMarkKeyword_0; }
+		//name=STRING
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_0_0() { return cNameSTRINGTerminalRuleCall_0_0; }
 
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
-		//"\":"
-		public Keyword getQuotationMarkColonKeyword_2() { return cQuotationMarkColonKeyword_2; }
+		//":"
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 
 		//type=Type
-		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
 
 		//Type
-		public RuleCall getTypeTypeParserRuleCall_3_0() { return cTypeTypeParserRuleCall_3_0; }
+		public RuleCall getTypeTypeParserRuleCall_2_0() { return cTypeTypeParserRuleCall_2_0; }
 	}
 
 	public class TypeElements extends AbstractParserRuleElementFinder {
@@ -238,6 +238,46 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		//"F"
 		public Keyword getFalseFKeyword_2_0() { return cFalseFKeyword_2_0; }
 	}
+
+	public class StatusElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Status");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cTheKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cExecutionKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLastedKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final RuleCall cINTTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final Keyword cSecondKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		//Status returns ecore::EString:
+		//  "The" "execution" "lasted" INT "." INT "second.";
+		public ParserRule getRule() { return rule; }
+
+		//"The" "execution" "lasted" INT "." INT "second."
+		public Group getGroup() { return cGroup; }
+
+		//"The"
+		public Keyword getTheKeyword_0() { return cTheKeyword_0; }
+
+		//"execution"
+		public Keyword getExecutionKeyword_1() { return cExecutionKeyword_1; }
+
+		//"lasted"
+		public Keyword getLastedKeyword_2() { return cLastedKeyword_2; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_3() { return cINTTerminalRuleCall_3; }
+
+		//"."
+		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_5() { return cINTTerminalRuleCall_5; }
+
+		//"second."
+		public Keyword getSecondKeyword_6() { return cSecondKeyword_6; }
+	}
 	
 	
 	private TraceElements pTrace;
@@ -245,6 +285,12 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	private TypeElements pType;
 	private TickElements pTick;
 	private DataElements pData;
+	private StatusElements pStatus;
+	private TerminalRule tINPUTS;
+	private TerminalRule tOUTPUTS;
+	private TerminalRule tLOCALS;
+	private TerminalRule tWS;
+	private TerminalRule tCOMMENT;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -268,8 +314,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Trace:
-	//  "#@inputs" inputs+=decl* "@#" "#@outputs" outputs+=decl* "@#" "#@locals" local+=decl*
-	//  "@#" tick+=Tick+;
+	//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
+	//  + Status?;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}
@@ -279,7 +325,7 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//decl:
-	//  "\"" name=ID "\":" type=Type;
+	//  name=STRING ":" type=Type;
 	public DeclElements getDeclAccess() {
 		return (pDecl != null) ? pDecl : (pDecl = new DeclElements());
 	}
@@ -318,6 +364,46 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataAccess().getRule();
 	}
 
+	//Status returns ecore::EString:
+	//  "The" "execution" "lasted" INT "." INT "second.";
+	public StatusElements getStatusAccess() {
+		return (pStatus != null) ? pStatus : (pStatus = new StatusElements());
+	}
+	
+	public ParserRule getStatusRule() {
+		return getStatusAccess().getRule();
+	}
+
+	//terminal INPUTS:
+	//  "#@inputs";
+	public TerminalRule getINPUTSRule() {
+		return (tINPUTS != null) ? tINPUTS : (tINPUTS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INPUTS"));
+	} 
+
+	//terminal OUTPUTS:
+	//  "#@outputs";
+	public TerminalRule getOUTPUTSRule() {
+		return (tOUTPUTS != null) ? tOUTPUTS : (tOUTPUTS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "OUTPUTS"));
+	} 
+
+	//terminal LOCALS:
+	//  "#@locals";
+	public TerminalRule getLOCALSRule() {
+		return (tLOCALS != null) ? tLOCALS : (tLOCALS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "LOCALS"));
+	} 
+
+	//terminal WS:
+	//  "\t" | " " | "\r" | "\n";
+	public TerminalRule getWSRule() {
+		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
+	} 
+
+	//terminal COMMENT:
+	//  "# "->"\n";
+	public TerminalRule getCOMMENTRule() {
+		return (tCOMMENT != null) ? tCOMMENT : (tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT"));
+	} 
+
 	//terminal ID:
 	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
@@ -347,12 +433,6 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	//  "//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
-	} 
-
-	//terminal WS:
-	//  (" " | "\t" | "\r" | "\n")+;
-	public TerminalRule getWSRule() {
-		return gaTerminals.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:

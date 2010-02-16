@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext">
-  <xtext:Grammar name="de.cau.cs.kieler.krep.editors.rif.Rif" usedGrammars="/1">
+  <xtext:Grammar name="de.cau.cs.kieler.krep.editors.rif.Rif" usedGrammars="/1" definesHiddenTokens="true" hiddenTokens="/0/@rules.9 /0/@rules.10">
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="rif">
       <ePackage href="http://www.cau.de/cs/kieler/krep/editors/rif/Rif#/"/>
     </metamodelDeclarations>
@@ -9,17 +9,17 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/rif/Rif#//Trace"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="#@inputs"/>
+        <tokens xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
         <tokens xsi:type="xtext:Assignment" cardinality="*" feature="inputs" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
         </tokens>
         <tokens xsi:type="xtext:Keyword" value="@#"/>
-        <tokens xsi:type="xtext:Keyword" value="#@outputs"/>
+        <tokens xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
         <tokens xsi:type="xtext:Assignment" cardinality="*" feature="outputs" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
         </tokens>
         <tokens xsi:type="xtext:Keyword" value="@#"/>
-        <tokens xsi:type="xtext:Keyword" value="#@locals"/>
+        <tokens xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
         <tokens xsi:type="xtext:Assignment" cardinality="*" feature="local" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
         </tokens>
@@ -27,6 +27,7 @@
         <tokens xsi:type="xtext:Assignment" cardinality="+" feature="tick" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </tokens>
+        <tokens xsi:type="xtext:RuleCall" cardinality="?" rule="/0/@rules.5"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="decl">
@@ -34,11 +35,10 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/rif/Rif#//decl"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="&quot;"/>
         <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
-        <tokens xsi:type="xtext:Keyword" value="&quot;:"/>
+        <tokens xsi:type="xtext:Keyword" value=":"/>
         <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
         </tokens>
@@ -96,8 +96,62 @@
         </groups>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="Status">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="The"/>
+        <tokens xsi:type="xtext:Keyword" value="execution"/>
+        <tokens xsi:type="xtext:Keyword" value="lasted"/>
+        <tokens xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        <tokens xsi:type="xtext:Keyword" value="."/>
+        <tokens xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        <tokens xsi:type="xtext:Keyword" value="second."/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="INPUTS">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="#@inputs"/>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="OUTPUTS">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="#@outputs"/>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="LOCALS">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="#@locals"/>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="WS">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:Keyword" value="&#x9;"/>
+        <groups xsi:type="xtext:Keyword" value=" "/>
+        <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+        <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="COMMENT">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="# "/>
+        <tokens xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="&#xA;"/>
+        </tokens>
+      </alternatives>
+    </rules>
   </xtext:Grammar>
-  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/1/@rules.5 /1/@rules.3 /1/@rules.4">
+  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/0/@rules.9 /1/@rules.3 /1/@rules.4">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>

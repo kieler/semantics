@@ -16,8 +16,11 @@ package de.cau.cs.kieler.krep.editors.rif;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
+
 import de.cau.cs.kieler.krep.editors.rif.rif.Data;
 import de.cau.cs.kieler.krep.editors.rif.rif.Tick;
+import de.cau.cs.kieler.krep.editors.rif.rif.decl;
 import de.cau.cs.kieler.sim.trace.ITick;
 import de.cau.cs.kieler.sim.trace.Signal;
 
@@ -28,12 +31,17 @@ import de.cau.cs.kieler.sim.trace.Signal;
 public class RifTick implements ITick {
 
     private Tick tick;
+    private EList<decl> in, out;
 
     /**
+     * @param outputs
+     * @param inputs
      * @param theTick
      */
-    public RifTick(Tick theTick) {
+    public RifTick(EList<decl> inputs, EList<decl> outputs, Tick theTick) {
         this.tick = theTick;
+        in = inputs;
+        out = outputs;
     }
 
     /**
@@ -41,8 +49,8 @@ public class RifTick implements ITick {
      */
     public List<Signal> getInputs() {
         LinkedList<Signal> res = new LinkedList<Signal>();
-        for(Data d: tick.getInput()){
-          
+        for (int i = 0; i < tick.getInput().size(); i++) {
+            res.add(new Signal(in.get(i).getName()));
         }
         return res;
     }
@@ -51,8 +59,11 @@ public class RifTick implements ITick {
      * {@inheritDoc}
      */
     public List<Signal> getOutputs() {
-        // TODO Auto-generated method stub
-        return null;
+        LinkedList<Signal> res = new LinkedList<Signal>();
+        for (int i = 0; i < tick.getOutput().size(); i++) {
+            res.add(new Signal(out.get(i).getName()));
+        }
+        return res;
     }
 
 }

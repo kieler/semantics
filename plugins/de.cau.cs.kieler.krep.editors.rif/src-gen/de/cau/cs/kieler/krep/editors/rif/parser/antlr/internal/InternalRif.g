@@ -84,9 +84,9 @@ ruleTrace returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-(	'#@inputs' 
-    {
-        createLeafNode(grammarAccess.getTraceAccess().getInputsKeyword_0(), null); 
+(RULE_INPUTS
+    { 
+    createLeafNode(grammarAccess.getTraceAccess().getINPUTSTerminalRuleCall_0(), null); 
     }
 (
 (
@@ -116,9 +116,9 @@ ruleTrace returns [EObject current=null]
     {
         createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2(), null); 
     }
-	'#@outputs' 
-    {
-        createLeafNode(grammarAccess.getTraceAccess().getOutputsKeyword_3(), null); 
+RULE_OUTPUTS
+    { 
+    createLeafNode(grammarAccess.getTraceAccess().getOUTPUTSTerminalRuleCall_3(), null); 
     }
 (
 (
@@ -148,9 +148,9 @@ ruleTrace returns [EObject current=null]
     {
         createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5(), null); 
     }
-	'#@locals' 
-    {
-        createLeafNode(grammarAccess.getTraceAccess().getLocalsKeyword_6(), null); 
+RULE_LOCALS
+    { 
+    createLeafNode(grammarAccess.getTraceAccess().getLOCALSTerminalRuleCall_6(), null); 
     }
 (
 (
@@ -204,7 +204,7 @@ ruleTrace returns [EObject current=null]
 	    }
 
 )
-)+)
+)+(ruleStatus)?)
 ;
 
 
@@ -227,15 +227,11 @@ ruledecl returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-(	'"' 
-    {
-        createLeafNode(grammarAccess.getDeclAccess().getQuotationMarkKeyword_0(), null); 
-    }
+((
 (
-(
-		lv_name_1_0=RULE_ID
+		lv_name_0_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getDeclAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+			createLeafNode(grammarAccess.getDeclAccess().getNameSTRINGTerminalRuleCall_0_0(), "name"); 
 		}
 		{
 	        if ($current==null) {
@@ -246,8 +242,8 @@ ruledecl returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_1_0, 
-	        		"ID", 
+	        		lv_name_0_0, 
+	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -255,16 +251,16 @@ ruledecl returns [EObject current=null]
 	    }
 
 )
-)	'":' 
+)	':' 
     {
-        createLeafNode(grammarAccess.getDeclAccess().getQuotationMarkColonKeyword_2(), null); 
+        createLeafNode(grammarAccess.getDeclAccess().getColonKeyword_1(), null); 
     }
 (
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_2_0(), currentNode); 
 	    }
-		lv_type_3_0=ruleType		{
+		lv_type_2_0=ruleType		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getDeclRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -273,7 +269,7 @@ ruledecl returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"type",
-	        		lv_type_3_0, 
+	        		lv_type_2_0, 
 	        		"Type", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -559,6 +555,83 @@ ruleData returns [EObject current=null]
 
 
 
+// Entry rule entryRuleStatus
+entryRuleStatus returns [String current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getStatusRule(), currentNode); } 
+	 iv_ruleStatus=ruleStatus 
+	 { $current=$iv_ruleStatus.current.getText(); }  
+	 EOF 
+;
+
+// Rule Status
+ruleStatus returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+	    lastConsumedNode = currentNode;
+    }:
+(
+	kw='The' 
+    {
+        $current.merge(kw);
+        createLeafNode(grammarAccess.getStatusAccess().getTheKeyword_0(), null); 
+    }
+
+	kw='execution' 
+    {
+        $current.merge(kw);
+        createLeafNode(grammarAccess.getStatusAccess().getExecutionKeyword_1(), null); 
+    }
+
+	kw='lasted' 
+    {
+        $current.merge(kw);
+        createLeafNode(grammarAccess.getStatusAccess().getLastedKeyword_2(), null); 
+    }
+    this_INT_3=RULE_INT    {
+		$current.merge(this_INT_3);
+    }
+
+    { 
+    createLeafNode(grammarAccess.getStatusAccess().getINTTerminalRuleCall_3(), null); 
+    }
+
+	kw='.' 
+    {
+        $current.merge(kw);
+        createLeafNode(grammarAccess.getStatusAccess().getFullStopKeyword_4(), null); 
+    }
+    this_INT_5=RULE_INT    {
+		$current.merge(this_INT_5);
+    }
+
+    { 
+    createLeafNode(grammarAccess.getStatusAccess().getINTTerminalRuleCall_5(), null); 
+    }
+
+	kw='second.' 
+    {
+        $current.merge(kw);
+        createLeafNode(grammarAccess.getStatusAccess().getSecondKeyword_6(), null); 
+    }
+)
+    ;
+
+
+
+
+
+RULE_INPUTS : '#@inputs';
+
+RULE_OUTPUTS : '#@outputs';
+
+RULE_LOCALS : '#@locals';
+
+RULE_WS : ('\t'|' '|'\r'|'\n');
+
+RULE_COMMENT : '# ' ( options {greedy=false;} : . )*'\n';
+
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_INT : ('0'..'9')+;
@@ -568,8 +641,6 @@ RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
-
-RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
 RULE_ANY_OTHER : .;
 
