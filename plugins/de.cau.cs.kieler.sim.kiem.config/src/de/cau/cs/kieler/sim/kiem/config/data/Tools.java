@@ -295,7 +295,8 @@ public final class Tools {
             final Shell shell) {
         ListDialog dialog = new ListDialog(shell);
         dialog.setTitle("Error!");
-        dialog.setMessage(e0.toString());
+        dialog.setMessage("Ooops, your machine seems to be broken..."
+                + e0.toString());
         dialog.setInput(e0.getStackTrace());
         StackTraceListProvider provider = new StackTraceListProvider();
         dialog.setContentProvider(provider);
