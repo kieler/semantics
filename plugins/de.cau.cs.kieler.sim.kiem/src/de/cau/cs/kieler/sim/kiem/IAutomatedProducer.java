@@ -30,6 +30,11 @@ public interface IAutomatedProducer extends IAutomatedComponent {
      * Notifies the DataComponent that the schedule has finished and asks it to
      * provide some information for evaluation.
      * 
+     * The number and order of properties has to be the same for all iterations
+     * that a particular execution file performs on all model files that should
+     * be simulated. This is necessary in order to construct a valid results
+     * table.
+     * 
      * @return information
      */
     List<KiemProperty> produceInformation();
