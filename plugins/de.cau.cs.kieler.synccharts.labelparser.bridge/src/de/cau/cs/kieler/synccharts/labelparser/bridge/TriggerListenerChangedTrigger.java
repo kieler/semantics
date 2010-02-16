@@ -20,6 +20,7 @@ import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
+import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**
  * Listen to changes of the TriggerAndEffects String of an Action and trigger
@@ -30,7 +31,7 @@ import de.cau.cs.kieler.synccharts.ValuedObject;
  * @author haf
  * 
  */
-public class TriggerListenerChangedTrigger extends TriggerListener {
+public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
 
     public TriggerListenerChangedTrigger() {
         super(NotificationFilter.createFeatureFilter(
@@ -44,6 +45,7 @@ public class TriggerListenerChangedTrigger extends TriggerListener {
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
+        System.out.println("Trigger: "+notification);        
         Action action = null;
         String newLabel = null;
         String oldLabel = null;
@@ -70,7 +72,8 @@ public class TriggerListenerChangedTrigger extends TriggerListener {
                 // there was no change in the label but in the underlying model
                 // however, then parsing and serializing goes into an endless
                 // loop.
-                && (oldLabel == null || newLabel.equals(oldLabel)) && action.eContainer() != null) {
+               // && (oldLabel == null || newLabel.equals(oldLabel)) 
+                && action.eContainer() != null) {
             ModelErrorHandler.clearMarker(action);
             try {
                 cc.append(actionLabelProcessor.getProcessActionCommand(action,

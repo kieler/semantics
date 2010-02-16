@@ -13,6 +13,7 @@ import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
+import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**
  * Listen to renamings of Signals and Variables and then re-serialize all affected transition
@@ -20,7 +21,7 @@ import de.cau.cs.kieler.synccharts.ValuedObject;
  * @author haf
  *
  */
-public class TriggerListenerRenamedSignals extends TriggerListener {
+public class TriggerListenerRenamedSignals extends FireOnceTriggerListener {
 
     public TriggerListenerRenamedSignals() {
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getValuedObject_Name()));
