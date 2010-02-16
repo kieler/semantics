@@ -23,13 +23,13 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPathElement;
 
-import de.cau.cs.kieler.xkev.mapping.Colorize;
-import de.cau.cs.kieler.xkev.mapping.MappingFactory;
-import de.cau.cs.kieler.xkev.mapping.MovePath;
-import de.cau.cs.kieler.xkev.mapping.Opacity;
-import de.cau.cs.kieler.xkev.mapping.SVGElement;
-import de.cau.cs.kieler.xkev.mapping.SVGFile;
-import de.cau.cs.kieler.xkev.mapping.Text;
+import de.cau.cs.kieler.kev.mapping.Colorize;
+import de.cau.cs.kieler.kev.mapping.MappingFactory;
+import de.cau.cs.kieler.kev.mapping.MovePath;
+import de.cau.cs.kieler.kev.mapping.Opacity;
+import de.cau.cs.kieler.kev.mapping.SVGElement;
+import de.cau.cs.kieler.kev.mapping.SVGFile;
+import de.cau.cs.kieler.kev.mapping.Text;
 
 /**
  * A static main application that creates a mapping SVG file for the railway
@@ -43,10 +43,14 @@ public class CreateRailwayMapping {
 
     private static final String svgFilename = "railway.svg";
     private static final String mapFilename = "railway.mapping";
-    private static final String path = "/Users/haf/shared/kieler/trunk/plugins/de.cau.cs.kieler.simplerailctrl.kev/images/";
-    private static final String resourcePath = "resource:images/";
+    //private static final String path = "/Users/haf/shared/kieler/trunk/plugins/de.cau.cs.kieler.simplerailctrl.kev/images/";
+    private static final String path = "X:\\dop_eclipse\\GALILEO32\\de.cau.cs.kieler.simplerailctrl.kev\\images\\";
+    private static final String resourcePath = "resource:examples/";
     
     public static void main(String[] args) {
+    	File file = new File(path + svgFilename);
+        java.net.URI localFileAsUri = file.toURI(); 
+    	
         try {
             MappingFactory mapFactory = MappingFactory.eINSTANCE;
             SVGFile svgFile = mapFactory.createSVGFile();
@@ -56,7 +60,8 @@ public class CreateRailwayMapping {
             try {
                 String parser = XMLResourceDescriptor.getXMLParserClassName();
                 SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-                Document doc = f.createDocument("file://" + path + svgFilename);
+                //Document doc = f.createDocument("file://" + path + svgFilename);
+                Document doc = f.createDocument(localFileAsUri.toString());
                 System.out.println(doc.getClass().getName());
             } catch (IOException ex) {
                ex.printStackTrace();
@@ -68,7 +73,8 @@ public class CreateRailwayMapping {
             canvas.setDoubleBufferedRendering(true);
             URL svgURL = new URL("file://" + path + svgFilename);
             System.out.println("File: " + svgURL);
-            canvas.setURI(svgURL.toString());
+            //canvas.setURI(svgURL.toString());
+            canvas.setURI(localFileAsUri.toString());
             Thread.sleep(5000);
             SVGDocument imageDoc = canvas.getSVGDocument();
             
@@ -114,15 +120,22 @@ public class CreateRailwayMapping {
                     svgFile.getSvgElement().add(mappingSVGElement);
                     MovePath mappingMovePath = mapFactory.createMovePath();
                     mappingMovePath.setInput("1..100");
-                    mappingMovePath.setAuto_orientation("true");
+                    mappingMovePath.setPath(path.getId());
+                    mappingMovePath.setAuto_orientation("false");
                     mappingMovePath.setKey("engine-" + path.getId());
                     mappingSVGElement.getAnimation().add(mappingMovePath);
 
-                    // Element display = mappingDoc.createElement("display");
-                    // display.setAttribute("port", "" + port);
-                    // mappingRoot.appendChild(display);
-                    // Element movePath = mappingDoc.createElement("move-path");
-                    // movePath.setAttribute("direction-angle", "90");
+                    Opacity mappingMovePathOpacity = mapFactory.createOpacity();
+                    mappingMovePathOpacity.setKey("engine-" + path.getId());
+                    mappingMovePathOpacity.setInput("-1");
+                    mappingMovePathOpacity.setOpacity("0");
+                    mappingSVGElement.getAnimation().add(mappingMovePathOpacity);
+
+                    //Element display = mappingDoc.createElement("display");
+                    //display.setAttribute("port", "" + port);
+                    //mappingRoot.appendChild(display);
+                    //Element movePath = mappingDoc.createElement("move-path");
+                    //movePath.setAttribute("direction-angle", "90");
                     // movePath.setAttribute("id", "engine");
                     // movePath.setAttribute("input", "1..100");
                     // movePath.setAttribute("path", path.getId());
@@ -135,10 +148,17 @@ public class CreateRailwayMapping {
                     svgFile.getSvgElement().add(mappingSVGElement2);
                     MovePath mappingMovePath2 = mapFactory.createMovePath();
                     mappingMovePath2.setInput("1..100");
-                    mappingMovePath2.setAuto_orientation("true");
+                    mappingMovePath2.setPath(path.getId());
+                    mappingMovePath2.setAuto_orientation("false");
                     mappingMovePath2.setKey("trailer-" + path.getId());
                     mappingSVGElement2.getAnimation().add(mappingMovePath2);
 
+//                    Opacity mappingMovePathOpacity2 = mapFactory.createOpacity();
+//                    mappingMovePathOpacity2.setKey("trailer-" + path.getId());
+//                    mappingMovePathOpacity2.setInput("-1");
+//                    mappingMovePathOpacity2.setOpacity("0");
+//                    mappingSVGElement2.getAnimation().add(mappingMovePathOpacity2);
+                    
                     // Element displayMove2 =
                     // mappingDoc.createElement("display");
                     // displayMove2.setAttribute("port", "" + port);

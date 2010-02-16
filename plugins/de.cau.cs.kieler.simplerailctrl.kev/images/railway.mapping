@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
-<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:images/railway.svg">
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/railway.svg">
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_JCT_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_JCT_0" path="IC_JCT_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_JCT_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_JCT_0" path="IC_JCT_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_JCT_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_JCT_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -24,10 +24,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_0" path="IC_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_0" path="IC_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -47,10 +47,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_1" path="IC_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_1" path="IC_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -70,10 +70,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_2" path="IC_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_2" path="IC_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -93,10 +93,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_3" path="IC_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_3" path="IC_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -116,10 +116,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-4" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_4" path="IC_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_4" path="IC_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -139,10 +139,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-5" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_LN_5" path="IC_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_LN_5" path="IC_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_LN_5">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -162,10 +162,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-6" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_0" path="IC_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_0" path="IC_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_ST_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -185,10 +185,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-7" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_1" path="IC_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_1" path="IC_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_ST_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -208,10 +208,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-8" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_2" path="IC_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_2" path="IC_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_ST_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -231,10 +231,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-9" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_3" path="IC_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_3" path="IC_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_ST_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -254,10 +254,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-10" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IC_ST_4" path="IC_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IC_ST_4" path="IC_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IC_ST_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -277,10 +277,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-11" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_0" path="IO_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_0" path="IO_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IO_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -300,10 +300,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-12" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_1" path="IO_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_1" path="IO_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IO_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -323,10 +323,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-13" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-IO_LN_2" path="IO_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-IO_LN_2" path="IO_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_IO_LN_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -346,10 +346,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-14" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_0" path="KH_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_0" path="KH_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -369,10 +369,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-15" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_1" path="KH_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_1" path="KH_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -392,10 +392,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-16" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_2" path="KH_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_2" path="KH_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -415,10 +415,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-17" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_3" path="KH_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_3" path="KH_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -438,10 +438,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-18" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_4" path="KH_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_4" path="KH_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -461,10 +461,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-19" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_5" path="KH_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_5" path="KH_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_5">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -484,10 +484,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-20" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_6" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_6" path="KH_LN_6" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_6" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_6" path="KH_LN_6" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_6">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_6" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -507,10 +507,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-21" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_7" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_7" path="KH_LN_7" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_7" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_7" path="KH_LN_7" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_7">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_7" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -530,10 +530,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-22" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_8" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_LN_8" path="KH_LN_8" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_8" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_LN_8" path="KH_LN_8" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_LN_8">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_8" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -553,10 +553,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-23" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_0" path="KH_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_0" path="KH_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -576,10 +576,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-24" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_1" path="KH_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_1" path="KH_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -599,10 +599,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-25" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_2" path="KH_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_2" path="KH_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -622,10 +622,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-26" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_3" path="KH_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_3" path="KH_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -645,10 +645,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-27" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_4" path="KH_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_4" path="KH_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -668,10 +668,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-28" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_5" path="KH_ST_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_5" path="KH_ST_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_5">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -691,10 +691,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-29" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_6" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KH_ST_6" path="KH_ST_6" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_6" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KH_ST_6" path="KH_ST_6" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KH_ST_6">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_6" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -704,10 +704,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_6" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KIO_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KIO_LN_0" path="KIO_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KIO_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KIO_LN_0" path="KIO_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KIO_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KIO_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -717,10 +717,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KIO_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KIO_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-KIO_LN_1" path="KIO_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KIO_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-KIO_LN_1" path="KIO_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_KIO_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KIO_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -730,10 +730,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KIO_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_JCT_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_JCT_0" path="OC_JCT_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_JCT_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_JCT_0" path="OC_JCT_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_JCT_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_JCT_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -743,10 +743,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_JCT_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_0" path="OC_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_0" path="OC_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -756,10 +756,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_1" path="OC_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_1" path="OC_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -769,10 +769,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_2" path="OC_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_2" path="OC_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -782,10 +782,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_3" path="OC_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_3" path="OC_LN_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -795,10 +795,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_4" path="OC_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_4" path="OC_LN_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -808,10 +808,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_4" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_LN_5" path="OC_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_5" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_LN_5" path="OC_LN_5" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_LN_5">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -821,10 +821,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_5" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_0" path="OC_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_0" path="OC_ST_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_ST_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -834,10 +834,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_1" path="OC_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_1" path="OC_ST_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_ST_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -847,10 +847,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_2" path="OC_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_2" path="OC_ST_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_ST_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -860,10 +860,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_3" path="OC_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_3" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_3" path="OC_ST_3" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_ST_3">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -873,10 +873,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OC_ST_4" path="OC_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_4" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OC_ST_4" path="OC_ST_4" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OC_ST_4">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -886,10 +886,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_4" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_0" path="OI_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_0" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_0" path="OI_LN_0" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OI_LN_0">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -899,10 +899,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OI_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_1" path="OI_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_1" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_1" path="OI_LN_1" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OI_LN_1">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
@@ -912,10 +912,10 @@
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OI_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="engine-OI_LN_2" path="OI_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="trailer">
-    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_2" auto_orientation="true"/>
+    <animation xsi:type="mapping:MovePath" input="1..100" key="trailer-OI_LN_2" path="OI_LN_2" auto_orientation="false"/>
   </svgElement>
   <svgElement id="b_OI_LN_2">
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
