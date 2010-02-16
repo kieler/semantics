@@ -26,19 +26,22 @@ public abstract class FireOnceTriggerListener extends FailSafeTriggerListener {
         super();
     }
 
+    /**
+     * Setting the Transaction in the event to null will also trigger this listener
+     * no matter what.
+     */
     @Override
     public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
-        if (transaction != null && transaction.isActive()) {
+        if (event.getTransaction() != null && transaction != null && transaction.isActive()) {
             // do nothing if the last transaction seen is not yet committed.
             // That means
             // we see changes performed within that transaction again
             return null;
         }
         // so this is a fresh transaction and we can process it
-        if (event != null) {
+        if (event != null && event.getTransaction() != null) {
             this.transaction = event.getTransaction();
         }
         return super.transactionAboutToCommit(event);
     }
-
 }

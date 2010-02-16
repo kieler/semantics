@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.core.model.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 
 /**
@@ -39,4 +43,62 @@ public class PossiblyEmptyCompoundCommand extends CompoundCommand {
             return super.prepare();
         }
     }
+
+    /**
+     * Return one of three commands: If the command list is empty, return null;
+     * if there is exactly one command in the list, return that command;
+     * otherwise return this PossiblyEmptyCompoundCommand. Can be used to remove
+     * unnecessary hierarchy levels of commands.
+     * 
+     * @returns the resulting Command, maybe null
+     */
+    @Override
+    public Command unwrap() {
+        switch (commandList.size()) {
+        case 0: {
+            dispose();
+            // null behaves like the neutral element of commands
+            return null;
+        }
+        case 1: {
+            Command result = commandList.remove(0);
+            dispose();
+            return result;
+        }
+        default: {
+            return this;
+        }
+        }
+    }
+
+    /**
+     * Flatten all PossiblyEmptyCompoundCommands recursively. Go recursively
+     * through all PossiblEmptyCompoundCommand children and unwrap them all. If
+     * a result is still a PossiblyEmptyCompoundCommand, all of its children are
+     * moved one level up and the compound command gets removed.
+     * 
+     * @return Either a flat PossiblyEmptyCompoundCommand or one single other
+     *         Command or maybe null.
+     */
+    public Command unwrapAll() {
+        List<Command> tempCmds = new ArrayList<Command>();
+        for (Command cmd : commandList) {
+            if (cmd instanceof PossiblyEmptyCompoundCommand) {
+                commandList.remove(cmd);
+                Command cmd2 = ((PossiblyEmptyCompoundCommand) cmd).unwrapAll();
+                if (cmd2 instanceof PossiblyEmptyCompoundCommand) {
+                    for (Command cmd3 : ((PossiblyEmptyCompoundCommand) cmd2).getCommandList()) {
+                        tempCmds.add(cmd3);
+                    }
+                } else {
+                    tempCmds.add(cmd2);
+                }
+            } else {
+                tempCmds.add(cmd);
+            }
+        }
+        this.commandList = tempCmds;
+        return this.unwrap();
+    }
+
 }

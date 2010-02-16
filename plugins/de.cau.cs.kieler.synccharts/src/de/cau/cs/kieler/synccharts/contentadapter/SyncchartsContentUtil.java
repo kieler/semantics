@@ -15,7 +15,9 @@
 package de.cau.cs.kieler.synccharts.contentadapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -26,8 +28,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
+import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.synccharts.Region;
@@ -50,6 +54,8 @@ public final class SyncchartsContentUtil {
     private SyncchartsContentUtil() {
     }
 
+    private final static Map<TransactionalEditingDomain,List<ResourceSetListener>> listeners = new HashMap<TransactionalEditingDomain,List<ResourceSetListener>>();
+    
     /**
      * Add all TriggerListener classes that are registered via the corresponding
      * extension point as a listener to the passed TransactionalEditingDomain.
@@ -60,18 +66,31 @@ public final class SyncchartsContentUtil {
     public static void addTriggerListeners(TransactionalEditingDomain domain) {
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor("de.cau.cs.kieler.synccharts.triggerListener");
+        List<ResourceSetListener> tempListeners = new ArrayList<ResourceSetListener>(elements.length); 
         for (int i = 0; i < elements.length; i++) {
             IConfigurationElement element = elements[i];
             try {
-                TriggerListener triggerListener = (TriggerListener) element
+                ResourceSetListener triggerListener = (ResourceSetListener) element
                         .createExecutableExtension("class");
                 domain.addResourceSetListener(triggerListener);
+                tempListeners.add(triggerListener);
             } catch (CoreException e) {
                 Status myStatus = new Status(IStatus.ERROR, "de.cau.cs.kieler.synccharts",
                         "Error attaching registered TriggerListener", e);
                 StatusManager.getManager().handle(myStatus, StatusManager.LOG);
             }
         }
+        // cleanup the cache in order to avoid memory leaks
+        for(TransactionalEditingDomain oldDomain : listeners.keySet()){
+            if(oldDomain.getID() == null){
+                listeners.remove(oldDomain);
+            }
+        }
+        listeners.put(domain, tempListeners);
+    }
+    
+    public static List<ResourceSetListener> getTriggerListeners(TransactionalEditingDomain domain){
+        return listeners.get(domain);
     }
 
     /**

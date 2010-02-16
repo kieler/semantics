@@ -58,6 +58,9 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerDebug">
       </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerRecursiveAdd">
+      </triggerListener>
    </extension>
 
 </plugin>

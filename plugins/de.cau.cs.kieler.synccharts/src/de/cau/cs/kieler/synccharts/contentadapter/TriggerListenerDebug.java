@@ -16,10 +16,10 @@ public class TriggerListenerDebug extends TriggerListener {
         super(filter);
     }
 
+
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        //System.out.println(notification);
+  //      System.out.println("Resource Set Changed: "+notification);     
         return null;
     }
-
 }

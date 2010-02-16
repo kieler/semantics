@@ -54,7 +54,6 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
 
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-//        System.out.println(notification);
         int type = notification.getEventType();
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (type == Notification.ADD || type == Notification.SET) {
@@ -86,13 +85,13 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                     .getRegion_Id(), newRegionId));
         }
         // handle contained States recursively
-        for (State state : region.getInnerStates()) {
-            if (state.getLabel() == null) {
-                cc.append(handleNewState(state));
-            } else {
-                cc.append(handleStateLabel(state, state.getLabel()));
-            }
-        }
+//        for (State state : region.getInnerStates()) {
+//            if (state.getLabel() == null) {
+//                cc.append(handleNewState(state));
+//            } else {
+//                cc.append(handleStateLabel(state, state.getLabel()));
+//            }
+//        }
 
         return cc;
     }
@@ -119,9 +118,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                         .getState_Label(), newLabel));
                 cc.append(handleStateId(state, newId));
                 // handle contained regions recursively
-                for (Region region : state.getRegions()) {
-                    cc.append(handleNewRegion(region));
-                }
+//                for (Region region : state.getRegions()) {
+//                    cc.append(handleNewRegion(region));
+//                }
             }else{
                 cc.append(handleStateLabel(state,state.getLabel()));
             }
@@ -191,9 +190,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         cc.append(handleStateId(state, newId));
 
         // handle contained Regions recursively
-        for (Region region : state.getRegions()) {
-            cc.append(handleNewRegion(region));
-        }
+//        for (Region region : state.getRegions()) {
+//            cc.append(handleNewRegion(region));
+//        }
         return cc;
     }
 

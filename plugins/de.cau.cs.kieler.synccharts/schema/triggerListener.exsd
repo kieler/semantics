@@ -52,10 +52,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  An Extension of TriggerListener which will be informed about model changes.
+                  An Extension of TriggerListener which will be informed about model changes. You can either implement ResourceSetListener or directly Extend TriggerListener. The latter will provide a trigger method that provides the Notifications one-by-one as a pre-commit listener while the former can be configured freely. Only a post-commit listener will be informed about ADD notifications of nested SyncCharts elements.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.transaction.TriggerListener:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.transaction.ResourceSetListener"/>
                </appInfo>
             </annotation>
          </attribute>
