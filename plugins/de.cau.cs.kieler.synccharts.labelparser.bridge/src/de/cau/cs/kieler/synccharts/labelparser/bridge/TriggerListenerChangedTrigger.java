@@ -8,6 +8,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
@@ -21,43 +22,63 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
 /**
- * Listen to changes of the TriggerAndEffects String of an Action and trigger the 
- * Xtext LabelParser to parse the String and create real objects out of it.
+ * Listen to changes of the TriggerAndEffects String of an Action and trigger
+ * the Xtext LabelParser to parse the String and create real objects out of it.
+ * Will also be triggered when a new Transition with an existing label has been
+ * added to a state.
+ * 
  * @author haf
- *
+ * 
  */
 public class TriggerListenerChangedTrigger extends TriggerListener {
 
     public TriggerListenerChangedTrigger() {
-        super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects()));
+        super(NotificationFilter.createFeatureFilter(
+                SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects()).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getState_OutgoingTransitions())));
     }
-    
+
     private ActionLabelProcessorWrapper actionLabelProcessor = new ActionLabelProcessorWrapper();
 
     @Override
-    protected Command trigger(final TransactionalEditingDomain domain, final Notification notification) {
-        System.out.println("Trigger: " +notification);
-        // We know the notifier is an Action. Otherwise it would not have passed the filter.
-        Action action = (Action)notification.getNotifier();
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
+        Action action = null;
+        String newLabel = null;
+        String oldLabel = null;
+        
+        Object feature = notification.getFeature();
+        int type = notification.getEventType();
+        if(type == Notification.SET && feature.equals(SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects())){
+            action = (Action) notification.getNotifier();
+            newLabel = notification.getNewStringValue();
+            oldLabel = notification.getOldStringValue();
+        }else if(type == Notification.ADD && feature.equals(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())){
+            action = (Action) notification.getNewValue();
+            newLabel = action.getTriggersAndEffects();
+            oldLabel = null;
+        }
         CompoundCommand cc = new CompoundCommand();
         /*
          * In order to parse correctly - the new String must not be
          * null - the old String must not be the same as the new String (however, it could be null)
          * - the Action needs a parent container to determine the scope correctly
          */
-        if(notification.getNewStringValue() != null
-                // FIXME: disable redundancy check in order to trigger parsing also when
+        if (newLabel != null
+        // FIXME: disable redundancy check in order to trigger parsing also when
                 // there was no change in the label but in the underlying model
-                // however, then parsing and serializing goes into an endless loop.
-                        && (notification.getOldStringValue() == null || !notification.getNewStringValue()
-                                .equals(notification.getOldStringValue()))
-        && action.eContainer() != null){
+                // however, then parsing and serializing goes into an endless
+                // loop.
+                && (oldLabel == null || newLabel.equals(oldLabel)) && action.eContainer() != null) {
             ModelErrorHandler.clearMarker(action);
             try {
-                cc.append(actionLabelProcessor.getProcessActionCommand(action, ActionLabelProcessorWrapper.PARSE));
+                cc.append(actionLabelProcessor.getProcessActionCommand(action,
+                        ActionLabelProcessorWrapper.PARSE));
                 // serialize the action again so that the user
                 // gets feedback on what the machine thinks the label looks like
-                cc.append(actionLabelProcessor.getProcessActionCommand(action, ActionLabelProcessorWrapper.SERIALIZE));
+                cc.append(actionLabelProcessor.getProcessActionCommand(action,
+                        ActionLabelProcessorWrapper.SERIALIZE));
             } catch (Exception e) {
                 Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "", e);
                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -65,6 +86,5 @@ public class TriggerListenerChangedTrigger extends TriggerListener {
         }
         return cc;
     }
-    
-   
+
 }
