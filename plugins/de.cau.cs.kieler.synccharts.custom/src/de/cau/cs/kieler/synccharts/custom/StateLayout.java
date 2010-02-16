@@ -216,8 +216,8 @@ public class StateLayout extends AbstractHintLayout {
                     if (childFigure instanceof WrappingLabel) {
                         if (wrappingLabelCounter == 1) {
                             regionSeparatorHeight = totalHeight;
-                            if(((WrappingLabel) childFigure).getText().isEmpty()){
-                            	size = new Dimension();
+                            if (((WrappingLabel) childFigure).getText().isEmpty()) {
+                                size = new Dimension();
                             }
                         }
                         wrappingLabelCounter++;
@@ -291,11 +291,7 @@ public class StateLayout extends AbstractHintLayout {
                         newBounds.x = clientArea.x;
                         newBounds.y = clientArea.y + offsetY;
                         newBounds.width = prefWidths[bodyTextIndex];
-                        if (bodyTextLabel.getText().length() == 0) {
-                            newBounds.height = 0;
-                        } else {
-                            newBounds.height = prefHeights[bodyTextIndex];
-                        }
+                        newBounds.height = prefHeights[bodyTextIndex];
                         bodyTextLabel.setBounds(newBounds);
                         offsetY += newBounds.height;
                     }
@@ -466,6 +462,7 @@ public class StateLayout extends AbstractHintLayout {
             } else if (checkComplex(state)) {
                 int minWidth = MIN_WIDTH;
                 int minHeight = 0;
+                int wrappingLabelCounter = 0;
                 for (IFigure childFigure : children) {
                     if (childFigure instanceof ShapeCompartmentFigure) {
                         String compartmentName = getName((ShapeCompartmentFigure) childFigure);
@@ -490,11 +487,15 @@ public class StateLayout extends AbstractHintLayout {
                             }
                         }
                     } else if (childFigure instanceof WrappingLabel) {
-                        Dimension preferredSize = childFigure.getPreferredSize();
-                        if (preferredSize.width >= minWidth) {
-                            minWidth = preferredSize.width;
+                        if (!(wrappingLabelCounter == 1
+                                && ((WrappingLabel) childFigure).getText().isEmpty())) {
+                            Dimension preferredSize = childFigure.getPreferredSize();
+                            if (preferredSize.width >= minWidth) {
+                                minWidth = preferredSize.width;
+                            }
+                            minHeight += preferredSize.height;
+                            wrappingLabelCounter++;
                         }
-                        minHeight += preferredSize.height;
                     }
                 }
                 return new Dimension(minWidth, Math.max(minHeight, MIN_HEIGHT));
