@@ -55,6 +55,9 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
             final Notification notification) {
         // System.out.println("STATE ADD : " + notification);
 
+        // TODO ... consider region signals and vars in conditions !!!
+        
+        
         CompoundCommand cc = new CompoundCommand();
 
         if (notification.getNewValue() instanceof State) {
@@ -65,7 +68,7 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
                     && (state.getInterfaceDeclaration() == null || state.getInterfaceDeclaration()
                             .equals(""))) {
                 cc.append(interfaceDeclProcessor.getCanonialSerializeCommand(state));
-                searchStatesForSignals(cc, state);
+
             }
 
             // look for interface declaration without existing signals
@@ -73,8 +76,13 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
                     .length() > 1)
                     && state.getSignals().isEmpty()) {
                 cc.append(interfaceDeclProcessor.getParseCommand(state));
-                searchStatesForInterfDecl(cc, state);
+
             }
+
+            // look through childstates, as there is just one "ADD STATE" coming
+            // in from listener
+            searchStatesForSignals(cc, state);
+            searchStatesForInterfDecl(cc, state);
 
             // otherwise we hope everything was synced sweet before
         }
