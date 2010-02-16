@@ -105,6 +105,8 @@ public class SchedulePreferencePage extends PreferencePage implements
     private Composite parent;
     /** group for displaying the table. */
     private Group prioritiesGroup;
+    /** the group for displaying the buttons. */
+    private Group buttonGroup;
 
     /** the table where everything is displayed. */
     private Table prioritiesTable;
@@ -168,12 +170,8 @@ public class SchedulePreferencePage extends PreferencePage implements
     @Override
     protected Control createContents(final Composite parentComponent) {
         parent = parentComponent;
-        try {
-            doInitialLayout();
-            layout();
-        } catch (RuntimeException e0) {
-            Tools.showErrorWithStackTrace(e0, parent.getShell());
-        }
+        doInitialLayout();
+        layout();
         return prioritiesGroup;
     }
 
@@ -258,36 +256,43 @@ public class SchedulePreferencePage extends PreferencePage implements
 
         SelectListener listener = new SelectListener();
 
-        editScheduleButton = new Button(prioritiesGroup, SWT.BORDER);
+        buttonGroup = new Group(prioritiesGroup, SWT.NONE);
+
+        editScheduleButton = new Button(buttonGroup, SWT.BORDER);
         editScheduleButton.addSelectionListener(listener);
         editScheduleButton.setText("Edit schedule location...");
         editScheduleButton.setToolTipText(EDIT_SCHEDULE_TOOLTIP);
 
-        removeSchedule = new Button(prioritiesGroup, SWT.BORDER);
+        removeSchedule = new Button(buttonGroup, SWT.BORDER);
         removeSchedule.addSelectionListener(listener);
         removeSchedule.setText("Remove Schedule");
         removeSchedule.setToolTipText(REMOVE_SCHEDULE_TOOLTIP);
 
-        addEditorButton = new Button(prioritiesGroup, SWT.BORDER);
+        addEditorButton = new Button(buttonGroup, SWT.BORDER);
         addEditorButton.setText("Add editor...");
         addEditorButton.addSelectionListener(listener);
         addEditorButton.setToolTipText(ADD_EDITOR_TOOLTIP);
 
-        removeEditorButton = new Button(prioritiesGroup, SWT.BORDER);
+        removeEditorButton = new Button(buttonGroup, SWT.BORDER);
         removeEditorButton.setText("Remove editor...");
         removeEditorButton.addSelectionListener(listener);
         removeEditorButton.setToolTipText(REMOVE_EDITOR_TOOLTIP);
 
-        selectDefaultEditorButton = new Button(prioritiesGroup, SWT.BORDER);
+        selectDefaultEditorButton = new Button(buttonGroup, SWT.BORDER);
         selectDefaultEditorButton.setText("Select default editor...");
         selectDefaultEditorButton.addSelectionListener(listener);
         selectDefaultEditorButton.setToolTipText(SELECT_DEFAULT_EDITOR_TOOLTIP);
 
-        importFilesInWorkspaceButton = new Button(prioritiesGroup, SWT.BORDER);
+        importFilesInWorkspaceButton = new Button(buttonGroup, SWT.BORDER);
         importFilesInWorkspaceButton.setText("Import workspace");
         importFilesInWorkspaceButton.addSelectionListener(listener);
         importFilesInWorkspaceButton.setToolTipText(IMPORT_TOOLTIP);
 
+        buttonGroup.setLayout(new GridLayout(2, false));
+        buttonGroup
+                .setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+        buttonGroup.pack();
         prioritiesGroup.pack();
         checkDefaultEditor();
         checkButtonStatus();
@@ -442,6 +447,7 @@ public class SchedulePreferencePage extends PreferencePage implements
             prioritiesTable.update();
             prioritiesTable.pack();
             prioritiesTable.layout();
+            buttonGroup.pack();
             prioritiesGroup.pack();
             prioritiesGroup.layout();
             parent.layout();
@@ -807,34 +813,30 @@ public class SchedulePreferencePage extends PreferencePage implements
          * {@inheritDoc}
          */
         public void widgetSelected(final SelectionEvent e) {
-            try {
-                if (e.widget == removeSchedule) {
-                    removeSchedule();
-                }
-                if (e.widget == addEditorButton) {
-                    addEditor();
-                }
-                if (e.widget == removeEditorButton) {
-                    removeEditor();
-                }
-                if (e.widget == selectDefaultEditorButton) {
-                    selectDefaultEditor();
-                }
-                if (e.widget == editScheduleButton) {
-                    ScheduleData result = getSelectedSchedule();
-                    if (result != null) {
-                        ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                                parent.getShell(), result);
-                        dialog.enterNewLocation(false);
-                    }
-                }
-                if (e.widget == importFilesInWorkspaceButton) {
-                    ScheduleManager.getInstance().importAllFilesInWorkspace();
-                }
-                layout();
-            } catch (RuntimeException e0) {
-                Tools.showErrorWithStackTrace(e0, getShell());
+            if (e.widget == removeSchedule) {
+                removeSchedule();
             }
+            if (e.widget == addEditorButton) {
+                addEditor();
+            }
+            if (e.widget == removeEditorButton) {
+                removeEditor();
+            }
+            if (e.widget == selectDefaultEditorButton) {
+                selectDefaultEditor();
+            }
+            if (e.widget == editScheduleButton) {
+                ScheduleData result = getSelectedSchedule();
+                if (result != null) {
+                    ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
+                            parent.getShell(), result);
+                    dialog.enterNewLocation(false);
+                }
+            }
+            if (e.widget == importFilesInWorkspaceButton) {
+                ScheduleManager.getInstance().importAllFilesInWorkspace();
+            }
+            layout();
         }
     }
 
