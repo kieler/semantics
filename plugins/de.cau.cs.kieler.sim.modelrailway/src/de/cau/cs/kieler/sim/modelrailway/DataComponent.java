@@ -229,7 +229,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 					}
 				}
 				// points
-				for (int point = 0; point < 27; point++) {
+				for (int point = 0; point < 29; point++) {
 					String keyPoint = "SetPoint_" + point;
 					if (jSONObject.has(keyPoint)) {
 						Object object = jSONObject.get(keyPoint);
@@ -307,7 +307,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		for (c = 0; c < 48; c++) {
 			signals0[c] = simuDataArray[c + offset];
 		}
-		offset += 48;
+		offset += 49;
 		for (c = 0; c < 48; c++) {
 			signals1[c] = simuDataArray[c + offset];
 		}
@@ -326,6 +326,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 						this.endPosition[c]);
 				railwayData.accumulate("track-" + trackID, this.motorModes[c]);
 				railwayData.accumulate("text-" + trackID, this.blockErrors[c]);
+				railwayData.accumulate("signal0-" + trackID, this.signals0[c]);
+				railwayData.accumulate("signal1-" + trackID, this.signals1[c]);
 			}
 			for (int point = 0; point < 29; point++) {
 				railwayData.accumulate("point-" + point, this.points[point]);
