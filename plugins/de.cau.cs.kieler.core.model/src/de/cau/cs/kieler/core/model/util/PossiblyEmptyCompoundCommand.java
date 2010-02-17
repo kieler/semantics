@@ -81,24 +81,25 @@ public class PossiblyEmptyCompoundCommand extends CompoundCommand {
      *         Command or maybe null.
      */
     public Command unwrapAll() {
-        List<Command> tempCmds = new ArrayList<Command>();
-        for (Command cmd : commandList) {
-            if (cmd instanceof PossiblyEmptyCompoundCommand) {
-                commandList.remove(cmd);
-                Command cmd2 = ((PossiblyEmptyCompoundCommand) cmd).unwrapAll();
-                if (cmd2 instanceof PossiblyEmptyCompoundCommand) {
-                    for (Command cmd3 : ((PossiblyEmptyCompoundCommand) cmd2).getCommandList()) {
-                        tempCmds.add(cmd3);
-                    }
-                } else {
-                    tempCmds.add(cmd2);
-                }
-            } else {
-                tempCmds.add(cmd);
-            }
-        }
-        this.commandList = tempCmds;
-        return this.unwrap();
+        return this;
+        // FIXME: this is buggy code
+//    	List<Command> tempCmds = new ArrayList<Command>();
+//        for (Command cmd : commandList) {
+//            if (cmd instanceof PossiblyEmptyCompoundCommand) {
+//                Command cmd2 = ((PossiblyEmptyCompoundCommand) cmd).unwrapAll();
+//                if (cmd2 instanceof PossiblyEmptyCompoundCommand) {
+//                    for (Command cmd3 : ((PossiblyEmptyCompoundCommand) cmd2).getCommandList()) {
+//                        tempCmds.add(cmd3);
+//                    }
+//                } else {
+//                    tempCmds.add(cmd2);
+//                }
+//            } else {
+//                tempCmds.add(cmd);
+//            }
+//        }
+//        this.commandList = tempCmds;
+//        return this.unwrap();
     }
 
 }

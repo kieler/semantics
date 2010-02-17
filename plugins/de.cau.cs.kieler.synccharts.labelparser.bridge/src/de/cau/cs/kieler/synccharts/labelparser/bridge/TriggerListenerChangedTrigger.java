@@ -45,7 +45,6 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
-        System.out.println("Trigger: "+notification);        
         Action action = null;
         String newLabel = null;
         String oldLabel = null;

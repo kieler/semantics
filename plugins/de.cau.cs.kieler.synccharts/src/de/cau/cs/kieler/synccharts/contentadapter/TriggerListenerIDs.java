@@ -113,7 +113,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
             if (state.getLabel() == null) {
                 String newLabel = getUniqueString(state, SyncchartsPackage.eINSTANCE
                         .getState_Label(), "S");
-                String newId = ("_" + newLabel).replaceAll("\\s", "_");
+                String newId = newLabel.replaceAll("\\s", "_");
                 cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE
                         .getState_Label(), newLabel));
                 cc.append(handleStateId(state, newId));

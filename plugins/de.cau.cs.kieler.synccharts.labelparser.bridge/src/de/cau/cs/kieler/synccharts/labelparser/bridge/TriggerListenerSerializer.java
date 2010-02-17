@@ -33,7 +33,6 @@ public class TriggerListenerSerializer extends FireOnceTriggerListener {
 
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        System.out.println("Serialize: "+notification);
         Action action = (Action) notification.getNotifier();
         return actionLabelProcessor.getProcessActionCommand(action,
                 ActionLabelProcessorWrapper.SERIALIZE);

@@ -32,7 +32,6 @@ public class TriggerListenerRenamedSignals extends FireOnceTriggerListener {
     
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        System.out.println("Signal: "+notification);
         ValuedObject signal = (ValuedObject)notification.getNotifier();
         CompoundCommand cc = new CompoundCommand();
         /*
