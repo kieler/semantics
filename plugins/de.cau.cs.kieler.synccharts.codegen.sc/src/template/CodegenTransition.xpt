@@ -35,11 +35,11 @@
 		«IF !(this.sourceState.regions.isEmpty)-»
 			«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
 			«IF this.type != TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
+			PRIO(«getRealThreadPriority(this.targetState)»);
 			«ENDIF-»
 			ABORT;
 			«IF this.type == TransitionType::STRONGABORT-»
-			PRIO(«computeRealThreadPriority(this.targetState)»);
+			PRIO(«getRealThreadPriority(this.targetState)»);
 			«ENDIF-»
 		«ENDIF-»
 		«EXPAND CodegenPriority::priorityReduction FOR this-»

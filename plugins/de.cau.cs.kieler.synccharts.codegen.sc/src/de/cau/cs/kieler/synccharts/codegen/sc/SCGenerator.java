@@ -30,9 +30,24 @@ public class SCGenerator extends AbstractHandler implements IHandler {
 
     private WorkflowGenerator wf = new WorkflowGenerator();
 
+    /**
+     * @param workflow
+     *            the workflow generator to set
+     */
+    public void setWf(final WorkflowGenerator workflow) {
+        this.wf = workflow;
+    }
+
+    /**
+     * @return the workflow generator
+     */
+    public WorkflowGenerator getWf() {
+        return wf;
+    }
+
+    @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        // TODO path for output
-        // wf.invokeWorkflow(false);
+        // TODO Auto-generated method stub
         return null;
     }
 }

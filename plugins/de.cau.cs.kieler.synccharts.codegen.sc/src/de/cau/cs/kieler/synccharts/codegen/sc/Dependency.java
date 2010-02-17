@@ -111,4 +111,17 @@ public class Dependency {
 	public void setDependencyType(final int type) {
 		dependencyType = type;
 	}
+	
+	@Override
+        public boolean equals(final Object other) {
+                if (other instanceof Dependency) {
+                        Dependency dep = (Dependency) other;
+                        boolean boolObject1 = dep.firstStateTupel.equals(firstStateTupel);
+                        boolean boolObject2 = dep.secondStateTupel.equals(secondStateTupel);
+                        boolean boolObject3 = dep.dependencyType.equals(dependencyType);
+                        return (boolObject1 && boolObject2 && boolObject3);
+                } else {
+                        return false;
+                }
+        }
 }

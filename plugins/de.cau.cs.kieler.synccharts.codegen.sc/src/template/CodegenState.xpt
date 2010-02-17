@@ -3,34 +3,13 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-
 «IF (this.regions.size >= 1)-»
-	«IF this.regions.size == 1-»
-«EXPAND generateForkOneRegion FOR this-»
-	«ELSE-»
-«EXPAND generateForkMoreRegions FOR this-»
-	«ENDIF-»
-«EXPAND CodegenRegion::region FOREACH this.regions-»
-
-«getStateNameByFlag(this, 3)»_main:
+	«EXPAND stateWithRegions FOR this-»
 «ELSE-»
 «getStateNameByFlag(this, 3)-»:
 «ENDIF-»
 «IF this.outgoingTransitions.isEmpty-»
-			«EXPAND CodegenMisc::callJSONState-»
-	«IF this.isFinal-»
-			TERM;
-	«ELSE-»
-		«EXPAND onEntry FOR this-»
-			// this should be HALT; but for simulation:
-			PAUSE;
-		«EXPAND onInside FOR this-»
-		«IF !(this.regions.isEmpty)-»
-			GOTO(«getStateNameByFlag(this, 3)»_main);
-		«ELSE-»
-			GOTO(«getStateNameByFlag(this, 3)»);
-		«ENDIF-»
-	«ENDIF-»
+	«EXPAND stateWithoutTransitions FOR this»
 «ELSE-»
 	«EXPAND immediateStrong FOR this-»
 	«EXPAND CodegenMisc::callJSONState-»
@@ -49,32 +28,66 @@
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
           «EXPAND onInside FOR this-»
 		  // PRIO für WEAK setzen
-		  PRIO(«computeWeakThreadPriority(this)»);
+		  PRIO(«getWeakThreadPriority(this)»);
 	«ENDIF-»
 	«EXPAND allWeak FOR this-»
-		  PRIO(«computeRealThreadPriority(this)»);
+		  PRIO(«getRealThreadPriority(this)»);
 	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
-		«IF !(this.regions.isEmpty)-»
-			GOTO(«getStateNameByFlag(this, 3)»_main_intern);
-		«ELSE-»
-			GOTO(«getStateNameByFlag(this, 3)»_intern);
-		«ENDIF-»
+		«EXPAND returnForHierarchical FOR this-»
 	«ENDIF-»
 «ENDIF-»
 «ENDDEFINE»
 
+«DEFINE stateWithRegions FOR State-»
+	«IF this.regions.size == 1-»
+		«EXPAND generateForkOneRegion FOR this-»
+	«ELSE-»
+		«EXPAND generateForkMoreRegions FOR this-»
+	«ENDIF-»
+	«EXPAND CodegenRegion::region FOREACH this.regions-»
+
+«getStateNameByFlag(this, 3)»_main:
+«ENDDEFINE»
+
 «DEFINE generateForkOneRegion FOR State-»
 «getStateNameByFlag(this, 3)»:
-			FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «computeRealThreadPriority(getInitialState(this.regions.first()))»);
+			FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
 			FORKE(«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
 «getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
-			FORK(«getStateNameByFlag(getInitialState(region), 3)-», «computeRealThreadPriority(getInitialState(region))»);
+			FORK(«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
 	«ENDFOREACH»
 			FORKE(«getStateNameByFlag(this, 3)»_main);
+«ENDDEFINE»
+
+«DEFINE returnForHierarchical FOR State-»
+	«IF !(this.regions.isEmpty)-»
+			GOTO(«getStateNameByFlag(this, 3)»_main_intern);
+	«ELSE-»
+			GOTO(«getStateNameByFlag(this, 3)»_intern);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE stateWithoutTransitions FOR State-»
+	«EXPAND CodegenMisc::callJSONState-»
+	«IF this.isFinal-»
+			TERM;
+	«ELSE-»
+		«EXPAND onEntry FOR this-»
+		«IF !(this.regions.isEmpty)-»
+«getStateNameByFlag(this, 3)»_main_intern:
+		«ELSE-»
+«getStateNameByFlag(this, 3)»_intern:
+		«ENDIF-»
+		«EXPAND CodegenMisc::callJSONState-»
+			// this should be HALT; but for simulation PAUSE and GOTO:
+			PAUSE;
+		«EXPAND onInside FOR this-»
+		«EXPAND returnForHierarchical FOR this-»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE immediateStrong FOR State-»

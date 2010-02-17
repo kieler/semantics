@@ -53,6 +53,7 @@ public final class Helper {
     private static ArrayList<Tuple<State, Integer>> realStates = new ArrayList<Tuple<State, Integer>>();
     private static ArrayList<StateSignalDependency> stateSignalDependencies = new ArrayList<StateSignalDependency>();
     private static ArrayList<State> neighborStates = new ArrayList<State>();
+    private static ArrayList<Region> neighborRegions = new ArrayList<Region>();
     private static ArrayList<State> checkedStates = new ArrayList<State>();
     private static ArrayList<Signal> allSignals = new ArrayList<Signal>();
     private static ArrayList<Signal> triggerSignals = new ArrayList<Signal>();
@@ -96,8 +97,8 @@ public final class Helper {
      *            the state you want to get the priority
      * @return priority of the state
      */
-    public static int computeRealThreadPriority(final State state) {
-        return computeThreadPriority(state, false);
+    public static int getRealThreadPriority(final State state) {
+        return getThreadPriority(state, false);
     }
 
     /**
@@ -107,8 +108,8 @@ public final class Helper {
      *            the state you want to get the priority
      * @return priority of the state
      */
-    public static int computeWeakThreadPriority(final State state) {
-        return computeThreadPriority(state, true);
+    public static int getWeakThreadPriority(final State state) {
+        return getThreadPriority(state, true);
     }
 
     /**
@@ -128,6 +129,7 @@ public final class Helper {
      * @param s
      *            error information
      * @throws KiemInitializationException
+     *             for error handling
      */
     public static void error(final String s) throws KiemInitializationException {
         System.out.println("hier");
@@ -234,6 +236,17 @@ public final class Helper {
         return (!getSignalDependentStates(state).isEmpty());
     }
 
+    /**
+     * Computes if the given state has signal dependent states.
+     * 
+     * @param transition
+     *            transition to search for dependencies
+     * @return true if the transition is signal dependent otherwise false
+     */
+    public static boolean isSignalDependent(final Transition transition) {
+        return (!getSignalDependentStates(transition.getSourceState()).isEmpty());
+    }
+
     private static String getStateNameAnyID(final State state) {
         String out = "";
         return out;
@@ -269,6 +282,18 @@ public final class Helper {
         }
         return out;
     }
+    
+    private static ArrayList<Tuple<State, Integer>> getDependencyOwner(final State state) {
+        ArrayList<Tuple<State, Integer>> out = new ArrayList<Tuple<State, Integer>>();
+        for (Dependency dep : stateDependencies) {
+            if (dep.getSecondStateTupel().getO2().equals(state)
+                    && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
+                out.add(dep.getSecondStateTupel());
+            }
+        }
+        return out;
+    }
+
 
     private static void putSignalDependencies(final State state) {
         // get signals of the state
@@ -282,8 +307,10 @@ public final class Helper {
             }
         }
 
+        neighborRegions.clear();
         neighborStates.clear();
-        getNeighbors(state);
+        getNeighborRegions(state);
+        addNeighbors(neighborRegions);
         for (State neighborState : neighborStates) {
             // get signals of neighbor states and their child states
             if (!state.equals(neighborState)) {
@@ -297,28 +324,29 @@ public final class Helper {
                     }
                 }
                 Dependency signalDependency = new Dependency();
+                Dependency cycleBreak = new Dependency();
                 // one direction
                 if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
                     // in dependency list eintragen
-                    Tuple<State, Integer> firstTuple = getStatePropertyTupel(state);
-                    Tuple<State, Integer> secondTuple = getStatePropertyTupel(neighborState);
-                    signalDependency = builtDependency(firstTuple, secondTuple, SIGNAL_FLOW_EDGE);
-                    if (!stateDependencies.contains(signalDependency)) {
+                    int one = getStatePropertyTupel(state).getO2();
+                    int two = getStatePropertyTupel(neighborState).getO2();
+                    if (!(stateDependencies.contains(signalDependency) || stateDependencies
+                            .contains(cycleBreak))) {
                         System.out.println("added " + state.getId() + " -> "
                                 + neighborState.getId());
-                        stateDependencies.add(signalDependency);
+                        putDependencyList(state, one, neighborState, two, SIGNAL_FLOW_EDGE);
                     }
                 }
                 // other direction
                 if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
                     // in dependency list eintragen
-                    Tuple<State, Integer> firstTuple = getStatePropertyTupel(neighborState);
-                    Tuple<State, Integer> secondTuple = getStatePropertyTupel(state);
-                    signalDependency = builtDependency(firstTuple, secondTuple, SIGNAL_FLOW_EDGE);
-                    if (!stateDependencies.contains(signalDependency)) {
-                        System.out.println("added " + neighborState.getId() + " -> "
-                                + state.getId());
-                        stateDependencies.add(signalDependency);
+                    int one = getStatePropertyTupel(neighborState).getO2();
+                    int two = getStatePropertyTupel(state).getO2();
+                    if (!(stateDependencies.contains(signalDependency) || stateDependencies
+                            .contains(cycleBreak))) {
+                        System.out.println("added " + state.getId() + " -> "
+                                + neighborState.getId());
+                        putDependencyList(neighborState, one, state, two, SIGNAL_FLOW_EDGE);
                     }
                 }
             }
@@ -342,7 +370,7 @@ public final class Helper {
         return out;
     }
 
-    private static int computeThreadPriority(final State state, final boolean weak) {
+    private static int getThreadPriority(final State state, final boolean weak) {
         int out = 0;
         Tuple<State, Integer> priorityState;
         if (weak) {
@@ -384,34 +412,28 @@ public final class Helper {
         return out;
     }
 
-    private static void getNeighbors(final State state) {
-        for (Region r : state.getParentRegion().getParentState().getRegions()) {
-            if (!r.equals(state.getParentRegion())) {
-                for (State s : r.getInnerStates()) {
-                    if (!neighborStates.contains(s)) {
-                        neighborStates.add(s);
-                    }
-                    if (!s.getRegions().isEmpty()) {
-                        for (State innerState : getChildStates(s)) {
-                            if (!neighborStates.contains(innerState)) {
-                                neighborStates.add(innerState);
-                            }
-                            getNeighbors(innerState);
-                        }
-                    }
+    private static void getNeighborRegions(final State state) {
+        if (state.getParentRegion().getParentState() != null) {
+            for (Region region : state.getParentRegion().getParentState().getRegions()) {
+                if (!region.equals(state.getParentRegion())) {
+                    neighborRegions.add(region);
                 }
             }
+            getNeighborRegions(state.getParentRegion().getParentState());
         }
     }
 
-    private static ArrayList<State> getChildStates(final State state) {
-        ArrayList<State> out = new ArrayList<State>();
-        for (Region region : state.getRegions()) {
+    private static void addNeighbors(final List<Region> regions) {
+        for (Region region : regions) {
             for (State innerState : region.getInnerStates()) {
-                out.add(innerState);
+                if (!neighborStates.contains(innerState)) {
+                    neighborStates.add(innerState);
+                }
+                if (!innerState.getRegions().isEmpty()) {
+                    addNeighbors(innerState.getRegions());
+                }
             }
         }
-        return out;
     }
 
     private static void printTupelList(final ArrayList<Tuple<State, Integer>> list) {
@@ -668,16 +690,17 @@ public final class Helper {
             edgeType = dependency.getDependencyType();
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
+            dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
             /*
              * TODO for control flow edges too?, but first handle circles
              */
             if (edgeType != CONTROL_FLOW_EDGE) {
-                dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
             }
         }
 
         // Make a topological sort of the dependency graph.
-        LinkedList<Integer> threadListTopologicalSorted = dependencyGraph.topologicalSort();
+        LinkedList<Integer> threadListTopologicalSorted;
+        threadListTopologicalSorted = dependencyGraph.topologicalSort();
         // Remove all pseudo threads and fill the
         // thread list with threads in their right priority order.
         for (int i = 0; i < threadListTopologicalSorted.size(); i++) {

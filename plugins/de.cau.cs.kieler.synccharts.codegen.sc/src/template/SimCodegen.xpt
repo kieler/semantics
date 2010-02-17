@@ -41,7 +41,7 @@ int valSigInt[valSigIntCnt];
 	«EXPAND CodegenMisc::generateReset-»
 int tick(int isInit){
 
-			TICKSTART(isInit, «computeMainTreadPriority(this.innerStates.first())-»);
+			TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
 			//«debug(this.innerStates.first().id)»
 «ENDDEFINE»
 

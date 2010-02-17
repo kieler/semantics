@@ -4,6 +4,7 @@
 
 «DEFINE priorityReduction FOR Transition-»
 	«IF hasDependentState(this.sourceState)-»
-		  PRIO(«getChangePriority(this.sourceState)»);
+		  //PRIO(«getChangePriority(this.sourceState)»);
+		  PRIO(«getRealThreadPriority(this.targetState)»);
 	«ENDIF-»
 «ENDDEFINE»

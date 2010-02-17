@@ -57,7 +57,7 @@ public class WorkflowGenerator {
         }
     }
 
-    public void invokeWorkflow(final boolean sim, String path) {
+    public void invokeWorkflow(final boolean sim, final String path) {
         // EMF reader
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
