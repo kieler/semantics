@@ -26,6 +26,9 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**
+ * Listens to State ADD events, for instance adding an ABRO. Checks all newly
+ * added states and regions for consistency between the interface declaration
+ * and the containing signals/variables.
  * 
  * @author uru
  * @author car
@@ -55,33 +58,16 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
             final Notification notification) {
         // System.out.println("STATE ADD : " + notification);
 
-        // TODO ... consider region signals and vars in conditions !!!
-        
-        
         CompoundCommand cc = new CompoundCommand();
 
         if (notification.getNewValue() instanceof State) {
             State state = (State) notification.getNewValue();
 
-            // look for existing signals without interface declaration
-            if (!state.getSignals().isEmpty()
-                    && (state.getInterfaceDeclaration() == null || state.getInterfaceDeclaration()
-                            .equals(""))) {
-                cc.append(interfaceDeclProcessor.getCanonialSerializeCommand(state));
-
-            }
-
-            // look for interface declaration without existing signals
-            if ((state.getInterfaceDeclaration() != null && state.getInterfaceDeclaration()
-                    .length() > 1)
-                    && state.getSignals().isEmpty()) {
-                cc.append(interfaceDeclProcessor.getParseCommand(state));
-
-            }
-
             // look through childstates, as there is just one "ADD STATE" coming
             // in from listener
+            // look for existing signals without interface declaration
             searchStatesForSignals(cc, state);
+            // look for interface declaration without existing signals
             searchStatesForInterfDecl(cc, state);
 
             // otherwise we hope everything was synced sweet before
@@ -90,26 +76,68 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
         return cc;
     }
 
-    private void searchStatesForSignals(CompoundCommand cc, State parent) {
+    /**
+     * checks if a state exists, that has signals or regions defined, but no
+     * interfaceDeclaration.
+     * 
+     * @param cc
+     *            CompoundCommand
+     * @param parent
+     *            state which should be searched
+     */
+    private void searchStatesForSignals(final CompoundCommand cc, final State parent) {
+
+        // check sub regions
+        boolean found = false;
+        for (Region r : parent.getRegions()) {
+            if (!r.getSignals().isEmpty() || !r.getVariables().isEmpty()) {
+                found = true;
+            }
+        }
+
+        // check state itself
+        if ((!parent.getSignals().isEmpty() || found)
+                && (parent.getInterfaceDeclaration() == null || parent.getInterfaceDeclaration()
+                        .equals(""))) {
+            cc.append(interfaceDeclProcessor.getCanonialSerializeCommand(parent));
+        }
+
+        // call check for every child state
         for (Region r : parent.getRegions()) {
             for (State s : r.getInnerStates()) {
-                if (!s.getSignals().isEmpty()
-                        && (s.getInterfaceDeclaration() == null || s.getInterfaceDeclaration()
-                                .equals(""))) {
-                    cc.append(interfaceDeclProcessor.getCanonialSerializeCommand(s));
-                }
                 searchStatesForSignals(cc, s);
             }
         }
     }
 
-    private void searchStatesForInterfDecl(CompoundCommand cc, State parent) {
+    /**
+     * checks if a state exists, that has a interfaceDeclaration, but no
+     * internal signals or variables.
+     * 
+     * @param cc
+     *            CompoundCommand
+     * @param parent
+     *            state which should be searched
+     */
+    private void searchStatesForInterfDecl(final CompoundCommand cc, final State parent) {
+
+        // check sub regions for signals
+        boolean found = true;
+        for (Region r : parent.getRegions()) {
+            if (!r.getSignals().isEmpty() || !r.getVariables().isEmpty()) {
+                found = false;
+            }
+        }
+
+        // check state itself
+        if ((parent.getInterfaceDeclaration() != null && parent.getInterfaceDeclaration().length() > 1)
+                && (parent.getSignals().isEmpty() && found)) {
+            cc.append(interfaceDeclProcessor.getParseCommand(parent));
+        }
+
+        // call check for every child state
         for (Region r : parent.getRegions()) {
             for (State s : r.getInnerStates()) {
-                if ((s.getInterfaceDeclaration() != null && s.getInterfaceDeclaration().length() > 1)
-                        && s.getSignals().isEmpty()) {
-                    cc.append(interfaceDeclProcessor.getParseCommand(s));
-                }
                 searchStatesForInterfDecl(cc, s);
             }
         }

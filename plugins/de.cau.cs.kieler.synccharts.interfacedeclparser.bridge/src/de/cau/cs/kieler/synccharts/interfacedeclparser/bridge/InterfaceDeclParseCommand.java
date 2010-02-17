@@ -61,6 +61,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     private String interfaceDeclaration;
     private Injector injector;
     private State rootState;
+    private String oldInterfaceDeclaration;
 
     /**
      * 
@@ -83,6 +84,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     @Override
     public void execute() {
         try {
+            oldInterfaceDeclaration = interfaceDeclaration;
             // prepare and then start parsing
             prepareInterfaceDeclParse();
             parseInterfaceDecl();
@@ -101,11 +103,14 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
         execute();
     }
 
-    @Override 
-    public void undo() { 
-      // this is done by the serialize command
-    } 
-    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void undo() {
+        rootState.setInterfaceDeclaration(oldInterfaceDeclaration);
+    }
+
     /**
      * {@inheritDoc}
      */

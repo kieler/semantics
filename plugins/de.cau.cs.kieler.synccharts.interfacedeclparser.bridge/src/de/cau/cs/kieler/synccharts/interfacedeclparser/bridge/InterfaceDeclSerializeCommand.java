@@ -100,9 +100,10 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
     // serialization logic
     private InterfaceDeclSerializerLogic serializeLogic;
-    
+
     // support for undo
     private String oldInterfaceDecl;
+    private XtextResource oldResource;
 
     /**
      * Constructor being used if the name of a signal has changed or a new
@@ -134,6 +135,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             this.rootRegion = (Region) changedSignalOrVariable.eContainer();
         }
         this.resource = theResource;
+        this.oldResource = theResource;
         this.oldName = theOldName;
         this.occurredChange = theOccurredChange;
         this.isExecutable = true;
@@ -147,10 +149,14 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
      *            state whose interface declaration should be serialized
      * @param theInjector
      *            injector
+     * @param theResource
+     *            old resource, only needed for undo
      */
-    public InterfaceDeclSerializeCommand(final State theRootState, final Injector theInjector) {
+    public InterfaceDeclSerializeCommand(final State theRootState, final Injector theInjector,
+            final XtextResource theResource) {
         this.injector = theInjector;
         this.rootState = theRootState;
+        this.oldResource = theResource;
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
@@ -164,6 +170,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     @Override
     public void execute() {
         try {
+
             prepareSerialize();
             serialize();
         } catch (Exception e) {
@@ -180,14 +187,19 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     public void redo() {
         execute();
     }
-    
-    @Override 
-    public void undo() { 
-        if (rootState != null) {
-            ((State) rootState).setInterfaceDeclaration(oldInterfaceDecl);
+
+    @Override
+    public void undo() {
+        resource = oldResource;
+        try {
+            serialize();
+        } catch (Exception e) {
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Error trying to undo serialization: ", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
-    } 
-    
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -235,8 +247,8 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             // outputStream.toString());
 
             oldInterfaceDecl = ((State) rootState).getInterfaceDeclaration();
-            
-            // set the interface declaration string            
+
+            // set the interface declaration string
             String result = outputStream.toString();
             ((State) rootState).setInterfaceDeclaration(result);
         } catch (IOException e) {

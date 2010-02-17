@@ -181,9 +181,11 @@ public class InterfaceDeclProcessorWrapper {
                         injector);
                 cmd.processInterfaceDeclParse();
             } else if (parse == SERIALIZE) {
+                XtextResource res = new InterfaceDeclParseCommand((State) parent, injector)
+                        .getParsedResource();
                 // this is a canonical serialization, it DOENST keep formatting
                 InterfaceDeclSerializeCommand cmd = new InterfaceDeclSerializeCommand(
-                        (State) parent, injector);
+                        (State) parent, injector, res);
                 cmd.processCanonicalSerialization();
             }
         } else {
@@ -203,7 +205,9 @@ public class InterfaceDeclProcessorWrapper {
 
         public CanonialSerializationCommand(final State theState) {
             this.state = theState;
-            this.cmd = new InterfaceDeclSerializeCommand(state, injector);
+            XtextResource res = new InterfaceDeclParseCommand(theState, injector)
+                    .getParsedResource();
+            this.cmd = new InterfaceDeclSerializeCommand(state, injector, res);
             this.isExecutable = true;
         }
 
