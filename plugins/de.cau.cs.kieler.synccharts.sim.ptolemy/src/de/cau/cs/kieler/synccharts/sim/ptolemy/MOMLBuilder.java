@@ -33,10 +33,8 @@ public class MOMLBuilder {
 		
 	        out.flush();
 	        out.close();
-	        System.out.println("done");
 	        return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

@@ -291,7 +291,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         try {
             long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
                     .getTimeStamp();
-            System.out.println("TIMESTAMP NEW " + newModelTimeStamp);
+            //System.out.println("TIMESTAMP NEW " + newModelTimeStamp);
 
             // check the dirty state of the editor containing the simulated model
             if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty())
