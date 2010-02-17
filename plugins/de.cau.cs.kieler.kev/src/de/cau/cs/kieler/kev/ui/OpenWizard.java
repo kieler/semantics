@@ -58,7 +58,6 @@ import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
  * 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
  */
 public class OpenWizard extends Wizard {
 
@@ -74,22 +73,28 @@ public class OpenWizard extends Wizard {
     /** Text field for the file url. */
     private Text resourceNameField;
 
-    /** The load at startup checkbox */
+    /** The load at startup checkbox. */
     private Button checkBox;
 
-    /** The actual bundleentry path to the "examples" folder */
+    /** The actual bundleentry path to the "examples" folder. */
     private String examplePath;
 
     /**
-     * Parent dialog to have access to window controls, e.g. closing the dialog (by double click in
-     * List for example
+     * Parent dialog to have access to window controls, e.g. closing the dialog (by double click) in
+     * list for example.
      */
-    WizardDialog dialog;
+    private WizardDialog dialog;
 
+    /** Name of extension point for images. */
     public static final String IMAGE_EXTENSION_POINT_ID = "de.cau.cs.kieler.kev.image";
+    /** Entry in preference store for saving the default image. */
     public static final String DEFAULT_IMAGE = "image";
+    /** Entry in preference store for saving the load at startup flag. */
     public static final String LOAD_STARTUP = "load_startup";
 
+    /**
+     * Opens a mapping file and its corresponding SVG image.
+     */
     public OpenWizard() {
         page = new OpenImageWizardPage("Open Image");
         this.addPage(page);
@@ -112,7 +117,8 @@ public class OpenWizard extends Wizard {
                     .showView("de.cau.cs.kieler.sim.kiem.view");
         } catch (PartInitException e) {
             Activator
-                    .reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) can't be initialized!");
+                    .reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) "
+                    + "can't be initialized!");
         }
         if (resourceNameField.getText().contains("bundleentry://")) {
             // Load the SVG file from bundle resources specified in the mapping file
@@ -138,7 +144,9 @@ public class OpenWizard extends Wizard {
             this.dialog.close();
         }
     }
-
+    /** The parent dialog.
+     *   
+     */
     public void setParentDialog(final WizardDialog parentDialog) {
         this.dialog = parentDialog;
     }
@@ -337,17 +345,17 @@ public class OpenWizard extends Wizard {
             }
         }
 
-        public void widgetDefaultSelected(final SelectionEvent e) {/* nothing */
+        public void widgetDefaultSelected(final SelectionEvent e) { /* nothing */
         }
 
         public void mouseDoubleClick(final MouseEvent e) {
             finishAndDispose();
         }
 
-        public void mouseDown(final MouseEvent e) {/* nothing */
+        public void mouseDown(final MouseEvent e) { /* nothing */
         }
 
-        public void mouseUp(final MouseEvent e) {/* nothing */
+        public void mouseUp(final MouseEvent e) { /* nothing */
         }
 
     }

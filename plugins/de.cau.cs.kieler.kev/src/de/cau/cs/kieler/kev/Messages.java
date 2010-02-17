@@ -19,7 +19,7 @@ import org.eclipse.osgi.util.NLS;
  * A data storage class for messages used by the KEV-plugin. 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow 
  */
 public final class Messages extends NLS {
     

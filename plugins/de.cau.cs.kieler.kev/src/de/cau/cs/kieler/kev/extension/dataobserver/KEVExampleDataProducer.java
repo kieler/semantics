@@ -23,25 +23,35 @@ import org.json.JSONObject;
  * A simple Example the Watertank.svg.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public class KEVExampleDataProducer extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    private int counter;
+    private int counter = 0;
 
+    
+    /**
+     * Producer for Example data for KEV.
+     */
     public KEVExampleDataProducer() {
         // TODO Auto-generated method stu
     }
 
+    /**
+     * Step method, where JSON-Values are created.
+     * @param JSONobject the current JSON Object, which will be updated
+     * @return jsonObject the object with the current values
+     * @throws KiemExecutionException 
+     */
     public JSONObject step(final JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
         JSONObject simulationData = new JSONObject();
 
         try {
-            simulationData.put("water", Integer.toString(counter));
-            simulationData.put("water2", Integer.toString(counter + 50));
+            simulationData.put("Counter_1", Integer.toString(counter));
+            simulationData.put("Counter_2", Integer.toString(counter + 50));
 
             JSONObject jo = new JSONObject();
             jo.append("prensent", "true");

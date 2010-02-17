@@ -26,7 +26,7 @@ import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
  * instead of the standard DocumentLoader.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public final class EclipseJSVGCanvas extends JSVGCanvas {
 

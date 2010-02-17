@@ -34,10 +34,19 @@ import de.cau.cs.kieler.kev.ui.OpenWizard;
  * The KEV-view which holds the EclipseJSVGCanvas for SVG document manipulation.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public class KevView extends ViewPart {
 
+    /** The value that identifies the OpenWizard button. */
+    public static final int BUTTON_OPEN_WIZARD = 1;
+
+    /** The value that identifies the Refresh button. */
+    public static final int BUTTON_REFRESH = 2;
+    
+    /** The value that identifies the both buttons. */
+    public static final int BUTTON_BOTH = 3;
+    
     private Action openWizardAction = null;
     private Action refreshAction = null;
 
@@ -80,8 +89,7 @@ public class KevView extends ViewPart {
         // This UI-Thread was started after the Kev-View was successfully created!
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                // TODO Auto-generated method stub
-                // load default image if available
+                // Load default image if available
                 IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
                 String defaultFile = preferenceStore.getString(OpenWizard.DEFAULT_IMAGE);
                 boolean load = preferenceStore.getBoolean(OpenWizard.LOAD_STARTUP);
@@ -107,13 +115,11 @@ public class KevView extends ViewPart {
 
     private void fillLocalPullDown(final IMenuManager manager) {
         manager.add(openWizardAction);
-        // manager.add(openAction);
         manager.add(refreshAction);
     }
 
     private void fillLocalToolBar(final IToolBarManager manager) {
         manager.add(openWizardAction);
-        // manager.add(openAction);
         manager.add(refreshAction);
     }
 
@@ -131,10 +137,6 @@ public class KevView extends ViewPart {
         openWizardAction = new OpenWizardAction();
         // If the execution manager is running, disable the openWizardAction otherwise enable it
         openWizardAction.setEnabled(!Activator.isExecutionManagerRunning());
-        // openAction = new OpenFileAction();
-
-        // printAction = new PrintAction(svg);
-        // printAction.setImageDescriptor(BatikUIPlugin.getDefault().getImageDescriptor(BatikUIPlugin.IMG_PRINT));
     }
 
     /**
@@ -145,13 +147,13 @@ public class KevView extends ViewPart {
      */
     public void enableButton(final int id) {
         switch (id) {
-        case 1:
+        case BUTTON_OPEN_WIZARD:
             openWizardAction.setEnabled(true);
             break;
-        case 2:
+        case BUTTON_REFRESH:
             refreshAction.setEnabled(true);
             break;
-        case 3:
+        case BUTTON_BOTH:
             openWizardAction.setEnabled(true);
             refreshAction.setEnabled(true);
             break;
@@ -166,13 +168,13 @@ public class KevView extends ViewPart {
      */
     public void disableButton(final int id) {
         switch (id) {
-        case 1:
+        case BUTTON_OPEN_WIZARD:
             openWizardAction.setEnabled(false);
             break;
-        case 2:
+        case BUTTON_REFRESH:
             refreshAction.setEnabled(false);
             break;
-        case 3:
+        case BUTTON_BOTH:
             openWizardAction.setEnabled(false);
             refreshAction.setEnabled(false);
             break;

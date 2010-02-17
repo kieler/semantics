@@ -98,8 +98,7 @@ import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
 /**
  * The adapted KEV-Composite class.
  * 
- * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de, Hauke Fuhrmann (haf)
  */
 
 public class KevComposite extends Composite implements ISelectionListener {
@@ -446,6 +445,11 @@ public class KevComposite extends Composite implements ISelectionListener {
         }
     }
 
+    /**
+     * Returns the current JSVGCanvas of the KEV-View.
+     * 
+     * @return svgCanvas the current JSVGCanvas
+     */
     public JSVGCanvas getSVGCanvas() {
         return svgCanvas;
     }
@@ -459,10 +463,10 @@ public class KevComposite extends Composite implements ISelectionListener {
 
         if (EclipseJSVGCanvas.getInstance() != null) {
             IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IProject project = root.getProject("KEV_SVG_FILEDUMP");// Project name
-            IFolder imageFolder = project.getFolder("images");// Folder name
+            IProject project = root.getProject("KEV_SVG_FILEDUMP"); // Project name
+            IFolder imageFolder = project.getFolder("images"); // Folder name
             try {
-                if (!project.exists()) {// Create project if it doesn't exists
+                if (!project.exists()) { // Create project if it doesn't exists
                     project.create(null);
                 }
                 project.open(null);
@@ -482,7 +486,7 @@ public class KevComposite extends Composite implements ISelectionListener {
                 Calendar now = Calendar.getInstance();
 
                 String fileName;
-                fileName = imageFolder.getLocation().toString();// Get fullpath to "images" folder
+                fileName = imageFolder.getLocation().toString(); // Get fullpath to "images" folder
                 fileName += "/SVGFileDump[";
                 fileName += now.get(Calendar.YEAR) + "-";
                 fileName += now.get(Calendar.MONTH) + 1 < 10 ? "0" + (now.get(Calendar.MONTH) + 1)
@@ -500,8 +504,8 @@ public class KevComposite extends Composite implements ISelectionListener {
                 t.transcode(input, output);
                 writer.flush();
                 writer.close();
-                imageFolder.refreshLocal(IFolder.DEPTH_ONE, null);// Refresh the "images" folder to
-                                                                  // show the saved file
+                imageFolder.refreshLocal(IFolder.DEPTH_ONE, null); // Refresh the "images" folder to
+                // show the saved file
             } catch (TranscoderException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -514,13 +518,6 @@ public class KevComposite extends Composite implements ISelectionListener {
             }
         }
     }
-
-    // public URI getSvgFile() throws URISyntaxException {
-    // if (svgURI == null) {
-    // throw new URISyntaxException("null", "No URI available: " + svgURI);
-    // }
-    // return svgURI;
-    // }
 
     //
     // UserAgent
@@ -846,5 +843,4 @@ public class KevComposite extends Composite implements ISelectionListener {
                 throws SecurityException {
         }
     }
-
 }

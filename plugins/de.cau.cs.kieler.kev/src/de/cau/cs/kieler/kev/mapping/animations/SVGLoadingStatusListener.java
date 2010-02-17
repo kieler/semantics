@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kev.Activator;
  * : document loading cancelled 2 : document loading failed 3 : document loading started
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public class SVGLoadingStatusListener implements SVGDocumentLoaderListener {
 

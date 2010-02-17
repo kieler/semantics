@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import org.apache.batik.bridge.UpdateManager;
@@ -49,14 +48,14 @@ import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
  * This class connects the mapping-file with the corresponding SVG-file.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public class MapAnimations {
 
     /**
      * SVGFile is an instance of the created model .mapping file.
      */
-    private SVGFile mappingFile;
+    private SVGFile currentMappingFile;
 
     /**
      * The single instance of the EclipseJSVGCanvas.
@@ -99,11 +98,13 @@ public class MapAnimations {
         if (isResource) {
             // mappingFile not needed anymore, because we now deal with a HashMap
             // mappingFile = loadFromResource(filename);
-            mappingFile = loadFromResource(filename);
+            currentMappingFile = loadFromResource(filename);
         } else {
             // mappingFile = loadFromFile(filename);
-            mappingFile = loadFromFile(filename);
+            currentMappingFile = loadFromFile(filename);
         }
+        // Initialize the hashmap with the values of the actual mapping file.
+        createHashMap(currentMappingFile);
     }
 
     /**
@@ -130,7 +131,7 @@ public class MapAnimations {
      * @return mappingFile the current mapping file
      */
     public final SVGFile getMappingFile() {
-        return mappingFile;
+        return currentMappingFile;
     }
 
     /**
@@ -171,12 +172,11 @@ public class MapAnimations {
                 Activator
                         .reportInfoMessage("The svg file was't specified in the current mapping file ("
                                 + filename + ")!");
-                EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
+                EclipseJSVGCanvas.getInstance().setSVGDocument(null); // Because we only want a valid
                 // mapping file for animation
             }
 
         } catch (WrappedException e) {
-            // TODO Auto-generated catch block
             Activator.reportInfoMessage("File: " + filename + " has a wrong format!");
         }
         return svgFile;
@@ -220,7 +220,7 @@ public class MapAnimations {
                         || svgFile.getFilename().contains(":/")) {
                     // System.out.println(svgFile.getFilename());
                     loadSpecifiedSVGFile(svgFile.getFilename());
-                } else {// Filename is relative
+                } else { // Filename is relative
                     String tempPath;
                     tempPath = filename.substring(0, filename.lastIndexOf("/") + 1)
                             + svgFile.getFilename();
@@ -231,18 +231,17 @@ public class MapAnimations {
                 Activator
                         .reportInfoMessage("The svg file was't specified in the current mapping file ("
                                 + filename + ")!");
-                EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
+                EclipseJSVGCanvas.getInstance().setSVGDocument(null); // Because we only want a valid
                 // mapping file for animation
             }
         } catch (WrappedException e) {
-            // TODO Auto-generated catch block
             Activator.reportInfoMessage("File: " + filename + " has a wrong format!");
         }
         return svgFile;
     }
 
     /**
-     * Loads the SVG-graphic which is specified in the current mapping file
+     * Loads the SVG-graphic which is specified in the current mapping file.
      * 
      * @param filename
      *            name of the SVG-graphic to load
@@ -274,7 +273,6 @@ public class MapAnimations {
                 Activator.getKevView().getComposite().setSVGFile(
                         new URL(URI.createFileURI(filename).toString()));
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 Activator.reportInfoMessage("File not found or file has wrong format: " + filename);
             }
         }
@@ -300,9 +298,10 @@ public class MapAnimations {
 
     /**
      * This Method creates a HashMap of SVGElements of the actual Mapping file.
+     * @param mappingFile current mapping file for which the hashmap should be created
      * 
      */
-    private synchronized void createHashMap(final SVGFile mappingFile) {
+    private void createHashMap(final SVGFile mappingFile) {
         // Create a new clonemap with all cloned elements (if exists)
         HashMap<String, ArrayList<String>> cloneMap = new HashMap<String, ArrayList<String>>();
 
@@ -318,8 +317,7 @@ public class MapAnimations {
                 animationIterator.next().initialize();
             }
             // If an Element already exists in the hashmap, we add a clone of this element to the
-            // hashmap
-            // and add the new clone name to the clone list
+            // hashmap and add the new clone name to the clone list
             if (svgElementsHashMap.containsKey(svgElement.getId())) {
                 ArrayList<String> clones = cloneMap.get(svgElement.getId());
                 String cloneName;
@@ -389,7 +387,8 @@ public class MapAnimations {
             }
         } else {
             Activator
-                    .reportErrorMessage("Hashmap is not initialized! -> Mapping-File may have a wrong format");
+                    .reportErrorMessage("Hashmap is not initialized! -> " 
+                            + "Mapping-File may have a wrong format");
         }
     }
 
@@ -401,7 +400,8 @@ public class MapAnimations {
      * @param input
      *            String to parse
      * @param isInputAttribute
-     *            true if
+     *            true means save all input values of a range. 
+     *            Example: true = 1..5 => 1,2,3,4,5 | false = 1..5 => 1,5
      * 
      */
     public ArrayList<String> attributeParser(final String input, final boolean isInputAttribute) {
@@ -418,7 +418,7 @@ public class MapAnimations {
                 Scanner inputScanner = new Scanner(input).useDelimiter("\\s*[,]\\s*");
                 while (inputScanner.hasNext()) {
                     // This means a range plus a distance between [number1]:[number2]
-                    if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {// Test if the
+                    if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) { // Test if the
                         // next input
                         // matches
                         // "[-]NUMBER..[.][-]NUMBER"
@@ -436,13 +436,13 @@ public class MapAnimations {
                                 for (int j = leftint; j <= rightint; j++) {
                                     if (inputSet.add(Integer.toString(j))) {
                                         inputArray.add(Integer.toString(j));
-                                    }// Else, the input is already in the Array
+                                    } // Else, the input is already in the Array
                                 }
-                            } else {// leftint is greater then rightint
+                            } else { // leftint is greater then rightint
                                 for (int j = leftint; j >= rightint; j--) {
                                     if (inputSet.add(Integer.toString(j))) {
                                         inputArray.add(Integer.toString(j));
-                                    }// Else, the input is already in the Array
+                                    } // Else, the input is already in the Array
                                 }
                             }
                         } else {
@@ -464,7 +464,8 @@ public class MapAnimations {
                             }
                         } else {
                             // Error - wrong Syntax, was not accepted!
-                            // System.out.println("Falsche Syntax: "+token);
+                            Activator.reportErrorMessage("Input has wrong syntax: " + token);
+
                         }
                     }
                 }
@@ -474,31 +475,18 @@ public class MapAnimations {
                 if (isInputAttribute) {
                     if (inputSet.add(input)) {
                         inputArray.add(input);
-                    }// Else, the input is already in the Array
+                    } // Else, the input is already in the Array
                 } else {
                     inputArray.add(input);
                 }
             } else {
                 // Error - wrong Syntax, was not accepted!
                 // System.out.println("Falsche Syntax: "+input);
+                Activator.reportErrorMessage("Input has wrong syntax: " + input);
             }
-            // for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
-            // System.out.println();
         }
         return inputArray;
     }
-
-    /**
-     * The short version for the normal case that all values are excepted.
-     * 
-     * @param input
-     * @param output
-     * @return
-     */
-    // public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String
-    // output) {
-    // return mapInputToOutput(input, output, false);
-    // }
 
     /**
      * THIS Method is really important and should be used for all animations! This method maps the
@@ -506,20 +494,21 @@ public class MapAnimations {
      * whereby output can be any value of the special animation to which the input values should be
      * mapped.
      * 
-     * Example: input="[1..10,20..30];[40,45,50];900"
+     * Example: input="1..10,20..30,40,45,50,900"
      * output=x_range="[200..215,220,225,230,235,240];[1..3];200" PROBLEME MIT DEM PARSEN DES
      * OUTPUTS HIER NOCHMAL SCHAUEN! UPDATE: This method does no parsing at all! it just maps an
      * input arraylist to an outputarraylist
      * 
+     * @param inputArray
+     *            the array with all valid input values
+     * @param outputArray
+     *            the array with the animation specific values to which the input values should be
+     *            mapped
+     * @return hashMap a hashmap with input values as the key and output values as the value
      */
     public HashMap<String, String> mapInputToOutput(final ArrayList<String> inputArray,
             final ArrayList<String> outputArray) {
         HashMap<String, String> hashMap = new HashMap<String, String>();
-        // inputArray = generateArrayListFromInput(inTokenizer.nextToken(), false); // The input
-        // // should
-        // // always allow
-        // // all values
-        // outputArray = generateArrayListFromInput(outTokenizer.nextToken(), outputIntegerOnly);
 
         // Do some size calculation
         // Only go on, if we have two arrays which are greater then zero
@@ -530,35 +519,6 @@ public class MapAnimations {
             }
         }
         return hashMap;
-    }
-
-    /**
-     * NOT USED ANYMORE
-     * 
-     * The values of the special animation is a single value for each input value separated by ";".
-     * 
-     * 
-     * @param inputValue
-     *            input string
-     * @return stingarray
-     */
-    public String[] parseValueString(final String inputValue) {
-        // First we need to seperate each value pairs (symbolized by ";")
-        // First of all delete all whitespace of inputValue
-        ArrayList<String> arrayList = new ArrayList<String>();
-        StringTokenizer tokenizer = new StringTokenizer(inputValue.replaceAll(" ", ""), ";");
-        while (tokenizer.hasMoreTokens()) {
-            arrayList.add(tokenizer.nextToken());
-        }
-        // Now the arrayList contains all validValues for each input, separated by ";"
-        return arrayList.toArray(new String[arrayList.size()]);
-    }
-
-    /**
-     * NOT USED ANYMORE Just updates the actual SVGDocument.
-     */
-    private void updateSVGGraphik() {
-        svgCanvas.setSVGDocument(svgCanvas.getSVGDocument());
     }
 
     // ----------------------------------------------------------------------------------------------

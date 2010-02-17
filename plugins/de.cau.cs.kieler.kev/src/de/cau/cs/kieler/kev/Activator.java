@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kev.views.KevView;
  * The activator class controls the plug-in life cycle.
  *  
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- *  
+ * @kieler.rating 2010-02-17 proposed yellow
  */
 public class Activator extends AbstractUIPlugin {
 
