@@ -62,7 +62,7 @@
     	</transformation>
        <transformation
              icon="icons/upgrade.gif"
-             keyboardShortcut="M1+R U"
+             keyboardShortcut="M1+R R"
              name="Add Region"
              transformation="upgradeState"
              transformationId="de.cau.cs.kieler.ksbase.upgradeState">
