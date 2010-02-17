@@ -284,7 +284,6 @@ public class AddDataComponentDialog extends Dialog {
      * the list. The selected list can be obtained by calling {@link #getSelectedComponents()}.
      */
     private void updateSelectedList() {
-        System.out.println("updateSelectedList()");
         selectedList = new LinkedList<AbstractDataComponent>();
         TableItem[] selection = table.getSelection();
         for (int c = 0; c < selection.length; c++) {
