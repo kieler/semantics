@@ -481,7 +481,10 @@ public class DataTableView extends ViewPart {
                         .getFirstElement()).isSignal();
                 for (int c = 0; c < selection.size(); c++) {
                     TableData tableData = (TableData) selection.toArray()[c];
+                    boolean isSignal = tableData.isSignal();
+                    boolean isModified = tableData.isModified();
                     tableData.setSignal(signalValue);
+                    tableData.setModified(isModified || isSignal != signalValue);
                 }
                 // viewer.setSelection(null);
                 refreshViewer();
