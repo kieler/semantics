@@ -172,7 +172,7 @@ public class MapAnimations {
                         .reportInfoMessage("The svg file was't specified in the current mapping file ("
                                 + filename + ")!");
                 EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
-                                                                     // mapping file for animation
+                // mapping file for animation
             }
 
         } catch (WrappedException e) {
@@ -216,14 +216,15 @@ public class MapAnimations {
 
             if (!svgFile.getFilename().isEmpty()) {
                 // Filename is absolute
-                if (svgFile.getFilename().contains("file:/") || svgFile.getFilename().contains(":/")) {
+                if (svgFile.getFilename().contains("file:/")
+                        || svgFile.getFilename().contains(":/")) {
                     // System.out.println(svgFile.getFilename());
                     loadSpecifiedSVGFile(svgFile.getFilename());
                 } else {// Filename is relative
                     String tempPath;
                     tempPath = filename.substring(0, filename.lastIndexOf("/") + 1)
                             + svgFile.getFilename();
-//                    System.out.println(tempPath);
+                    // System.out.println(tempPath);
                     loadSpecifiedSVGFile(tempPath);
                 }
             } else {
@@ -231,7 +232,7 @@ public class MapAnimations {
                         .reportInfoMessage("The svg file was't specified in the current mapping file ("
                                 + filename + ")!");
                 EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
-                                                                     // mapping file for animation
+                // mapping file for animation
             }
         } catch (WrappedException e) {
             // TODO Auto-generated catch block
@@ -269,10 +270,11 @@ public class MapAnimations {
             try {
                 System.out.println(URI.createFileURI(filename).toString());
                 // KevComposite.getInstance().setSVGFile(url);
-                //svgCanvas.loadSVGDocument(URI.createFileURI(filename).toString());
-                Activator.getKevView().getComposite().setSVGFile(new URL(URI.createFileURI(filename).toString()));
-           } catch (Exception e) {
-                //TODO Auto-generated catch block
+                // svgCanvas.loadSVGDocument(URI.createFileURI(filename).toString());
+                Activator.getKevView().getComposite().setSVGFile(
+                        new URL(URI.createFileURI(filename).toString()));
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
                 Activator.reportInfoMessage("File not found or file has wrong format: " + filename);
             }
         }
@@ -353,33 +355,33 @@ public class MapAnimations {
                 // System.out.println(flatJSONObject.toString());
                 // For each svg element id we need to check if all any animation can be applied.
                 Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
-                while (svgElementIDIterator.hasNext()) {
-                    String svgElementID = svgElementIDIterator.next();
-                    // System.out.println("SVG: " + svgElementID);
-                    // Get all animations for each SVG element
-                    Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID)
-                            .iterator();
 
-                    // Get the Batik UpdateManager for scheduling.
-                    UpdateManager updateManager = EclipseJSVGCanvas.getInstance()
-                            .getUpdateManager();
+                // Get the Batik UpdateManager for scheduling.
+                UpdateManager updateManager = EclipseJSVGCanvas.getInstance().getUpdateManager();
 
-                    if (updateManager != null) {
-                        RunnableQueue runnableQueue = updateManager.getUpdateRunnableQueue();
-                        // We need to stop the RunnableQueue for SVGDocument manipulation
-                        runnableQueue.suspendExecution(true);//true = wait till suspended, false =
-                                                             //go on
+                if (updateManager != null) {
+                    RunnableQueue runnableQueue = updateManager.getUpdateRunnableQueue();
+                    // We need to stop the RunnableQueue for SVGDocument manipulation
+                    runnableQueue.suspendExecution(true);
+                    // true = wait till suspended, false = go on
+
+                    while (svgElementIDIterator.hasNext()) {
+                        String svgElementID = svgElementIDIterator.next();
+                        // System.out.println("SVG: " + svgElementID);
+                        // Get all animations for each SVG element
+                        Iterator<Animation> animationIterator = svgElementsHashMap
+                                .get(svgElementID).iterator();
 
                         // We need to apply all animations for each SVG element, before updating the
                         // EclipseJSVGCanvas
                         while (animationIterator.hasNext()) {
                             animationIterator.next().apply(flatJSONObject, svgElementID);
                         }
-                        // Schedule a new Batik thread for redrawing the canvas and resume
-                        // scheduling afterwards.
-                        runnableQueue.invokeLater(new RunnableAnimation());
-                        runnableQueue.resumeExecution();
                     }
+                    // Schedule a new Batik thread for redrawing the canvas and resume
+                    // scheduling afterwards.
+                    runnableQueue.invokeLater(new RunnableAnimation());
+                    runnableQueue.resumeExecution();
 
                 }
             } catch (JSONException e) {
