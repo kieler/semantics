@@ -19,7 +19,6 @@ import org.apache.batik.swing.svg.SVGDocumentLoader;
 import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.ParsedURL;
-
 import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
 
 /**
@@ -35,12 +34,12 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
      * Generated serialVersionID.
      */
     private static final long serialVersionUID = -3324506235308202723L;
-    
+
     /**
      * The single instace of the EclipseJSVGCanvas.
      */
     private static EclipseJSVGCanvas INSTANCE = null;
-    
+
     /**
      * This one is a single loadingStatusListener so we can keep an eye on the svg document loading
      * status.
@@ -62,9 +61,13 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
 
     /**
      * This method creates a single Instance of the EclipseJSVGCanvas.
-     * @param userAgent see the EclipseJSVGCanvas constructor
-     * @param b1 see the EclipseJSVGCanvas constructor
-     * @param b2 see the EclipseJSVGCanvas constructor
+     * 
+     * @param userAgent
+     *            see the EclipseJSVGCanvas constructor
+     * @param b1
+     *            see the EclipseJSVGCanvas constructor
+     * @param b2
+     *            see the EclipseJSVGCanvas constructor
      * @return true if the instance hasn't already been created, false otherwise.
      */
     public static synchronized boolean createSingleInstance(final SVGUserAgent userAgent,

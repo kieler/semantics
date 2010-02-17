@@ -1,24 +1,22 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
+ * Copyright 2009 by + Christian-Albrechts-University of Kiel + Department of Computer Science +
+ * Real-Time and Embedded Systems Group
  * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
+ * This code is provided under the terms of the Eclipse Public License (EPL). See the file
+ * epl-v10.html for the license text.
  */
 
 package de.cau.cs.kieler.kev.ui;
 
-import java.awt.Checkbox;
 import java.io.File;
+
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
+
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -47,41 +45,40 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
-
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.Messages;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
-import de.cau.cs.kieler.kev.views.KevView;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
  * 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- *
+ * 
  */
 public class OpenWizard extends Wizard {
 
     /** The actual wizard page that will be shown. */
     private OpenImageWizardPage page;
 
-    /** A map of predefined images (Names) to their URLs. This map will be generated from extensions. 
-     * It is used for a sorted list of images 
+    /**
+     * A map of predefined images (Names) to their URLs. This map will be generated from extensions.
+     * It is used for a sorted list of images
      */
     private TreeMap<String, String> imageTreeMap;
 
     /** Text field for the file url. */
     private Text resourceNameField;
-    
+
     /** The load at startup checkbox */
     private Button checkBox;
-    
+
     /** The actual bundleentry path to the "examples" folder */
-    private String examplePath; 
+    private String examplePath;
 
     /**
      * Parent dialog to have access to window controls, e.g. closing the dialog (by double click in
@@ -110,18 +107,20 @@ public class OpenWizard extends Wizard {
             return false;
         }
         try {
-            //Set the ExecutionManager view active, for initialization
+            // Set the ExecutionManager view active, for initialization
             Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
                     .showView("de.cau.cs.kieler.sim.kiem.view");
         } catch (PartInitException e) {
-            Activator.reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) can't be initialized!");
+            Activator
+                    .reportErrorMessage("Kiem view (ID: de.cau.cs.kieler.sim.kiem.view) can't be initialized!");
         }
         if (resourceNameField.getText().contains("bundleentry://")) {
-            //Load the SVG file from bundle resources specified in the mapping file
-            String filename = resourceNameField.getText().substring(resourceNameField.getText().lastIndexOf("/")+1);
+            // Load the SVG file from bundle resources specified in the mapping file
+            String filename = resourceNameField.getText().substring(
+                    resourceNameField.getText().lastIndexOf("/") + 1);
             Activator.setCurrentMapAnimation(new MapAnimations(filename, true));
         } else {
-          //Load the SVG file from filesystem
+            // Load the SVG file from filesystem
             Activator.setCurrentMapAnimation(new MapAnimations(resourceNameField.getText(), false));
         }
         savePreferences();
@@ -140,19 +139,20 @@ public class OpenWizard extends Wizard {
         }
     }
 
-    public void setParentDialog(WizardDialog parentDialog) {
+    public void setParentDialog(final WizardDialog parentDialog) {
         this.dialog = parentDialog;
     }
 
     private void savePreferences() {
         String path = resourceNameField.getText();
-        //If the actual image is an example image from bundle path, we have to save only the filename
+        // If the actual image is an example image from bundle path, we have to save only the
+        // filename
         if (path.contains("bundleentry")) {
             while (path.contains("/")) {
-                path = path.substring(path.indexOf("/")+1);
+                path = path.substring(path.indexOf("/") + 1);
             }
-        } //otherwise we save the whole path and file
-        
+        } // otherwise we save the whole path and file
+
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         preferenceStore.setValue(OpenWizard.DEFAULT_IMAGE, path);
         preferenceStore.setValue(OpenWizard.LOAD_STARTUP, checkBox.getSelection());
@@ -160,17 +160,18 @@ public class OpenWizard extends Wizard {
 
     private class OpenImageWizardPage extends WizardPage implements SelectionListener,
             MouseListener {
-        protected OpenImageWizardPage(String pageName) {
+        protected OpenImageWizardPage(final String pageName) {
             super(pageName);
             this.setDescription(Messages.DiscriptionOpenImageWizard);
             // this.setErrorMessage("ErrorMessage");
-            this.setImageDescriptor(Activator.getDefault().getImageDescriptor(
+            this
+                    .setImageDescriptor(Activator.getDefault().getImageDescriptor(
                             "icons/svg-logo.png"));
             this.setMessage(Messages.MessageOpenImageWizard);
             this.setTitle(Messages.TitleOpenImageWizard);
         }
 
-        public void createControl(Composite parent) {
+        public void createControl(final Composite parent) {
             Composite composite = new Composite(parent, SWT.NONE);
 
             // create layout manager
@@ -193,33 +194,33 @@ public class OpenWizard extends Wizard {
 
             checkBox = new Button(composite, SWT.CHECK);
             checkBox.setText("Load default image at startup");
-            
-            //Create a new treemap for a sorted list of mapping files
+
+            // Create a new treemap for a sorted list of mapping files
             imageTreeMap = new TreeMap<String, String>();
-            
+
             // Load images from Plugin "examples" Folder
             Bundle b = Platform.getBundle(Activator.PLUGIN_ID);
-            
-            //Set the current bundle path
+
+            // Set the current bundle path
             if (b.getEntry("examples") != null) {
                 examplePath = b.getEntry("examples").toString();
             }
-            
+
             Enumeration e = b.findEntries("examples", "*.mapping", false);
             while (e.hasMoreElements()) {
                 URL url = (URL) e.nextElement();
                 String fileName = url.getPath();
                 while (fileName.contains("/")) {
-                    fileName = fileName.substring(fileName.indexOf("/")+1);
+                    fileName = fileName.substring(fileName.indexOf("/") + 1);
                 }
-                //TreeMap contains two identical strings. It's only used for sorting.
+                // TreeMap contains two identical strings. It's only used for sorting.
                 imageTreeMap.put(fileName, fileName);
             }
-            
+
             for (String imageName : imageTreeMap.navigableKeySet()) {
                 imagesList.add(imageName);
             }
-            
+
             imagesList.addSelectionListener(this);
             imagesList.addMouseListener(this);
 
@@ -242,14 +243,14 @@ public class OpenWizard extends Wizard {
             IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
             String last = preferences.getString(DEFAULT_IMAGE);
             if (last != null && !last.trim().equals("")) {
-                if (!last.contains("/")) { //It must be an bundleentry
+                if (!last.contains("/")) { // It must be an bundleentry
                     resourceNameField.setText(examplePath + last);
-                } else { // It must be a file which is located on disk 
+                } else { // It must be a file which is located on disk
                     resourceNameField.setText(last);
                 }
             }
             checkBox.setSelection(preferences.getBoolean(LOAD_STARTUP));
-            
+
             Button resourceButton = new Button(resourceComposite, SWT.NONE);
             resourceButton.setText("Browse...");
             resourceButton.addSelectionListener(this);
@@ -287,7 +288,7 @@ public class OpenWizard extends Wizard {
                     }
                     images.put(name, url);
                 } catch (Exception e) {
-                    Activator.reportErrorMessage("Exception",e);
+                    Activator.reportErrorMessage("Exception", e);
                 }
             }
             return images;
@@ -296,7 +297,7 @@ public class OpenWizard extends Wizard {
         public URL openFileDialog() {
             FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getShell());
-            String[] extensions = {"*.mapping"};
+            String[] extensions = { "*.mapping" };
             dialog.setFilterExtensions(extensions);
             dialog.open();
             String path = dialog.getFilterPath() + File.separator + dialog.getFileName();
@@ -316,7 +317,7 @@ public class OpenWizard extends Wizard {
          * Handles selection changes in the image List widget. If a different item is selected, the
          * corresponding URL is automatically inserted into the resource file text field.
          */
-        public void widgetSelected(SelectionEvent e) {
+        public void widgetSelected(final SelectionEvent e) {
             if (e.getSource() instanceof List) { // Item in List was selected
                 List list = (List) e.getSource();
 
@@ -324,7 +325,7 @@ public class OpenWizard extends Wizard {
                     String imageName = imageTreeMap.get(list.getSelection()[i]);
                     // only one selected element makes sense
                     if (i == 0) {
-                        resourceNameField.setText(examplePath+imageName);
+                        resourceNameField.setText(examplePath + imageName);
                     }
                 }
             } else if (e.getSource() instanceof Button) { // Browse Button was pressed
@@ -336,17 +337,17 @@ public class OpenWizard extends Wizard {
             }
         }
 
-        public void widgetDefaultSelected(SelectionEvent e) {/* nothing */
+        public void widgetDefaultSelected(final SelectionEvent e) {/* nothing */
         }
 
-        public void mouseDoubleClick(MouseEvent e) {
+        public void mouseDoubleClick(final MouseEvent e) {
             finishAndDispose();
         }
 
-        public void mouseDown(MouseEvent e) {/* nothing */
+        public void mouseDown(final MouseEvent e) {/* nothing */
         }
 
-        public void mouseUp(MouseEvent e) {/* nothing */
+        public void mouseUp(final MouseEvent e) {/* nothing */
         }
 
     }

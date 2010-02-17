@@ -8,8 +8,6 @@ package de.cau.cs.kieler.kev.mapping;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.json.JSONObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>RunnableAnimation</b></em>'.

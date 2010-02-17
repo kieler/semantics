@@ -3,12 +3,16 @@
   <svgElement id="water">
     <animation xsi:type="mapping:Move" input="0..28" x_range="$x_range" y_range="71..350"/>
     <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="blue, red, yellow, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
+    <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="black, red, yellow, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
+    <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="red, red, yellow, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
+    <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="white, red, pink, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" />
     <animation xsi:type="mapping:Move" input="29..56" y_range="350..71" />
     <animation xsi:type="mapping:Colorize" input="on,off" fill_color="$fill_color,#626262" key="color" stroke_color="$stroke_color, none" stroke_width="$stroke_width, 10"/>
+    <animation xsi:type="mapping:Move" input="0..28" x_range="$x_range" y_range="55..71"/>
   </svgElement>
   <svgElement id="text">
     <animation xsi:type="mapping:Text" key="textString" />
-    <animation xsi:type="mapping:Colorize" key="signal.value" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
+    <animation xsi:type="mapping:Colorize" key="water" input="0,10,50" fill_color="red, green, blue" stroke_color="black,none,yellow"/>
   </svgElement>
   
 </mapping:SVGFile>

@@ -62,6 +62,7 @@ public class Activator extends AbstractUIPlugin {
     public Activator() {
     }
 
+
     /**
      * Starts the bundle.
      * 

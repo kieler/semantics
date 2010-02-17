@@ -171,7 +171,11 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
         // But only if the KevView is visible
         if (Activator.getKevView() != null) {
             Activator.getKevView().enableButton(3);
+            //Redraw SVG-Canvas after execution was stopped
+            if (Activator.getKevView().getComposite() != null) {
+                Activator.getKevView().getComposite().paintSVGFile();
+            }
         }
-    }
+     }
 
 }

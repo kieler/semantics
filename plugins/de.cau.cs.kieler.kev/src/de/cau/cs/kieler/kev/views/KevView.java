@@ -12,11 +12,7 @@
 
 package de.cau.cs.kieler.kev.views;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.apache.batik.swing.JSVGCanvas;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -24,11 +20,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.internal.ViewSite;
 import org.eclipse.ui.part.ViewPart;
-import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.Messages;
@@ -64,7 +58,9 @@ public class KevView extends ViewPart {
 
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
-     * @param parent the Composite. This method is called by Eclipse.
+     * 
+     * @param parent
+     *            the Composite. This method is called by Eclipse.
      */
     public void createPartControl(final Composite parent) {
         parent.setLayout(new FillLayout());
@@ -81,17 +77,26 @@ public class KevView extends ViewPart {
         makeActions();
         contributeToActionBars();
 
-        // load default image if available
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        String defaultFile = preferenceStore.getString(OpenWizard.DEFAULT_IMAGE);
-        boolean load = preferenceStore.getBoolean(OpenWizard.LOAD_STARTUP);
-        if ((defaultFile != null) && (!defaultFile.trim().equals("")) && load && Activator.getKevView().getComposite().getSVGURI() == null) {
-            if (!defaultFile.contains("/")) { //It must be an bundleentry
-                Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, true));
-            } else {
-                Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, false));
+        // This UI-Thread was started after the Kev-View was successfully created!
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // TODO Auto-generated method stub
+                // load default image if available
+                IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+                String defaultFile = preferenceStore.getString(OpenWizard.DEFAULT_IMAGE);
+                boolean load = preferenceStore.getBoolean(OpenWizard.LOAD_STARTUP);
+
+                if ((defaultFile != null) && (!defaultFile.trim().equals("")) && load
+                        && Activator.getKevView().getComposite().getSVGURI() == null) {
+                    if (!defaultFile.contains("/")) { // It must be an bundleentry
+                        Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, true));
+                    } else {
+                        Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, false));
+                    }
+                }
             }
-        }
+        });
+
     }
 
     private void contributeToActionBars() {
@@ -135,9 +140,10 @@ public class KevView extends ViewPart {
     /**
      * Enable the openWizardAction.
      * 
-     * @param action
+     * @param id
+     *            indicates which button should be enabled
      */
-    public void enableButton(int id) {
+    public void enableButton(final int id) {
         switch (id) {
         case 1:
             openWizardAction.setEnabled(true);
@@ -149,15 +155,16 @@ public class KevView extends ViewPart {
             openWizardAction.setEnabled(true);
             refreshAction.setEnabled(true);
             break;
-        }        
+        }
     }
 
     /**
      * Disable the openWizardAction.
      * 
-     * @param action
+     * @param id
+     *            indicates which button should be disabled
      */
-    public void disableButton(int id) {
+    public void disableButton(final int id) {
         switch (id) {
         case 1:
             openWizardAction.setEnabled(false);
@@ -171,8 +178,7 @@ public class KevView extends ViewPart {
             break;
         }
     }
-    
-    
+
     /**
      * Sets the focus to the KevComposite.
      */

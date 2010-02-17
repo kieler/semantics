@@ -30,6 +30,7 @@ public final class Messages extends NLS {
     
     /** ID of the extension point. */
     public static String extensionPointID;
+
     /** The name of the view. */
     public static String ViewTitle;
 

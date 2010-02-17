@@ -12,7 +12,6 @@
 
 package de.cau.cs.kieler.kev.mapping.animations;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +20,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import org.apache.batik.bridge.UpdateManager;
+import org.apache.batik.util.RunnableQueue;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
@@ -57,7 +57,7 @@ public class MapAnimations {
      * SVGFile is an instance of the created model .mapping file.
      */
     private SVGFile mappingFile;
-    
+
     /**
      * The single instance of the EclipseJSVGCanvas.
      */
@@ -67,7 +67,7 @@ public class MapAnimations {
      * The HashMap with SVG element id's as the keys and a list of animations as values.
      */
     private HashMap<String, EList<Animation>> svgElementsHashMap = null;
-    
+
     /**
      * The default constructor.
      */
@@ -76,20 +76,18 @@ public class MapAnimations {
         // initialized first)
         if (svgCanvas == null) {
             Activator.reportInfoMessage("The xKEV-View must be initialized first!");
-            return;
         }
-
     }
-    
+
     /**
      * Creates the MapAnimation instance and loads an mapping file either from Resource (examples/*)
      * isResource=true or from anywhere on the harddisk (isResource=false).
      * 
      * @param filename
-     *          The name of the file which should be loaded.
+     *            The name of the file which should be loaded.
      * @param isResource
-     *          True, if the resource is loaded from the KEV-plugin itself.
-     *          False, if the the resource is a file on the local filesystem. 
+     *            True, if the resource is loaded from the KEV-plugin itself. False, if the the
+     *            resource is a file on the local filesystem.
      */
     public MapAnimations(final String filename, final boolean isResource) {
         // We must make sure that the svgCanvas has already been created (xKEV-View must have been
@@ -126,26 +124,26 @@ public class MapAnimations {
         return svgCanvas.getSVGDocument();
     }
 
-    
     /**
      * Return the current mapping file of this MapAnimations.
+     * 
      * @return mappingFile the current mapping file
      */
     public final SVGFile getMappingFile() {
         return mappingFile;
     }
-    
-    
+
     /**
      * Loads an .mapping file from the resource example folder.
      * 
-     * @param filename name of the file to load from resource
+     * @param filename
+     *            name of the file to load from resource
      * @return current mapping file (SVGFile see ecore model)
      */
     public final SVGFile loadFromResource(final String filename) {
         // Initialize the model
         MappingPackage.eINSTANCE.eClass();
-        
+
         // Register the XMI resource factory for the .mapping extension
         Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
         Map<String, Object> m = reg.getExtensionToFactoryMap();
@@ -159,23 +157,27 @@ public class MapAnimations {
         SVGFile svgFile = null;
         try {
             // Get the resource from examples folder
-            System.out.println(filename);
-            resource = resSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID+"/examples/"+filename, true), true);
+            // System.out.println(filename);
+            resource = resSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID
+                    + "/examples/" + filename, true), true);
             // Get the first model element and cast it to the right type, in my
             // example everything is hierarchical included in this first node
-            System.out.println("Size: "+resource.getContents().size());
-            svgFile = (SVGFile) resource.getContents().get(0);        
+            // System.out.println("Size: "+resource.getContents().size());
+            svgFile = (SVGFile) resource.getContents().get(0);
             createHashMap(svgFile);
             if (!svgFile.getFilename().isEmpty()) {
                 loadSpecifiedSVGFile(svgFile.getFilename());
             } else {
-                Activator.reportInfoMessage("The svg file was't specified in the current mapping file ("+filename+")!");
-                EclipseJSVGCanvas.getInstance().setSVGDocument(null);//Because we only want a valid mapping file for animation
+                Activator
+                        .reportInfoMessage("The svg file was't specified in the current mapping file ("
+                                + filename + ")!");
+                EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
+                                                                     // mapping file for animation
             }
 
         } catch (WrappedException e) {
             // TODO Auto-generated catch block
-            System.out.println("File: "+filename+" has a wrong format!");
+            Activator.reportInfoMessage("File: " + filename + " has a wrong format!");
         }
         return svgFile;
     }
@@ -183,7 +185,8 @@ public class MapAnimations {
     /**
      * Loads an mapping file from disk.
      * 
-     * @param filename name of the file to load from disk
+     * @param filename
+     *            name of the file to load from disk
      * @return current mapping file
      */
     public final SVGFile loadFromFile(final String filename) {
@@ -204,39 +207,44 @@ public class MapAnimations {
         SVGFile svgFile = null;
 
         try {
-            System.out.println(URI.createURI(filename));
+            // System.out.println(URI.createURI(filename));
             // Get the resource from anywhere on the harddisk
             resource = resSet.getResource(URI.createURI(filename), true);
             // Get the first model element and cast it to the right type
             svgFile = (SVGFile) resource.getContents().get(0);
-            createHashMap(svgFile);            
-            
+            createHashMap(svgFile);
+
             if (!svgFile.getFilename().isEmpty()) {
-                //Filename is absolute
-                if (svgFile.getFilename().contains("file:/")) {
-                    System.out.println(svgFile.getFilename());
+                // Filename is absolute
+                if (svgFile.getFilename().contains("file:/") || svgFile.getFilename().contains(":/")) {
+                    // System.out.println(svgFile.getFilename());
                     loadSpecifiedSVGFile(svgFile.getFilename());
-                } else {//Filename is relative
+                } else {// Filename is relative
                     String tempPath;
-                    tempPath = filename.substring(0,filename.lastIndexOf("/")+1) + svgFile.getFilename();
-                    System.out.println(tempPath);
+                    tempPath = filename.substring(0, filename.lastIndexOf("/") + 1)
+                            + svgFile.getFilename();
+//                    System.out.println(tempPath);
                     loadSpecifiedSVGFile(tempPath);
                 }
             } else {
-                Activator.reportInfoMessage("The svg file was't specified in the current mapping file ("+filename+")!");
-                EclipseJSVGCanvas.getInstance().setSVGDocument(null);//Because we only want a valid mapping file for animation
+                Activator
+                        .reportInfoMessage("The svg file was't specified in the current mapping file ("
+                                + filename + ")!");
+                EclipseJSVGCanvas.getInstance().setSVGDocument(null);// Because we only want a valid
+                                                                     // mapping file for animation
             }
         } catch (WrappedException e) {
             // TODO Auto-generated catch block
-            System.out.println("File: " + filename + " has a wrong format!");
+            Activator.reportInfoMessage("File: " + filename + " has a wrong format!");
         }
         return svgFile;
     }
 
     /**
      * Loads the SVG-graphic which is specified in the current mapping file
-     *
-     * @param filename name of the SVG-graphic to load
+     * 
+     * @param filename
+     *            name of the SVG-graphic to load
      */
     private void loadSpecifiedSVGFile(final String filename) {
         SVGLoadingStatusListener loadingStatusListener = svgCanvas.getSVGLoadingStatusListener();
@@ -244,56 +252,47 @@ public class MapAnimations {
         if (filename.indexOf("resource:") == 0) {
             String path = filename.substring("resource:".length());
             // Get the resource from examples folder
-            
+
             url = FileLocator.find(Activator.getDefault().getBundle(), new Path(path), null);
 
             if (url != null) {
-                System.out.println("Bundleentry: " + url.toExternalForm());
+                // System.out.println("Bundleentry: " + url.toExternalForm());
                 // setSVGFile(url);
                 // KevComposite.getInstance().setSVGFile(url);
                 svgCanvas.loadSVGDocument(url.toExternalForm());
-//                // Sometimes on first load, the fileloading get's cancelled, don't know why and from
-//                // whom, so try again
-//                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
-//                    // KevComposite.getInstance().paintSVGFile();
-//                    svgCanvas.loadSVGDocument(url.toExternalForm());
-//                }
             } else {
-                Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
+                Activator.reportInfoMessage("File not found or file has wrong format: " + filename);
                 return;
             }
             // svgCanvas.loadSVGDocument(url.toExternalForm());
         } else {
             try {
-                //URL url = new URL("file:/" + filename);
-                url = new URL(filename);
+                System.out.println(URI.createFileURI(filename).toString());
                 // KevComposite.getInstance().setSVGFile(url);
-                svgCanvas.loadSVGDocument(url.toExternalForm());
-                // Sometimes on first load, the fileloading get's cancelled, don't know why and from
-                // whom so try again
-//                if (loadingStatusListener.getLoadingStatus() == SVGLoadingStatusListener.LOADING_CANCELLED) {
-//                    // KevComposite.getInstance().paintSVGFile();
-//                    svgCanvas.loadSVGDocument(url.toExternalForm());
-//                }
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                Activator.reportInfoMessage("File not found or file has wrong format: "+filename);
+                //svgCanvas.loadSVGDocument(URI.createFileURI(filename).toString());
+                Activator.getKevView().getComposite().setSVGFile(new URL(URI.createFileURI(filename).toString()));
+           } catch (Exception e) {
+                //TODO Auto-generated catch block
+                Activator.reportInfoMessage("File not found or file has wrong format: " + filename);
             }
         }
-        //Wait until loading was successful or an Errorstatus occurs (status < 2) or timeout has reached (approx. after 5 seconds)
+        // Wait until loading was successful or an Errorstatus occurs (status < 2) or timeout has
+        // reached (approx. after 5 seconds)
         int timeoutCounter = 1;
-        while ((loadingStatusListener.getLoadingStatus() < SVGLoadingStatusListener.LOADING_COMPLETED) && timeoutCounter < 50) {
+        while ((loadingStatusListener.getLoadingStatus() < SVGLoadingStatusListener.LOADING_COMPLETED)
+                && timeoutCounter < 50) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                //Thread has been interrupted
+                // Thread has been interrupted
             } finally {
                 timeoutCounter++;
             }
         }
         if (url != null) {
-            //Set the uri of the current svg file (needed for the refresh)
-            Activator.getKevView().getComposite().setSVGURI(java.net.URI.create(url.toExternalForm()));
+            // Set the uri of the current svg file (needed for the refresh)
+            Activator.getKevView().getComposite().setSVGURI(
+                    java.net.URI.create(url.toExternalForm()));
         }
     }
 
@@ -302,9 +301,9 @@ public class MapAnimations {
      * 
      */
     private synchronized void createHashMap(final SVGFile mappingFile) {
-        //Create a new clonemap with all cloned elements (if exists)
+        // Create a new clonemap with all cloned elements (if exists)
         HashMap<String, ArrayList<String>> cloneMap = new HashMap<String, ArrayList<String>>();
-                
+
         svgElementsHashMap = new HashMap<String, EList<Animation>>();
         Iterator<SVGElement> elementIterator = mappingFile.getSvgElement().iterator();
         SVGElement svgElement;
@@ -312,17 +311,18 @@ public class MapAnimations {
         while (elementIterator.hasNext()) {
             svgElement = elementIterator.next();
             animationIterator = svgElement.getAnimation().iterator();
-            //Now we have to initialize all animations once
+            // Now we have to initialize all animations once
             while (animationIterator.hasNext()) {
                 animationIterator.next().initialize();
             }
-            //If an Element already exists in the hashmap, we add a clone of this element to the hashmap
-            //and add the new clone name to the clone list
+            // If an Element already exists in the hashmap, we add a clone of this element to the
+            // hashmap
+            // and add the new clone name to the clone list
             if (svgElementsHashMap.containsKey(svgElement.getId())) {
                 ArrayList<String> clones = cloneMap.get(svgElement.getId());
                 String cloneName;
                 if (clones != null) {
-                    cloneName = "_" + svgElement.getId() + "_" + (clones.size()+1);
+                    cloneName = "_" + svgElement.getId() + "_" + (clones.size() + 1);
                 } else {
                     clones = new ArrayList<String>();
                     cloneName = "_" + svgElement.getId() + "_1";
@@ -339,48 +339,70 @@ public class MapAnimations {
     /**
      * Applies the Animations for all JSON-Keys which exists in the mapping file.
      * 
-     * @param jsonObject the actual JSON-object
+     * @param jsonObject
+     *            the actual JSON-object
      */
     public void doAnimations(final JSONObject jsonObject) {
         // Check whether the HashMap has been created
-        if (this.svgElementsHashMap == null) {
-            System.out.println("HashMap is not initialized!");
-            return;
-        }
-        
-        try {
-//            System.out.println(jsonObject.toString());
-            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
-            JSONObject flatJSONObject = makeItFlat(jsonObject);
-//            System.out.println(flatJSONObject.toString());
-            //For each svg element id we need to check if all any animation can be applied. 
-            Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
-            while (svgElementIDIterator.hasNext()) {
-                String svgElementID = svgElementIDIterator.next();
-//                System.out.println("SVG: " + svgElementID);
-                // Get all animations for each SVG element
-                Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
+        if (svgElementsHashMap != null) {
+            try {
+                // System.out.println(jsonObject.toString());
+                // Now we have to make the JSONobject flat, so that we can address all key by "."
+                // notation.
+                JSONObject flatJSONObject = makeItFlat(jsonObject);
+                // System.out.println(flatJSONObject.toString());
+                // For each svg element id we need to check if all any animation can be applied.
+                Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
+                while (svgElementIDIterator.hasNext()) {
+                    String svgElementID = svgElementIDIterator.next();
+                    // System.out.println("SVG: " + svgElementID);
+                    // Get all animations for each SVG element
+                    Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID)
+                            .iterator();
 
-                while (animationIterator.hasNext()) {
-                    // We need to apply all animations for each SVG element
-                    animationIterator.next().apply(flatJSONObject, svgElementID);
+                    // Get the Batik UpdateManager for scheduling.
+                    UpdateManager updateManager = EclipseJSVGCanvas.getInstance()
+                            .getUpdateManager();
+
+                    if (updateManager != null) {
+                        RunnableQueue runnableQueue = updateManager.getUpdateRunnableQueue();
+                        // We need to stop the RunnableQueue for SVGDocument manipulation
+                        runnableQueue.suspendExecution(true);//true = wait till suspended, false =
+                                                             //go on
+
+                        // We need to apply all animations for each SVG element, before updating the
+                        // EclipseJSVGCanvas
+                        while (animationIterator.hasNext()) {
+                            animationIterator.next().apply(flatJSONObject, svgElementID);
+                        }
+                        // Schedule a new Batik thread for redrawing the canvas and resume
+                        // scheduling afterwards.
+                        runnableQueue.invokeLater(new RunnableAnimation());
+                        runnableQueue.resumeExecution();
+                    }
+
                 }
+            } catch (JSONException e) {
+                // Something went wrong with the JSONObject.
             }
-        } catch (JSONException e) {
-            //Something went wrong with the JSONObject.
+        } else {
+            Activator
+                    .reportErrorMessage("Hashmap is not initialized! -> Mapping-File may have a wrong format");
         }
-    }    
-    
+    }
+
     /**
      * This function is intensively used by the mapInputToOutput() method. It simply creates an
      * ArrayList with no duplicates of the inputstring.
+     * 
      * @return An ArrayList with all parsed values
-     * @param input String to parse
-     * @param isInputAttribute true if 
+     * @param input
+     *            String to parse
+     * @param isInputAttribute
+     *            true if
      * 
      */
-    public ArrayList<String> attributeParser(final String input,
-            final boolean isInputAttribute) {
+    public ArrayList<String> attributeParser(final String input, final boolean isInputAttribute) {
         ArrayList<String> inputArray = new ArrayList<String>();
         HashSet<String> inputSet = new HashSet<String>();
         // Now we begin with the input tokens
@@ -395,17 +417,18 @@ public class MapAnimations {
                 while (inputScanner.hasNext()) {
                     // This means a range plus a distance between [number1]:[number2]
                     if (inputScanner.hasNext("[-]?[\\d]+[.]{2,3}[-]?[\\d]+")) {// Test if the
-                                                                                      // next input
-                                                                                      // matches
-                                                                                      // "[-]NUMBER..[.][-]NUMBER"
-                        // Now we know, that the inputScanner.next() contains exactly 2 integer values
+                        // next input
+                        // matches
+                        // "[-]NUMBER..[.][-]NUMBER"
+                        // Now we know, that the inputScanner.next() contains exactly 2 integer
+                        // values
                         Scanner sc = new Scanner(inputScanner.next()).useDelimiter("[.]+");
                         int leftint = sc.nextInt();
                         int rightint = sc.nextInt();
                         // int min, max;
                         // min = Math.min(leftint, rightint);
                         // max = Math.max(leftint, rightint);
-                        //if it is the input attribute, we need all values 
+                        // if it is the input attribute, we need all values
                         if (isInputAttribute) {
                             if (leftint <= rightint) {
                                 for (int j = leftint; j <= rightint; j++) {
@@ -421,7 +444,7 @@ public class MapAnimations {
                                 }
                             }
                         } else {
-                            //allow multiple values only if it is not the input
+                            // allow multiple values only if it is not the input
                             inputArray.add(Integer.toString(leftint));
                             inputArray.add(Integer.toString(rightint));
                         }
@@ -432,20 +455,20 @@ public class MapAnimations {
                             if (isInputAttribute) {
                                 if (inputSet.add(token)) {
                                     inputArray.add(token);
-    //                                System.out.println("Genau ein Wert: "+token);
+                                    // System.out.println("Genau ein Wert: "+token);
                                 }
                             } else {
                                 inputArray.add(token);
                             }
                         } else {
                             // Error - wrong Syntax, was not accepted!
-    //                        System.out.println("Falsche Syntax: "+token);
+                            // System.out.println("Falsche Syntax: "+token);
                         }
                     }
                 }
             } else if (Pattern.matches(pattern, input)) {
                 // Valid value (exactly one)
-    //            System.out.println("Genau ein Wert: "+input);
+                // System.out.println("Genau ein Wert: "+input);
                 if (isInputAttribute) {
                     if (inputSet.add(input)) {
                         inputArray.add(input);
@@ -455,23 +478,25 @@ public class MapAnimations {
                 }
             } else {
                 // Error - wrong Syntax, was not accepted!
-    //            System.out.println("Falsche Syntax: "+input);
+                // System.out.println("Falsche Syntax: "+input);
             }
-    //         for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
-    //         System.out.println();
+            // for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
+            // System.out.println();
         }
         return inputArray;
     }
 
     /**
      * The short version for the normal case that all values are excepted.
+     * 
      * @param input
      * @param output
      * @return
      */
-//    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String output) {
-//        return mapInputToOutput(input, output, false);
-//    }
+    // public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String
+    // output) {
+    // return mapInputToOutput(input, output, false);
+    // }
 
     /**
      * THIS Method is really important and should be used for all animations! This method maps the
@@ -481,20 +506,18 @@ public class MapAnimations {
      * 
      * Example: input="[1..10,20..30];[40,45,50];900"
      * output=x_range="[200..215,220,225,230,235,240];[1..3];200" PROBLEME MIT DEM PARSEN DES
-     * OUTPUTS HIER NOCHMAL SCHAUEN!
-     * UPDATE: This method does no parsing at all! it just maps an input arraylist to an outputarraylist 
+     * OUTPUTS HIER NOCHMAL SCHAUEN! UPDATE: This method does no parsing at all! it just maps an
+     * input arraylist to an outputarraylist
      * 
      */
-    public HashMap<String, String> mapInputToOutput(final ArrayList<String> inputArray, final ArrayList<String> outputArray) {
-        ArrayList<HashMap<String, String>> hashMapArray = new ArrayList<HashMap<String, String>>();
-//            // For each token we generate an input and output Array
-//            // and create a HashMap of it
+    public HashMap<String, String> mapInputToOutput(final ArrayList<String> inputArray,
+            final ArrayList<String> outputArray) {
         HashMap<String, String> hashMap = new HashMap<String, String>();
-//            inputArray = generateArrayListFromInput(inTokenizer.nextToken(), false); // The input
-//                                                                                     // should
-//                                                                                     // always allow
-//                                                                                     // all values
-//            outputArray = generateArrayListFromInput(outTokenizer.nextToken(), outputIntegerOnly);
+        // inputArray = generateArrayListFromInput(inTokenizer.nextToken(), false); // The input
+        // // should
+        // // always allow
+        // // all values
+        // outputArray = generateArrayListFromInput(outTokenizer.nextToken(), outputIntegerOnly);
 
         // Do some size calculation
         // Only go on, if we have two arrays which are greater then zero
@@ -507,13 +530,15 @@ public class MapAnimations {
         return hashMap;
     }
 
-    /** NOT USED ANYMORE
+    /**
+     * NOT USED ANYMORE
      * 
      * The values of the special animation is a single value for each input value separated by ";".
      * 
      * 
-     * @param inputValue input string
-     * @return stingarray 
+     * @param inputValue
+     *            input string
+     * @return stingarray
      */
     public String[] parseValueString(final String inputValue) {
         // First we need to seperate each value pairs (symbolized by ";")
@@ -527,25 +552,26 @@ public class MapAnimations {
         return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    /** NOT USED ANYMORE
-     * Just updates the actual SVGDocument.
+    /**
+     * NOT USED ANYMORE Just updates the actual SVGDocument.
      */
     private void updateSVGGraphik() {
         svgCanvas.setSVGDocument(svgCanvas.getSVGDocument());
     }
 
-    
     // ----------------------------------------------------------------------------------------------
-    //Should be put later on to the JSON package
+    // Should be put later on to the JSON package
 
     /**
      * Make the input JSONObject flat if there exists a hierarchy. This one should be called instead
      * of the other version of makeItFlat, which has some initial value parameters for recursive
      * computation.
      * 
-     * @param inputObject the input JSONObject, which may not be flat
-     * @return A JSONObject which has a flat hierarchy 
-     * @throws JSONException, is thrown if a conversion fails
+     * @param inputObject
+     *            the input JSONObject, which may not be flat
+     * @return A JSONObject which has a flat hierarchy
+     * @throws JSONException
+     *             , is thrown if a conversion fails
      */
     public final JSONObject makeItFlat(final JSONObject inputObject) throws JSONException {
         return makeItFlat(new JSONObject(), "", inputObject);
@@ -560,11 +586,11 @@ public class MapAnimations {
      * @return
      * @throws JSONException
      */
-    private static JSONObject makeItFlat(JSONObject flatOne, String adressKey,
-            JSONObject inputObject) throws JSONException {
+    private static JSONObject makeItFlat(final JSONObject flatOne, final String adressKey,
+            final JSONObject inputObject) throws JSONException {
         String[] keys = JSONObject.getNames(inputObject);
         if (keys == null) {
-            //If there exists no key try it must be an empty json object
+            // If there exists no key try it must be an empty json object
             if (!adressKey.isEmpty()) {
                 flatOne.put(adressKey, new JSONObject());
             }
@@ -579,15 +605,16 @@ public class MapAnimations {
                 } else {
                     if (adressKey.isEmpty()) {
                         makeItFlat(flatOne, key, inputObject.optJSONObject(key));
-                        //Add the toplevel objects to the result object (that are the svgelement id's)
-                        //flatOne.put(key, JSONObject.NULL);
+                        // Add the toplevel objects to the result object (that are the svgelement
+                        // id's)
+                        // flatOne.put(key, JSONObject.NULL);
                     } else {
                         makeItFlat(flatOne, adressKey + "." + key, inputObject.optJSONObject(key));
                     }
                 }
             }
         }
-        //System.out.println(flatOne);
+        // System.out.println(flatOne);
         return flatOne;
     }
 }

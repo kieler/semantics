@@ -12,14 +12,12 @@
 
 package de.cau.cs.kieler.kev.extension.dataobserver;
 
-import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 /**
  * A simple Example the Watertank.svg.
@@ -31,24 +29,23 @@ public class KEVExampleDataProducer extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
     private int counter;
-    private MapAnimations mapAnimation;
 
     public KEVExampleDataProducer() {
         // TODO Auto-generated method stu
     }
 
-    public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
+    public JSONObject step(final JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
         JSONObject simulationData = new JSONObject();
 
         try {
             simulationData.put("water", Integer.toString(counter));
-            simulationData.put("water2", Integer.toString(counter+50));
+            simulationData.put("water2", Integer.toString(counter + 50));
 
             JSONObject jo = new JSONObject();
             jo.append("prensent", "true");
-            
+
             if (counter <= 50) {
                 simulationData.put("textString", Double.toString((50 - counter) * 10.5));
                 jo.append("value", "50");
@@ -70,14 +67,18 @@ public class KEVExampleDataProducer extends JSONObjectDataComponent implements
         return simulationData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
     public void initialize() throws KiemInitializationException {
         counter = 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
      */
     public boolean isObserver() {
@@ -85,7 +86,9 @@ public class KEVExampleDataProducer extends JSONObjectDataComponent implements
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
      */
     public boolean isProducer() {
@@ -93,7 +96,9 @@ public class KEVExampleDataProducer extends JSONObjectDataComponent implements
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
      */
     public void wrapup() throws KiemInitializationException {

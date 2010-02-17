@@ -6,11 +6,6 @@
  */
 package de.cau.cs.kieler.kev.mapping;
 
-import org.w3c.dom.svg.SVGDocument;
-
-import org.json.JSONObject;
-
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Move</b></em>'.

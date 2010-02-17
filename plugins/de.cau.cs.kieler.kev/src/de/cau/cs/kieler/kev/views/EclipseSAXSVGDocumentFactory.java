@@ -19,8 +19,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
-//import org.apache.xerces.jaxp.SAXParserFactoryImpl;
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory; // import
+                                                       // org.apache.xerces.jaxp.SAXParserFactoryImpl;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,9 +34,10 @@ import org.xml.sax.SAXException;
  * 
  */
 public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
-    
+
     /**
      * The constructor.
+     * 
      * @param parser
      * @param dd
      */
@@ -47,12 +48,12 @@ public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
     protected Document createDocument(final InputSource is) throws IOException {
         try {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-//            Das Systemproperty muss gelöscht werden, sonst kann nicht auf das Ressourceset
-//            zugegriffen werden
-//            System.setProperty("javax.xml.parsers.SAXParserFactory",
-//            SAXParserFactoryImpl.class.getName()); //Different Parser then the XMI-Parser (hat
-//            mich stunden gekostent, diesen Fehler zu finden!!!!ARRRRR!)
-//            //java -Djaxp.debug=1 Aufruf als consolendebug des jaxparsers
+            // Das Systemproperty muss gelöscht werden, sonst kann nicht auf das Ressourceset
+            // zugegriffen werden
+            // System.setProperty("javax.xml.parsers.SAXParserFactory",
+            // SAXParserFactoryImpl.class.getName()); //Different Parser then the XMI-Parser (hat
+            // mich stunden gekostent, diesen Fehler zu finden!!!!ARRRRR!)
+            // //java -Djaxp.debug=1 Aufruf als consolendebug des jaxparsers
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://xml.org/sax/features/namespaces", true);
             factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);

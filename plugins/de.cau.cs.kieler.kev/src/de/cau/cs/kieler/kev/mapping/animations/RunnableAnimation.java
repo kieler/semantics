@@ -14,50 +14,16 @@
 
 package de.cau.cs.kieler.kev.mapping.animations;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
-
-import org.json.JSONObject;
-
-import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
-
 /**
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  *
  */
 public class RunnableAnimation implements Runnable {
 
-    private final JSONObject jsonObject;
-    private final String svgElementID;
-  
-    
-    /**
-     * 
-     */
-    public RunnableAnimation(JSONObject jsonObject, String svgElementID) {
-        this.jsonObject = jsonObject;
-        this.svgElementID = svgElementID;
-    }
-
-    public String getSVGElementID() {
-        return svgElementID;
-    }
-    
-    public JSONObject getJSONObject() {
-        return jsonObject;
-    }
-    
-    public Element getSVGElement() {
-        SVGDocument doc = EclipseJSVGCanvas.getInstance().getSVGDocument();
-        if (doc != null) {
-            return doc.getElementById(svgElementID);
-        } else {
-            return null;
-        }
-    }
-    
     public void run() {
-        
+        //Here we can put some code for SVGDocument manipulation, 
+        //but we don't need it now because we manipulate the tree already within
+        //the animations itself.
     }
 
 }
