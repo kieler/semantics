@@ -34,7 +34,7 @@ import org.json.JSONObject;
 public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
     /** Sets the sleep time for the step-method. */
-    private static final int SLEEP_TIME = 100;
+    private static final int SLEEP_TIME = 10;
 
     /**
      * Applies the JSON data to the SVG document.
@@ -53,7 +53,7 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
             Activator.getCurrentMapAnimation().doAnimations(jSONObject);
         }
         try {
-            // For refreshing the svg document, we only need to be called every 100 ms.
+            // For refreshing the svg document, we only need to be called every 10 ms.
             // TODO: Should be changeable in the Kev properties view
             Thread.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
@@ -146,7 +146,7 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
      */
     public boolean isProducer() {
         // The Kev plugin is momentarily an observer only.
-        return false;
+        return true;
     }
 
     /**
