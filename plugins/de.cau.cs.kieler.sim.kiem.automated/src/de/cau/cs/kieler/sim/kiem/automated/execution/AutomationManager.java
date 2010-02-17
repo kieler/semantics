@@ -93,6 +93,9 @@ public final class AutomationManager implements StatusListener {
     /** The monitor that is monitoring the progress of the current execution. */
     private IProgressMonitor monitor;
 
+    /** True if the manager is about to stop the execution. */
+    private boolean stoppedByManager;
+
     // --------------------------------------------------------------------------
 
     /** Singleton pattern. */
@@ -481,7 +484,9 @@ public final class AutomationManager implements StatusListener {
                         execution.getSteps() + ""));
                 getResultsFromProducers(currentResult);
 
+                stoppedByManager = true;
                 execution.stopExecutionSync();
+                stoppedByManager = false;
             } else {
                 // the execution somehow was terminated
                 currentResult.setStatus(IterationStatus.ERROR);
@@ -805,15 +810,17 @@ public final class AutomationManager implements StatusListener {
      * Tell the automation manager that the user paused the execution.
      */
     public void notifyOnUserPause() {
-        // can't determine what to do since automation will try to proceed.
-        // don't want to lock up by pausing
+        KiemPlugin.getDefault().getExecution().stepExecutionSync();
     }
 
     /**
      * Tell the automation manager that the user stopped the execution.
      */
     public void notifyOnUserStop() {
-        // normal termination, do nothing
+        if (!stoppedByManager) {
+            CancelManager.getInstance().cancelIteration(
+                    CancelStatus.USER_CANCELED);
+        }
     }
 
     // --------------------------------------------------------------------------
