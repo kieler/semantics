@@ -24,6 +24,7 @@ import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
@@ -102,7 +103,6 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     private InterfaceDeclSerializerLogic serializeLogic;
 
     // support for undo
-    private String oldInterfaceDecl;
     private XtextResource oldResource;
 
     /**
@@ -134,8 +134,12 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             this.changedVariable = (Variable) changedSignalOrVariable;
             this.rootRegion = (Region) changedSignalOrVariable.eContainer();
         }
+        // make sure to clone the resource for undo
+        XtextResourceSet rs = EcoreUtil2
+                .clone(new XtextResourceSet(), theResource.getResourceSet());
+        // TODO check if this is save
+        this.oldResource = (XtextResource) rs.getResources().get(0);
         this.resource = theResource;
-        this.oldResource = theResource;
         this.oldName = theOldName;
         this.occurredChange = theOccurredChange;
         this.isExecutable = true;
@@ -156,7 +160,11 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             final XtextResource theResource) {
         this.injector = theInjector;
         this.rootState = theRootState;
-        this.oldResource = theResource;
+        // make sure to clone the resource for undo
+        XtextResourceSet rs = EcoreUtil2
+                .clone(new XtextResourceSet(), theResource.getResourceSet());
+        // TODO check if this is save
+        this.oldResource = (XtextResource) rs.getResources().get(0);
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
@@ -245,8 +253,6 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
             // System.out.println("######Serialized result: " +
             // outputStream.toString());
-
-            oldInterfaceDecl = ((State) rootState).getInterfaceDeclaration();
 
             // set the interface declaration string
             String result = outputStream.toString();

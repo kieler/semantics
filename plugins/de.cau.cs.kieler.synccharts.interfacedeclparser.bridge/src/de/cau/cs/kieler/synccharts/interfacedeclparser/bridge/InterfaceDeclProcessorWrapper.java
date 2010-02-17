@@ -201,7 +201,7 @@ public class InterfaceDeclProcessorWrapper {
 
     private class CanonialSerializationCommand extends AbstractCommand {
         private State state;
-        InterfaceDeclSerializeCommand cmd;
+        private InterfaceDeclSerializeCommand cmd;
 
         public CanonialSerializationCommand(final State theState) {
             this.state = theState;
@@ -219,6 +219,12 @@ public class InterfaceDeclProcessorWrapper {
         @Override
         public void redo() {
             execute();
+        }
+
+        @Override
+        public void undo() {
+            System.out.println("UNDO");
+            cmd.undo();
         }
 
         @Override
