@@ -1,13 +1,5 @@
-/* An actor that interacts with the Model Railway (and its simulation) of
-   the Department of Computer Science of Kiel University, Germany.
-
-   The Model Railway can be found here:
-   http://www.informatik.uni-kiel.de/~railway/
-
-   The simulation of the Model Railway can be found here:
-   http://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/cmot-st.pdf
-
- Copyright (c) 2009 Christian Motika.
+/* 
+ Copyright (c) 2006-2009 The Regents of the University of California.
  All rights reserved.
  Permission is hereby granted, without written agreement and without
  license or royalty fees, to use, copy, modify, and distribute this
@@ -15,68 +7,44 @@
  copyright notice and the following two paragraphs appear in all copies
  of this software.
 
- IN NO EVENT SHALL THE AUTHOR BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
- SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF
- THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE AUTHOR HAS BEEN ADVISED
- OF THE POSSIBILITY OF SUCH DAMAGE.
+ IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
+ FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+ ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
+ THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
 
- THE AUTHOR SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT
- LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- BASIS, AND THE AUTHOR HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT,
- UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
+ PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
+ CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
+ ENHANCEMENTS, OR MODIFICATIONS.
+ PT_COPYRIGHT_VERSION_2
+ COPYRIGHTENDKEY
 
  */
 package ptolemy.actor.kiel;
 
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
-import ptolemy.data.ArrayToken;
-import ptolemy.data.Token;
-import ptolemy.data.RecordToken;
-import ptolemy.data.StringToken;
 import ptolemy.data.IntToken;
 import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
-import java.io.*;
-import java.net.*;
 
 //////////////////////////////////////////////////////////////////////////
-//// ModelRailwayIO
+//// KielerIO
 
 /**
- * Interacts with the Model Railway (and its simulation) of the Department of Computer Science of
- * Kiel University, Germany. The Model Railway can be found here:
- * http://www.informatik.uni-kiel.de/~railway/ The simulation of the Model Railway can be found
- * here: http://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/cmot-st.pdf
- * 
- * Input track, point and signal commands as RecordTokens of the following form:
- * port={track2={motormode=1,speed=100}} where motormode can be off(0), primary(1), secondary(2) or
- * brake(3) DEFAULT is primary(1) and speed is a value between 0 .. 100 DEFAULT is 0
- * port={point2={turn=0}} where a turn value of 0 indicates straight and a turn value of 1 indicates
- * turn position DEFAULT is straight(0) port={signal2a={lights=2}} where a means first and b means
- * second in default driving direction of the selected track (here 2) and lights can be off(0),
- * red(1), yellowgreen(2), green(4) DEFAULT is red(1)
- * 
- * Output of this actor are two ArrayTokens contact and occupied that can be used to obtain
- * information about the triggered reed contacts or the occupied track segments with the following
- * meaning of values: contact: not triggered(-1), triggered first(0) and triggered second(1) in
- * default driving direction occupied: not occupied(0) or occupied(1)
+ * KielerIO Actor for simulating SyncCharts with Ptolemy II.
  * 
  * @author Christian Motika
- * @version $Id: ModelRailwayIO.java 44783 2009-06-07 16:41:17Z $
- * @since Ptolemy II 0.2
  * @Pt.AcceptedRating Red (cmot)
  */
 public class KielerIO extends TypedAtomicActor {
     /**
-     * Construct an actor with the given container and name. In addition to invoking the base class
-     * constructors, construct the <i>host</i> and <i>port</i> parameters, the <i>speed</i>,
-     * <i>point</i> and <i>signal</i> input ports and the <i>contact</i> and <i>occupied</i> output
-     * ports. Initialize <i>host</i> to StringToken with value 'localhost', and <i>port</i> to
-     * IntToken with value 2000.
+     * Construct an actor with the given container and name.
      * 
      * @param container
      *            The container.
@@ -116,11 +84,6 @@ public class KielerIO extends TypedAtomicActor {
     // /////////////////////////////////////////////////////////////////
     // // ports and parameters ////
 
-    /**
-     * The host and port to make the connection to, i.e., where the Model Railway interface program
-     * is running. Often this is set to the string value 'localhost' for the host and 2000 for the
-     * port.
-     */
     public Parameter present;
     public Parameter sname;
     public Parameter value;
@@ -131,24 +94,11 @@ public class KielerIO extends TypedAtomicActor {
      */
     public TypedIOPort trigger;
 
-    /**
-     * Set the speed of some tracks using RecordTokens like port={track5={motormode=1,speed=100}
-     * where motormode can be off(0), primary(1), secondary(2) or brake(3) DEFAULT is primary(1) and
-     * speed is a value between 0 .. 100 DEFAULT is 0
-     */
     public TypedIOPort signal;
 
     // /////////////////////////////////////////////////////////////////
     // // public methods ////
 
-    /**
-     * Collect the trigger Token first, then process possible speed, point or signal commands. After
-     * that collect the reed contact values to an ArrayToken. Also do this for the occupied track
-     * states.
-     * 
-     * @exception IllegalActionException
-     *                If calling send() or super.fire() throws it.
-     */
     public void setValue(int value) {
         this.value.setExpression(value + "");
     }
@@ -206,30 +156,15 @@ public class KielerIO extends TypedAtomicActor {
         return true;
     }
 
-    /**
-     * Set the RailwayInterface and open a TCP connection to the Model Railway interface program w/
-     * the given <i>host</i> and <i>port</i> parameters.
-     * 
-     * @exception IllegalActionException
-     *                If the parent class throws it.
-     */
     public void initialize() throws IllegalActionException {
         super.initialize();
     }
 
-    /**
-     * Terminate the TCP connection of the Model Railway interface. Set RI object to null so that
-     * for the next execution a new connection will be made.
-     * 
-     * @exception IllegalActionException
-     *                Not thrown in this base class.
-     */
     public void wrapup() throws IllegalActionException {
         super.wrapup();
     }
 
     // /////////////////////////////////////////////////////////////////
     // // private variables ////
-    // private RailwayInterface RI;
 
 }

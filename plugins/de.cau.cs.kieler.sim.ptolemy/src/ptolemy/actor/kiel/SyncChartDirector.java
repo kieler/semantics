@@ -1,5 +1,4 @@
-/* Base class for directors that have fixed point semantics at each iteration.
-
+/* 
  Copyright (c) 2006-2009 The Regents of the University of California.
  All rights reserved.
  Permission is hereby granted, without written agreement and without
@@ -73,74 +72,17 @@ import ptolemy.kernel.util.StringAttribute;
 import ptolemy.kernel.util.Workspace;
 
 //////////////////////////////////////////////////////////////////////////
-//// FixedPointDirector
+//// SyncChartDirector 
+//// (based on FixedPointDirector by Haiyang Zheng and Edward A. Lee)
 
 /**
- A base class for directors that have fixed point semantics at each
- iteration. An iteration consists of repeated firings of the
- actors controlled by this director until a fixed point is reached.
- An iteration has converged if firing actors will not change signal
- status any more.
- <p>
- At the beginning of each iteration, the status of
- all inputs and outputs is unknown. Upon firing an actor,
- the status of its output signals may become known.  Once the status of
- a signal becomes known, it cannot be changed back to unknown in the
- iteration. This monotonicity constraint ensures the existence and
- uniqueness of the fixed point.
- During an iteration, the prefire() and fire() methods of the controlled
- actors may be repeatedly invoked, but the postfire() method will be
- invoked exactly once after the fixed point has been found.
- The postfire() methods of the contained actors are invoked only
- in the postfire() method of this director, and they are invoked
- in arbitrary order.
- </p><p>
- If the prefire() method of an actor returns false, then this director
- assumes that all the outputs of the actor are absent. The actor has
- declined to fire.
- </p><p>
- Although this director does not require any specific ordering of actor
- firings, a scheduler is used to choose an efficient ordering.
- <p>
- By default, actors are <i>strict</i>, which means that all their
- input signals must be known before the actor can be fired. Here,
- what we mean by "fired" is that prefire() is invoked, and if it
- returns true, then fire() is invoked. Such actors
- will be fired only once in an iteration. A non-strict actor can
- be fired regardless of the status of its inputs, and may be fired
- repeatedly in an iteration if some of the inputs are unknown.
- Once an actor is fired with all its inputs known, it will not
- be fired again in the same iteration.
- A composite actor containing this director is a non-strict actor.
- <p>
- For an actor to be used under the control of this director, it must
- either be strict, or if it is non-strict, it must be monotonic.
- Montonicity implies two constraints on the actor. First, if prefire()
- ever returns true during an iteration, then it will return true
- on all subsequent invocations in the same iteration().
- Second, if either prefire() or fire() call clear() on an output port,
- then no subsequent invocation in the same iteration can call
- put() on the port. If prefire() or fire() call put() on an
- output port with some token, then no subsequent invocation in
- the same iteration can call clear() or put() with a token with
- a different value.
- These constraints ensure determinacy.
- </p><p>
- If <i>synchronizeToRealTime</i> is set to <code>true</code>,
- then the postfire() method stalls until the real time elapsed
- since the model started matches the current time.
- This ensures that the director does not get ahead of real time. However,
- of course, this does not ensure that the director keeps up with real time.
- Note that this synchronization occurs <i>after</i> actors have been fired,
- but before they have been postfired.
- <p>
- This class is based on the original SRDirector, written by Paul Whitaker.
+ This director implements a fixed point iteration for finding 
+ synchronous signal assignments of SyncCharts. This director is based on
+ the FixedPointDirector that was written for Ptolemy II 
+ by Haiyang Zheng and Edward A. Lee.
 
- @author Haiyang Zheng and Edward A. Lee
- @version $Id: FixedPointDirector.java 55890 2009-10-19 00:37:48Z eal $
- @since Ptolemy II 5.2
- @Pt.ProposedRating Green (hyzheng)
- @Pt.AcceptedRating Yellow (eal)
+ @author Christian Motika
+ @Pt.ProposedRating Red (cmot)
  */
 public class SyncChartDirector extends FixedPointDirector {
 
