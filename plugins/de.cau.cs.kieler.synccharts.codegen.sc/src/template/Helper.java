@@ -244,7 +244,7 @@ public final class Helper {
      * @return true if the transition is signal dependent otherwise false
      */
     public static boolean isSignalDependent(final Transition transition) {
-        return (!getSignalDependentStates(transition.getSourceState()).isEmpty());
+        return (!getDependencyOwner(transition.getSourceState()).isEmpty());
     }
 
     private static String getStateNameAnyID(final State state) {
@@ -691,11 +691,6 @@ public final class Helper {
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
             dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
-            /*
-             * TODO for control flow edges too?, but first handle circles
-             */
-            if (edgeType != CONTROL_FLOW_EDGE) {
-            }
         }
 
         // Make a topological sort of the dependency graph.
