@@ -26,6 +26,24 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public final class CancelManager {
 
+    /**
+     * The status of the operation.
+     * 
+     * @author soh
+     * @kieler.rating 2010-02-17 proposed yellow
+     */
+    public enum CancelStatus {
+
+        /** The operation was not canceled. */
+        NOT_CANCELED,
+
+        /** The user canceled the operation. */
+        USER_CANCELED,
+
+        /** The operation was canceled due to an error. */
+        ERROR_CANCELED;
+    }
+
     /** Singleton instance. */
     private static CancelManager instance = null;
 
@@ -42,13 +60,13 @@ public final class CancelManager {
     private static int timeout;
 
     /** True if the iteration was canceled by the user. */
-    private boolean userCanceledIteration = false;
+    private CancelStatus userCanceledIteration = CancelStatus.NOT_CANCELED;
     /** True if the model file was canceled by the user. */
-    private boolean userCanceledModelFile = false;
+    private CancelStatus userCanceledModelFile = CancelStatus.NOT_CANCELED;
     /** True if the execution file was canceled by the user. */
-    private boolean userCanceledExecutionFile = false;
+    private CancelStatus userCanceledExecutionFile = CancelStatus.NOT_CANCELED;
     /** True if the execution was canceled by the user. */
-    private boolean userCanceledExecution = false;
+    private CancelStatus userCanceledExecution = CancelStatus.NOT_CANCELED;
 
     /** The progress monitor that the user might use to cancel. */
     private IProgressMonitor monitor = null;
@@ -79,108 +97,138 @@ public final class CancelManager {
 
     /**
      * Cancel the currently running iteration.
+     * 
+     * @param status
+     *            the status that the operation was canceled with.
      */
-    public void cancelIteration() {
+    public void cancelIteration(final CancelStatus status) {
+
         if (AutomationManager.getInstance().isRunning()) {
-            userCanceledIteration = true;
+            userCanceledIteration = status;
         }
     }
 
     /**
      * Determine whether or not the current iteration should be skipped.
      * 
-     * @return true if it should be skipped
+     * @return the status of the operation
      */
-    protected boolean isIterationCanceled() {
-        return isModelFileCanceled() || userCanceledIteration;
+    protected CancelStatus isIterationCanceled() {
+        CancelStatus result = isModelFileCanceled();
+        if (result == CancelStatus.NOT_CANCELED) {
+            result = userCanceledIteration;
+        }
+        return result;
     }
 
     /**
      * Reset the cancel conditions.
      */
     protected void resetIterationCancel() {
-        userCanceledIteration = false;
+        userCanceledIteration = CancelStatus.NOT_CANCELED;
     }
 
     // --------------------------------------------------------------------------
 
     /**
      * Cancel the currently running model file.
+     * 
+     * @param status
+     *            the status of the operation
      */
-    public void cancelModelFile() {
+    public void cancelModelFile(final CancelStatus status) {
         if (AutomationManager.getInstance().isRunning()) {
-            userCanceledModelFile = true;
+            userCanceledModelFile = status;
         }
     }
 
     /**
      * Determine whether or not the current model file should be skipped.
      * 
-     * @return true if it should be skipped
+     * @return the status of the operation
      */
-    protected boolean isModelFileCanceled() {
-        return isExecutionFileCanceled() || userCanceledModelFile;
+    protected CancelStatus isModelFileCanceled() {
+        CancelStatus result = isExecutionFileCanceled();
+        if (result == CancelStatus.NOT_CANCELED) {
+            result = userCanceledModelFile;
+        }
+        return result;
     }
 
     /**
      * Reset the cancel conditions.
      */
     protected void resetModelFileCancel() {
-        userCanceledModelFile = false;
+        userCanceledModelFile = CancelStatus.NOT_CANCELED;
     }
 
     // --------------------------------------------------------------------------
 
     /**
      * Cancel the currently running execution file.
+     * 
+     * @param status
+     *            the status of the operation
      */
-    public void cancelExecutionFile() {
+    public void cancelExecutionFile(final CancelStatus status) {
         if (AutomationManager.getInstance().isRunning()) {
-            userCanceledExecutionFile = true;
+            userCanceledExecutionFile = status;
         }
     }
 
     /**
      * Determine whether or not the current execution file should be skipped.
      * 
-     * @return true if it should be skipped
+     * @return the status of the operation
      */
-    protected boolean isExecutionFileCanceled() {
-        return isExecutionCanceled() || userCanceledExecutionFile;
+    protected CancelStatus isExecutionFileCanceled() {
+        CancelStatus result = isExecutionCanceled();
+        if (result == CancelStatus.NOT_CANCELED) {
+            result = userCanceledExecutionFile;
+        }
+        return result;
     }
 
     /**
      * Reset the cancel conditions.
      */
     protected void resetExecutionFileCancel() {
-        userCanceledExecutionFile = false;
+        userCanceledExecutionFile = CancelStatus.NOT_CANCELED;
     }
 
     // --------------------------------------------------------------------------
 
     /**
      * Cancel the currently running execution.
+     * 
+     * @param status
+     *            the status of the operation
      */
-    public void cancelExecution() {
+    public void cancelExecution(final CancelStatus status) {
         if (AutomationManager.getInstance().isRunning()) {
-            userCanceledExecution = true;
+            userCanceledExecution = status;
         }
     }
 
     /**
      * Determine whether or not the entire execution should be canceled.
      * 
-     * @return true if it should be canceled
+     * @return the status of the operation
      */
-    protected boolean isExecutionCanceled() {
-        return monitor.isCanceled() || userCanceledExecution;
+    protected CancelStatus isExecutionCanceled() {
+        CancelStatus result = monitor.isCanceled() ? CancelStatus.USER_CANCELED
+                : CancelStatus.NOT_CANCELED;
+        if (result == CancelStatus.NOT_CANCELED) {
+            result = userCanceledExecution;
+        }
+        return result;
     }
 
     /**
      * Reset the cancel conditions.
      */
     protected void resetExecutionCancel() {
-        userCanceledExecution = false;
+        userCanceledExecution = CancelStatus.NOT_CANCELED;
     }
 
     /**
@@ -241,8 +289,11 @@ public final class CancelManager {
             boolean aborted = false;
             while (!aborted) {
                 long dif = System.currentTimeMillis() - startTime;
-                aborted = CancelManager.getInstance().isExecutionCanceled()
-                        || canceled || dif > timeout;
+                CancelStatus status = CancelManager.getInstance()
+                        .isExecutionCanceled();
+                boolean cancel = status != CancelStatus.NOT_CANCELED;
+
+                aborted = cancel || canceled || dif > timeout;
 
                 try {
                     // wait a while before trying again

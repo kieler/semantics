@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.automated.ui;
 import org.eclipse.jface.action.IAction;
 
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager;
+import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.CancelStatus;
 
 /**
  * Action for skipping the currently running iteration.
@@ -29,7 +30,7 @@ public class SkipIterationAction extends SkipAction {
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-        CancelManager.getInstance().cancelIteration();
+        CancelManager.getInstance().cancelIteration(CancelStatus.USER_CANCELED);
     }
 
 }

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.ComponentResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
+import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.CancelStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecker;
 import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
 import de.cau.cs.kieler.sim.kiem.automated.views.ExecutionFilePanel;
@@ -91,9 +92,6 @@ public final class AutomationManager implements StatusListener {
 
     /** The monitor that is monitoring the progress of the current execution. */
     private IProgressMonitor monitor;
-
-    /** Indicates that an error has occurred. */
-    private boolean error = false;
 
     // --------------------------------------------------------------------------
 
@@ -246,7 +244,7 @@ public final class AutomationManager implements StatusListener {
 
                 executeExecutionFile(modelFiles, properties, results, execution);
 
-                if (CancelManager.getInstance().isExecutionCanceled()) {
+                if (CancelManager.getInstance().isExecutionCanceled() != CancelStatus.NOT_CANCELED) {
                     CancelManager.getInstance().resetExecutionCancel();
                     break;
                 }
@@ -318,7 +316,7 @@ public final class AutomationManager implements StatusListener {
 
             // update progress
             monitor.worked(1);
-            if (CancelManager.getInstance().isExecutionFileCanceled()) {
+            if (CancelManager.getInstance().isExecutionFileCanceled() != CancelStatus.NOT_CANCELED) {
                 CancelManager.getInstance().resetExecutionFileCancel();
                 break;
             }
@@ -348,7 +346,7 @@ public final class AutomationManager implements StatusListener {
             final List<IterationResult> results, final IPath execution,
             final boolean firstModelFirstRun, final IPath model) {
         boolean result = firstModelFirstRun;
-
+        CancelManager manager = CancelManager.getInstance();
         // the index of the current iteration
         int iteration = 0;
 
@@ -364,8 +362,8 @@ public final class AutomationManager implements StatusListener {
             cachedResults.add(noRunsResult);
         }
 
-        while (remainingRuns-- > 0
-                && !CancelManager.getInstance().isModelFileCanceled()) {
+        boolean canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
+        while (remainingRuns-- > 0 && !canceled) {
 
             // update progress
             monitor.subTask(execution.toOSString() + " : " + model.toOSString()
@@ -385,14 +383,18 @@ public final class AutomationManager implements StatusListener {
             executeIteration();
 
             if (currentResult.getStatus() != IterationStatus.ERROR) {
-                if (CancelManager.getInstance().isIterationCanceled()) {
-                    // user canceled the iteration
-                    currentResult.setStatus(IterationStatus.ABORTED);
-                    CancelManager.getInstance().resetIterationCancel();
-                } else {
-                    // iteration completed normally
+                switch (manager.isIterationCanceled()) {
+                case NOT_CANCELED:
                     currentResult.setStatus(IterationStatus.DONE);
+                    break;
+                case USER_CANCELED:
+                    currentResult.setStatus(IterationStatus.ABORTED);
+                    break;
+                case ERROR_CANCELED:
+                    currentResult.setStatus(IterationStatus.ERROR);
+                    break;
                 }
+                manager.resetIterationCancel();
                 if (result) {
                     // add after run to ensure that all columns
                     // contributed by producers are filled
@@ -408,8 +410,8 @@ public final class AutomationManager implements StatusListener {
             // update the view through the display thread
             refreshView();
 
-            if (remainingRuns == 0
-                    && !CancelManager.getInstance().isModelFileCanceled()) {
+            canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
+            if (remainingRuns == 0 && !canceled) {
                 // estimated number of runs finished, ask again
                 remainingRuns = askForMoreRuns();
             }
@@ -428,7 +430,6 @@ public final class AutomationManager implements StatusListener {
     private void executeIteration() {
         Execution exec = null;
         stepDoneMutex = new Semaphore(0);
-        error = false;
         // start the thread for checking for timeouts, monitor canceling,...
         monitorChecker = new MonitorChecker();
         monitorChecker.start();
@@ -444,8 +445,9 @@ public final class AutomationManager implements StatusListener {
 
                 // step until no component wants another step
                 int remainingSteps = askForMoreSteps();
-                while (remainingSteps-- > 0
-                        && !CancelManager.getInstance().isIterationCanceled()) {
+                boolean keepStepping = CancelManager.getInstance()
+                        .isIterationCanceled() == CancelStatus.NOT_CANCELED;
+                while (remainingSteps-- > 0 && keepStepping) {
                     try {
                         // reset the timeout
                         monitorChecker.reset();
@@ -458,9 +460,9 @@ public final class AutomationManager implements StatusListener {
                         e0.printStackTrace();
                     }
 
-                    if (remainingSteps == 0
-                            && !CancelManager.getInstance()
-                                    .isIterationCanceled()) {
+                    keepStepping = CancelManager.getInstance()
+                            .isIterationCanceled() == CancelStatus.NOT_CANCELED;
+                    if (remainingSteps == 0 && keepStepping) {
                         // ask components for another step or abort
                         remainingSteps = askForMoreSteps();
                     }
@@ -759,22 +761,27 @@ public final class AutomationManager implements StatusListener {
     // --------------------------------------------------------------------------
 
     /**
-     * Tell the execution manager that the execution was paused due to an error.
+     * Tell the automation manager that the execution was paused due to an
+     * error.
      */
     public void notifyOnErrorPause() {
-        // TODO: determine semantics
+        // abort iteration
+        CancelManager.getInstance()
+                .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
 
     /**
-     * Tell the execution manager that the execution was stopped due to an
+     * Tell the automation manager that the execution was stopped due to an
      * error.
      */
     public void notifyOnErrorStop() {
-        // TODO: determine semantics
+        // abort iteration
+        CancelManager.getInstance()
+                .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
 
     /**
-     * Tell the execution manager that a step was processed and that the
+     * Tell the automation manager that a step was processed and that the
      * execution can resume.
      */
     public void notifyOnStepFinished() {
@@ -795,17 +802,18 @@ public final class AutomationManager implements StatusListener {
     }
 
     /**
-     * Tell the execution manager that the user paused the execution.
+     * Tell the automation manager that the user paused the execution.
      */
     public void notifyOnUserPause() {
-        // TODO: determine semantics
+        // can't determine what to do since automation will try to proceed.
+        // don't want to lock up by pausing
     }
 
     /**
-     * Tell the execution manager that the user stopped the execution.
+     * Tell the automation manager that the user stopped the execution.
      */
     public void notifyOnUserStop() {
-        // TODO: determine semantics
+        // normal termination, do nothing
     }
 
     // --------------------------------------------------------------------------
@@ -836,7 +844,8 @@ public final class AutomationManager implements StatusListener {
         // those are probably really bad... don't want to filter
         // furthermore those hopefully were not triggered due to the execution
         if (!pluginId.contains("org.eclipse")) {
-            CancelManager.getInstance().cancelIteration();
+            CancelManager.getInstance().cancelIteration(
+                    CancelStatus.ERROR_CANCELED);
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;
