@@ -14,7 +14,7 @@
         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
      <content
            class="de.cau.cs.kieler.sim.esi.EsoComponent"
-           id="de.cau.cs.kieler.sim.esi.verify"
+           id="de.cau.cs.kieler.sim.esi.eso"
            name="Esi writer">
      </content>
   </extension>
