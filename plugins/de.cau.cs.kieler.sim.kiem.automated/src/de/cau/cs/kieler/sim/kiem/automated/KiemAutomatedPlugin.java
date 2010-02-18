@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.automated;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -147,13 +148,21 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     // --------------------------------------------------------------------------
 
     /**
+     * Getter for the imageDescriptor for this plug-in.
+     * 
+     * @return the image
+     */
+    public static ImageDescriptor getAutoImageDescriptor() {
+        return imageDescriptorFromPlugin(PLUGIN_ID, AUTO_IMAGE_PATH);
+    }
+
+    /**
      * Getter for the image for this plug-in.
      * 
      * @return the image
      */
     public static Image getAutoImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, AUTO_IMAGE_PATH)
-                .createImage();
+        return getAutoImageDescriptor().createImage();
     }
 
     /**

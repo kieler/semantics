@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.config.extension;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
@@ -32,5 +33,12 @@ public final class ContributionsProvider implements IKiemToolbarContributor {
      */
     public ControlContribution[] provideToolbarContributions(final Object info) {
         return ContributionManager.getInstance().getContributions();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Action[] provideToolbarActions(final Object info) {
+        return null;
     }
 }

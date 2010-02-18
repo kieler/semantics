@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 
 /**
@@ -48,4 +49,21 @@ public interface IKiemToolbarContributor {
      * @return the list of controls that should be contributed.
      */
     ControlContribution[] provideToolbarContributions(Object info);
+
+    /**
+     * <p>
+     * The plugin will add the components from left to right in the order that
+     * the contributors are stored in the extension registry. KIEM's own
+     * controls will be added after the contributed components have been added.
+     * </p>
+     * <p>
+     * The array should contain the components in the order that they are
+     * supposed to be added, null values will be ignored.
+     * </p>
+     * 
+     * @param info
+     *            may hold some information.
+     * @return the list of controls that should be contributed.
+     */
+    Action[] provideToolbarActions(Object info);
 }

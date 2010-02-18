@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kiem.automated.extension;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.ui.menus.AbstractContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
@@ -20,13 +21,12 @@ import org.eclipse.ui.services.IServiceLocator;
 
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
 import de.cau.cs.kieler.sim.kiem.automated.execution.AutomationManager;
-import de.cau.cs.kieler.sim.kiem.automated.ui.AutomatedExecutionButton;
-import de.cau.cs.kieler.sim.kiem.automated.ui.ClearViewButton;
+import de.cau.cs.kieler.sim.kiem.automated.ui.OpenWizardAction;
 
 /**
- * The toolbar contributor is responsible for providing the button that is added
- * to the toolbar of the KIEM. It also creates the button that is added to the
- * toolbar of the view.
+ * The toolbar contributor is responsible for providing the wizardAction that is
+ * added to the toolbar of the KIEM. It also creates the wizardAction that is
+ * added to the toolbar of the view.
  * 
  * @author soh
  * @kieler.rating 2010-01-29 proposed yellow
@@ -34,8 +34,8 @@ import de.cau.cs.kieler.sim.kiem.automated.ui.ClearViewButton;
 public class ToolbarContributor extends AbstractContributionFactory implements
         IKiemToolbarContributor {
 
-    /** The automated execution button. */
-    private AutomatedExecutionButton button;
+    /** The automated execution wizardAction. */
+    private OpenWizardAction wizardAction;
 
     // --------------------------------------------------------------------------
 
@@ -53,12 +53,18 @@ public class ToolbarContributor extends AbstractContributionFactory implements
      * {@inheritDoc}
      */
     public ControlContribution[] provideToolbarContributions(final Object info) {
-        // for the extension point in the KIEM
-        ControlContribution[] result = new ControlContribution[1];
-        if (button == null) {
-            button = new AutomatedExecutionButton("AutomatedExecutionButton0");
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Action[] provideToolbarActions(final Object info) {
+        Action[] result = new Action[1];
+        if (wizardAction == null) {
+            wizardAction = new OpenWizardAction();
         }
-        result[0] = button;
+        result[0] = wizardAction;
         return result;
     }
 
@@ -73,9 +79,6 @@ public class ToolbarContributor extends AbstractContributionFactory implements
         // for directly adding to the views toolbar
         additions.addContributionItem(AutomationManager.getInstance()
                 .getStepTextField(), null);
-        additions.addContributionItem(new ClearViewButton("ClearViewButton1"),
-                null);
-        additions.addContributionItem(new AutomatedExecutionButton(
-                "AutomatedExecutionButton1"), null);
     }
+
 }

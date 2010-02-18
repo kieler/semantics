@@ -148,33 +148,33 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private KiemPlugin kIEMInstance;
 
     /** The Constant columnBoundsCollapsed - no properties visible. */
-    public static final int[] COLUMN_BOUNDS_COLLAPSED = { 250, 0, 20, 120, 50,
+    private static final int[] COLUMN_BOUNDS_COLLAPSED = { 250, 0, 20, 120, 50,
             50 };
 
     /** The Constant columnBounds - properties visible. */
-    public static final int[] COLUMN_BOUNDS = { 250, 200, 20, 120, 50, 50 };
+    private static final int[] COLUMN_BOUNDS = { 250, 200, 20, 120, 50, 50 };
 
     /** The column property user defined width, initially -1. */
     private int columnProperty = -1;
 
     /** The Constant columnTitlesCollapsed - properties not visible. */
-    public static final String[] COLUMN_TITLES_COLLAPSED = {
+    private static final String[] COLUMN_TITLES_COLLAPSED = {
             Messages.mTableComponentName, Messages.mTableValue,
             Messages.mTableEnabled, Messages.mTableType, Messages.mTableMaster };
 
     /** The Constant columnTitles - properties visible. */
-    public static final String[] COLUMN_TITLES = {
+    private static final String[] COLUMN_TITLES = {
             Messages.mTableComponentNameKey, Messages.mTableValue,
             Messages.mTableEnabled, Messages.mTableType, Messages.mTableMaster };
 
     /** The Constant columnToolTipCollapsed - properties not visible. */
-    public static final String[] COLUMN_TOOLTIP_COLLAPSED = {
+    private static final String[] COLUMN_TOOLTIP_COLLAPSED = {
             Messages.mTableHintComponentName, Messages.mTableHintValue,
             Messages.mTableHintEnabled, Messages.mTableHintType,
             Messages.mTableHintMaster };
 
     /** The Constant columnToolTip - properties visible. */
-    public static final String[] COLUMN_TOOLTIP = {
+    private static final String[] COLUMN_TOOLTIP = {
             Messages.mTableHintComponentNameKey, Messages.mTableHintValue,
             Messages.mTableHintEnabled, Messages.mTableHintType,
             Messages.mTableHintMaster };
@@ -581,12 +581,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         }
                     }
                 }
+
+                Action[] actions = contributor.provideToolbarActions(null);
+
+                if (actions != null) {
+                    for (Action contribution : actions) {
+                        if (contribution != null) {
+                            manager.add(contribution);
+                        }
+                    }
+                }
             } catch (CoreException e0) {
                 // TODO Auto-generated catch block
                 e0.printStackTrace();
             }
         }
-
     }
 
     // -------------------------------------------------------------------------
@@ -625,9 +634,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         dlg.open();
         if (dlg.getReturnCode() == InputDialog.OK) {
             return dlg.getValue();
-        } else {
-            return null;
         }
+        return null;
     }
 
     // -------------------------------------------------------------------------

@@ -1,0 +1,61 @@
+% project file
+%
+% introduction, analysis and projectmanagement of elevator project
+%
+% owner: ean
+
+\section{Configurations in the KIEM}
+\subsection{Problem Statement}
+
+% introduction
+\begin{frame}[fragile]
+\frametitle{Configurations in the KIEM}
+\begin{itemize}
+  \item Currently:
+  \begin{itemize}
+   \item Properties hard-coded, can only be changed for the current execution,
+can't be saved.
+    \item Execution files scattered all over the workspace, no easy way to find 
+them.
+  \end{itemize}
+  \item Task:
+  \begin{itemize}
+   \item Find a way for execution files to carry their own configuration
+   \item Allow a default configuration, that may override the one saved in the files
+   \item Allow for easier loading of an execution file.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Demonstration}
+\begin{frame}[fragile]
+\frametitle{Demonstration}
+Demonstration
+\end{frame}
+
+\section{Automated Execution in the KIEM}
+\subsection{Problem Statement}
+\begin{frame}[fragile]
+\frametitle{Automated Execution in the KIEM}
+\begin{itemize}
+  \item Currently:
+  \begin{itemize}
+   \item Manually load an execution file, click run, wait for results, manually open next\dots
+    \item DataComponents can't be programmed in a generic way
+  \end{itemize}
+  \item Task:
+  \begin{itemize}
+   \item Automate the entire execution process
+    \item Allow multiple combinations of model file and execution files to be run multiple 
+times
+    \item Give DataComponents input on each part of the automated run
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Demonstration}
+\begin{frame}[fragile]
+\frametitle{Demonstration}
+Demonstration
+\end{frame}
+
