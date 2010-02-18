@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.interfacedeclparser;bundle-version="1.0.0",
  de.cau.cs.kieler.core.model;bundle-version="1.0.0",
- de.cau.cs.kieler.core.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
+ org.junit4
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.synccharts.interfacedeclparser.bridge

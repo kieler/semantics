@@ -160,11 +160,15 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             final XtextResource theResource) {
         this.injector = theInjector;
         this.rootState = theRootState;
-        // make sure to clone the resource for undo
-        XtextResourceSet rs = EcoreUtil2
+        
+        // in some cases like unit testing old might be null
+        if (theResource != null) {
+            //make sure to clone the resource for undo
+            XtextResourceSet rs = EcoreUtil2
                 .clone(new XtextResourceSet(), theResource.getResourceSet());
-        // TODO check if this is save
-        this.oldResource = (XtextResource) rs.getResources().get(0);
+            //TODO check if this is save
+            this.oldResource = (XtextResource) rs.getResources().get(0);
+        }
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
