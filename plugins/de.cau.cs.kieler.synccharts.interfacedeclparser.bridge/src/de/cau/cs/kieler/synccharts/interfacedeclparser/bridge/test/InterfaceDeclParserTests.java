@@ -17,6 +17,9 @@ package de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.test;
 import java.io.IOException;
 import java.util.List;
 
+import junit.framework.TestCase;
+import junit.textui.TestRunner;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
@@ -26,8 +29,8 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import org.eclipse.ui.internal.commands.WorkbenchCommandSupport;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.internal.runners.TestMethod;
 
 import com.google.inject.Injector;
 
@@ -197,28 +200,84 @@ public class InterfaceDeclParserTests {
         // serialize empty state
         Command c1 = idpw.getCanonialSerializeCommand(rootState);
         c1.execute();
-        System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
-                + rootState.getSignals().size());
+        //System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
+        //        + rootState.getSignals().size());
         Signal sig1 = generateRandomSignal("sig1");
         rootState.getSignals().add(sig1);
         Command c2 = idpw.getCanonialSerializeCommand(rootState);
         c2.execute();
-        System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
-                + rootState.getSignals().size());
+        //System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
+        //        + rootState.getSignals().size());
         c2.undo();
-        System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
-                + rootState.getSignals().size());
+        //System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
+        //        + rootState.getSignals().size());
         Signal sig2 = generateRandomSignal("sig2");
         rootState.getSignals().add(sig2);
         c2 = idpw.getCanonialSerializeCommand(rootState);
         c2.execute();
-        System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
-                + rootState.getSignals().size());
+        //System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
+        //        + rootState.getSignals().size());
         c2.undo();
-        System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
-                + rootState.getSignals().size());
+        //System.out.println("#" + rootState.getInterfaceDeclaration() + "#"
+        //       + rootState.getSignals().size());
+    }
+    
+    @Test
+    public void workflow() throws Exception {
+        rootState.setInterfaceDeclaration("signal A, B, C; // signals\n"+"R0: var D, E, F; // vars");
+        assertEquals(0, rootState.getSignals().size());
+        assertEquals(0, rootState.getRegions().get(0).getVariables().size());
+        assertEquals(0, rootState.getRegions().get(0).getSignals().size());
+        
+        Command c1 = idpw.getParseCommand(rootState);
+        c1.execute();
+        assertEquals(3, rootState.getSignals().size());
+        assertEquals(3, rootState.getRegions().get(0).getVariables().size());
+        assertEquals(0, rootState.getRegions().get(0).getSignals().size());
+       
+        Signal moveMe = rootState.getSignals().get(0);
+        rootState.getSignals().remove(moveMe);
+        rootState.getRegions().get(0).getSignals().add(moveMe);
+        Command c2 = idpw.getCanonialSerializeCommand(rootState);
+        c2.execute();
+        asssertContains(rootState.getInterfaceDeclaration(), moveMe.getName());
+        assertEquals(2, rootState.getSignals().size());
+        assertEquals(3, rootState.getRegions().get(0).getVariables().size());
+        assertEquals(1, rootState.getRegions().get(0).getSignals().size());
+        System.out.println(rootState.getInterfaceDeclaration());
+        
+        // undo
+        c2.undo();
+        // this would be caused by a trigger handler, dunno how to get them here right now
+        Command triggerFaker1 = idpw.getParseCommand(rootState);
+        triggerFaker1.execute();
+        asssertContains(rootState.getInterfaceDeclaration(), moveMe.getName());
+        assertEquals(3, rootState.getSignals().size());
+        assertEquals(3, rootState.getRegions().get(0).getVariables().size());
+        assertEquals(0, rootState.getRegions().get(0).getSignals().size());
+        System.out.println(rootState.getInterfaceDeclaration());
+        
+        // change afterwards
+        Signal changeMe = rootState.getSignals().get(2);
+        changeMe.setIsInput(true);
+        changeMe.setInitialValue("23");
+        Command triggerFaker2 = idpw.getCanonialSerializeCommand(rootState);
+        triggerFaker2.execute();
+        asssertContains(rootState.getInterfaceDeclaration(), changeMe.getName());
+        assertEquals(3, rootState.getSignals().size());
+        assertEquals(3, rootState.getRegions().get(0).getVariables().size());
+        assertEquals(0, rootState.getRegions().get(0).getSignals().size());        
     }
 
+    // since extends TestCase causes problems
+    private void assertEquals(int a, int b) throws Exception {
+        if (a != b) throw new KielerException(a + " != " + b);
+    }
+    
+    private void asssertContains(String haystack, String needle) throws Exception {
+        if (haystack.indexOf(needle) < 0) throw new KielerException(needle + " not found in " + haystack);
+    }
+    
     private Signal generateRandomSignal(String name) {
         Signal sig = SyncchartsFactory.eINSTANCE.createSignal();
         if (Math.random() < 0.5) {
