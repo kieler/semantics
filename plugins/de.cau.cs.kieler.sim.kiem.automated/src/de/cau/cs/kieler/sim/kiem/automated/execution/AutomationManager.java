@@ -141,7 +141,7 @@ public final class AutomationManager implements StatusListener {
         for (IAutomatedComponent comp : getRelevantComponents()) {
             String[] extensions = comp.getSupportedExtensions();
 
-            if (extensions != null && !(extensions.length == 0)) {
+            if (extensions != null && extensions.length > 0) {
                 for (String extension : extensions) {
                     String s = (extension.startsWith(".") ? extension
                             .substring(1) : extension).trim();
@@ -150,7 +150,6 @@ public final class AutomationManager implements StatusListener {
                     }
                 }
             }
-
         }
 
         return result;
@@ -237,6 +236,10 @@ public final class AutomationManager implements StatusListener {
         // store the currently opened file.
         IPath currentFile = KiemPlugin.getDefault().getKIEMViewInstance()
                 .getCurrentFile();
+        Execution exec = KiemPlugin.getDefault().getExecution();
+        if (exec != null) {
+            exec.stopExecutionSync();
+        }
 
         // register as error listener to avoid pop-ups during run
         KiemAutomatedPlugin.addErrorListener(this);
@@ -473,7 +476,6 @@ public final class AutomationManager implements StatusListener {
             }
         } catch (RuntimeException e0) {
             // something bad happened, try to continue
-            e0.printStackTrace();
             currentResult.setStatus(IterationStatus.ERROR);
         } finally {
             // setup results
