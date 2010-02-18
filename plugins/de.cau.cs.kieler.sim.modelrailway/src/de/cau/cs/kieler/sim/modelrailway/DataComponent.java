@@ -95,27 +95,66 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	public static String getLibLocation() {
 		try {
-			URL url = Activator.getDefault().getBundle().getResource(
-			"/lib/railway.dll");
-			String path = (org.eclipse.core.runtime.FileLocator
-					.toFileURL(url)).toString();
-			if (Platform.isLinux() || Platform.isSolaris()) {
-				path = "/" + (org.eclipse.core.runtime.FileLocator
-						.toFileURL(Activator.getDefault().getBundle()
-								.getResource("/lib/railway.so"))).toString();
-
-			} else
-			if (Platform.isMac()) {
+//			URL url = Activator.getDefault().getBundle().getResource(
+//			"/lib/railway.dll");
+			String path = ""; 
+//				(org.eclipse.core.runtime.FileLocator
+//					.toFileURL(url)).toString();
+			if (Platform.isWindows()) {
 				if (Platform.is64Bit()) {
-				path = "/" + (org.eclipse.core.runtime.FileLocator
-						.toFileURL(Activator.getDefault().getBundle()
-								.getResource("/lib/railway.dylib64"))).toString();
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.dll64")))
+									.toString();
 				} else {
-					path = "/" + (org.eclipse.core.runtime.FileLocator
-						.toFileURL(Activator.getDefault().getBundle()
-								.getResource("/lib/railway.dylib"))).toString();
-				} 
-
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.dll")))
+									.toString();
+				}
+			} else if (Platform.isLinux()) {
+				if (Platform.is64Bit()) {
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.so64")))
+									.toString();
+				} else {
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.so")))
+									.toString();
+				}
+			} else if (Platform.isMac()) {
+				if (Platform.is64Bit()) {
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.dylib64")))
+									.toString();
+				} else {
+					path = "/"
+							+ (org.eclipse.core.runtime.FileLocator
+									.toFileURL(Activator.getDefault()
+											.getBundle().getResource(
+													"/lib/railway.dylib")))
+									.toString();
+				}
+			} else if (Platform.isSolaris()) {
+				path = "/"
+					+ (org.eclipse.core.runtime.FileLocator
+							.toFileURL(Activator.getDefault()
+									.getBundle().getResource(
+											"/lib/railway.solaris")))
+							.toString();
 			}
 			path = path.replaceFirst("file:/", "");
 			System.out.println(path);
