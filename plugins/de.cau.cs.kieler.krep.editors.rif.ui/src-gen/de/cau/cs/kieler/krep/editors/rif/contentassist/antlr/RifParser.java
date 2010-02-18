@@ -53,7 +53,7 @@ public class RifParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTickAccess().getInputAssignment_3(), "rule__Tick__InputAssignment_3");
 					put(grammarAccess.getTickAccess().getOutputAssignment_5(), "rule__Tick__OutputAssignment_5");
 					put(grammarAccess.getTickAccess().getLocalAssignment_7(), "rule__Tick__LocalAssignment_7");
-					put(grammarAccess.getDataAccess().getIntValAssignment_0(), "rule__Data__IntValAssignment_0");
+					put(grammarAccess.getDataAccess().getValAssignment_0(), "rule__Data__ValAssignment_0");
 					put(grammarAccess.getDataAccess().getTrueAssignment_1(), "rule__Data__TrueAssignment_1");
 					put(grammarAccess.getDataAccess().getFalseAssignment_2(), "rule__Data__FalseAssignment_2");
 				}

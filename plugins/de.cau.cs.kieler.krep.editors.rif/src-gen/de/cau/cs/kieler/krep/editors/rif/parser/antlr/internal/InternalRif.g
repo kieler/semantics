@@ -482,9 +482,9 @@ ruleData returns [EObject current=null]
     }:
 ((
 (
-		lv_intVal_0_0=RULE_INT
+		lv_val_0_0=RULE_INT
 		{
-			createLeafNode(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0(), "intVal"); 
+			createLeafNode(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0(), "val"); 
 		}
 		{
 	        if ($current==null) {
@@ -494,8 +494,8 @@ ruleData returns [EObject current=null]
 	        try {
 	       		set(
 	       			$current, 
-	       			"intVal",
-	        		lv_intVal_0_0, 
+	       			"val",
+	        		lv_val_0_0, 
 	        		"INT", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -519,7 +519,7 @@ ruleData returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "true", true, "T", lastConsumedNode);
+	       		set($current, "true", lv_true_1_0, "T", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -541,7 +541,7 @@ ruleData returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "false", true, "F", lastConsumedNode);
+	       		set($current, "false", lv_false_2_0, "F", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }

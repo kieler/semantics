@@ -26,7 +26,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Rif.ecore#//Tick/local"/>
     </genClasses>
     <genClasses ecoreClass="Rif.ecore#//Data">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/intVal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/val"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/true"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Rif.ecore#//Data/false"/>
     </genClasses>

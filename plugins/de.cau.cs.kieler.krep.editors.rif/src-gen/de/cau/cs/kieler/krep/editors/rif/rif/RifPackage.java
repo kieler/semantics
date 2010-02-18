@@ -217,13 +217,13 @@ public interface RifPackage extends EPackage
   int DATA = 3;
 
   /**
-   * The feature id for the '<em><b>Int Val</b></em>' attribute.
+   * The feature id for the '<em><b>Val</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DATA__INT_VAL = 0;
+  int DATA__VAL = 0;
 
   /**
    * The feature id for the '<em><b>True</b></em>' attribute.
@@ -404,33 +404,33 @@ public interface RifPackage extends EPackage
   EClass getData();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getIntVal <em>Int Val</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getVal <em>Val</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Int Val</em>'.
-   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#getIntVal()
+   * @return the meta object for the attribute '<em>Val</em>'.
+   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#getVal()
    * @see #getData()
    * @generated
    */
-  EAttribute getData_IntVal();
+  EAttribute getData_Val();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isTrue <em>True</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getTrue <em>True</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>True</em>'.
-   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#isTrue()
+   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#getTrue()
    * @see #getData()
    * @generated
    */
   EAttribute getData_True();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isFalse <em>False</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getFalse <em>False</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>False</em>'.
-   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#isFalse()
+   * @see de.cau.cs.kieler.krep.editors.rif.rif.Data#getFalse()
    * @see #getData()
    * @generated
    */
@@ -580,12 +580,12 @@ public interface RifPackage extends EPackage
     EClass DATA = eINSTANCE.getData();
 
     /**
-     * The meta object literal for the '<em><b>Int Val</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute DATA__INT_VAL = eINSTANCE.getData_IntVal();
+    EAttribute DATA__VAL = eINSTANCE.getData_Val();
 
     /**
      * The meta object literal for the '<em><b>True</b></em>' attribute feature.

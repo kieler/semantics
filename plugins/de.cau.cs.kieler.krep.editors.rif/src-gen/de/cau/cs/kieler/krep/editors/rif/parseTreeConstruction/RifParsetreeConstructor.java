@@ -871,11 +871,29 @@ protected class Tick_LocalAssignment_7 extends AssignmentToken  {
 /************ begin Rule Data ****************
  *
  * Data:
- *   intVal=INT|true?="T"|false?="F";
+ *   val=INT|true="T"|false="F"; 
+ * 
+ *       
+ *           
+ *            
+ *         
+ *         
+ *    / *     Bool returns ecore::EInt: 'T' {$=1} 
+ *         | false?='F' 
+ *         ;* /
  *
  **/
 
-// intVal=INT|true?="T"|false?="F"
+// val=INT|true="T"|false="F" 
+// 
+//       
+//           
+//            
+//         
+//         
+//    / *     Bool returns ecore::EInt: 'T' {$=1} 
+//         | false?='F' 
+//         ;* /
 protected class Data_Alternatives extends AlternativesToken {
 
 	public Data_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -890,7 +908,7 @@ protected class Data_Alternatives extends AlternativesToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Data_IntValAssignment_0(parent, this, 0, inst);
+			case 0: return new Data_ValAssignment_0(parent, this, 0, inst);
 			case 1: return new Data_TrueAssignment_1(parent, this, 1, inst);
 			case 2: return new Data_FalseAssignment_2(parent, this, 2, inst);
 			default: return null;
@@ -904,16 +922,16 @@ protected class Data_Alternatives extends AlternativesToken {
 	}
 }
 
-// intVal=INT
-protected class Data_IntValAssignment_0 extends AssignmentToken  {
+// val=INT
+protected class Data_ValAssignment_0 extends AssignmentToken  {
 	
-	public Data_IntValAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Data_ValAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getDataAccess().getIntValAssignment_0();
+		return grammarAccess.getDataAccess().getValAssignment_0();
 	}
 
     @Override
@@ -925,11 +943,11 @@ protected class Data_IntValAssignment_0 extends AssignmentToken  {
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("intVal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("intVal");
+		if((value = current.getConsumable("val",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("val");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0();
+			element = grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -937,7 +955,7 @@ protected class Data_IntValAssignment_0 extends AssignmentToken  {
 
 }
 
-// true?="T"
+// true="T"
 protected class Data_TrueAssignment_1 extends AssignmentToken  {
 	
 	public Data_TrueAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -960,7 +978,7 @@ protected class Data_TrueAssignment_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("true",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("true");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if("T".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
 			element = grammarAccess.getDataAccess().getTrueTKeyword_1_0();
 			return obj;
@@ -970,7 +988,7 @@ protected class Data_TrueAssignment_1 extends AssignmentToken  {
 
 }
 
-// false?="F"
+// false="F"
 protected class Data_FalseAssignment_2 extends AssignmentToken  {
 	
 	public Data_FalseAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -993,7 +1011,7 @@ protected class Data_FalseAssignment_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("false",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("false");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if("F".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
 			element = grammarAccess.getDataAccess().getFalseFKeyword_2_0();
 			return obj;

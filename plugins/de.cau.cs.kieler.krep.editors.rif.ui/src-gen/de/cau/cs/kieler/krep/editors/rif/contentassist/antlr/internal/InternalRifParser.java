@@ -587,13 +587,13 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Data__Alternatives
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:254:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:254:1: rule__Data__Alternatives : ( ( ( rule__Data__ValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );
     public final void rule__Data__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:258:1: ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:258:1: ( ( ( rule__Data__ValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) )
             int alt2=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -613,30 +613,30 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("254:1: rule__Data__Alternatives : ( ( ( rule__Data__IntValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );", 2, 0, input);
+                    new NoViableAltException("254:1: rule__Data__Alternatives : ( ( ( rule__Data__ValAssignment_0 ) ) | ( ( rule__Data__TrueAssignment_1 ) ) | ( ( rule__Data__FalseAssignment_2 ) ) );", 2, 0, input);
 
                 throw nvae;
             }
 
             switch (alt2) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__IntValAssignment_0 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__ValAssignment_0 ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__IntValAssignment_0 ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:260:1: ( rule__Data__IntValAssignment_0 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:259:1: ( ( rule__Data__ValAssignment_0 ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:260:1: ( rule__Data__ValAssignment_0 )
                     {
-                     before(grammarAccess.getDataAccess().getIntValAssignment_0()); 
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:1: ( rule__Data__IntValAssignment_0 )
-                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:2: rule__Data__IntValAssignment_0
+                     before(grammarAccess.getDataAccess().getValAssignment_0()); 
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:1: ( rule__Data__ValAssignment_0 )
+                    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:261:2: rule__Data__ValAssignment_0
                     {
-                    pushFollow(FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives491);
-                    rule__Data__IntValAssignment_0();
+                    pushFollow(FOLLOW_rule__Data__ValAssignment_0_in_rule__Data__Alternatives491);
+                    rule__Data__ValAssignment_0();
                     _fsp--;
 
 
                     }
 
-                     after(grammarAccess.getDataAccess().getIntValAssignment_0()); 
+                     after(grammarAccess.getDataAccess().getValAssignment_0()); 
 
                     }
 
@@ -2539,9 +2539,9 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__Tick__LocalAssignment_7
 
 
-    // $ANTLR start rule__Data__IntValAssignment_0
-    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1043:1: rule__Data__IntValAssignment_0 : ( RULE_INT ) ;
-    public final void rule__Data__IntValAssignment_0() throws RecognitionException {
+    // $ANTLR start rule__Data__ValAssignment_0
+    // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1043:1: rule__Data__ValAssignment_0 : ( RULE_INT ) ;
+    public final void rule__Data__ValAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -2552,9 +2552,9 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1048:1: ( RULE_INT )
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1049:1: RULE_INT
             {
-             before(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); 
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_02036); 
-             after(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); 
+             before(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0()); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Data__ValAssignment_02036); 
+             after(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0()); 
 
             }
 
@@ -2573,7 +2573,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Data__IntValAssignment_0
+    // $ANTLR end rule__Data__ValAssignment_0
 
 
     // $ANTLR start rule__Data__TrueAssignment_1
@@ -2688,7 +2688,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Status__Group__0_in_ruleStatus400 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_15_in_rule__Type__Alternatives437 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_16_in_rule__Type__Alternatives457 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Data__IntValAssignment_0_in_rule__Data__Alternatives491 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Data__ValAssignment_0_in_rule__Data__Alternatives491 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives509 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives527 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INPUTS_in_rule__Trace__Group__0562 = new BitSet(new long[]{0x0000000000020100L});
@@ -2755,7 +2755,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleData_in_rule__Tick__InputAssignment_31943 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51974 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleData_in_rule__Tick__LocalAssignment_72005 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Data__IntValAssignment_02036 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Data__ValAssignment_02036 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_27_in_rule__Data__TrueAssignment_12072 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_28_in_rule__Data__FalseAssignment_22116 = new BitSet(new long[]{0x0000000000000002L});
 

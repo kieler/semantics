@@ -263,7 +263,7 @@ public class RifPackageImpl extends EPackageImpl implements RifPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getData_IntVal()
+  public EAttribute getData_Val()
   {
     return (EAttribute)dataEClass.getEStructuralFeatures().get(0);
   }
@@ -335,7 +335,7 @@ public class RifPackageImpl extends EPackageImpl implements RifPackage
     createEReference(tickEClass, TICK__LOCAL);
 
     dataEClass = createEClass(DATA);
-    createEAttribute(dataEClass, DATA__INT_VAL);
+    createEAttribute(dataEClass, DATA__VAL);
     createEAttribute(dataEClass, DATA__TRUE);
     createEAttribute(dataEClass, DATA__FALSE);
   }
@@ -388,9 +388,9 @@ public class RifPackageImpl extends EPackageImpl implements RifPackage
     initEReference(getTick_Local(), this.getData(), null, "local", null, 0, -1, Tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getData_IntVal(), ecorePackage.getEInt(), "intVal", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getData_True(), ecorePackage.getEBoolean(), "true", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getData_False(), ecorePackage.getEBoolean(), "false", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getData_Val(), ecorePackage.getEInt(), "val", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getData_True(), ecorePackage.getEString(), "true", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getData_False(), ecorePackage.getEString(), "false", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

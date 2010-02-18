@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#getIntVal <em>Int Val</em>}</li>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#isTrue <em>True</em>}</li>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#isFalse <em>False</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#getVal <em>Val</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#getTrue <em>True</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.impl.DataImpl#getFalse <em>False</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,64 +33,64 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class DataImpl extends MinimalEObjectImpl.Container implements Data
 {
   /**
-   * The default value of the '{@link #getIntVal() <em>Int Val</em>}' attribute.
+   * The default value of the '{@link #getVal() <em>Val</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntVal()
+   * @see #getVal()
    * @generated
    * @ordered
    */
-  protected static final int INT_VAL_EDEFAULT = 0;
+  protected static final int VAL_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getIntVal() <em>Int Val</em>}' attribute.
+   * The cached value of the '{@link #getVal() <em>Val</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntVal()
+   * @see #getVal()
    * @generated
    * @ordered
    */
-  protected int intVal = INT_VAL_EDEFAULT;
+  protected int val = VAL_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isTrue() <em>True</em>}' attribute.
+   * The default value of the '{@link #getTrue() <em>True</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isTrue()
+   * @see #getTrue()
    * @generated
    * @ordered
    */
-  protected static final boolean TRUE_EDEFAULT = false;
+  protected static final String TRUE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #isTrue() <em>True</em>}' attribute.
+   * The cached value of the '{@link #getTrue() <em>True</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isTrue()
+   * @see #getTrue()
    * @generated
    * @ordered
    */
-  protected boolean true_ = TRUE_EDEFAULT;
+  protected String true_ = TRUE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isFalse() <em>False</em>}' attribute.
+   * The default value of the '{@link #getFalse() <em>False</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isFalse()
+   * @see #getFalse()
    * @generated
    * @ordered
    */
-  protected static final boolean FALSE_EDEFAULT = false;
+  protected static final String FALSE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #isFalse() <em>False</em>}' attribute.
+   * The cached value of the '{@link #getFalse() <em>False</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isFalse()
+   * @see #getFalse()
    * @generated
    * @ordered
    */
-  protected boolean false_ = FALSE_EDEFAULT;
+  protected String false_ = FALSE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -118,9 +118,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getIntVal()
+  public int getVal()
   {
-    return intVal;
+    return val;
   }
 
   /**
@@ -128,12 +128,12 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIntVal(int newIntVal)
+  public void setVal(int newVal)
   {
-    int oldIntVal = intVal;
-    intVal = newIntVal;
+    int oldVal = val;
+    val = newVal;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RifPackage.DATA__INT_VAL, oldIntVal, intVal));
+      eNotify(new ENotificationImpl(this, Notification.SET, RifPackage.DATA__VAL, oldVal, val));
   }
 
   /**
@@ -141,7 +141,7 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isTrue()
+  public String getTrue()
   {
     return true_;
   }
@@ -151,9 +151,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTrue(boolean newTrue)
+  public void setTrue(String newTrue)
   {
-    boolean oldTrue = true_;
+    String oldTrue = true_;
     true_ = newTrue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RifPackage.DATA__TRUE, oldTrue, true_));
@@ -164,7 +164,7 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isFalse()
+  public String getFalse()
   {
     return false_;
   }
@@ -174,9 +174,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFalse(boolean newFalse)
+  public void setFalse(String newFalse)
   {
-    boolean oldFalse = false_;
+    String oldFalse = false_;
     false_ = newFalse;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RifPackage.DATA__FALSE, oldFalse, false_));
@@ -192,12 +192,12 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case RifPackage.DATA__INT_VAL:
-        return getIntVal();
+      case RifPackage.DATA__VAL:
+        return getVal();
       case RifPackage.DATA__TRUE:
-        return isTrue();
+        return getTrue();
       case RifPackage.DATA__FALSE:
-        return isFalse();
+        return getFalse();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -212,14 +212,14 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case RifPackage.DATA__INT_VAL:
-        setIntVal((Integer)newValue);
+      case RifPackage.DATA__VAL:
+        setVal((Integer)newValue);
         return;
       case RifPackage.DATA__TRUE:
-        setTrue((Boolean)newValue);
+        setTrue((String)newValue);
         return;
       case RifPackage.DATA__FALSE:
-        setFalse((Boolean)newValue);
+        setFalse((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,8 +235,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case RifPackage.DATA__INT_VAL:
-        setIntVal(INT_VAL_EDEFAULT);
+      case RifPackage.DATA__VAL:
+        setVal(VAL_EDEFAULT);
         return;
       case RifPackage.DATA__TRUE:
         setTrue(TRUE_EDEFAULT);
@@ -258,12 +258,12 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case RifPackage.DATA__INT_VAL:
-        return intVal != INT_VAL_EDEFAULT;
+      case RifPackage.DATA__VAL:
+        return val != VAL_EDEFAULT;
       case RifPackage.DATA__TRUE:
-        return true_ != TRUE_EDEFAULT;
+        return TRUE_EDEFAULT == null ? true_ != null : !TRUE_EDEFAULT.equals(true_);
       case RifPackage.DATA__FALSE:
-        return false_ != FALSE_EDEFAULT;
+        return FALSE_EDEFAULT == null ? false_ != null : !FALSE_EDEFAULT.equals(false_);
     }
     return super.eIsSet(featureID);
   }
@@ -279,8 +279,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (intVal: ");
-    result.append(intVal);
+    result.append(" (val: ");
+    result.append(val);
     result.append(", true: ");
     result.append(true_);
     result.append(", false: ");

@@ -206,33 +206,51 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	public class DataElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Data");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cIntValAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cIntValINTTerminalRuleCall_0_0 = (RuleCall)cIntValAssignment_0.eContents().get(0);
+		private final Assignment cValAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cValINTTerminalRuleCall_0_0 = (RuleCall)cValAssignment_0.eContents().get(0);
 		private final Assignment cTrueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final Keyword cTrueTKeyword_1_0 = (Keyword)cTrueAssignment_1.eContents().get(0);
 		private final Assignment cFalseAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final Keyword cFalseFKeyword_2_0 = (Keyword)cFalseAssignment_2.eContents().get(0);
 		
 		//Data:
-		//  intVal=INT|true?="T"|false?="F";
+		//  val=INT|true="T"|false="F"; 
+		//
+		//      
+		//          
+		//           
+		//        
+		//        
+		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+		//        | false?='F' 
+		//        ;* /
 		public ParserRule getRule() { return rule; }
 
-		//intVal=INT|true?="T"|false?="F"
+		//val=INT|true="T"|false="F" 
+		//
+		//      
+		//          
+		//           
+		//        
+		//        
+		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+		//        | false?='F' 
+		//        ;* /
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//intVal=INT
-		public Assignment getIntValAssignment_0() { return cIntValAssignment_0; }
+		//val=INT
+		public Assignment getValAssignment_0() { return cValAssignment_0; }
 
 		//INT
-		public RuleCall getIntValINTTerminalRuleCall_0_0() { return cIntValINTTerminalRuleCall_0_0; }
+		public RuleCall getValINTTerminalRuleCall_0_0() { return cValINTTerminalRuleCall_0_0; }
 
-		//true?="T"
+		//true="T"
 		public Assignment getTrueAssignment_1() { return cTrueAssignment_1; }
 
 		//"T"
 		public Keyword getTrueTKeyword_1_0() { return cTrueTKeyword_1_0; }
 
-		//false?="F"
+		//false="F"
 		public Assignment getFalseAssignment_2() { return cFalseAssignment_2; }
 
 		//"F"
@@ -251,7 +269,11 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSecondKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Status returns ecore::EString:
-		//  "The" "execution" "lasted" INT "." INT "second.";
+		//  "The" "execution" "lasted" INT "." INT "second."; 
+		//        
+		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+		//        | false?='F' 
+		//        ;* /
 		public ParserRule getRule() { return rule; }
 
 		//"The" "execution" "lasted" INT "." INT "second."
@@ -355,7 +377,16 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Data:
-	//  intVal=INT|true?="T"|false?="F";
+	//  val=INT|true="T"|false="F"; 
+	//
+	//      
+	//          
+	//           
+	//        
+	//        
+	//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+	//        | false?='F' 
+	//        ;* /
 	public DataElements getDataAccess() {
 		return (pData != null) ? pData : (pData = new DataElements());
 	}
@@ -365,7 +396,11 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Status returns ecore::EString:
-	//  "The" "execution" "lasted" INT "." INT "second.";
+	//  "The" "execution" "lasted" INT "." INT "second."; 
+	//        
+	//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+	//        | false?='F' 
+	//        ;* /
 	public StatusElements getStatusAccess() {
 		return (pStatus != null) ? pStatus : (pStatus = new StatusElements());
 	}

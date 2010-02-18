@@ -257,9 +257,9 @@ rule__Data__Alternatives
     }
 :
 (
-{ before(grammarAccess.getDataAccess().getIntValAssignment_0()); }
-(rule__Data__IntValAssignment_0)
-{ after(grammarAccess.getDataAccess().getIntValAssignment_0()); }
+{ before(grammarAccess.getDataAccess().getValAssignment_0()); }
+(rule__Data__ValAssignment_0)
+{ after(grammarAccess.getDataAccess().getValAssignment_0()); }
 )
 
     |(
@@ -1040,14 +1040,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Data__IntValAssignment_0
+rule__Data__ValAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); }
-	RULE_INT{ after(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0()); }
+{ before(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0()); }
+	RULE_INT{ after(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0()); }
 )
 
 ;

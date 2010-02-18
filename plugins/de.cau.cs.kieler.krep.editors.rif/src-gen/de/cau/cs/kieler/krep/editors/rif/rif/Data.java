@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getIntVal <em>Int Val</em>}</li>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isTrue <em>True</em>}</li>
- *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isFalse <em>False</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getVal <em>Val</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getTrue <em>True</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getFalse <em>False</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,30 +28,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Data extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Int Val</b></em>' attribute.
+   * Returns the value of the '<em><b>Val</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Int Val</em>' attribute isn't clear,
+   * If the meaning of the '<em>Val</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Int Val</em>' attribute.
-   * @see #setIntVal(int)
-   * @see de.cau.cs.kieler.krep.editors.rif.rif.RifPackage#getData_IntVal()
+   * @return the value of the '<em>Val</em>' attribute.
+   * @see #setVal(int)
+   * @see de.cau.cs.kieler.krep.editors.rif.rif.RifPackage#getData_Val()
    * @model
    * @generated
    */
-  int getIntVal();
+  int getVal();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getIntVal <em>Int Val</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getVal <em>Val</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Int Val</em>' attribute.
-   * @see #getIntVal()
+   * @param value the new value of the '<em>Val</em>' attribute.
+   * @see #getVal()
    * @generated
    */
-  void setIntVal(int value);
+  void setVal(int value);
 
   /**
    * Returns the value of the '<em><b>True</b></em>' attribute.
@@ -62,22 +62,22 @@ public interface Data extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>True</em>' attribute.
-   * @see #setTrue(boolean)
+   * @see #setTrue(String)
    * @see de.cau.cs.kieler.krep.editors.rif.rif.RifPackage#getData_True()
    * @model
    * @generated
    */
-  boolean isTrue();
+  String getTrue();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isTrue <em>True</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getTrue <em>True</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>True</em>' attribute.
-   * @see #isTrue()
+   * @see #getTrue()
    * @generated
    */
-  void setTrue(boolean value);
+  void setTrue(String value);
 
   /**
    * Returns the value of the '<em><b>False</b></em>' attribute.
@@ -88,21 +88,21 @@ public interface Data extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>False</em>' attribute.
-   * @see #setFalse(boolean)
+   * @see #setFalse(String)
    * @see de.cau.cs.kieler.krep.editors.rif.rif.RifPackage#getData_False()
    * @model
    * @generated
    */
-  boolean isFalse();
+  String getFalse();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#isFalse <em>False</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.krep.editors.rif.rif.Data#getFalse <em>False</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>False</em>' attribute.
-   * @see #isFalse()
+   * @see #getFalse()
    * @generated
    */
-  void setFalse(boolean value);
+  void setFalse(String value);
 
 } // Data

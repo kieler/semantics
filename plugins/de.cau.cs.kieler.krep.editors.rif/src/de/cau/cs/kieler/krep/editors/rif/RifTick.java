@@ -50,7 +50,12 @@ public class RifTick implements ITick {
     public List<Signal> getInputs() {
         LinkedList<Signal> res = new LinkedList<Signal>();
         for (int i = 0; i < tick.getInput().size(); i++) {
-            res.add(new Signal(in.get(i).getName()));
+            int val = tick.getInput().get(i).getVal();
+            if (tick.getInput().get(i).getTrue() != null)
+                val = 1;
+            if (tick.getInput().get(i).getFalse() != null)
+                val = 0;
+            res.add(new Signal(in.get(i).getName(), val));
         }
         return res;
     }
@@ -61,7 +66,13 @@ public class RifTick implements ITick {
     public List<Signal> getOutputs() {
         LinkedList<Signal> res = new LinkedList<Signal>();
         for (int i = 0; i < tick.getOutput().size(); i++) {
-            res.add(new Signal(out.get(i).getName()));
+            int val = tick.getOutput().get(i).getVal();
+            if (tick.getOutput().get(i).getTrue() != null)
+                val = 1;
+            if (tick.getOutput().get(i).getFalse() != null)
+                val = 0;
+
+            res.add(new Signal(out.get(i).getName(), val));
         }
         return res;
     }

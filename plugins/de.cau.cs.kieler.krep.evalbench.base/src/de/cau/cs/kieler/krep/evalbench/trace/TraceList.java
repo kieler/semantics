@@ -20,12 +20,16 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import de.cau.cs.kieler.krep.editors.rif.RifFile;
+import de.cau.cs.kieler.krep.editors.rif.RifTrace;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.trace.esi.esiParser;
 import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
  * 
@@ -61,10 +65,23 @@ public class TraceList {
         super();
         traces = new LinkedList<Trace>();
         try {
-            File traceFile = null; 
+            File traceFile = null;
             if ((new File(baseName + ".rif")).exists()) {
                 traceFile = new File(baseName + ".rif");
-                traces.add(rifParser.parse(asm, new FileReader(traceFile)));
+                RifFile rif = new RifFile();
+                RifTrace t = rif.loadTrace(baseName + ".rif").getFirst();
+                LinkedList<Tick> ticks = new LinkedList<Tick>();
+                while (t.hasNext()) {
+                    t.next();
+                    LinkedList<Signal> in = new LinkedList<Signal>();
+                    LinkedList<Signal> out = new LinkedList<Signal>();
+                 //   t.current().getInputs();
+                    ticks.add(new Tick(in, out));
+                }
+
+                traces.add(new Trace(ticks));
+
+                // traces.add(rifParser.parse(asm, new FileReader(traceFile)));
             } else if ((new File(baseName + ".eso")).exists()) {
                 traceFile = new File(baseName + ".eso");
                 traces.addAll(esiParser.parse(asm, new FileReader(traceFile)));
@@ -74,7 +91,9 @@ public class TraceList {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
+            // } catch (ParseException e) {
+            // traces.clear();
+        } catch (KiemInitializationException e) {
             traces.clear();
         }
         for (Trace trace : traces) {
@@ -95,7 +114,6 @@ public class TraceList {
         notifyListeners(true);
     }
 
-    
     /**
      * @return true if another tick or trace exists
      */

@@ -1013,21 +1013,21 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleData
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:477:1: ruleData returns [EObject current=null] : ( ( (lv_intVal_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:477:1: ruleData returns [EObject current=null] : ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) ;
     public final EObject ruleData() throws RecognitionException {
         EObject current = null;
 
-        Token lv_intVal_0_0=null;
+        Token lv_val_0_0=null;
         Token lv_true_1_0=null;
         Token lv_false_2_0=null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:482:6: ( ( ( (lv_intVal_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_intVal_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:482:6: ( ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_intVal_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
             int alt10=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -1047,25 +1047,25 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("483:1: ( ( (lv_intVal_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )", 10, 0, input);
+                    new NoViableAltException("483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )", 10, 0, input);
 
                 throw nvae;
             }
 
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_intVal_0_0= RULE_INT ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_val_0_0= RULE_INT ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_intVal_0_0= RULE_INT ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_intVal_0_0= RULE_INT )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_val_0_0= RULE_INT ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_val_0_0= RULE_INT )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_intVal_0_0= RULE_INT )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:485:3: lv_intVal_0_0= RULE_INT
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_val_0_0= RULE_INT )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:485:3: lv_val_0_0= RULE_INT
                     {
-                    lv_intVal_0_0=(Token)input.LT(1);
+                    lv_val_0_0=(Token)input.LT(1);
                     match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleData775); 
 
-                    			createLeafNode(grammarAccess.getDataAccess().getIntValINTTerminalRuleCall_0_0(), "intVal"); 
+                    			createLeafNode(grammarAccess.getDataAccess().getValINTTerminalRuleCall_0_0(), "val"); 
                     		
 
                     	        if (current==null) {
@@ -1075,8 +1075,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"intVal",
-                    	        		lv_intVal_0_0, 
+                    	       			"val",
+                    	        		lv_val_0_0, 
                     	        		"INT", 
                     	        		lastConsumedNode);
                     	        } catch (ValueConverterException vce) {
@@ -1113,7 +1113,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     	        }
                     	        
                     	        try {
-                    	       		set(current, "true", true, "T", lastConsumedNode);
+                    	       		set(current, "true", lv_true_1_0, "T", lastConsumedNode);
                     	        } catch (ValueConverterException vce) {
                     				handleValueConverterException(vce);
                     	        }
@@ -1148,7 +1148,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     	        }
                     	        
                     	        try {
-                    	       		set(current, "false", true, "F", lastConsumedNode);
+                    	       		set(current, "false", lv_false_2_0, "F", lastConsumedNode);
                     	        } catch (ValueConverterException vce) {
                     				handleValueConverterException(vce);
                     	        }
