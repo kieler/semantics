@@ -102,14 +102,14 @@ public class DataComponent extends JSONObjectDataComponent implements
 //					.toFileURL(url)).toString();
 			if (Platform.isWindows()) {
 				if (Platform.is64Bit()) {
-					path = "/"
+					path = ""
 							+ (org.eclipse.core.runtime.FileLocator
 									.toFileURL(Activator.getDefault()
 											.getBundle().getResource(
 													"/lib/railway.dll64")))
 									.toString();
 				} else {
-					path = "/"
+					path = ""
 							+ (org.eclipse.core.runtime.FileLocator
 									.toFileURL(Activator.getDefault()
 											.getBundle().getResource(
