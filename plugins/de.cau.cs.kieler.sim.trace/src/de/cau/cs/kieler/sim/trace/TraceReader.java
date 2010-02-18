@@ -69,12 +69,11 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
             ITick tick = current.current();
             try {
                 for (Signal s : tick.getInputs()) {
-                    // TODO: valued signals
-                    // if (s.isValued()) {
-                    res.accumulate(s.getName(), JSONSignalValues.newValue(true));
-                    // } else {
-                    // res.accumulate(s.getName(), JSONSignalValues.newValue(true));
-                    // }
+                     if (s.isValued()) {
+                    res.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), true));
+                     } else {
+                     res.accumulate(s.getName(), JSONSignalValues.newValue(true));
+                     }
                 }
             } catch (JSONException e) {
                 throw new KiemExecutionException("Error building JSON Object", false, e);

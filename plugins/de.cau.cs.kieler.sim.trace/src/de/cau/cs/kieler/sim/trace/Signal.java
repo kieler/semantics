@@ -19,13 +19,27 @@ package de.cau.cs.kieler.sim.trace;
  */
 public class Signal {
     private String name;
+    private Integer value = null;
 
     public Signal(String theName) {
         name = theName;
+    }
+    
+    public Signal(String theName, int theValue) {
+        name = theName;
+        value = theValue;
+    }
+
+    public Integer getValue() {
+        return value;
     }
 
     public String getName() {
         return name;
     }
 
+    
+    public boolean isValued(){
+        return value!=null;
+    }
 }
