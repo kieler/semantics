@@ -329,19 +329,6 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
 		return parser;
 	}
 
-	//
-	// /**
-	// * @generated
-	// */
-	// protected DirectEditManager getManager() {
-	// if (manager == null) {
-	//
-	// setManager(new TextDirectEditManager(this, WrapTextCellEditor.class,
-	// SyncchartsEditPartFactory.getTextCellEditorLocator(this)));
-	// }
-	// return manager;
-	// }
-
 	/**
 	 * @generated
 	 */
@@ -377,6 +364,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
 	 * @generated NOT
 	 */
 	protected void performDirectEdit(Point eventLocation) {
+		//TODO-cku: add this to gmf-template 
 		if (getManager() instanceof TextDirectEditManager) {
 			((TextDirectEditManager) getManager()).show(eventLocation
 					.getSWTPoint());
