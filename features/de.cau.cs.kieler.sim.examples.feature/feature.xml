@@ -17,12 +17,12 @@
       [Enter License Description here.]
    </license>
 
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="de.cau.cs.kieler.sim.kiem" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.json" version="0.1.0" match="greaterOrEqual"/>
+   </requires>
 
    <plugin
          id="de.cau.cs.kieler.sim.modelrailway"
