@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
@@ -33,9 +35,10 @@ import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.InterfaceDeclStandaloneSetup;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.InterfaceDeclParseCommand;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.InterfaceDeclProcessorWrapper;
+
 /**
- * JUnit Test Case for the SyncCharts Editor Interfacedeclaration parser
- * and its serializer.
+ * JUnit Test Case for the SyncCharts Editor Interfacedeclaration parser and its
+ * serializer.
  * 
  * @author uru
  * @author car
@@ -61,11 +64,12 @@ public class InterfaceDeclParserTests {
         rootState = SyncchartsFactory.eINSTANCE.createState();
         rootState.setLabel("SyncChart");
         rootRegion.getInnerStates().add(rootState);
-        rootRegion.setId("R0");
+        rootRegion.setId("rootReg");
 
         region = SyncchartsFactory.eINSTANCE.createRegion();
         region.setParentState(rootState);
-        rootState.getRegions().add(region);        
+        region.setId("R0");
+        rootState.getRegions().add(region);
     }
 
     /**
@@ -95,7 +99,7 @@ public class InterfaceDeclParserTests {
     @Test
     public void testParseSome() throws Exception {
         parse("signal b, c;");
-        String[] names = {"b", "c"};        
+        String[] names = { "b", "c" };
         if (!searchSignals(rootState.getSignals(), names)) {
             throw new KielerException("parsing some signals failed");
         }
@@ -111,35 +115,75 @@ public class InterfaceDeclParserTests {
             throw new KielerException("serializing one signal failed");
         }
     }
+
     
     @Test
     public void testMoreSignals() throws Exception {
+        String prefix = "magicTest";
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
-            Signal sig = SyncchartsFactory.eINSTANCE.createSignal();
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
-            sig.setIsInput(true);
-            sig.setName(letter);
-            rootState.getSignals().add(sig);
-            //TODO: Fix var adding, causes Nullpointer, too late to see why
+            Signal sig = generateRandomSignal(prefix + letter);
+            if (Math.random() < 0.5) {
+                rootState.getSignals().add(sig);
+            } else {
+                rootState.getRegions().get(0).getSignals().add(sig);
+            }
             Variable var = SyncchartsFactory.eINSTANCE.createVariable();
-            var.setName("var" + letter);
-            //region.getVariables().add(var);
+            var.setName(prefix + "var" + letter);
+            rootState.getRegions().get(0).getVariables().add(var);
+            serialize(rootState);
+
+            // test if the current one has been added additionally to full test
+            // below, should make it easier to find what went wrong
+            if (rootState.getInterfaceDeclaration().indexOf(sig.getName()) < 0)
+                throw new KielerException("Missing signal " + sig.getName()
+                        + " in serialized String.");
+            if (rootState.getInterfaceDeclaration().indexOf(var.getName()) < 0)
+                throw new KielerException("Missing var " + var.getName()
+                        + " in serialized String.");
         }
-        String serialized = serialize(rootState);
+        //System.out.println(rootState.getInterfaceDeclaration());
+        // test them all again
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
-            if (serialized.indexOf(letter) < 0) throw new KielerException("Missing Signal");
+            if (rootState.getInterfaceDeclaration().indexOf(prefix + letter) < 0)
+                throw new KielerException("Missing signal " + prefix + letter
+                        + " in serialized String.");
+            if (rootState.getInterfaceDeclaration().indexOf(
+                    prefix + "var" + letter) < 0)
+                throw new KielerException("Missing var " + prefix + "var"
+                        + letter + " in serialized String.");
         }
     }
-    
-    
-    
+
+    private Signal generateRandomSignal(String name) {
+        Signal sig = SyncchartsFactory.eINSTANCE.createSignal();
+        if (Math.random() < 0.5) {
+            sig.setIsInput(true);
+            if (Math.random() < 0.5) {
+                sig.setIsOutput(true);
+            }
+        } else if (Math.random() < 0.5)
+            sig.setIsOutput(true);
+        else if (Math.random() < 0.5)
+            sig.setCombineOperator(CombineOperator.MULT);
+        else {
+            sig.setHostType("uint8_t");
+            sig.setHostCombineOperator("while 1; do asm(nop); done");
+        }
+        sig.setName(name);
+        return sig;
+    }
+
     /**
      * search for names inside a bunch of signals
-     * @param signals haystack
-     * @param names needles
+     * 
+     * @param signals
+     *            haystack
+     * @param names
+     *            needles
      * @return true if all found
      */
     private boolean searchSignals(List<Signal> signals, String[] names) {
@@ -149,19 +193,22 @@ public class InterfaceDeclParserTests {
         }
         return ret;
     }
-    
+
     /**
      * search for a name inside a bunch of signals
-     * @param signals haystack
-     * @param name needle
+     * 
+     * @param signals
+     *            haystack
+     * @param name
+     *            needle
      * @return true if found
      */
     private boolean searchSignal(List<Signal> signals, String name) {
         for (Signal s : rootState.getSignals()) {
             if (s.getName().equals(name)) {
                 return true;
-            }                
-        }   
+            }
+        }
         return false;
     }
 
@@ -177,7 +224,7 @@ public class InterfaceDeclParserTests {
         InterfaceDeclProcessorWrapper foo = new InterfaceDeclProcessorWrapper();
         Command c = foo.getCanonialSerializeCommand(state);
         c.execute();
-        return state.getInterfaceDeclaration();        
+        return state.getInterfaceDeclaration();
     }
 
 }
