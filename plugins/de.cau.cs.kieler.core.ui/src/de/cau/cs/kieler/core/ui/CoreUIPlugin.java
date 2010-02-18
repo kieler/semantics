@@ -14,8 +14,11 @@
 package de.cau.cs.kieler.core.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ltk.core.refactoring.RefactoringCore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.core.ui.listeners.RefactoringListener;
 
 /**
  * Activator class for the KIELER core UI plugin.
@@ -35,6 +38,7 @@ public class CoreUIPlugin extends AbstractUIPlugin {
      * The constructor.
      */
     public CoreUIPlugin() {
+
     }
 
     /**
@@ -44,6 +48,8 @@ public class CoreUIPlugin extends AbstractUIPlugin {
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
+        RefactoringCore.getHistoryService().addHistoryListener(
+                new RefactoringListener());
     }
 
     /**
