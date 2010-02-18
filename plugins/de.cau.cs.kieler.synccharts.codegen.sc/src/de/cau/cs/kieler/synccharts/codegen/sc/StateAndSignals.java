@@ -25,24 +25,24 @@ import de.cau.cs.kieler.synccharts.State;
  * @author tam
  * 
  */
-public class StateSignalDependency {
-    private State state;
+public class StateAndSignals {
+    private StatePlusTransition statePlusTransition;
     private ArrayList<Signal> triggerSignals;
     private ArrayList<Signal> effectSignals;
 
     /**
      * @return the state
      */
-    public State getState() {
-        return state;
+    public StatePlusTransition getStatePlusTransition() {
+        return statePlusTransition;
     }
 
     /**
      * @param newState
      *            the state to set
      */
-    public void setState(final State newState) {
-        this.state = newState;
+    public void setState(final StatePlusTransition newState) {
+        this.statePlusTransition = newState;
     }
 
     /**
@@ -73,6 +73,19 @@ public class StateSignalDependency {
      */
     public void setEffectSignals(final ArrayList<Signal> newEffectSignals) {
         this.effectSignals = newEffectSignals;
+    }
+    
+    @Override
+    public boolean equals(final Object other) {
+        if (other instanceof StateAndSignals) {
+            StateAndSignals stateSig = (StateAndSignals) other;
+            boolean boolObject1 = stateSig.statePlusTransition.equals(statePlusTransition);
+            boolean boolObject2 = stateSig.triggerSignals.equals(triggerSignals);
+            boolean boolObject3 = stateSig.effectSignals.equals(effectSignals);
+            return (boolObject1 && boolObject2 && boolObject3);
+        } else {
+            return false;
+        }
     }
 
 

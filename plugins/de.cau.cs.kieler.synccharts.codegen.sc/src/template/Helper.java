@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -30,9 +31,8 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
 import de.cau.cs.kieler.synccharts.codegen.sc.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Graph;
-import de.cau.cs.kieler.synccharts.codegen.sc.StateSignalDependency;
-import de.cau.cs.kieler.synccharts.codegen.sc.Tuple;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.codegen.sc.StateAndSignals;
+import de.cau.cs.kieler.synccharts.codegen.sc.StatePlusTransition;
 
 /**
  * The Helper class provides some helping functions for the generation of code.
@@ -49,9 +49,9 @@ public final class Helper {
     }
 
     private static ArrayList<Dependency> stateDependencies = new ArrayList<Dependency>();
-    private static ArrayList<Tuple<State, Integer>> sortedStates = new ArrayList<Tuple<State, Integer>>();
-    private static ArrayList<Tuple<State, Integer>> realStates = new ArrayList<Tuple<State, Integer>>();
-    private static ArrayList<StateSignalDependency> stateSignalDependencies = new ArrayList<StateSignalDependency>();
+    private static ArrayList<StatePlusTransition> sortedStates = new ArrayList<StatePlusTransition>();
+    private static ArrayList<StatePlusTransition> realStates = new ArrayList<StatePlusTransition>();
+    private static ArrayList<StateAndSignals> stateSignalDependencies = new ArrayList<StateAndSignals>();
     private static ArrayList<State> neighborStates = new ArrayList<State>();
     private static ArrayList<Region> neighborRegions = new ArrayList<Region>();
     private static ArrayList<State> checkedStates = new ArrayList<State>();
@@ -61,6 +61,7 @@ public final class Helper {
     private static final int HIERARCHY_EDGE = 1;
     private static final int CONTROL_FLOW_EDGE = -1;
     private static final int SIGNAL_FLOW_EDGE = 2;
+    private static final int TRANSITION_PRIO_EDGE = 0;
     private static final int WEAK_STATE = 1;
     private static final int STRONG_STATE = 2;
     private static final int SIMPLE_STATE = 0;
@@ -76,7 +77,7 @@ public final class Helper {
      *            the root state to start with
      * @return a sorted list (by priority) of states
      */
-    public static List<Tuple<State, Integer>> computeThreadPriorities(final State state) {
+    public static List<StatePlusTransition> computeThreadPriorities(final State state) {
         stateSignalDependencies.clear();
         stateDependencies.clear();
         realStates.clear();
@@ -86,7 +87,7 @@ public final class Helper {
         printDependencyList();
         fillSortedThreadList();
         System.out.print("threadListSorted: ");
-        printTupelList(sortedStates);
+        printStatePlusTransitionList(sortedStates);
         return sortedStates;
     }
 
@@ -120,7 +121,6 @@ public final class Helper {
      */
     public static void debug(final String s) {
         System.out.println(s);
-        // return s;
     }
 
     /**
@@ -199,7 +199,7 @@ public final class Helper {
      *            nut used?
      * @return not used?
      */
-    public static List<StateSignalDependency> getStateSignals(final State state) {
+    public static List<StateAndSignals> getStateSignals(final State state) {
         stateSignalDependencies.clear();
         fillStateSignalList(state);
         return stateSignalDependencies;
@@ -215,8 +215,8 @@ public final class Helper {
     public static int getChangePriority(final State state) {
         int out = MAX_PRIORITY;
         int newPrio = 0;
-        ArrayList<Tuple<State, Integer>> dependentStates = getSignalDependentStates(state);
-        for (Tuple<State, Integer> tuple : dependentStates) {
+        ArrayList<StatePlusTransition> dependentStates = getSignalDependentStates(state);
+        for (StatePlusTransition tuple : dependentStates) {
             newPrio = sortedStates.indexOf(tuple);
             if (newPrio < out) {
                 out = newPrio;
@@ -272,35 +272,34 @@ public final class Helper {
         return out;
     }
 
-    private static ArrayList<Tuple<State, Integer>> getSignalDependentStates(final State state) {
-        ArrayList<Tuple<State, Integer>> out = new ArrayList<Tuple<State, Integer>>();
+    private static ArrayList<StatePlusTransition> getSignalDependentStates(final State state) {
+        ArrayList<StatePlusTransition> out = new ArrayList<StatePlusTransition>();
         for (Dependency dep : stateDependencies) {
-            if (dep.getSecondStateTupel().getO1().equals(state)
+            if (dep.getSecondState().getState().equals(state)
                     && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
-                out.add(dep.getFirstStateTupel());
-            }
-        }
-        return out;
-    }
-    
-    private static ArrayList<Tuple<State, Integer>> getDependencyOwner(final State state) {
-        ArrayList<Tuple<State, Integer>> out = new ArrayList<Tuple<State, Integer>>();
-        for (Dependency dep : stateDependencies) {
-            if (dep.getSecondStateTupel().getO2().equals(state)
-                    && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
-                out.add(dep.getSecondStateTupel());
+                out.add(dep.getFirstState());
             }
         }
         return out;
     }
 
+    private static ArrayList<StatePlusTransition> getDependencyOwner(final State state) {
+        ArrayList<StatePlusTransition> out = new ArrayList<StatePlusTransition>();
+        for (Dependency dep : stateDependencies) {
+            if (dep.getSecondState().getState().equals(state)
+                    && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
+                out.add(dep.getSecondState());
+            }
+        }
+        return out;
+    }
 
-    private static void putSignalDependencies(final State state) {
+    private static void putSignalDependencies(final StatePlusTransition statePlusTransition) {
         // get signals of the state
         ArrayList<Signal> stateTriggerSignals = new ArrayList<Signal>();
         ArrayList<Signal> stateEffectSignals = new ArrayList<Signal>();
-        for (StateSignalDependency s : stateSignalDependencies) {
-            if (state.equals(s.getState())) {
+        for (StateAndSignals s : stateSignalDependencies) {
+            if (statePlusTransition.equals(s.getStatePlusTransition().getState())) {
                 stateTriggerSignals = s.getTriggerSignals();
                 stateEffectSignals = s.getEffectSignals();
                 break;
@@ -309,45 +308,33 @@ public final class Helper {
 
         neighborRegions.clear();
         neighborStates.clear();
-        getNeighborRegions(state);
+        getNeighborRegions(statePlusTransition.getState());
         addNeighbors(neighborRegions);
         for (State neighborState : neighborStates) {
             // get signals of neighbor states and their child states
-            if (!state.equals(neighborState)) {
+            if (!statePlusTransition.equals(neighborState)) {
                 ArrayList<Signal> neighborEffectSignals = new ArrayList<Signal>();
                 ArrayList<Signal> neighborTriggerSignals = new ArrayList<Signal>();
-                for (StateSignalDependency s : stateSignalDependencies) {
-                    if (neighborState.equals(s.getState())) {
+                for (StateAndSignals s : stateSignalDependencies) {
+                    if (neighborState.equals(s.getStatePlusTransition().getState())) {
                         neighborEffectSignals = s.getEffectSignals();
                         neighborTriggerSignals = s.getTriggerSignals();
                         break;
                     }
                 }
-                Dependency signalDependency = new Dependency();
-                Dependency cycleBreak = new Dependency();
+                StatePlusTransition neighborStatePlusTransition = null;
+                neighborStatePlusTransition = getStateProperties(neighborState);
                 // one direction
                 if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
                     // in dependency list eintragen
-                    int one = getStatePropertyTupel(state).getO2();
-                    int two = getStatePropertyTupel(neighborState).getO2();
-                    if (!(stateDependencies.contains(signalDependency) || stateDependencies
-                            .contains(cycleBreak))) {
-                        System.out.println("added " + state.getId() + " -> "
-                                + neighborState.getId());
-                        putDependencyList(state, one, neighborState, two, SIGNAL_FLOW_EDGE);
-                    }
+                    putDependencyList(statePlusTransition, neighborStatePlusTransition,
+                            SIGNAL_FLOW_EDGE);
                 }
                 // other direction
                 if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
                     // in dependency list eintragen
-                    int one = getStatePropertyTupel(neighborState).getO2();
-                    int two = getStatePropertyTupel(state).getO2();
-                    if (!(stateDependencies.contains(signalDependency) || stateDependencies
-                            .contains(cycleBreak))) {
-                        System.out.println("added " + state.getId() + " -> "
-                                + neighborState.getId());
-                        putDependencyList(neighborState, one, state, two, SIGNAL_FLOW_EDGE);
-                    }
+                    putDependencyList(neighborStatePlusTransition, statePlusTransition,
+                            SIGNAL_FLOW_EDGE);
                 }
             }
         }
@@ -372,11 +359,11 @@ public final class Helper {
 
     private static int getThreadPriority(final State state, final boolean weak) {
         int out = 0;
-        Tuple<State, Integer> priorityState;
+        StatePlusTransition priorityState;
         if (weak) {
-            priorityState = new Tuple<State, Integer>(state, WEAK_STATE);
+            priorityState = new StatePlusTransition(state, WEAK_STATE, null);
         } else {
-            priorityState = getStatePropertyTupel(state);
+            priorityState = getStateProperties(state);
         }
         out = sortedStates.indexOf(priorityState) + 1;
         return out;
@@ -436,12 +423,12 @@ public final class Helper {
         }
     }
 
-    private static void printTupelList(final ArrayList<Tuple<State, Integer>> list) {
+    private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
         System.out.print("[");
-        for (Tuple<State, Integer> tupel : list) {
+        for (StatePlusTransition state : list) {
             String weakStrong = "";
-            weakStrong = stateType2String(tupel.getO2());
-            System.out.print(tupel.getO1().getId() + weakStrong + " , ");
+            weakStrong = stateType2String(state.getType());
+            System.out.print(state.getState().getId() + weakStrong + " , ");
         }
         System.out.println("]");
     }
@@ -454,8 +441,8 @@ public final class Helper {
             String rel = "";
             String first = "";
             String second = "";
-            weakStrongFirst = stateType2String(dependency.getFirstStateTupel().getO2());
-            weakStrongSecond = stateType2String(dependency.getSecondStateTupel().getO2());
+            weakStrongFirst = stateType2String(dependency.getFirstState().getType());
+            weakStrongSecond = stateType2String(dependency.getSecondState().getType());
             if (dependency.getDependencyType() == CONTROL_FLOW_EDGE) {
                 rel = " <c< ";
             } else if (dependency.getDependencyType() == HIERARCHY_EDGE) {
@@ -463,16 +450,16 @@ public final class Helper {
             } else {
                 rel = " <s< ";
             }
-            first = dependency.getFirstStateTupel().getO1().getId();
-            second = dependency.getSecondStateTupel().getO1().getId();
+            first = dependency.getFirstState().getState().getId();
+            second = dependency.getSecondState().getState().getId();
             System.out.print(first + weakStrongFirst + rel + second + weakStrongSecond + " , ");
 
         }
         System.out.println("] ");
     }
 
-    private static Dependency builtDependency(final Tuple<State, Integer> firstState,
-            final Tuple<State, Integer> secondState, final int edgeType) {
+    private static Dependency builtDependency(final StatePlusTransition firstState,
+            final StatePlusTransition secondState, final int edgeType) {
         Dependency out = new Dependency(firstState, secondState, edgeType);
         return out;
     }
@@ -480,18 +467,24 @@ public final class Helper {
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
         if (state.getParentRegion().getParentState() != null) {
-            putSignalDependencies(state);
+            for (Transition transition : state.getOutgoingTransitions()) {
+                StatePlusTransition put = new StatePlusTransition();
+                put.setState(state);
+                put.setTransition(transition);
+                put.setType(getStateProperties(state).getType());
+                putSignalDependencies(put);
+            }
         }
         // add state to the checked State list
         checkedStates.add(state);
-        Tuple<State, Integer> sourceStateTupel = getStatePropertyTupel(state);
+        StatePlusTransition sourceStatePlusTrans = getStateProperties(state);
         // add tuple to the real state list
-        realStates.add(sourceStateTupel);
+        realStates.add(sourceStatePlusTrans);
         for (Transition transition : state.getOutgoingTransitions()) {
             if (!transition.getSourceState().equals(transition.getTargetState())) {
                 State targetState = transition.getTargetState();
-                Tuple<State, Integer> targetStateTupel = getStatePropertyTupel(targetState);
-                Dependency dependency = new Dependency(targetStateTupel, sourceStateTupel,
+                StatePlusTransition targetStatePlusTrans = getStateProperties(targetState);
+                Dependency dependency = new Dependency(targetStatePlusTrans, sourceStatePlusTrans,
                         CONTROL_FLOW_EDGE);
                 if (!stateDependencies.contains(dependency)) {
                     stateDependencies.add(dependency);
@@ -502,32 +495,50 @@ public final class Helper {
             }
         }
 
-        if (sourceStateTupel.getO2() > SIMPLE_STATE) {
+        StatePlusTransition sptOne = new StatePlusTransition();
+        StatePlusTransition sptTwo = new StatePlusTransition();
+
+        // properties do not change
+        sptOne.setState(state);
+        sptOne.setTransition(null);
+        sptTwo.setTransition(null);
+
+        if (sourceStatePlusTrans.getType() > SIMPLE_STATE) {
             for (Region region : state.getRegions()) {
                 for (State innerState : region.getInnerStates()) {
-                    int innerStateStatus = getStatePropertyTupel(innerState).getO2();
+                    int innerStateStatus = getStateProperties(innerState).getType();
+                    sptTwo.setState(innerState);
+                    sptTwo.setType(innerStateStatus);
                     // state as weak state
-                    putDependencyList(state, WEAK_STATE, innerState, innerStateStatus,
-                            HIERARCHY_EDGE);
+                    sptOne.setType(WEAK_STATE);
+                    putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
                     // state as strong state
-                    putDependencyList(innerState, innerStateStatus, state, STRONG_STATE,
-                            HIERARCHY_EDGE);
+                    sptOne.setType(STRONG_STATE);
+                    putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
+
+                    /**
+                     * TODO TODO sptTwo und sptOne neu instanziieren! TODO TODO
+                     */
 
                     // inner state is hierarchical
                     if (innerStateStatus > SIMPLE_STATE) {
                         // inner state is concurrent
                         if (innerStateStatus == WEAK_STATE) {
                             // dependency for strong state
-                            putDependencyList(state, WEAK_STATE, innerState, STRONG_STATE,
-                                    HIERARCHY_EDGE);
-                            putDependencyList(innerState, STRONG_STATE, state, STRONG_STATE,
-                                    HIERARCHY_EDGE);
+                            sptOne.setType(WEAK_STATE);
+                            sptTwo.setType(STRONG_STATE);
+                            putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
+                            sptOne.setType(STRONG_STATE);
+                            sptTwo.setType(STRONG_STATE);
+                            putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
                         } else {
                             // dependency for weak state
-                            putDependencyList(state, WEAK_STATE, innerState, WEAK_STATE,
-                                    HIERARCHY_EDGE);
-                            putDependencyList(innerState, WEAK_STATE, state, STRONG_STATE,
-                                    HIERARCHY_EDGE);
+                            sptOne.setType(WEAK_STATE);
+                            sptTwo.setType(WEAK_STATE);
+                            putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
+                            sptOne.setType(STRONG_STATE);
+                            sptTwo.setType(WEAK_STATE);
+                            putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
                         }
                     }
                     if (!checkedStates.contains(innerState)) {
@@ -539,18 +550,17 @@ public final class Helper {
 
     }
 
-    private static void putDependencyList(final State stateOne, final int typeOne,
-            final State stateTwo, final int typeTwo, final int dependency) {
-        Tuple<State, Integer> first = new Tuple<State, Integer>(stateOne, typeOne);
-        Tuple<State, Integer> second = new Tuple<State, Integer>(stateTwo, typeTwo);
-        Dependency put = builtDependency(first, second, dependency);
+    private static void putDependencyList(final StatePlusTransition stateOne,
+            final StatePlusTransition stateTwo, final int dependency) {
+        Dependency put = builtDependency(stateOne, stateTwo, dependency);
         if (!stateDependencies.contains(put)) {
             stateDependencies.add(put);
         }
+        printDependencyList();
     }
 
-    private static Tuple<State, Integer> getStatePropertyTupel(final State state) {
-        Tuple<State, Integer> out = new Tuple<State, Integer>();
+    private static StatePlusTransition getStateProperties(final State state) {
+        StatePlusTransition out = new StatePlusTransition();
         int stateProperty = SIMPLE_STATE;
         if (!state.getRegions().isEmpty()) {
             stateProperty = WEAK_STATE;
@@ -561,16 +571,17 @@ public final class Helper {
                 }
             }
         }
-        out.setO1(state);
-        out.setO2(stateProperty);
+        out.setState(state);
+        out.setType(stateProperty);
+        out.setTransition(null);
         return out;
     }
 
-    private static boolean isInTupelList(final ArrayList<Tuple<State, Integer>> tupelList,
-            final Tuple<State, Integer> tupel) {
+    private static boolean isInTupelList(final ArrayList<StatePlusTransition> list,
+            final StatePlusTransition state) {
         boolean out = false;
-        for (Tuple<State, Integer> listTupel : tupelList) {
-            if (listTupel.equals(tupel)) {
+        for (StatePlusTransition listTupel : list) {
+            if (listTupel.equals(state)) {
                 out = true;
                 break;
             }
@@ -593,37 +604,33 @@ public final class Helper {
         return out;
     }
 
-    private static void fillTriggerSignals(final State state) {
-        for (Transition transition : state.getOutgoingTransitions()) {
-            // simple signals
-            if (transition.getTrigger() instanceof SignalReference) {
-                // put trigger signal into the list
-                Signal triggerSignal = ((SignalReference) transition.getTrigger()).getSignal();
-                if (!triggerSignals.contains(triggerSignal)) {
-                    triggerSignals.add(triggerSignal);
-                }
+    private static void fillTriggerSignals(final Transition transition) {
+        // simple signals
+        if (transition.getTrigger() instanceof SignalReference) {
+            // put trigger signal into the list
+            Signal triggerSignal = ((SignalReference) transition.getTrigger()).getSignal();
+            if (!triggerSignals.contains(triggerSignal)) {
+                triggerSignals.add(triggerSignal);
             }
         }
     }
 
-    private static void fillEffectSignals(final State state) {
-        for (Transition transition : state.getOutgoingTransitions()) {
-            EList<Effect> tmpEffectSignals = transition.getEffects();
-            // put all effect signals into the list
-            for (Effect effect : tmpEffectSignals) {
-                if (effect instanceof Emission) {
-                    Signal effectSignal = ((Emission) effect).getSignal();
-                    if (!effectSignals.contains(effectSignal)) {
-                        effectSignals.add(effectSignal);
-                    }
+    private static void fillEffectSignals(final Transition transition) {
+        EList<Effect> tmpEffectSignals = transition.getEffects();
+        // put all effect signals into the list
+        for (Effect effect : tmpEffectSignals) {
+            if (effect instanceof Emission) {
+                Signal effectSignal = ((Emission) effect).getSignal();
+                if (!effectSignals.contains(effectSignal)) {
+                    effectSignals.add(effectSignal);
                 }
             }
-            // if the target state has an immediate
-            // outgoing transition put its signals to the source state ones
-            for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
-                if (targetTrans.isIsImmediate()) {
-                    fillEffectSignals(targetTrans.getTargetState());
-                }
+        }
+        // if the target state has an immediate
+        // outgoing transition put its signals to the source state ones
+        for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
+            if (targetTrans.isIsImmediate()) {
+                fillEffectSignals(targetTrans);
             }
         }
     }
@@ -633,25 +640,29 @@ public final class Helper {
         for (Region region : state.getRegions()) {
             // every state
             for (State innerState : region.getInnerStates()) {
-                StateSignalDependency stateAndSignals = new StateSignalDependency();
-                triggerSignals.clear();
-                effectSignals.clear();
-                // every outgoing transition
-                fillTriggerSignals(innerState);
-                fillEffectSignals(innerState);
-                ArrayList<Signal> triggers = copyFromList(triggerSignals);
-                ArrayList<Signal> effects = copyFromList(effectSignals);
+                for (Transition transition : innerState.getOutgoingTransitions()) {
+                    StateAndSignals stateAndSignals = new StateAndSignals();
+                    triggerSignals.clear();
+                    effectSignals.clear();
+                    // every outgoing transition
+                    fillTriggerSignals(transition);
+                    fillEffectSignals(transition);
+                    ArrayList<Signal> triggers = copyFromList(triggerSignals);
+                    ArrayList<Signal> effects = copyFromList(effectSignals);
 
-                if (!(triggers.isEmpty() && effects.isEmpty())) {
-                    stateAndSignals.setState(innerState);
-                    stateAndSignals.setTriggerSignals(triggers);
-                    stateAndSignals.setEffectSignals(effects);
-                    if (!stateSignalDependencies.contains(stateAndSignals)) {
-                        stateSignalDependencies.add(stateAndSignals);
+                    if (!(triggers.isEmpty() && effects.isEmpty())) {
+                        StatePlusTransition s = getStateProperties(innerState);
+                        s.setTransition(transition);
+                        stateAndSignals.setState(s);
+                        stateAndSignals.setTriggerSignals(triggers);
+                        stateAndSignals.setEffectSignals(effects);
+                        if (!stateSignalDependencies.contains(stateAndSignals)) {
+                            stateSignalDependencies.add(stateAndSignals);
+                        }
                     }
-                }
-                if (!innerState.getRegions().isEmpty()) {
-                    fillStateSignalList(innerState);
+                    if (!innerState.getRegions().isEmpty()) {
+                        fillStateSignalList(innerState);
+                    }
                 }
             }
         }
@@ -667,26 +678,26 @@ public final class Helper {
 
     private static void fillSortedThreadList() {
         // Build a unsorted list of all threads.
-        ArrayList<Tuple<State, Integer>> threadListUnsorted = new ArrayList<Tuple<State, Integer>>();
+        ArrayList<StatePlusTransition> threadListUnsorted = new ArrayList<StatePlusTransition>();
         for (Dependency dependency : stateDependencies) {
-            if (!isInTupelList(threadListUnsorted, dependency.getFirstStateTupel())) {
-                threadListUnsorted.add(dependency.getFirstStateTupel());
+            if (!isInTupelList(threadListUnsorted, dependency.getFirstState())) {
+                threadListUnsorted.add(dependency.getFirstState());
             }
-            if (!isInTupelList(threadListUnsorted, dependency.getSecondStateTupel())) {
-                threadListUnsorted.add(dependency.getSecondStateTupel());
+            if (!isInTupelList(threadListUnsorted, dependency.getSecondState())) {
+                threadListUnsorted.add(dependency.getSecondState());
             }
         }
 
         // Build a Graph with the dependencies of all threads.
         Graph dependencyGraph = new Graph(threadListUnsorted.size(), true);
-        Tuple<State, Integer> sourceState;
-        Tuple<State, Integer> targetState;
+        StatePlusTransition sourceState;
+        StatePlusTransition targetState;
         int sourceInt;
         int targetInt;
         int edgeType;
         for (Dependency dependency : stateDependencies) {
-            sourceState = dependency.getFirstStateTupel();
-            targetState = dependency.getSecondStateTupel();
+            sourceState = dependency.getFirstState();
+            targetState = dependency.getSecondState();
             edgeType = dependency.getDependencyType();
             sourceInt = threadListUnsorted.indexOf(sourceState);
             targetInt = threadListUnsorted.indexOf(targetState);
@@ -700,7 +711,7 @@ public final class Helper {
         // thread list with threads in their right priority order.
         for (int i = 0; i < threadListTopologicalSorted.size(); i++) {
             int threadInt = threadListTopologicalSorted.get(i);
-            Tuple<State, Integer> stateTupel = threadListUnsorted.get(threadInt);
+            StatePlusTransition stateTupel = threadListUnsorted.get(threadInt);
             sortedStates.add(stateTupel);
         }
     }

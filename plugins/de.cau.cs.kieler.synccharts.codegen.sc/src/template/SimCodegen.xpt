@@ -42,7 +42,6 @@ int valSigInt[valSigIntCnt];
 int tick(int isInit){
 
 			TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
-			//«debug(this.innerStates.first().id)»
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»

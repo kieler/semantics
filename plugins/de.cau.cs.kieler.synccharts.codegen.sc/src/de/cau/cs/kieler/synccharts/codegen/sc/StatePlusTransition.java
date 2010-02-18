@@ -18,36 +18,97 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
- * An implementation of a tuple with a state and one of its transitions.
+ * An implementation of a "triple" with a state, its type and one of its transitions.
  * 
  * @author tam
  * 
  */
 public class StatePlusTransition {
-    private Tuple<State, Integer> stateTuple;
+    private State lokalState;
+    private int lokalType;
+    private Transition lokalTransition;
+
     /**
-     * @return the stateTuple
+     * Constructor, setting the fields.
+     * 
+     * @param state the state
+     * @param type the type
+     * @param transition the transition
      */
-    public Tuple<State, Integer> getStateTuple() {
-        return stateTuple;
+    public StatePlusTransition(final State state, final int type, final Transition transition) {
+        super();
+        lokalState = state;
+        lokalType = type;
+        lokalTransition = transition;
     }
+    
     /**
-     * @param tuple the stateTuple to set
+     * Contructor without setting fields.
      */
-    public void setStateTuple(final Tuple<State, Integer> tuple) {
-        this.stateTuple = tuple;
+    public StatePlusTransition() {
+        super();
     }
+
+    /**
+     * @return the type
+     */
+    public int getType() {
+        return lokalType;
+    }
+
+    /**
+     * @param type
+     *            the type to set
+     */
+    public void setType(final int type) {
+        lokalType = type;
+    }
+
+    /**
+     * @return the state
+     */
+    public State getState() {
+        return lokalState;
+    }
+
+    /**
+     * @param state
+     *            the stateTuple to set
+     */
+    public void setState(final State state) {
+        lokalState = state;
+    }
+
     /**
      * @return the transition
      */
     public Transition getTransition() {
-        return transition;
+        return lokalTransition;
     }
+
     /**
-     * @param trans the transition to set
+     * @param transition
+     *            the transition to set
      */
-    public void setTransition(final Transition trans) {
-        this.transition = trans;
+    public void setTransition(final Transition transition) {
+        lokalTransition = transition;
     }
-    private Transition transition;
+    
+    @Override
+    public boolean equals(final Object other) {
+        if (other instanceof StatePlusTransition) {
+            StatePlusTransition statePlusTransition = (StatePlusTransition) other;
+            boolean boolObject1 = statePlusTransition.lokalState.equals(lokalState);
+            boolean boolObject2 = statePlusTransition.lokalType == lokalType;
+            boolean boolObject3 = false;
+            if (statePlusTransition.lokalTransition != null) {
+                boolObject3 = statePlusTransition.lokalTransition.equals(lokalTransition);
+            } else {
+                boolObject3 = (lokalTransition == null);
+            }
+            return (boolObject1 && boolObject2 && boolObject3);
+        } else {
+            return false;
+        }
+    }
 }
