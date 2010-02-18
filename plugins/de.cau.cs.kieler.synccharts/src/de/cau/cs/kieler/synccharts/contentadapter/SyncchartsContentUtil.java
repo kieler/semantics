@@ -81,11 +81,16 @@ public final class SyncchartsContentUtil {
             }
         }
         // cleanup the cache in order to avoid memory leaks
+        List<TransactionalEditingDomain> stuffToRemove = new ArrayList<TransactionalEditingDomain>();
         for(TransactionalEditingDomain oldDomain : listeners.keySet()){
             if(oldDomain.getID() == null){
-                listeners.remove(oldDomain);
+            	// avoid concurrent modification exception
+            	stuffToRemove.add(oldDomain);
             }
         }
+        for (TransactionalEditingDomain oldDomain : stuffToRemove) {
+        	listeners.remove(oldDomain);
+		}
         listeners.put(domain, tempListeners);
     }
     
