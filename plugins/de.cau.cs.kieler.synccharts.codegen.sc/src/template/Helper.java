@@ -15,6 +15,7 @@
 package template;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
+import de.cau.cs.kieler.synccharts.codegen.sc.CompareTransitions;
 import de.cau.cs.kieler.synccharts.codegen.sc.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.sc.Graph;
 import de.cau.cs.kieler.synccharts.codegen.sc.StateAndSignals;
@@ -50,9 +52,8 @@ public final class Helper {
 
     private static ArrayList<Dependency> stateDependencies = new ArrayList<Dependency>();
     private static ArrayList<StatePlusTransition> sortedStates = new ArrayList<StatePlusTransition>();
-    private static ArrayList<StatePlusTransition> realStates = new ArrayList<StatePlusTransition>();
     private static ArrayList<StateAndSignals> stateSignalDependencies = new ArrayList<StateAndSignals>();
-    private static ArrayList<State> neighborStates = new ArrayList<State>();
+    private static ArrayList<StatePlusTransition> neighborStates = new ArrayList<StatePlusTransition>();
     private static ArrayList<Region> neighborRegions = new ArrayList<Region>();
     private static ArrayList<State> checkedStates = new ArrayList<State>();
     private static ArrayList<Signal> allSignals = new ArrayList<Signal>();
@@ -80,7 +81,6 @@ public final class Helper {
     public static List<StatePlusTransition> computeThreadPriorities(final State state) {
         stateSignalDependencies.clear();
         stateDependencies.clear();
-        realStates.clear();
         sortedStates.clear();
         fillStateSignalList(state);
         fillDependencyList(state);
@@ -216,8 +216,8 @@ public final class Helper {
         int out = MAX_PRIORITY;
         int newPrio = 0;
         ArrayList<StatePlusTransition> dependentStates = getSignalDependentStates(state);
-        for (StatePlusTransition tuple : dependentStates) {
-            newPrio = sortedStates.indexOf(tuple);
+        for (StatePlusTransition spt : dependentStates) {
+            newPrio = sortedStates.indexOf(spt);
             if (newPrio < out) {
                 out = newPrio;
             }
@@ -294,12 +294,13 @@ public final class Helper {
         return out;
     }
 
-    private static void putSignalDependencies(final StatePlusTransition statePlusTransition) {
+    private static void putSignalDependencies(final StatePlusTransition spt) {
         // get signals of the state
         ArrayList<Signal> stateTriggerSignals = new ArrayList<Signal>();
         ArrayList<Signal> stateEffectSignals = new ArrayList<Signal>();
         for (StateAndSignals s : stateSignalDependencies) {
-            if (statePlusTransition.equals(s.getStatePlusTransition().getState())) {
+            boolean found = spt.equals(s.getStatePlusTransition());
+            if (found) {
                 stateTriggerSignals = s.getTriggerSignals();
                 stateEffectSignals = s.getEffectSignals();
                 break;
@@ -308,33 +309,27 @@ public final class Helper {
 
         neighborRegions.clear();
         neighborStates.clear();
-        getNeighborRegions(statePlusTransition.getState());
+        getNeighborRegions(spt.getState());
         addNeighbors(neighborRegions);
-        for (State neighborState : neighborStates) {
+        for (StatePlusTransition neighborSpt : neighborStates) {
             // get signals of neighbor states and their child states
-            if (!statePlusTransition.equals(neighborState)) {
+            if (!spt.equals(neighborSpt)) {
                 ArrayList<Signal> neighborEffectSignals = new ArrayList<Signal>();
                 ArrayList<Signal> neighborTriggerSignals = new ArrayList<Signal>();
                 for (StateAndSignals s : stateSignalDependencies) {
-                    if (neighborState.equals(s.getStatePlusTransition().getState())) {
+                    if (neighborSpt.equals(s.getStatePlusTransition())) {
                         neighborEffectSignals = s.getEffectSignals();
                         neighborTriggerSignals = s.getTriggerSignals();
                         break;
                     }
                 }
-                StatePlusTransition neighborStatePlusTransition = null;
-                neighborStatePlusTransition = getStateProperties(neighborState);
                 // one direction
                 if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
-                    // in dependency list eintragen
-                    putDependencyList(statePlusTransition, neighborStatePlusTransition,
-                            SIGNAL_FLOW_EDGE);
+                    addDependency(spt, neighborSpt, SIGNAL_FLOW_EDGE);
                 }
                 // other direction
                 if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
-                    // in dependency list eintragen
-                    putDependencyList(neighborStatePlusTransition, statePlusTransition,
-                            SIGNAL_FLOW_EDGE);
+                    addDependency(neighborSpt, spt, SIGNAL_FLOW_EDGE);
                 }
             }
         }
@@ -359,13 +354,13 @@ public final class Helper {
 
     private static int getThreadPriority(final State state, final boolean weak) {
         int out = 0;
-        StatePlusTransition priorityState;
+        StatePlusTransition spt;
         if (weak) {
-            priorityState = new StatePlusTransition(state, WEAK_STATE, null);
+            spt = new StatePlusTransition(state, WEAK_STATE, null);
         } else {
-            priorityState = getStateProperties(state);
+            spt = getStateProperties(state);
         }
-        out = sortedStates.indexOf(priorityState) + 1;
+        out = sortedStates.indexOf(spt) + 1;
         return out;
     }
 
@@ -413,8 +408,12 @@ public final class Helper {
     private static void addNeighbors(final List<Region> regions) {
         for (Region region : regions) {
             for (State innerState : region.getInnerStates()) {
-                if (!neighborStates.contains(innerState)) {
-                    neighborStates.add(innerState);
+                for (Transition transition : innerState.getOutgoingTransitions()) {
+                    StatePlusTransition spt = getStateProperties(innerState);
+                    spt.setTransition(transition);
+                    if (!neighborStates.contains(spt)) {
+                        neighborStates.add(spt);
+                    }
                 }
                 if (!innerState.getRegions().isEmpty()) {
                     addNeighbors(innerState.getRegions());
@@ -425,10 +424,14 @@ public final class Helper {
 
     private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
         System.out.print("[");
-        for (StatePlusTransition state : list) {
+        for (StatePlusTransition spt : list) {
             String weakStrong = "";
-            weakStrong = stateType2String(state.getType());
-            System.out.print(state.getState().getId() + weakStrong + " , ");
+            weakStrong = stateType2String(spt.getType());
+            String transition = "";
+            if (spt.getTransition() != null) {
+                transition = "+(" + spt.getTransition().getTriggersAndEffects() + ")";
+            }
+            System.out.print(spt.getState().getId() + transition + weakStrong + " , ");
         }
         System.out.println("]");
     }
@@ -436,58 +439,83 @@ public final class Helper {
     private static void printDependencyList() {
         System.out.print("dependencyList: [ ");
         for (Dependency dependency : stateDependencies) {
-            String weakStrongFirst = "";
-            String weakStrongSecond = "";
+            String firstWS = "";
+            String secondWS = "";
+            String firstState = "";
+            String secondState = "";
+            String firstTrans = "";
+            String secondTrans = "";
             String rel = "";
-            String first = "";
-            String second = "";
-            weakStrongFirst = stateType2String(dependency.getFirstState().getType());
-            weakStrongSecond = stateType2String(dependency.getSecondState().getType());
+            firstWS = stateType2String(dependency.getFirstState().getType());
+            secondWS = stateType2String(dependency.getSecondState().getType());
             if (dependency.getDependencyType() == CONTROL_FLOW_EDGE) {
                 rel = " <c< ";
             } else if (dependency.getDependencyType() == HIERARCHY_EDGE) {
                 rel = " <h< ";
+            } else if (dependency.getDependencyType() == TRANSITION_PRIO_EDGE) {
+                rel = " <p< ";
             } else {
                 rel = " <s< ";
             }
-            first = dependency.getFirstState().getState().getId();
-            second = dependency.getSecondState().getState().getId();
-            System.out.print(first + weakStrongFirst + rel + second + weakStrongSecond + " , ");
-
+            if (dependency.getFirstState().getTransition() != null) {
+                firstTrans = "("
+                        + dependency.getFirstState().getTransition().getTriggersAndEffects() + ")";
+            }
+            if (dependency.getSecondState().getTransition() != null) {
+                secondTrans = "("
+                        + dependency.getSecondState().getTransition().getTriggersAndEffects() + ")";
+            }
+            firstState = dependency.getFirstState().getState().getId() + firstTrans;
+            secondState = dependency.getSecondState().getState().getId() + secondTrans;
+            System.out.print(firstState + firstWS + rel + secondState + secondWS + " , ");
         }
         System.out.println("] ");
     }
 
-    private static Dependency builtDependency(final StatePlusTransition firstState,
-            final StatePlusTransition secondState, final int edgeType) {
-        Dependency out = new Dependency(firstState, secondState, edgeType);
+    private static Dependency builtDependency(final StatePlusTransition firstSpt,
+            final StatePlusTransition secondSpt, final int edgeType) {
+        Dependency out = new Dependency(firstSpt, secondSpt, edgeType);
         return out;
     }
 
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
+        // fill transition priority dependencies
+
+        EList<Transition> sortedTransitions = getSortedTransitions(state.getOutgoingTransitions());
+        int countTransitions = sortedTransitions.size();
+        if (countTransitions > 1) {
+            for (int i = 0; i < countTransitions - 1; i++) {
+                StatePlusTransition sptOne = getStateProperties(state);
+                sptOne.setTransition(sortedTransitions.get(i));
+                StatePlusTransition sptTwo = getStateProperties(state);
+                sptTwo.setTransition(sortedTransitions.get(i + 1));
+                addDependency(sptTwo, sptOne, TRANSITION_PRIO_EDGE);
+            }
+        }
+        // fill signal flow dependencies
         if (state.getParentRegion().getParentState() != null) {
             for (Transition transition : state.getOutgoingTransitions()) {
-                StatePlusTransition put = new StatePlusTransition();
-                put.setState(state);
-                put.setTransition(transition);
-                put.setType(getStateProperties(state).getType());
-                putSignalDependencies(put);
+                StatePlusTransition putSpt = getStateProperties(state);
+                putSpt.setTransition(transition);
+                putSignalDependencies(putSpt);
             }
         }
         // add state to the checked State list
         checkedStates.add(state);
-        StatePlusTransition sourceStatePlusTrans = getStateProperties(state);
-        // add tuple to the real state list
-        realStates.add(sourceStatePlusTrans);
+
+        // fill control flow dependencies
         for (Transition transition : state.getOutgoingTransitions()) {
+            StatePlusTransition sourceSpt = getStateProperties(state);
+            sourceSpt.setTransition(transition);
+
             if (!transition.getSourceState().equals(transition.getTargetState())) {
                 State targetState = transition.getTargetState();
-                StatePlusTransition targetStatePlusTrans = getStateProperties(targetState);
-                Dependency dependency = new Dependency(targetStatePlusTrans, sourceStatePlusTrans,
-                        CONTROL_FLOW_EDGE);
+                StatePlusTransition targetSpt = getStateProperties(targetState);
+                Dependency dependency = new Dependency(targetSpt, sourceSpt, CONTROL_FLOW_EDGE);
                 if (!stateDependencies.contains(dependency)) {
                     stateDependencies.add(dependency);
+                    //TOOODOOOOOOO
                     if (!checkedStates.contains(targetState)) {
                         fillDependencyList(targetState);
                     }
@@ -495,49 +523,40 @@ public final class Helper {
             }
         }
 
-        StatePlusTransition sptOne = new StatePlusTransition();
-        StatePlusTransition sptTwo = new StatePlusTransition();
-
-        // properties do not change
-        sptOne.setState(state);
-        sptOne.setTransition(null);
-        sptTwo.setTransition(null);
-
-        if (sourceStatePlusTrans.getType() > SIMPLE_STATE) {
+        // fill hierarchy dependencies
+        StatePlusTransition sptOne;
+        StatePlusTransition sptTwo;
+        StatePlusTransition hierarchySpt = getStateProperties(state);
+        if (hierarchySpt.getType() > SIMPLE_STATE) {
             for (Region region : state.getRegions()) {
                 for (State innerState : region.getInnerStates()) {
                     int innerStateStatus = getStateProperties(innerState).getType();
-                    sptTwo.setState(innerState);
-                    sptTwo.setType(innerStateStatus);
                     // state as weak state
-                    sptOne.setType(WEAK_STATE);
+                    sptOne = new StatePlusTransition(state, WEAK_STATE, null);
+                    sptTwo = new StatePlusTransition(innerState, innerStateStatus, null);
                     putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
                     // state as strong state
-                    sptOne.setType(STRONG_STATE);
+                    sptOne = new StatePlusTransition(state, STRONG_STATE, null);
+                    sptTwo = new StatePlusTransition(innerState, innerStateStatus, null);
                     putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
-
-                    /**
-                     * TODO TODO sptTwo und sptOne neu instanziieren! TODO TODO
-                     */
-
                     // inner state is hierarchical
                     if (innerStateStatus > SIMPLE_STATE) {
                         // inner state is concurrent
                         if (innerStateStatus == WEAK_STATE) {
                             // dependency for strong state
-                            sptOne.setType(WEAK_STATE);
-                            sptTwo.setType(STRONG_STATE);
+                            sptOne = new StatePlusTransition(state, WEAK_STATE, null);
+                            sptTwo = new StatePlusTransition(innerState, STRONG_STATE, null);
                             putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
-                            sptOne.setType(STRONG_STATE);
-                            sptTwo.setType(STRONG_STATE);
+                            sptOne = new StatePlusTransition(state, STRONG_STATE, null);
+                            sptTwo = new StatePlusTransition(innerState, STRONG_STATE, null);
                             putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
                         } else {
                             // dependency for weak state
-                            sptOne.setType(WEAK_STATE);
-                            sptTwo.setType(WEAK_STATE);
+                            sptOne = new StatePlusTransition(state, WEAK_STATE, null);
+                            sptTwo = new StatePlusTransition(innerState, WEAK_STATE, null);
                             putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
-                            sptOne.setType(STRONG_STATE);
-                            sptTwo.setType(WEAK_STATE);
+                            sptOne = new StatePlusTransition(state, STRONG_STATE, null);
+                            sptTwo = new StatePlusTransition(innerState, WEAK_STATE, null);
                             putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
                         }
                     }
@@ -550,13 +569,27 @@ public final class Helper {
 
     }
 
-    private static void putDependencyList(final StatePlusTransition stateOne,
-            final StatePlusTransition stateTwo, final int dependency) {
-        Dependency put = builtDependency(stateOne, stateTwo, dependency);
+    private static void putDependencyList(final StatePlusTransition sptOne,
+            final StatePlusTransition sptTwo, final int dependency) {
+        Dependency put = builtDependency(sptOne, sptTwo, dependency);
         if (!stateDependencies.contains(put)) {
             stateDependencies.add(put);
         }
-        printDependencyList();
+    }
+
+    private static void addDependency(final StatePlusTransition sptOne,
+            final StatePlusTransition sptTwo, final int dependency) {
+        Dependency put = builtDependency(sptOne, sptTwo, dependency);
+        if (!stateDependencies.contains(put)) {
+            stateDependencies.add(put);
+        }
+    }
+
+    private static EList<Transition> getSortedTransitions(final EList<Transition> transitions) {
+        EList<Transition> out = transitions;
+        CompareTransitions comparable = new CompareTransitions();
+        Collections.sort(out, comparable);
+        return out;
     }
 
     private static StatePlusTransition getStateProperties(final State state) {
@@ -577,11 +610,11 @@ public final class Helper {
         return out;
     }
 
-    private static boolean isInTupelList(final ArrayList<StatePlusTransition> list,
+    private static boolean isInTupelList(final ArrayList<StatePlusTransition> sptList,
             final StatePlusTransition state) {
         boolean out = false;
-        for (StatePlusTransition listTupel : list) {
-            if (listTupel.equals(state)) {
+        for (StatePlusTransition spt : sptList) {
+            if (spt.equals(state)) {
                 out = true;
                 break;
             }
@@ -593,10 +626,10 @@ public final class Helper {
         String out = "";
         switch (stateType) {
         case WEAK_STATE:
-            out = "_weak";
+            out = "_w";
             break;
         case STRONG_STATE:
-            out = "_strong";
+            out = "_s";
             break;
         default:
             break;
@@ -651,9 +684,9 @@ public final class Helper {
                     ArrayList<Signal> effects = copyFromList(effectSignals);
 
                     if (!(triggers.isEmpty() && effects.isEmpty())) {
-                        StatePlusTransition s = getStateProperties(innerState);
-                        s.setTransition(transition);
-                        stateAndSignals.setState(s);
+                        StatePlusTransition spt = getStateProperties(innerState);
+                        spt.setTransition(transition);
+                        stateAndSignals.setState(spt);
                         stateAndSignals.setTriggerSignals(triggers);
                         stateAndSignals.setEffectSignals(effects);
                         if (!stateSignalDependencies.contains(stateAndSignals)) {
@@ -690,17 +723,17 @@ public final class Helper {
 
         // Build a Graph with the dependencies of all threads.
         Graph dependencyGraph = new Graph(threadListUnsorted.size(), true);
-        StatePlusTransition sourceState;
-        StatePlusTransition targetState;
+        StatePlusTransition sourceSpt;
+        StatePlusTransition targetSpt;
         int sourceInt;
         int targetInt;
         int edgeType;
         for (Dependency dependency : stateDependencies) {
-            sourceState = dependency.getFirstState();
-            targetState = dependency.getSecondState();
+            sourceSpt = dependency.getFirstState();
+            targetSpt = dependency.getSecondState();
             edgeType = dependency.getDependencyType();
-            sourceInt = threadListUnsorted.indexOf(sourceState);
-            targetInt = threadListUnsorted.indexOf(targetState);
+            sourceInt = threadListUnsorted.indexOf(sourceSpt);
+            targetInt = threadListUnsorted.indexOf(targetSpt);
             dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
         }
 
@@ -711,8 +744,8 @@ public final class Helper {
         // thread list with threads in their right priority order.
         for (int i = 0; i < threadListTopologicalSorted.size(); i++) {
             int threadInt = threadListTopologicalSorted.get(i);
-            StatePlusTransition stateTupel = threadListUnsorted.get(threadInt);
-            sortedStates.add(stateTupel);
+            StatePlusTransition spt = threadListUnsorted.get(threadInt);
+            sortedStates.add(spt);
         }
     }
 
