@@ -3,7 +3,6 @@ package de.cau.cs.kieler.synccharts.custom.contentassist.providers;
 import java.util.HashMap;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * Creates and manages a cache of {@link EObject}s, depending on inheriting
@@ -19,10 +18,10 @@ public abstract class AbstractEObjectProvider {
 	/**
 	 * Initialize the cache.
 	 * 
-	 * @param editingDomain
+	 * @param editingTransition
 	 * @return
 	 */
-	public abstract void init(EditingDomain editingDomain);
+	public abstract void init(EObject editingElement);
 
 	/**
 	 * Returns the element names.

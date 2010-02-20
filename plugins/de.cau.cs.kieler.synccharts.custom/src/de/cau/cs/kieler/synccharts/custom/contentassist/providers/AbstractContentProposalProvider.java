@@ -16,14 +16,23 @@ public abstract class AbstractContentProposalProvider implements
 		IContentProposalProvider {
 
 	/**
-	 * Gets proposals from the inheriting ProposalProvider and generates an array of IContentproposals.<br>
-	 * These proposals are filtered by labelcontent and cursorposition.
+	 * Returns the classifier proposals.
+	 * 
+	 * @return Array of String proposals.
+	 */
+	protected abstract String[] getProposalsAsStrings();
+
+	/**
+	 * Gets proposals from the inheriting ProposalProvider and generates an
+	 * array of IContentproposals.<br>
+	 * Proposals are filtered by labelcontent and cursorposition.
 	 * 
 	 * @param contents
 	 * @param position
 	 * @return array of {@link IContentProposal}s.
 	 */
-	public IContentProposal[] getProposals(final String contents, final int position) {
+	public IContentProposal[] getProposals(final String contents,
+			final int position) {
 		String[] proposals = getProposalsAsStrings();
 		if (proposals != null) {
 			String name = contents.trim();
@@ -71,12 +80,5 @@ public abstract class AbstractContentProposalProvider implements
 			}
 		};
 	}
-
-	/**
-	 * Returns the classifier proposals.
-	 * 
-	 * @return Array of String proposals.
-	 */
-	protected abstract String[] getProposalsAsStrings();
 
 }

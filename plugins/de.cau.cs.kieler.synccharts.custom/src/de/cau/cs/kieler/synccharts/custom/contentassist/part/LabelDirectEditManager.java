@@ -47,7 +47,8 @@ public class LabelDirectEditManager extends TextDirectEditManager {
 		Text text = (Text) getCellEditor().getControl();
 		if (proposalProvider != null) {
 
-			// after typing that sign the contentassist pops up with entered
+			// after typing "activation characters" content assist pops up
+			// with entered
 			// delay (see contentAdapter.setAutoActivationDelay(...)).
 			// char[] autoActivationCharacters = new char[] { '.' };
 

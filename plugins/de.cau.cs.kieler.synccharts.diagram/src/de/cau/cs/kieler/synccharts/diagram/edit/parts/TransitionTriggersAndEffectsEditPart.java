@@ -32,6 +32,7 @@ import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
+import org.eclipse.gmf.runtime.notation.DecorationNode;
 import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
@@ -43,6 +44,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameContentProposalProvider;
 import de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameProvider;
 import de.cau.cs.kieler.synccharts.custom.contentassist.part.LabelDirectEditManager;
@@ -333,10 +335,15 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
 	 * @generated
 	 */
 	protected DirectEditManager getManager() {
-		SignalNameProvider.INSTANCE.init(getEditingDomain());
+		Object model = getModel();
+		if (model instanceof DecorationNode) {
+			DecorationNode node = (DecorationNode) model;
+			SignalNameProvider.INSTANCE.init((Transition) node.getElement());
+		}
+		
 		if (manager == null) {
-			// create a new ContentProposalProvider for the
-			// ContentProposalAdapter
+
+			// creates a new ContentProposalProvider for ContentProposalAdapter
 			SignalNameContentProposalProvider provider = new SignalNameContentProposalProvider();
 			// instantiate the modified constructor in LabelDirectEditManager
 			setManager(new LabelDirectEditManager(this, TextDirectEditManager
