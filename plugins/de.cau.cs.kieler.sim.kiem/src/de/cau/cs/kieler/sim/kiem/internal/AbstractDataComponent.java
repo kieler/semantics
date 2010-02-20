@@ -103,8 +103,12 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
         if (this.provideProperties() != null) {
             KiemProperty[] propertiesTmp = this.provideProperties();
             for (int c = 0; c < propertiesTmp.length; c++) {
-                propertiesId = propertiesId + propertiesTmp[c].getKey();
-                propertiesId = propertiesId + propertiesTmp[c].getType().getClass().getName();
+                try {
+                    propertiesId = propertiesId + propertiesTmp[c].getKey();
+                    propertiesId = propertiesId + propertiesTmp[c].getType().getClass().getName();
+                } catch (Exception e) {
+                    // ignore properties that a key/type cannot be retrieved for
+                }
             }
         }
         String type = "";
