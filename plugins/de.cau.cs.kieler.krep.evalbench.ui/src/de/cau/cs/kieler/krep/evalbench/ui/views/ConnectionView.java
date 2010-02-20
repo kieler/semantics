@@ -23,6 +23,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
+import de.cau.cs.kieler.krep.evalbench.ui.actions.EnableAction;
 
 /**
  * A view for logging of connection messages to targets. This includes the information on the
@@ -43,6 +44,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 
     private Display display;
 
+    private boolean enabled;
+
     @Override
     public void createPartControl(final Composite parent) {
         // create text viewer
@@ -53,6 +56,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         // create actions
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
         toolBarManager.add(new ClearAction(viewer));
+        toolBarManager.add(new EnableAction(this));
+        enabled = true;
     }
 
     @Override
@@ -64,7 +69,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * {@inheritDoc}
      */
     public void dataReceived(final String data) {
-        if (viewer != null && display != null) {
+        if (enabled && viewer != null && display != null) {
             display.asyncExec(new Runnable() {
                 public void run() {
                     viewer.append("< " + data + "\n");
@@ -78,7 +83,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * 
      */
     public void dataSent(final String data) {
-        if (viewer != null && display != null) {
+        if (enabled && viewer != null && display != null) {
             display.asyncExec(new Runnable() {
                 public void run() {
                     viewer.append("> " + data + "\n");
@@ -111,7 +116,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * @return true if the message was displayed
      */
     public static boolean log(final String msg) {
-
         IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
         if (window == null) {
@@ -121,7 +125,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         if (connectionView == null) {
             return false;
         }
-        ((ConnectionView) connectionView).getViewer().append(msg + "\n");
+
+        ((ConnectionView) connectionView).show(msg + "\n");
         return true;
     }
 
@@ -130,7 +135,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      *            message to display in the connection view
      */
     public void show(final String msg) {
-        if (viewer != null && display != null) {
+        if (enabled && viewer != null && display != null) {
             display.asyncExec(new Runnable() {
                 public void run() {
                     viewer.append(msg + "\n");
@@ -144,6 +149,16 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      */
     public void comment(final String comment) {
         show(comment);
+    }
+
+    public void enable() {
+        enabled = true;
+        viewer.setEnabled(true);
+    }
+
+    public void disable() {
+        enabled = false;
+        viewer.setEnabled(false);
     }
 
 }

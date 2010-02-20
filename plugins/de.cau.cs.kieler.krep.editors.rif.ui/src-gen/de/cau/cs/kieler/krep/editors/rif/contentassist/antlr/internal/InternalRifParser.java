@@ -21,20 +21,16 @@ import java.util.ArrayList;
 
 public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_INT", "RULE_STRING", "RULE_WS", "RULE_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "'bool'", "'int'", "'@#'", "':'", "'#step'", "'#outs'", "'#locs'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'", "'T'", "'F'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_INT", "RULE_STRING", "RULE_WS", "RULE_COMMENT", "'bool'", "'int'", "'@#'", "':'", "'#step'", "'#outs'", "'#locs'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'", "'T'", "'F'"
     };
     public static final int RULE_LOCALS=6;
-    public static final int RULE_ID=11;
     public static final int RULE_STRING=8;
-    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_OUTPUTS=5;
     public static final int RULE_INPUTS=4;
     public static final int RULE_INT=7;
     public static final int RULE_COMMENT=10;
     public static final int RULE_WS=9;
-    public static final int RULE_SL_COMMENT=13;
     public static final int EOF=-1;
-    public static final int RULE_ML_COMMENT=12;
 
         public InternalRifParser(TokenStream input) {
             super(input);
@@ -526,10 +522,10 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             int alt1=2;
             int LA1_0 = input.LA(1);
 
-            if ( (LA1_0==15) ) {
+            if ( (LA1_0==11) ) {
                 alt1=1;
             }
-            else if ( (LA1_0==16) ) {
+            else if ( (LA1_0==12) ) {
                 alt1=2;
             }
             else {
@@ -546,7 +542,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:234:1: 'bool'
                     {
                      before(grammarAccess.getTypeAccess().getBoolKeyword_0()); 
-                    match(input,15,FOLLOW_15_in_rule__Type__Alternatives437); 
+                    match(input,11,FOLLOW_11_in_rule__Type__Alternatives437); 
                      after(grammarAccess.getTypeAccess().getBoolKeyword_0()); 
 
                     }
@@ -561,7 +557,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:242:1: 'int'
                     {
                      before(grammarAccess.getTypeAccess().getIntKeyword_1()); 
-                    match(input,16,FOLLOW_16_in_rule__Type__Alternatives457); 
+                    match(input,12,FOLLOW_12_in_rule__Type__Alternatives457); 
                      after(grammarAccess.getTypeAccess().getIntKeyword_1()); 
 
                     }
@@ -601,12 +597,12 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 alt2=1;
                 }
                 break;
-            case 27:
+            case 23:
                 {
                 alt2=2;
                 }
                 break;
-            case 28:
+            case 24:
                 {
                 alt2=3;
                 }
@@ -831,7 +827,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:326:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2()); 
-            match(input,17,FOLLOW_17_in_rule__Trace__Group__2637); 
+            match(input,13,FOLLOW_13_in_rule__Trace__Group__2637); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2()); 
 
             }
@@ -981,7 +977,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:382:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5()); 
-            match(input,17,FOLLOW_17_in_rule__Trace__Group__5750); 
+            match(input,13,FOLLOW_13_in_rule__Trace__Group__5750); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5()); 
 
             }
@@ -1131,7 +1127,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:438:1: '@#'
             {
              before(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8()); 
-            match(input,17,FOLLOW_17_in_rule__Trace__Group__8863); 
+            match(input,13,FOLLOW_13_in_rule__Trace__Group__8863); 
              after(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8()); 
 
             }
@@ -1199,7 +1195,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==19) ) {
+                if ( (LA6_0==15) ) {
                     alt6=1;
                 }
 
@@ -1268,7 +1264,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==22) ) {
+            if ( (LA7_0==18) ) {
                 alt7=1;
             }
             switch (alt7) {
@@ -1371,7 +1367,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:540:1: ':'
             {
              before(grammarAccess.getDeclAccess().getColonKeyword_1()); 
-            match(input,18,FOLLOW_18_in_rule__Decl__Group__11051); 
+            match(input,14,FOLLOW_14_in_rule__Decl__Group__11051); 
              after(grammarAccess.getDeclAccess().getColonKeyword_1()); 
 
             }
@@ -1503,7 +1499,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:603:1: '#step'
             {
              before(grammarAccess.getTickAccess().getStepKeyword_1()); 
-            match(input,19,FOLLOW_19_in_rule__Tick__Group__11168); 
+            match(input,15,FOLLOW_15_in_rule__Tick__Group__11168); 
              after(grammarAccess.getTickAccess().getStepKeyword_1()); 
 
             }
@@ -1600,7 +1596,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_INT||(LA8_0>=27 && LA8_0<=28)) ) {
+                if ( (LA8_0==RULE_INT||(LA8_0>=23 && LA8_0<=24)) ) {
                     alt8=1;
                 }
 
@@ -1662,7 +1658,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:659:1: '#outs'
             {
              before(grammarAccess.getTickAccess().getOutsKeyword_4()); 
-            match(input,20,FOLLOW_20_in_rule__Tick__Group__41282); 
+            match(input,16,FOLLOW_16_in_rule__Tick__Group__41282); 
              after(grammarAccess.getTickAccess().getOutsKeyword_4()); 
 
             }
@@ -1709,7 +1705,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( (LA9_0==RULE_INT||(LA9_0>=27 && LA9_0<=28)) ) {
+                if ( (LA9_0==RULE_INT||(LA9_0>=23 && LA9_0<=24)) ) {
                     alt9=1;
                 }
 
@@ -1771,7 +1767,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:697:1: '#locs'
             {
              before(grammarAccess.getTickAccess().getLocsKeyword_6()); 
-            match(input,21,FOLLOW_21_in_rule__Tick__Group__61359); 
+            match(input,17,FOLLOW_17_in_rule__Tick__Group__61359); 
              after(grammarAccess.getTickAccess().getLocsKeyword_6()); 
 
             }
@@ -1818,7 +1814,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
                 int alt10=2;
                 int LA10_0 = input.LA(1);
 
-                if ( (LA10_0==RULE_INT||(LA10_0>=27 && LA10_0<=28)) ) {
+                if ( (LA10_0==RULE_INT||(LA10_0>=23 && LA10_0<=24)) ) {
                     alt10=1;
                 }
 
@@ -1876,7 +1872,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:750:1: 'The'
             {
              before(grammarAccess.getStatusAccess().getTheKeyword_0()); 
-            match(input,22,FOLLOW_22_in_rule__Status__Group__01449); 
+            match(input,18,FOLLOW_18_in_rule__Status__Group__01449); 
              after(grammarAccess.getStatusAccess().getTheKeyword_0()); 
 
             }
@@ -1917,7 +1913,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:770:1: 'execution'
             {
              before(grammarAccess.getStatusAccess().getExecutionKeyword_1()); 
-            match(input,23,FOLLOW_23_in_rule__Status__Group__11488); 
+            match(input,19,FOLLOW_19_in_rule__Status__Group__11488); 
              after(grammarAccess.getStatusAccess().getExecutionKeyword_1()); 
 
             }
@@ -1958,7 +1954,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:790:1: 'lasted'
             {
              before(grammarAccess.getStatusAccess().getLastedKeyword_2()); 
-            match(input,24,FOLLOW_24_in_rule__Status__Group__21527); 
+            match(input,20,FOLLOW_20_in_rule__Status__Group__21527); 
              after(grammarAccess.getStatusAccess().getLastedKeyword_2()); 
 
             }
@@ -2040,7 +2036,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:828:1: '.'
             {
              before(grammarAccess.getStatusAccess().getFullStopKeyword_4()); 
-            match(input,25,FOLLOW_25_in_rule__Status__Group__41602); 
+            match(input,21,FOLLOW_21_in_rule__Status__Group__41602); 
              after(grammarAccess.getStatusAccess().getFullStopKeyword_4()); 
 
             }
@@ -2122,7 +2118,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:866:1: 'second.'
             {
              before(grammarAccess.getStatusAccess().getSecondKeyword_6()); 
-            match(input,26,FOLLOW_26_in_rule__Status__Group__61677); 
+            match(input,22,FOLLOW_22_in_rule__Status__Group__61677); 
              after(grammarAccess.getStatusAccess().getSecondKeyword_6()); 
 
             }
@@ -2594,7 +2590,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1066:1: 'T'
             {
              before(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
-            match(input,27,FOLLOW_27_in_rule__Data__TrueAssignment_12072); 
+            match(input,23,FOLLOW_23_in_rule__Data__TrueAssignment_12072); 
              after(grammarAccess.getDataAccess().getTrueTKeyword_1_0()); 
 
             }
@@ -2639,7 +2635,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/contentassist/antlr/internal/InternalRif.g:1089:1: 'F'
             {
              before(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
-            match(input,28,FOLLOW_28_in_rule__Data__FalseAssignment_22116); 
+            match(input,24,FOLLOW_24_in_rule__Data__FalseAssignment_22116); 
              after(grammarAccess.getDataAccess().getFalseFKeyword_2_0()); 
 
             }
@@ -2686,65 +2682,65 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleStatus_in_entryRuleStatus366 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStatus373 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Status__Group__0_in_ruleStatus400 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Type__Alternatives437 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Type__Alternatives457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_rule__Type__Alternatives437 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_rule__Type__Alternatives457 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__ValAssignment_0_in_rule__Data__Alternatives491 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__TrueAssignment_1_in_rule__Data__Alternatives509 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Data__FalseAssignment_2_in_rule__Data__Alternatives527 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INPUTS_in_rule__Trace__Group__0562 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_RULE_INPUTS_in_rule__Trace__Group__0562 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0570 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1598 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__InputsAssignment_1_in_rule__Trace__Group__1598 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1608 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__Trace__Group__2637 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_13_in_rule__Trace__Group__2637 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2647 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_OUTPUTS_in_rule__Trace__Group__3675 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_RULE_OUTPUTS_in_rule__Trace__Group__3675 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__4_in_rule__Trace__Group__3683 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4711 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__OutputsAssignment_4_in_rule__Trace__Group__4711 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__5_in_rule__Trace__Group__4721 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__Trace__Group__5750 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_13_in_rule__Trace__Group__5750 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Trace__Group__6_in_rule__Trace__Group__5760 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_LOCALS_in_rule__Trace__Group__6788 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_RULE_LOCALS_in_rule__Trace__Group__6788 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__7_in_rule__Trace__Group__6796 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7824 = new BitSet(new long[]{0x0000000000020100L});
+    public static final BitSet FOLLOW_rule__Trace__LocalAssignment_7_in_rule__Trace__Group__7824 = new BitSet(new long[]{0x0000000000002100L});
     public static final BitSet FOLLOW_rule__Trace__Group__8_in_rule__Trace__Group__7834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__Trace__Group__8863 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_13_in_rule__Trace__Group__8863 = new BitSet(new long[]{0x0000000000008000L});
     public static final BitSet FOLLOW_rule__Trace__Group__9_in_rule__Trace__Group__8873 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9903 = new BitSet(new long[]{0x0000000000480002L});
-    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9915 = new BitSet(new long[]{0x0000000000480002L});
+    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9903 = new BitSet(new long[]{0x0000000000048002L});
+    public static final BitSet FOLLOW_rule__Trace__TickAssignment_9_in_rule__Trace__Group__9915 = new BitSet(new long[]{0x0000000000048002L});
     public static final BitSet FOLLOW_rule__Trace__Group__10_in_rule__Trace__Group__9927 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStatus_in_rule__Trace__Group__10956 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Decl__NameAssignment_0_in_rule__Decl__Group__01013 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_rule__Decl__NameAssignment_0_in_rule__Decl__Group__01013 = new BitSet(new long[]{0x0000000000004000L});
     public static final BitSet FOLLOW_rule__Decl__Group__1_in_rule__Decl__Group__01022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Decl__Group__11051 = new BitSet(new long[]{0x0000000000018000L});
+    public static final BitSet FOLLOW_14_in_rule__Decl__Group__11051 = new BitSet(new long[]{0x0000000000001800L});
     public static final BitSet FOLLOW_rule__Decl__Group__2_in_rule__Decl__Group__11061 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Decl__TypeAssignment_2_in_rule__Decl__Group__21089 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01139 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_rule__Tick__Group__11168 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_15_in_rule__Tick__Group__11168 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21206 = new BitSet(new long[]{0x0000000018100080L});
+    public static final BitSet FOLLOW_rule__Tick__NrAssignment_2_in_rule__Tick__Group__21206 = new BitSet(new long[]{0x0000000001810080L});
     public static final BitSet FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21215 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31243 = new BitSet(new long[]{0x0000000018100080L});
+    public static final BitSet FOLLOW_rule__Tick__InputAssignment_3_in_rule__Tick__Group__31243 = new BitSet(new long[]{0x0000000001810080L});
     public static final BitSet FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31253 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rule__Tick__Group__41282 = new BitSet(new long[]{0x0000000018200080L});
+    public static final BitSet FOLLOW_16_in_rule__Tick__Group__41282 = new BitSet(new long[]{0x0000000001820080L});
     public static final BitSet FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41292 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51320 = new BitSet(new long[]{0x0000000018200080L});
+    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_5_in_rule__Tick__Group__51320 = new BitSet(new long[]{0x0000000001820080L});
     public static final BitSet FOLLOW_rule__Tick__Group__6_in_rule__Tick__Group__51330 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__Tick__Group__61359 = new BitSet(new long[]{0x0000000018000082L});
+    public static final BitSet FOLLOW_17_in_rule__Tick__Group__61359 = new BitSet(new long[]{0x0000000001800082L});
     public static final BitSet FOLLOW_rule__Tick__Group__7_in_rule__Tick__Group__61369 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71397 = new BitSet(new long[]{0x0000000018000082L});
-    public static final BitSet FOLLOW_22_in_rule__Status__Group__01449 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_rule__Tick__LocalAssignment_7_in_rule__Tick__Group__71397 = new BitSet(new long[]{0x0000000001800082L});
+    public static final BitSet FOLLOW_18_in_rule__Status__Group__01449 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_rule__Status__Group__1_in_rule__Status__Group__01459 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_rule__Status__Group__11488 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_19_in_rule__Status__Group__11488 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_rule__Status__Group__2_in_rule__Status__Group__11498 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__Status__Group__21527 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_20_in_rule__Status__Group__21527 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_rule__Status__Group__3_in_rule__Status__Group__21537 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__31565 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__31565 = new BitSet(new long[]{0x0000000000200000L});
     public static final BitSet FOLLOW_rule__Status__Group__4_in_rule__Status__Group__31573 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rule__Status__Group__41602 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_21_in_rule__Status__Group__41602 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_rule__Status__Group__5_in_rule__Status__Group__41612 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__51640 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Status__Group__51640 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_rule__Status__Group__6_in_rule__Status__Group__51648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_rule__Status__Group__61677 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_rule__Status__Group__61677 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruledecl_in_rule__Trace__InputsAssignment_11726 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruledecl_in_rule__Trace__OutputsAssignment_41757 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruledecl_in_rule__Trace__LocalAssignment_71788 = new BitSet(new long[]{0x0000000000000002L});
@@ -2756,7 +2752,7 @@ public class InternalRifParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleData_in_rule__Tick__OutputAssignment_51974 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleData_in_rule__Tick__LocalAssignment_72005 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__Data__ValAssignment_02036 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__Data__TrueAssignment_12072 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Data__FalseAssignment_22116 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_rule__Data__TrueAssignment_12072 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__Data__FalseAssignment_22116 = new BitSet(new long[]{0x0000000000000002L});
 
 }

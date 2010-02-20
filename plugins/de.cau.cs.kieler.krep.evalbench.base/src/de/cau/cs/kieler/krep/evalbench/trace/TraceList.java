@@ -26,9 +26,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.trace.esi.esiParser;
-import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
@@ -73,9 +71,15 @@ public class TraceList {
                 LinkedList<Tick> ticks = new LinkedList<Tick>();
                 while (t.hasNext()) {
                     t.next();
+                    int i = 0;
                     LinkedList<Signal> in = new LinkedList<Signal>();
+                    for (de.cau.cs.kieler.sim.trace.Signal s : t.current().getInputs()) {
+                        in.add(new Signal(s.getName(), true, s.getValue(), i++));
+                    }
                     LinkedList<Signal> out = new LinkedList<Signal>();
-                 //   t.current().getInputs();
+                    for (de.cau.cs.kieler.sim.trace.Signal s : t.current().getOutputs()) {
+                        out.add(new Signal(s.getName(), true, s.getValue(), i++));
+                    }
                     ticks.add(new Tick(in, out));
                 }
 

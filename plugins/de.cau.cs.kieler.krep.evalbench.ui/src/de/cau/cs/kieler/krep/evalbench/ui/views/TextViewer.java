@@ -135,4 +135,8 @@ public class TextViewer extends ContentViewer {
         text.append(s);
     }
 
+    public void setEnabled(boolean enabled) {
+        text.setEnabled(enabled);
+    }
+
 }

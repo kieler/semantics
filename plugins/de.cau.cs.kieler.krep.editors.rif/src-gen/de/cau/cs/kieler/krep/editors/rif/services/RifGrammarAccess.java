@@ -11,7 +11,6 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton
 public class RifGrammarAccess extends AbstractGrammarElementFinder {
@@ -308,31 +307,25 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	private TickElements pTick;
 	private DataElements pData;
 	private StatusElements pStatus;
+	private TerminalRule tINT;
 	private TerminalRule tINPUTS;
 	private TerminalRule tOUTPUTS;
 	private TerminalRule tLOCALS;
+	private TerminalRule tSTRING;
 	private TerminalRule tWS;
 	private TerminalRule tCOMMENT;
 	
 	private final GrammarProvider grammarProvider;
 
-	private TerminalsGrammarAccess gaTerminals;
-
 	@Inject
-	public RifGrammarAccess(GrammarProvider grammarProvider,
-		TerminalsGrammarAccess gaTerminals) {
+	public RifGrammarAccess(GrammarProvider grammarProvider) {
 		this.grammarProvider = grammarProvider;
-		this.gaTerminals = gaTerminals;
 	}
 	
 	public Grammar getGrammar() {	
 		return grammarProvider.getGrammar(this);
 	}
 	
-
-	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
-		return gaTerminals;
-	}
 
 	
 	//Trace:
@@ -409,6 +402,12 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		return getStatusAccess().getRule();
 	}
 
+	//terminal INT returns ecore::EInt:
+	//  "-"? "0".."9"+;
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
 	//terminal INPUTS:
 	//  "#@inputs";
 	public TerminalRule getINPUTSRule() {
@@ -427,6 +426,13 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		return (tLOCALS != null) ? tLOCALS : (tLOCALS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "LOCALS"));
 	} 
 
+	//terminal STRING:
+	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" |
+	//  "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	public TerminalRule getSTRINGRule() {
+		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
+	} 
+
 	//terminal WS:
 	//  "\t" | " " | "\r" | "\n";
 	public TerminalRule getWSRule() {
@@ -437,42 +443,5 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	//  "# "->"\n";
 	public TerminalRule getCOMMENTRule() {
 		return (tCOMMENT != null) ? tCOMMENT : (tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT"));
-	} 
-
-	//terminal ID:
-	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
-	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//  "0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
-	} 
-
-	//terminal STRING:
-	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" |
-	//  "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
-	public TerminalRule getSTRINGRule() {
-		return gaTerminals.getSTRINGRule();
-	} 
-
-	//terminal ML_COMMENT:
-	//  "/ *"->"* /";
-	public TerminalRule getML_COMMENTRule() {
-		return gaTerminals.getML_COMMENTRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//  "//" !("\n" | "\r")* ("\r"? "\n")?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
-	} 
-
-	//terminal ANY_OTHER:
-	//  .;
-	public TerminalRule getANY_OTHERRule() {
-		return gaTerminals.getANY_OTHERRule();
 	} 
 }

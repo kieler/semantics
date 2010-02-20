@@ -70,11 +70,16 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
                                 break;
                             }
                             // TODO: valued signals
-                            /*
-                             * if (sig.isValued()) { if ((Integer)
-                             * (JSONSignalValues.getSignalValue(obj)) != sig .getVal()) { valid =
-                             * false; break; } }
-                             */
+
+                            if (sig.isValued()) {
+                                int v1 = (Integer) (JSONSignalValues.getSignalValue(obj));
+                                int v2 = sig.getValue();
+                                if (v1 != v2) {
+                                    valid = false;
+                                    break;
+                                }
+                            }
+
                         } else {
                             valid = false;
 
@@ -106,7 +111,7 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
                         errorPos = pos;
                     }
                     res.accumulate("valid", JSONSignalValues.newValue(pos, valid));
-                    res.accumulate("not valid", JSONSignalValues.newValue(pos, !valid));
+                    // res.accumulate("not valid", JSONSignalValues.newValue(pos, !valid));
                     res.accumulate("traceValid", JSONSignalValues.newValue(errorPos, isValid));
 
                 } catch (JSONException e) {
@@ -148,14 +153,10 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
 
     /** {@inheritDoc} */
     public void initialize() throws KiemInitializationException {
-        // tracelist = null;
-        /*
-         * if (tracelist == null) { // load new trace try { String name =
-         * getProperties()[0].getValue(); if (traceFile != null) { // Automated run name =
-         * traceFile; } tracelist = new EsiFile(getClass(), name); } catch (Exception e) { throw new
-         * KiemInitializationException("Cannot open trace file", true, e); } }
-         */
         isValid = true;
+        pos = 0;
+        errorPos = 0;
+
     }
 
     /** {@inheritDoc} */

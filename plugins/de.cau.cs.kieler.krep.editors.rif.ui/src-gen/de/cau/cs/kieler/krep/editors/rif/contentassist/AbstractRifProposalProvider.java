@@ -6,7 +6,7 @@ package de.cau.cs.kieler.krep.editors.rif.contentassist;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.*;
-import org.eclipse.xtext.common.contentassist.TerminalsProposalProvider;
+import org.eclipse.xtext.ui.common.editor.contentassist.AbstractJavaBasedContentProposalProvider;
 import org.eclipse.xtext.ui.core.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.core.editor.contentassist.ContentAssistContext;
 
@@ -15,7 +15,7 @@ import org.eclipse.xtext.ui.core.editor.contentassist.ContentAssistContext;
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-public class AbstractRifProposalProvider extends TerminalsProposalProvider {
+public class AbstractRifProposalProvider extends AbstractJavaBasedContentProposalProvider {
 		
 	private final static Logger logger = Logger.getLogger(AbstractRifProposalProvider.class);
 	
@@ -166,6 +166,13 @@ public class AbstractRifProposalProvider extends TerminalsProposalProvider {
 		}
 		// subclasses may override
 	}
+	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("complete_INT '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
+					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
+		}
+		// subclasses may override
+	}
 	public void complete_INPUTS(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("complete_INPUTS '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
@@ -183,6 +190,13 @@ public class AbstractRifProposalProvider extends TerminalsProposalProvider {
 	public void complete_LOCALS(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("complete_LOCALS '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
+					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
+		}
+		// subclasses may override
+	}
+	public void complete_STRING(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("complete_STRING '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
 					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
 		}
 		// subclasses may override

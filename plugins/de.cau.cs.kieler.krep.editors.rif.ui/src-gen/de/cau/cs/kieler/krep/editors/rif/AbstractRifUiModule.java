@@ -53,11 +53,6 @@ public abstract class AbstractRifUiModule extends RifRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider> bindDelegatingStyledCellLabelProvider$IStyledLabelProvider() {
-		return org.eclipse.xtext.ui.core.DefaultLabelProvider.class;
-	}
-
-	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
 	public Class<? extends org.eclipse.emf.common.notify.AdapterFactory> bindAdapterFactory() {
 		return org.eclipse.xtext.ui.core.InjectableAdapterFactory.class;
 	}
@@ -113,6 +108,11 @@ public abstract class AbstractRifUiModule extends RifRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+	public void configureXtextEditorErrorTickUpdater(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.core.editor.IXtextEditorCallback.class).annotatedWith(com.google.inject.name.Names.named("IXtextEditorCallBack")).to(org.eclipse.xtext.ui.core.editor.XtextEditorErrorTickUpdater.class);
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
 	public Class<? extends org.eclipse.xtext.resource.IExternalContentSupport.IExternalContentProvider> bindIExternalContentSupport$IExternalContentProvider() {
 		return org.eclipse.xtext.ui.core.editor.IDirtyStateManager.class;
 	}
@@ -154,6 +154,11 @@ public abstract class AbstractRifUiModule extends RifRuntimeModule {
 
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
 	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
+		return de.cau.cs.kieler.krep.editors.rif.labeling.RifLabelProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
+	public Class<? extends org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider> bindDelegatingStyledCellLabelProvider$IStyledLabelProvider() {
 		return de.cau.cs.kieler.krep.editors.rif.labeling.RifLabelProvider.class;
 	}
 

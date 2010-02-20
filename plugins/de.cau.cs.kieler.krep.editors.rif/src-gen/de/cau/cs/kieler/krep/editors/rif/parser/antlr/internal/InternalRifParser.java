@@ -23,20 +23,16 @@ import java.util.ArrayList;
 
 public class InternalRifParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_STRING", "RULE_INT", "RULE_WS", "RULE_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "'@#'", "':'", "'bool'", "'int'", "'#step'", "'#outs'", "'#locs'", "'T'", "'F'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_STRING", "RULE_INT", "RULE_WS", "RULE_COMMENT", "'@#'", "':'", "'bool'", "'int'", "'#step'", "'#outs'", "'#locs'", "'T'", "'F'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'"
     };
     public static final int RULE_LOCALS=6;
-    public static final int RULE_ID=11;
     public static final int RULE_STRING=7;
-    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_OUTPUTS=5;
     public static final int RULE_INT=8;
     public static final int RULE_INPUTS=4;
     public static final int RULE_COMMENT=10;
     public static final int RULE_WS=9;
-    public static final int RULE_SL_COMMENT=13;
     public static final int EOF=-1;
-    public static final int RULE_ML_COMMENT=12;
 
         public InternalRifParser(TokenStream input) {
             super(input);
@@ -186,7 +182,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,15,FOLLOW_15_in_ruleTrace150); 
+            match(input,11,FOLLOW_11_in_ruleTrace150); 
 
                     createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_2(), null); 
                 
@@ -248,7 +244,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,15,FOLLOW_15_in_ruleTrace190); 
+            match(input,11,FOLLOW_11_in_ruleTrace190); 
 
                     createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_5(), null); 
                 
@@ -310,7 +306,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,15,FOLLOW_15_in_ruleTrace230); 
+            match(input,11,FOLLOW_11_in_ruleTrace230); 
 
                     createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8(), null); 
                 
@@ -321,7 +317,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==19) ) {
+                if ( (LA4_0==15) ) {
                     alt4=1;
                 }
 
@@ -377,7 +373,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==24) ) {
+            if ( (LA5_0==20) ) {
                 alt5=1;
             }
             switch (alt5) {
@@ -502,7 +498,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,16,FOLLOW_16_in_ruledecl359); 
+            match(input,12,FOLLOW_12_in_ruledecl359); 
 
                     createLeafNode(grammarAccess.getDeclAccess().getColonKeyword_1(), null); 
                 
@@ -616,10 +612,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
             int alt6=2;
             int LA6_0 = input.LA(1);
 
-            if ( (LA6_0==17) ) {
+            if ( (LA6_0==13) ) {
                 alt6=1;
             }
-            else if ( (LA6_0==18) ) {
+            else if ( (LA6_0==14) ) {
                 alt6=2;
             }
             else {
@@ -633,7 +629,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:306:2: kw= 'bool'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,17,FOLLOW_17_in_ruleType466); 
+                    match(input,13,FOLLOW_13_in_ruleType466); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getTypeAccess().getBoolKeyword_0(), null); 
@@ -645,7 +641,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:313:2: kw= 'int'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,18,FOLLOW_18_in_ruleType485); 
+                    match(input,14,FOLLOW_14_in_ruleType485); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getTypeAccess().getIntKeyword_1(), null); 
@@ -748,7 +744,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,19,FOLLOW_19_in_ruleTick579); 
+            match(input,15,FOLLOW_15_in_ruleTick579); 
 
                     createLeafNode(grammarAccess.getTickAccess().getStepKeyword_1(), null); 
                 
@@ -791,7 +787,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==RULE_INT||(LA7_0>=22 && LA7_0<=23)) ) {
+                if ( (LA7_0==RULE_INT||(LA7_0>=18 && LA7_0<=19)) ) {
                     alt7=1;
                 }
 
@@ -839,7 +835,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,20,FOLLOW_20_in_ruleTick633); 
+            match(input,16,FOLLOW_16_in_ruleTick633); 
 
                     createLeafNode(grammarAccess.getTickAccess().getOutsKeyword_4(), null); 
                 
@@ -849,7 +845,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_INT||(LA8_0>=22 && LA8_0<=23)) ) {
+                if ( (LA8_0==RULE_INT||(LA8_0>=18 && LA8_0<=19)) ) {
                     alt8=1;
                 }
 
@@ -897,7 +893,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,21,FOLLOW_21_in_ruleTick665); 
+            match(input,17,FOLLOW_17_in_ruleTick665); 
 
                     createLeafNode(grammarAccess.getTickAccess().getLocsKeyword_6(), null); 
                 
@@ -907,7 +903,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( (LA9_0==RULE_INT||(LA9_0>=22 && LA9_0<=23)) ) {
+                if ( (LA9_0==RULE_INT||(LA9_0>=18 && LA9_0<=19)) ) {
                     alt9=1;
                 }
 
@@ -1035,12 +1031,12 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 alt10=1;
                 }
                 break;
-            case 22:
+            case 18:
                 {
                 alt10=2;
                 }
                 break;
-            case 23:
+            case 19:
                 {
                 alt10=3;
                 }
@@ -1102,7 +1098,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:510:3: lv_true_1_0= 'T'
                     {
                     lv_true_1_0=(Token)input.LT(1);
-                    match(input,22,FOLLOW_22_in_ruleData804); 
+                    match(input,18,FOLLOW_18_in_ruleData804); 
 
                             createLeafNode(grammarAccess.getDataAccess().getTrueTKeyword_1_0(), "true"); 
                         
@@ -1137,7 +1133,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:532:3: lv_false_2_0= 'F'
                     {
                     lv_false_2_0=(Token)input.LT(1);
-                    match(input,23,FOLLOW_23_in_ruleData841); 
+                    match(input,19,FOLLOW_19_in_ruleData841); 
 
                             createLeafNode(grammarAccess.getDataAccess().getFalseFKeyword_2_0(), "false"); 
                         
@@ -1238,19 +1234,19 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:575:2: kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.'
             {
             kw=(Token)input.LT(1);
-            match(input,24,FOLLOW_24_in_ruleStatus940); 
+            match(input,20,FOLLOW_20_in_ruleStatus940); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getStatusAccess().getTheKeyword_0(), null); 
                 
             kw=(Token)input.LT(1);
-            match(input,25,FOLLOW_25_in_ruleStatus953); 
+            match(input,21,FOLLOW_21_in_ruleStatus953); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getStatusAccess().getExecutionKeyword_1(), null); 
                 
             kw=(Token)input.LT(1);
-            match(input,26,FOLLOW_26_in_ruleStatus966); 
+            match(input,22,FOLLOW_22_in_ruleStatus966); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getStatusAccess().getLastedKeyword_2(), null); 
@@ -1264,7 +1260,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 createLeafNode(grammarAccess.getStatusAccess().getINTTerminalRuleCall_3(), null); 
                 
             kw=(Token)input.LT(1);
-            match(input,27,FOLLOW_27_in_ruleStatus999); 
+            match(input,23,FOLLOW_23_in_ruleStatus999); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getStatusAccess().getFullStopKeyword_4(), null); 
@@ -1278,7 +1274,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 createLeafNode(grammarAccess.getStatusAccess().getINTTerminalRuleCall_5(), null); 
                 
             kw=(Token)input.LT(1);
-            match(input,28,FOLLOW_28_in_ruleStatus1032); 
+            match(input,24,FOLLOW_24_in_ruleStatus1032); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getStatusAccess().getSecondKeyword_6(), null); 
@@ -1309,48 +1305,48 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruleTrace_in_entryRuleTrace75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTrace85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INPUTS_in_ruleTrace119 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_ruledecl_in_ruleTrace139 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_15_in_ruleTrace150 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_OUTPUTS_in_ruleTrace159 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_ruledecl_in_ruleTrace179 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_15_in_ruleTrace190 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_LOCALS_in_ruleTrace199 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_ruledecl_in_ruleTrace219 = new BitSet(new long[]{0x0000000000008080L});
-    public static final BitSet FOLLOW_15_in_ruleTrace230 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_ruleTick_in_ruleTrace251 = new BitSet(new long[]{0x0000000001080002L});
+    public static final BitSet FOLLOW_RULE_INPUTS_in_ruleTrace119 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_ruledecl_in_ruleTrace139 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_11_in_ruleTrace150 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_OUTPUTS_in_ruleTrace159 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_ruledecl_in_ruleTrace179 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_11_in_ruleTrace190 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_LOCALS_in_ruleTrace199 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_ruledecl_in_ruleTrace219 = new BitSet(new long[]{0x0000000000000880L});
+    public static final BitSet FOLLOW_11_in_ruleTrace230 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_ruleTick_in_ruleTrace251 = new BitSet(new long[]{0x0000000000108002L});
     public static final BitSet FOLLOW_ruleStatus_in_ruleTrace262 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruledecl_in_entryRuledecl292 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuledecl302 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruledecl344 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ruledecl359 = new BitSet(new long[]{0x0000000000060000L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruledecl344 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruledecl359 = new BitSet(new long[]{0x0000000000006000L});
     public static final BitSet FOLLOW_ruleType_in_ruledecl380 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleType_in_entryRuleType417 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleType428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_ruleType466 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_ruleType485 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_ruleType466 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_ruleType485 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTick_in_entryRuleTick525 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTick535 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_ruleTick579 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleTick596 = new BitSet(new long[]{0x0000000000D00100L});
-    public static final BitSet FOLLOW_ruleData_in_ruleTick622 = new BitSet(new long[]{0x0000000000D00100L});
-    public static final BitSet FOLLOW_20_in_ruleTick633 = new BitSet(new long[]{0x0000000000E00100L});
-    public static final BitSet FOLLOW_ruleData_in_ruleTick654 = new BitSet(new long[]{0x0000000000E00100L});
-    public static final BitSet FOLLOW_21_in_ruleTick665 = new BitSet(new long[]{0x0000000000C00102L});
-    public static final BitSet FOLLOW_ruleData_in_ruleTick686 = new BitSet(new long[]{0x0000000000C00102L});
+    public static final BitSet FOLLOW_15_in_ruleTick579 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleTick596 = new BitSet(new long[]{0x00000000000D0100L});
+    public static final BitSet FOLLOW_ruleData_in_ruleTick622 = new BitSet(new long[]{0x00000000000D0100L});
+    public static final BitSet FOLLOW_16_in_ruleTick633 = new BitSet(new long[]{0x00000000000E0100L});
+    public static final BitSet FOLLOW_ruleData_in_ruleTick654 = new BitSet(new long[]{0x00000000000E0100L});
+    public static final BitSet FOLLOW_17_in_ruleTick665 = new BitSet(new long[]{0x00000000000C0102L});
+    public static final BitSet FOLLOW_ruleData_in_ruleTick686 = new BitSet(new long[]{0x00000000000C0102L});
     public static final BitSet FOLLOW_ruleData_in_entryRuleData723 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleData733 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_ruleData775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleData804 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleData841 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_ruleData804 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_ruleData841 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStatus_in_entryRuleStatus891 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStatus902 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_ruleStatus940 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_ruleStatus953 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_ruleStatus966 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleStatus981 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_ruleStatus999 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleStatus1014 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleStatus1032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_ruleStatus940 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ruleStatus953 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_22_in_ruleStatus966 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleStatus981 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleStatus999 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleStatus1014 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleStatus1032 = new BitSet(new long[]{0x0000000000000002L});
 
 }

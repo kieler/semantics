@@ -89,7 +89,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
  */
 public final class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
 
-    private static final String[] SUPPORTED_FILES = { "kasm" };
+    private static final String[] SUPPORTED_FILES = { "kasm", "klp", "strl" };
 
     private IConnection connection = null;
     private CommunicationProtocol protocol = null;
@@ -103,7 +103,7 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
     private int maxRT = Integer.MIN_VALUE;
     private int minRT = Integer.MAX_VALUE;
     private int rt = 0;
-    private int steps = 1;
+    private int steps = 0;
 
     /*
      * number of the properties in the property array. This is established in provideProperties
@@ -166,6 +166,8 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 res.accumulate("TickWarn", JSONSignalValues.newValue(true));
             }
 
+            res.accumulate("Reaction Times", getReactionTimes());
+
             trace = protocol.getExecutionTrace();
             for (int i = 0; i < trace.length; i++) {
                 trace[i] = assembler.adr2row(trace[i]);
@@ -223,6 +225,10 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
         connection = null;
         assembler = null;
         viewer = null;
+        rt = 0;
+        steps = 0;
+        minRT = Integer.MAX_VALUE;
+        maxRT = Integer.MIN_VALUE;
     }
 
     @Override
@@ -634,9 +640,12 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
     public List<KiemProperty> produceInformation() {
         List<KiemProperty> res = new LinkedList<KiemProperty>();
         res.add(new KiemProperty("Est. Reaction Time", assembler.getTickLen()));
-        res.add(new KiemProperty("Reaction Time", "{" + minRT + "/ "
-                + (steps == 0 ? 0 : rt / steps) + "/" + maxRT + "}"));
+        res.add(new KiemProperty("Reaction Times", getReactionTimes()));
         return res;
+    }
+
+    private String getReactionTimes() {
+        return "{" + minRT + " / " + (steps == 0 ? 0 : rt / steps) + " /" + maxRT + "}";
     }
 
     /**

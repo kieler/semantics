@@ -52,8 +52,7 @@
         <page
             class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage"
             id="de.cau.cs.kieler.krep.editors.rif.Rif"
-            name="Rif"
-            category="org.eclipse.xtext.languages">
+            name="Rif">
             <keywordReference id="de.cau.cs.kieler.krep.editors.rif.ui.keyword_Rif"/>
         </page>
         <page
@@ -87,7 +86,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.open">
+            locationURI="popup:#TextEditorContext?after=group.edit">
              <command
                  commandId="de.cau.cs.kieler.krep.editors.rif.Rif.validate"
                  style="push"
@@ -100,6 +99,27 @@
          </command>  
          </menuContribution>
     </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.core.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="de.cau.cs.kieler.krep.editors.rif.Rif.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.core.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.krep.editors.rif.Rif.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
 
 <!-- adding resource factories -->
 
@@ -110,13 +130,12 @@
 			type="rif">
 		</parser>
 	</extension>
-	<extension
-        point="org.eclipse.xtext.extension_resourceServiceProvider">
-     <resourceServiceProvider
-           class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceServiceProvider"
-           uriExtension="rif">
-     </resourceServiceProvider>
-  </extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.resource.IResourceUIServiceProvider"
+            uriExtension="rif">
+        </resourceServiceProvider>
+    </extension>
 
 
 
