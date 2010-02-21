@@ -52,35 +52,19 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule StateExtend ****************
  *
  * StateExtend:
- *   ("input" inputSignals+=InputSignals|"output" outputSignals+=OutputSignals|"input"
- *   "output" inOutputSignals+=InOutputSignals|"signal" signals+=Signals|regions+=
- *   RegionSignalDec)+; 
+ *   (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
+ *   "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
+ *   signals+=Signals)+; 
  * 
  * //==============================================================================
  * // "Buckets" containing the Signals / Regions with Signals
  * //==============================================================================
- * 
- * 
- * 	
- * 	    
- * 	
- * 	    
- * 	
- * 	       
- * 	
- * 	    	
- * 
- * 	
- * 	
- * 	
- * 
- * // also allow lists of signals and vars ?
  *
  **/
 
-// ("input" inputSignals+=InputSignals|"output" outputSignals+=OutputSignals|"input"
-// "output" inOutputSignals+=InOutputSignals|"signal" signals+=Signals|regions+=
-// RegionSignalDec)+
+// (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
+// "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
+// signals+=Signals)+
 protected class StateExtend_Alternatives extends AlternativesToken {
 
 	public StateExtend_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -95,11 +79,11 @@ protected class StateExtend_Alternatives extends AlternativesToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new StateExtend_Group_0(parent, this, 0, inst);
+			case 0: return new StateExtend_RegionsAssignment_0(parent, this, 0, inst);
 			case 1: return new StateExtend_Group_1(parent, this, 1, inst);
 			case 2: return new StateExtend_Group_2(parent, this, 2, inst);
 			case 3: return new StateExtend_Group_3(parent, this, 3, inst);
-			case 4: return new StateExtend_RegionsAssignment_4(parent, this, 4, inst);
+			case 4: return new StateExtend_Group_4(parent, this, 4, inst);
 			default: return null;
 		}	
 	}	
@@ -111,402 +95,16 @@ protected class StateExtend_Alternatives extends AlternativesToken {
 	}
 }
 
-// "input" inputSignals+=InputSignals
-protected class StateExtend_Group_0 extends GroupToken {
-	
-	public StateExtend_Group_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getGroup_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_InputSignalsAssignment_0_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "input"
-protected class StateExtend_InputKeyword_0_0 extends KeywordToken  {
-	
-	public StateExtend_InputKeyword_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getInputKeyword_0_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
-		}	
-	}	
-		
-}
-
-// inputSignals+=InputSignals
-protected class StateExtend_InputSignalsAssignment_0_1 extends AssignmentToken  {
-	
-	public StateExtend_InputSignalsAssignment_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getInputSignalsAssignment_0_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new InputSignals_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("inputSignals",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("inputSignals");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getInputSignalsRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateExtendAccess().getInputSignalsInputSignalsParserRuleCall_0_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateExtend_InputKeyword_0_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-// "output" outputSignals+=OutputSignals
-protected class StateExtend_Group_1 extends GroupToken {
-	
-	public StateExtend_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getGroup_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_OutputSignalsAssignment_1_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "output"
-protected class StateExtend_OutputKeyword_1_0 extends KeywordToken  {
-	
-	public StateExtend_OutputKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getOutputKeyword_1_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
-		}	
-	}	
-		
-}
-
-// outputSignals+=OutputSignals
-protected class StateExtend_OutputSignalsAssignment_1_1 extends AssignmentToken  {
-	
-	public StateExtend_OutputSignalsAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_1_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new OutputSignals_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("outputSignals",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("outputSignals");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getOutputSignalsRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateExtendAccess().getOutputSignalsOutputSignalsParserRuleCall_1_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateExtend_OutputKeyword_1_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-// "input" "output" inOutputSignals+=InOutputSignals
-protected class StateExtend_Group_2 extends GroupToken {
-	
-	public StateExtend_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getGroup_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_InOutputSignalsAssignment_2_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "input"
-protected class StateExtend_InputKeyword_2_0 extends KeywordToken  {
-	
-	public StateExtend_InputKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getInputKeyword_2_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
-		}	
-	}	
-		
-}
-
-// "output"
-protected class StateExtend_OutputKeyword_2_1 extends KeywordToken  {
-	
-	public StateExtend_OutputKeyword_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getOutputKeyword_2_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_InputKeyword_2_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// inOutputSignals+=InOutputSignals
-protected class StateExtend_InOutputSignalsAssignment_2_2 extends AssignmentToken  {
-	
-	public StateExtend_InOutputSignalsAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_2_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new InOutputSignals_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("inOutputSignals",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("inOutputSignals");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getInOutputSignalsRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateExtendAccess().getInOutputSignalsInOutputSignalsParserRuleCall_2_2_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateExtend_OutputKeyword_2_1(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-// "signal" signals+=Signals
-protected class StateExtend_Group_3 extends GroupToken {
-	
-	public StateExtend_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getGroup_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_SignalsAssignment_3_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "signal"
-protected class StateExtend_SignalKeyword_3_0 extends KeywordToken  {
-	
-	public StateExtend_SignalKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getSignalKeyword_3_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
-		}	
-	}	
-		
-}
-
-// signals+=Signals
-protected class StateExtend_SignalsAssignment_3_1 extends AssignmentToken  {
-	
-	public StateExtend_SignalsAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getSignalsAssignment_3_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signals_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("signals",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("signals");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalsRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateExtendAccess().getSignalsSignalsParserRuleCall_3_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateExtend_SignalKeyword_3_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
 // regions+=RegionSignalDec
-protected class StateExtend_RegionsAssignment_4 extends AssignmentToken  {
+protected class StateExtend_RegionsAssignment_0 extends AssignmentToken  {
 	
-	public StateExtend_RegionsAssignment_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public StateExtend_RegionsAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateExtendAccess().getRegionsAssignment_4();
+		return grammarAccess.getStateExtendAccess().getRegionsAssignment_0();
 	}
 
     @Override
@@ -525,7 +123,7 @@ protected class StateExtend_RegionsAssignment_4 extends AssignmentToken  {
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getRegionSignalDecRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getStateExtendAccess().getRegionsRegionSignalDecParserRuleCall_4_0(); 
+				element = grammarAccess.getStateExtendAccess().getRegionsRegionSignalDecParserRuleCall_0_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -543,6 +141,392 @@ protected class StateExtend_RegionsAssignment_4 extends AssignmentToken  {
 	}	
 }
 
+// "input" "output" inOutputSignals+=InOutputSignals
+protected class StateExtend_Group_1 extends GroupToken {
+	
+	public StateExtend_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getGroup_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_InOutputSignalsAssignment_1_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "input"
+protected class StateExtend_InputKeyword_1_0 extends KeywordToken  {
+	
+	public StateExtend_InputKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getInputKeyword_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
+		}	
+	}	
+		
+}
+
+// "output"
+protected class StateExtend_OutputKeyword_1_1 extends KeywordToken  {
+	
+	public StateExtend_OutputKeyword_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getOutputKeyword_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_InputKeyword_1_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// inOutputSignals+=InOutputSignals
+protected class StateExtend_InOutputSignalsAssignment_1_2 extends AssignmentToken  {
+	
+	public StateExtend_InOutputSignalsAssignment_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_1_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new InOutputSignals_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("inOutputSignals",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("inOutputSignals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getInOutputSignalsRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateExtendAccess().getInOutputSignalsInOutputSignalsParserRuleCall_1_2_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new StateExtend_OutputKeyword_1_1(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+// "output" outputSignals+=OutputSignals
+protected class StateExtend_Group_2 extends GroupToken {
+	
+	public StateExtend_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getGroup_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_OutputSignalsAssignment_2_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "output"
+protected class StateExtend_OutputKeyword_2_0 extends KeywordToken  {
+	
+	public StateExtend_OutputKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getOutputKeyword_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
+		}	
+	}	
+		
+}
+
+// outputSignals+=OutputSignals
+protected class StateExtend_OutputSignalsAssignment_2_1 extends AssignmentToken  {
+	
+	public StateExtend_OutputSignalsAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new OutputSignals_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("outputSignals",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("outputSignals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getOutputSignalsRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateExtendAccess().getOutputSignalsOutputSignalsParserRuleCall_2_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new StateExtend_OutputKeyword_2_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+// "input" inputSignals+=InputSignals
+protected class StateExtend_Group_3 extends GroupToken {
+	
+	public StateExtend_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getGroup_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_InputSignalsAssignment_3_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "input"
+protected class StateExtend_InputKeyword_3_0 extends KeywordToken  {
+	
+	public StateExtend_InputKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getInputKeyword_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
+		}	
+	}	
+		
+}
+
+// inputSignals+=InputSignals
+protected class StateExtend_InputSignalsAssignment_3_1 extends AssignmentToken  {
+	
+	public StateExtend_InputSignalsAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getInputSignalsAssignment_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new InputSignals_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("inputSignals",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("inputSignals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getInputSignalsRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateExtendAccess().getInputSignalsInputSignalsParserRuleCall_3_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new StateExtend_InputKeyword_3_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+// "signal" signals+=Signals
+protected class StateExtend_Group_4 extends GroupToken {
+	
+	public StateExtend_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getGroup_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_SignalsAssignment_4_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "signal"
+protected class StateExtend_SignalKeyword_4_0 extends KeywordToken  {
+	
+	public StateExtend_SignalKeyword_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getSignalKeyword_4_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
+		}	
+	}	
+		
+}
+
+// signals+=Signals
+protected class StateExtend_SignalsAssignment_4_1 extends AssignmentToken  {
+	
+	public StateExtend_SignalsAssignment_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getSignalsAssignment_4_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Signals_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("signals",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("signals");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSignalsRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateExtendAccess().getSignalsSignalsParserRuleCall_4_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new StateExtend_SignalKeyword_4_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
 
 /************ end Rule StateExtend ****************/
 
@@ -552,9 +536,7 @@ protected class StateExtend_RegionsAssignment_4 extends AssignmentToken  {
  * RegionSignalDec:
  *   region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
  *   signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)*
- *   |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"; 
- * 
- * // also allow lists of signals and vars ?
+ *   |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";";
  *
  **/
 

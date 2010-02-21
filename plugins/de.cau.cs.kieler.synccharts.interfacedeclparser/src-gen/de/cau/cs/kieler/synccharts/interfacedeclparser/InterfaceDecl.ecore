@@ -5,16 +5,16 @@
     nsURI="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl"
     nsPrefix="interfaceDecl">
   <eClassifiers xsi:type="ecore:EClass" name="StateExtend">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inputSignals" upperBound="-1"
-        eType="#//InputSignals" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outputSignals" upperBound="-1"
-        eType="#//OutputSignals" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inOutputSignals" upperBound="-1"
-        eType="#//InOutputSignals" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="#//Signals" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
         eType="#//RegionSignalDec" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inOutputSignals" upperBound="-1"
+        eType="#//InOutputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputSignals" upperBound="-1"
+        eType="#//OutputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputSignals" upperBound="-1"
+        eType="#//InputSignals" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="#//Signals" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegionSignalDec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Region"/>

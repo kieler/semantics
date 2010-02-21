@@ -70,22 +70,13 @@ public interface InterfaceDeclPackage extends EPackage
   int STATE_EXTEND = 0;
 
   /**
-   * The feature id for the '<em><b>Input Signals</b></em>' containment reference list.
+   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_EXTEND__INPUT_SIGNALS = 0;
-
-  /**
-   * The feature id for the '<em><b>Output Signals</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_EXTEND__OUTPUT_SIGNALS = 1;
+  int STATE_EXTEND__REGIONS = 0;
 
   /**
    * The feature id for the '<em><b>In Output Signals</b></em>' containment reference list.
@@ -94,7 +85,25 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_EXTEND__IN_OUTPUT_SIGNALS = 2;
+  int STATE_EXTEND__IN_OUTPUT_SIGNALS = 1;
+
+  /**
+   * The feature id for the '<em><b>Output Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_EXTEND__OUTPUT_SIGNALS = 2;
+
+  /**
+   * The feature id for the '<em><b>Input Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_EXTEND__INPUT_SIGNALS = 3;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -103,16 +112,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_EXTEND__SIGNALS = 3;
-
-  /**
-   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_EXTEND__REGIONS = 4;
+  int STATE_EXTEND__SIGNALS = 4;
 
   /**
    * The number of structural features of the '<em>State Extend</em>' class.
@@ -293,26 +293,15 @@ public interface InterfaceDeclPackage extends EPackage
   EClass getStateExtend();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInputSignals <em>Input Signals</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRegions <em>Regions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Input Signals</em>'.
-   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInputSignals()
+   * @return the meta object for the containment reference list '<em>Regions</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRegions()
    * @see #getStateExtend()
    * @generated
    */
-  EReference getStateExtend_InputSignals();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getOutputSignals <em>Output Signals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Output Signals</em>'.
-   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getOutputSignals()
-   * @see #getStateExtend()
-   * @generated
-   */
-  EReference getStateExtend_OutputSignals();
+  EReference getStateExtend_Regions();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInOutputSignals <em>In Output Signals</em>}'.
@@ -326,6 +315,28 @@ public interface InterfaceDeclPackage extends EPackage
   EReference getStateExtend_InOutputSignals();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getOutputSignals <em>Output Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Output Signals</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getOutputSignals()
+   * @see #getStateExtend()
+   * @generated
+   */
+  EReference getStateExtend_OutputSignals();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInputSignals <em>Input Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Input Signals</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInputSignals()
+   * @see #getStateExtend()
+   * @generated
+   */
+  EReference getStateExtend_InputSignals();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getSignals <em>Signals</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -335,17 +346,6 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    */
   EReference getStateExtend_Signals();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRegions <em>Regions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Regions</em>'.
-   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRegions()
-   * @see #getStateExtend()
-   * @generated
-   */
-  EReference getStateExtend_Regions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec <em>Region Signal Dec</em>}'.
@@ -508,20 +508,12 @@ public interface InterfaceDeclPackage extends EPackage
     EClass STATE_EXTEND = eINSTANCE.getStateExtend();
 
     /**
-     * The meta object literal for the '<em><b>Input Signals</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATE_EXTEND__INPUT_SIGNALS = eINSTANCE.getStateExtend_InputSignals();
-
-    /**
-     * The meta object literal for the '<em><b>Output Signals</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_EXTEND__OUTPUT_SIGNALS = eINSTANCE.getStateExtend_OutputSignals();
+    EReference STATE_EXTEND__REGIONS = eINSTANCE.getStateExtend_Regions();
 
     /**
      * The meta object literal for the '<em><b>In Output Signals</b></em>' containment reference list feature.
@@ -532,20 +524,28 @@ public interface InterfaceDeclPackage extends EPackage
     EReference STATE_EXTEND__IN_OUTPUT_SIGNALS = eINSTANCE.getStateExtend_InOutputSignals();
 
     /**
+     * The meta object literal for the '<em><b>Output Signals</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE_EXTEND__OUTPUT_SIGNALS = eINSTANCE.getStateExtend_OutputSignals();
+
+    /**
+     * The meta object literal for the '<em><b>Input Signals</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE_EXTEND__INPUT_SIGNALS = eINSTANCE.getStateExtend_InputSignals();
+
+    /**
      * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference STATE_EXTEND__SIGNALS = eINSTANCE.getStateExtend_Signals();
-
-    /**
-     * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_EXTEND__REGIONS = eINSTANCE.getStateExtend_Regions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl <em>Region Signal Dec</em>}' class.

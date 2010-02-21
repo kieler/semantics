@@ -15,10 +15,14 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//StateExtend"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
+        <groups xsi:type="xtext:Assignment" feature="regions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+        </groups>
         <groups xsi:type="xtext:Group">
           <tokens xsi:type="xtext:Keyword" value="input"/>
-          <tokens xsi:type="xtext:Assignment" feature="inputSignals" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+          <tokens xsi:type="xtext:Keyword" value="output"/>
+          <tokens xsi:type="xtext:Assignment" feature="inOutputSignals" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
           </tokens>
         </groups>
         <groups xsi:type="xtext:Group">
@@ -29,9 +33,8 @@
         </groups>
         <groups xsi:type="xtext:Group">
           <tokens xsi:type="xtext:Keyword" value="input"/>
-          <tokens xsi:type="xtext:Keyword" value="output"/>
-          <tokens xsi:type="xtext:Assignment" feature="inOutputSignals" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+          <tokens xsi:type="xtext:Assignment" feature="inputSignals" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
           </tokens>
         </groups>
         <groups xsi:type="xtext:Group">
@@ -39,9 +42,6 @@
           <tokens xsi:type="xtext:Assignment" feature="signals" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
           </tokens>
-        </groups>
-        <groups xsi:type="xtext:Assignment" feature="regions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
         </groups>
       </alternatives>
     </rules>

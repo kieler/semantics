@@ -10,11 +10,11 @@
   <genPackages prefix="InterfaceDecl" basePackage="de.cau.cs.kieler.synccharts.interfacedeclparser"
       disposableProviderFactory="true" ecorePackage="InterfaceDecl.ecore#/">
     <genClasses ecoreClass="InterfaceDecl.ecore#//StateExtend">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/inputSignals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/outputSignals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/inOutputSignals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/regions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/inOutputSignals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/outputSignals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/inputSignals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//StateExtend/signals"/>
     </genClasses>
     <genClasses ecoreClass="InterfaceDecl.ecore#//RegionSignalDec">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/region"/>

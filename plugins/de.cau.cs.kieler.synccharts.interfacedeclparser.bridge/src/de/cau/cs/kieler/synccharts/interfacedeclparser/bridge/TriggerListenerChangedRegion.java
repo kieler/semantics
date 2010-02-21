@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts.interfacedeclparser.bridge;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
@@ -61,7 +62,8 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                         NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
                 NotificationFilter.createFeatureFilter(
                         SyncchartsPackage.eINSTANCE.getRegion_Variables()).and(
-                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))));
+                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getRegion_Id())));
     }
 
     /**
@@ -74,7 +76,29 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      */
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        // System.out.println("RegionTrigger: " + notification);
+        //System.out.println("RegionTrigger: " + notification);
+
+        CompoundCommand cc = new CompoundCommand();
+        // as a region name should be unique, the easiest way to react to an id
+        // change, is just to replace the region's id within the interface
+        // declaration string
+        if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getRegion_Id())
+                && notification.getOldValue() != null) {
+            Region r = (Region) notification.getNotifier();
+            if (r.getParentState() != null) {
+                State par = r.getParentState();
+                String ifdecl = par.getInterfaceDeclaration();
+                ifdecl = ifdecl.replace(notification.getOldStringValue() + ":", notification
+                        .getNewStringValue()
+                        + ":");
+
+                cc.appendIfCanExecute(new SetCommand(domain, par, SyncchartsPackage.eINSTANCE
+                        .getState_InterfaceDeclaration(), ifdecl));
+                return cc;
+            }
+            return null;
+        }
+
         // either signal or variable
         ValuedObject vo = (ValuedObject) notification.getNotifier();
         if (!(vo.eContainer() instanceof Region)) {
@@ -82,7 +106,6 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
             return null;
         }
 
-        CompoundCommand cc = new CompoundCommand();
         State parent = (State) vo.eContainer().eContainer();
         int occuredChange = -1;
         String oldName = null;

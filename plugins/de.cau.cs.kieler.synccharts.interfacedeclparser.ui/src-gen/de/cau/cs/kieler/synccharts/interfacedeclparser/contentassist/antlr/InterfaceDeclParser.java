@@ -43,10 +43,10 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getAlternatives(), "rule__Signal__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getStateExtendAccess().getGroup_0(), "rule__StateExtend__Group_0__0");
 					put(grammarAccess.getStateExtendAccess().getGroup_1(), "rule__StateExtend__Group_1__0");
 					put(grammarAccess.getStateExtendAccess().getGroup_2(), "rule__StateExtend__Group_2__0");
 					put(grammarAccess.getStateExtendAccess().getGroup_3(), "rule__StateExtend__Group_3__0");
+					put(grammarAccess.getStateExtendAccess().getGroup_4(), "rule__StateExtend__Group_4__0");
 					put(grammarAccess.getRegionSignalDecAccess().getGroup(), "rule__RegionSignalDec__Group__0");
 					put(grammarAccess.getRegionSignalDecAccess().getGroup_2_0(), "rule__RegionSignalDec__Group_2_0__0");
 					put(grammarAccess.getRegionSignalDecAccess().getGroup_2_0_2(), "rule__RegionSignalDec__Group_2_0_2__0");
@@ -87,11 +87,11 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup_1(), "rule__Variable__Group_1__0");
 					put(grammarAccess.getVariableAccess().getGroup_3(), "rule__Variable__Group_3__0");
-					put(grammarAccess.getStateExtendAccess().getInputSignalsAssignment_0_1(), "rule__StateExtend__InputSignalsAssignment_0_1");
-					put(grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_1_1(), "rule__StateExtend__OutputSignalsAssignment_1_1");
-					put(grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_2_2(), "rule__StateExtend__InOutputSignalsAssignment_2_2");
-					put(grammarAccess.getStateExtendAccess().getSignalsAssignment_3_1(), "rule__StateExtend__SignalsAssignment_3_1");
-					put(grammarAccess.getStateExtendAccess().getRegionsAssignment_4(), "rule__StateExtend__RegionsAssignment_4");
+					put(grammarAccess.getStateExtendAccess().getRegionsAssignment_0(), "rule__StateExtend__RegionsAssignment_0");
+					put(grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_1_2(), "rule__StateExtend__InOutputSignalsAssignment_1_2");
+					put(grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_2_1(), "rule__StateExtend__OutputSignalsAssignment_2_1");
+					put(grammarAccess.getStateExtendAccess().getInputSignalsAssignment_3_1(), "rule__StateExtend__InputSignalsAssignment_3_1");
+					put(grammarAccess.getStateExtendAccess().getSignalsAssignment_4_1(), "rule__StateExtend__SignalsAssignment_4_1");
 					put(grammarAccess.getRegionSignalDecAccess().getRegionAssignment_0(), "rule__RegionSignalDec__RegionAssignment_0");
 					put(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_1(), "rule__RegionSignalDec__VarsAssignment_2_0_1");
 					put(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_2_1(), "rule__RegionSignalDec__VarsAssignment_2_0_2_1");

@@ -14,10 +14,14 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.interfacedeclparser.bridge;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
+import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InOutputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InputSignals;
@@ -124,6 +128,58 @@ public class InterfaceDeclSerializerLogic {
             Signals sigs = InterfaceDeclFactory.eINSTANCE.createSignals();
             sigs.getSignals().add(newSig);
             se.getSignals().add(sigs);
+        }
+    }
+
+    /**
+     * places all signals within the StateExtend. Plain signals are all added
+     * within one bucket, complex ones are placed in a seperate bucket.
+     * 
+     * @param se
+     *            StateExtend
+     * @param sigs
+     *            List with signals to be added.
+     */
+    protected void handleBunchNewSignals(final StateExtend se, final EList<Signal> sigs) {
+        Copier cop = new Copier();
+
+        InOutputSignals ios = InterfaceDeclFactory.eINSTANCE.createInOutputSignals();
+        InputSignals is = InterfaceDeclFactory.eINSTANCE.createInputSignals();
+        OutputSignals os = InterfaceDeclFactory.eINSTANCE.createOutputSignals();
+        Signals newsigs = InterfaceDeclFactory.eINSTANCE.createSignals();
+
+        for (Signal s : sigs) {
+            Signal newSig = (Signal) cop.copy(s);
+            boolean complex = checkSignalComplex(s);
+            if (complex) {
+                handleNewSignal(se, s);
+            } else if (s.isIsInput() && s.isIsOutput()) {
+                newSig.setIsInput(true);
+                newSig.setIsOutput(true);
+                ios.getSignals().add(newSig);
+            } else if (s.isIsInput()) {
+                newSig.setIsInput(false);
+                is.getSignals().add(newSig);
+            } else if (s.isIsOutput()) {
+                newSig.setIsOutput(false);
+                os.getSignals().add(newSig);
+            } else {
+                newsigs.getSignals().add(newSig);
+            }
+        }
+
+        // if not empty, add buckets
+        if (ios.getSignals().size() > 0) {
+            se.getInOutputSignals().add(ios);
+        }
+        if (is.getSignals().size() > 0) {
+            se.getInputSignals().add(is);
+        }
+        if (os.getSignals().size() > 0) {
+            se.getOutputSignals().add(os);
+        }
+        if (newsigs.getSignals().size() > 0) {
+            se.getSignals().add(newsigs);
         }
     }
 
@@ -600,7 +656,7 @@ public class InterfaceDeclSerializerLogic {
     // ##################
 
     /**
-     * check if everything was deleted
+     * check if everything was deleted.
      * 
      * @param se
      */
@@ -611,6 +667,20 @@ public class InterfaceDeclSerializerLogic {
             return true;
         }
         return false;
+    }
+
+    /**
+     * checks whether a signal is complex or plain.
+     * 
+     * @param sig
+     *            signal being checked
+     * @return true if complex
+     */
+    private boolean checkSignalComplex(final Signal sig) {
+        // TODO maybe check for trim() != ""
+        return (sig.getInitialValue() != null || sig.getCombineOperator() != CombineOperator.NONE
+                || sig.getType() != ValueType.PURE || sig.getHostCombineOperator() != null || sig
+                .getHostType() != null);
     }
 
 }

@@ -35,11 +35,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getInputSignals <em>Input Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getOutputSignals <em>Output Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getInOutputSignals <em>In Output Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getRegions <em>Regions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getInOutputSignals <em>In Output Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getOutputSignals <em>Output Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getInputSignals <em>Input Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getSignals <em>Signals</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,24 +48,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class StateExtendImpl extends MinimalEObjectImpl.Container implements StateExtend
 {
   /**
-   * The cached value of the '{@link #getInputSignals() <em>Input Signals</em>}' containment reference list.
+   * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInputSignals()
+   * @see #getRegions()
    * @generated
    * @ordered
    */
-  protected EList<InputSignals> inputSignals;
-
-  /**
-   * The cached value of the '{@link #getOutputSignals() <em>Output Signals</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOutputSignals()
-   * @generated
-   * @ordered
-   */
-  protected EList<OutputSignals> outputSignals;
+  protected EList<RegionSignalDec> regions;
 
   /**
    * The cached value of the '{@link #getInOutputSignals() <em>In Output Signals</em>}' containment reference list.
@@ -78,6 +68,26 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
   protected EList<InOutputSignals> inOutputSignals;
 
   /**
+   * The cached value of the '{@link #getOutputSignals() <em>Output Signals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOutputSignals()
+   * @generated
+   * @ordered
+   */
+  protected EList<OutputSignals> outputSignals;
+
+  /**
+   * The cached value of the '{@link #getInputSignals() <em>Input Signals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getInputSignals()
+   * @generated
+   * @ordered
+   */
+  protected EList<InputSignals> inputSignals;
+
+  /**
    * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -86,16 +96,6 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * @ordered
    */
   protected EList<Signals> signals;
-
-  /**
-   * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRegions()
-   * @generated
-   * @ordered
-   */
-  protected EList<RegionSignalDec> regions;
 
   /**
    * <!-- begin-user-doc -->
@@ -123,27 +123,13 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<InputSignals> getInputSignals()
+  public EList<RegionSignalDec> getRegions()
   {
-    if (inputSignals == null)
+    if (regions == null)
     {
-      inputSignals = new EObjectContainmentEList<InputSignals>(InputSignals.class, this, InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS);
+      regions = new EObjectContainmentEList<RegionSignalDec>(RegionSignalDec.class, this, InterfaceDeclPackage.STATE_EXTEND__REGIONS);
     }
-    return inputSignals;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<OutputSignals> getOutputSignals()
-  {
-    if (outputSignals == null)
-    {
-      outputSignals = new EObjectContainmentEList<OutputSignals>(OutputSignals.class, this, InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS);
-    }
-    return outputSignals;
+    return regions;
   }
 
   /**
@@ -165,6 +151,34 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<OutputSignals> getOutputSignals()
+  {
+    if (outputSignals == null)
+    {
+      outputSignals = new EObjectContainmentEList<OutputSignals>(OutputSignals.class, this, InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS);
+    }
+    return outputSignals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<InputSignals> getInputSignals()
+  {
+    if (inputSignals == null)
+    {
+      inputSignals = new EObjectContainmentEList<InputSignals>(InputSignals.class, this, InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS);
+    }
+    return inputSignals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Signals> getSignals()
   {
     if (signals == null)
@@ -179,35 +193,21 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<RegionSignalDec> getRegions()
-  {
-    if (regions == null)
-    {
-      regions = new EObjectContainmentEList<RegionSignalDec>(RegionSignalDec.class, this, InterfaceDeclPackage.STATE_EXTEND__REGIONS);
-    }
-    return regions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
-        return ((InternalEList<?>)getInputSignals()).basicRemove(otherEnd, msgs);
-      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
-        return ((InternalEList<?>)getOutputSignals()).basicRemove(otherEnd, msgs);
-      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
-        return ((InternalEList<?>)getInOutputSignals()).basicRemove(otherEnd, msgs);
-      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
-        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
       case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
         return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
+        return ((InternalEList<?>)getInOutputSignals()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
+        return ((InternalEList<?>)getOutputSignals()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
+        return ((InternalEList<?>)getInputSignals()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
+        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -222,16 +222,16 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
-        return getInputSignals();
-      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
-        return getOutputSignals();
-      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
-        return getInOutputSignals();
-      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
-        return getSignals();
       case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
         return getRegions();
+      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
+        return getInOutputSignals();
+      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
+        return getOutputSignals();
+      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
+        return getInputSignals();
+      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
+        return getSignals();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -247,25 +247,25 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
-        getInputSignals().clear();
-        getInputSignals().addAll((Collection<? extends InputSignals>)newValue);
-        return;
-      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
-        getOutputSignals().clear();
-        getOutputSignals().addAll((Collection<? extends OutputSignals>)newValue);
+      case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
+        getRegions().clear();
+        getRegions().addAll((Collection<? extends RegionSignalDec>)newValue);
         return;
       case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
         getInOutputSignals().clear();
         getInOutputSignals().addAll((Collection<? extends InOutputSignals>)newValue);
         return;
+      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
+        getOutputSignals().clear();
+        getOutputSignals().addAll((Collection<? extends OutputSignals>)newValue);
+        return;
+      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
+        getInputSignals().clear();
+        getInputSignals().addAll((Collection<? extends InputSignals>)newValue);
+        return;
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signals>)newValue);
-        return;
-      case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
-        getRegions().clear();
-        getRegions().addAll((Collection<? extends RegionSignalDec>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -281,20 +281,20 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
-        getInputSignals().clear();
-        return;
-      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
-        getOutputSignals().clear();
+      case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
+        getRegions().clear();
         return;
       case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
         getInOutputSignals().clear();
         return;
+      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
+        getOutputSignals().clear();
+        return;
+      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
+        getInputSignals().clear();
+        return;
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         getSignals().clear();
-        return;
-      case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
-        getRegions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -310,16 +310,16 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
   {
     switch (featureID)
     {
-      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
-        return inputSignals != null && !inputSignals.isEmpty();
-      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
-        return outputSignals != null && !outputSignals.isEmpty();
-      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
-        return inOutputSignals != null && !inOutputSignals.isEmpty();
-      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
-        return signals != null && !signals.isEmpty();
       case InterfaceDeclPackage.STATE_EXTEND__REGIONS:
         return regions != null && !regions.isEmpty();
+      case InterfaceDeclPackage.STATE_EXTEND__IN_OUTPUT_SIGNALS:
+        return inOutputSignals != null && !inOutputSignals.isEmpty();
+      case InterfaceDeclPackage.STATE_EXTEND__OUTPUT_SIGNALS:
+        return outputSignals != null && !outputSignals.isEmpty();
+      case InterfaceDeclPackage.STATE_EXTEND__INPUT_SIGNALS:
+        return inputSignals != null && !inputSignals.isEmpty();
+      case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
+        return signals != null && !signals.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -25,15 +25,11 @@ generate interfaceDecl "http://www.cau.de/cs/kieler/synccharts/interfacedeclpars
 
 StateExtend:
 	(
-	("input" (inputSignals+=InputSignals)) |
-	
-	("output" (outputSignals+=OutputSignals)) |
-	
+	(regions+=RegionSignalDec) |	
 	("input" "output" (inOutputSignals+=InOutputSignals))  |
-	
-	("signal" (signals+=Signals)) |	
-
-	(regions+=RegionSignalDec)
+	("output" (outputSignals+=OutputSignals)) |
+	("input" (inputSignals+=InputSignals)) |
+	("signal" (signals+=Signals)) 	
 	)+
 	;
 

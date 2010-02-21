@@ -104,6 +104,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
     // support for undo
     private XtextResource oldResource;
+    private String olfInterfaceDecl;
 
     /**
      * Constructor being used if the name of a signal has changed or a new
@@ -134,11 +135,12 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             this.changedVariable = (Variable) changedSignalOrVariable;
             this.rootRegion = (Region) changedSignalOrVariable.eContainer();
         }
-        // make sure to clone the resource for undo
-        XtextResourceSet rs = EcoreUtil2
-                .clone(new XtextResourceSet(), theResource.getResourceSet());
-        // TODO check if this is save
-        this.oldResource = (XtextResource) rs.getResources().get(0);
+        // // make sure to clone the resource for undo
+        // XtextResourceSet rs = EcoreUtil2
+        // .clone(new XtextResourceSet(), theResource.getResourceSet());
+        // // TODO check if this is save
+        // this.oldResource = (XtextResource) rs.getResources().get(0);
+        this.olfInterfaceDecl = theRootState.getInterfaceDeclaration();
         this.resource = theResource;
         this.oldName = theOldName;
         this.occurredChange = theOccurredChange;
@@ -160,15 +162,17 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             final XtextResource theResource) {
         this.injector = theInjector;
         this.rootState = theRootState;
-        
-        // in some cases like unit testing old might be null
-        if (theResource != null) {
-            //make sure to clone the resource for undo
-            XtextResourceSet rs = EcoreUtil2
-                .clone(new XtextResourceSet(), theResource.getResourceSet());
-            //TODO check if this is save
-            this.oldResource = (XtextResource) rs.getResources().get(0);
-        }
+
+        // // in some cases like unit testing old might be null
+        // if (theResource != null) {
+        // // make sure to clone the resource for undo
+        // XtextResourceSet rs = EcoreUtil2.clone(new XtextResourceSet(),
+        // theResource
+        // .getResourceSet());
+        // // TODO check if this is save
+        // this.oldResource = (XtextResource) rs.getResources().get(0);
+        // }
+        this.olfInterfaceDecl = theRootState.getInterfaceDeclaration();
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
@@ -202,9 +206,16 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
     @Override
     public void undo() {
-        resource = oldResource;
+        // resource = oldResource;
         try {
-            serialize();
+            // serialize();
+
+            // TODO validate this!
+            rootState.setInterfaceDeclaration(this.olfInterfaceDecl);
+            new InterfaceDeclProcessorWrapper();
+            InterfaceDeclProcessorWrapper.processInterfaceDecl(rootState,
+                    InterfaceDeclProcessorWrapper.PARSE);
+
         } catch (Exception e) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error trying to undo serialization: ", e);
@@ -351,9 +362,8 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         resource.getContents().add(se);
 
         // inject all current signals and variables
-        for (Signal s : state.getSignals()) {
-            serializeLogic.handleNewSignal(se, s);
-        }
+        serializeLogic.handleBunchNewSignals(se, state.getSignals());
+        // TODO do bunchadding for regions as well
         for (Region r : state.getRegions()) {
             for (Signal s : r.getSignals()) {
                 serializeLogic.handleRegionNewSignal(se, r, s);

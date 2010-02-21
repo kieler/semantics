@@ -154,7 +154,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStateExtend_InputSignals()
+  public EReference getStateExtend_Regions()
   {
     return (EReference)stateExtendEClass.getEStructuralFeatures().get(0);
   }
@@ -164,7 +164,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStateExtend_OutputSignals()
+  public EReference getStateExtend_InOutputSignals()
   {
     return (EReference)stateExtendEClass.getEStructuralFeatures().get(1);
   }
@@ -174,7 +174,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStateExtend_InOutputSignals()
+  public EReference getStateExtend_OutputSignals()
   {
     return (EReference)stateExtendEClass.getEStructuralFeatures().get(2);
   }
@@ -184,7 +184,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStateExtend_Signals()
+  public EReference getStateExtend_InputSignals()
   {
     return (EReference)stateExtendEClass.getEStructuralFeatures().get(3);
   }
@@ -194,7 +194,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStateExtend_Regions()
+  public EReference getStateExtend_Signals()
   {
     return (EReference)stateExtendEClass.getEStructuralFeatures().get(4);
   }
@@ -350,11 +350,11 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
 
     // Create classes and their features
     stateExtendEClass = createEClass(STATE_EXTEND);
-    createEReference(stateExtendEClass, STATE_EXTEND__INPUT_SIGNALS);
-    createEReference(stateExtendEClass, STATE_EXTEND__OUTPUT_SIGNALS);
-    createEReference(stateExtendEClass, STATE_EXTEND__IN_OUTPUT_SIGNALS);
-    createEReference(stateExtendEClass, STATE_EXTEND__SIGNALS);
     createEReference(stateExtendEClass, STATE_EXTEND__REGIONS);
+    createEReference(stateExtendEClass, STATE_EXTEND__IN_OUTPUT_SIGNALS);
+    createEReference(stateExtendEClass, STATE_EXTEND__OUTPUT_SIGNALS);
+    createEReference(stateExtendEClass, STATE_EXTEND__INPUT_SIGNALS);
+    createEReference(stateExtendEClass, STATE_EXTEND__SIGNALS);
 
     regionSignalDecEClass = createEClass(REGION_SIGNAL_DEC);
     createEReference(regionSignalDecEClass, REGION_SIGNAL_DEC__REGION);
@@ -409,11 +409,11 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
 
     // Initialize classes and features; add operations and parameters
     initEClass(stateExtendEClass, StateExtend.class, "StateExtend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStateExtend_InputSignals(), this.getInputSignals(), null, "inputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStateExtend_OutputSignals(), this.getOutputSignals(), null, "outputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStateExtend_InOutputSignals(), this.getInOutputSignals(), null, "inOutputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStateExtend_Signals(), this.getSignals(), null, "signals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStateExtend_Regions(), this.getRegionSignalDec(), null, "regions", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateExtend_InOutputSignals(), this.getInOutputSignals(), null, "inOutputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateExtend_OutputSignals(), this.getOutputSignals(), null, "outputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateExtend_InputSignals(), this.getInputSignals(), null, "inputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateExtend_Signals(), this.getSignals(), null, "signals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(regionSignalDecEClass, RegionSignalDec.class, "RegionSignalDec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRegionSignalDec_Region(), theSyncchartsPackage.getRegion(), null, "region", null, 0, 1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

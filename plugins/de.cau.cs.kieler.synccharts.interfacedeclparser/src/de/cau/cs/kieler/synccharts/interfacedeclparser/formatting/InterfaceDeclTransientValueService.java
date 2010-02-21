@@ -22,6 +22,7 @@ import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValueType;
+import de.cau.cs.kieler.synccharts.Variable;
 
 /**
  * Overrides the DefaultTransientValueService to provide functionality for
@@ -42,7 +43,16 @@ public class InterfaceDeclTransientValueService extends DefaultTransientValueSer
     @Override
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 
-        // TODO check whether variables need to be treated.
+        // TODO check whether variables need to be treated further.
+        if (owner instanceof Variable) {
+            Variable var = (Variable) owner;
+
+            // initial value
+            if (feature.equals(sync.getValuedObject_InitialValue())
+                    && ((var.getInitialValue() != null) && var.getInitialValue().trim() != "")) {
+                return false;
+            }
+        }
 
         // if a signal is passed in, check for relevant elements being set
         if (owner instanceof Signal) {

@@ -20,113 +20,97 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	public class StateExtendElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateExtend");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cInputKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cInputSignalsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cInputSignalsInputSignalsParserRuleCall_0_1_0 = (RuleCall)cInputSignalsAssignment_0_1.eContents().get(0);
+		private final Assignment cRegionsAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cRegionsRegionSignalDecParserRuleCall_0_0 = (RuleCall)cRegionsAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cOutputKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cOutputSignalsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOutputSignalsOutputSignalsParserRuleCall_1_1_0 = (RuleCall)cOutputSignalsAssignment_1_1.eContents().get(0);
+		private final Keyword cInputKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cOutputKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cInOutputSignalsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cInOutputSignalsInOutputSignalsParserRuleCall_1_2_0 = (RuleCall)cInOutputSignalsAssignment_1_2.eContents().get(0);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cInputKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Keyword cOutputKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Assignment cInOutputSignalsAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cInOutputSignalsInOutputSignalsParserRuleCall_2_2_0 = (RuleCall)cInOutputSignalsAssignment_2_2.eContents().get(0);
+		private final Keyword cOutputKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cOutputSignalsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cOutputSignalsOutputSignalsParserRuleCall_2_1_0 = (RuleCall)cOutputSignalsAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Keyword cSignalKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cSignalsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cSignalsSignalsParserRuleCall_3_1_0 = (RuleCall)cSignalsAssignment_3_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
-		private final RuleCall cRegionsRegionSignalDecParserRuleCall_4_0 = (RuleCall)cRegionsAssignment_4.eContents().get(0);
+		private final Keyword cInputKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cInputSignalsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cInputSignalsInputSignalsParserRuleCall_3_1_0 = (RuleCall)cInputSignalsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cSignalKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cSignalsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cSignalsSignalsParserRuleCall_4_1_0 = (RuleCall)cSignalsAssignment_4_1.eContents().get(0);
 		
 		//StateExtend:
-		//  ("input" inputSignals+=InputSignals|"output" outputSignals+=OutputSignals|"input"
-		//  "output" inOutputSignals+=InOutputSignals|"signal" signals+=Signals|regions+=
-		//  RegionSignalDec)+; 
+		//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
+		//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
+		//  signals+=Signals)+; 
 		//
 		////==============================================================================
 		//// "Buckets" containing the Signals / Regions with Signals
 		////==============================================================================
-		//
-		//
-		//	
-		//	    
-		//	
-		//	    
-		//	
-		//	       
-		//	
-		//	    	
-		//
-		//	
-		//	
-		//	
-		//
-		//// also allow lists of signals and vars ?
 		public ParserRule getRule() { return rule; }
 
-		//("input" inputSignals+=InputSignals|"output" outputSignals+=OutputSignals|"input"
-		//"output" inOutputSignals+=InOutputSignals|"signal" signals+=Signals|regions+=
-		//RegionSignalDec)+
+		//(regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
+		//"output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
+		//signals+=Signals)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"input" inputSignals+=InputSignals
-		public Group getGroup_0() { return cGroup_0; }
-
-		//"input"
-		public Keyword getInputKeyword_0_0() { return cInputKeyword_0_0; }
-
-		//inputSignals+=InputSignals
-		public Assignment getInputSignalsAssignment_0_1() { return cInputSignalsAssignment_0_1; }
-
-		//InputSignals
-		public RuleCall getInputSignalsInputSignalsParserRuleCall_0_1_0() { return cInputSignalsInputSignalsParserRuleCall_0_1_0; }
-
-		//"output" outputSignals+=OutputSignals
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"output"
-		public Keyword getOutputKeyword_1_0() { return cOutputKeyword_1_0; }
-
-		//outputSignals+=OutputSignals
-		public Assignment getOutputSignalsAssignment_1_1() { return cOutputSignalsAssignment_1_1; }
-
-		//OutputSignals
-		public RuleCall getOutputSignalsOutputSignalsParserRuleCall_1_1_0() { return cOutputSignalsOutputSignalsParserRuleCall_1_1_0; }
-
-		//"input" "output" inOutputSignals+=InOutputSignals
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"input"
-		public Keyword getInputKeyword_2_0() { return cInputKeyword_2_0; }
-
-		//"output"
-		public Keyword getOutputKeyword_2_1() { return cOutputKeyword_2_1; }
-
-		//inOutputSignals+=InOutputSignals
-		public Assignment getInOutputSignalsAssignment_2_2() { return cInOutputSignalsAssignment_2_2; }
-
-		//InOutputSignals
-		public RuleCall getInOutputSignalsInOutputSignalsParserRuleCall_2_2_0() { return cInOutputSignalsInOutputSignalsParserRuleCall_2_2_0; }
-
-		//"signal" signals+=Signals
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"signal"
-		public Keyword getSignalKeyword_3_0() { return cSignalKeyword_3_0; }
-
-		//signals+=Signals
-		public Assignment getSignalsAssignment_3_1() { return cSignalsAssignment_3_1; }
-
-		//Signals
-		public RuleCall getSignalsSignalsParserRuleCall_3_1_0() { return cSignalsSignalsParserRuleCall_3_1_0; }
-
 		//regions+=RegionSignalDec
-		public Assignment getRegionsAssignment_4() { return cRegionsAssignment_4; }
+		public Assignment getRegionsAssignment_0() { return cRegionsAssignment_0; }
 
 		//RegionSignalDec
-		public RuleCall getRegionsRegionSignalDecParserRuleCall_4_0() { return cRegionsRegionSignalDecParserRuleCall_4_0; }
+		public RuleCall getRegionsRegionSignalDecParserRuleCall_0_0() { return cRegionsRegionSignalDecParserRuleCall_0_0; }
+
+		//"input" "output" inOutputSignals+=InOutputSignals
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"input"
+		public Keyword getInputKeyword_1_0() { return cInputKeyword_1_0; }
+
+		//"output"
+		public Keyword getOutputKeyword_1_1() { return cOutputKeyword_1_1; }
+
+		//inOutputSignals+=InOutputSignals
+		public Assignment getInOutputSignalsAssignment_1_2() { return cInOutputSignalsAssignment_1_2; }
+
+		//InOutputSignals
+		public RuleCall getInOutputSignalsInOutputSignalsParserRuleCall_1_2_0() { return cInOutputSignalsInOutputSignalsParserRuleCall_1_2_0; }
+
+		//"output" outputSignals+=OutputSignals
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"output"
+		public Keyword getOutputKeyword_2_0() { return cOutputKeyword_2_0; }
+
+		//outputSignals+=OutputSignals
+		public Assignment getOutputSignalsAssignment_2_1() { return cOutputSignalsAssignment_2_1; }
+
+		//OutputSignals
+		public RuleCall getOutputSignalsOutputSignalsParserRuleCall_2_1_0() { return cOutputSignalsOutputSignalsParserRuleCall_2_1_0; }
+
+		//"input" inputSignals+=InputSignals
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"input"
+		public Keyword getInputKeyword_3_0() { return cInputKeyword_3_0; }
+
+		//inputSignals+=InputSignals
+		public Assignment getInputSignalsAssignment_3_1() { return cInputSignalsAssignment_3_1; }
+
+		//InputSignals
+		public RuleCall getInputSignalsInputSignalsParserRuleCall_3_1_0() { return cInputSignalsInputSignalsParserRuleCall_3_1_0; }
+
+		//"signal" signals+=Signals
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"signal"
+		public Keyword getSignalKeyword_4_0() { return cSignalKeyword_4_0; }
+
+		//signals+=Signals
+		public Assignment getSignalsAssignment_4_1() { return cSignalsAssignment_4_1; }
+
+		//Signals
+		public RuleCall getSignalsSignalsParserRuleCall_4_1_0() { return cSignalsSignalsParserRuleCall_4_1_0; }
 	}
 
 	public class RegionSignalDecElements extends AbstractParserRuleElementFinder {
@@ -177,9 +161,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//RegionSignalDec:
 		//  region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
 		//  signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)*
-		//  |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"; 
-		//
-		//// also allow lists of signals and vars ?
+		//  |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";";
 		public ParserRule getRule() { return rule; }
 
 		//region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
@@ -1057,29 +1039,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//StateExtend:
-	//  ("input" inputSignals+=InputSignals|"output" outputSignals+=OutputSignals|"input"
-	//  "output" inOutputSignals+=InOutputSignals|"signal" signals+=Signals|regions+=
-	//  RegionSignalDec)+; 
+	//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
+	//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
+	//  signals+=Signals)+; 
 	//
 	////==============================================================================
 	//// "Buckets" containing the Signals / Regions with Signals
 	////==============================================================================
-	//
-	//
-	//	
-	//	    
-	//	
-	//	    
-	//	
-	//	       
-	//	
-	//	    	
-	//
-	//	
-	//	
-	//	
-	//
-	//// also allow lists of signals and vars ?
 	public StateExtendElements getStateExtendAccess() {
 		return (pStateExtend != null) ? pStateExtend : (pStateExtend = new StateExtendElements());
 	}
@@ -1091,9 +1057,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	//RegionSignalDec:
 	//  region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|"signal"
 	//  signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)*
-	//  |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"; 
-	//
-	//// also allow lists of signals and vars ?
+	//  |"," "signal" signals+=Signal ("," signals+=Signal)*)* ";";
 	public RegionSignalDecElements getRegionSignalDecAccess() {
 		return (pRegionSignalDec != null) ? pRegionSignalDec : (pRegionSignalDec = new RegionSignalDecElements());
 	}
