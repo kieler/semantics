@@ -27,7 +27,6 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class CompareTransitions implements Comparator<Transition> {
 
-    @Override
     public int compare(final Transition t1, final Transition t2) {
         int out = 0;
         if (t1.getPriority() < t2.getPriority()) {

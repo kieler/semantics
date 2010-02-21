@@ -45,7 +45,6 @@ public class SCGenerator extends AbstractHandler implements IHandler {
         return wf;
     }
 
-    @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         // TODO Auto-generated method stub
         return null;
