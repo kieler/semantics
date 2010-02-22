@@ -1,8 +1,5 @@
 import synccharts;
 import utilities;
-///////////////////////////////////////////
-//More ore less usefull transformations ///
-///////////////////////////////////////////
 
 //Adds a successor to the given state 
 Void addSuccessorState(State source):
@@ -55,7 +52,8 @@ Void flipTransition(Transition t):
  let source = t.sourceState:
  let target = t.targetState: 
  t.setSourceState(target) ->
- t.setTargetState(source)
+ t.setTargetState(source) ->
+ setSelection(t) 
 ;
 
 //Connects two states
@@ -105,7 +103,7 @@ if parentState.regions.size > 0 then
 //Returns true if the state is a complex state, 
 //i.e. it has at least one inner region
 Boolean isRegionState(State state):
-	state.parentRegion != null && state.parentRegion.parentState != null
+	state.regions.size > 0
 ;
 
 //Sets the object that should be selected after the transformation is executed

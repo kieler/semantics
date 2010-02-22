@@ -23,7 +23,8 @@
           keyboardShortcut="M1+R P"
           name="Add Predecessor State"
           transformation="addPredecessorState"
-          transformationId="de.cau.cs.kieler.ksbase.addPred">
+          transformationId="de.cau.cs.kieler.ksbase.addPred"
+          validation="isNoRootState">
 				</transformation>
 				<transformation
           icon="icons/choice.gif"
