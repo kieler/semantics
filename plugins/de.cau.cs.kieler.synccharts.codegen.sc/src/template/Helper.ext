@@ -47,6 +47,10 @@ int getRealThreadPriority(State state):
 	JAVA template.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+int getSmallestThreadPriority(State state):
+	JAVA template.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
+;
+
 int getWeakThreadPriority(State rootState):
 	JAVA template.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
@@ -65,12 +69,8 @@ cached List getStateSignals(State state):
 	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
-int getChangePriority(State state):
-	JAVA template.Helper.getChangePriority(de.cau.cs.kieler.synccharts.State)
-;
-
-boolean hasDependentState(State state):
-	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.State)
+boolean hasDependentState(Transition transition):
+	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 boolean isSignalDependent(Transition transition):

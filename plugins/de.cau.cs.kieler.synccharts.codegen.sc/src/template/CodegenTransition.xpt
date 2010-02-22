@@ -20,6 +20,10 @@
 	«ELSE»
 		«EXPAND stateAbortion FOR this-»
 	«ENDIF-»
+		  // PRIO for «this.sourceState.id»
+	«IF hasDependentState(this)-»
+		  PRIO(«getSmallestThreadPriority(this.sourceState)»);
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»

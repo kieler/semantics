@@ -99,7 +99,18 @@ public final class Helper {
      * @return priority of the state
      */
     public static int getRealThreadPriority(final State state) {
-        return getThreadPriority(state, false);
+        return getThreadPriority(state, false, false);
+    }
+
+    /**
+     * Computes the real priority of the given state.
+     * 
+     * @param state
+     *            the state you want to get the priority
+     * @return priority of the state
+     */
+    public static int getSmallestThreadPriority(final State state) {
+        return getThreadPriority(state, false, true);
     }
 
     /**
@@ -110,7 +121,7 @@ public final class Helper {
      * @return priority of the state
      */
     public static int getWeakThreadPriority(final State state) {
-        return getThreadPriority(state, true);
+        return getThreadPriority(state, true, true);
     }
 
     /**
@@ -206,34 +217,14 @@ public final class Helper {
     }
 
     /**
-     * Computes the priority to change the thread priority depending on signal dependencies.
-     * 
-     * @param state
-     *            the state for the priority
-     * @return priority to change
-     */
-    public static int getChangePriority(final State state) {
-        int out = MAX_PRIORITY;
-        int newPrio = 0;
-        ArrayList<StatePlusTransition> dependentStates = getSignalDependentStates(state);
-        for (StatePlusTransition spt : dependentStates) {
-            newPrio = sortedStates.indexOf(spt);
-            if (newPrio < out) {
-                out = newPrio;
-            }
-        }
-        return out;
-    }
-
-    /**
      * Computes if the given state has signal dependent states.
      * 
-     * @param state
-     *            state to search for dependencies
+     * @param transition
+     *            transition to search for dependencies
      * @return true if the state has signal dependencies otherwise false
      */
-    public static boolean hasDependentState(final State state) {
-        return (!getSignalDependentStates(state).isEmpty());
+    public static boolean hasDependentState(final Transition transition) {
+        return (!getSignalDependentStates(transition).isEmpty());
     }
 
     /**
@@ -272,12 +263,15 @@ public final class Helper {
         return out;
     }
 
-    private static ArrayList<StatePlusTransition> getSignalDependentStates(final State state) {
+    private static ArrayList<StatePlusTransition> getSignalDependentStates(
+            final Transition transition) {
         ArrayList<StatePlusTransition> out = new ArrayList<StatePlusTransition>();
         for (Dependency dep : stateDependencies) {
-            if (dep.getSecondState().getState().equals(state)
-                    && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
-                out.add(dep.getFirstState());
+            if (dep.getSecondState().getTransition() != null) {
+                if (dep.getSecondState().getTransition().equals(transition)
+                        && dep.getDependencyType() == SIGNAL_FLOW_EDGE) {
+                    out.add(dep.getFirstState());
+                }
             }
         }
         return out;
@@ -352,7 +346,8 @@ public final class Helper {
         return out;
     }
 
-    private static int getThreadPriority(final State state, final boolean weak) {
+    private static int getThreadPriority(final State state, final boolean weak,
+            final boolean smallest) {
         int out = 0;
         StatePlusTransition spt;
         if (weak) {
@@ -360,7 +355,21 @@ public final class Helper {
         } else {
             spt = getStateProperties(state);
         }
-        out = sortedStates.indexOf(spt) + 1;
+        out = getIndexWithoutTransition(spt, smallest) + 1;
+        return out;
+    }
+
+    private static int getIndexWithoutTransition(final StatePlusTransition spt, final boolean first) {
+        int out = 0;
+        for (int i = 0; i < sortedStates.size(); i++) {
+            StatePlusTransition listSpt = sortedStates.get(i);
+            if (listSpt.getState().equals(spt.getState()) && listSpt.getType() == spt.getType()) {
+                out = i;
+                if (first) {
+                    break;
+                }
+            }
+        }
         return out;
     }
 
@@ -443,19 +452,27 @@ public final class Helper {
             String secondWS = "";
             String firstState = "";
             String secondState = "";
-            String firstTrans = "";
-            String secondTrans = "";
+            String firstTrans = "empty";
+            String secondTrans = "empty";
             String rel = "";
             firstWS = stateType2String(dependency.getFirstState().getType());
             secondWS = stateType2String(dependency.getSecondState().getType());
-            if (dependency.getDependencyType() == CONTROL_FLOW_EDGE) {
+            switch (dependency.getDependencyType()) {
+            case CONTROL_FLOW_EDGE:
                 rel = " <c< ";
-            } else if (dependency.getDependencyType() == HIERARCHY_EDGE) {
+                break;
+
+            case HIERARCHY_EDGE:
                 rel = " <h< ";
-            } else if (dependency.getDependencyType() == TRANSITION_PRIO_EDGE) {
+                break;
+
+            case TRANSITION_PRIO_EDGE:
                 rel = " <p< ";
-            } else {
+                break;
+
+            default:
                 rel = " <s< ";
+                break;
             }
             if (dependency.getFirstState().getTransition() != null) {
                 firstTrans = "("
@@ -465,8 +482,8 @@ public final class Helper {
                 secondTrans = "("
                         + dependency.getSecondState().getTransition().getTriggersAndEffects() + ")";
             }
-            firstState = dependency.getFirstState().getState().getId() + firstTrans;
-            secondState = dependency.getSecondState().getState().getId() + secondTrans;
+            firstState = dependency.getFirstState().getState().getId() + "+" + firstTrans;
+            secondState = dependency.getSecondState().getState().getId() + "+" + secondTrans;
             System.out.print(firstState + firstWS + rel + secondState + secondWS + " , ");
         }
         System.out.println("] ");
@@ -511,14 +528,9 @@ public final class Helper {
 
             if (!transition.getSourceState().equals(transition.getTargetState())) {
                 State targetState = transition.getTargetState();
-                StatePlusTransition targetSpt = getStateProperties(targetState);
-                Dependency dependency = new Dependency(targetSpt, sourceSpt, CONTROL_FLOW_EDGE);
-                if (!stateDependencies.contains(dependency)) {
-                    stateDependencies.add(dependency);
-                    //TOOODOOOOOOO
-                    if (!checkedStates.contains(targetState)) {
-                        fillDependencyList(targetState);
-                    }
+                addDependencies(targetState, sourceSpt, CONTROL_FLOW_EDGE);
+                if (!checkedStates.contains(targetState)) {
+                    fillDependencyList(targetState);
                 }
             }
         }
@@ -534,11 +546,11 @@ public final class Helper {
                     // state as weak state
                     sptOne = new StatePlusTransition(state, WEAK_STATE, null);
                     sptTwo = new StatePlusTransition(innerState, innerStateStatus, null);
-                    putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
+                    addAllDependencies(sptOne, sptTwo, HIERARCHY_EDGE);
                     // state as strong state
                     sptOne = new StatePlusTransition(state, STRONG_STATE, null);
                     sptTwo = new StatePlusTransition(innerState, innerStateStatus, null);
-                    putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
+                    addAllDependencies(sptTwo, sptOne, HIERARCHY_EDGE);
                     // inner state is hierarchical
                     if (innerStateStatus > SIMPLE_STATE) {
                         // inner state is concurrent
@@ -546,18 +558,18 @@ public final class Helper {
                             // dependency for strong state
                             sptOne = new StatePlusTransition(state, WEAK_STATE, null);
                             sptTwo = new StatePlusTransition(innerState, STRONG_STATE, null);
-                            putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
+                            addAllDependencies(sptOne, sptTwo, HIERARCHY_EDGE);
                             sptOne = new StatePlusTransition(state, STRONG_STATE, null);
                             sptTwo = new StatePlusTransition(innerState, STRONG_STATE, null);
-                            putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
+                            addAllDependencies(sptTwo, sptOne, HIERARCHY_EDGE);
                         } else {
                             // dependency for weak state
                             sptOne = new StatePlusTransition(state, WEAK_STATE, null);
                             sptTwo = new StatePlusTransition(innerState, WEAK_STATE, null);
-                            putDependencyList(sptOne, sptTwo, HIERARCHY_EDGE);
+                            addAllDependencies(sptOne, sptTwo, HIERARCHY_EDGE);
                             sptOne = new StatePlusTransition(state, STRONG_STATE, null);
                             sptTwo = new StatePlusTransition(innerState, WEAK_STATE, null);
-                            putDependencyList(sptTwo, sptOne, HIERARCHY_EDGE);
+                            addAllDependencies(sptTwo, sptOne, HIERARCHY_EDGE);
                         }
                     }
                     if (!checkedStates.contains(innerState)) {
@@ -569,11 +581,35 @@ public final class Helper {
 
     }
 
-    private static void putDependencyList(final StatePlusTransition sptOne,
+    private static void addAllDependencies(final StatePlusTransition sptOne,
             final StatePlusTransition sptTwo, final int dependency) {
-        Dependency put = builtDependency(sptOne, sptTwo, dependency);
-        if (!stateDependencies.contains(put)) {
-            stateDependencies.add(put);
+        State stateOne = sptOne.getState();
+        if (stateOne.getOutgoingTransitions().isEmpty()) {
+            State stateTwo = sptTwo.getState();
+            if (stateTwo.getOutgoingTransitions().isEmpty()) {
+                addDependency(sptOne, sptTwo, dependency);
+            } else {
+                for (Transition transition : stateTwo.getOutgoingTransitions()) {
+                    StatePlusTransition sptTwoNew = getStateProperties(stateTwo);
+                    sptTwoNew.setTransition(transition);
+                    addDependency(sptOne, sptTwoNew, dependency);
+                }
+            }
+        } else {
+            State stateTwo = sptTwo.getState();
+            for (Transition transitionOne : stateOne.getOutgoingTransitions()) {
+                StatePlusTransition sptOneNew = getStateProperties(stateOne);
+                sptOneNew.setTransition(transitionOne);
+                if (stateTwo.getOutgoingTransitions().isEmpty()) {
+                    addDependency(sptOneNew, sptTwo, dependency);
+                } else {
+                    for (Transition transitionTwo : stateTwo.getOutgoingTransitions()) {
+                        StatePlusTransition sptTwoNew = getStateProperties(stateTwo);
+                        sptTwoNew.setTransition(transitionTwo);
+                        addDependency(sptOneNew, sptTwoNew, dependency);
+                    }
+                }
+            }
         }
     }
 
@@ -582,6 +618,20 @@ public final class Helper {
         Dependency put = builtDependency(sptOne, sptTwo, dependency);
         if (!stateDependencies.contains(put)) {
             stateDependencies.add(put);
+        }
+    }
+
+    private static void addDependencies(final State state, final StatePlusTransition sptTwo,
+            final int dependency) {
+        if (state.getOutgoingTransitions().isEmpty()) {
+            StatePlusTransition sptOne = getStateProperties(state);
+            addDependency(sptOne, sptTwo, dependency);
+        } else {
+            for (Transition transition : state.getOutgoingTransitions()) {
+                StatePlusTransition sptOne = getStateProperties(state);
+                sptOne.setTransition(transition);
+                addDependency(sptOne, sptTwo, dependency);
+            }
         }
     }
 

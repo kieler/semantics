@@ -3,8 +3,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE priorityReduction FOR Transition-»
-	«IF hasDependentState(this.sourceState)-»
-		  //PRIO(«getChangePriority(this.sourceState)»);
+	«IF hasDependentState(this)-»
 		  PRIO(«getRealThreadPriority(this.targetState)»);
 	«ENDIF-»
 «ENDDEFINE»
