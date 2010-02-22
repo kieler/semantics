@@ -114,14 +114,6 @@ public interface Animation extends EObject {
      * @model
      * @generated
      */
-    String getActualJSONValue(Object jsonObject, String svgElementID);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @model
-     * @generated
-     */
     void apply(Object jsonObject, String svgElementID);
 
     /**
@@ -130,7 +122,8 @@ public interface Animation extends EObject {
      * @model
      * @generated
      */
-    void initialize();
+    void initialize(String svgElementID);
+    
 
     /**
      * <!-- begin-user-doc -->

@@ -16,17 +16,22 @@ import de.cau.cs.kieler.kev.mapping.MovePath;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 
+import org.apache.batik.dom.svg.SVGOMElement;
+import org.apache.batik.dom.svg.SVGOMMPathElement;
 import org.apache.batik.dom.svg.SVGOMPathElement;
+import org.apache.batik.dom.svg.SVGPathSupport;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.json.JSONObject;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGLocatable;
+import org.w3c.dom.svg.SVGPathElement;
 import org.w3c.dom.svg.SVGPoint;
 
 /**
@@ -35,20 +40,19 @@ import org.w3c.dom.svg.SVGPoint;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getPath <em>Path</em>}</li>
- * <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAnchor_point <em>Anchor point</em>}</li>
- * <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAuto_orientation <em>Auto
- * orientation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAnchor_point <em>Anchor point</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAuto_orientation <em>Auto orientation</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MovePathImpl extends AnimationImpl implements MovePath {
     /**
-     * The default value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc
+     * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @see #getPath()
      * @generated
      * @ordered
@@ -56,9 +60,9 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
     protected static final String PATH_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc -->
+     * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @see #getPath()
      * @generated
      * @ordered
@@ -86,9 +90,8 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
     protected String anchor_point = ANCHOR_POINT_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getAuto_orientation()
      * @generated
      * @ordered
@@ -98,7 +101,6 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
     /**
      * The cached value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getAuto_orientation()
      * @generated
      * @ordered
@@ -110,7 +112,6 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected MovePathImpl() {
@@ -119,7 +120,6 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -129,7 +129,6 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getPath() {
@@ -138,20 +137,17 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setPath(String newPath) {
         String oldPath = path;
         path = newPath;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__PATH,
-                    oldPath, path));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__PATH, oldPath, path));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getAnchor_point() {
@@ -160,20 +156,17 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setAnchor_point(String newAnchor_point) {
         String oldAnchor_point = anchor_point;
         anchor_point = newAnchor_point;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchor_point, anchor_point));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchor_point, anchor_point));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getAuto_orientation() {
@@ -182,107 +175,96 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setAuto_orientation(String newAuto_orientation) {
         String oldAuto_orientation = auto_orientation;
         auto_orientation = newAuto_orientation;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET,
-                    MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAuto_orientation,
-                    auto_orientation));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAuto_orientation, auto_orientation));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-        case MappingPackage.MOVE_PATH__PATH:
-            return getPath();
-        case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-            return getAnchor_point();
-        case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-            return getAuto_orientation();
+            case MappingPackage.MOVE_PATH__PATH:
+                return getPath();
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                return getAnchor_point();
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                return getAuto_orientation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-        case MappingPackage.MOVE_PATH__PATH:
-            setPath((String) newValue);
-            return;
-        case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-            setAnchor_point((String) newValue);
-            return;
-        case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-            setAuto_orientation((String) newValue);
-            return;
+            case MappingPackage.MOVE_PATH__PATH:
+                setPath((String)newValue);
+                return;
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                setAnchor_point((String)newValue);
+                return;
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                setAuto_orientation((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-        case MappingPackage.MOVE_PATH__PATH:
-            setPath(PATH_EDEFAULT);
-            return;
-        case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-            setAnchor_point(ANCHOR_POINT_EDEFAULT);
-            return;
-        case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-            setAuto_orientation(AUTO_ORIENTATION_EDEFAULT);
-            return;
+            case MappingPackage.MOVE_PATH__PATH:
+                setPath(PATH_EDEFAULT);
+                return;
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                setAnchor_point(ANCHOR_POINT_EDEFAULT);
+                return;
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                setAuto_orientation(AUTO_ORIENTATION_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-        case MappingPackage.MOVE_PATH__PATH:
-            return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
-        case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-            return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT
-                    .equals(anchor_point);
-        case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-            return AUTO_ORIENTATION_EDEFAULT == null ? auto_orientation != null
-                    : !AUTO_ORIENTATION_EDEFAULT.equals(auto_orientation);
+            case MappingPackage.MOVE_PATH__PATH:
+                return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+            case MappingPackage.MOVE_PATH__ANCHOR_POINT:
+                return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
+            case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
+                return AUTO_ORIENTATION_EDEFAULT == null ? auto_orientation != null : !AUTO_ORIENTATION_EDEFAULT.equals(auto_orientation);
         }
         return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (path: ");
@@ -300,38 +282,115 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
      * 
      * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
      */
-    public void initialize() {
-        // Initialize values if necessary
-        if (getPath() == null) {
-            setPath("");
-        }
-        if (getAuto_orientation() == null) {
-            setAuto_orientation("");
-        }
-        if (getAnchor_point() == null) {
-            setAnchor_point("");
-        }
+    public void initialize(String svgElementID) {
+        SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
+        Element elem = svgDoc.getElementById(svgElementID);
 
-        // Set auto_orientation per default to false
-        if (getAuto_orientation() == null || !getAuto_orientation().equalsIgnoreCase("true")) {
-            setAuto_orientation("false");
-        } else {
-            if (getAuto_orientation().equalsIgnoreCase("true")) {
-                // This check is needed to get a valid boolean for later access
-                setAuto_orientation("true");
+        // Check whether the Element is a clone and not already created
+        if (elem == null && isClonedElement(svgElementID)) {
+            String originalID = svgElementID.substring(1, svgElementID.lastIndexOf("_"));
+
+            // System.out.println("Original: "+originalID+ " Clone: "+svgElementID);
+
+            Element original, clone;
+            original = svgDoc.getElementById(originalID);
+            clone = (Element) original.cloneNode(true); // We need a deep clone with all child
+                                                        // elements if exists (see the text-element
+                                                        // for example)
+            clone.setAttribute("id", svgElementID);     // Now the new id of the Element needs to be set
+
+            Node parentNode = original.getParentNode();
+            parentNode.appendChild(clone);// Append the new Element to the DOM-Tree
+//            elem = clone;// Set the pointer to the cloned element
+        }     
+        
+        // General initializing for each animation. 
+        //MapAnimations currentMapAnimation = Activator.getCurrentMapAnimation();
+        //System.out.println("Mapanimation pointer: "+currentMapAnimation);
+       // if (currentMapAnimation != null) {
+            // Check current key and set it to the element id if it doesn't exists.
+            if (getKey() == null || getKey().isEmpty()) {
+                setKey(svgElementID);
+            } else {
+                String jsonKey = getKey();
+                // Otherwise we have a link to another JSON value.
+                if (jsonKey.indexOf("$") == 0) {
+                    setKey(jsonKey.substring(1));
+                }
+//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
+//                    try {
+//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
+//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
+//                    } catch (NumberFormatException e) {
+//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
+//                    }
+//                }
             }
-        }
-        // Initialize the anchorpoint
-        anchorPoint = new Point();
-
-        if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
-            if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchor_point())) {
-                String[] anchorPointValues = getAnchor_point().split(",");
-                anchorPoint.setLocation(Float.parseFloat(anchorPointValues[0]), Float
-                        .parseFloat(anchorPointValues[1]));
+        
+            // Initialize values if necessary
+            if (getPath() == null) {
+                setPath("");
             }
-        }
+            if (getAuto_orientation() == null) {
+                setAuto_orientation("");
+            }
+            if (getAnchor_point() == null) {
+                setAnchor_point("");
+            }
+            if (getInput() == null) {
+                setInput("");
+            }
+    
+            // Set auto_orientation per default to false
+            if (getAuto_orientation() == null || !getAuto_orientation().equalsIgnoreCase("true")) {
+                setAuto_orientation("false");
+            } else {
+                if (getAuto_orientation().equalsIgnoreCase("true")) {
+                    // This check is needed to get a valid boolean for later access
+                    setAuto_orientation("true");
+                }
+            }
+            // Initialize the anchorpoint
+            anchorPoint = new Point();
+    
+            if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
+                if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchor_point())) {
+                    String[] anchorPointValues = getAnchor_point().split(",");
+                    anchorPoint.setLocation(Float.parseFloat(anchorPointValues[0]), Float
+                            .parseFloat(anchorPointValues[1]));
+                }
+            }
+            
+            hashMapList = new HashMap<String, HashMap<String, String>>();
 
+            SVGOMPathElement path = SVGOMPathElement.class.cast(svgDoc.getElementById(getPath()));
+            ArrayList<String> inputArray, xPos, yPos, angle;
+            inputArray = MapAnimations.getInstance().attributeParser(getInput(), true);
+            float pathLength, stepLength;
+            pathLength = path.getTotalLength();
+            stepLength = pathLength / inputArray.size();
+            SVGPoint p, p_old = null;
+            xPos = new ArrayList<String>();
+            yPos = new ArrayList<String>();
+            angle = new ArrayList<String>();
+
+            for (int i = 0; i < inputArray.size(); i++) {
+                p = path.getPointAtLength(i * stepLength);
+                xPos.add(Float.toString(p.getX()));
+                yPos.add(Float.toString(p.getY()));
+                if (i > 0) {
+                    angle.add(computeAngle(p, p_old));
+                } else {
+                    angle.add("0");
+                }
+                p_old = p;
+            }
+
+            hashMapList.put("xPos", MapAnimations.getInstance().mapInputToOutput(inputArray, xPos));
+            hashMapList.put("yPos", MapAnimations.getInstance().mapInputToOutput(inputArray, yPos));
+            hashMapList.put("angle", MapAnimations.getInstance().mapInputToOutput(inputArray, angle));
+        
+    
     }
 
     private String computeAngle(SVGPoint p1, SVGPoint p2) {
@@ -371,129 +430,79 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
-        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-
-        if (hashMapList == null && svgDoc != null) {
-            hashMapList = new HashMap<String, HashMap<String, String>>();
-            SVGOMPathElement path;
-            path = (SVGOMPathElement) svgDoc.getElementById(getPath());
-            if (path == null) {
-                Activator.reportDebugMessage("The SVG path-element with id[" + getPath()
-                        + "] does not exists.");
+        
+        // Check whether JSON object is an JSONAArray
+        String jsonValue;
+        if (getAccessID() != null && !getAccessID().isEmpty()) {
+            jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
+            if (jsonValue.isEmpty()) {
                 return;
             }
-            ArrayList<String> inputArray, xPos, yPos, angle;
-            MapAnimations mapAnimation = new MapAnimations();
-            inputArray = mapAnimation.attributeParser(getInput(), true);
-            float pathLength, stepLength;
-            pathLength = path.getTotalLength();
-            stepLength = pathLength / inputArray.size();
-            SVGPoint p, p_old = null;
-            xPos = new ArrayList<String>();
-            yPos = new ArrayList<String>();
-            angle = new ArrayList<String>();
-
-            for (int i = 0; i < inputArray.size(); i++) {
-                p = path.getPointAtLength(i * stepLength);
-                xPos.add(Float.toString(p.getX()));
-                yPos.add(Float.toString(p.getY()));
-                if (i > 0) {
-                    angle.add(computeAngle(p, p_old));
-                } else {
-                    angle.add("0");
-                }
-                p_old = p;
-            }
-
-            hashMapList.put("xPos", mapAnimation.mapInputToOutput(inputArray, xPos));
-            hashMapList.put("yPos", mapAnimation.mapInputToOutput(inputArray, yPos));
-            hashMapList.put("angle", mapAnimation.mapInputToOutput(inputArray, angle));
-
+        } else {
+            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
 
-        // Check whether the Element is a clone and not already created
-        if (elem == null && isClonedElement(svgElementID)) {
-            SVGDocument doc = EclipseJSVGCanvas.getInstance().getSVGDocument();
-            String originalID = svgElementID.substring(1, svgElementID.lastIndexOf("_"));
+        // Now apply the animation
+        if (elem != null) {
+            try {
+                String xValue, yValue, angleValue;
+                if (hashMapList.containsKey("xPos") && hashMapList.containsKey("yPos")) {
+                    xValue = hashMapList.get("xPos").get(jsonValue);
+                    yValue = hashMapList.get("yPos").get(jsonValue);
+                    angleValue = hashMapList.get("angle").get(jsonValue);
 
-            // System.out.println("Original: "+originalID+ " Clone: "+svgElementID);
+                    // System.out.println("xValue: "+xValue+" yValue: "+yValue);
 
-            Element original, clone;
-            original = doc.getElementById(originalID);
-            clone = (Element) original.cloneNode(true);// We need a deep clone with all child
-                                                       // elements if exists (see the text-element
-                                                       // for example)
-            clone.setAttribute("id", svgElementID);// Now the new id of the Element needs to be set
+                    // BoundingBox is always the same. so get the x,y position of the upperleft
+                    // corner
+                    SVGLocatable locatable = (SVGLocatable) elem;
 
-            Node parentNode = original.getParentNode();
-            parentNode.appendChild(clone);// Append the new Element to the DOM-Tree
-
-            elem = clone;// Set the pointer to the cloned element
-        }
-
-        if (jsonValue != null) {
-            // Now apply the animation
-            if (elem != null) {
-                try {
-                    String xValue, yValue, angleValue;
-                    if (hashMapList.containsKey("xPos") && hashMapList.containsKey("yPos")) {
-                        xValue = hashMapList.get("xPos").get(jsonValue);
-                        yValue = hashMapList.get("yPos").get(jsonValue);
-                        angleValue = hashMapList.get("angle").get(jsonValue);
-
-                        // System.out.println("xValue: "+xValue+" yValue: "+yValue);
-
-                        // BoundingBox is always the same. so get the x,y position of the upperleft
-                        // corner
-                        SVGLocatable locatable = (SVGLocatable) elem;
-
-                        if (xValue == null) {
-                            xValue = "0";
-                            if (yValue == null) {
-                                return;
-                            }
-                        } else {
-                            xValue = Double.toString(Float.parseFloat(xValue)
-                                    - locatable.getBBox().getX() - anchorPoint.getX());
-                        }
-
+                    if (xValue == null) {
+                        xValue = "0";
                         if (yValue == null) {
-                            yValue = "0";
-                            if (xValue == null) {
-                                return;
-                            }
-                        } else {
-                            yValue = Double.toString(Float.parseFloat(yValue)
-                                    - locatable.getBBox().getY() - anchorPoint.getY());
+                            return;
                         }
+                    } else {
+                        xValue = Double.toString(Float.parseFloat(xValue)
+                                - locatable.getBBox().getX() - anchorPoint.getX());
+                    }
 
-                        String attrib = "translate(" + xValue + "," + yValue + ")";
-                        elem.setAttribute("transform", attrib);
-                        // System.out.println(elem.getAttribute("transform"));
-                        // System.out.println(elem.getAttribute("id")+": "+xValue+", "+yValue+" BBox: "+locatable.getBBox().getX()+
-                        // " "+locatable.getBBox().getY()+" Anchorpoint:"+anchorPoint.getX()+", "+anchorPoint.getY()+
-                        // "BBox-Width-Height: "+locatable.getBBox().getWidth()+
-                        // ", "+locatable.getBBox().getHeight());
+                    if (yValue == null) {
+                        yValue = "0";
+                        if (xValue == null) {
+                            return;
+                        }
+                    } else {
+                        yValue = Double.toString(Float.parseFloat(yValue)
+                                - locatable.getBBox().getY() - anchorPoint.getY());
+                    }
 
-                        if (angleValue != null && !angleValue.isEmpty() && xValue != null
-                                && !xValue.isEmpty() && yValue != null && !yValue.isEmpty()) {
-                            if (getAuto_orientation().equals("true")) {
-                                elem.setAttribute("transform", attrib + "rotate(" + angleValue
-                                        + "," + (locatable.getBBox().getX() + anchorPoint.getX())
-                                        + "," + (locatable.getBBox().getY() + anchorPoint.getY())
-                                        + ")");
-                            }
+                    String attrib = "translate(" + xValue + "," + yValue + ")";
+                    elem.setAttribute("transform", attrib);
+                    // System.out.println(elem.getAttribute("transform"));
+                    // System.out.println(elem.getAttribute("id")+": "+xValue+", "+yValue+" BBox: "+locatable.getBBox().getX()+
+                    // " "+locatable.getBBox().getY()+" Anchorpoint:"+anchorPoint.getX()+", "+anchorPoint.getY()+
+                    // "BBox-Width-Height: "+locatable.getBBox().getWidth()+
+                    // ", "+locatable.getBBox().getHeight());
+
+                    if (angleValue != null && !angleValue.isEmpty() && xValue != null
+                            && !xValue.isEmpty() && yValue != null && !yValue.isEmpty()) {
+                        if (getAuto_orientation().equals("true")) {
+                            elem.setAttribute("transform", attrib + "rotate(" + angleValue
+                                    + "," + (locatable.getBBox().getX() + anchorPoint.getX())
+                                    + "," + (locatable.getBBox().getY() + anchorPoint.getY())
+                                    + ")");
                         }
                     }
-                } catch (DOMException e1) {
-                    Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
-                            e1);
                 }
-            } else {
-                Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
-                        + " doesn't exists in "
-                        + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
+            } catch (DOMException e1) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
+                        e1);
             }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+                    + " doesn't exists in "
+                    + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
     }
 

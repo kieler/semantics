@@ -466,7 +466,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 		alarm = false;
 		done = false;
 		cancelled = false;
-		mapAnimation = Activator.getCurrentMapAnimation();
+		mapAnimation = MapAnimations.getInstance();
 		repaint();
 	}
 

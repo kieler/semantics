@@ -564,15 +564,12 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEAttribute(getAnimation_AccessID(), ecorePackage.getEString(), "accessID", "", 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAnimation_Key(), ecorePackage.getEString(), "key", "", 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        EOperation op = addEOperation(animationEClass, ecorePackage.getEString(), "getActualJSONValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+        EOperation op = addEOperation(animationEClass, null, "apply", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEJavaObject(), "jsonObject", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "svgElementID", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-        op = addEOperation(animationEClass, null, "apply", 0, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, ecorePackage.getEJavaObject(), "jsonObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+        op = addEOperation(animationEClass, null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "svgElementID", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        addEOperation(animationEClass, null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         op = addEOperation(animationEClass, ecorePackage.getEBoolean(), "isClonedElement", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "svgElementID", 0, 1, IS_UNIQUE, IS_ORDERED);

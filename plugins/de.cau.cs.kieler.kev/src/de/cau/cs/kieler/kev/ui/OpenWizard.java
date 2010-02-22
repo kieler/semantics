@@ -124,11 +124,12 @@ public class OpenWizard extends Wizard {
             // Load the SVG file from bundle resources specified in the mapping file
             String filename = resourceNameField.getText().substring(
                     resourceNameField.getText().lastIndexOf("/") + 1);
-            Activator.setCurrentMapAnimation(new MapAnimations(filename, true));
+            MapAnimations.getInstance().initializeMappingFile(filename, true);
         } else {
             // Load the SVG file from filesystem
-            Activator.setCurrentMapAnimation(new MapAnimations(resourceNameField.getText(), false));
+            MapAnimations.getInstance().initializeMappingFile(resourceNameField.getText(), false);
         }
+        
         savePreferences();
         return true;
     }

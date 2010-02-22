@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.kev.Activator;
@@ -33,11 +34,11 @@ import org.w3c.dom.svg.SVGLocatable;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getX_range <em>Xrange</em>}</li>
- * <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getY_range <em>Yrange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getX_range <em>Xrange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getY_range <em>Yrange</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MoveImpl extends AnimationImpl implements Move {
@@ -88,7 +89,6 @@ public class MoveImpl extends AnimationImpl implements Move {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected MoveImpl() {
@@ -97,7 +97,6 @@ public class MoveImpl extends AnimationImpl implements Move {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -107,7 +106,6 @@ public class MoveImpl extends AnimationImpl implements Move {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getX_range() {
@@ -116,20 +114,17 @@ public class MoveImpl extends AnimationImpl implements Move {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setX_range(String newX_range) {
         String oldX_range = x_range;
         x_range = newX_range;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE,
-                    oldX_range, x_range));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE, oldX_range, x_range));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getY_range() {
@@ -138,94 +133,86 @@ public class MoveImpl extends AnimationImpl implements Move {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setY_range(String newY_range) {
         String oldY_range = y_range;
         y_range = newY_range;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE,
-                    oldY_range, y_range));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-        case MappingPackage.MOVE__XRANGE:
-            return getX_range();
-        case MappingPackage.MOVE__YRANGE:
-            return getY_range();
+            case MappingPackage.MOVE__XRANGE:
+                return getX_range();
+            case MappingPackage.MOVE__YRANGE:
+                return getY_range();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-        case MappingPackage.MOVE__XRANGE:
-            setX_range((String) newValue);
-            return;
-        case MappingPackage.MOVE__YRANGE:
-            setY_range((String) newValue);
-            return;
+            case MappingPackage.MOVE__XRANGE:
+                setX_range((String)newValue);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-        case MappingPackage.MOVE__XRANGE:
-            setX_range(XRANGE_EDEFAULT);
-            return;
-        case MappingPackage.MOVE__YRANGE:
-            setY_range(YRANGE_EDEFAULT);
-            return;
+            case MappingPackage.MOVE__XRANGE:
+                setX_range(XRANGE_EDEFAULT);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range(YRANGE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-        case MappingPackage.MOVE__XRANGE:
-            return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
-        case MappingPackage.MOVE__YRANGE:
-            return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
+            case MappingPackage.MOVE__XRANGE:
+                return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
+            case MappingPackage.MOVE__YRANGE:
+                return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
         }
         return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (x_range: ");
@@ -262,7 +249,7 @@ public class MoveImpl extends AnimationImpl implements Move {
             }
         } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
             // Get a list of comma separted values
-            range = new MapAnimations().attributeParser(value, false);
+            range = MapAnimations.getInstance().attributeParser(value, false);
         } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
             for (int i = 0; i < numberOfInputValues; i++) {
                 range.add(value);
@@ -288,74 +275,68 @@ public class MoveImpl extends AnimationImpl implements Move {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
-        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-
-        if (jsonValue != null) {
-            // Now apply the animation
-            if (jsonValue.indexOf("$") == 0) {
-                jsonValue = ((JSONObject) jsonObject).optString(jsonValue.substring(1));
+        
+        // Check whether JSON object is an JSONAArray
+        String jsonValue;
+        if (getAccessID() != null && !getAccessID().isEmpty()) {
+            jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
+            if (jsonValue.isEmpty()) {
+                return;
             }
-            if (elem != null) {
-                try {
-                    // BoundingBox is always the same. so get the x,y position of the upperleft
-                    // corner
-                    SVGLocatable locatable = (SVGLocatable) elem;
+        } else {
+            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
+        }
 
-                    String xValue, yValue;
-                    xValue = hashMapList.get("x_range").get(jsonValue);
-                    yValue = hashMapList.get("y_range").get(jsonValue);
+        if (elem != null) {
+            try {
+                // BoundingBox is always the same. so get the x,y position of the upperleft
+                // corner
+                SVGLocatable locatable = (SVGLocatable) elem;
 
-                    // Move-animation makes only sense if at least one of theses attributes exists
-                    if (xValue != null || yValue != null) {
+                String xValue, yValue;
+                xValue = hashMapList.get("x_range").get(jsonValue);
+                yValue = hashMapList.get("y_range").get(jsonValue);
 
-                        if (xValue != null) {
-                            if (xValue.indexOf("$") == 0) {
-                                xValue = ((JSONObject) jsonObject).optString(xValue.substring(1));
-                                // System.out.println("stimmt "+xValue);
-                                if (xValue.isEmpty()) {
-                                    xValue = "0"; // Set shift in x-direction to zero
-                                } else {
-                                    // compute the distance between bounding box and origin
-                                    try {
-                                        xValue = Float.toString(Float.parseFloat(xValue)
-                                                - locatable.getBBox().getX());
-                                        // System.out.println("OK");
-                                    } catch (NumberFormatException e) {
-                                        Activator.reportErrorMessage(
-                                                "The x_range-attribute has a wrong number format!",
-                                                e);
-                                    }
-                                }
+                // Move-animation makes only sense if at least one of theses attributes exists
+                if (xValue != null || yValue != null) {
+
+                    if (xValue != null) {
+                        if (xValue.indexOf("$") == 0) {
+                            xValue = ((JSONObject) jsonObject).optString(xValue.substring(1));
+                            // System.out.println("stimmt "+xValue);
+                            if (xValue.isEmpty()) {
+                                xValue = "0"; // Set shift in x-direction to zero
                             } else {
                                 // compute the distance between bounding box and origin
                                 try {
                                     xValue = Float.toString(Float.parseFloat(xValue)
                                             - locatable.getBBox().getX());
+                                    // System.out.println("OK");
                                 } catch (NumberFormatException e) {
                                     Activator.reportErrorMessage(
-                                            "The x_range-attribute has a wrong number format!", e);
+                                            "The x_range-attribute has a wrong number format!",
+                                            e);
                                 }
                             }
                         } else {
-                            xValue = "0"; // Set shift in x-direction to zero
+                            // compute the distance between bounding box and origin
+                            try {
+                                xValue = Float.toString(Float.parseFloat(xValue)
+                                        - locatable.getBBox().getX());
+                            } catch (NumberFormatException e) {
+                                Activator.reportErrorMessage(
+                                        "The x_range-attribute has a wrong number format!", e);
+                            }
                         }
+                    } else {
+                        xValue = "0"; // Set shift in x-direction to zero
+                    }
 
-                        if (yValue != null) {
-                            if (yValue.indexOf("$") == 0) {
-                                yValue = ((JSONObject) jsonObject).optString(yValue.substring(1));
-                                if (yValue.isEmpty()) {
-                                    yValue = "0"; // Set shift in x-direction to zero
-                                } else {
-                                    // compute the distance between bounding box and origin
-                                    try {
-                                        yValue = Float.toString(Float.parseFloat(yValue)
-                                                - locatable.getBBox().getY());
-                                    } catch (NumberFormatException e) {
-                                        Activator.reportErrorMessage(
-                                                "The y_range-attribute has a wrong number format!",
-                                                e);
-                                    }
-                                }
+                    if (yValue != null) {
+                        if (yValue.indexOf("$") == 0) {
+                            yValue = ((JSONObject) jsonObject).optString(yValue.substring(1));
+                            if (yValue.isEmpty()) {
+                                yValue = "0"; // Set shift in x-direction to zero
                             } else {
                                 // compute the distance between bounding box and origin
                                 try {
@@ -363,23 +344,33 @@ public class MoveImpl extends AnimationImpl implements Move {
                                             - locatable.getBBox().getY());
                                 } catch (NumberFormatException e) {
                                     Activator.reportErrorMessage(
-                                            "The y_range-attribute has a wrong number format!", e);
+                                            "The y_range-attribute has a wrong number format!",
+                                            e);
                                 }
                             }
                         } else {
-                            yValue = "0"; // Set shift in x-direction to zero
+                            // compute the distance between bounding box and origin
+                            try {
+                                yValue = Float.toString(Float.parseFloat(yValue)
+                                        - locatable.getBBox().getY());
+                            } catch (NumberFormatException e) {
+                                Activator.reportErrorMessage(
+                                        "The y_range-attribute has a wrong number format!", e);
+                            }
                         }
-                        elem.setAttribute("transform", "translate(" + xValue + "," + yValue + ")");
+                    } else {
+                        yValue = "0"; // Set shift in x-direction to zero
                     }
-                } catch (DOMException e1) {
-                    Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
-                            e1);
+                    elem.setAttribute("transform", "translate(" + xValue + "," + yValue + ")");
                 }
-            } else {
-                Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
-                        + " doesn't exists in "
-                        + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
+            } catch (DOMException e1) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
+                        e1);
             }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+                    + " doesn't exists in "
+                    + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
     }
 
@@ -388,26 +379,51 @@ public class MoveImpl extends AnimationImpl implements Move {
      * 
      * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
      */
-    public void initialize() {
-        MapAnimations mapAnimation = new MapAnimations();
-        hashMapList = new HashMap<String, HashMap<String, String>>();
-
-        // If the attribute is null, set the default value to the empty string
-        if (getX_range() == null) {
-            setX_range("");
+    public void initialize(String svgElementID) {
+        // General initializing for each animation. 
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
+        if (currentMapAnimation != null) {
+            // Check current key and set it to the element id if it doesn't exists.
+            if (getKey() == null || getKey().isEmpty()) {
+                setKey(svgElementID);
+            } else {
+                String jsonKey = getKey();
+                // Otherwise we have a link to another JSON value.
+                if (jsonKey.indexOf("$") == 0) {
+                    setKey(jsonKey.substring(1));
+                }
+//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
+//                    try {
+//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
+//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
+//                    } catch (NumberFormatException e) {
+//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
+//                    }
+//                }
+            }
+            
+            hashMapList = new HashMap<String, HashMap<String, String>>();
+    
+            // If the attribute is null, set the default value to the empty string
+            if (getX_range() == null) {
+                setX_range("");
+            }
+    
+            if (getY_range() == null) {
+                setY_range("");
+            }
+            if (getInput() == null) {
+                setInput("");
+            }
+    
+            ArrayList<String> outputList, inputList;
+            inputList = currentMapAnimation.attributeParser(getInput(), true);
+    
+            outputList = computeRange(getX_range(), inputList.size());
+            hashMapList.put("x_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
+            outputList = computeRange(getY_range(), inputList.size());
+            hashMapList.put("y_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
         }
-
-        if (getY_range() == null) {
-            setY_range("");
-        }
-
-        ArrayList<String> outputList, inputList;
-        inputList = mapAnimation.attributeParser(getInput(), true);
-
-        outputList = computeRange(getX_range(), inputList.size());
-        hashMapList.put("x_range", mapAnimation.mapInputToOutput(inputList, outputList));
-        outputList = computeRange(getY_range(), inputList.size());
-        hashMapList.put("y_range", mapAnimation.mapInputToOutput(inputList, outputList));
     }
 
 } // MoveImpl

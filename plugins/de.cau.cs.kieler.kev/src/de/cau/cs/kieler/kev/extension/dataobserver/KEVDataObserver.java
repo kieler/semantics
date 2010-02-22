@@ -19,6 +19,8 @@ import org.eclipse.ui.PartInitException;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.SVGElement;
 import de.cau.cs.kieler.kev.mapping.SVGFile;
+import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.kev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 import de.cau.cs.kieler.kev.views.KevView;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -49,16 +51,17 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
      * 
      */
     public JSONObject step(final JSONObject jSONObject) {
-        if (Activator.getCurrentMapAnimation() != null) {
-            Activator.getCurrentMapAnimation().doAnimations(jSONObject);
+//        System.out.println(jSONObject.toString());
+        if (MapAnimations.getInstance() != null) {
+            MapAnimations.getInstance().doAnimations(jSONObject);
         }
-        try {
-            // For refreshing the svg document, we only need to be called every 10 ms.
-            // TODO: Should be changeable in the Kev properties view
-            Thread.sleep(SLEEP_TIME);
-        } catch (InterruptedException e) {
-            Activator.reportErrorMessage("Error during sleeping in the KEV step-method.", e);
-        }
+//        try {
+//            // For refreshing the svg document, we only need to be called every 10 ms.
+//            // TODO: Should be changeable in the Kev properties view
+//            Thread.sleep(SLEEP_TIME);
+//        } catch (InterruptedException e) {
+//            Activator.reportErrorMessage("Error during sleeping in the KEV step-method.", e);
+//        }
         return null; // Return null because we have nothing to return right now.
     }
 
@@ -71,11 +74,11 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
     public JSONObject provideInitialVariables() {
         JSONObject jsonObject = new JSONObject();
         SVGFile mappingFile = null;
-        if (Activator.getCurrentMapAnimation() != null) {
-            mappingFile = Activator.getCurrentMapAnimation().getMappingFile();
+        if (MapAnimations.getInstance() != null) {
+            mappingFile = MapAnimations.getInstance().getMappingFile();
             if (mappingFile != null) {
                 // Get the svgElement iterator of the current mappingfile
-                Iterator<SVGElement> elementIterator = Activator.getCurrentMapAnimation()
+                Iterator<SVGElement> elementIterator = MapAnimations.getInstance()
                         .getMappingFile().getSvgElement().iterator();
                 try {
                     while (elementIterator.hasNext()) {
@@ -109,20 +112,21 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
             }
         } else {
             // Disable OpenWizardButton during execution
-            Activator.getKevView().disableButton(KevView.BUTTON_OPEN_WIZARD);
+            Activator.getKevView().disableButton(KevView.BUTTON_BOTH);
 
         }
         // Only go one, if a valid svg document already exists.
         if (EclipseJSVGCanvas.getInstance().getSVGDocument() == null) {
             // Reactivate the button, because the execution will be stopped.
-            Activator.getKevView().enableButton(1);
+            //Activator.getKevView().enableButton(1);
+            Activator.getKevView().enableButton(KevView.BUTTON_BOTH);
             throw new KiemInitializationException(
                     "No svg file was loaded! Please select a valid mapping file before execution.",
                     true, null);
         }
 
     }
-
+    
     /**
      * Tells the ExecutionManager that the KEV-view is an observer.
      * 
@@ -143,7 +147,7 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
      */
     public boolean isProducer() {
         // The Kev plugin is momentarily an observer only.
-        return true;
+        return false;
     }
 
     /**
@@ -166,6 +170,10 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
         Activator.setExecutionManagerStatus(false);
         // Kev icon openwizard action should be reactivated after execution has fished.
         // But only if the KevView is visible
+        if (Activator.getKevView().getSVGCanvas().getUpdateManager().isRunning()) {
+            Activator.getKevView().getSVGCanvas().getUpdateManager().getUpdateRunnableQueue().suspendExecution(true);
+        }
+        
         if (Activator.getKevView() != null) {
             Activator.getKevView().enableButton(KevView.BUTTON_BOTH);
             // Redraw SVG-Canvas after execution was stopped

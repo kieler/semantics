@@ -93,14 +93,14 @@ public class KevView extends ViewPart {
                 IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
                 String defaultFile = preferenceStore.getString(OpenWizard.DEFAULT_IMAGE);
                 boolean load = preferenceStore.getBoolean(OpenWizard.LOAD_STARTUP);
-
                 if ((defaultFile != null) && (!defaultFile.trim().equals("")) && load
                         && Activator.getKevView().getComposite().getSVGURI() == null) {
                     if (!defaultFile.contains("/")) { // It must be an bundleentry
-                        Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, true));
+                        MapAnimations.getInstance().initializeMappingFile(defaultFile, true);
                     } else {
-                        Activator.setCurrentMapAnimation(new MapAnimations(defaultFile, false));
+                        MapAnimations.getInstance().initializeMappingFile(defaultFile, false);
                     }
+                    //MapAnimations.getInstance().createHashMap();
                 }
             }
         });
@@ -126,7 +126,14 @@ public class KevView extends ViewPart {
     private void makeActions() {
         refreshAction = new Action() {
             public void run() {
-                svg.paintSVGFile();
+                //svg.paintSVGFile();
+                System.out.println(MapAnimations.getInstance().getMappingFilePath());
+                if (MapAnimations.getInstance().getMappingFilePath().contains(":/")) {
+                    MapAnimations.getInstance().initializeMappingFile(MapAnimations.getInstance().getMappingFilePath(), false);                    
+                } else {
+                    MapAnimations.getInstance().initializeMappingFile(MapAnimations.getInstance().getMappingFilePath(), true);
+                }
+                MapAnimations.getInstance().createHashMap();
             }
         };
         refreshAction.setText(Messages.ActionRefresh);
@@ -136,7 +143,12 @@ public class KevView extends ViewPart {
 
         openWizardAction = new OpenWizardAction();
         // If the execution manager is running, disable the openWizardAction otherwise enable it
-        openWizardAction.setEnabled(!Activator.isExecutionManagerRunning());
+        if (Activator.isExecutionManagerRunning()) {
+            disableButton(BUTTON_BOTH);
+        } else {
+            enableButton(BUTTON_BOTH);
+        }
+        
     }
 
     /**

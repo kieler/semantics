@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.Animation;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
+import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -271,6 +272,7 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
         return result.toString();
     }
 
+    
     /**
      * <!-- begin-user-doc -->
      * This abstract method is equal for all animations.
@@ -329,7 +331,7 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void initialize() {
+    public void initialize(String svgElementID) {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
         throw new UnsupportedOperationException();
@@ -349,8 +351,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
             return false;
         }  
     }
-
-    
 
 
 } //AnimationImpl

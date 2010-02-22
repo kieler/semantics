@@ -34,4 +34,5 @@ Export-Package: de.cau.cs.kieler.kev.mapping;uses:="org.eclipse.emf.ecore,org.ec
    org.eclipse.emf.ecore,
    org.eclipse.emf.common.notify.impl,
    org.eclipse.emf.common.notify"
-Import-Package: org.eclipse.emf.ecore.xmi.impl
+Import-Package: de.cau.cs.kieler.core.util,
+ org.eclipse.emf.ecore.xmi.impl

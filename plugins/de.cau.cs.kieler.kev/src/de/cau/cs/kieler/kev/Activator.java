@@ -53,8 +53,6 @@ public class Activator extends AbstractUIPlugin {
      */
     private static boolean executionManagerStatus = false;
     
-    
-    private static MapAnimations currentMapAnimation = null;
 
     /**
      * The constructor.
@@ -101,29 +99,6 @@ public class Activator extends AbstractUIPlugin {
         return plugin;
     }
 
-    /**
-     * Returns the current MapAnimation object.
-     * 
-     * @see MapAnimation
-     * @return
-     *          Returns the current MapAnimations object.
-     */
-    public static final MapAnimations getCurrentMapAnimation() {
-        return currentMapAnimation;
-    }
-    
-    /**
-     * Setting the new MapAnimation object.
-     * 
-     * @see MapAnimation
-     * @param mapAnimation
-     *          The new MapAnimation object.
-     */
-    public static final void setCurrentMapAnimation(final MapAnimations mapAnimation) {
-        currentMapAnimation = mapAnimation;
-    }
-    
-    
     /**
      * Set the current visibility status of the KEV-View instance.
      * 

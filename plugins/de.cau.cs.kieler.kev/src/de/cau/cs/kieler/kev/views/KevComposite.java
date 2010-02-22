@@ -23,7 +23,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -93,6 +92,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.w3c.dom.Element;
 
 import de.cau.cs.kieler.kev.Activator;
+import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
 
 /**
@@ -207,7 +207,6 @@ public class KevComposite extends Composite implements ISelectionListener {
                 // System.out.println("Loading svg file... failed!");
                 // }
                 // });
-
                 svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
                     public void gvtBuildStarted(GVTTreeBuilderEvent e) {
                     }
@@ -222,18 +221,17 @@ public class KevComposite extends Composite implements ISelectionListener {
 
                     public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
                         // Here we can receive the updatemanager
-                        // updateManager = svgCanvas.getUpdateManager();
+                        Activator.reportDebugMessage("Image rendering done.");
+                        MapAnimations.getInstance().createHashMap();
                     }
                 });
 
                 svgCanvas.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        // System.out.println("Canvas Width: "+svgCanvas.getWidth()
-                        // +" Canvas Height: "+ svgCanvas.getHeight());
-                        int onmask = MouseEvent.CTRL_DOWN_MASK | MouseEvent.SHIFT_DOWN_MASK;
+                        int onmask = MouseEvent.SHIFT_DOWN_MASK | MouseEvent.ALT_DOWN_MASK;
                         if ((e.getModifiersEx() & onmask) == onmask) {
                             // Only save current SVGDocument to file, if
-                            // CTRL+SHIFT+Right-Mousebutton is clicked
+                            // SHIFT + ALT + Right-Mousebutton is clicked
                             if (e.getButton() == MouseEvent.BUTTON3) {
                                 saveSVGDocument();
                             }

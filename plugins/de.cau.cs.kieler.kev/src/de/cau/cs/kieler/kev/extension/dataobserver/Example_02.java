@@ -30,7 +30,6 @@ public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDa
 
     private boolean flag = true;
     private int counter = 0;
-    private MapAnimations mapAnimation;
     
     public Example_02() {
         // TODO Auto-generated method stu
@@ -71,7 +70,7 @@ public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDa
                     break;
             }
             counter++;
-            mapAnimation.doAnimations(JSONobject);
+            MapAnimations.getInstance().doAnimations(JSONobject);
 
         
         } catch (JSONException e) {
@@ -86,7 +85,7 @@ public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDa
 
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
-        mapAnimation = new MapAnimations("Trafficlight.mapping", true);
+        MapAnimations.getInstance().initializeMappingFile("Trafficlight.mapping", true);
     }
 
     public boolean isObserver() {

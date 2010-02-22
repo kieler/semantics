@@ -25,14 +25,13 @@ import org.w3c.dom.svg.SVGLocatable;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class MoveToImpl extends AnimationImpl implements MoveTo {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected MoveToImpl() {
@@ -41,7 +40,6 @@ public class MoveToImpl extends AnimationImpl implements MoveTo {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -156,6 +154,9 @@ public class MoveToImpl extends AnimationImpl implements MoveTo {
      * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
      */
     public void initialize() {
+        if (getInput() == null) {
+            setInput("");
+        }
     }
 
 } // MoveImpl
