@@ -98,4 +98,14 @@ public class EsiTrace implements ITrace {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void remove() {
+        if (pos > trace.getTicks().size()) {
+            trace.getTicks().remove(pos);
+        }
+        current = trace.getTicks().get(pos);
+    }
+
 }

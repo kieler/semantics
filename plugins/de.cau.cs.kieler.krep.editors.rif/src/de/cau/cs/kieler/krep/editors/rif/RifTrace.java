@@ -96,4 +96,12 @@ public class RifTrace implements ITrace {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void remove() {
+        // TODO implement
+
+    }
+
 }

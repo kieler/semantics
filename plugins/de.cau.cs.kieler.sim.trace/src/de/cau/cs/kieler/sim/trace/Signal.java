@@ -14,6 +14,9 @@
 package de.cau.cs.kieler.sim.trace;
 
 /**
+ * Implementation of a signal, which has a name, as status and an optional value. A signal does not
+ * have a status: a signal that exists is present.
+ * 
  * @author ctr
  * 
  */
@@ -21,25 +24,49 @@ public class Signal {
     private String name;
     private Integer value = null;
 
+    /**
+     * Generate pure signal
+     * 
+     * @param theName
+     *            name of the signal
+     */
     public Signal(String theName) {
         name = theName;
     }
-    
+
+    /**
+     * Generate valued signal.
+     * 
+     * @param theName
+     *            name of the signal
+     * @param theValue
+     *            value of the signal.
+     */
     public Signal(String theName, int theValue) {
         name = theName;
         value = theValue;
     }
 
+    /**
+     * @return value of the signal
+     */
     public Integer getValue() {
         return value;
     }
 
+    /**
+     * 
+     * @return name of the signal
+     */
     public String getName() {
         return name;
     }
 
-    
-    public boolean isValued(){
-        return value!=null;
+    /**
+     * 
+     * @return true if it is a valued signal.
+     */
+    public boolean isValued() {
+        return value != null;
     }
 }

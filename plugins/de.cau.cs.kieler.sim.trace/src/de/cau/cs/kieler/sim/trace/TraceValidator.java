@@ -15,12 +15,9 @@ package de.cau.cs.kieler.sim.trace;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.trace.ITraceList;
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -47,7 +44,6 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
 
     private TraceReader traceReader;
 
-    private Set<String> outputs = null;
 
     /**
      * {@inheritDoc}
@@ -69,7 +65,6 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
                                 valid = false;
                                 break;
                             }
-                            // TODO: valued signals
 
                             if (sig.isValued()) {
                                 int v1 = (Integer) (JSONSignalValues.getSignalValue(obj));

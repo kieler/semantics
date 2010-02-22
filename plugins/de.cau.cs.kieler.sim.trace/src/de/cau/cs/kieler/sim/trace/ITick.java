@@ -17,10 +17,22 @@ import java.util.List;
 
 /**
  * @author ctr
- *
+ * 
  */
-public interface ITick {   
-  List<Signal> getInputs();
+public interface ITick {
+    /**
+     * Get input signals of the tick. A signal is absent if it is either not in the list, or if its
+     * status is false.
+     * 
+     * @return all input signals
+     */
+    List<Signal> getInputs();
   
-  List<Signal> getOutputs();
+    /**
+     * Get output signals of the tick. A signal is absent if it is either not in the list, or if its
+     * status is false.
+     * 
+     * @return all output signals
+     */
+    List<Signal> getOutputs();
 }

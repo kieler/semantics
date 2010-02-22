@@ -13,25 +13,51 @@
  */
 package de.cau.cs.kieler.sim.trace;
 
+import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * Generic interface for traces, ie, a list of ticks.
+ * 
  * @author ctr
  * 
  */
-public interface ITrace {
+public interface ITrace extends Iterator<ITick>{
+    /**
+     * Activate and return the next tick of the trace, or null if no further tick exists.
+     * 
+     * @return the next tick in the list
+     */
     ITick next();
 
+    /**
+     * 
+     * @return true if the trace has another tick
+     */
     boolean hasNext();
 
+    /**
+     * Returns the current tick of the trace, without switching to the next tick.
+     * 
+     * @return the current tick
+     */
     ITick current();
 
+    /**
+     * 
+     * @return number of remaining ticks
+     */
     int getRemaining();
-    
+
+    /**
+     * Reset the trace, ie, set initial tick as current.
+     */
     void reset();
 
     /**
-     * @return
+     * Take all signals that are defined by the trace, either input or output.
+     * 
+     * @return all signals that all defined by the trace
      */
     Set<String> getSignals();
 }
