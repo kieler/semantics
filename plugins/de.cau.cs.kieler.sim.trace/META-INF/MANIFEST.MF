@@ -4,7 +4,7 @@ Bundle-Name: de.cau.cs.kieler.sim.trace
 Bundle-SymbolicName: de.cau.cs.kieler.sim.trace;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.trace.Activator
-Bundle-Vendor: Christian Albrechts Universität zu Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  org.json;bundle-version="0.1.0",
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
