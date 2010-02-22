@@ -34,7 +34,6 @@ Export-Package: de.cau.cs.kieler.krep.evalbench;
    de.cau.cs.kieler.krep.evalbench.trace,
    org.antlr.runtime,
    de.cau.cs.kieler.krep.evalbench.program",
- de.cau.cs.kieler.krep.evalbench.trace.rif;uses:="de.cau.cs.kieler.krep.evalbench.trace,org.antlr.runtime,de.cau.cs.kieler.krep.evalbench.program",
  de.cau.cs.kieler.krep.evalbench.util;uses:="org.eclipse.jface.operation,kiel.util.kit.analysis,kiel.util.kit.node",
  kiel.util.kit.analysis;uses:="kiel.util.kit.node",
  kiel.util.kit.lexer;uses:="kiel.util.kit.node",
