@@ -1,8 +1,0 @@
-\beamer@endinputifotherversion {3.07pt}
-\select@language {english}
-\beamer@sectionintoc {1}{Configurations in the KIEM}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Problem Statement}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Demonstration}{5}{0}{1}
-\beamer@sectionintoc {2}{Automated Execution in the KIEM}{6}{0}{2}
-\beamer@subsectionintoc {2}{1}{Problem Statement}{6}{0}{2}
-\beamer@subsectionintoc {2}{2}{Demonstration}{8}{0}{2}
