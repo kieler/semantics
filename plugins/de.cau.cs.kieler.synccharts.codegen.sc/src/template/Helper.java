@@ -660,18 +660,6 @@ public final class Helper {
         return out;
     }
 
-    private static boolean isInTupelList(final ArrayList<StatePlusTransition> sptList,
-            final StatePlusTransition state) {
-        boolean out = false;
-        for (StatePlusTransition spt : sptList) {
-            if (spt.equals(state)) {
-                out = true;
-                break;
-            }
-        }
-        return out;
-    }
-
     private static String stateType2String(final int stateType) {
         String out = "";
         switch (stateType) {
@@ -763,11 +751,13 @@ public final class Helper {
         // Build a unsorted list of all threads.
         ArrayList<StatePlusTransition> threadListUnsorted = new ArrayList<StatePlusTransition>();
         for (Dependency dependency : stateDependencies) {
-            if (!isInTupelList(threadListUnsorted, dependency.getFirstState())) {
+            if (!threadListUnsorted.contains(dependency.getFirstState())) {
                 threadListUnsorted.add(dependency.getFirstState());
+                System.out.println(dependency.getFirstState().getState().getId());
             }
-            if (!isInTupelList(threadListUnsorted, dependency.getSecondState())) {
+            if (!threadListUnsorted.contains(dependency.getSecondState())) {
                 threadListUnsorted.add(dependency.getSecondState());
+                System.out.println(dependency.getSecondState().getState().getId());
             }
         }
 
