@@ -59,7 +59,6 @@ public class EditInStateHandler extends AbstractHandler implements IHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil
                 .getActiveMenuSelection(event);
