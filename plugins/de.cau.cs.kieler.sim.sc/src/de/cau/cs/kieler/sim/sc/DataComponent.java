@@ -35,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -46,7 +47,7 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
-public class DataComponent extends JSONObjectDataComponent {
+public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer{
 
     private WorkflowGenerator wf = null;
     private Process process = null;
@@ -308,5 +309,26 @@ public class DataComponent extends JSONObjectDataComponent {
         String[] noDebugInfos = s.split("DEBUGEND");
         out = noDebugInfos[noDebugInfos.length - 1];
         return out;
+    }
+
+    public List<KiemProperty> produceInformation() {
+        return null;
+    }
+
+    public String[] getSupportedExtensions() {
+        String[] test = {"kixs"};
+        return test;
+    }
+
+    public void setParameters(List<KiemProperty> properties) throws KiemInitializationException {
+        
+    }
+
+    public int wantsMoreRuns() {
+        return 0;
+    }
+
+    public int wantsMoreSteps() {
+        return 0;
     }
 }
