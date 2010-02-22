@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.sim.trace
-Bundle-SymbolicName: de.cau.cs.kieler.sim.trace
+Bundle-SymbolicName: de.cau.cs.kieler.sim.trace;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.trace.Activator
 Bundle-Vendor: Christian Albrechts Universität zu Kiel
