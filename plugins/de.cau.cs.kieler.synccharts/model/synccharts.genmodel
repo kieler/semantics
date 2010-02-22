@@ -136,6 +136,7 @@
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/bodyText"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/bodyReference"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/bodyContents"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/interfaceDeclaration"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//Transition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Transition/priority"/>

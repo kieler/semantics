@@ -899,6 +899,15 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getState_InterfaceDeclaration() {
+        return (EAttribute)stateEClass.getEStructuralFeatures().get(17);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -1255,6 +1264,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         createEAttribute(stateEClass, STATE__BODY_TEXT);
         createEReference(stateEClass, STATE__BODY_REFERENCE);
         createEReference(stateEClass, STATE__BODY_CONTENTS);
+        createEAttribute(stateEClass, STATE__INTERFACE_DECLARATION);
 
         transitionEClass = createEClass(TRANSITION);
         createEAttribute(transitionEClass, TRANSITION__PRIORITY);
@@ -1417,6 +1427,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEAttribute(getState_BodyText(), ecorePackage.getEString(), "bodyText", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_BodyReference(), ecorePackage.getEObject(), null, "bodyReference", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_BodyContents(), ecorePackage.getEObject(), null, "bodyContents", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getState_InterfaceDeclaration(), ecorePackage.getEString(), "interfaceDeclaration", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

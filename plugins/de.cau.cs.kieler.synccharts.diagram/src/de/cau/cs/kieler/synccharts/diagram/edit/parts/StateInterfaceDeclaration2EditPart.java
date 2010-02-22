@@ -54,13 +54,13 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsParserProvider;
 /**
  * @generated
  */
-public class SignalNameEditPart extends CompartmentEditPart implements
-        ITextAwareEditPart {
+public class StateInterfaceDeclaration2EditPart extends CompartmentEditPart
+        implements ITextAwareEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5001;
+    public static final int VISUAL_ID = 5012;
 
     /**
      * @generated
@@ -85,7 +85,7 @@ public class SignalNameEditPart extends CompartmentEditPart implements
     /**
      * @generated
      */
-    public SignalNameEditPart(View view) {
+    public StateInterfaceDeclaration2EditPart(View view) {
         super(view);
     }
 
@@ -313,10 +313,10 @@ public class SignalNameEditPart extends CompartmentEditPart implements
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Signal_3003,
+                            SyncchartsElementTypes.State_3002,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
-                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart.VISUAL_ID));
+                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart.VISUAL_ID));
         }
         return parser;
     }

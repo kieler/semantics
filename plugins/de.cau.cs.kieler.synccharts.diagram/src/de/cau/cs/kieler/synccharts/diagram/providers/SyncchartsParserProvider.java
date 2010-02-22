@@ -22,6 +22,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyText2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyTextEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
@@ -32,7 +34,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class SyncchartsParserProvider extends AbstractProvider implements IParserProvider {
+public class SyncchartsParserProvider extends AbstractProvider implements
+        IParserProvider {
 
     /**
      * @generated
@@ -44,7 +47,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getStateLabel_5008Parser() {
         if (stateLabel_5008Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getState_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5008Parser = parser;
         }
@@ -72,6 +76,24 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
     /**
      * @generated
      */
+    private IParser stateInterfaceDeclaration_5013Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getStateInterfaceDeclaration_5013Parser() {
+        if (stateInterfaceDeclaration_5013Parser == null) {
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_InterfaceDeclaration() };
+            MessageFormatParser parser = new MessageFormatParser(features);
+            stateInterfaceDeclaration_5013Parser = parser;
+        }
+        return stateInterfaceDeclaration_5013Parser;
+    }
+
+    /**
+     * @generated
+     */
     private IParser regionId_5009Parser;
 
     /**
@@ -79,10 +101,12 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getRegionId_5009Parser() {
         if (regionId_5009Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getRegion_Id() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getRegion_Id() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getRegion_Id() };
-            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features,
+                    editableFeatures);
             regionId_5009Parser = parser;
         }
         return regionId_5009Parser;
@@ -98,7 +122,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getStateLabel_5007Parser() {
         if (stateLabel_5007Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getState_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5007Parser = parser;
         }
@@ -121,6 +146,24 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             stateBodyText_5010Parser = parser;
         }
         return stateBodyText_5010Parser;
+    }
+
+    /**
+     * @generated
+     */
+    private IParser stateInterfaceDeclaration_5012Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getStateInterfaceDeclaration_5012Parser() {
+        if (stateInterfaceDeclaration_5012Parser == null) {
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_InterfaceDeclaration() };
+            MessageFormatParser parser = new MessageFormatParser(features);
+            stateInterfaceDeclaration_5012Parser = parser;
+        }
+        return stateInterfaceDeclaration_5012Parser;
     }
 
     /**
@@ -248,7 +291,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
                     .getTransition_Priority() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getTransition_Priority() };
-            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features,
+                    editableFeatures);
             transitionPriority_6002Parser = parser;
         }
         return transitionPriority_6002Parser;
@@ -263,12 +307,16 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             return getStateLabel_5008Parser();
         case StateBodyTextEditPart.VISUAL_ID:
             return getStateBodyText_5011Parser();
+        case StateInterfaceDeclarationEditPart.VISUAL_ID:
+            return getStateInterfaceDeclaration_5013Parser();
         case RegionIdEditPart.VISUAL_ID:
             return getRegionId_5009Parser();
         case StateLabel2EditPart.VISUAL_ID:
             return getStateLabel_5007Parser();
         case StateBodyText2EditPart.VISUAL_ID:
             return getStateBodyText_5010Parser();
+        case StateInterfaceDeclaration2EditPart.VISUAL_ID:
+            return getStateInterfaceDeclaration_5012Parser();
         case SignalNameEditPart.VISUAL_ID:
             return getSignalName_5001Parser();
         case ActionTriggersAndEffectsEditPart.VISUAL_ID:
@@ -291,8 +339,10 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      * Utility method that consults ParserService
      * @generated
      */
-    public static IParser getParser(IElementType type, EObject object, String parserHint) {
-        return ParserService.getInstance().getParser(new HintAdapter(type, object, parserHint));
+    public static IParser getParser(IElementType type, EObject object,
+            String parserHint) {
+        return ParserService.getInstance().getParser(
+                new HintAdapter(type, object, parserHint));
     }
 
     /**

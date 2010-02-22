@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getBodyContents <em>Body Contents</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.State#getInterfaceDeclaration <em>Interface Declaration</em>}</li>
  * </ul>
  * </p>
  *
@@ -448,5 +449,31 @@ public interface State extends EObject {
      * @generated
      */
     void setBodyContents(EObject value);
+
+    /**
+     * Returns the value of the '<em><b>Interface Declaration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Interface Declaration</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Interface Declaration</em>' attribute.
+     * @see #setInterfaceDeclaration(String)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getState_InterfaceDeclaration()
+     * @model
+     * @generated
+     */
+    String getInterfaceDeclaration();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.State#getInterfaceDeclaration <em>Interface Declaration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Interface Declaration</em>' attribute.
+     * @see #getInterfaceDeclaration()
+     * @generated
+     */
+    void setInterfaceDeclaration(String value);
 
 } // State

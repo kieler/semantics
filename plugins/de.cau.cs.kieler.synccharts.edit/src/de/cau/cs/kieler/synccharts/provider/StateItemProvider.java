@@ -74,6 +74,7 @@ public class StateItemProvider
             addIsFinalPropertyDescriptor(object);
             addBodyTextPropertyDescriptor(object);
             addBodyReferencePropertyDescriptor(object);
+            addInterfaceDeclarationPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -236,6 +237,28 @@ public class StateItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Interface Declaration feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addInterfaceDeclarationPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_State_interfaceDeclaration_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_State_interfaceDeclaration_feature", "_UI_State_type"),
+                 SyncchartsPackage.Literals.STATE__INTERFACE_DECLARATION,
+                 true,
+                 true,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -316,6 +339,7 @@ public class StateItemProvider
             case SyncchartsPackage.STATE__IS_INITIAL:
             case SyncchartsPackage.STATE__IS_FINAL:
             case SyncchartsPackage.STATE__BODY_TEXT:
+            case SyncchartsPackage.STATE__INTERFACE_DECLARATION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SyncchartsPackage.STATE__SIGNALS:

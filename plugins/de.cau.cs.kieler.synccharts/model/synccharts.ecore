@@ -152,6 +152,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyReference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyContents" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="interfaceDeclaration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL"/>

@@ -71,10 +71,12 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
         if (!myContribute) {
             return;
         }
-        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+        IStructuredSelection selection = (IStructuredSelection) getContext()
+                .getSelection();
         myOpenDiagramAction.selectionChanged(selection);
         if (myOpenDiagramAction.isEnabled()) {
-            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, myOpenDiagramAction);
+            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN,
+                    myOpenDiagramAction);
         }
     }
 
@@ -115,14 +117,17 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             if (selection.size() == 1) {
                 Object selectedElement = selection.getFirstElement();
                 if (selectedElement instanceof SyncchartsNavigatorItem) {
-                    selectedElement = ((SyncchartsNavigatorItem) selectedElement).getView();
+                    selectedElement = ((SyncchartsNavigatorItem) selectedElement)
+                            .getView();
                 } else if (selectedElement instanceof IAdaptable) {
-                    selectedElement = ((IAdaptable) selectedElement).getAdapter(View.class);
+                    selectedElement = ((IAdaptable) selectedElement)
+                            .getAdapter(View.class);
                 }
                 if (selectedElement instanceof Diagram) {
                     Diagram diagram = (Diagram) selectedElement;
-                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                            .getModelID(diagram))) {
+                    if (RegionEditPart.MODEL_ID
+                            .equals(SyncchartsVisualIDRegistry
+                                    .getModelID(diagram))) {
                         myDiagram = diagram;
                     }
                 }
@@ -152,10 +157,12 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
          * @generated
          */
         private IEditorInput getEditorInput() {
-            for (Iterator it = myDiagram.eResource().getContents().iterator(); it.hasNext();) {
+            for (Iterator it = myDiagram.eResource().getContents().iterator(); it
+                    .hasNext();) {
                 EObject nextEObject = (EObject) it.next();
                 if (nextEObject == myDiagram) {
-                    return new FileEditorInput(WorkspaceSynchronizer.getFile(myDiagram.eResource()));
+                    return new FileEditorInput(WorkspaceSynchronizer
+                            .getFile(myDiagram.eResource()));
                 }
                 if (nextEObject instanceof Diagram) {
                     break;

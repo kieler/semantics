@@ -29,6 +29,13 @@
         <features
             href="synccharts.ecore#//State/bodyText"/>
       </labelMappings>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="synccharts.gmfgraph#InterfaceDecl"/>
+        <features
+            href="synccharts.ecore#//State/interfaceDeclaration"/>
+      </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
           href="synccharts.gmftool#//@palette/@tools.0/@tools.0"/>

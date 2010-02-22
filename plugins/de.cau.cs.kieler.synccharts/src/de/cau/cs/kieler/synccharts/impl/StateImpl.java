@@ -66,6 +66,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getBodyContents <em>Body Contents</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getInterfaceDeclaration <em>Interface Declaration</em>}</li>
  * </ul>
  * </p>
  *
@@ -291,6 +292,26 @@ public class StateImpl extends EObjectImpl implements State {
      * @ordered
      */
     protected EObject bodyContents;
+
+    /**
+     * The default value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInterfaceDeclaration()
+     * @generated
+     * @ordered
+     */
+    protected static final String INTERFACE_DECLARATION_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInterfaceDeclaration()
+     * @generated
+     * @ordered
+     */
+    protected String interfaceDeclaration = INTERFACE_DECLARATION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -688,6 +709,27 @@ public class StateImpl extends EObjectImpl implements State {
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getInterfaceDeclaration() {
+        return interfaceDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setInterfaceDeclaration(String newInterfaceDeclaration) {
+        String oldInterfaceDeclaration = interfaceDeclaration;
+        interfaceDeclaration = newInterfaceDeclaration;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.STATE__INTERFACE_DECLARATION, oldInterfaceDeclaration, interfaceDeclaration));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -810,6 +852,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return basicGetBodyReference();
             case SyncchartsPackage.STATE__BODY_CONTENTS:
                 return getBodyContents();
+            case SyncchartsPackage.STATE__INTERFACE_DECLARATION:
+                return getInterfaceDeclaration();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -881,6 +925,9 @@ public class StateImpl extends EObjectImpl implements State {
             case SyncchartsPackage.STATE__BODY_CONTENTS:
                 setBodyContents((EObject)newValue);
                 return;
+            case SyncchartsPackage.STATE__INTERFACE_DECLARATION:
+                setInterfaceDeclaration((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -944,6 +991,9 @@ public class StateImpl extends EObjectImpl implements State {
             case SyncchartsPackage.STATE__BODY_CONTENTS:
                 setBodyContents((EObject)null);
                 return;
+            case SyncchartsPackage.STATE__INTERFACE_DECLARATION:
+                setInterfaceDeclaration(INTERFACE_DECLARATION_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -990,6 +1040,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return bodyReference != null;
             case SyncchartsPackage.STATE__BODY_CONTENTS:
                 return bodyContents != null;
+            case SyncchartsPackage.STATE__INTERFACE_DECLARATION:
+                return INTERFACE_DECLARATION_EDEFAULT == null ? interfaceDeclaration != null : !INTERFACE_DECLARATION_EDEFAULT.equals(interfaceDeclaration);
         }
         return super.eIsSet(featureID);
     }
@@ -1016,6 +1068,8 @@ public class StateImpl extends EObjectImpl implements State {
         result.append(isFinal);
         result.append(", bodyText: ");
         result.append(bodyText);
+        result.append(", interfaceDeclaration: ");
+        result.append(interfaceDeclaration);
         result.append(')');
         return result.toString();
     }

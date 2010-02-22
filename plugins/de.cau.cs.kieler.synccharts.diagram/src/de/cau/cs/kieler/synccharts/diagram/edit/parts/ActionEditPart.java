@@ -57,7 +57,8 @@ public class ActionEditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new ActionItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new ActionItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -70,7 +71,8 @@ public class ActionEditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -95,7 +97,8 @@ public class ActionEditPart extends ShapeNodeEditPart {
         IFigure figure = new InvisibleFigure();
 
         if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
+                    .getElement());
         }
         return primaryShape = figure;
     }
@@ -112,8 +115,9 @@ public class ActionEditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof ActionTriggersAndEffectsEditPart) {
-            ((ActionTriggersAndEffectsEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureInvisibleFigureLabelFigure());
+            ((ActionTriggersAndEffectsEditPart) childEditPart)
+                    .setLabel(getPrimaryShape()
+                            .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;

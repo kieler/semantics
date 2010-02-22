@@ -1010,13 +1010,22 @@ public interface SyncchartsPackage extends EPackage {
     int STATE__BODY_CONTENTS = 16;
 
     /**
+     * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__INTERFACE_DECLARATION = 17;
+
+    /**
      * The number of structural features of the '<em>State</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int STATE_FEATURE_COUNT = 17;
+	int STATE_FEATURE_COUNT = 18;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2324,6 +2333,17 @@ public interface SyncchartsPackage extends EPackage {
     EReference getState_BodyContents();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.State#getInterfaceDeclaration <em>Interface Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Interface Declaration</em>'.
+     * @see de.cau.cs.kieler.synccharts.State#getInterfaceDeclaration()
+     * @see #getState()
+     * @generated
+     */
+    EAttribute getState_InterfaceDeclaration();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3199,6 +3219,14 @@ public interface SyncchartsPackage extends EPackage {
          * @generated
          */
         EReference STATE__BODY_CONTENTS = eINSTANCE.getState_BodyContents();
+
+        /**
+         * The meta object literal for the '<em><b>Interface Declaration</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STATE__INTERFACE_DECLARATION = eINSTANCE.getState_InterfaceDeclaration();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.TransitionImpl <em>Transition</em>}' class.

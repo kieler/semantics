@@ -48,9 +48,13 @@ main() {
 	model.diagram.preferences.noteFillColor := object GenConstantColor{name := DiagramColors::yellow;};
 	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
 	
-	// customize state edit parts so it shows textwrap for the interface declaration
-	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap();
-	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap();
+	// customize state edit parts so it shows textwrap for the body text
+	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure");
+	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure");
+		   
+    // customize state edit parts so it shows textwrap for the interface declaration
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure");
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure");    
 }
 
 mapping inout GenCompartment::compartmentSettings(){
@@ -86,13 +90,13 @@ mapping inout GenCompartment::compartmentSettings(){
 	};
 }
 
-mapping inout InnerClassViewmap::customizeTextWrap(){	
+mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String){	
 	// customize the Interface Declaration Label from a State
     if (self.className = "StateFigure") then {
-        var find := "fFigureBodyTextFigure.setText(\"\");";
+        var find := ("f").+(figureName).+(".setText(\"\");");
         var pre := self.classBody.substringBefore(find);
         // setting TextWrap to true enables multi line display and editing
-        var inject := find.+("fFigureBodyTextFigure.setTextWrap(true);\n");
+        var inject := find.+("f").+(figureName).+(".setTextWrap(true);\n");
         var after := self.classBody.substringAfter(find);
         self.classBody := pre.+(inject).+(after);
     } endif;

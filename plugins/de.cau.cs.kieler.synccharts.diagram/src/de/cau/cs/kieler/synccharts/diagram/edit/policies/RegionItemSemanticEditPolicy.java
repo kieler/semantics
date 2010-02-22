@@ -13,7 +13,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class RegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
+public class RegionItemSemanticEditPolicy extends
+        SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
@@ -44,14 +45,17 @@ public class RegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
     /**
      * @generated
      */
-    private static class DuplicateAnythingCommand extends DuplicateEObjectsCommand {
+    private static class DuplicateAnythingCommand extends
+            DuplicateEObjectsCommand {
 
         /**
          * @generated
          */
-        public DuplicateAnythingCommand(TransactionalEditingDomain editingDomain,
+        public DuplicateAnythingCommand(
+                TransactionalEditingDomain editingDomain,
                 DuplicateElementsRequest req) {
-            super(editingDomain, req.getLabel(), req.getElementsToBeDuplicated(), req
+            super(editingDomain, req.getLabel(), req
+                    .getElementsToBeDuplicated(), req
                     .getAllDuplicatedElementsMap());
         }
 

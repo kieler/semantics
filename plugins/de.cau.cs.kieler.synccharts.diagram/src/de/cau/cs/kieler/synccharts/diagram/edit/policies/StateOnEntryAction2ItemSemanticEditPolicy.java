@@ -9,7 +9,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class StateOnEntryAction2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
+public class StateOnEntryAction2ItemSemanticEditPolicy extends
+        SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated

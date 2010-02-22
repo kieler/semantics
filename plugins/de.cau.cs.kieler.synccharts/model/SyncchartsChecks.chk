@@ -62,7 +62,11 @@ context State if (signals.size>0)
   ERROR "Signalname may not be empty!" :
    this.signals.forAll(s| s.name.length>0);
 
-
+// TODO: verify those check conditions when variables work
+context State if (interfaceDeclaration.length > 0)
+  WARNING "The Interfacedeclaration is not empty but there are no signals and variables defined" :
+  	(!this.signals.isEmpty) || (!this.regions.select(r | (!r.variables.isEmpty || !r.signals.isEmpty)).isEmpty);
+   
 // Root state
 context State if (parentRegion == null || parentRegion.parentState == null)
   WARNING "Model has no inputs":

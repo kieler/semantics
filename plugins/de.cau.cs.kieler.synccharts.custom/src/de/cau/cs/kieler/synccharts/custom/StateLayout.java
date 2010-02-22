@@ -70,6 +70,8 @@ public class StateLayout extends AbstractHintLayout {
     private boolean containsInsideActions;
     private boolean containsExitActions;
     private boolean containsSuspensionTrigger;
+    private boolean containsInterfaceDeclaration;
+
 
     /**
      * Creates a state layout.
@@ -155,10 +157,13 @@ public class StateLayout extends AbstractHintLayout {
         containsInsideActions = state.getInnerActions().size() > 0;
         containsExitActions = state.getExitActions().size() > 0;
         containsSuspensionTrigger = state.getSuspensionTrigger() != null;
+		containsInterfaceDeclaration = (state.getInterfaceDeclaration() != null 
+			&& state.getInterfaceDeclaration().length() > 0);
 
         return (containsRegions || containsSignals || containsVariables || containsEntryActions
                 || containsInsideActions || containsExitActions || containsSuspensionTrigger || state
-                .getType() == StateType.TEXTUAL || state.getType() == StateType.REFERENCE)
+                .getType() == StateType.TEXTUAL || state.getType() == StateType.REFERENCE 
+				|| containsInterfaceDeclaration)
                 && state.getType() != StateType.CONDITIONAL;
     }
 

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Bridge
+Bundle-Name: SyncCharts Diagram Interfacedeclaration Bridge
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.interfacedeclparser.bridge;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.interfacedeclparser.bridge.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -17,10 +17,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.emf.ui;bundle-version="1.2.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.interfacedeclparser;bundle-version="1.0.0",
+ de.cau.cs.kieler.synccharts.interfacedeclparser;bundle-version="0.1.0",
  de.cau.cs.kieler.core.model;bundle-version="1.0.0",
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
  org.junit4
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.synccharts.interfacedeclparser.bridge
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

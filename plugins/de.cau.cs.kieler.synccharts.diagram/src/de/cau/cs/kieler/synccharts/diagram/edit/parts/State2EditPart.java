@@ -69,7 +69,8 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new State2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new State2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -82,7 +83,8 @@ public class State2EditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -107,7 +109,8 @@ public class State2EditPart extends ShapeNodeEditPart {
         IFigure figure = new StateFigure();
 
         if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
+                    .getElement());
         }
         return primaryShape = figure;
     }
@@ -123,14 +126,19 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabel2EditPart) {
-            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
+            ((StateInterfaceDeclaration2EditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
             return true;
         }
         if (childEditPart instanceof StateBodyText2EditPart) {
             ((StateBodyText2EditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureBodyTextFigure());
+            return true;
+        }
+        if (childEditPart instanceof StateLabel2EditPart) {
+            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureStateNameFigure());
             return true;
         }
         return false;
@@ -140,10 +148,13 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabel2EditPart) {
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
             return true;
         }
         if (childEditPart instanceof StateBodyText2EditPart) {
+            return true;
+        }
+        if (childEditPart instanceof StateLabel2EditPart) {
             return true;
         }
         return false;
@@ -342,11 +353,14 @@ public class State2EditPart extends ShapeNodeEditPart {
          * @generated
          */
         private WrappingLabel fFigureStateNameFigure;
-
         /**
          * @generated
          */
         private WrappingLabel fFigureBodyTextFigure;
+        /**
+         * @generated
+         */
+        private WrappingLabel fFigureInterfaceDeclFigure;
 
         /**
          * @generated
@@ -369,14 +383,17 @@ public class State2EditPart extends ShapeNodeEditPart {
             fFigureStateNameFigure = new WrappingLabel();
             fFigureStateNameFigure.setText("");
 
-            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
+                    .DPtoLP(5), getMapMode().DPtoLP(10),
+                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
             Polyline polyline0 = new Polyline();
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode().DPtoLP(20)));
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode().DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
+                    .DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode()
+                    .DPtoLP(20)));
             polyline0.setLineWidth(1);
 
             this.add(polyline0);
@@ -385,10 +402,21 @@ public class State2EditPart extends ShapeNodeEditPart {
             fFigureBodyTextFigure.setText("");
             fFigureBodyTextFigure.setTextWrap(true);
 
-            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode()
+                    .DPtoLP(5), getMapMode().DPtoLP(10),
+                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureBodyTextFigure);
+
+            fFigureInterfaceDeclFigure = new WrappingLabel();
+            fFigureInterfaceDeclFigure.setText("");
+            fFigureInterfaceDeclFigure.setTextWrap(true);
+
+            fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode()
+                    .DPtoLP(5), getMapMode().DPtoLP(10),
+                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+
+            this.add(fFigureInterfaceDeclFigure);
 
         }
 
@@ -423,6 +451,13 @@ public class State2EditPart extends ShapeNodeEditPart {
          */
         public WrappingLabel getFigureBodyTextFigure() {
             return fFigureBodyTextFigure;
+        }
+
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureInterfaceDeclFigure() {
+            return fFigureInterfaceDeclFigure;
         }
 
     }
