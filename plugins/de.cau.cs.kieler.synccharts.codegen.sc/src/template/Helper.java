@@ -584,27 +584,29 @@ public final class Helper {
     private static void addAllDependencies(final StatePlusTransition sptOne,
             final StatePlusTransition sptTwo, final int dependency) {
         State stateOne = sptOne.getState();
+        int typeOne = sptOne.getType();
+        State stateTwo = sptTwo.getState();
+        int typeTwo = sptTwo.getType();
         if (stateOne.getOutgoingTransitions().isEmpty()) {
-            State stateTwo = sptTwo.getState();
             if (stateTwo.getOutgoingTransitions().isEmpty()) {
                 addDependency(sptOne, sptTwo, dependency);
             } else {
                 for (Transition transition : stateTwo.getOutgoingTransitions()) {
-                    StatePlusTransition sptTwoNew = getStateProperties(stateTwo);
-                    sptTwoNew.setTransition(transition);
+                    StatePlusTransition sptTwoNew = new StatePlusTransition(stateTwo, typeTwo,
+                            transition);
                     addDependency(sptOne, sptTwoNew, dependency);
                 }
             }
         } else {
-            State stateTwo = sptTwo.getState();
             for (Transition transitionOne : stateOne.getOutgoingTransitions()) {
-                StatePlusTransition sptOneNew = getStateProperties(stateOne);
-                sptOneNew.setTransition(transitionOne);
+                StatePlusTransition sptOneNew = new StatePlusTransition(stateOne, typeOne,
+                        transitionOne);
                 if (stateTwo.getOutgoingTransitions().isEmpty()) {
                     addDependency(sptOneNew, sptTwo, dependency);
                 } else {
                     for (Transition transitionTwo : stateTwo.getOutgoingTransitions()) {
-                        StatePlusTransition sptTwoNew = getStateProperties(stateTwo);
+                        StatePlusTransition sptTwoNew = new StatePlusTransition(stateTwo, typeTwo,
+                                transitionTwo);
                         sptTwoNew.setTransition(transitionTwo);
                         addDependency(sptOneNew, sptTwoNew, dependency);
                     }

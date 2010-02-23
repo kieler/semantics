@@ -20,7 +20,6 @@
 	«ELSE»
 		«EXPAND stateAbortion FOR this-»
 	«ENDIF-»
-		  // PRIO for «this.sourceState.id»
 	«IF hasDependentState(this)-»
 		  PRIO(«getSmallestThreadPriority(this.sourceState)»);
 	«ENDIF-»
@@ -47,8 +46,8 @@
 			«ENDIF-»
 		«ENDIF-»
 		«EXPAND CodegenPriority::priorityReduction FOR this-»
-		«EXPAND transitionWithoutTriggersAndEffects FOR this»
 	«ENDIF-»
+	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
 «ENDDEFINE»
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
