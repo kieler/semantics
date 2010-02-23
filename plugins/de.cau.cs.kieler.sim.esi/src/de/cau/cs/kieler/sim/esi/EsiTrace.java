@@ -108,4 +108,16 @@ public class EsiTrace implements ITrace {
         current = trace.getTicks().get(pos);
     }
 
+    @Override
+    public String toString() {
+        StringBuffer res = new StringBuffer();
+        for (tick t : trace.getTicks()) {
+            for (signal s : t.getInput()) {
+                res.append(s.getName() + " ");
+            }
+            res.append(";");
+        }
+        return res.toString();
+    }
+
 }

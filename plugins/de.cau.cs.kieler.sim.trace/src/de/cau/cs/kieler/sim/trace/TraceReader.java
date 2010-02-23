@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -53,18 +55,37 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
     private static final String[] SUPPORTED_FILES = {};
 
     private static final String REMAINING = "_Trace Remaining";
-    
-    
+
     private KiemPropertyTypeFile fileProperty;
 
     private List<? extends ITrace> tracelist;
     ITrace current;
 
-    private int iteration = 0, pos = 0;
+    private int iteration = 0;
 
-    private String traceFile = null;
+    // private String traceFile = null;
 
     private HashMap<String, ITraceProvider> provider = new HashMap<String, ITraceProvider>();
+
+    public TraceReader() {
+        super();
+        IExtensionRegistry reg = Platform.getExtensionRegistry();
+        for (IConfigurationElement bundle : reg
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.trace.traceprovider")) {
+            try {
+                ITraceProvider p = (ITraceProvider) bundle.createExecutableExtension("class");
+                for (String s : p.getExtensions()) {
+                    provider.put(s, p);
+
+                }
+            } catch (InvalidRegistryObjectException e) {
+                // throw new KiemInitializationException("Trace Error", true, e);
+            } catch (CoreException e) {
+                // throw new KiemInitializationException("Trace Error", true, e);
+                // TODO handle exception
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -103,21 +124,16 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
      * @throws KiemInitializationException
      */
     public void initialize() throws KiemInitializationException {
-        IExtensionRegistry reg = Platform.getExtensionRegistry();
-        for (IConfigurationElement bundle : reg
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.trace.traceprovider")) {
-            try {
-                ITraceProvider p = (ITraceProvider) bundle.createExecutableExtension("class");
-                for (String s : p.getExtensions()) {
-                    provider.put(s, p);
-
-                }
-            } catch (InvalidRegistryObjectException e) {
-                throw new KiemInitializationException("Trace Error", true, e);
-            } catch (CoreException e) {
-                throw new KiemInitializationException("Trace Error", true, e);
-            }
-        }
+        /*
+         * IExtensionRegistry reg = Platform.getExtensionRegistry(); for (IConfigurationElement
+         * bundle : reg .getConfigurationElementsFor("de.cau.cs.kieler.sim.trace.traceprovider")) {
+         * try { ITraceProvider p = (ITraceProvider) bundle.createExecutableExtension("class"); for
+         * (String s : p.getExtensions()) { provider.put(s, p);
+         * 
+         * } } catch (InvalidRegistryObjectException e) { throw new
+         * KiemInitializationException("Trace Error", true, e); } catch (CoreException e) { throw
+         * new KiemInitializationException("Trace Error", true, e); } }
+         */
         if (fileProperty != null) {
             fileProperty.setFilterNames(provider.keySet().toArray(
                     new String[provider.keySet().size()]));
@@ -140,26 +156,26 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
         KiemProperty[] properties = new KiemProperty[1];
 
         fileProperty = new KiemPropertyTypeFile();
-        properties[0] = new KiemProperty("Input File", fileProperty, traceFile);
+        properties[0] = new KiemProperty("Input File", fileProperty, "");
         return properties;
     }
 
     /** {@inheritDoc} */
     public void wrapup() {
-        iteration = 0;
+        // iteration = 0;
     }
 
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        if (iteration == 0 || tracelist == null) {
+        if (tracelist == null) {
             tracelist = null;
             // load new trace
             try {
                 String name = getProperties()[0].getValue();
-                if (traceFile != null) { // Automated run
-                    name = traceFile;
-                }
+                // if (traceFile != null) { // Automated run
+                // name = traceFile;
+                // }
 
                 if (name != null && (new File(name)).exists()) {
                     for (Entry<String, ITraceProvider> i : provider.entrySet()) {
@@ -248,28 +264,24 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
             }
         }
         if (model != null) {
-            IPath path = Path.fromOSString(model);
-            path = path.removeFileExtension();
-            path = path.addFileExtension("esi");
+            if (iteration == 0) {
+                IPath path = Path.fromOSString(model);
+                path = path.removeFileExtension();
 
-            // IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+                IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
-            // traceFile = file.getLocation().toOSString();
-            // properties.add(new KiemProperty("TRACE", traceFile));
+                String name = file.getLocation().toOSString();
 
-            if (iteration == 0 || tracelist == null) {
-                // FIXME: tracelist has to be available before
-                // initExecution() is called
-                // load new trace
-                try {
-                    String name = getProperties()[0].getValue();
-                    if (traceFile != null) { // Automated run
-                        name = traceFile;
+                for (Entry<String, ITraceProvider> i : provider.entrySet()) {
+                    if (new File(name + "." + i.getKey()).exists()) {
+                        tracelist = i.getValue().loadTrace(name + "." + i.getKey());
+                        current = tracelist.get(0);
+                        break;
                     }
-                    // tracelist = new EsiFile(getClass(), name);
-                } catch (Exception e) {
-                    throw new KiemInitializationException("Can't find trace file", false, e);
-
+                }
+            } else {
+                if (tracelist.size() > iteration) {
+                    current = tracelist.get(iteration);
                 }
             }
         }
@@ -282,7 +294,7 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
         if (tracelist == null) {
             return 0;
         }
-        return tracelist.size() - pos;
+        return tracelist.size() - iteration;
     }
 
     /**
