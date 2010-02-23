@@ -25,7 +25,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
@@ -65,13 +64,17 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                 new ComponentEditPolicy() {
                     @Override
                     public Command getCommand(final Request request) {
+                        Command result = super.getCommand(request);
                         // If the user presses the delete key, don't delete
                         if (request instanceof GroupRequestViaKeyboard
                                 && RequestConstants.REQ_DELETE.equals(request
                                         .getType())) {
-                            return UnexecutableCommand.INSTANCE;
+                            GroupRequestViaKeyboard req = (GroupRequestViaKeyboard) request;
+
+                            result = super.createDeleteSemanticCommand(req);
                         }
-                        return super.getCommand(request);
+
+                        return result;
                     }
                 });
     }
