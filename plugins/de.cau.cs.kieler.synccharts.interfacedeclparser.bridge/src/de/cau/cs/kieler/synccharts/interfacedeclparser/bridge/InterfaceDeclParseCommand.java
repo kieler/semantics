@@ -81,7 +81,6 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void execute() {
         try {
             oldInterfaceDeclaration = interfaceDeclaration;
@@ -98,7 +97,6 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void redo() {
         execute();
     }
@@ -106,7 +104,6 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void undo() {
         rootState.setInterfaceDeclaration(oldInterfaceDeclaration);
     }

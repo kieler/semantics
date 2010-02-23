@@ -183,7 +183,6 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void execute() {
         try {
 
@@ -199,7 +198,6 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void redo() {
         execute();
     }

@@ -211,12 +211,10 @@ public class InterfaceDeclProcessorWrapper {
             this.isExecutable = true;
         }
 
-        @Override
         public void execute() {
             cmd.processCanonicalSerialization();
         }
 
-        @Override
         public void redo() {
             execute();
         }
