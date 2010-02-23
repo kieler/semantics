@@ -73,7 +73,6 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
       case QuartzPackage.POINTED_NAME: return createPointedName();
       case QuartzPackage.MACRO_DEF: return createMacroDef();
       case QuartzPackage.QMODULE: return createQModule();
-      case QuartzPackage.OBSERVED_SPEC_LIST: return createObservedSpecList();
       case QuartzPackage.NAME: return createName();
       case QuartzPackage.QNAME: return createQName();
       case QuartzPackage.QNAME_LIST: return createQNameList();
@@ -88,7 +87,6 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
       case QuartzPackage.INTERFACE_LIST: return createInterfaceList();
       case QuartzPackage.CONTROL_LIST: return createControlList();
       case QuartzPackage.ASSUME_LIST: return createAssumeList();
-      case QuartzPackage.PROOF_GOAL_LIST: return createProofGoalList();
       case QuartzPackage.FIXPOINT_EQ_LIST: return createFixpointEqList();
       case QuartzPackage.OPT_UTY_EXPR: return createOptUtyExpr();
       case QuartzPackage.OPT_UTY_EXPR_LIST: return createOptUtyExprList();
@@ -173,17 +171,6 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
   {
     QModuleImpl qModule = new QModuleImpl();
     return qModule;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ObservedSpecList createObservedSpecList()
-  {
-    ObservedSpecListImpl observedSpecList = new ObservedSpecListImpl();
-    return observedSpecList;
   }
 
   /**
@@ -338,17 +325,6 @@ public class QuartzFactoryImpl extends EFactoryImpl implements QuartzFactory
   {
     AssumeListImpl assumeList = new AssumeListImpl();
     return assumeList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ProofGoalList createProofGoalList()
-  {
-    ProofGoalListImpl proofGoalList = new ProofGoalListImpl();
-    return proofGoalList;
   }
 
   /**

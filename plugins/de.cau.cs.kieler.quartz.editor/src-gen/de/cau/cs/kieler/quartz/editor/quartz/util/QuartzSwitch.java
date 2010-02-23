@@ -140,13 +140,6 @@ public class QuartzSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case QuartzPackage.OBSERVED_SPEC_LIST:
-      {
-        ObservedSpecList observedSpecList = (ObservedSpecList)theEObject;
-        T result = caseObservedSpecList(observedSpecList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case QuartzPackage.NAME:
       {
         Name name = (Name)theEObject;
@@ -264,14 +257,6 @@ public class QuartzSwitch<T>
       {
         AssumeList assumeList = (AssumeList)theEObject;
         T result = caseAssumeList(assumeList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case QuartzPackage.PROOF_GOAL_LIST:
-      {
-        ProofGoalList proofGoalList = (ProofGoalList)theEObject;
-        T result = caseProofGoalList(proofGoalList);
-        if (result == null) result = caseObservedSpecList(proofGoalList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -502,22 +487,6 @@ public class QuartzSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Observed Spec List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Observed Spec List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseObservedSpecList(ObservedSpecList object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Name</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -737,22 +706,6 @@ public class QuartzSwitch<T>
    * @generated
    */
   public T caseAssumeList(AssumeList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Proof Goal List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Proof Goal List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseProofGoalList(ProofGoalList object)
   {
     return null;
   }

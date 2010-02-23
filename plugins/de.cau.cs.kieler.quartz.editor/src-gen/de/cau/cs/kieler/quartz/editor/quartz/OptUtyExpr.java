@@ -54,7 +54,7 @@ public interface OptUtyExpr extends OptUtyExprList
 
   /**
    * Returns the value of the '<em><b>Exprs</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.quartz.editor.quartz.OptUtyExprList}.
+   * The list contents are of type {@link de.cau.cs.kieler.quartz.editor.quartz.OptUtyExpr}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Exprs</em>' containment reference list isn't clear,
@@ -66,6 +66,6 @@ public interface OptUtyExpr extends OptUtyExprList
    * @model containment="true"
    * @generated
    */
-  EList<OptUtyExprList> getExprs();
+  EList<OptUtyExpr> getExprs();
 
 } // OptUtyExpr

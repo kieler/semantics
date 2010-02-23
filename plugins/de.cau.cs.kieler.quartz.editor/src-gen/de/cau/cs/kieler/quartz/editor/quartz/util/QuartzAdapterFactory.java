@@ -108,11 +108,6 @@ public class QuartzAdapterFactory extends AdapterFactoryImpl
         return createQModuleAdapter();
       }
       @Override
-      public Adapter caseObservedSpecList(ObservedSpecList object)
-      {
-        return createObservedSpecListAdapter();
-      }
-      @Override
       public Adapter caseName(Name object)
       {
         return createNameAdapter();
@@ -181,11 +176,6 @@ public class QuartzAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAssumeList(AssumeList object)
       {
         return createAssumeListAdapter();
-      }
-      @Override
-      public Adapter caseProofGoalList(ProofGoalList object)
-      {
-        return createProofGoalListAdapter();
       }
       @Override
       public Adapter caseFixpointEqList(FixpointEqList object)
@@ -370,21 +360,6 @@ public class QuartzAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createQModuleAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList <em>Observed Spec List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList
-   * @generated
-   */
-  public Adapter createObservedSpecListAdapter()
   {
     return null;
   }
@@ -595,21 +570,6 @@ public class QuartzAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAssumeListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.quartz.editor.quartz.ProofGoalList <em>Proof Goal List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.ProofGoalList
-   * @generated
-   */
-  public Adapter createProofGoalListAdapter()
   {
     return null;
   }

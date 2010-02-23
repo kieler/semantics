@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getT03 <em>T03</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getT16 <em>T16</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getT06 <em>T06</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getT13 <em>T13</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QNameImpl#getT14 <em>T14</em>}</li>
@@ -78,16 +77,6 @@ public class QNameImpl extends InOutNameImpl implements QName
    * @ordered
    */
   protected AtomicStmt t03;
-
-  /**
-   * The cached value of the '{@link #getT16() <em>T16</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getT16()
-   * @generated
-   * @ordered
-   */
-  protected AtomicStmt t16;
 
   /**
    * The cached value of the '{@link #getT06() <em>T06</em>}' containment reference.
@@ -384,54 +373,6 @@ public class QNameImpl extends InOutNameImpl implements QName
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.QNAME__T03, newT03, newT03));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AtomicStmt getT16()
-  {
-    return t16;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetT16(AtomicStmt newT16, NotificationChain msgs)
-  {
-    AtomicStmt oldT16 = t16;
-    t16 = newT16;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QuartzPackage.QNAME__T16, oldT16, newT16);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setT16(AtomicStmt newT16)
-  {
-    if (newT16 != t16)
-    {
-      NotificationChain msgs = null;
-      if (t16 != null)
-        msgs = ((InternalEObject)t16).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.QNAME__T16, null, msgs);
-      if (newT16 != null)
-        msgs = ((InternalEObject)newT16).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QuartzPackage.QNAME__T16, null, msgs);
-      msgs = basicSetT16(newT16, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QuartzPackage.QNAME__T16, newT16, newT16));
   }
 
   /**
@@ -1239,8 +1180,6 @@ public class QNameImpl extends InOutNameImpl implements QName
         return basicSetExpr(null, msgs);
       case QuartzPackage.QNAME__T03:
         return basicSetT03(null, msgs);
-      case QuartzPackage.QNAME__T16:
-        return basicSetT16(null, msgs);
       case QuartzPackage.QNAME__T06:
         return basicSetT06(null, msgs);
       case QuartzPackage.QNAME__T13:
@@ -1291,8 +1230,6 @@ public class QNameImpl extends InOutNameImpl implements QName
         return getExpr();
       case QuartzPackage.QNAME__T03:
         return getT03();
-      case QuartzPackage.QNAME__T16:
-        return getT16();
       case QuartzPackage.QNAME__T06:
         return getT06();
       case QuartzPackage.QNAME__T13:
@@ -1346,9 +1283,6 @@ public class QNameImpl extends InOutNameImpl implements QName
         return;
       case QuartzPackage.QNAME__T03:
         setT03((AtomicStmt)newValue);
-        return;
-      case QuartzPackage.QNAME__T16:
-        setT16((AtomicStmt)newValue);
         return;
       case QuartzPackage.QNAME__T06:
         setT06((dUtyExprs)newValue);
@@ -1421,9 +1355,6 @@ public class QNameImpl extends InOutNameImpl implements QName
       case QuartzPackage.QNAME__T03:
         setT03((AtomicStmt)null);
         return;
-      case QuartzPackage.QNAME__T16:
-        setT16((AtomicStmt)null);
-        return;
       case QuartzPackage.QNAME__T06:
         setT06((dUtyExprs)null);
         return;
@@ -1493,8 +1424,6 @@ public class QNameImpl extends InOutNameImpl implements QName
         return expr != null;
       case QuartzPackage.QNAME__T03:
         return t03 != null;
-      case QuartzPackage.QNAME__T16:
-        return t16 != null;
       case QuartzPackage.QNAME__T06:
         return t06 != null;
       case QuartzPackage.QNAME__T13:
@@ -1547,7 +1476,6 @@ public class QNameImpl extends InOutNameImpl implements QName
       {
         case QuartzPackage.QNAME__EXPR: return QuartzPackage.ATOMIC_STMT__EXPR;
         case QuartzPackage.QNAME__T03: return QuartzPackage.ATOMIC_STMT__T03;
-        case QuartzPackage.QNAME__T16: return QuartzPackage.ATOMIC_STMT__T16;
         case QuartzPackage.QNAME__T06: return QuartzPackage.ATOMIC_STMT__T06;
         default: return -1;
       }
@@ -1622,7 +1550,6 @@ public class QNameImpl extends InOutNameImpl implements QName
       {
         case QuartzPackage.ATOMIC_STMT__EXPR: return QuartzPackage.QNAME__EXPR;
         case QuartzPackage.ATOMIC_STMT__T03: return QuartzPackage.QNAME__T03;
-        case QuartzPackage.ATOMIC_STMT__T16: return QuartzPackage.QNAME__T16;
         case QuartzPackage.ATOMIC_STMT__T06: return QuartzPackage.QNAME__T06;
         default: return -1;
       }

@@ -80,15 +80,6 @@ public interface QuartzFactory extends EFactory
   QModule createQModule();
 
   /**
-   * Returns a new object of class '<em>Observed Spec List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Observed Spec List</em>'.
-   * @generated
-   */
-  ObservedSpecList createObservedSpecList();
-
-  /**
    * Returns a new object of class '<em>Name</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -213,15 +204,6 @@ public interface QuartzFactory extends EFactory
    * @generated
    */
   AssumeList createAssumeList();
-
-  /**
-   * Returns a new object of class '<em>Proof Goal List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Proof Goal List</em>'.
-   * @generated
-   */
-  ProofGoalList createProofGoalList();
 
   /**
    * Returns a new object of class '<em>Fixpoint Eq List</em>'.

@@ -8,25 +8,17 @@ package de.cau.cs.kieler.quartz.editor.quartz.impl;
 import de.cau.cs.kieler.quartz.editor.quartz.InterfaceList;
 import de.cau.cs.kieler.quartz.editor.quartz.LocStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.Name;
-import de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList;
 import de.cau.cs.kieler.quartz.editor.quartz.QModule;
 import de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +30,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QModuleImpl#getIntf <em>Intf</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QModuleImpl#getStmt <em>Stmt</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.impl.QModuleImpl#getObs <em>Obs</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,16 +66,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
    * @ordered
    */
   protected LocStmt stmt;
-
-  /**
-   * The cached value of the '{@link #getObs() <em>Obs</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getObs()
-   * @generated
-   * @ordered
-   */
-  protected EList<ObservedSpecList> obs;
 
   /**
    * <!-- begin-user-doc -->
@@ -256,20 +237,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ObservedSpecList> getObs()
-  {
-    if (obs == null)
-    {
-      obs = new EObjectContainmentEList<ObservedSpecList>(ObservedSpecList.class, this, QuartzPackage.QMODULE__OBS);
-    }
-    return obs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -281,8 +248,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
         return basicSetIntf(null, msgs);
       case QuartzPackage.QMODULE__STMT:
         return basicSetStmt(null, msgs);
-      case QuartzPackage.QMODULE__OBS:
-        return ((InternalEList<?>)getObs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -303,8 +268,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
         return getIntf();
       case QuartzPackage.QMODULE__STMT:
         return getStmt();
-      case QuartzPackage.QMODULE__OBS:
-        return getObs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -314,7 +277,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -328,10 +290,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
         return;
       case QuartzPackage.QMODULE__STMT:
         setStmt((LocStmt)newValue);
-        return;
-      case QuartzPackage.QMODULE__OBS:
-        getObs().clear();
-        getObs().addAll((Collection<? extends ObservedSpecList>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -356,9 +314,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
       case QuartzPackage.QMODULE__STMT:
         setStmt((LocStmt)null);
         return;
-      case QuartzPackage.QMODULE__OBS:
-        getObs().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -379,8 +334,6 @@ public class QModuleImpl extends MinimalEObjectImpl.Container implements QModule
         return intf != null;
       case QuartzPackage.QMODULE__STMT:
         return stmt != null;
-      case QuartzPackage.QMODULE__OBS:
-        return obs != null && !obs.isEmpty();
     }
     return super.eIsSet(featureID);
   }

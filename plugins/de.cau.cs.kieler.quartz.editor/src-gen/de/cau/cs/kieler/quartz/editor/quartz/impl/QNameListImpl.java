@@ -58,7 +58,7 @@ public class QNameListImpl extends ControlListImpl implements QNameList
    * @generated
    * @ordered
    */
-  protected EList<QNameList> names;
+  protected EList<QName> names;
 
   /**
    * <!-- begin-user-doc -->
@@ -134,11 +134,11 @@ public class QNameListImpl extends ControlListImpl implements QNameList
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<QNameList> getNames()
+  public EList<QName> getNames()
   {
     if (names == null)
     {
-      names = new EObjectContainmentEList<QNameList>(QNameList.class, this, QuartzPackage.QNAME_LIST__NAMES);
+      names = new EObjectContainmentEList<QName>(QName.class, this, QuartzPackage.QNAME_LIST__NAMES);
     }
     return names;
   }
@@ -195,7 +195,7 @@ public class QNameListImpl extends ControlListImpl implements QNameList
         return;
       case QuartzPackage.QNAME_LIST__NAMES:
         getNames().clear();
-        getNames().addAll((Collection<? extends QNameList>)newValue);
+        getNames().addAll((Collection<? extends QName>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

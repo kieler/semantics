@@ -32,9 +32,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QModule/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QModule/intf"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QModule/stmt"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//QModule/obs"/>
     </genClasses>
-    <genClasses ecoreClass="Quartz.ecore#//ObservedSpecList"/>
     <genClasses ecoreClass="Quartz.ecore#//Name">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Quartz.ecore#//Name/id"/>
     </genClasses>
@@ -83,15 +81,6 @@
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//ControlList"/>
     <genClasses ecoreClass="Quartz.ecore#//AssumeList"/>
-    <genClasses ecoreClass="Quartz.ecore#//ProofGoalList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/goals"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Quartz.ecore#//ProofGoalList/ver"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/ctrl"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/ass"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//ProofGoalList/ctr"/>
-    </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//FixpointEqList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//FixpointEqList/expr2"/>
     </genClasses>
@@ -141,7 +130,6 @@
     <genClasses ecoreClass="Quartz.ecore#//AtomicStmt">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/expr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t03"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t16"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Quartz.ecore#//AtomicStmt/t06"/>
     </genClasses>
     <genClasses ecoreClass="Quartz.ecore#//NamedStmt"/>

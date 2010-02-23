@@ -22,12 +22,10 @@ import de.cau.cs.kieler.quartz.editor.quartz.LocStmt;
 import de.cau.cs.kieler.quartz.editor.quartz.MacroDef;
 import de.cau.cs.kieler.quartz.editor.quartz.Name;
 import de.cau.cs.kieler.quartz.editor.quartz.NamedStmt;
-import de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList;
 import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExpr;
 import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExprList;
 import de.cau.cs.kieler.quartz.editor.quartz.PackagePath;
 import de.cau.cs.kieler.quartz.editor.quartz.PointedName;
-import de.cau.cs.kieler.quartz.editor.quartz.ProofGoalList;
 import de.cau.cs.kieler.quartz.editor.quartz.QModule;
 import de.cau.cs.kieler.quartz.editor.quartz.QName;
 import de.cau.cs.kieler.quartz.editor.quartz.QNameList;
@@ -101,13 +99,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * @generated
    */
   private EClass qModuleEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass observedSpecListEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -206,13 +197,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * @generated
    */
   private EClass assumeListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass proofGoalListEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -570,26 +554,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
   public EReference getQModule_Stmt()
   {
     return (EReference)qModuleEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getQModule_Obs()
-  {
-    return (EReference)qModuleEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getObservedSpecList()
-  {
-    return observedSpecListEClass;
   }
 
   /**
@@ -960,86 +924,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
   public EClass getAssumeList()
   {
     return assumeListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getProofGoalList()
-  {
-    return proofGoalListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Name()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Expr()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Goals()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getProofGoalList_Ver()
-  {
-    return (EAttribute)proofGoalListEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Ctrl()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Ass()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getProofGoalList_Ctr()
-  {
-    return (EReference)proofGoalListEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1437,19 +1321,9 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAtomicStmt_T16()
-  {
-    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getAtomicStmt_T06()
   {
-    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(3);
+    return (EReference)atomicStmtEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1516,9 +1390,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     createEReference(qModuleEClass, QMODULE__NAME);
     createEReference(qModuleEClass, QMODULE__INTF);
     createEReference(qModuleEClass, QMODULE__STMT);
-    createEReference(qModuleEClass, QMODULE__OBS);
-
-    observedSpecListEClass = createEClass(OBSERVED_SPEC_LIST);
 
     nameEClass = createEClass(NAME);
     createEAttribute(nameEClass, NAME__ID);
@@ -1570,15 +1441,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     controlListEClass = createEClass(CONTROL_LIST);
 
     assumeListEClass = createEClass(ASSUME_LIST);
-
-    proofGoalListEClass = createEClass(PROOF_GOAL_LIST);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__NAME);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__EXPR);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__GOALS);
-    createEAttribute(proofGoalListEClass, PROOF_GOAL_LIST__VER);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__CTRL);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__ASS);
-    createEReference(proofGoalListEClass, PROOF_GOAL_LIST__CTR);
 
     fixpointEqListEClass = createEClass(FIXPOINT_EQ_LIST);
     createEReference(fixpointEqListEClass, FIXPOINT_EQ_LIST__EXPR2);
@@ -1632,7 +1494,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     atomicStmtEClass = createEClass(ATOMIC_STMT);
     createEReference(atomicStmtEClass, ATOMIC_STMT__EXPR);
     createEReference(atomicStmtEClass, ATOMIC_STMT__T03);
-    createEReference(atomicStmtEClass, ATOMIC_STMT__T16);
     createEReference(atomicStmtEClass, ATOMIC_STMT__T06);
 
     namedStmtEClass = createEClass(NAMED_STMT);
@@ -1677,7 +1538,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     qNameListEClass.getESuperTypes().add(this.getControlList());
     qNameListEClass.getESuperTypes().add(this.getAssumeList());
     inOutNameEClass.getESuperTypes().add(this.getInOutNameList());
-    proofGoalListEClass.getESuperTypes().add(this.getObservedSpecList());
     fixpointEqListEClass.getESuperTypes().add(this.getUtyExpr());
     optUtyExprEClass.getESuperTypes().add(this.getOptUtyExprList());
     utyExprEClass.getESuperTypes().add(this.getUtyAction());
@@ -1715,9 +1575,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     initEReference(getQModule_Name(), this.getName_(), null, "name", null, 0, 1, QModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQModule_Intf(), this.getInterfaceList(), null, "intf", null, 0, 1, QModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQModule_Stmt(), this.getLocStmt(), null, "stmt", null, 0, 1, QModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQModule_Obs(), this.getObservedSpecList(), null, "obs", null, 0, -1, QModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(observedSpecListEClass, ObservedSpecList.class, "ObservedSpecList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(nameEClass, Name.class, "Name", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getName_Id(), ecorePackage.getEString(), "id", null, 0, 1, Name.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1731,7 +1588,7 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
 
     initEClass(qNameListEClass, QNameList.class, "QNameList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getQNameList_Name(), this.getQName(), null, "name", null, 0, 1, QNameList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQNameList_Names(), this.getQNameList(), null, "names", null, 0, -1, QNameList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQNameList_Names(), this.getQName(), null, "names", null, 0, -1, QNameList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(qTypeEClass, QType.class, "QType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getQType_Ta(), this.getUtyExpr(), null, "ta", null, 0, 1, QType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1770,21 +1627,12 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
 
     initEClass(assumeListEClass, AssumeList.class, "AssumeList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(proofGoalListEClass, ProofGoalList.class, "ProofGoalList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProofGoalList_Name(), this.getQName(), null, "name", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProofGoalList_Expr(), this.getUtyExpr(), null, "expr", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProofGoalList_Goals(), this.getProofGoalList(), null, "goals", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProofGoalList_Ver(), ecorePackage.getEString(), "ver", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProofGoalList_Ctrl(), this.getControlList(), null, "ctrl", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProofGoalList_Ass(), this.getAssumeList(), null, "ass", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProofGoalList_Ctr(), this.getControlList(), null, "ctr", null, 0, -1, ProofGoalList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(fixpointEqListEClass, FixpointEqList.class, "FixpointEqList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFixpointEqList_Expr2(), this.getUtyExpr(), null, "expr2", null, 0, 1, FixpointEqList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(optUtyExprEClass, OptUtyExpr.class, "OptUtyExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOptUtyExpr_Tk(), this.getUtyExpr(), null, "tk", null, 0, 1, OptUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getOptUtyExpr_Exprs(), this.getOptUtyExprList(), null, "exprs", null, 0, -1, OptUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOptUtyExpr_Exprs(), this.getOptUtyExpr(), null, "exprs", null, 0, -1, OptUtyExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(optUtyExprListEClass, OptUtyExprList.class, "OptUtyExprList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1831,7 +1679,6 @@ public class QuartzPackageImpl extends EPackageImpl implements QuartzPackage
     initEClass(atomicStmtEClass, AtomicStmt.class, "AtomicStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAtomicStmt_Expr(), this.getdUtyExprs(), null, "expr", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAtomicStmt_T03(), this.getAtomicStmt(), null, "t03", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAtomicStmt_T16(), this.getAtomicStmt(), null, "t16", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAtomicStmt_T06(), this.getdUtyExprs(), null, "t06", null, 0, 1, AtomicStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(namedStmtEClass, NamedStmt.class, "NamedStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -5,8 +5,6 @@
  */
 package de.cau.cs.kieler.quartz.editor.quartz;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -20,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.QModule#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.QModule#getIntf <em>Intf</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.QModule#getStmt <em>Stmt</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.QModule#getObs <em>Obs</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,21 +104,5 @@ public interface QModule extends EObject
    * @generated
    */
   void setStmt(LocStmt value);
-
-  /**
-   * Returns the value of the '<em><b>Obs</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.quartz.editor.quartz.ObservedSpecList}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Obs</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Obs</em>' containment reference list.
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage#getQModule_Obs()
-   * @model containment="true"
-   * @generated
-   */
-  EList<ObservedSpecList> getObs();
 
 } // QModule

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT03 <em>T03</em>}</li>
- *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT16 <em>T16</em>}</li>
  *   <li>{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT06 <em>T06</em>}</li>
  * </ul>
  * </p>
@@ -79,32 +78,6 @@ public interface AtomicStmt extends EObject
    * @generated
    */
   void setT03(AtomicStmt value);
-
-  /**
-   * Returns the value of the '<em><b>T16</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>T16</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>T16</em>' containment reference.
-   * @see #setT16(AtomicStmt)
-   * @see de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage#getAtomicStmt_T16()
-   * @model containment="true"
-   * @generated
-   */
-  AtomicStmt getT16();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.quartz.editor.quartz.AtomicStmt#getT16 <em>T16</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>T16</em>' containment reference.
-   * @see #getT16()
-   * @generated
-   */
-  void setT16(AtomicStmt value);
 
   /**
    * Returns the value of the '<em><b>T06</b></em>' containment reference.

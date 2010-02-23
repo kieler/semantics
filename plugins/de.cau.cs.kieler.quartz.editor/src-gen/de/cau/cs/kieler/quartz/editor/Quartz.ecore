@@ -36,10 +36,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stmt" eType="#//LocStmt"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="obs" upperBound="-1" eType="#//ObservedSpecList"
-        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ObservedSpecList"/>
   <eClassifiers xsi:type="ecore:EClass" name="Name" eSuperTypes="#//QName">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -59,7 +56,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//QName"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="names" upperBound="-1"
-        eType="#//QNameList" containment="true"/>
+        eType="#//QName" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="QType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ta" eType="#//UtyExpr"
@@ -110,22 +107,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ControlList"/>
   <eClassifiers xsi:type="ecore:EClass" name="AssumeList"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ProofGoalList" eSuperTypes="#//ObservedSpecList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" upperBound="-1" eType="#//QName"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//UtyExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="goals" upperBound="-1"
-        eType="#//ProofGoalList" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ver" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ctrl" upperBound="-1" eType="#//ControlList"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ass" upperBound="-1" eType="#//AssumeList"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ctr" upperBound="-1" eType="#//ControlList"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FixpointEqList" eSuperTypes="#//UtyExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr2" eType="#//UtyExpr"
         containment="true"/>
@@ -134,7 +115,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="tk" eType="#//UtyExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" upperBound="-1"
-        eType="#//OptUtyExprList" containment="true"/>
+        eType="#//OptUtyExpr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OptUtyExprList"/>
   <eClassifiers xsi:type="ecore:EClass" name="UtyExprSelectList">
@@ -197,8 +178,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//dUtyExprs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="t03" eType="#//AtomicStmt"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="t16" eType="#//AtomicStmt"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="t06" eType="#//dUtyExprs"
         containment="true"/>

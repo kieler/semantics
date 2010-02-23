@@ -15,18 +15,18 @@ generate quartz "http://www.cau.de/cs/kieler/quartz/editor/Quartz"
 MacroDef: "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"
         | "macro" name=QName "(" ")" "=" expr=UtyExpr ";";
 
-QModule : "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt? obs+=ObservedSpecList*;
+QModule : "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?;// obs+=ObservedSpecList*;
 
-ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
+//ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
                 // | 
-                "satisfies" "{" ProofGoalList "}" ;
+                //"satisfies" "{" ProofGoalList "}" ;
 
 Name : id=ID;
 
 QName : Name;
 
-QNameList : name=QName ("," names+=QNameList)*;
+QNameList : name=QName ("," names+=QName)*;
 
 Storage : "event" | "mem";
         
@@ -68,18 +68,15 @@ ControlList : "{" QNameList "}";
 
 AssumeList : "with" "{" QNameList "}";
 
-ProofGoalList : (name+=QName ":" "assume" expr+=UtyExpr ";"
-              | name+=QName ":" "assume" expr+=UtyExpr ";" goals+=ProofGoalList
-              | name+=QName ver+=VerifTask (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"
-              | name+=QName ctr+=ControlList ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"
-              | name+=QName ":" "assert" expr+=UtyExpr ass+=AssumeList? ";")+;
+//ProofGoalList : (name+=QName (":" "assume" expr+=UtyExpr ";" (goals+=ProofGoalList)?   ))+;          
+              //| (ver+=VerifTask)? (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"))+;
 
 
 FixpointEqList : (("mu"| "nu") name+=QName "=" expr+=UtyExpr ";")*;
 
 OptUtyExpr : "_" | tk=UtyExpr;
 
-OptUtyExprList : (OptUtyExpr ("," exprs+=OptUtyExprList)*)?;
+OptUtyExprList : (OptUtyExpr ("," exprs+=OptUtyExpr)*)?;
 
 UtyExprSelectList : ("[" tk=UtyExpr "]")+;
 
@@ -219,11 +216,11 @@ AtomicStmt: "nothing" ";"
     | "immediate"? ("during" | "final") AtomicStmt "do" t03=AtomicStmt
     | "abstract" AtomicStmt
     | "case" case_list "default" t15=AtomicStmt
-    | "choose" AtomicStmt "else" t16=AtomicStmt
+   // | "choose" AtomicStmt "else" t16=AtomicStmt
     | "choose" Generic t23=AtomicStmt
     | "do" AtomicStmt "while" t06=dUtyExprs
     | "for" Generic ("do" ("||" | "&&" | "|||" | "&&&" | OR | AND) )? t=AtomicStmt
-    | "if" dUtyExpr t13=AtomicStmt ("else" t14=AtomicStmt)?
+    | "if" dUtyExpr t13=AtomicStmt "else" t14=AtomicStmt
     | "let" "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt
     | "loop" AtomicStmt
     | "while" dUtyExpr t07=AtomicStmt

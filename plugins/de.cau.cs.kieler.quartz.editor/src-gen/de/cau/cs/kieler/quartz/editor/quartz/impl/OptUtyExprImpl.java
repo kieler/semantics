@@ -6,7 +6,6 @@
 package de.cau.cs.kieler.quartz.editor.quartz.impl;
 
 import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExpr;
-import de.cau.cs.kieler.quartz.editor.quartz.OptUtyExprList;
 import de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage;
 import de.cau.cs.kieler.quartz.editor.quartz.UtyExpr;
 
@@ -59,7 +58,7 @@ public class OptUtyExprImpl extends OptUtyExprListImpl implements OptUtyExpr
    * @generated
    * @ordered
    */
-  protected EList<OptUtyExprList> exprs;
+  protected EList<OptUtyExpr> exprs;
 
   /**
    * <!-- begin-user-doc -->
@@ -135,11 +134,11 @@ public class OptUtyExprImpl extends OptUtyExprListImpl implements OptUtyExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<OptUtyExprList> getExprs()
+  public EList<OptUtyExpr> getExprs()
   {
     if (exprs == null)
     {
-      exprs = new EObjectContainmentEList<OptUtyExprList>(OptUtyExprList.class, this, QuartzPackage.OPT_UTY_EXPR__EXPRS);
+      exprs = new EObjectContainmentEList<OptUtyExpr>(OptUtyExpr.class, this, QuartzPackage.OPT_UTY_EXPR__EXPRS);
     }
     return exprs;
   }
@@ -196,7 +195,7 @@ public class OptUtyExprImpl extends OptUtyExprListImpl implements OptUtyExpr
         return;
       case QuartzPackage.OPT_UTY_EXPR__EXPRS:
         getExprs().clear();
-        getExprs().addAll((Collection<? extends OptUtyExprList>)newValue);
+        getExprs().addAll((Collection<? extends OptUtyExpr>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

@@ -54,7 +54,7 @@ public interface QNameList extends ControlList, AssumeList
 
   /**
    * Returns the value of the '<em><b>Names</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.quartz.editor.quartz.QNameList}.
+   * The list contents are of type {@link de.cau.cs.kieler.quartz.editor.quartz.QName}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Names</em>' containment reference list isn't clear,
@@ -66,6 +66,6 @@ public interface QNameList extends ControlList, AssumeList
    * @model containment="true"
    * @generated
    */
-  EList<QNameList> getNames();
+  EList<QName> getNames();
 
 } // QNameList
