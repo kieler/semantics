@@ -308,9 +308,6 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
         // add signals and vars to contained regions
         for (RegionSignalDec rsd : se.getRegions()) {
             Region currRegion = rsd.getRegion();
-            // clear old signals and vars
-            currRegion.getSignals().clear();
-            currRegion.getVariables().clear();
 
             LinkedList<Signal> newSignals = new LinkedList<Signal>();
             for (Signal s : rsd.getSignals()) {
