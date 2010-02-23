@@ -9,5 +9,16 @@
             name="SC simulation">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <configurationFile
+            file="execution/sc.execution">
+         <editor
+               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+               name="SyncChart Editor"
+               priority="8">
+         </editor>
+      </configurationFile>
+   </extension>
 
 </plugin>
