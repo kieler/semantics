@@ -14,12 +14,15 @@ package de.cau.cs.kieler.kev.views;
 
 import java.util.Iterator;
 
+import org.apache.batik.bridge.UpdateManagerAdapter;
+import org.apache.batik.bridge.UpdateManagerEvent;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.SVGDocumentLoader;
 import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.ParsedURL;
 import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
+import de.cau.cs.kieler.kev.mapping.animations.SVGUpdateManagerListener;
 
 /**
  * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
@@ -45,6 +48,9 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
      * status.
      */
     private final SVGLoadingStatusListener loadingStatusListener = new SVGLoadingStatusListener();
+    
+//    private final SVGUpdateManagerListener updateManagerListener = new SVGUpdateManagerListener();
+    
 
     /**
      * This method needs to be private in order to create only one single instance.
@@ -57,6 +63,8 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
         super(userAgent, b1, b2);
         // Add the loadingStatusListener to the single instance
         this.addSVGDocumentLoaderListener(loadingStatusListener);
+
+        //this.addUpdateManagerListener(updateManagerListener);
     }
 
     /**
@@ -99,6 +107,16 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
     public SVGLoadingStatusListener getSVGLoadingStatusListener() {
         return loadingStatusListener;
     }
+    
+//    /**
+//     * Returns the SVGUpdateManagerListener for the single svgCanvas instance. So we only need one for
+//     * whole xKEV.
+//     * 
+//     * @return loadingStatusListener
+//     */
+//    public SVGUpdateManagerListener getSVGUpdateManagerListener() {
+//        return updateManagerListener;
+//    }
 
     // Should not be called, because the simulation can't continue otherwise
     // public void dispose() {

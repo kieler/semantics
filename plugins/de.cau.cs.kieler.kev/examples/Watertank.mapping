@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/Watertank.svg">
   <svgElement id="water">
-    <animation xsi:type="mapping:Move" input="0..28" x_range="$x_range" y_range="71..350" key="Counter_1" />
-    <animation xsi:type="mapping:Colorize" input="0,10,20,30,40,50" fill_color="white, red, pink, white, black, green" stroke_color="black,none,yellow,none,red" stroke_width="1,10,13,2,0.34,2,3" key="Counter_1" />
-    <animation xsi:type="mapping:Move" input="29..56" y_range="350..71" key="Counter_1" />
+    <animation xsi:type="mapping:Move" input="0..50" x_range="$x_range" y_range="71..350" key="Counter_1" />
+    <animation xsi:type="mapping:Move" input="51..100" y_range="350..71" key="Counter_1" />
+   <animation xsi:type="mapping:Opacity" key="Counter_1" input="0..50,51..100,110..120, 122..130" opacity="1..0,0..1,0.5,1" />
   </svgElement>
   <svgElement id="text">
     <animation xsi:type="mapping:Text" text_value="$textString" />

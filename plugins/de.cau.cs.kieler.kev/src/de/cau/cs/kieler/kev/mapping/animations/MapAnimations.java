@@ -410,12 +410,20 @@ public class MapAnimations {
         Pair<String, Animation> newPair;
         Iterator<String> it = svgElementsHashMap.keySet().iterator();
         HashMap<String, ArrayList<Pair<String, Animation>>> keyToAnimationsMap = new HashMap<String, ArrayList<Pair<String, Animation>>>();
+        animateAlways = new HashMap<String, ArrayList<Animation>>();
         while (it.hasNext()) {
             Animation animation;
             svgElementID = it.next();
             Iterator<Animation> animations = svgElementsHashMap.get(svgElementID).iterator();
             while (animations.hasNext()) {
                 animation = animations.next();
+                // Save all animations to an extra list which have no input value
+                if (animation.getInput() == null || animation.getInput().isEmpty()) {
+                    if (!animateAlways.containsKey(svgElementID)) {
+                        animateAlways.put(svgElementID, new ArrayList<Animation>());
+                    }
+                    animateAlways.get(svgElementID).add(animation);
+                }
                 if (!keyToAnimationsMap.containsKey(animation.getKey())) {
                     keyToAnimationsMap.put(animation.getKey(), new ArrayList<Pair<String, Animation>>());
                 }
@@ -436,28 +444,21 @@ public class MapAnimations {
         // Now all possible JSON keys need to  be mapped to possible input values and afterwards to all possible animations
         jsonKeyToInputValuesToAnimationsMap = new HashMap<String, HashMap<String, ArrayList<Pair<String, Animation>>>>();
         HashMap<String, ArrayList<Pair<String, Animation>>> inputValuesToAnimationsMap;
-        animateAlways = new HashMap<String, ArrayList<Animation>>();
         //2), 3) create a inputValuesToAnimationsMap for each JSON key
         it = keyToAnimationsMap.keySet().iterator();
         while (it.hasNext()) {
             String jsonKey = it.next(); 
             inputValuesToAnimationsMap = new HashMap<String, ArrayList<Pair<String, Animation>>>();
             for (Pair<String, Animation> oldPair : keyToAnimationsMap.get(jsonKey)) {
-                if (oldPair.getSecond().getInput() == null || oldPair.getSecond().getInput().isEmpty()) {
-                    if (!animateAlways.containsKey(jsonKey)) {
-                        animateAlways.put(jsonKey, new ArrayList<Animation>());
+                for (String inputString : parser(oldPair.getSecond().getInput())) { // Get the animation (second value of the pair)
+                    if (!inputValuesToAnimationsMap.containsKey(inputString)) {
+                        inputValuesToAnimationsMap.put(inputString, new ArrayList<Pair<String, Animation>>());
                     }
-                    animateAlways.get(jsonKey).add(oldPair.getSecond());
-                } else {
-                    for (String inputString : parser(oldPair.getSecond().getInput())) { // Get the animation (second value of the pair)
-                        if (!inputValuesToAnimationsMap.containsKey(inputString)) {
-                            inputValuesToAnimationsMap.put(inputString, new ArrayList<Pair<String, Animation>>());
-                        }
-                        //newPair = new Pair<String, Animation>(oldPair.getFirst(), oldPair.getSecond());
-                        inputValuesToAnimationsMap.get(inputString).add(oldPair);
-                    }
+                    //newPair = new Pair<String, Animation>(oldPair.getFirst(), oldPair.getSecond());
+                    inputValuesToAnimationsMap.get(inputString).add(oldPair);
                 }
             }
+        
             //4)
             jsonKeyToInputValuesToAnimationsMap.put(jsonKey, inputValuesToAnimationsMap);
 //            System.out.println("Input values for Key: " + jsonKey + " " + inputValuesToAnimationsMap.keySet());
@@ -469,8 +470,8 @@ public class MapAnimations {
         //bis hier scheint auch alles ok zu sein -top!!!
         // TESTING ONLY
 //        String key, value;
-//        key = "engine-KH_LN_2";
-//        value = "1..100";
+//        key = "text-KH_ST_6";
+//        value = "E_OK__simulation";
 //        
 //        for (Pair pair : jsonKeyToInputValuesToAnimationsMap.get(key).get(value)) {
 //            System.out.println("Alles Animationen die zu <KEY,VALUE> ausgeführt werden sollen: <"+key+","+value+"> <-> <"+pair.getFirst()+","+pair.getSecond()+">");
@@ -499,24 +500,39 @@ public class MapAnimations {
                 JSONObject resultObject, flatJSONObject;
                 flatJSONObject = makeItFlat(jsonObject);
                 // if the lastObject exists, we want to compare the actual jsonOject and the last one to compute the difference between them
-                if (lastObject != null) {
-                    resultObject = flatJSONObject;//compareDifference(lastObject, flatJSONObject);
-                } else {
-                    resultObject = flatJSONObject;
-                }
-                lastObject = flatJSONObject;
+//                if (lastObject != null) {
+//                    resultObject = compareDifference(lastObject, flatJSONObject);
+//                } else {
+//                    resultObject = flatJSONObject;
+//                }
+                
+//                lastObject = flatJSONObject;
+                resultObject = flatJSONObject;
                 
                 Iterator<String> jsonKeyIterator;
                 jsonKeyIterator = resultObject.keys();
                 String jsonKey, jsonValue, svgElementID;
                 Animation animation;
                 
-                // Get the Batik UpdateManager for scheduling.
-                UpdateManager updateManager = EclipseJSVGCanvas.getInstance().getUpdateManager();
-                if (updateManager != null) {
-                    RunnableQueue runnableQueue = updateManager.getUpdateRunnableQueue();
+
+                RunnableQueue runnableQueue = EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue();
+                if (runnableQueue.getQueueState() == RunnableQueue.RUNNING) {
                     runnableQueue.suspendExecution(true);
                 }
+                
+                // Now apply all animations, which have no inputvalue set -> animate always
+                // So first we apply the default values and afterwards we overwrite it with more specific ones if exists -> OVERHEAD!
+                Iterator<String> svgElementIDs = animateAlways.keySet().iterator();
+                while (svgElementIDs.hasNext()) {
+                    svgElementID = svgElementIDs.next();
+                    for (Animation ani : animateAlways.get(svgElementID)) {
+                        ani.apply(flatJSONObject, svgElementID);
+//                        System.out.println(ani);
+//                        System.out.println(flatJSONObject.optString(ani.getKey()));
+                        
+                    }
+                }
+                
                 while (jsonKeyIterator.hasNext()) {
                     jsonKey = jsonKeyIterator.next();
 //                    System.out.println("KEY: "+jsonKey + " Value: "+jsonKeyToInputValuesToAnimationsMap.get(jsonKey));
@@ -529,57 +545,32 @@ public class MapAnimations {
                                 animation = pair.getSecond();
                                 
                                 animation.apply(flatJSONObject, svgElementID);
-                            }
-                        } else  {
-                            // if this matches, we know that the jsonValue is a valid double value
-                            if (resultObject.optDouble(jsonKey) != Double.NaN) {
-                                Iterator<String> values = jsonKeyToInputValuesToAnimationsMap.get(jsonKey).keySet().iterator();
-                                String value;
-                                while (values.hasNext()) {
-                                    value = values.next();
-                                    if (value.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
-//                                        System.out.println("Value: "+value);
-                                        Scanner s = new Scanner(value).useDelimiter("[.]{2,3}");
-                                        double min, max, currentValue;
-                                        min = s.nextDouble();
-                                        max = s.nextDouble();
-                                        currentValue = resultObject.optDouble(jsonKey);
-//                                        System.out.printf("Min: %s, Max: %s, CurrentValue: %s ",min,max, currentValue);
-//                                        System.out.println();
-                                        // current value is in between min and max so apply the animations
-                                        if (currentValue >= min && currentValue <= max) {
-                                            for (Pair<String, Animation> pair : jsonKeyToInputValuesToAnimationsMap.
-                                                    get(jsonKey).get(value)) {
-                                                svgElementID = pair.getFirst();
-                                                animation = pair.getSecond();
-                                                
-                                                animation.apply(flatJSONObject, svgElementID);
-                                            }                                        
-                                        }
+                            } // if this matches, we know that the jsonValue is a valid double value
+                        } else if (resultObject.optDouble(jsonKey) != Double.NaN) {
+                                Iterator<String> ranges = jsonKeyToInputValuesToAnimationsMap.get(jsonKey).keySet().iterator();
+                                String range;
+                                while (ranges.hasNext()) {
+                                    range = ranges.next();
+                                    if (valueMatchesRange(resultObject.optString(jsonKey), range)) {
+                                        for (Pair<String, Animation> pair : jsonKeyToInputValuesToAnimationsMap.
+                                                get(jsonKey).get(range)) {
+                                            svgElementID = pair.getFirst();
+                                            animation = pair.getSecond();
+                                            //System.out.println("Ist im Bereich! -> "+range+ " SVGElementID: "+svgElementID);
+
+                                            animation.apply(flatJSONObject, svgElementID);
+                                        }                                        
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-                // Now apply all animations, which have no inputvalue set -> animate always
-                Iterator<String> svgElementIDs = animateAlways.keySet().iterator();
-                while (svgElementIDs.hasNext()) {
-                    svgElementID = svgElementIDs.next();
-                    for (Animation ani : animateAlways.get(svgElementID)) {
-                        ani.apply(flatJSONObject, svgElementID);
-//                        System.out.println(ani);
-//                        System.out.println(flatJSONObject.optString(ani.getKey()));
-                        
-                    }
+                        } 
                 }
                 
-                    
-                if (updateManager != null) {
-                    RunnableQueue runnableQueue = updateManager.getUpdateRunnableQueue();
+                if (runnableQueue.getQueueState() == RunnableQueue.SUSPENDED) {
                     runnableQueue.invokeLater(new RunnableAnimation());
                     runnableQueue.resumeExecution();
                 }
+
                 
             } catch (JSONException e) {
                 // Something went wrong with the JSONObject.
@@ -590,6 +581,22 @@ public class MapAnimations {
                             + "Mapping-File may have a wrong format");
         }
     }
+    
+    public boolean valueMatchesRange(String value, String range) {
+        if (range.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
+            Scanner s = new Scanner(range).useDelimiter("[.]{2,3}");
+            double leftValue, rightValue, currentValue;
+            leftValue = s.nextDouble();
+            rightValue = s.nextDouble();
+            currentValue = Double.parseDouble(value);
+            if (currentValue >= Math.min(leftValue, rightValue) && currentValue <= Math.max(leftValue, rightValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
     
 // OLD VERSION FOR BACKUP    
 //    /**

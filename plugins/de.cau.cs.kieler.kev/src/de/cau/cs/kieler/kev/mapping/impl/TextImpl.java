@@ -315,7 +315,7 @@ public class TextImpl extends AnimationImpl implements Text {
                 if (textValue.indexOf("$") == 0) {
                     textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
                 }
-                System.out.println(textValue);
+                //System.out.println(textValue);
                 if (elem != null) {
                     String styleAttrib, specialValue;
                     styleAttrib = elem.getAttribute("style");
@@ -331,7 +331,7 @@ public class TextImpl extends AnimationImpl implements Text {
                         styleAttrib = styleAttrib.replaceAll("font-family:[^;]*[;]?", "");
                         styleAttrib = "font-family:" + specialValue + ";" + styleAttrib;
                     }
-
+                    //System.out.println(textValue);
                     // Now apply the animation
                     try {
                         // Set the current style values for the element

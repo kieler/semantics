@@ -7,9 +7,11 @@ package de.cau.cs.kieler.kev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.Opacity;
@@ -62,7 +64,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     /**
      * The hashmap for mapping the input to the corresponding opacity values
      */
-    private HashMap<String, String> hashMapOpacityRange = null;
+    private HashMap<String, String> hashMapList = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -169,40 +171,64 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         return result.toString();
     }
 
-    // Computes the range values
-    private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
-        ArrayList<String> range = new ArrayList<String>();
-        value = value.replaceAll("\\s", "");// Delete any whitespace character
-        if (Pattern.matches("[-]?\\d+[.]{2,3}[-]?\\d+", value)) {
-            Scanner sc = new Scanner(value).useDelimiter("[.]+");
-            // We have exactly two values
-            float first, last, numberOfRangeValues;
-            first = sc.nextFloat();
-            last = sc.nextFloat();
+    /**
+     * Maps the current JSON value from an input range to an output range
+     * 
+     * @param jsonValue
+     * @param input
+     * @param output
+     * @return
+     */
+    private final double computeRangeValue(String jsonValue, String input, String output) {
+        double value;
+        if (input.matches("[-]?\\d+[.]{2,3}[-]?\\d+") && output.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
+            double leftInput, rightInput, leftOutput, rightOutput, diffInput, diffOutput, stepDistance;
+            boolean direction;
+            
+            Scanner s = new Scanner(input).useDelimiter("[.]{2,3}");
+            leftInput = s.nextFloat();
+            rightInput = s.nextFloat();
 
-            numberOfRangeValues = Math.abs(first - last);
-            // System.out.println("first: "+first+ " last: "+last+
-            // " NumberofRangeValues:"+numberOfRangeValues);
-            float x = numberOfRangeValues / numberOfInputValues;
-            // System.out.println(x);
-            if (first <= last) {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString((x * i) + first));
-                }
+            if (Math.min(leftInput, rightInput) == leftInput) {
+                direction = false;
             } else {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString(first - (x * i)));
-                }
+                direction = true;
             }
-        } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
-            // Get a list of comma separted values
-            range = MapAnimations.getInstance().attributeParser(value, false);
-        } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
-            for (int i = 0; i < numberOfInputValues; i++) {
-                range.add(value);
+            
+            diffInput = Math.abs(leftInput - rightInput);
+
+            s = new Scanner(output).useDelimiter("[.]{2,3}");
+            leftOutput = s.nextFloat();
+            rightOutput = s.nextFloat();
+            
+            if (Math.min(leftOutput, rightOutput) == leftOutput) {
+                direction ^= false;
+            } else {
+                direction ^= true;
             }
-        } // else we have invalid values for move x_range and y_range
-        return range;
+
+            diffOutput = Math.abs(leftOutput - rightOutput);
+
+            // Compute the step-distance
+            if (direction) {
+                value = Math.abs(Double.parseDouble(jsonValue) - rightInput); 
+            } else {
+                value = Math.abs(Double.parseDouble(jsonValue) - leftInput); 
+            }
+            stepDistance = diffOutput / diffInput;
+            
+            
+            return (value * stepDistance);
+
+        } else if (input.matches("[-]?\\d+[.]{2,3}[-]?\\d+") && output.matches("[-]?\\d([.]\\d+)?")) {
+            return Double.parseDouble(output);
+        } else if (input.matches("[-]?\\d([.]\\d+)?") && output.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
+            Scanner s = new Scanner(output).useDelimiter("[.]{2,3}");
+            return s.nextDouble();
+
+        } else {
+            return Double.NaN;
+        }
     }
 
     /*
@@ -223,25 +249,55 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 return;
             }
         } else {
-            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
+            jsonValue = ((JSONObject) jsonObject).optString(getKey());
         }
+
+        String opacityValue;
         // Now apply the animation.
         if (elem != null) {
             try {
-                String opacityValue = hashMapOpacityRange.get(jsonValue);
-                if (opacityValue == null) {
-                    return;
+                if (getInput().isEmpty()) {
+                    // If no input is set, return the value of actual json key
+                    opacityValue = getOpacity();
+                    if (opacityValue != null) {
+                        if (opacityValue.indexOf("$") == 0) {
+                            opacityValue = ((JSONObject) jsonObject).optString(opacityValue.substring(1));
+                        }
+                    }
+                } else {
+                    opacityValue = hashMapList.get(jsonValue);
+                    if (opacityValue == null) {
+                        Iterator<String> iterator = hashMapList.keySet().iterator();
+                        String range;
+                        double rangeValue;
+                        while (iterator.hasNext()) {
+                            range = iterator.next();
+                            if (MapAnimations.getInstance().valueMatchesRange(jsonValue, range)) {
+                                opacityValue = hashMapList.get(range);
+                                rangeValue = computeRangeValue(jsonValue, range, opacityValue);
+                                if (rangeValue != Double.NaN) {
+                                    opacityValue = Double.toString(rangeValue);
+                                    break; // Now we found the right range so we can go on.
+                                }
+                            }
+                        }
+                        if (opacityValue.equals("NaN")) {
+                            // Something went wrong with computing the range -> maybe wrong format
+                            return;
+                        }
+                    }
                 }
+                System.out.println("Opacity: "+svgElementID+ " Value: " +opacityValue+ " JSONValue: "+jsonValue+ " JSONKey: "+getKey());
                 String attrib = elem.getAttribute("style");
                 attrib = attrib.replaceAll("opacity:\\d+([.]\\d+)?[;]?", "");
-                elem.setAttribute("style", "opacity:" + Float.parseFloat(opacityValue) + ";"
+                elem.setAttribute("style", "opacity:" + Double.parseDouble(opacityValue) + ";"
                         + attrib);
             } catch (DOMException e1) {
                 Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
                         e1);
             }
         } else {
-            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+            Activator.reportErrorMessage("Opacity-Animation: SVGElement with ID: " + svgElementID
                     + " doesn't exists in "
                     + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
@@ -284,15 +340,17 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
             if (getInput() == null) {
                 setInput("");
             }
-        
-            ArrayList<String> inputArray, opacityRange;
-            inputArray = currentMapAnimation.attributeParser(getInput(), true);
-            opacityRange = computeRange(getOpacity(), inputArray.size());
-            // System.out.println("Input: "+inputArray);
-            // System.out.println("Output: "+opacityRange);
-        
-            hashMapOpacityRange = currentMapAnimation.mapInputToOutput(inputArray, opacityRange);
-            // System.out.println(hashMapOpacityRange);
+
+            ArrayList<String> outputList, inputList;
+            inputList = currentMapAnimation.parser(getInput());
+            outputList =  currentMapAnimation.parser(getOpacity());
+
+            hashMapList = currentMapAnimation.mapInputToOutput(inputList, outputList);
+//           
+//            System.out.println("Input: "+inputList);
+//            System.out.println("Output: "+outputList);
+//        
+//            System.out.println(hashMapList);
         }
     }
 

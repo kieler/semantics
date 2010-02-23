@@ -365,7 +365,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
 
             SVGOMPathElement path = SVGOMPathElement.class.cast(svgDoc.getElementById(getPath()));
             ArrayList<String> inputArray, xPos, yPos, angle;
-            inputArray = MapAnimations.getInstance().attributeParser(getInput(), true);
+            inputArray = MapAnimations.getInstance().attributeParser(getInput(),true);
             float pathLength, stepLength;
             pathLength = path.getTotalLength();
             stepLength = pathLength / inputArray.size();

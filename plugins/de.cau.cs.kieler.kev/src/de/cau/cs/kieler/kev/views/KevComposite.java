@@ -48,6 +48,9 @@ import org.apache.batik.bridge.ExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadScriptSecurity;
 import org.apache.batik.bridge.ScriptSecurity;
+import org.apache.batik.bridge.UpdateManagerAdapter;
+import org.apache.batik.bridge.UpdateManagerEvent;
+import org.apache.batik.bridge.UpdateManagerListener;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
@@ -225,6 +228,9 @@ public class KevComposite extends Composite implements ISelectionListener {
                         MapAnimations.getInstance().createHashMap();
                     }
                 });
+                
+                
+                
 
                 svgCanvas.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {

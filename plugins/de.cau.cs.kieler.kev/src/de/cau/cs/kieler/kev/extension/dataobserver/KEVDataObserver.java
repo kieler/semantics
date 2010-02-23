@@ -14,6 +14,8 @@ package de.cau.cs.kieler.kev.extension.dataobserver;
 
 import java.util.Iterator;
 
+import org.apache.batik.util.RunnableQueue;
+import org.apache.batik.util.RunnableQueue.RunnableQueueState;
 import org.eclipse.ui.PartInitException;
 
 import de.cau.cs.kieler.kev.Activator;
@@ -170,8 +172,12 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
         Activator.setExecutionManagerStatus(false);
         // Kev icon openwizard action should be reactivated after execution has fished.
         // But only if the KevView is visible
-        if (Activator.getKevView().getSVGCanvas().getUpdateManager().isRunning()) {
-            Activator.getKevView().getSVGCanvas().getUpdateManager().getUpdateRunnableQueue().suspendExecution(true);
+
+        
+        // Wait until Batik runnable queue has suspended.
+        RunnableQueue runnableQueue = EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue();
+        if (runnableQueue.getQueueState() == RunnableQueue.RUNNING) {
+            runnableQueue.suspendExecution(true);
         }
         
         if (Activator.getKevView() != null) {

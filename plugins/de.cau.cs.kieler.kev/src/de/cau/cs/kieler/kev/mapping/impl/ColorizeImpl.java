@@ -184,6 +184,24 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case MappingPackage.COLORIZE__FILL_COLOR:
+                return getFill_color();
+            case MappingPackage.COLORIZE__STROKE_COLOR:
+                return getStroke_color();
+            case MappingPackage.COLORIZE__STROKE_WIDTH:
+                return getStroke_width();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
