@@ -219,6 +219,22 @@ public final class EditorManager extends AbstractManager {
     }
 
     /**
+     * Get the default editor.
+     * 
+     * @return the default editor.
+     */
+    public EditorDefinition getDefaultEditor() {
+        EditorDefinition result = null;
+        for (EditorDefinition editor : getEditors()) {
+            if (editor.getEditorId().equals(getDefaultEditorId())) {
+                result = editor;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
      * Set the default editor.
      * 
      * @param defaultEditor

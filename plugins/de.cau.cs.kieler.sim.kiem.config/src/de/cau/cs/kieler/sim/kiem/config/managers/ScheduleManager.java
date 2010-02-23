@@ -776,6 +776,11 @@ public final class ScheduleManager extends AbstractManager implements
                                     // editor
                                 }
                             }
+                        } else {
+                            // no editors added, use default editor
+                            addSchedule(EditorManager.getInstance()
+                                    .getDefaultEditor(), path,
+                                    ScheduleData.DEFAULT_PRIORITY);
                         }
                     }
                 } catch (ScheduleFileMissingException e0) {

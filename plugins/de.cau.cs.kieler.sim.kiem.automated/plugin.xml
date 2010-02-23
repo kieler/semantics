@@ -40,12 +40,15 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <configurationFile
-            file="testFiles/krep.execution">
+            file="testFiles/krepRunner.execution">
          <editor
                id="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
                name="KASM Editor"
                priority="8">
          </editor>
+      </configurationFile>
+      <configurationFile
+            file="testFiles/demo.execution">
       </configurationFile>
    </extension>
    <extension

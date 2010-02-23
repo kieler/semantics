@@ -29,7 +29,7 @@ but are reset on the next start up.
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="configurationFile"/>
+            <element ref="executionFile"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -58,9 +58,9 @@ but are reset on the next start up.
       </complexType>
    </element>
 
-   <element name="configurationFile">
+   <element name="executionFile">
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
+         <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="editor"/>
          </sequence>
          <attribute name="file" type="string" use="required">
