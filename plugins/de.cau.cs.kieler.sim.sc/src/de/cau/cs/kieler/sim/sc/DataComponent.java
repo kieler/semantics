@@ -55,11 +55,14 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
     private BufferedReader fromSC;
     private BufferedReader error;
     private String outPath;
+    private boolean validation;
+    private String fileLocation;
 
     /**
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        System.out.println("bin hier: init");
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
@@ -72,7 +75,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         }
 
         String bundleLocation = url.getFile();
-        // because of windows vs Linux
+        // because of windows vs. linux
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
@@ -127,6 +130,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        System.out.println("bin hier: step");
         JSONObject out = null;
         try {
             jSONObject.remove("state");
@@ -231,6 +235,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
 
     @Override
     public JSONObject provideInitialVariables() {
+        System.out.println("ich bin hier: provide initial");
 
         JSONObject returnObj = new JSONObject();
 
@@ -247,7 +252,11 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
                 outPath += File.separator;
             }
         }
-        wf = new WorkflowGenerator();
+        if (validation) {
+            wf = new WorkflowGenerator(fileLocation);
+        } else {
+            wf = new WorkflowGenerator();
+        }
         // generate Code from SyncChart
         // true sets the flag for simulation
         wf.invokeWorkflow(true, outPath);
@@ -321,7 +330,12 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
     }
 
     public void setParameters(List<KiemProperty> properties) throws KiemInitializationException {
-        
+        validation = true;
+        for (KiemProperty p : properties) {
+            if (p.getKey().equals(MODEL_FILE)) {
+                fileLocation = p.getValue();
+            }
+        }
     }
 
     public int wantsMoreRuns() {

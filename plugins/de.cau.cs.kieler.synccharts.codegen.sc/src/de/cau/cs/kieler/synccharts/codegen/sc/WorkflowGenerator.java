@@ -1,12 +1,12 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
-import java.io.File;
-import java.util.Random;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -26,6 +26,7 @@ import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 public class WorkflowGenerator {
@@ -44,7 +45,6 @@ public class WorkflowGenerator {
         // location for the sc file in the KIELER workspace
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
-
         editor = activePage.getActiveEditor();
         outPath = part2Location(editor);
         uriString = null;
@@ -57,6 +57,31 @@ public class WorkflowGenerator {
         }
     }
 
+    /**
+     * The constructor to use a given diagram (as *.kixs file) for generating code.
+     * 
+     * @param fileLocation
+     *            the location of the given diagram file
+     */
+    public WorkflowGenerator(final String fileLocation) {
+        // location for the sc file in the KIELER workspace
+        uriString = fileLocation;
+        uri = URI.createURI(uriString);
+        ResourceSet resourceSet = new ResourceSetImpl();
+        Resource resource = resourceSet.getResource(uri, true);
+        Region rootRegion = (Region) resource.getContents().get(0); 
+        myModel = (EObject) rootRegion;
+    }
+
+    /**
+     * Invocation of the workflow. Prepares the environment for generating code.
+     * 
+     * @param sim
+     *            is false if you just want to generate code and true if you want to generate code
+     *            and simulate it
+     * @param path
+     *            the path where the generated files should be written
+     */
     public void invokeWorkflow(final boolean sim, final String path) {
         // EMF reader
         Reader emfReader = new Reader();
