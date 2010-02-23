@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IPath;
 
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
@@ -129,6 +130,7 @@ public final class KiemEventListener implements IKiemEventListener {
         } else {
             loadImminent = false;
         }
+        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
     }
 
     /**
