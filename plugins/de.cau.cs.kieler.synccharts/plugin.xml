@@ -11,6 +11,7 @@
 <plugin>
    <extension-point id="triggerListener" name="Trigger Listener" schema="schema/triggerListener.exsd"/>
 
+
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
@@ -61,6 +62,15 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerRecursiveAdd">
       </triggerListener>
+   </extension>
+      <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="de.cau.cs.kieler.core.ui.policies.BalloonPopupEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpolicyProvider>
    </extension>
 
 </plugin>
