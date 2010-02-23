@@ -5,17 +5,13 @@
       version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">
+      Dependencies of the KIELER project used for building a Rich Client Application.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      The plug-ins and features included in this feature originate from different projects.
    </copyright>
-
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
-   </license>
 
    <includes
          id="org.eclipse.emf.common"
