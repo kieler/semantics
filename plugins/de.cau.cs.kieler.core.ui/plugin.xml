@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+   <extension-point id="balloonPopupBarContribution" name="Balloon Popup Bar Contribution" schema="schema/balloonPopupBarContribution.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -237,6 +238,12 @@
             id="de.cau.cs.kieler.core.ui.statusHandler">
       </statusHandler>
    </extension>
+      <extension
+            point="de.cau.cs.kieler.core.ui.balloonPopupBarContribution">
+         <PopupBarElement
+               class="de.cau.cs.kieler.core.ui.policies.TestBalloon">
+         </PopupBarElement>
+      </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config
