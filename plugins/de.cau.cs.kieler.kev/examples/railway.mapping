@@ -452,8 +452,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_2">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_0">
@@ -463,8 +463,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-0" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_0">
-    <animation xsi:type="mapping:Text" key="point-text-0"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -481,8 +481,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_7" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_7">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_7"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_7" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_7"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_7" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_1">
@@ -492,8 +492,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-1" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_1">
-    <animation xsi:type="mapping:Text" key="point-text-1"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -510,8 +510,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_1">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_1" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_2">
@@ -521,8 +521,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-2" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_2">
-    <animation xsi:type="mapping:Text" key="point-text-2"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -539,8 +539,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_2">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_2" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_3">
@@ -550,8 +550,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-3" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_3">
-    <animation xsi:type="mapping:Text" key="point-text-3"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -568,8 +568,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_3">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_3" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_4">
@@ -579,8 +579,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-4" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_4">
-    <animation xsi:type="mapping:Text" key="point-text-4"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-4" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -597,8 +597,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_6" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_6">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_6"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_6" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_6"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_6" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_5">
@@ -608,8 +608,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-5" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_5">
-    <animation xsi:type="mapping:Text" key="point-text-5"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-5" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-5"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-5" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -626,8 +626,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_0">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_6">
@@ -637,8 +637,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-6" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_6">
-    <animation xsi:type="mapping:Text" key="point-text-6"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-6" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-6"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-6" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -655,8 +655,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_4">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_4" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_7">
@@ -666,8 +666,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-7" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_7">
-    <animation xsi:type="mapping:Text" key="point-text-7"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-7" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-7"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-7" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -684,8 +684,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_5">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_5"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_5" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_5"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_5" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_8">
@@ -695,8 +695,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-8" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_8">
-    <animation xsi:type="mapping:Text" key="point-text-8"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-8" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-8"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-8" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -713,8 +713,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_1">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_9">
@@ -724,8 +724,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-9" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_9">
-    <animation xsi:type="mapping:Text" key="point-text-9"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-9" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-9"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-9" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -742,8 +742,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_3">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_3" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_10">
@@ -753,8 +753,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-10" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_10">
-    <animation xsi:type="mapping:Text" key="point-text-10"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-10" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-10"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-10" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -771,8 +771,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_5">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_5"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_5" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_5"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_5" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_11">
@@ -782,8 +782,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-11" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_11">
-    <animation xsi:type="mapping:Text" key="point-text-11"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-11" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-11"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-11" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -800,8 +800,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_4">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_4" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_12">
@@ -811,8 +811,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-12" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_12">
-    <animation xsi:type="mapping:Text" key="point-text-12"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-12" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-12"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-12" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -829,8 +829,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_6" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_6">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_6"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_6" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_6"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_6" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_13">
@@ -840,8 +840,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-13" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_13">
-    <animation xsi:type="mapping:Text" key="point-text-13"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-13" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-13"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-13" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -858,8 +858,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_ST_1">
-    <animation xsi:type="mapping:Text" key="text-OC_ST_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_ST_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_ST_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_1" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_14">
@@ -869,8 +869,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-14" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_14">
-    <animation xsi:type="mapping:Text" key="point-text-14"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-14" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-14"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-14" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -887,8 +887,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_ST_2">
-    <animation xsi:type="mapping:Text" key="text-OC_ST_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_ST_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_ST_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_2" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_15">
@@ -898,8 +898,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-15" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_15">
-    <animation xsi:type="mapping:Text" key="point-text-15"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-15" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-15"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-15" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -916,8 +916,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_ST_3">
-    <animation xsi:type="mapping:Text" key="text-OC_ST_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_ST_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_ST_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_3" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_16">
@@ -927,8 +927,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-16" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_16">
-    <animation xsi:type="mapping:Text" key="point-text-16"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-16" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-16"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-16" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -945,8 +945,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_ST_1">
-    <animation xsi:type="mapping:Text" key="text-IC_ST_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_ST_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_ST_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_ST_1" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_17">
@@ -956,8 +956,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-17" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_17">
-    <animation xsi:type="mapping:Text" key="point-text-17"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-17" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-17"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-17" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -974,8 +974,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_ST_2">
-    <animation xsi:type="mapping:Text" key="text-IC_ST_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_ST_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_ST_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_ST_2" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_18">
@@ -985,8 +985,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-18" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_18">
-    <animation xsi:type="mapping:Text" key="point-text-18"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-18" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-18"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-18" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1003,8 +1003,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_ST_3">
-    <animation xsi:type="mapping:Text" key="text-IC_ST_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_ST_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_ST_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_ST_3" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_19">
@@ -1014,8 +1014,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-19" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_19">
-    <animation xsi:type="mapping:Text" key="point-text-19"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-19" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-19"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-19" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1032,8 +1032,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_ST_0">
-    <animation xsi:type="mapping:Text" key="text-OC_ST_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_ST_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_ST_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_20">
@@ -1043,8 +1043,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-20" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_20">
-    <animation xsi:type="mapping:Text" key="point-text-20"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-20" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-20"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-20" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1061,8 +1061,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_ST_4">
-    <animation xsi:type="mapping:Text" key="text-IC_ST_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_ST_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_ST_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_ST_4" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_21">
@@ -1072,8 +1072,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-21" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_21">
-    <animation xsi:type="mapping:Text" key="point-text-21"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-21" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-21"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-21" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1090,8 +1090,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_0">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_22">
@@ -1101,8 +1101,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-22" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_22">
-    <animation xsi:type="mapping:Text" key="point-text-22"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-22" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-22"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-22" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1119,8 +1119,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_5">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_5"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_5" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_5"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_5" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_23">
@@ -1130,8 +1130,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-23" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_23">
-    <animation xsi:type="mapping:Text" key="point-text-23"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-23" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-23"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-23" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1148,8 +1148,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_JCT_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_JCT_0">
-    <animation xsi:type="mapping:Text" key="text-OC_JCT_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_JCT_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_JCT_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_JCT_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_24">
@@ -1159,8 +1159,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-24" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_24">
-    <animation xsi:type="mapping:Text" key="point-text-24"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-24" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-24"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-24" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1177,8 +1177,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_JCT_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_JCT_0">
-    <animation xsi:type="mapping:Text" key="text-IC_JCT_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_JCT_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_JCT_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_JCT_0" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_25">
@@ -1188,8 +1188,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-25" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_25">
-    <animation xsi:type="mapping:Text" key="point-text-25"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-25" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-25"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-25" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1206,8 +1206,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_1">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_26">
@@ -1217,8 +1217,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-26" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_26">
-    <animation xsi:type="mapping:Text" key="point-text-26"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-26" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-26"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-26" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1235,8 +1235,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_4">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_4" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_27">
@@ -1246,8 +1246,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-27" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_27">
-    <animation xsi:type="mapping:Text" key="point-text-27"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-27" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-27"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-27" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1264,8 +1264,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_LN_8" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_LN_8">
-    <animation xsi:type="mapping:Text" key="text-KH_LN_8"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_LN_8" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_LN_8"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_LN_8" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_28">
@@ -1275,8 +1275,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-28" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_28">
-    <animation xsi:type="mapping:Text" key="point-text-28"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-28" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-28"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-28" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1293,8 +1293,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_ST_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_ST_4">
-    <animation xsi:type="mapping:Text" key="text-OC_ST_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_ST_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_ST_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_ST_4" opacity="0"/>
   </svgElement>
   <svgElement id="point_straight_29">
@@ -1304,8 +1304,8 @@
     <animation xsi:type="mapping:Opacity" input="P_STRAIGHT__simulation, P_TURN__simulation" key="point-29" opacity="0.3, 1"/>
   </svgElement>
   <svgElement id="t_point_29">
-    <animation xsi:type="mapping:Text" key="point-text-29"/>
-    <animation xsi:type="mapping:Opacity" key="point-text-29" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$point-text-29"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="point-text-29" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1322,8 +1322,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_ST_0">
-    <animation xsi:type="mapping:Text" key="text-IC_ST_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_ST_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_ST_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_ST_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1340,8 +1340,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KH_ST_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KH_ST_0">
-    <animation xsi:type="mapping:Text" key="text-KH_ST_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-KH_ST_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KH_ST_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KH_ST_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1358,8 +1358,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_0">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1376,8 +1376,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_5" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_5">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_5"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_5" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_5"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_5" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1394,8 +1394,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_2">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1412,8 +1412,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_3">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1430,8 +1430,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_2">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1448,8 +1448,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_3" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_3">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_3"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_3" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_3"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_3" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1466,8 +1466,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OC_LN_4" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OC_LN_4">
-    <animation xsi:type="mapping:Text" key="text-OC_LN_4"/>
-    <animation xsi:type="mapping:Opacity" key="text-OC_LN_4" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OC_LN_4"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OC_LN_4" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1484,8 +1484,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IC_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IC_LN_1">
-    <animation xsi:type="mapping:Text" key="text-IC_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-IC_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IC_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IC_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1502,8 +1502,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KIO_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KIO_LN_1">
-    <animation xsi:type="mapping:Text" key="text-KIO_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-KIO_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KIO_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KIO_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1520,8 +1520,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OI_LN_0">
-    <animation xsi:type="mapping:Text" key="text-OI_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-OI_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OI_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OI_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1538,8 +1538,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OI_LN_2">
-    <animation xsi:type="mapping:Text" key="text-OI_LN_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-OI_LN_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OI_LN_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OI_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1556,8 +1556,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_2" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IO_LN_2">
-    <animation xsi:type="mapping:Text" key="text-IO_LN_2"/>
-    <animation xsi:type="mapping:Opacity" key="text-IO_LN_2" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IO_LN_2"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IO_LN_2" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1574,8 +1574,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IO_LN_0">
-    <animation xsi:type="mapping:Text" key="text-IO_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-IO_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IO_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IO_LN_0" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1592,8 +1592,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-OI_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_OI_LN_1">
-    <animation xsi:type="mapping:Text" key="text-OI_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-OI_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-OI_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-OI_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1610,8 +1610,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-IO_LN_1" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_IO_LN_1">
-    <animation xsi:type="mapping:Text" key="text-IO_LN_1"/>
-    <animation xsi:type="mapping:Opacity" key="text-IO_LN_1" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-IO_LN_1"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-IO_LN_1" opacity="0"/>
   </svgElement>
   <svgElement id="engine">
@@ -1628,8 +1628,8 @@
     <animation xsi:type="mapping:Colorize" input="M_OFF__simulation, M_PRIMARY__simulation, M_SECONDARY__simulation, M_BRAKE__simulation" key="track-KIO_LN_0" stroke_color="#ffffff, #00ff00, #ff0000, #000000"/>
   </svgElement>
   <svgElement id="t_KIO_LN_0">
-    <animation xsi:type="mapping:Text" key="text-KIO_LN_0"/>
-    <animation xsi:type="mapping:Opacity" key="text-KIO_LN_0" opacity="1"/>
+    <animation xsi:type="mapping:Text" text_value="$text-KIO_LN_0"/>
+    <animation xsi:type="mapping:Opacity" opacity="1"/>
     <animation xsi:type="mapping:Opacity" input="E_OK__simulation" key="text-KIO_LN_0" opacity="0"/>
   </svgElement>
 </mapping:SVGFile>
