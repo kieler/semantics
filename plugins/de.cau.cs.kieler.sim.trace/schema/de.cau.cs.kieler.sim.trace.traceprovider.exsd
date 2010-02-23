@@ -6,7 +6,7 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.trace" id="de.cau.cs.kieler.sim.trace.traceprovider" name="Trace Provider"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         Provide a list of traces, that can be loaded from a trace definition file.
       </documentation>
    </annotation>
 
@@ -74,7 +74,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.1
       </documentation>
    </annotation>
 
@@ -83,7 +83,9 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         extended by
+- sim.esi.EsiFile 
+- sim.krep.editors.rif
       </documentation>
    </annotation>
 
