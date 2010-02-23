@@ -327,19 +327,21 @@ public class CreateRailwayMapping {
 					svgFile.getSvgElement().add(mappingSVGText);
 					mappingSVGText.setId("t_" + path.getId());
 					Text mappingText = mapFactory.createText();
+					mappingText.setInput("E_OK__simulation,E_TRACK_DOUBLE_ENTRY__simulation,E_TRACK_OCCUPIED__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation,E_WRONG_SWITCHPOINT_DIRECTION__simulation,E_FORBIDDEN_SWITCHCROSS_SETTING__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation");
+					mappingText.setText_value("`,E_TRACK_DOUBLE_ENTRY__simulation,E_TRACK_OCCUPIED__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation,E_WRONG_SWITCHPOINT_DIRECTION__simulation,E_FORBIDDEN_SWITCHCROSS_SETTING__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation");
 					mappingText.setKey("text-" + path.getId());
 					mappingSVGText.getAnimation().add(mappingText);
 					// set to show or hide the error message text
-					Opacity mappingTextOpacity = mapFactory.createOpacity();
-					mappingTextOpacity.setKey("text-" + path.getId());
-					mappingTextOpacity.setOpacity("1");
-					mappingSVGText.getAnimation().add(mappingTextOpacity);
+//					Opacity mappingTextOpacity = mapFactory.createOpacity();
+//					mappingTextOpacity.setOpacity("1");
+//					mappingSVGText.getAnimation().add(mappingTextOpacity);
 
-					Opacity mappingTextOpacity2 = mapFactory.createOpacity();
-					mappingTextOpacity2.setKey("text-" + path.getId());
-					mappingTextOpacity2.setInput("E_OK__simulation");
-					mappingTextOpacity2.setOpacity("0");
-					mappingSVGText.getAnimation().add(mappingTextOpacity2);
+//				
+//					Opacity mappingTextOpacity2 = mapFactory.createOpacity();
+//					mappingTextOpacity2.setKey("text-" + path.getId());
+//					mappingTextOpacity2.setInput("E_OK__simulation");
+//					mappingTextOpacity2.setOpacity("0");
+//					mappingSVGText.getAnimation().add(mappingTextOpacity2);
 
 					// Element displayText =
 					// mappingDoc.createElement("display");
@@ -412,25 +414,28 @@ public class CreateRailwayMapping {
 						svgFile.getSvgElement().add(mappingSVGPointText);
 						mappingSVGPointText.setId("t_point_" + counter);
 						Text mappingPointText = mapFactory.createText();
+						mappingPointText.setInput("E_OK__simulation,E_TRACK_DOUBLE_ENTRY__simulation,E_TRACK_OCCUPIED__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation,E_WRONG_SWITCHPOINT_DIRECTION__simulation,E_FORBIDDEN_SWITCHCROSS_SETTING__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation");
+						mappingPointText.setText_value("`,E_TRACK_DOUBLE_ENTRY__simulation,E_TRACK_OCCUPIED__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation,E_WRONG_SWITCHPOINT_DIRECTION__simulation,E_FORBIDDEN_SWITCHCROSS_SETTING__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation");
 						mappingPointText.setKey("point-text-" + counter);
 						mappingSVGPointText.getAnimation()
 								.add(mappingPointText);
-						// set to show or hide the error message text
-						Opacity mappingPointTextOpacity = mapFactory
-								.createOpacity();
-						mappingPointTextOpacity.setKey("point-text-" + counter);
-						mappingPointTextOpacity.setOpacity("1");
-						mappingSVGPointText.getAnimation().add(
-								mappingPointTextOpacity);
+//						// set to show or hide the error message text
+//						Opacity mappingPointTextOpacity = mapFactory
+//								.createOpacity();
+//						mappingPointTextOpacity.setKey("point-text-" + counter);
+//						mappingPointTextOpacity.setOpacity("0,1,1,1,1,1,1,1,1");
+//						mappingPointTextOpacity.setInput("E_OK__simulation,E_TRACK_DOUBLE_ENTRY__simulation,E_TRACK_OCCUPIED__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation,E_WRONG_SWITCHPOINT_DIRECTION__simulation,E_FORBIDDEN_SWITCHCROSS_SETTING__simulation,E_MOTORMODE_MISMATCH__simulation,E_SPEED_MISMATCH__simulation");
+//						mappingSVGPointText.getAnimation().add(
+//								mappingPointTextOpacity);
 
-						Opacity mappingPointTextOpacity2 = mapFactory
-								.createOpacity();
-						mappingPointTextOpacity2
-								.setKey("point-text-" + counter);
-						mappingPointTextOpacity2.setInput("E_OK__simulation");
-						mappingPointTextOpacity2.setOpacity("0");
-						mappingSVGPointText.getAnimation().add(
-								mappingPointTextOpacity2);
+//						Opacity mappingPointTextOpacity2 = mapFactory
+//								.createOpacity();
+//						mappingPointTextOpacity2
+//								.setKey("point-text-" + counter);
+//						mappingPointTextOpacity2.setInput("E_OK__simulation");
+//						mappingPointTextOpacity2.setOpacity("0");
+//						mappingSVGPointText.getAnimation().add(
+//								mappingPointTextOpacity2);
 						// Element displayText2 = mappingDoc
 						// .createElement("display");
 						// displayText2.setAttribute("port", "" + port);
