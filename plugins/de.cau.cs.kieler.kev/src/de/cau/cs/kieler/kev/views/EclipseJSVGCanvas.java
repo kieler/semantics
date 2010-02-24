@@ -14,15 +14,12 @@ package de.cau.cs.kieler.kev.views;
 
 import java.util.Iterator;
 
-import org.apache.batik.bridge.UpdateManagerAdapter;
-import org.apache.batik.bridge.UpdateManagerEvent;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.SVGDocumentLoader;
 import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.ParsedURL;
 import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
-import de.cau.cs.kieler.kev.mapping.animations.SVGUpdateManagerListener;
 
 /**
  * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
