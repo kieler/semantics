@@ -62,23 +62,23 @@ public class Beautifier {
     }
 
     private static String setNewLines() throws Exception {
-        String oneLine = getCleanString(inFile);
-        oneLine = oneLine.replaceAll(";" + seperator, ";\n");
-        oneLine = oneLine.replaceAll(":" + seperator, ":\n");
-        oneLine = oneLine.replaceAll("\\{" + seperator, "{\n");
-        oneLine = oneLine.replaceAll("\\}" + seperator, "}\n");
-        oneLine = oneLine.replaceAll("\\*\\/" + seperator, "*/\n");
-        oneLine = oneLine.replaceAll("h\"" + seperator, "h\"\n");
-        oneLine = oneLine.replaceAll(">" + seperator, ">\n");
-        oneLine = oneLine.replaceAll(";\\}", ";\n}");
-        oneLine = oneLine.replaceAll("\\)\\{", ") {");
-        oneLine = oneLine.replaceAll("\t", "");
-        oneLine = oneLine.replaceAll("==", " ==");
-        oneLine = oneLine.replaceAll("  ==", " ==");
-        oneLine = oneLine.replaceAll("==", "== ");
-        oneLine = oneLine.replaceAll("==  ", "== ");
-        oneLine = oneLine.replaceAll(seperator, "");
-        return oneLine;
+        String line = getCleanString(inFile);
+        line = line.replaceAll(";" + seperator, ";\n");
+        line = line.replaceAll(":" + seperator, ":\n");
+        line = line.replaceAll("\\)\\{", ") {");
+        line = line.replaceAll("\\) \\{" + seperator, ") {\n");
+        line = line.replaceAll("\\}" + seperator, "}\n");
+        line = line.replaceAll("\\*\\/" + seperator, "*/\n");
+        line = line.replaceAll("h\"" + seperator, "h\"\n");
+        line = line.replaceAll(">" + seperator, ">\n");
+        line = line.replaceAll(";\\}", ";\n}");
+        line = line.replaceAll("\t", "");
+        line = line.replaceAll("==", " ==");
+        line = line.replaceAll("  ==", " ==");
+        line = line.replaceAll("==", "== ");
+        line = line.replaceAll("==  ", "== ");
+        line = line.replaceAll(seperator, "");
+        return line;
     }
 
     private static String tabs(int tabNumber) {
@@ -122,7 +122,6 @@ public class Beautifier {
         in = new BufferedReader(new FileReader(fileName));
 
         while ((line = in.readLine()) != null) {
-            System.out.println(line);
             line = removeLeadingWhitespaces(line);
             line = removeRetailWhitespaces(line);
             if (!line.isEmpty()) {

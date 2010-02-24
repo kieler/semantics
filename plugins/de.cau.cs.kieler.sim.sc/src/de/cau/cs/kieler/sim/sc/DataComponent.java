@@ -62,7 +62,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        System.out.println("bin hier: init");
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
@@ -87,7 +86,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
                     + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I " + bundleLocation
                     + " " + "-o " + outPath + "simulation -lm -Dexternflags";
-            System.out.println(compile);
             process = Runtime.getRuntime().exec(compile);
 
             InputStream stderr = process.getErrorStream();
@@ -109,7 +107,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
 
             // start compiled sc code
             String executable = outPath + "simulation ";
-            System.out.println("start: " + executable);
 
             process = Runtime.getRuntime().exec(executable);
 
@@ -130,12 +127,9 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
-        System.out.println("bin hier: step");
         JSONObject out = null;
         try {
             jSONObject.remove("state");
-
-            System.out.println("jSONObject: " + jSONObject.toString());
 
             toSC.write(jSONObject.toString() + "\n");
             toSC.flush();
@@ -146,7 +140,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             String receivedMessage = fromSC.readLine();
             // print and delete debug information
             receivedMessage = printDebugInfos(receivedMessage);
-            System.out.println("in:  " + receivedMessage);
             while (error.ready()) {
                 System.err.print(error.readLine());
             }
@@ -170,7 +163,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             allStates = allStates.substring(0, allStates.length() - 1);
             out.remove("state");
             out.put("state", allStates);
-            System.out.println("out:" + out);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
@@ -235,7 +227,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
 
     @Override
     public JSONObject provideInitialVariables() {
-        System.out.println("ich bin hier: provide initial");
 
         JSONObject returnObj = new JSONObject();
 
@@ -313,7 +304,9 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         String out = "";
         String[] debugInfos = s.split("DEBUGEND");
         for (String string : debugInfos[0].split("INFO")) {
-            System.out.println("SC Debug Info: " + string);
+        	if (!string.equals("")) {
+        		System.out.println("SC Debug Info: " + string);
+			}
         }
         String[] noDebugInfos = s.split("DEBUGEND");
         out = noDebugInfos[noDebugInfos.length - 1];

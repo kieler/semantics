@@ -69,7 +69,6 @@ public final class Helper {
     private static final int LABEL_ANY_ID = 1;
     private static final int LABEL_SHORTEST_HIERARCHIE = 2;
     private static final int LABEL_COMPLETE_HIERARCHIE = 3;
-    private static final int MAX_PRIORITY = 256;
 
     /**
      * Computes a list with all states in the right order of their priority.
@@ -84,10 +83,7 @@ public final class Helper {
         sortedStates.clear();
         fillStateSignalList(state);
         fillDependencyList(state);
-        printDependencyList();
         fillSortedThreadList();
-        System.out.print("threadListSorted: ");
-        printStatePlusTransitionList(sortedStates);
         return sortedStates;
     }
 
@@ -431,7 +427,11 @@ public final class Helper {
         }
     }
 
-    private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
+    /*
+     * useful for debugging
+     */
+    @SuppressWarnings("unused")
+	private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
         System.out.print("[");
         for (StatePlusTransition spt : list) {
             String weakStrong = "";
@@ -445,7 +445,11 @@ public final class Helper {
         System.out.println("]");
     }
 
-    private static void printDependencyList() {
+    /*
+     * useful for debugging
+     */
+    @SuppressWarnings("unused")
+	private static void printDependencyList() {
         System.out.print("dependencyList: [ ");
         for (Dependency dependency : stateDependencies) {
             String firstWS = "";
@@ -755,11 +759,9 @@ public final class Helper {
         for (Dependency dependency : stateDependencies) {
             if (!threadListUnsorted.contains(dependency.getFirstState())) {
                 threadListUnsorted.add(dependency.getFirstState());
-                System.out.println(dependency.getFirstState().getState().getId());
             }
             if (!threadListUnsorted.contains(dependency.getSecondState())) {
                 threadListUnsorted.add(dependency.getSecondState());
-                System.out.println(dependency.getSecondState().getState().getId());
             }
         }
 
