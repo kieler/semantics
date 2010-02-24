@@ -16,6 +16,7 @@
     <property name="pmd.home"              location="/home/kieler/pmd" />
     <property name="build.basedir"         location="${system.WORKSPACE}" />
     <property name="findbugs.classes"      location="${system.WORKSPACE}/update-site/plugins" />
+    <property name="hudson.home"           location="${system.HUDSON_HOME}" />
 
     <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
@@ -73,7 +74,7 @@
              job itself in order to avoid any confusions while generating the build scripts;
              id and property have disjoint namespaces -->
         <path id="pluginPath">
-            <dirset dir="${build.basedir}/../../" includes="*/lastSuccessful/archive/update-site" excludes="${job.name}/**" />
+            <dirset dir="${hudson.home}/jobs/" includes="*/lastSuccessful/archive/update-site" excludes="${job.name}/**" />
         </path>
         <property name="pluginPath" value="${toString:pluginPath}" />
                 
