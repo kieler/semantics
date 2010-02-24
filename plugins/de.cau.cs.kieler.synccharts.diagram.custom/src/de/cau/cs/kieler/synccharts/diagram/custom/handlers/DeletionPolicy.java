@@ -16,9 +16,11 @@ package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
 import org.eclipse.gef.EditPart;
 
 import de.cau.cs.kieler.core.ui.policies.DeletionPolicyProvider;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 
 /**
  * This policy prevents deletion of edit parts that should not be deleted from a
@@ -30,15 +32,29 @@ public class DeletionPolicy extends DeletionPolicyProvider {
 
     @Override
     public boolean isUnremovableEditPart(final EditPart editPart) {
-        boolean result = false;
-        if (editPart instanceof TransitionTriggersAndEffectsEditPart) {
-            result = true;
+        boolean result = true;
+        if (editPart instanceof Region2EditPart) {
+            result = false;
         }
-        if (editPart instanceof TransitionPriorityEditPart) {
-            result = true;
+        if (editPart instanceof RegionEditPart) {
+            result = false;
+        }
+        if (editPart instanceof State2EditPart) {
+            result = false;
+        }
+        if (editPart instanceof StateEditPart) {
+            result = false;
+        }
+        /*
+        if (editPart instanceof StateSignal2EditPart) {
+            result = false;
         }
         if (editPart instanceof StateSignalEditPart) {
-            result = true;
+            result = false;
+        }
+        */
+        if (editPart instanceof TransitionEditPart) {
+            result = false;
         }
         return result;
     }
