@@ -5,7 +5,7 @@
 «DEFINE main FOR Region-»
 	«FILE innerStates.first().id + ".c"-»
 	
-// generated SC-code //
+/* generated SC-code */
 	«EXPAND init-»
 	«EXPAND start-»
 	«EXPAND finish-»
@@ -88,7 +88,7 @@ void «this.parentState.id»_I_«this.name»(){
 «ENDDEFINE»
 
 «DEFINE complexTrigger FOR Transition-»
->>>> TODO complex Trigger
+	/* TODO: complex Trigger */
 «ENDDEFINE»
 
 «DEFINE transitionEffects FOR Transition-»

@@ -6,9 +6,9 @@
 	«IF !(this.triggersAndEffects == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
-					«EXPAND simpleTrigger FOR this-»
+				«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
-					«EXPAND complexTrigger FOR this-»
+				«EXPAND complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
 			«EXPAND effects FOR this-»
@@ -18,14 +18,14 @@
 
 «DEFINE simpleTrigger FOR Action-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
-		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
-	«EXPAND effects FOR this-»
-	«EXPAND CodegenPriority::priorityReduction FOR (Transition)this.eRootContainer-»
-		}
+	if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+		«EXPAND effects FOR this-»
+		«EXPAND CodegenPriority::priorityReduction FOR (Transition)this.eRootContainer-»
+	}
 «ENDDEFINE»
 
 «DEFINE complexTrigger FOR Action-»
-//>>>> TODO complex Trigger
+	«EXPAND complexExpression FOR ((ComplexExpression)this.trigger)»
 «ENDDEFINE»
 
 «DEFINE effects FOR Action-»
@@ -40,27 +40,75 @@
 
 «DEFINE valuedSignal FOR Emission-»
 	«IF this.signal.combineOperator == CombineOperator::NONE-»
-		  EMITINT(«EXPAND signalAndValue FOR this-»);
+		EMITINT(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MULT-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMUL(«EXPAND signalAndValue FOR this-»);
+		if (PRESENT(«this.signal.name-»)){
+			EMITINTMUL(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::ADD-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTADD(«EXPAND signalAndValue FOR this-»);
+		if (PRESENT(«this.signal.name-»)){
+			EMITINTADD(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MAX-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMAX(«EXPAND signalAndValue FOR this-»);
+		if (PRESENT(«this.signal.name-»)){
+			EMITINTMAX(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MIN-»
-		  if (PRESENT(«this.signal.name-»)){
-		    EMITINTMIN(«EXPAND signalAndValue FOR this-»);
+		if (PRESENT(«this.signal.name-»)){
+			EMITINTMIN(«EXPAND signalAndValue FOR this-»);
 	«ENDIF-»
 	«IF this.signal.combineOperator == CombineOperator::MULT || this.signal.combineOperator == CombineOperator::ADD || this.signal.combineOperator == CombineOperator::MAX || this.signal.combineOperator == CombineOperator::MIN-»
-		  } else {
-		    EMITINT(«EXPAND signalAndValue FOR this-»);
-		  }
+		} else {
+			EMITINT(«EXPAND signalAndValue FOR this-»);
+		}
 	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE signalAndValue FOR Emission-»
-«this.signal.name», «((IntValue)this.newValue).value-»
+	«this.signal.name», «((IntValue)this.newValue).value-»
+«ENDDEFINE»
+
+«DEFINE operatorEQ FOR ComplexExpression-»
+	if («EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-» == «((IntValue)this.subExpressions.get(1)).value»){
+		«EXPAND effects FOR this.parentAction-»
+		«EXPAND stateAbortion FOR (Transition)this.eContainer-»
+	}
+«ENDDEFINE»
+
+«DEFINE complexExpression FOR ComplexExpression-»
+	«IF this.operator == OperatorType::EQ-»
+		«EXPAND operatorEQ FOR this-»
+	«ENDIF-»
+	«IF this.operator == OperatorType::AND-»
+		«IF this.subExpressions.get(0).metaType == ComplexExpression-»
+			//«EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-»
+		«ELSE»
+			//«((SignalReference)this.subExpressions.get(0)).signal.name»
+		«ENDIF»
+			//«this.operator»
+			//«((SignalReference)this.subExpressions.get(1)).signal.name»
+	«ENDIF»
+	«IF this.operator == OperatorType::VAL-»
+		valSigInt[«((SignalReference)this.subExpressions.get(0)).signal.name-»]
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE signalReference FOR SignalReference-»
+«ENDDEFINE»
+
+«DEFINE stateAbortion FOR Transition-»
+	«IF this.type != TransitionType::NORMALTERMINATION-»
+		«IF !(this.sourceState.regions.isEmpty)-»
+			«IF this.type != TransitionType::STRONGABORT-»
+				PRIO(«getRealThreadPriority(this.targetState)»);
+			«ENDIF-»
+			ABORT;
+			«IF this.type == TransitionType::STRONGABORT-»
+				PRIO(«getRealThreadPriority(this.targetState)»);
+			«ENDIF-»
+		«ENDIF-»
+		«EXPAND CodegenPriority::priorityReduction FOR this-»
+	«ENDIF-»
+	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
+«ENDDEFINE»
+
+«DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
+	GOTO(«getStateNameByFlag(this.targetState, 3)»);
 «ENDDEFINE»

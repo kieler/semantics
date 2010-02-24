@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -32,7 +34,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 public class WorkflowGenerator {
 
     private EObject myModel = null;
-    private String outPath = null;
+    private static String outPath = null;
     private String uriString = null;
     private IEditorPart editor = null;
     private URI uri = null;
@@ -137,6 +139,13 @@ public class WorkflowGenerator {
         StatusManager.getManager().handle(
                 new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue.toString(), null),
                 StatusManager.LOG);
+        bueatifyFiles();
+    }
+    
+    private static void bueatifyFiles() {
+        File simFile = new File(outPath + "sim.c");
+        Beautifier simBeautifier = new Beautifier(simFile, simFile);
+        simBeautifier.bueatify();
     }
 
     private static String part2Location(final IEditorPart editor) {

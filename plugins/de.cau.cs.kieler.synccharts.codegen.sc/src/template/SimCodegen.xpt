@@ -8,8 +8,7 @@
 	«ELSE-»
 		«computeThreadPriorities(this.innerStates.first())»
 		«FILE "sim.c"-»
-	
-// generated SC-code //
+		/* generated SC-code */
 		«EXPAND init-»
 		«EXPAND start-»
 		«EXPAND finish-»
@@ -20,16 +19,12 @@
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
-#include "sc.h"
-#include "misc.h"
-
-extern void JSONstate(char*);
-
+	#include "sc.h"
+	#include "misc.h"
+	extern void JSONstate(char*);
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
-
-// Define valued int signals
-int valSigInt[valSigIntCnt];
-
+	/* Define valued int signals */
+	int valSigInt[valSigIntCnt];
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»
@@ -39,9 +34,8 @@ int valSigInt[valSigIntCnt];
 	«ENDFOREACH-»
 	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
 	«EXPAND CodegenMisc::generateReset-»
-int tick(int isInit){
-
-			TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
+	int tick(int isInit){
+	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»
@@ -49,7 +43,5 @@ int tick(int isInit){
 «ENDDEFINE»
 
 «DEFINE finish FOR Region-»
-
-			TICKEND;
-}
+	TICKEND;}
 «ENDDEFINE»

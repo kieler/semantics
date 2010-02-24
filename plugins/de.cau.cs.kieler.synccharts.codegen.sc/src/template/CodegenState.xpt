@@ -3,39 +3,41 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-«IF (this.regions.size >= 1)-»
-	«EXPAND stateWithRegions FOR this-»
-«ELSE-»
-«getStateNameByFlag(this, 3)-»:
-«ENDIF-»
-«IF this.outgoingTransitions.isEmpty-»
-	«EXPAND stateWithoutTransitions FOR this»
-«ELSE-»
-	«EXPAND immediateStrong FOR this-»
-	«EXPAND CodegenMisc::callJSONState-»
-	«EXPAND onEntry FOR this-»
-	«EXPAND immediateWeak FOR this-»
-	«IF !(this.regions.isEmpty)-»
-«getStateNameByFlag(this, 3)»_main_intern:
+	«IF (this.regions.size >= 1)-»
+		«EXPAND stateWithRegions FOR this-»
 	«ELSE-»
-«getStateNameByFlag(this, 3)»_intern:
+		«getStateNameByFlag(this, 3)-»:
 	«ENDIF-»
-	«EXPAND CodegenMisc::callJSONState-»
-	«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
-			PAUSE;
+	«IF this.outgoingTransitions.isEmpty-»
+		«EXPAND stateWithoutTransitions FOR this»
+	«ELSE-»
+		«EXPAND immediateStrong FOR this-»
+		«EXPAND CodegenMisc::callJSONState-»
+		«EXPAND onEntry FOR this-»
+		«EXPAND immediateWeak FOR this-»
+		«IF !(this.regions.isEmpty)-»
+			«getStateNameByFlag(this, 3)»_main_intern:
+		«ELSE-»
+			«getStateNameByFlag(this, 3)»_intern:
+		«ENDIF-»
+		«EXPAND CodegenMisc::callJSONState-»
+		«IF this.type != StateType::CONDITIONAL-»
+			«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
+				PAUSE;
+			«ENDIF-»
+		«ENDIF-»
+		«EXPAND allStrong FOR this-»
+		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+			«EXPAND onInside FOR this-»
+			// PRIO für WEAK setzen
+			PRIO(«getWeakThreadPriority(this)»);
+		«ENDIF-»
+		«EXPAND allWeak FOR this-»
+		PRIO(«getRealThreadPriority(this)»);
+		«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
+			«EXPAND returnForHierarchical FOR this-»
+		«ENDIF-»
 	«ENDIF-»
-	«EXPAND allStrong FOR this-»
-	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-          «EXPAND onInside FOR this-»
-		  // PRIO für WEAK setzen
-		  PRIO(«getWeakThreadPriority(this)»);
-	«ENDIF-»
-	«EXPAND allWeak FOR this-»
-		  PRIO(«getRealThreadPriority(this)»);
-	«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
-		«EXPAND returnForHierarchical FOR this-»
-	«ENDIF-»
-«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE stateWithRegions FOR State-»
@@ -45,46 +47,45 @@
 		«EXPAND generateForkMoreRegions FOR this-»
 	«ENDIF-»
 	«EXPAND CodegenRegion::region FOREACH this.regions-»
-
-«getStateNameByFlag(this, 3)»_main:
+	«getStateNameByFlag(this, 3)»_main:
 «ENDDEFINE»
 
 «DEFINE generateForkOneRegion FOR State-»
-«getStateNameByFlag(this, 3)»:
-			FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
-			FORKE(«getStateNameByFlag(this, 3)»_main);
+	«getStateNameByFlag(this, 3)»:
+	FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
+	FORKE(«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
-«getStateNameByFlag(this, 3)»:
+	«getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
-			FORK(«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
+		FORK(«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
 	«ENDFOREACH»
-			FORKE(«getStateNameByFlag(this, 3)»_main);
+	FORKE(«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE returnForHierarchical FOR State-»
 	«IF !(this.regions.isEmpty)-»
-			GOTO(«getStateNameByFlag(this, 3)»_main_intern);
+		GOTO(«getStateNameByFlag(this, 3)»_main_intern);
 	«ELSE-»
-			GOTO(«getStateNameByFlag(this, 3)»_intern);
+		GOTO(«getStateNameByFlag(this, 3)»_intern);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE stateWithoutTransitions FOR State-»
 	«EXPAND CodegenMisc::callJSONState-»
 	«IF this.isFinal-»
-			TERM;
+		TERM;
 	«ELSE-»
 		«EXPAND onEntry FOR this-»
 		«IF !(this.regions.isEmpty)-»
-«getStateNameByFlag(this, 3)»_main_intern:
+			«getStateNameByFlag(this, 3)»_main_intern:
 		«ELSE-»
-«getStateNameByFlag(this, 3)»_intern:
+			«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
 		«EXPAND CodegenMisc::callJSONState-»
-			// this should be HALT; but for simulation PAUSE and GOTO:
-			PAUSE;
+		/* this should be HALT; but for simulation PAUSE and GOTO */
+		PAUSE;
 		«EXPAND onInside FOR this-»
 		«EXPAND returnForHierarchical FOR this-»
 	«ENDIF-»
@@ -93,7 +94,7 @@
 «DEFINE immediateStrong FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type == TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
 «ENDDEFINE»
@@ -101,7 +102,7 @@
 «DEFINE immediateWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type != TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
 «ENDDEFINE»
@@ -109,7 +110,7 @@
 «DEFINE allStrong FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).type == TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
 «ENDDEFINE»
@@ -117,7 +118,7 @@
 «DEFINE allWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).type != TransitionType::STRONGABORT)-»
-				«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
 «ENDDEFINE»
@@ -127,7 +128,7 @@
 		«FOREACH this.entryActions AS onEntryAction-»
 			«EXPAND CodegenTriggerAndEffect::trigger FOR onEntryAction-»
 		«ENDFOREACH-»
-	«ENDIF»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE onInside FOR State-»
@@ -135,5 +136,5 @@
 		«FOREACH this.innerActions AS onInsideAction-»
 			«EXPAND CodegenTriggerAndEffect::trigger FOR onInsideAction-»
 		«ENDFOREACH-»
-	«ENDIF»
+	«ENDIF-»
 «ENDDEFINE»

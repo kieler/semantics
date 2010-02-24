@@ -4,14 +4,14 @@
 
 «DEFINE transition FOR Transition-»
 	«IF this.type == TransitionType::NORMALTERMINATION-»
-			JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main_intern);
+		JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main_intern);
 	«ENDIF-»
 	«IF !(this.triggersAndEffects == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
-					«EXPAND simpleTrigger FOR this-»
+				«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
-					«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
+				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
 			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
@@ -21,16 +21,16 @@
 		«EXPAND stateAbortion FOR this-»
 	«ENDIF-»
 	«IF hasDependentState(this)-»
-		  PRIO(«getSmallestThreadPriority(this.sourceState)»);
+		PRIO(«getSmallestThreadPriority(this.sourceState)»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
-		if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
-	«EXPAND CodegenTriggerAndEffect::effects FOR this-»
-	«EXPAND stateAbortion FOR this-»
-		}
+	if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+		«EXPAND CodegenTriggerAndEffect::effects FOR this-»
+		«EXPAND stateAbortion FOR this-»
+	}
 «ENDDEFINE»
 
 «DEFINE stateAbortion FOR Transition-»
@@ -38,11 +38,11 @@
 		«IF !(this.sourceState.regions.isEmpty)-»
 			«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
 			«IF this.type != TransitionType::STRONGABORT-»
-			PRIO(«getRealThreadPriority(this.targetState)»);
+				PRIO(«getRealThreadPriority(this.targetState)»);
 			«ENDIF-»
-			ABORT;
+				ABORT;
 			«IF this.type == TransitionType::STRONGABORT-»
-			PRIO(«getRealThreadPriority(this.targetState)»);
+				PRIO(«getRealThreadPriority(this.targetState)»);
 			«ENDIF-»
 		«ENDIF-»
 		«EXPAND CodegenPriority::priorityReduction FOR this-»
@@ -51,5 +51,5 @@
 «ENDDEFINE»
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
-			GOTO(«getStateNameByFlag(this.targetState, 3)»);
+	GOTO(«getStateNameByFlag(this.targetState, 3)»);
 «ENDDEFINE»
