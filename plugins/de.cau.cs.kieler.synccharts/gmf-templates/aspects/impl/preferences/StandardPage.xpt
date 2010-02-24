@@ -37,7 +37,7 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
         super.addFieldEditors(composite);
 
         // spline mode
-        splineModeFieldEditor = new org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor(SplineConnection.PREF_SPLINE_MODE,
+        splineModeFieldEditor = new org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE,
                 SPLINE_LABEL, composite, org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor.INT_TYPE, true, 0, 0, true);
         splineModeFieldEditor.autoStorage = true;
         addField(splineModeFieldEditor);
@@ -50,14 +50,14 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
 	«EXPAND xpt::Common::generatedMemberComment»
     public static void initDefaults(org.eclipse.jface.preference.IPreferenceStore preferenceStore) {
         ConnectionsPreferencePage.initDefaults(preferenceStore);
-        preferenceStore.setDefault(SplineConnection.PREF_SPLINE_MODE, SplineConnection.SPLINE_OFF);
+        preferenceStore.setDefault(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.ui.figures.SplineConnection.SPLINE_OFF);
     }
     
     «EXPAND xpt::Common::generatedMemberComment»
     @Override
     public boolean performOk() {
         boolean ok = super.performOk();
-        org.eclipse.ui.IWorkbench wb = PlatformUI.getWorkbench();
+        org.eclipse.ui.IWorkbench wb = org.eclipse.ui.PlatformUI.getWorkbench();
         if (wb != null) {
             org.eclipse.ui.IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
             if (wbw != null) {
