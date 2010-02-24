@@ -126,11 +126,6 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
-            ((StateInterfaceDeclaration2EditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
-            return true;
-        }
         if (childEditPart instanceof StateBodyText2EditPart) {
             ((StateBodyText2EditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureBodyTextFigure());
@@ -141,6 +136,11 @@ public class State2EditPart extends ShapeNodeEditPart {
                     .getFigureStateNameFigure());
             return true;
         }
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
+            ((StateInterfaceDeclaration2EditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
+            return true;
+        }
         return false;
     }
 
@@ -148,13 +148,13 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
-            return true;
-        }
         if (childEditPart instanceof StateBodyText2EditPart) {
             return true;
         }
         if (childEditPart instanceof StateLabel2EditPart) {
+            return true;
+        }
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
             return true;
         }
         return false;
