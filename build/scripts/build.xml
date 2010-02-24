@@ -139,7 +139,7 @@
                 <!-- name of the dedicated import (svn checkout) job -->
             <arg value="-Dplugin=${plugin}" />
                 <!-- the plugin whose bin parts should be gathered (after building the feature) -->
-            <arg value="-Dfeature=${feature}" />
+            <arg value="-DfeatureParam=${feature}" />
                 <!-- the feature whose plugins should be build -->
             <arg value="-Dproduct=${product}" />
                 <!-- the product which should be build -->
@@ -258,6 +258,8 @@
     
     <target name="generateScripts" if="eclipse.running" depends="init"
         description="target for complete feature build and publishing">
+
+        <property name="feature" value="${featureParam}" />
 
         <tstamp />
         <property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
@@ -429,6 +431,15 @@
         </ant>
     </target>
     
+    <target name="build.multiple.features" if="eclipse.running" depends="init, cleanFolders"
+        description="target for complete feature collection building, checking and publishing">
+
+        <property name="no.clean" />
+         <!-- setting the executable flag on launcher binaries
+             CAUTION: foreach is a ant-contrib task declared above! -->
+        <foreach list="${featureParam}" param="feature" target="build.feature" />
+    </target>
+
     <target name="build.rca" if="eclipse.running"
         description="target for creating the RCA by means of the feature build's results">
         <property name="p2.gathering"  value="true" />
