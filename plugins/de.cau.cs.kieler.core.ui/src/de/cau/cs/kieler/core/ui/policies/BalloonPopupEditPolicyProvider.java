@@ -22,14 +22,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.Request;
-import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.requests.GroupRequestViaKeyboard;
-import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPoliciesOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
@@ -37,7 +31,6 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvide
  * Provides an edit policy to create popup balloons.
  * 
  * @author soh
- * 
  * @kieler.rating 2009-02-23 proposed yellow
  */
 public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
@@ -59,24 +52,6 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                             new BalloonPopupBarEditPolicy(getContributions(),
                                     editPart));
         }
-
-        editPart.installEditPolicy(EditPolicy.COMPONENT_ROLE,
-                new ComponentEditPolicy() {
-                    @Override
-                    public Command getCommand(final Request request) {
-                        Command result = super.getCommand(request);
-                        // If the user presses the delete key, don't delete
-                        if (request instanceof GroupRequestViaKeyboard
-                                && RequestConstants.REQ_DELETE.equals(request
-                                        .getType())) {
-                            GroupRequestViaKeyboard req = (GroupRequestViaKeyboard) request;
-
-                            result = super.createDeleteSemanticCommand(req);
-                        }
-
-                        return result;
-                    }
-                });
     }
 
     /**

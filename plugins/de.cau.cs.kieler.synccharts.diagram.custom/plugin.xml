@@ -408,5 +408,14 @@
             value="1.0">
       </option>
    </extension>
+      <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DeletionPolicy">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpolicyProvider>
+   </extension>
 
 </plugin>
