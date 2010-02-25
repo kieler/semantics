@@ -87,7 +87,7 @@ void printOutputs(){
 «ENDDEFINE»
 
 «DEFINE setSignalValue FOR Signal-»
-	«IF this.type == ValueType::INTEGER-»
+	«IF this.type == ValueType::INTEGER || this.type == ValueType::BOOL-»
 		if (value != NULL && value->type == 3) { 
 			valSigInt[sig_«this.name»] = value->valueint;
 			printDebugInfo(value->valuestring);

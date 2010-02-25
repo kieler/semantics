@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
@@ -45,6 +46,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer{
@@ -130,8 +132,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         JSONObject out = null;
         try {
             jSONObject.remove("state");
-
-            toSC.write(jSONObject.toString() + "\n");
+            // boolToInt converts true and t to 1, false and f to 0
+            toSC.write(boolToInt(jSONObject).toString() + "\n");
             toSC.flush();
             while (error.ready()) {
                 System.out.print(error.read());
@@ -161,6 +163,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
                 allStates += stateArray.opt(i) + ",";
             }
             allStates = allStates.substring(0, allStates.length() - 1);
+            System.out.println(allStates);
             out.remove("state");
             out.put("state", allStates);
         } catch (JSONException e) {
@@ -286,6 +289,35 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             tmp.add(signalList.get(i).getName());
         }
         out = tmp.toArray(new String[tmp.size()]);
+        return out;
+    }
+    
+    private JSONObject boolToInt(JSONObject signals) {
+    	JSONObject out = new JSONObject();
+        Region myModel = (Region) (wf.getModel());
+        List<Signal> signalList = myModel.getInnerStates().get(0).getSignals();
+        for (Signal signal : signalList) {
+        	if (signal.getType().equals(ValueType.BOOL)) {
+        		String sig = signal.getName();
+        		try {
+        			JSONObject jSONSig = signals.getJSONObject(sig);
+        			if (!jSONSig.isNull("value")) {
+        				Object obj = jSONSig.get("value");
+        				int bool = 0;
+        				if (obj.equals(true) || obj.equals("t")) {
+        					bool = 1;
+        				}
+        				jSONSig.remove("value");
+        				jSONSig.put("value", bool);
+        				signals.remove(sig);
+        				signals.put(sig, jSONSig);
+        				out = signals;
+        			}
+        		} catch (JSONException e) {
+        			e.printStackTrace();
+        		}
+			}
+		}
         return out;
     }
 
