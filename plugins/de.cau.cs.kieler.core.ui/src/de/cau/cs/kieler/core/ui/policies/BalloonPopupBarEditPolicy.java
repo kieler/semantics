@@ -960,24 +960,27 @@ public class BalloonPopupBarEditPolicy extends DiagramAssistantEditPolicy {
 
         initPopupBars();
 
-        getBalloon().addMouseMotionListener(this);
-        getBalloon().addMouseListener(myMouseKeyListener);
+        if (getBalloon() != null) {
+            getBalloon().addMouseMotionListener(this);
+            getBalloon().addMouseListener(myMouseKeyListener);
 
-        // the feedback layer figures do not recieve mouse events so do not use
-        // it for popup bars
-        IFigure layer = getLayer(LayerConstants.HANDLE_LAYER);
-        layer.add(getBalloon());
+            // the feedback layer figures do not recieve mouse events so do not
+            // use
+            // it for popup bars
+            IFigure layer = getLayer(LayerConstants.HANDLE_LAYER);
+            layer.add(getBalloon());
 
-        if (refPoint == null) {
-            refPoint = getHostFigure().getBounds().getCenter();
+            if (refPoint == null) {
+                refPoint = getHostFigure().getBounds().getCenter();
+            }
+
+            Point thePoint = getBalloonPosition(refPoint);
+
+            getBalloon().setLocation(thePoint);
+
+            // dismiss the popup bar after a delay
+            hideDiagramAssistantAfterDelay(getDisappearanceDelay());
         }
-
-        Point thePoint = getBalloonPosition(refPoint);
-
-        getBalloon().setLocation(thePoint);
-
-        // dismiss the popup bar after a delay
-        hideDiagramAssistantAfterDelay(getDisappearanceDelay());
     }
 
     /**
