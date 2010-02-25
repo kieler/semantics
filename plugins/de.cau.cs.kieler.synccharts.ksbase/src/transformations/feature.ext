@@ -18,6 +18,9 @@ Void addPredecessorState(State target):
 let source = new State:
 connectStates(source,target) ->
 target.parentRegion.innerStates.add(source) ->
+(target.isInitial == true) ?
+	(target.setIsInitial(false) ->
+	source.setIsInitial(true)) : 
 setSelection(source)
 ;
 
