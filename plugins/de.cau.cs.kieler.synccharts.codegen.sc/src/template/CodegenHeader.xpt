@@ -21,6 +21,9 @@ extern const char *s2signame[];
 // Define valued int signals
 #define valSigIntCnt «allSignals(this.innerStates.first()).size»
 extern int valSigInt[valSigIntCnt];
+// Define valued boolean signals
+/* #define valSigBoolCnt «allSignals(this.innerStates.first()).size» */
+/* extern char valSigBool[valSigBoolCnt]; */
 
 void printDebugInfo(char* str);
 

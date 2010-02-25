@@ -57,7 +57,6 @@ void setInputs(){
   }
   buffer[i]=0;
   
-  //char* str = rcvMessage();
 	cJSON* object = 0;
 	cJSON* child = 0;
 	cJSON* present = 0;
@@ -71,8 +70,9 @@ void setInputs(){
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
 		value = cJSON_GetObjectItem(child, "value");
-		if (present != NULL && present->type){
-			«((Signal)signal).parentState.id»_I_«((Signal)signal).name»();
+		«EXPAND setSignalValue FOR (Signal)signal-»
+		if (present != NULL && present->type) {
+			«((Signal)signal).parentState.id»_I_sig_«((Signal)signal).name»();
 		}
 	}
   	«ENDIF-»
@@ -84,6 +84,15 @@ void setInputs(){
 void printOutputs(){
 	printf("%s \n", cJSON_Print(output));
 }
+«ENDDEFINE»
+
+«DEFINE setSignalValue FOR Signal-»
+	«IF this.type == ValueType::INTEGER-»
+		if (value != NULL && value->type == 3) { 
+			valSigInt[sig_«this.name»] = value->valueint;
+			printDebugInfo(value->valuestring);
+		}
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE generateMain FOR Region»

@@ -25,6 +25,8 @@
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
 	/* Define valued int signals */
 	int valSigInt[valSigIntCnt];
+	/* Define valued boolean signals */
+	/* char valSigBool[valSigBoolCnt]; */
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»

@@ -6,7 +6,7 @@
 	«IF !this.isEmpty-»
 		typedef enum {
 			«FOREACH this AS signal SEPARATOR ", "-»
-				«((Signal)signal).name-»
+				sig_«((Signal)signal).name-»
 			«ENDFOREACH-»
 		} signaltype;
 	«ENDIF-»
@@ -15,7 +15,7 @@
 «DEFINE generateSigArray FOR List-»
 	const char *s2signame[] = {
 		«FOREACH this AS signal SEPARATOR ", "-»
-		"«((Signal)signal).name-»"
+		"sig_«((Signal)signal).name-»"
 		«ENDFOREACH-»
 	};
 «ENDDEFINE»
@@ -25,19 +25,17 @@
 «ENDDEFINE»
 
 «DEFINE generateInputSignal FOR Signal-»
-	void «this.parentState.id»_I_«this.name»() {
-		signals = signals | (1 << «this.name»);
+	void «this.parentState.id»_I_sig_«this.name»() {
+		signals = signals | (1 << sig_«this.name»);
 	}
 «ENDDEFINE»
 
 «DEFINE generateOutputSignals FOR Signal»
-	void «this.parentState.id»_O_«this.name»(int status){
+	void «this.parentState.id»_O_sig_«this.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 		«IF this.type == ValueType::INTEGER-»
-			char c[256];
-			sprintf(c, "%d" , valSigInt[«this.name»]);
-			cJSON_AddItemToObject(value, "value", cJSON_CreateString(c));
+			cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«this.name»)));
 		«ENDIF-»
 		cJSON_AddItemToObject(output, "«this.name»", value);
 	}
@@ -47,7 +45,7 @@
 	void callOutputs() {
 		«FOREACH this AS signal-»
 			«IF !((Signal)signal).isInput-»
-				«((Signal)signal).parentState.id»_O_«((Signal)signal).name-»(signals & (1 << «((Signal)signal).name-»));
+				«((Signal)signal).parentState.id»_O_sig_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
 			«ENDIF-»
 		«ENDFOREACH-»
 	}
@@ -61,7 +59,7 @@
 
 «DEFINE detectLocalSignal FOR Signal-»
 	«IF !getRootState(this.parentState).signals.contains(this)-»
-		SIGNAL(«this.name»);
+		SIGNAL(sig_«this.name»);
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -70,8 +68,28 @@
 		/* initialize all valued integer signals */
 		«FOREACH allSignals(this.innerStates.first()) AS signal-»
 			«IF ((Signal)signal).type == ValueType::INTEGER-»
-				valSigInt[«((Signal)signal).name»] = «((Signal)signal).initialValue»;
+				valSigInt[sig_«((Signal)signal).name»] = «EXPAND getIntegerSignalValue FOR (Signal)signal-»;
 			«ENDIF-»
 		«ENDFOREACH-»
 	}
+«ENDDEFINE»
+
+«DEFINE getIntegerSignalValue FOR Signal-»
+	«IF this.initialValue != null-»
+		«this.initialValue-»
+	«ELSE-»
+		0
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE getBooleanSignalValue FOR Signal-»
+	«IF this.initialValue != null-»
+		«IF this.initialValue == "true" || this.initialValue == "t" || this.initialValue == "1"-»
+			1
+		«ELSE»
+			0
+		«ENDIF-»
+	«ELSE-»
+		0
+	«ENDIF-»
 «ENDDEFINE»

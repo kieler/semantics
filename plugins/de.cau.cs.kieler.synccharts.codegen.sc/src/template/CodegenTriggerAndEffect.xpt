@@ -18,40 +18,45 @@
 
 «DEFINE simpleTrigger FOR Action-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
-	if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+	if (PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)){
 		«EXPAND effects FOR this-»
 		«EXPAND CodegenPriority::priorityReduction FOR (Transition)this.eRootContainer-»
 	}
 «ENDDEFINE»
 
 «DEFINE complexTrigger FOR Action-»
-	«EXPAND complexExpression FOR ((ComplexExpression)this.trigger)»
+	if («EXPAND complexExpression FOR ((ComplexExpression)this.trigger)») {
+		«EXPAND effects FOR this-»
+		«EXPAND stateAbortion FOR (Transition)this-»
+	}
 «ENDDEFINE»
 
 «DEFINE effects FOR Action-»
 	«FOREACH this.effects AS effect-»
 		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
-			«EXPAND valuedSignal FOR ((Emission)effect)-»
+			«EXPAND valuedIntegerSignal FOR ((Emission)effect)-»
+		«ELSEIF ((Emission)effect).signal.type == ValueType::BOOL-»
+			«EXPAND valuedBooleanSignal FOR ((Emission)effect)-»
 		«ELSE-»
-			EMIT(«((Emission)effect).signal.name-»);
+			EMIT(sig_«((Emission)effect).signal.name-»);
 		«ENDIF-»
 	«ENDFOREACH-»
 «ENDDEFINE»
 
-«DEFINE valuedSignal FOR Emission-»
+«DEFINE valuedIntegerSignal FOR Emission-»
 	«IF this.signal.combineOperator == CombineOperator::NONE-»
 		EMITINT(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MULT-»
-		if (PRESENT(«this.signal.name-»)){
+		if (PRESENT(sig_«this.signal.name-»)){
 			EMITINTMUL(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::ADD-»
-		if (PRESENT(«this.signal.name-»)){
+		if (PRESENT(sig_«this.signal.name-»)){
 			EMITINTADD(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MAX-»
-		if (PRESENT(«this.signal.name-»)){
+		if (PRESENT(sig_«this.signal.name-»)){
 			EMITINTMAX(«EXPAND signalAndValue FOR this-»);
 	«ELSEIF this.signal.combineOperator == CombineOperator::MIN-»
-		if (PRESENT(«this.signal.name-»)){
+		if (PRESENT(sig_«this.signal.name-»)){
 			EMITINTMIN(«EXPAND signalAndValue FOR this-»);
 	«ENDIF-»
 	«IF this.signal.combineOperator == CombineOperator::MULT || this.signal.combineOperator == CombineOperator::ADD || this.signal.combineOperator == CombineOperator::MAX || this.signal.combineOperator == CombineOperator::MIN-»
@@ -61,36 +66,79 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«DEFINE valuedBooleanSignal FOR Emission-»
+	«IF this.signal.combineOperator == CombineOperator::NONE-»
+		EMITBOOL(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::AND-»
+		if (PRESENT(sig_«this.signal.name-»)){
+			EMITBOOLAND(«EXPAND signalAndValue FOR this-»);
+	«ELSEIF this.signal.combineOperator == CombineOperator::OR-»
+		if (PRESENT(sig_«this.signal.name-»)){
+			EMITBOOLOR(«EXPAND signalAndValue FOR this-»);
+	«ENDIF-»
+	«IF this.signal.combineOperator == CombineOperator::AND || this.signal.combineOperator == CombineOperator::OR-»
+		} else {
+			EMITBOOL(«EXPAND signalAndValue FOR this-»);
+		}
+	«ENDIF»
+«ENDDEFINE»
+
 «DEFINE signalAndValue FOR Emission-»
-	«this.signal.name», «((IntValue)this.newValue).value-»
+	sig_«this.signal.name», «((IntValue)this.newValue).value-»
 «ENDDEFINE»
 
 «DEFINE operatorEQ FOR ComplexExpression-»
-	if («EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-» == «((IntValue)this.subExpressions.get(1)).value»){
-		«EXPAND effects FOR this.parentAction-»
-		«EXPAND stateAbortion FOR (Transition)this.eContainer-»
-	}
+	«EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-» == «((IntValue)this.subExpressions.get(1)).value»
 «ENDDEFINE»
 
 «DEFINE complexExpression FOR ComplexExpression-»
 	«IF this.operator == OperatorType::EQ-»
 		«EXPAND operatorEQ FOR this-»
 	«ENDIF-»
-	«IF this.operator == OperatorType::AND-»
-		«IF this.subExpressions.get(0).metaType == ComplexExpression-»
-			//«EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-»
-		«ELSE»
-			//«((SignalReference)this.subExpressions.get(0)).signal.name»
-		«ENDIF»
-			//«this.operator»
-			//«((SignalReference)this.subExpressions.get(1)).signal.name»
+	«IF this.operator == OperatorType::AND || this.operator == OperatorType::OR-»
+		«EXPAND signalOrComplex FOR this.subExpressions.get(0)-»
+		«EXPAND syncChartsOpToCOp FOR this.operator-»
+		«EXPAND signalOrComplex FOR this.subExpressions.get(1)-»
+	«ENDIF»
+	«IF this.operator == OperatorType::NOT-»
+		«EXPAND syncChartsOpToCOp FOR this.operator-»
+		«EXPAND signalOrComplex FOR this.subExpressions.get(0)-»
 	«ENDIF»
 	«IF this.operator == OperatorType::VAL-»
-		valSigInt[«((SignalReference)this.subExpressions.get(0)).signal.name-»]
+		VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE signalReference FOR SignalReference-»
+	PRESENT(sig_«this.signal.name»)
+«ENDDEFINE»
+
+«DEFINE signalOrComplex FOR Expression-»
+	«IF this.metaType == ComplexExpression-»
+			(«EXPAND complexExpression FOR (ComplexExpression)this-»)
+		«ELSE»
+			«EXPAND signalReference FOR (SignalReference)this-»
+		«ENDIF»
+«ENDDEFINE»
+
+«DEFINE syncChartsOpToCOp FOR OperatorType-»
+	«IF this == OperatorType::AND-»
+		&&
+	«ELSEIF this == OperatorType::OR»
+		||
+	«ELSEIF this == OperatorType::NOT»
+		!
+	«ELSEIF this == OperatorType::EQ»
+		==
+	«ELSEIF this == OperatorType::LT»
+		<
+	«ELSEIF this == OperatorType::GT»
+		>
+	«ELSEIF this == OperatorType::LEQ»
+		<=
+	«ELSEIF this == OperatorType::GEQ»
+		>=
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE stateAbortion FOR Transition-»

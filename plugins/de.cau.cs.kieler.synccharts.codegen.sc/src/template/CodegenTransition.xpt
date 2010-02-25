@@ -6,14 +6,16 @@
 	«IF this.type == TransitionType::NORMALTERMINATION-»
 		JOINELSE(«getStateNameByFlag(this.sourceState, 3)»_main_intern);
 	«ENDIF-»
-	«IF !(this.triggersAndEffects == null)-»
-		«IF !(this.trigger == null)-»
+	«IF (this.triggersAndEffects != null)-»
+		«IF (this.trigger != null)-»
+			/* TRIGGER != NULL */
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
 				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
+			/* TRIGGER == NULL */
 			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 			«EXPAND stateAbortion FOR this-»
 		«ENDIF-»
@@ -27,7 +29,7 @@
 
 «DEFINE simpleTrigger FOR Transition-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
-	if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+	if (PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)){
 		«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 		«EXPAND stateAbortion FOR this-»
 	}

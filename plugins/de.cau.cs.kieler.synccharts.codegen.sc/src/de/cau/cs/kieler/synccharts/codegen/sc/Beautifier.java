@@ -73,15 +73,28 @@ public class Beautifier {
         line = line.replaceAll(">" + seperator, ">\n");
         line = line.replaceAll(";\\}", ";\n}");
         line = line.replaceAll("\t", "");
-        line = line.replaceAll("==", " ==");
-        line = line.replaceAll("  ==", " ==");
-        line = line.replaceAll("==", "== ");
-        line = line.replaceAll("==  ", "== ");
+        line = addSurroundingSpaces(line, "==");
+        line = addSurroundingSpaces(line, "\\|\\|");
+        line = addSurroundingSpaces(line, "&&");
+        line = addSurroundingSpaces(line, "<=");
+        line = addSurroundingSpaces(line, ">=");
         line = line.replaceAll(seperator, "");
         return line;
     }
 
-    private static String tabs(int tabNumber) {
+    private static String addSurroundingSpaces(final String line, final String sign) {
+        String out = line;
+        while (out.contains(" " + sign)) {
+            out = out.replaceAll(" " + sign, sign);
+        }
+        while (out.contains(sign + " ")) {
+            out = out.replaceAll(sign + " ", sign);
+        }
+        out = out.replaceAll(sign, " " + sign + " ");
+        return out;
+    }
+    
+    private static String tabs(final int tabNumber) {
         String out = "";
         for (int i = 0; i < tabNumber; i++) {
             out += "\t";
