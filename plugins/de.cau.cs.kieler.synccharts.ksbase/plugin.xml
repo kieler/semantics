@@ -190,8 +190,38 @@
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
           </transformationCommand>
     </menuContribution>
+    <menuContribution
+          locationURI="popupBar:any">
+          <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addSuc">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addPred">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addChoice">
+       </transformationCommand>
+          <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.selfLoop">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.encapsulate">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.flattenState">
+          </transformationCommand>
+    </menuContribution>
 
 			</menus>
 		</configuration>
  </extension>
+
 </plugin>

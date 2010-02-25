@@ -147,7 +147,6 @@ public class XtendTransformationFramework implements ITransformationFramework {
      */
     public boolean initializeTransformation(final String fileName, final String operation,
             final String... basePackages) {
-
         if (parameters == null) {
             return false;
         }

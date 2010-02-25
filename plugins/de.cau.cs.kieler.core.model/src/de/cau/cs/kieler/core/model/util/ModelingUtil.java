@@ -120,7 +120,6 @@ public final class ModelingUtil {
                                 EObject parentModel = ((View) view).getElement();
                                 if (parentModel == eObject) {
                                     editPart = parentPart;
-                                    System.out.println();
                                 }
                             } else {
                                 break;
@@ -340,7 +339,6 @@ public final class ModelingUtil {
                                     EObject parentModel = ((View) view).getElement();
                                     if (parentModel == eObject) {
                                         editPart = parentPart;
-                                        System.out.println();
                                     }
                                 } else {
                                     break;

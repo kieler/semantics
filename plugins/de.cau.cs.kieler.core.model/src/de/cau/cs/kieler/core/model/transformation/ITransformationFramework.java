@@ -18,15 +18,14 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Interface for executing a transformation with a framework.
+ * Interface for creating a bridge between a transformation framework and KIELER. 
  * 
- * Every transformation framework that is used by the KSBAsE Plug-in has to implement this
- * interface. The {@link XtendTransformationFramework} contains an implementation for the Xtend
+ * Every transformation framework that is used by the KSBasE Plug-in has to implement this
+ * interface. 
+ * The {@link XtendTransformationFramework} class contains an implementation for the Xtend
  * framework.
  * 
  * @author mim
- * 
- * @kieler.rating 2010-01-08 proposed yellow
  * 
  */
 public interface ITransformationFramework {
