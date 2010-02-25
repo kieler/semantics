@@ -238,12 +238,6 @@
             id="de.cau.cs.kieler.core.ui.statusHandler">
       </statusHandler>
    </extension>
-      <extension
-            point="de.cau.cs.kieler.core.ui.balloonPopupBarContribution">
-         <PopupBarElement
-               class="de.cau.cs.kieler.core.ui.policies.TestBalloon">
-         </PopupBarElement>
-      </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config
