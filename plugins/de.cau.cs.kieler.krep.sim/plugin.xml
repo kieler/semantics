@@ -10,5 +10,23 @@
             name="Krep">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/krep.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               priority="6">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.krep.evalbench.ui.editors.kasm"
+               priority="10">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.krep.editors.klp.Klp"
+               priority="10">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
