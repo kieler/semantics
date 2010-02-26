@@ -395,10 +395,10 @@
 
         <!-- default definitions of target properties dumped into ${feature}'s build file;
              will normally presetted by editScripts.loadTemplates -->
-        <property name="doc.target"        value="    &lt;target=&quot;doc&quot;        unless=&quot;no.doc&quot;&gt;${line.separator}    &lt;/target&gt;" />
-        <property name="findbugs.target"   value="    &lt;target=&quot;findbugs&quot;   unless=&quot;no.findbugs&quot;&gt;${line.separator}    &lt;/target&gt;" />
-        <property name="checkstyle.target" value="    &lt;target=&quot;checkstyle&quot; unless=&quot;no.checkstyle&quot;&gt;${line.separator}    &lt;/target&gt;" />
-        <property name="pmd.target"        value="    &lt;target=&quot;pmd&quot;        unless=&quot;no.pmd&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="doc.target"        value="    &lt;target name=&quot;doc&quot;        unless=&quot;no.doc&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="findbugs.target"   value="    &lt;target name=&quot;findbugs&quot;   unless=&quot;no.findbugs&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="checkstyle.target" value="    &lt;target name=&quot;checkstyle&quot; unless=&quot;no.checkstyle&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="pmd.target"        value="    &lt;target name=&quot;pmd&quot;        unless=&quot;no.pmd&quot;&gt;${line.separator}    &lt;/target&gt;" />
 
         <!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->        
         <replace file="${basedir}/features/${feature}/build.xml"
