@@ -133,7 +133,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         try {
             jSONObject.remove("state");
             // boolToInt converts true and t to 1, false and f to 0
-            toSC.write(boolToInt(jSONObject).toString() + "\n");
+            String jSONString = boolToInt(jSONObject).toString();
+            toSC.write(jSONString + "\n");
             toSC.flush();
             while (error.ready()) {
                 System.out.print(error.read());
@@ -163,7 +164,6 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
                 allStates += stateArray.opt(i) + ",";
             }
             allStates = allStates.substring(0, allStates.length() - 1);
-            System.out.println(allStates);
             out.remove("state");
             out.put("state", allStates);
         } catch (JSONException e) {
@@ -172,6 +172,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             process.destroy();
         }
 
+		// System.out.println("incoming " + out.toString());
+		// System.out.println("outgoing " + jSONObject.toString());
         return out;
     }
 
@@ -293,7 +295,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
     }
     
     private JSONObject boolToInt(JSONObject signals) {
-    	JSONObject out = new JSONObject();
+    	JSONObject out = signals;
         Region myModel = (Region) (wf.getModel());
         List<Signal> signalList = myModel.getInnerStates().get(0).getSignals();
         for (Signal signal : signalList) {
@@ -309,9 +311,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         				}
         				jSONSig.remove("value");
         				jSONSig.put("value", bool);
-        				signals.remove(sig);
-        				signals.put(sig, jSONSig);
-        				out = signals;
+        				out.remove(sig);
+        				out.put(sig, jSONSig);
         			}
         		} catch (JSONException e) {
         			e.printStackTrace();
