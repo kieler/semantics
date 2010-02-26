@@ -472,24 +472,6 @@
 
     <!-- =========================================================================================== -->
 
-    <target name="backupManifest" if="eclipse.running"
-        description="target for saving MANIFEST.MF as it will be manipulated due to a bug in the publisher">
-        <copy overwrite="true"
-              file="${bundle}/META-INF/MANIFEST.MF" 
-              tofile="${bundle}/META-INF/MANIFEST.backup" />
-    </target>
-
-    <!-- =========================================================================================== -->
-
-    <target name="restoreManifest" if="eclipse.running"
-        description="target for restoring MANIFEST.MF as it will be manipulated due to a bug in the publisher">
-        <copy overwrite="true"
-              file="${bundle}/META-INF/MANIFEST.backup"
-              tofile="${bundle}/META-INF/MANIFEST.MF" />
-    </target>
-
-    <!-- =========================================================================================== -->
-
     <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts"
         description="target for complete feature building, checking and publishing">
         
@@ -499,8 +481,8 @@
             </path>
             <sequential>
                 <copy overwrite="true"
-                      file="${bundle}/META-INF/MANIFEST.MF" 
-                      tofile="${bundle}/META-INF/MANIFEST.backup" />
+                      file="@{bundle}/META-INF/MANIFEST.MF" 
+                      tofile="@{bundle}/META-INF/MANIFEST.backup" />
             </sequential>
         </for>
  
@@ -538,8 +520,8 @@
             </path>
             <sequential>
                 <copy overwrite="true"
-                      file="${bundle}/META-INF/MANIFEST.backup"
-                      tofile="${bundle}/META-INF/MANIFEST.MF" />
+                      file="@{bundle}/META-INF/MANIFEST.backup"
+                      tofile="@{bundle}/META-INF/MANIFEST.MF" />
             </sequential>
         </for>
 
@@ -713,7 +695,7 @@
                          (multiple repexp conditions will be ANDed) -->
                     <tokenfilter>
                         <replacestring from="path=&quot;../../../../../../../" to="path=&quot;/home/" />
-                        <replacestring from="path=&quot;../../../../F" to="path=&quot;${hudson.home}/jobs/F" />
+                        <replacestring from="path=&quot;../../../../Feature" to="path=&quot;${hudson.home}/jobs/Feature" />
                     </tokenfilter>
                 </filterchain>
             </concat>
@@ -736,10 +718,20 @@
         <!-- finally, invoke the generated build file -->
         <for param="doclet" list="${doc.doclets}">
             <sequential>
+                <echo message="Using doclet @{doclet}" />
                 <ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}">
                     <property name="doc.doclet" value="@{doclet}" />
                 </ant>
             </sequential>
         </for>
     </target>
+    
+    <!-- =========================================================================================== -->
+
+    <target name="zip.doc" description="target for zipping overall javadoc">
+        <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
+        <tstamp>        
+        <zip destfile="${basedir}/kieler-doc_v${DSTAMP}${TSTAMP}.zip" basedir="${doc.destination}/.." includes="${doc.destination}/**/*.*" />
+    </target>
+
 </project>
