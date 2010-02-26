@@ -730,7 +730,7 @@
 
     <target name="zip.doc" description="target for zipping overall javadoc">
         <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
-        <tstamp>        
+        <tstamp />        
         <zip destfile="${basedir}/kieler-doc_v${DSTAMP}${TSTAMP}.zip" basedir="${doc.destination}/.." includes="${doc.destination}/**/*.*" />
     </target>
 
