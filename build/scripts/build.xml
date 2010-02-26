@@ -30,7 +30,7 @@
     <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
     <property name="doc.destination"                     value="doc" />
-    <property name="doc.doclet"                          value="com.sun.tools.doclets.standard.Standard" />
+    <property name="doc.doclets"                         value="com.sun.tools.doclets.standard.Standard" />
     <property name="doc.docletPath"                      value="." />
     
 
@@ -189,7 +189,7 @@
                 <!-- comma separated lib path patterns excluded at javadoc generation -->
             <arg value="-Ddoc.destination=${doc.destination}" />
                 <!-- destination folder for javadoc artifacts -->
-            <arg value="-Ddoc.doclet=${doc.doclet}" />
+            <arg value="-Ddoc.doclets=${doc.doclet}" />
                 <!-- qualified doclet class name-->
             <arg value="-Ddoc.docletPath=${doc.docletPath}" />
                 <!-- doclet class path -->
@@ -493,11 +493,16 @@
     <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts"
         description="target for complete feature building, checking and publishing">
         
-        <foreach param="bundle" target="backupManifest">
+        <for param="bundle">
             <path>
                <dirset dir="${basedir}/plugins" includes="${feature}*" />
             </path>
-        </foreach>
+            <sequential>
+                <copy overwrite="true"
+                      file="${bundle}/META-INF/MANIFEST.MF" 
+                      tofile="${bundle}/META-INF/MANIFEST.backup" />
+            </sequential>
+        </for>
  
         <!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->        
         <ant antfile="build.xml" dir="${basedir}/features/${feature}">
@@ -527,12 +532,17 @@
         <!-- run feature's assemble.p2.xml: generate update site entry -->
         <antcall target="build.updatesiteEntry" />
         
-        <foreach param="bundle" target="restoreManifest">
+        <for param="bundle">
             <path>
                <dirset dir="${basedir}/plugins" includes="${feature}*" />
             </path>
-        </foreach>
- 
+            <sequential>
+                <copy overwrite="true"
+                      file="${bundle}/META-INF/MANIFEST.backup"
+                      tofile="${bundle}/META-INF/MANIFEST.MF" />
+            </sequential>
+        </for>
+
     </target>
     
     <!-- =========================================================================================== -->
@@ -724,7 +734,7 @@
         </concat>
         
         <!-- finally, invoke the generated build file -->
-        <for param="doclet" list="${doc.doclet}">
+        <for param="doclet" list="${doc.doclets}">
             <sequential>
                 <ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}">
                     <property name="doc.doclet" value="@{doclet}" />
