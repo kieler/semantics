@@ -390,7 +390,7 @@
 
     <!-- =========================================================================================== -->
 
-    <target name="editScripts" if="eclipse.running" unless="no.editScripts" depends="init, generateScripts, editScripts.loadTemplates"
+    <target name="editScripts" if="eclipse.running" depends="init, generateScripts, editScripts.loadTemplates"
         description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
 
         <!-- default definitions of target properties dumped into ${feature}'s build file;
