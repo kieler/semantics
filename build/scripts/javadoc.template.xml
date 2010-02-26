@@ -13,19 +13,19 @@ ${feature.classpath}
 		</path> 
 
         <if>
-        <equals arg1="${doclet}" arg2="com.sun.tools.doclets.standard.Standard" />
+        <equals arg1="${doc.doclet}" arg2="com.sun.tools.doclets.standard.Standard" />
         <!-- argument set for the standard doclet -->
         <then>
 	        <javadoc access="protected"
     			 author="true"
-    			 destdir="${basedir}/${docdir}"
+    			 destdir="${basedir}/${doc.destination}"
     			 doctitle="KIELER API Specification"
     			 nodeprecated="false"
 	    		 nodeprecatedlist="false"
 	    		 noindex="false"
 	    		 nonavbar="false"
-	    		 docletpath="${doclet.path}"
-	    		 doclet="${doclet}"
+	    		 docletpath="${doc.docletPath}"
+	    		 doclet="${doc.doclet}"
 	    		 notree="false"
 	    		 packagenames="de.cau.cs.kieler.*"
 	    		 classpathref="doc.classpath"
@@ -56,9 +56,9 @@ ${feature.classpath}
 	    <!-- argument set for other doclets -->
 	    <else>
 	        <javadoc access="protected"
-    			 destdir="${basedir}/${docdir}"
-	    		 docletpath="${doclet.path}"
-	    		 doclet="${doclet}"
+    			 destdir="${basedir}/${doc.destination}"
+	    		 docletpath="${doc.docletPath}"
+	    		 doclet="${doc.doclet}"
 	    		 packagenames="de.cau.cs.kieler.*"
 	    		 classpathref="doc.classpath"
 	    		 maxmemory="1024m">

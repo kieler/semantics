@@ -4,6 +4,7 @@
     <property name="scriptdir" location="."/>
     <property file="${scriptdir}/build.properties" />
 
+    <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="baseLocation"          location="${system.baseLocation}" />
     <property name="baseDeltaPackLocation" location="${system.baseDeltaPackLocation}" />
     <property name="eclipseLocation"       location="${system.eclipseLocation}" />
@@ -18,15 +19,21 @@
     <property name="findbugs.classes"      location="${system.WORKSPACE}/update-site/plugins" />
     <property name="hudson.home"           location="${system.HUDSON_HOME}" />
 
+    <property name="job.name"                            value="${system.JOB_NAME}" />
     <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
     <property name="updateSiteCategoryDescriptor"        value="${hudson.home}/jobs/${updateSiteCategoryDescriptorJobName}/workspace/de.cau.cs.kieler.updatesite/site.xml" />
     <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
+    <property name="doc.basedir"                         value="${hudson.home}/jobs/" />
+    <property name="doc.includes"                        value="*/workspace/plugins/**/*.java" />
+    <property name="doc.includes.buildfiles"             value="*/workspace/plugins/*/build.xml" />
     <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
-    <property name="job.name"                            value="${system.JOB_NAME}" />
+    <property name="doc.destination"                     value="doc" />
+    <property name="doc.doclet"                          value="com.sun.tools.doclets.standard.Standard" />
+    <property name="doc.docletPath"                      value="." />
+    
 
-    <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="plugin"              value=" "/>
     <!-- property name="feature"         value=" "/   # see declaration in call.antRunner -->
     <property name="product"             value=" "/>
@@ -37,10 +44,6 @@
     <property name="build.jars"          value="true"/>
     <property name="publish.feature"     value="true"/>
 
-    <property name="docdir"              value="doc" />
-    <property name="doclet"              value="com.sun.tools.doclets.standard.Standard" />
-    <property name="doclet.path"         value="." />
-    
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
     <taskdef resource="checkstyletask.properties" classpath="${checkstyle.home}/checkstyle-all-5.0.jar" />
     <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home}/lib/findbugs-ant.jar" />
@@ -170,17 +173,23 @@
                 <!-- location of the update site, default is defined in build.properties -->
             <arg value="-Dfindbugs.classes=${findbugs.classes}" />
                 <!-- path to classes, jars to be examined by findbugs -->
+            <arg value="-Ddoc.basedir=${doc.basedir}" />
+                <!-- base/root path of search for java sources at javadoc generation -->
+            <arg value="-Ddoc.includes.buildfiles=${doc.includes.buildfiles}" />
+                <!-- comma separated path patterns included classpath computation for overall javadoc generation -->
+            <arg value="-Ddoc.includes=${doc.includes}" />
+                <!-- comma separated path patterns included at javadoc generation -->
             <arg value="-Ddoc.excludes=${doc.excludes}" />
                 <!-- comma separated path patterns excluded at javadoc generation -->
             <arg value="-Ddoc.libIncludes=${doc.libIncludes}" />
                 <!-- comma separated lib path patterns included at javadoc generation -->
             <arg value="-Ddoc.libExcludes=${doc.libExcludes}" />
                 <!-- comma separated lib path patterns excluded at javadoc generation -->
-            <arg value="-Ddocdir=${docdir}" />
+            <arg value="-Ddoc.destination=${doc.destination}" />
                 <!-- destination folder for javadoc artifacts -->
-            <arg value="-Ddoclet=${doclet}" />
+            <arg value="-Ddoc.doclet=${doc.doclet}" />
                 <!-- qualified doclet class name-->
-            <arg value="-Ddoclet.path=${doclet.path}" />
+            <arg value="-Ddoc.docletPath=${doc.docletPath}" />
                 <!-- doclet class path -->
             <arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
                 <!-- comma separated path patterns excluded at checkstyle examination -->
@@ -670,16 +679,13 @@
     <!-- =========================================================================================== -->
 
     <target name="doc" description="target for overall javadoc generation">
-        <property name="basedir"      value="${system.WORKSPACE}" />
-        <property name="doc.basedir"  value="${hudson.home}/jobs/" />
-        <property name="doc.includes" value="*/workspace/plugins/**/*.java" />
         <property name="doc.packages" value="${scriptdir}/../package-lists" />
 
         <!-- first, we need to gather the classpath path entries from plugin's generated build files -->
         <loadfile property="feature.classpath">
             <concat>
                 <fileset dir="${doc.basedir}">
-                    <include name="*/workspace/plugins/*/build.xml" />
+                    <include name="${doc.includes.buildfiles}" />
                 </fileset>
                 <filterchain>
                     <linecontainsregexp>
