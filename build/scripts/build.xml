@@ -313,10 +313,10 @@
 
     <!-- =========================================================================================== -->
 
-    <target name="editScripts" if="eclipse.running" unless="no.editScripts" depends="init, generateScripts"
+    <target name="editScripts.loadTemplates" if="eclipse.running" unless="no.editScripts"
         description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
-        
         <!-- read javac's classpath information from build.xml scripts -->        
+
         <loadfile property="feature.classpath">
             <concat>
                 <fileset dir="plugins" includes="**/build.xml" />
@@ -385,7 +385,21 @@
             </filterchain>
         </loadfile -->  <!-- deactivated analysis as it is pretty much similar to checkstyle -->
         <property name="pmd.target" value="" />
-        
+                
+    </target>    
+
+    <!-- =========================================================================================== -->
+
+    <target name="editScripts" if="eclipse.running" unless="no.editScripts" depends="init, generateScripts, editScripts.loadTemplates"
+        description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
+
+        <!-- default definitions of target properties dumped into ${feature}'s build file;
+             will normally presetted by editScripts.loadTemplates -->
+        <property name="doc.target"        value="    &lt;target=&quot;doc&quot;        unless=&quot;no.doc&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="findbugs.target"   value="    &lt;target=&quot;findbugs&quot;   unless=&quot;no.findbugs&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="checkstyle.target" value="    &lt;target=&quot;checkstyle&quot; unless=&quot;no.checkstyle&quot;&gt;${line.separator}    &lt;/target&gt;" />
+        <property name="pmd.target"        value="    &lt;target=&quot;pmd&quot;        unless=&quot;no.pmd&quot;&gt;${line.separator}    &lt;/target&gt;" />
+
         <!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->        
         <replace file="${basedir}/features/${feature}/build.xml"
                  token="&lt;/project&gt;"
