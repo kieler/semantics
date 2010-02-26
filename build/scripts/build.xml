@@ -50,13 +50,13 @@
         </classpath>
     </taskdef>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="noTargetInfo" unless="target">
         <fail message="No build target given. Please give a target explicitly by setting -Dtarget=&lt;{build.feature,build.rca}&gt;" />
     </target>    
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="call.antRunner" depends="noTargetInfo">
         <!-- delete dir="${eclipseConfig}" />
@@ -202,7 +202,7 @@
         </java>
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="init">
         <property name="p2.category.site" value="file:${updateSiteCategoryDescriptor}" />
@@ -264,7 +264,7 @@
         </touch>
     </target>    
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="cleanFolders" unless="no.clean">
         <!-- this is just a helper target that is executed during normal feature builds
@@ -285,7 +285,7 @@
         </delete>
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="generateScripts" if="eclipse.running" depends="init"
         description="target for complete feature build and publishing">
@@ -311,7 +311,7 @@
         </ant>
     </target>    
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="editScripts" if="eclipse.running" unless="no.editScripts" depends="init, generateScripts"
         description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
@@ -392,7 +392,7 @@
                  value="${doc.target}${findbugs.target}${checkstyle.target}${pmd.target}&lt;/project&gt;" />
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="setBuildTempFolder" if="eclipse.running" unless="no.publishing">
         <!-- this target is a hack due to a bug in the publish-to-updatesite-script:
@@ -410,7 +410,7 @@
         <property name="buildTempFolder" value="${basedir}/buildTempFolder" />
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="backupManifest" if="eclipse.running"
         description="target for saving MANIFEST.MF as it will be manipulated due to a bug in the publisher">
@@ -419,7 +419,7 @@
               tofile="${bundle}/META-INF/MANIFEST.backup" />
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="restoreManifest" if="eclipse.running"
         description="target for restoring MANIFEST.MF as it will be manipulated due to a bug in the publisher">
@@ -428,7 +428,7 @@
               tofile="${bundle}/META-INF/MANIFEST.MF" />
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts"
         description="target for complete feature building, checking and publishing">
@@ -475,7 +475,7 @@
  
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing" depends="init"
         description="target for creating an updatesite entry of last build results">
@@ -489,7 +489,7 @@
         <ant antfile="assemble.${feature}.p2.xml" />
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="gather.plugin.bin.parts" if="eclipse.running" depends="init"
         description="target for providing an unjared version of ${plugins}, needed if it contains library .jar files">
@@ -504,7 +504,7 @@
         </delete>
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="gather.feature.bin.parts" if="eclipse.running" depends="init, cleanFolders, generateScripts"
         description="target for gathering feature's bin parts, i.e. timestamp the feature only; no children are included!">
@@ -516,7 +516,7 @@
         </ant>
     </target>
 
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="build.multiple.features" if="eclipse.running" depends="init, cleanFolders"
         description="target for complete feature collection building, checking and publishing">
@@ -541,7 +541,7 @@
         </foreach>
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="build.rca" if="eclipse.running"
         description="target for creating the RCA by means of the feature build's results">
@@ -596,7 +596,7 @@
         </foreach>
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="update.launcher"
         description="private target for updating the permission flags of the launcher and other binaries">
@@ -618,7 +618,7 @@
         <delete dir="${basedir}/${buildLabel}/${platform}" />
     </target>
     
-    <!------------------------------------------------------------------------------------------------->
+    <!-- =========================================================================================== -->
 
     <target name="doc" description="target for overall javadoc generation">
         <property name="basedir"      value="${system.WORKSPACE}" />
