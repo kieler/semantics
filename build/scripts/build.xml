@@ -20,6 +20,7 @@
 
     <property name="equinoxLauncherPluginVersion"        value="${system.equinoxLauncherPluginVersion}" />
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
+    <property name="updateSiteCategoryDescriptor"        value="${hudson.home}/jobs/${updateSiteCategoryDescriptorJobName}/workspace/de.cau.cs.kieler.updatesite/site.xml" />
     <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
     <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
@@ -27,7 +28,7 @@
 
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="plugin"              value=" "/>
-    <property name="feature"             value=" "/>
+    <!-- property name="feature"         value=" "/   # see declaration in call.antRunner -->
     <property name="product"             value=" "/>
     <property name="executables"         value=" "/>
     <property name="doc.excludes"        value=" "/>
@@ -49,9 +50,13 @@
         </classpath>
     </taskdef>
 
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="noTargetInfo" unless="target">
         <fail message="No build target given. Please give a target explicitly by setting -Dtarget=&lt;{build.feature,build.rca}&gt;" />
     </target>    
+
+    <!------------------------------------------------------------------------------------------------->
 
     <target name="call.antRunner" depends="noTargetInfo">
         <!-- delete dir="${eclipseConfig}" />
@@ -78,6 +83,11 @@
         </path>
         <property name="pluginPath" value="${toString:pluginPath}" />
                 
+        <!-- default definitions: may be overwritten while calling this script if necessary
+             this is to give antRunner a reasonable value of ${featureParam}
+             ${feature} must not be set widely in case of invoking the build.multiple.features target -->
+        <property name="feature"    value=" "/>
+
         <!-- the following conditions will check the presence of certain properties
              and write definite values to new properties in order to pass them to the antRunner -->
         <condition property="suppress.clean" value="true" else="false">
@@ -135,12 +145,16 @@
                      examined by build.xml, one of the PDE build scripts -->
             <arg value="-DupdateSiteCategoryDescriptorJobName=${updateSiteCategoryDescriptorJobName}" />
                 <!-- name of the dedicated import (svn checkout) job -->
+            <arg value="-DupdateSiteCategoryDescriptor=${updateSiteCategoryDescriptor}" />
+                <!-- name and location of the update site category descriptor (e.g. workspace/site.xml) -->
             <arg value="-DjavadocTagletJobName=${javadocTagletJobName}" />
                 <!-- name of the dedicated import (svn checkout) job -->
             <arg value="-Dplugin=${plugin}" />
                 <!-- the plugin whose bin parts should be gathered (after building the feature) -->
             <arg value="-DfeatureParam=${feature}" />
-                <!-- the feature whose plugins should be build -->
+                <!-- the feature(s) whose plugins should be build;
+                     need a different name here as for proper execution of target
+                     build.multiple.features ${feature} must be unset -->
             <arg value="-Dproduct=${product}" />
                 <!-- the product which should be build -->
             <arg value="-Dbasename=${basename}" />
@@ -188,8 +202,10 @@
         </java>
     </target>
 
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="init">
-        <property name="p2.category.site" value="file:${basedir}/../../${updateSiteCategoryDescriptorJobName}/workspace/de.cau.cs.kieler.updatesite/site.xml" />
+        <property name="p2.category.site" value="file:${updateSiteCategoryDescriptor}" />
         <property name="p2.gathering"  value="true" />
         <property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
             <!-- property name="configs"       value="${feature.configs}" / -->
@@ -209,6 +225,10 @@
             <istrue value="${suppress.clean}" />
         </condition>
     
+        <condition property="no.publishing" value="true">
+            <istrue value="${suppress.publishing}" />
+        </condition>
+        
         <condition property="no.doc" value="true">
             <istrue value="${suppress.doc}" />
         </condition>
@@ -225,10 +245,15 @@
             <istrue value="${suppress.pmd}" />
         </condition>    
 
-        <condition property="no.publishing" value="true">
-            <istrue value="${suppress.publishing}" />
+        <condition property="no.editScripts" value="true">
+            <and>
+                <istrue value="${suppress.doc}" />
+                <istrue value="${suppress.findbugs}" />
+                <istrue value="${suppress.checkstyle}" />
+                <!-- istrue value="${suppress.pmd}" / -->
+            </and>
         </condition>
-        
+    
         <!-- the following touch is needed as hudson will raise an error if a doc location is provided
              and no NEW files are available. This will happen in case of building the updatesite entry only.
              (to identify javadoc warnings a local project javadoc will be created
@@ -239,10 +264,14 @@
         </touch>
     </target>    
 
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="cleanFolders" unless="no.clean">
         <!-- this is just a helper target that is executed during normal feature builds
              and may be skipped in release builds if multiples features should be build in one job -->
-        
+
+        <echo message="cleaning..." />
+
         <mkdir dir="${basedir}/buildTempFolder" />
         <mkdir dir="${basedir}/features" />
         <mkdir dir="${basedir}/plugins" />
@@ -256,14 +285,24 @@
         </delete>
     </target>
     
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="generateScripts" if="eclipse.running" depends="init"
         description="target for complete feature build and publishing">
 
+        <!-- ${feature} is set here first - ant keeps it in mind as "depends"-called targets
+             will be executed in the same property context as calling targets
+             (in contrast ant will loose properties set of target executions called via ant / antcall);
+             in case of running build.multiple.features ${feature} is pre-setted -->
         <property name="feature" value="${featureParam}" />
 
+        <echo message="feature: ${feature}" />
+
         <tstamp />
+        <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
+
         <property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
-        <!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
+        <!-- in case of running build.multiple.features ${forceContextQualifier} is pre-setted -->
 
         <!-- generate build.xml scripts for feature and plugins -->
         <ant antfile="${genericTargets}" target="generateScript">
@@ -272,7 +311,9 @@
         </ant>
     </target>    
 
-    <target name="editScripts" if="eclipse.running" depends="init, generateScripts"
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="editScripts" if="eclipse.running" unless="no.editScripts" depends="init, generateScripts"
         description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
         
         <!-- read javac's classpath information from build.xml scripts -->        
@@ -297,6 +338,10 @@
                     </linecontainsregexp>
                     <!-- separate enclosing tags to realize NOR function
                          (multiple repexp conditions will be ANDed) -->
+                    <tokenfilter>
+                        <replacestring from="path=&quot;../../../../../../../" to="path=&quot;/home/" />
+                        <replacestring from="path=&quot;../../../../" to="path=&quot;${hudson.home}/jobs/" />
+                    </tokenfilter>
                 </filterchain>
                 <!-- footer filtering="no">
                         &lt;fileset dir=&quot;${basedir}&quot;
@@ -347,6 +392,8 @@
                  value="${doc.target}${findbugs.target}${checkstyle.target}${pmd.target}&lt;/project&gt;" />
     </target>
 
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="setBuildTempFolder" if="eclipse.running" unless="no.publishing">
         <!-- this target is a hack due to a bug in the publish-to-updatesite-script:
              running the publishing with default configuration will modify
@@ -363,9 +410,35 @@
         <property name="buildTempFolder" value="${basedir}/buildTempFolder" />
     </target>
 
-    <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts, setBuildTempFolder"
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="backupManifest" if="eclipse.running"
+        description="target for saving MANIFEST.MF as it will be manipulated due to a bug in the publisher">
+        <copy overwrite="true"
+              file="${bundle}/META-INF/MANIFEST.MF" 
+              tofile="${bundle}/META-INF/MANIFEST.backup" />
+    </target>
+
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="restoreManifest" if="eclipse.running"
+        description="target for restoring MANIFEST.MF as it will be manipulated due to a bug in the publisher">
+        <copy overwrite="true"
+              file="${bundle}/META-INF/MANIFEST.backup"
+              tofile="${bundle}/META-INF/MANIFEST.MF" />
+    </target>
+
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts"
         description="target for complete feature building, checking and publishing">
         
+        <foreach param="bundle" target="backupManifest">
+            <path>
+               <dirset dir="${basedir}/plugins" includes="${feature}*" />
+            </path>
+        </foreach>
+ 
         <!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->        
         <ant antfile="build.xml" dir="${basedir}/features/${feature}">
             <property name="javacDebugInfo" value="true" />
@@ -387,14 +460,24 @@
             <target name="checkstyle" />
             <!-- target name="pmd" / --> <!-- deactivated pmd analysis as it is pretty much similar to checkstyle -->
             <!-- gather.bin.parts copies customized feature.xml into update-site/features folder
-                 needed by succeeding feature builds while resolving dependencies -->        
+                 needed by succeeding feature builds while resolving dependencies
+                 (jar-ed version is not sufficient) -->        
         </ant>
 
         <!-- run feature's assemble.p2.xml: generate update site entry -->
         <antcall target="build.updatesiteEntry" />
+        
+        <foreach param="bundle" target="restoreManifest">
+            <path>
+               <dirset dir="${basedir}/plugins" includes="${feature}*" />
+            </path>
+        </foreach>
+ 
     </target>
     
-    <target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing" depends="init, setBuildTempFolder"
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing" depends="init"
         description="target for creating an updatesite entry of last build results">
         
         <property name="p2.gathering"  value="true" />
@@ -404,11 +487,11 @@
 
         <echo message="STARTING p2 stuff" />
         <ant antfile="assemble.${feature}.p2.xml" />
-            <!-- property name="buildTempFolder" value="${basedir}/buildTempFolder" />
-        </ant> -->
     </target>
     
-    <target name="gather.plugin.bin.parts" if="eclipse.running" depends="init, setBuildTempFolder"
+    <!------------------------------------------------------------------------------------------------->
+
+    <target name="gather.plugin.bin.parts" if="eclipse.running" depends="init"
         description="target for providing an unjared version of ${plugins}, needed if it contains library .jar files">
         <!-- used in KIELER_klepto job -->
 
@@ -421,6 +504,8 @@
         </delete>
     </target>
     
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="gather.feature.bin.parts" if="eclipse.running" depends="init, cleanFolders, generateScripts"
         description="target for gathering feature's bin parts, i.e. timestamp the feature only; no children are included!">
         <!-- used in KIELER_dependencies job -->
@@ -430,15 +515,33 @@
             <property name="updateJar.omitRootfiles" value="true" />
         </ant>
     </target>
-    
+
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="build.multiple.features" if="eclipse.running" depends="init, cleanFolders"
         description="target for complete feature collection building, checking and publishing">
 
-        <property name="no.clean" />
-         <!-- setting the executable flag on launcher binaries
+        <tstamp />
+        <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
+
+        <condition property="features" value="${featureParam}">
+            <not>
+                <equals arg1="${featureParam}" arg2=" "/>
+            </not>
+        </condition>
+        
+        <!-- loadfile srcFile="${basedir}/features.info" property="features" / -->
+        <echo message="${features}" />
+
+        <!-- setting the executable flag on launcher binaries
              CAUTION: foreach is a ant-contrib task declared above! -->
-        <foreach list="${featureParam}" param="feature" target="build.feature" />
+        <foreach list="${features}" param="feature" target="build.feature">
+            <param name="no.clean" value="true" />
+            <param name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
+        </foreach>
     </target>
+    
+    <!------------------------------------------------------------------------------------------------->
 
     <target name="build.rca" if="eclipse.running"
         description="target for creating the RCA by means of the feature build's results">
@@ -493,6 +596,8 @@
         </foreach>
     </target>
     
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="update.launcher"
         description="private target for updating the permission flags of the launcher and other binaries">
         <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755
@@ -513,9 +618,11 @@
         <delete dir="${basedir}/${buildLabel}/${platform}" />
     </target>
     
+    <!------------------------------------------------------------------------------------------------->
+
     <target name="doc" description="target for overall javadoc generation">
         <property name="basedir"      value="${system.WORKSPACE}" />
-        <property name="doc.basedir"  value="${basedir}/../../" />
+        <property name="doc.basedir"  value="${hudson.home}/jobs/" />
         <property name="doc.includes" value="*/workspace/plugins/**/*.java" />
         <property name="doc.packages" value="${scriptdir}/../package-lists" />
 
@@ -538,18 +645,10 @@
                     <!-- separate enclosing tags to realize NOR function
                          (multiple repexp conditions will be ANDed) -->
                     <tokenfilter>
-                        <replacestring from="path=&quot;../../" to="path=&quot;" />
+                        <replacestring from="path=&quot;../../../../../../../" to="path=&quot;/home/" />
+                        <replacestring from="path=&quot;../../../../" to="path=&quot;${hudson.home}/jobs/" />
                     </tokenfilter>
                 </filterchain>
-                <!-- footer filtering="no">
-                        &lt;fileset dir=&quot;${doc.basedir}&quot;
-                            includes=&quot;**/plugins/**/*.jar&quot;
-                            excludes=&quot;**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*&quot;  /&gt;
-                </footer-->
-                <!-- plain text equals the following:
-                     fileset dir="${doc.basedir}" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*,KIELER_all-r*/**/*.*" /
-                     it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution
-                     but not to include stuff of RCA and release builds! -->
             </concat>
         </loadfile>
         
@@ -560,10 +659,6 @@
             </header>
             <fileset file="${scriptdir}/javadoc.template.xml" />
             <filterchain>
-                <!-- tokenfilter>
-                    <replacestring from="dir=&quot;$${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
-                    <replacestring from="includes=&quot;**/*.java&quot;"      to="includes=&quot;*/workspace/plugins/**/*.java&quot;" />
-                </tokenfilter -->
                 <expandproperties />
             </filterchain>
             <footer filtering="no" trimleading="yes">
