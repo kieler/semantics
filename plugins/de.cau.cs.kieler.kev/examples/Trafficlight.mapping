@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/Trafficlight.svg" >
   <svgElement id="cRed">
-    <animation xsi:type="mapping:Colorize" key="cRed.present" input="true" fill_color="red"/>
-    <animation xsi:type="mapping:Colorize" key="cRed.present" input="false" fill_color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="cRed.present" input="true" fillColor="red"/>
+    <animation xsi:type="mapping:Colorize" key="cRed.present" input="false" fillColor="#626262"/>
   </svgElement>
   <svgElement id="cYellow">
-    <animation xsi:type="mapping:Colorize" key="cYellow.present" input="true" fill_color="yellow"/>
-    <animation xsi:type="mapping:Colorize" key="cYellow.present" input="false" fill_color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="cYellow.present" input="true" fillColor="yellow"/>
+    <animation xsi:type="mapping:Colorize" key="cYellow.present" input="false" fillColor="#626262"/>
   </svgElement>
   <svgElement id="cGreen">
-    <animation xsi:type="mapping:Colorize" key="cGreen.present" input="true" fill_color="lime"/>
-    <animation xsi:type="mapping:Colorize" key="cGreen.present" input="false" fill_color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="cGreen.present" input="true" fillColor="lime"/>
+    <animation xsi:type="mapping:Colorize" key="cGreen.present" input="false" fillColor="#626262"/>
   </svgElement>
   <svgElement id="pRed">
-    <animation xsi:type="mapping:Colorize" key="pRed.present" input="true" fill_color="red"/>
-    <animation xsi:type="mapping:Colorize" key="pRed.present" input="false" fill_color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="pRed.present" input="true" fillColor="red"/>
+    <animation xsi:type="mapping:Colorize" key="pRed.present" input="false" fillColor="#626262"/>
   </svgElement>
   <svgElement id="pGreen">
-    <animation xsi:type="mapping:Colorize" key="pGreen.present" input="true" fill_color="lime"/>
-    <animation xsi:type="mapping:Colorize" key="pGreen.present" input="false" fill_color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="pGreen.present" input="true" fillColor="lime"/>
+    <animation xsi:type="mapping:Colorize" key="pGreen.present" input="false" fillColor="#626262"/>
   </svgElement>
 </mapping:SVGFile>

@@ -281,7 +281,7 @@ public interface MappingPackage extends EPackage {
     int MOVE_PATH__PATH = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Anchor point</b></em>' attribute.
+     * The feature id for the '<em><b>Anchor Point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -290,7 +290,7 @@ public interface MappingPackage extends EPackage {
     int MOVE_PATH__ANCHOR_POINT = ANIMATION_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Auto orientation</b></em>' attribute.
+     * The feature id for the '<em><b>Auto Orientation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -345,7 +345,7 @@ public interface MappingPackage extends EPackage {
     int ROTATE__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Angle range</b></em>' attribute.
+     * The feature id for the '<em><b>Angle Range</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -354,7 +354,7 @@ public interface MappingPackage extends EPackage {
     int ROTATE__ANGLE_RANGE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Anchor point</b></em>' attribute.
+     * The feature id for the '<em><b>Anchor Point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -409,7 +409,7 @@ public interface MappingPackage extends EPackage {
     int MOVE__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Xrange</b></em>' attribute.
+     * The feature id for the '<em><b>XRange</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -418,7 +418,7 @@ public interface MappingPackage extends EPackage {
     int MOVE__XRANGE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Yrange</b></em>' attribute.
+     * The feature id for the '<em><b>YRange</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -473,7 +473,7 @@ public interface MappingPackage extends EPackage {
     int COLORIZE__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Fill color</b></em>' attribute.
+     * The feature id for the '<em><b>Fill Color</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -482,7 +482,7 @@ public interface MappingPackage extends EPackage {
     int COLORIZE__FILL_COLOR = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Stroke color</b></em>' attribute.
+     * The feature id for the '<em><b>Stroke Color</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -491,7 +491,7 @@ public interface MappingPackage extends EPackage {
     int COLORIZE__STROKE_COLOR = ANIMATION_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Stroke width</b></em>' attribute.
+     * The feature id for the '<em><b>Stroke Width</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -546,7 +546,7 @@ public interface MappingPackage extends EPackage {
     int TEXT__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Text value</b></em>' attribute.
+     * The feature id for the '<em><b>Text Value</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -555,7 +555,7 @@ public interface MappingPackage extends EPackage {
     int TEXT__TEXT_VALUE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Font size</b></em>' attribute.
+     * The feature id for the '<em><b>Font Size</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -564,7 +564,7 @@ public interface MappingPackage extends EPackage {
     int TEXT__FONT_SIZE = ANIMATION_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Font family</b></em>' attribute.
+     * The feature id for the '<em><b>Font Family</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -779,26 +779,26 @@ public interface MappingPackage extends EPackage {
     EAttribute getMovePath_Path();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchor_point <em>Anchor point</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchorPoint <em>Anchor Point</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Anchor point</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.MovePath#getAnchor_point()
+     * @return the meta object for the attribute '<em>Anchor Point</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.MovePath#getAnchorPoint()
      * @see #getMovePath()
      * @generated
      */
-    EAttribute getMovePath_Anchor_point();
+    EAttribute getMovePath_AnchorPoint();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAuto_orientation <em>Auto orientation</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAutoOrientation <em>Auto Orientation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Auto orientation</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.MovePath#getAuto_orientation()
+     * @return the meta object for the attribute '<em>Auto Orientation</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.MovePath#getAutoOrientation()
      * @see #getMovePath()
      * @generated
      */
-    EAttribute getMovePath_Auto_orientation();
+    EAttribute getMovePath_AutoOrientation();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kev.mapping.Rotate <em>Rotate</em>}'.
@@ -811,26 +811,26 @@ public interface MappingPackage extends EPackage {
     EClass getRotate();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngle_range <em>Angle range</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngleRange <em>Angle Range</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Angle range</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Rotate#getAngle_range()
+     * @return the meta object for the attribute '<em>Angle Range</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Rotate#getAngleRange()
      * @see #getRotate()
      * @generated
      */
-    EAttribute getRotate_Angle_range();
+    EAttribute getRotate_AngleRange();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchorPoint <em>Anchor Point</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Anchor point</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Rotate#getAnchor_point()
+     * @return the meta object for the attribute '<em>Anchor Point</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Rotate#getAnchorPoint()
      * @see #getRotate()
      * @generated
      */
-    EAttribute getRotate_Anchor_point();
+    EAttribute getRotate_AnchorPoint();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kev.mapping.Move <em>Move</em>}'.
@@ -843,26 +843,26 @@ public interface MappingPackage extends EPackage {
     EClass getMove();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Move#getX_range <em>Xrange</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Move#getXRange <em>XRange</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Xrange</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Move#getX_range()
+     * @return the meta object for the attribute '<em>XRange</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Move#getXRange()
      * @see #getMove()
      * @generated
      */
-    EAttribute getMove_X_range();
+    EAttribute getMove_XRange();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Move#getY_range <em>Yrange</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Move#getYRange <em>YRange</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Yrange</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Move#getY_range()
+     * @return the meta object for the attribute '<em>YRange</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Move#getYRange()
      * @see #getMove()
      * @generated
      */
-    EAttribute getMove_Y_range();
+    EAttribute getMove_YRange();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kev.mapping.Colorize <em>Colorize</em>}'.
@@ -875,37 +875,37 @@ public interface MappingPackage extends EPackage {
     EClass getColorize();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getFill_color <em>Fill color</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getFillColor <em>Fill Color</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Fill color</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Colorize#getFill_color()
+     * @return the meta object for the attribute '<em>Fill Color</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Colorize#getFillColor()
      * @see #getColorize()
      * @generated
      */
-    EAttribute getColorize_Fill_color();
+    EAttribute getColorize_FillColor();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getStroke_color <em>Stroke color</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getStrokeColor <em>Stroke Color</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Stroke color</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Colorize#getStroke_color()
+     * @return the meta object for the attribute '<em>Stroke Color</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Colorize#getStrokeColor()
      * @see #getColorize()
      * @generated
      */
-    EAttribute getColorize_Stroke_color();
+    EAttribute getColorize_StrokeColor();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getStroke_width <em>Stroke width</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Colorize#getStrokeWidth <em>Stroke Width</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Stroke width</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Colorize#getStroke_width()
+     * @return the meta object for the attribute '<em>Stroke Width</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Colorize#getStrokeWidth()
      * @see #getColorize()
      * @generated
      */
-    EAttribute getColorize_Stroke_width();
+    EAttribute getColorize_StrokeWidth();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kev.mapping.Text <em>Text</em>}'.
@@ -918,37 +918,37 @@ public interface MappingPackage extends EPackage {
     EClass getText();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getText_value <em>Text value</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getTextValue <em>Text Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Text value</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Text#getText_value()
+     * @return the meta object for the attribute '<em>Text Value</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Text#getTextValue()
      * @see #getText()
      * @generated
      */
-    EAttribute getText_Text_value();
+    EAttribute getText_TextValue();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getFont_size <em>Font size</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getFontSize <em>Font Size</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Font size</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Text#getFont_size()
+     * @return the meta object for the attribute '<em>Font Size</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Text#getFontSize()
      * @see #getText()
      * @generated
      */
-    EAttribute getText_Font_size();
+    EAttribute getText_FontSize();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getFont_family <em>Font family</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kev.mapping.Text#getFontFamily <em>Font Family</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Font family</em>'.
-     * @see de.cau.cs.kieler.kev.mapping.Text#getFont_family()
+     * @return the meta object for the attribute '<em>Font Family</em>'.
+     * @see de.cau.cs.kieler.kev.mapping.Text#getFontFamily()
      * @see #getText()
      * @generated
      */
-    EAttribute getText_Font_family();
+    EAttribute getText_FontFamily();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kev.mapping.MoveTo <em>Move To</em>}'.
@@ -1105,20 +1105,20 @@ public interface MappingPackage extends EPackage {
         EAttribute MOVE_PATH__PATH = eINSTANCE.getMovePath_Path();
 
         /**
-         * The meta object literal for the '<em><b>Anchor point</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Anchor Point</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MOVE_PATH__ANCHOR_POINT = eINSTANCE.getMovePath_Anchor_point();
+        EAttribute MOVE_PATH__ANCHOR_POINT = eINSTANCE.getMovePath_AnchorPoint();
 
         /**
-         * The meta object literal for the '<em><b>Auto orientation</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Auto Orientation</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MOVE_PATH__AUTO_ORIENTATION = eINSTANCE.getMovePath_Auto_orientation();
+        EAttribute MOVE_PATH__AUTO_ORIENTATION = eINSTANCE.getMovePath_AutoOrientation();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kev.mapping.impl.RotateImpl <em>Rotate</em>}' class.
@@ -1131,20 +1131,20 @@ public interface MappingPackage extends EPackage {
         EClass ROTATE = eINSTANCE.getRotate();
 
         /**
-         * The meta object literal for the '<em><b>Angle range</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Angle Range</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ROTATE__ANGLE_RANGE = eINSTANCE.getRotate_Angle_range();
+        EAttribute ROTATE__ANGLE_RANGE = eINSTANCE.getRotate_AngleRange();
 
         /**
-         * The meta object literal for the '<em><b>Anchor point</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Anchor Point</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ROTATE__ANCHOR_POINT = eINSTANCE.getRotate_Anchor_point();
+        EAttribute ROTATE__ANCHOR_POINT = eINSTANCE.getRotate_AnchorPoint();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -1157,20 +1157,20 @@ public interface MappingPackage extends EPackage {
         EClass MOVE = eINSTANCE.getMove();
 
         /**
-         * The meta object literal for the '<em><b>Xrange</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>XRange</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MOVE__XRANGE = eINSTANCE.getMove_X_range();
+        EAttribute MOVE__XRANGE = eINSTANCE.getMove_XRange();
 
         /**
-         * The meta object literal for the '<em><b>Yrange</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>YRange</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MOVE__YRANGE = eINSTANCE.getMove_Y_range();
+        EAttribute MOVE__YRANGE = eINSTANCE.getMove_YRange();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl <em>Colorize</em>}' class.
@@ -1183,28 +1183,28 @@ public interface MappingPackage extends EPackage {
         EClass COLORIZE = eINSTANCE.getColorize();
 
         /**
-         * The meta object literal for the '<em><b>Fill color</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Fill Color</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COLORIZE__FILL_COLOR = eINSTANCE.getColorize_Fill_color();
+        EAttribute COLORIZE__FILL_COLOR = eINSTANCE.getColorize_FillColor();
 
         /**
-         * The meta object literal for the '<em><b>Stroke color</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Stroke Color</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COLORIZE__STROKE_COLOR = eINSTANCE.getColorize_Stroke_color();
+        EAttribute COLORIZE__STROKE_COLOR = eINSTANCE.getColorize_StrokeColor();
 
         /**
-         * The meta object literal for the '<em><b>Stroke width</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Stroke Width</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COLORIZE__STROKE_WIDTH = eINSTANCE.getColorize_Stroke_width();
+        EAttribute COLORIZE__STROKE_WIDTH = eINSTANCE.getColorize_StrokeWidth();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kev.mapping.impl.TextImpl <em>Text</em>}' class.
@@ -1217,28 +1217,28 @@ public interface MappingPackage extends EPackage {
         EClass TEXT = eINSTANCE.getText();
 
         /**
-         * The meta object literal for the '<em><b>Text value</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Text Value</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXT__TEXT_VALUE = eINSTANCE.getText_Text_value();
+        EAttribute TEXT__TEXT_VALUE = eINSTANCE.getText_TextValue();
 
         /**
-         * The meta object literal for the '<em><b>Font size</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font Size</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXT__FONT_SIZE = eINSTANCE.getText_Font_size();
+        EAttribute TEXT__FONT_SIZE = eINSTANCE.getText_FontSize();
 
         /**
-         * The meta object literal for the '<em><b>Font family</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font Family</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXT__FONT_FAMILY = eINSTANCE.getText_Font_family();
+        EAttribute TEXT__FONT_FAMILY = eINSTANCE.getText_FontFamily();
 
 								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.kev.mapping.impl.MoveToImpl <em>Move To</em>}' class.

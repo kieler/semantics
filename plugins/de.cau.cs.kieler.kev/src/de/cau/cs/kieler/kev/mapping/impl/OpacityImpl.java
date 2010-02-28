@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.Opacity;
@@ -92,7 +90,8 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public void setOpacity(String newOpacity) {
@@ -243,9 +242,9 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         
         // Check whether JSON object is an JSONAArray.
         String jsonValue;
-        if (getAccessID() != null && !getAccessID().isEmpty()) {
+        if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
-            if (jsonValue.isEmpty()) {
+            if (jsonValue.equals("")) {
                 return;
             }
         } else {
@@ -256,13 +255,12 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         // Now apply the animation.
         if (elem != null) {
             try {
-                if (getInput().isEmpty()) {
+                if (getInput().equals("")) {
                     // If no input is set, return the value of actual json key
                     opacityValue = getOpacity();
-                    if (opacityValue != null) {
-                        if (opacityValue.indexOf("$") == 0) {
-                            opacityValue = ((JSONObject) jsonObject).optString(opacityValue.substring(1));
-                        }
+                    if (opacityValue.indexOf("$") == 0) {
+                        opacityValue = ((JSONObject) jsonObject).optString(opacityValue.substring(1));
+//                        System.out.println(svgElementID + " "+getKey()+" "+opacityValue);
                     }
                 } else {
                     opacityValue = hashMapList.get(jsonValue);
@@ -270,6 +268,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                         Iterator<String> iterator = hashMapList.keySet().iterator();
                         String range;
                         double rangeValue;
+                        opacityValue = "";
                         while (iterator.hasNext()) {
                             range = iterator.next();
                             if (MapAnimations.getInstance().valueMatchesRange(jsonValue, range)) {
@@ -278,7 +277,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                                 if (rangeValue != Double.NaN) {
                                     opacityValue = Double.toString(rangeValue);
                                     break; // Now we found the right range so we can go on.
-                                }
+                                } 
                             }
                         }
                         if (opacityValue.equals("NaN")) {
@@ -287,7 +286,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                         }
                     }
                 }
-                System.out.println("Opacity: "+svgElementID+ " Value: " +opacityValue+ " JSONValue: "+jsonValue+ " JSONKey: "+getKey());
+                //System.out.println("Opacity: "+svgElementID+ " Value: " +opacityValue+ " JSONValue: "+jsonValue+ " JSONKey: "+getKey());
                 String attrib = elem.getAttribute("style");
                 attrib = attrib.replaceAll("opacity:\\d+([.]\\d+)?[;]?", "");
                 elem.setAttribute("style", "opacity:" + Double.parseDouble(opacityValue) + ";"
@@ -313,7 +312,7 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
-            if (getKey() == null || getKey().isEmpty()) {
+            if (getKey() == null || getKey().equals("")) {
                 setKey(svgElementID);
             } else {
                 String jsonKey = getKey();
@@ -346,6 +345,19 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
             outputList =  currentMapAnimation.parser(getOpacity());
 
             hashMapList = currentMapAnimation.mapInputToOutput(inputList, outputList);
+            
+            // Delete all values which were not needed anymore (eg. more input values than output values)
+            if (inputList.size() > hashMapList.size()) {
+//                System.out.println("Before: "+getInput());
+                setInput(inputList.subList(0, hashMapList.size()).toString().replaceAll("[\\[\\]]", ""));
+//                System.out.println("After: "+getInput());                
+            }
+            
+            // Not nessasary i guess but it's more secure to proof the outputlist as well
+//            if (outputList.size() > hashMapList.size()) {
+//                setInput(outputList.subList(0, hashMapList.size()).toString().replaceAll("[\\[\\]]", ""));
+//            }
+            
 //           
 //            System.out.println("Input: "+inputList);
 //            System.out.println("Output: "+outputList);

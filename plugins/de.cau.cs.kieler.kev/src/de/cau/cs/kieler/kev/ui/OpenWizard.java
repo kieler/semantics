@@ -103,7 +103,7 @@ public class OpenWizard extends Wizard {
     @Override
     public boolean performFinish() {
         // search for the KEV view
-        if (resourceNameField.getText().isEmpty()) {
+        if (resourceNameField.getText().equals("")) {
             page.setErrorMessage("The textfield must not be empty");
             return false;
         }
@@ -226,7 +226,7 @@ public class OpenWizard extends Wizard {
                 imageTreeMap.put(fileName, fileName);
             }
 
-            for (String imageName : imageTreeMap.navigableKeySet()) {
+            for (String imageName : imageTreeMap.keySet()) {
                 imagesList.add(imageName);
             }
 

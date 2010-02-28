@@ -42,7 +42,7 @@ public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDa
         // the old SVG-Graphic and updated afterwards
 
         try {
-            if (!((String) JSONobject.get("Ampelknopf")).isEmpty() && JSONobject.getBoolean("Ampelknopf")) {
+            if (!((String) JSONobject.get("Ampelknopf")).equals("") && JSONobject.getBoolean("Ampelknopf")) {
                 flag = !flag;
             }
             jsonArray = new JSONArray();

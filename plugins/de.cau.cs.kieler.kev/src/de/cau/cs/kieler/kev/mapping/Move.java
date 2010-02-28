@@ -14,8 +14,8 @@ package de.cau.cs.kieler.kev.mapping;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Move#getX_range <em>Xrange</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Move#getY_range <em>Yrange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Move#getXRange <em>XRange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Move#getYRange <em>YRange</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,55 +25,55 @@ package de.cau.cs.kieler.kev.mapping;
  */
 public interface Move extends Animation {
     /**
-     * Returns the value of the '<em><b>Xrange</b></em>' attribute.
+     * Returns the value of the '<em><b>XRange</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Xrange</em>' attribute isn't clear,
+     * If the meaning of the '<em>XRange</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Xrange</em>' attribute.
-     * @see #setX_range(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMove_X_range()
+     * @return the value of the '<em>XRange</em>' attribute.
+     * @see #setXRange(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMove_XRange()
      * @model
      * @generated
      */
-    String getX_range();
+    String getXRange();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Move#getX_range <em>Xrange</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Move#getXRange <em>XRange</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Xrange</em>' attribute.
-     * @see #getX_range()
+     * @param value the new value of the '<em>XRange</em>' attribute.
+     * @see #getXRange()
      * @generated
      */
-    void setX_range(String value);
+    void setXRange(String value);
 
     /**
-     * Returns the value of the '<em><b>Yrange</b></em>' attribute.
+     * Returns the value of the '<em><b>YRange</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Yrange</em>' attribute isn't clear,
+     * If the meaning of the '<em>YRange</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Yrange</em>' attribute.
-     * @see #setY_range(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMove_Y_range()
+     * @return the value of the '<em>YRange</em>' attribute.
+     * @see #setYRange(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMove_YRange()
      * @model
      * @generated
      */
-    String getY_range();
+    String getYRange();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Move#getY_range <em>Yrange</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Move#getYRange <em>YRange</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Yrange</em>' attribute.
-     * @see #getY_range()
+     * @param value the new value of the '<em>YRange</em>' attribute.
+     * @see #getYRange()
      * @generated
      */
-    void setY_range(String value);
+    void setYRange(String value);
     
 } // Move

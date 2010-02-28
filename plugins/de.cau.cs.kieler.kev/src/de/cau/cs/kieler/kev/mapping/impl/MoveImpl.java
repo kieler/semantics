@@ -34,8 +34,8 @@ import org.w3c.dom.svg.SVGLocatable;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getX_range <em>Xrange</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getY_range <em>Yrange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getXRange <em>XRange</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MoveImpl#getYRange <em>YRange</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,14 +53,14 @@ public class MoveImpl extends AnimationImpl implements Move {
     protected static final String XRANGE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getX_range() <em>Xrange</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getX_range()
+     * The cached value of the '{@link #getXRange() <em>XRange</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getXRange()
      * @generated
      * @ordered
      */
-    protected String x_range = XRANGE_EDEFAULT;
+    protected String xRange = XRANGE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getY_range() <em>Yrange</em>}' attribute. <!--
@@ -73,14 +73,14 @@ public class MoveImpl extends AnimationImpl implements Move {
     protected static final String YRANGE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getY_range() <em>Yrange</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getY_range()
+     * The cached value of the '{@link #getYRange() <em>YRange</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getYRange()
      * @generated
      * @ordered
      */
-    protected String y_range = YRANGE_EDEFAULT;
+    protected String yRange = YRANGE_EDEFAULT;
 
     /**
      * The hashmap for mapping the input values to output
@@ -105,41 +105,45 @@ public class MoveImpl extends AnimationImpl implements Move {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getX_range() {
-        return x_range;
+    public String getXRange() {
+        return xRange;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setX_range(String newX_range) {
-        String oldX_range = x_range;
-        x_range = newX_range;
+    public void setXRange(String newXRange) {
+        String oldXRange = xRange;
+        xRange = newXRange;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE, oldX_range, x_range));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__XRANGE, oldXRange, xRange));
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getY_range() {
-        return y_range;
+    public String getYRange() {
+        return yRange;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setY_range(String newY_range) {
-        String oldY_range = y_range;
-        y_range = newY_range;
+    public void setYRange(String newYRange) {
+        String oldYRange = yRange;
+        yRange = newYRange;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldYRange, yRange));
     }
 
     /**
@@ -150,9 +154,9 @@ public class MoveImpl extends AnimationImpl implements Move {
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case MappingPackage.MOVE__XRANGE:
-                return getX_range();
+                return getXRange();
             case MappingPackage.MOVE__YRANGE:
-                return getY_range();
+                return getYRange();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -165,10 +169,10 @@ public class MoveImpl extends AnimationImpl implements Move {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case MappingPackage.MOVE__XRANGE:
-                setX_range((String)newValue);
+                setXRange((String)newValue);
                 return;
             case MappingPackage.MOVE__YRANGE:
-                setY_range((String)newValue);
+                setYRange((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -182,10 +186,10 @@ public class MoveImpl extends AnimationImpl implements Move {
     public void eUnset(int featureID) {
         switch (featureID) {
             case MappingPackage.MOVE__XRANGE:
-                setX_range(XRANGE_EDEFAULT);
+                setXRange(XRANGE_EDEFAULT);
                 return;
             case MappingPackage.MOVE__YRANGE:
-                setY_range(YRANGE_EDEFAULT);
+                setYRange(YRANGE_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -199,9 +203,9 @@ public class MoveImpl extends AnimationImpl implements Move {
     public boolean eIsSet(int featureID) {
         switch (featureID) {
             case MappingPackage.MOVE__XRANGE:
-                return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
+                return XRANGE_EDEFAULT == null ? xRange != null : !XRANGE_EDEFAULT.equals(xRange);
             case MappingPackage.MOVE__YRANGE:
-                return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
+                return YRANGE_EDEFAULT == null ? yRange != null : !YRANGE_EDEFAULT.equals(yRange);
         }
         return super.eIsSet(featureID);
     }
@@ -215,10 +219,10 @@ public class MoveImpl extends AnimationImpl implements Move {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (x_range: ");
-        result.append(x_range);
-        result.append(", y_range: ");
-        result.append(y_range);
+        result.append(" (xRange: ");
+        result.append(xRange);
+        result.append(", yRange: ");
+        result.append(yRange);
         result.append(')');
         return result.toString();
     }
@@ -278,9 +282,9 @@ public class MoveImpl extends AnimationImpl implements Move {
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
-        if (getAccessID() != null && !getAccessID().isEmpty()) {
+        if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
-            if (jsonValue.isEmpty()) {
+            if (jsonValue.equals("")) {
                 return;
             }
         } else {
@@ -304,7 +308,7 @@ public class MoveImpl extends AnimationImpl implements Move {
                         if (xValue.indexOf("$") == 0) {
                             xValue = ((JSONObject) jsonObject).optString(xValue.substring(1));
                             // System.out.println("stimmt "+xValue);
-                            if (xValue.isEmpty()) {
+                            if (xValue.equals("")) {
                                 xValue = "0"; // Set shift in x-direction to zero
                             } else {
                                 // compute the distance between bounding box and origin
@@ -335,7 +339,7 @@ public class MoveImpl extends AnimationImpl implements Move {
                     if (yValue != null) {
                         if (yValue.indexOf("$") == 0) {
                             yValue = ((JSONObject) jsonObject).optString(yValue.substring(1));
-                            if (yValue.isEmpty()) {
+                            if (yValue.equals("")) {
                                 yValue = "0"; // Set shift in x-direction to zero
                             } else {
                                 // compute the distance between bounding box and origin
@@ -384,7 +388,7 @@ public class MoveImpl extends AnimationImpl implements Move {
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
-            if (getKey() == null || getKey().isEmpty()) {
+            if (getKey() == null || getKey().equals("")) {
                 setKey(svgElementID);
             } else {
                 String jsonKey = getKey();
@@ -405,12 +409,12 @@ public class MoveImpl extends AnimationImpl implements Move {
             hashMapList = new HashMap<String, HashMap<String, String>>();
     
             // If the attribute is null, set the default value to the empty string
-            if (getX_range() == null) {
-                setX_range("");
+            if (getXRange() == null) {
+                setXRange("");
             }
     
-            if (getY_range() == null) {
-                setY_range("");
+            if (getYRange() == null) {
+                setYRange("");
             }
             if (getInput() == null) {
                 setInput("");
@@ -419,9 +423,9 @@ public class MoveImpl extends AnimationImpl implements Move {
             ArrayList<String> outputList, inputList;
             inputList = currentMapAnimation.attributeParser(getInput(), true);
     
-            outputList = computeRange(getX_range(), inputList.size());
+            outputList = computeRange(getXRange(), inputList.size());
             hashMapList.put("x_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = computeRange(getY_range(), inputList.size());
+            outputList = computeRange(getYRange(), inputList.size());
             hashMapList.put("y_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
         }
     }

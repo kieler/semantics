@@ -33,9 +33,9 @@ import org.json.JSONObject;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getFill_color <em>Fill color</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getStroke_color <em>Stroke color</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getStroke_width <em>Stroke width</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getFillColor <em>Fill Color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getStrokeColor <em>Stroke Color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.ColorizeImpl#getStrokeWidth <em>Stroke Width</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,14 +53,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     protected static final String FILL_COLOR_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getFill_color() <em>Fill color</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getFill_color()
+     * The cached value of the '{@link #getFillColor() <em>Fill Color</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFillColor()
      * @generated
      * @ordered
      */
-    protected String fill_color = FILL_COLOR_EDEFAULT;
+    protected String fillColor = FILL_COLOR_EDEFAULT;
 
     /**
      * The default value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute. <!--
@@ -73,14 +73,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     protected static final String STROKE_COLOR_EDEFAULT = "";
 
     /**
-     * The cached value of the '{@link #getStroke_color() <em>Stroke color</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getStroke_color()
+     * The cached value of the '{@link #getStrokeColor() <em>Stroke Color</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStrokeColor()
      * @generated
      * @ordered
      */
-    protected String stroke_color = STROKE_COLOR_EDEFAULT;
+    protected String strokeColor = STROKE_COLOR_EDEFAULT;
 
     /**
      * The default value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute. <!--
@@ -93,14 +93,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     protected static final String STROKE_WIDTH_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getStroke_width() <em>Stroke width</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getStroke_width()
+     * The cached value of the '{@link #getStrokeWidth() <em>Stroke Width</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStrokeWidth()
      * @generated
      * @ordered
      */
-    protected String stroke_width = STROKE_WIDTH_EDEFAULT;
+    protected String strokeWidth = STROKE_WIDTH_EDEFAULT;
 
     /**
      * The hashmap for mapping the input values to output
@@ -127,60 +127,66 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getFill_color() {
-        return fill_color;
+    public String getFillColor() {
+        return fillColor;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setFill_color(String newFill_color) {
-        String oldFill_color = fill_color;
-        fill_color = newFill_color;
+    public void setFillColor(String newFillColor) {
+        String oldFillColor = fillColor;
+        fillColor = newFillColor;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__FILL_COLOR, oldFill_color, fill_color));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__FILL_COLOR, oldFillColor, fillColor));
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getStroke_color() {
-        return stroke_color;
+    public String getStrokeColor() {
+        return strokeColor;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setStroke_color(String newStroke_color) {
-        String oldStroke_color = stroke_color;
-        stroke_color = newStroke_color;
+    public void setStrokeColor(String newStrokeColor) {
+        String oldStrokeColor = strokeColor;
+        strokeColor = newStrokeColor;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_COLOR, oldStroke_color, stroke_color));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_COLOR, oldStrokeColor, strokeColor));
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getStroke_width() {
-        return stroke_width;
+    public String getStrokeWidth() {
+        return strokeWidth;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setStroke_width(String newStroke_width) {
-        String oldStroke_width = stroke_width;
-        stroke_width = newStroke_width;
+    public void setStrokeWidth(String newStrokeWidth) {
+        String oldStrokeWidth = strokeWidth;
+        strokeWidth = newStrokeWidth;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_WIDTH, oldStroke_width, stroke_width));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STROKE_WIDTH, oldStrokeWidth, strokeWidth));
     }
 
     /**
@@ -192,11 +198,11 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case MappingPackage.COLORIZE__FILL_COLOR:
-                return getFill_color();
+                return getFillColor();
             case MappingPackage.COLORIZE__STROKE_COLOR:
-                return getStroke_color();
+                return getStrokeColor();
             case MappingPackage.COLORIZE__STROKE_WIDTH:
-                return getStroke_width();
+                return getStrokeWidth();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -209,13 +215,13 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case MappingPackage.COLORIZE__FILL_COLOR:
-                setFill_color((String)newValue);
+                setFillColor((String)newValue);
                 return;
             case MappingPackage.COLORIZE__STROKE_COLOR:
-                setStroke_color((String)newValue);
+                setStrokeColor((String)newValue);
                 return;
             case MappingPackage.COLORIZE__STROKE_WIDTH:
-                setStroke_width((String)newValue);
+                setStrokeWidth((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -229,13 +235,13 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     public void eUnset(int featureID) {
         switch (featureID) {
             case MappingPackage.COLORIZE__FILL_COLOR:
-                setFill_color(FILL_COLOR_EDEFAULT);
+                setFillColor(FILL_COLOR_EDEFAULT);
                 return;
             case MappingPackage.COLORIZE__STROKE_COLOR:
-                setStroke_color(STROKE_COLOR_EDEFAULT);
+                setStrokeColor(STROKE_COLOR_EDEFAULT);
                 return;
             case MappingPackage.COLORIZE__STROKE_WIDTH:
-                setStroke_width(STROKE_WIDTH_EDEFAULT);
+                setStrokeWidth(STROKE_WIDTH_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -249,11 +255,11 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     public boolean eIsSet(int featureID) {
         switch (featureID) {
             case MappingPackage.COLORIZE__FILL_COLOR:
-                return FILL_COLOR_EDEFAULT == null ? fill_color != null : !FILL_COLOR_EDEFAULT.equals(fill_color);
+                return FILL_COLOR_EDEFAULT == null ? fillColor != null : !FILL_COLOR_EDEFAULT.equals(fillColor);
             case MappingPackage.COLORIZE__STROKE_COLOR:
-                return STROKE_COLOR_EDEFAULT == null ? stroke_color != null : !STROKE_COLOR_EDEFAULT.equals(stroke_color);
+                return STROKE_COLOR_EDEFAULT == null ? strokeColor != null : !STROKE_COLOR_EDEFAULT.equals(strokeColor);
             case MappingPackage.COLORIZE__STROKE_WIDTH:
-                return STROKE_WIDTH_EDEFAULT == null ? stroke_width != null : !STROKE_WIDTH_EDEFAULT.equals(stroke_width);
+                return STROKE_WIDTH_EDEFAULT == null ? strokeWidth != null : !STROKE_WIDTH_EDEFAULT.equals(strokeWidth);
         }
         return super.eIsSet(featureID);
     }
@@ -267,12 +273,12 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (fill_color: ");
-        result.append(fill_color);
-        result.append(", stroke_color: ");
-        result.append(stroke_color);
-        result.append(", stroke_width: ");
-        result.append(stroke_width);
+        result.append(" (fillColor: ");
+        result.append(fillColor);
+        result.append(", strokeColor: ");
+        result.append(strokeColor);
+        result.append(", strokeWidth: ");
+        result.append(strokeWidth);
         result.append(')');
         return result.toString();
     }
@@ -290,9 +296,9 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
-        if (getAccessID() != null && !getAccessID().isEmpty()) {
+        if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
-            if (jsonValue.isEmpty()) {
+            if (jsonValue.equals("")) {
                 return;
             }
         } else {
@@ -351,7 +357,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
-            if (getKey() == null || getKey().isEmpty()) {
+            if (getKey() == null || getKey().equals("")) {
                 setKey(svgElementID);
             } else {
                 String jsonKey = getKey();
@@ -374,14 +380,14 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
             this.hashMapList = new HashMap<String, HashMap<String, String>>();
             
             // Initialize values if necessary
-            if (getFill_color() == null) {
-                setFill_color("");
+            if (getFillColor() == null) {
+                setFillColor("");
             }
-            if (getStroke_color() == null) {
-                setStroke_color("");
+            if (getStrokeColor() == null) {
+                setStrokeColor("");
             }
-            if (getStroke_width() == null) {
-                setStroke_width("");
+            if (getStrokeWidth() == null) {
+                setStrokeWidth("");
             }
             if (getInput() == null) {
                 setInput("");
@@ -392,11 +398,11 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
             inputList = currentMapAnimation.attributeParser(getInput(), true);
             
             // Map input values to output values.
-            outputList = currentMapAnimation.attributeParser(getFill_color(), false);
+            outputList = currentMapAnimation.attributeParser(getFillColor(), false);
             this.hashMapList.put("fill_color", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = currentMapAnimation.attributeParser(getStroke_color(), false);
+            outputList = currentMapAnimation.attributeParser(getStrokeColor(), false);
             this.hashMapList.put("stroke_color", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = currentMapAnimation.attributeParser(getStroke_width(), false);
+            outputList = currentMapAnimation.attributeParser(getStrokeWidth(), false);
             this.hashMapList.put("stroke_width", currentMapAnimation.mapInputToOutput(inputList, outputList));
             
         } else {

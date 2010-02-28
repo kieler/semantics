@@ -15,9 +15,9 @@ package de.cau.cs.kieler.kev.mapping;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getText_value <em>Text value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getFont_size <em>Font size</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getFont_family <em>Font family</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getTextValue <em>Text Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getFontSize <em>Font Size</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Text#getFontFamily <em>Font Family</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,82 +27,82 @@ package de.cau.cs.kieler.kev.mapping;
  */
 public interface Text extends Animation {
     /**
-     * Returns the value of the '<em><b>Text value</b></em>' attribute.
+     * Returns the value of the '<em><b>Text Value</b></em>' attribute.
      * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Text value</em>' attribute isn't clear,
+     * If the meaning of the '<em>Text Value</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Text value</em>' attribute.
-     * @see #setText_value(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_Text_value()
+     * @return the value of the '<em>Text Value</em>' attribute.
+     * @see #setTextValue(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_TextValue()
      * @model default=""
      * @generated
      */
-    String getText_value();
+    String getTextValue();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getText_value <em>Text value</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getTextValue <em>Text Value</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Text value</em>' attribute.
-     * @see #getText_value()
+     * @param value the new value of the '<em>Text Value</em>' attribute.
+     * @see #getTextValue()
      * @generated
      */
-    void setText_value(String value);
+    void setTextValue(String value);
 
     /**
-     * Returns the value of the '<em><b>Font size</b></em>' attribute.
+     * Returns the value of the '<em><b>Font Size</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Font size</em>' attribute isn't clear,
+     * If the meaning of the '<em>Font Size</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Font size</em>' attribute.
-     * @see #setFont_size(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_Font_size()
+     * @return the value of the '<em>Font Size</em>' attribute.
+     * @see #setFontSize(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_FontSize()
      * @model
      * @generated
      */
-    String getFont_size();
+    String getFontSize();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getFont_size <em>Font size</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getFontSize <em>Font Size</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Font size</em>' attribute.
-     * @see #getFont_size()
+     * @param value the new value of the '<em>Font Size</em>' attribute.
+     * @see #getFontSize()
      * @generated
      */
-    void setFont_size(String value);
+    void setFontSize(String value);
 
     /**
-     * Returns the value of the '<em><b>Font family</b></em>' attribute.
+     * Returns the value of the '<em><b>Font Family</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Font family</em>' attribute isn't clear,
+     * If the meaning of the '<em>Font Family</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Font family</em>' attribute.
-     * @see #setFont_family(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_Font_family()
+     * @return the value of the '<em>Font Family</em>' attribute.
+     * @see #setFontFamily(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getText_FontFamily()
      * @model
      * @generated
      */
-    String getFont_family();
+    String getFontFamily();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getFont_family <em>Font family</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Text#getFontFamily <em>Font Family</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Font family</em>' attribute.
-     * @see #getFont_family()
+     * @param value the new value of the '<em>Font Family</em>' attribute.
+     * @see #getFontFamily()
      * @generated
      */
-    void setFont_family(String value);
+    void setFontFamily(String value);
 
 } // Text

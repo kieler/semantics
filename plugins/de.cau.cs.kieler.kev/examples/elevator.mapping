@@ -2,46 +2,46 @@
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/elevator.svg">
 
   <svgElement id="elevator">
-   <animation xsi:type="mapping:Move" input="0..100" x_range="54..54" y_range="92..-150"/>
+   <animation xsi:type="mapping:Move" input="0..100" xRange="54..54" yRange="92..-150"/>
    </svgElement>
   
   <svgElement id="signal_up">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FF0000"/>
-   <animation xsi:type="mapping:Colorize" input="false" fill_color="#009e00"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
+   <animation xsi:type="mapping:Colorize" input="false" fillColor="#009e00"/>
   </svgElement>
   
   <svgElement id="signal_down">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FF0000"/>
-    <animation xsi:type="mapping:Colorize" input="false" fill_color="#009e00"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#009e00"/>
   </svgElement>
   
   <svgElement id="signal_alarm">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FF0000"/>
-   <animation xsi:type="mapping:Colorize" input="false" fill_color="#510000"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
+   <animation xsi:type="mapping:Colorize" input="false" fillColor="#510000"/>
   </svgElement>
   
     <svgElement id="button_alarm">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FF0000"/>
-   <animation xsi:type="mapping:Colorize" input="false" fill_color="#FFFF00"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
+   <animation xsi:type="mapping:Colorize" input="false" fillColor="#FFFF00"/>
   </svgElement>
   
       <svgElement id="button_up">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#00FFFF"/>
-    <animation xsi:type="mapping:Colorize" input="false" fill_color="#7c86ff"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#00FFFF"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#7c86ff"/>
   </svgElement>
   
   <svgElement id="button_down">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#00FFFF"/>
-    <animation xsi:type="mapping:Colorize" input="false" fill_color="#7c86ff"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#00FFFF"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#7c86ff"/>
   </svgElement>
   
     <svgElement id="door_left">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FFFFFF"/>
-    <animation xsi:type="mapping:Colorize" input="false" fill_color="#353535"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FFFFFF"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#353535"/>
   </svgElement>
   
     <svgElement id="door_right">
-    <animation xsi:type="mapping:Colorize" input="true" fill_color="#FFFFFF"/>
-    <animation xsi:type="mapping:Colorize" input="false" fill_color="#353535"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FFFFFF"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#353535"/>
   </svgElement>
 </mapping:SVGFile>

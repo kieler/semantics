@@ -16,8 +16,8 @@ package de.cau.cs.kieler.kev.mapping;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kev.mapping.MovePath#getPath <em>Path</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchor_point <em>Anchor point</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.MovePath#getAuto_orientation <em>Auto orientation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchorPoint <em>Anchor Point</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.MovePath#getAutoOrientation <em>Auto Orientation</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,55 +53,55 @@ public interface MovePath extends Animation {
     void setPath(String value);
 
     /**
-     * Returns the value of the '<em><b>Anchor point</b></em>' attribute.
+     * Returns the value of the '<em><b>Anchor Point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Anchor point</em>' attribute isn't clear,
+     * If the meaning of the '<em>Anchor Point</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Anchor point</em>' attribute.
-     * @see #setAnchor_point(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMovePath_Anchor_point()
+     * @return the value of the '<em>Anchor Point</em>' attribute.
+     * @see #setAnchorPoint(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMovePath_AnchorPoint()
      * @model
      * @generated
      */
-    String getAnchor_point();
+    String getAnchorPoint();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchor_point <em>Anchor point</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAnchorPoint <em>Anchor Point</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Anchor point</em>' attribute.
-     * @see #getAnchor_point()
+     * @param value the new value of the '<em>Anchor Point</em>' attribute.
+     * @see #getAnchorPoint()
      * @generated
      */
-    void setAnchor_point(String value);
+    void setAnchorPoint(String value);
 
     /**
-     * Returns the value of the '<em><b>Auto orientation</b></em>' attribute.
+     * Returns the value of the '<em><b>Auto Orientation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Auto orientation</em>' attribute isn't clear,
+     * If the meaning of the '<em>Auto Orientation</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Auto orientation</em>' attribute.
-     * @see #setAuto_orientation(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMovePath_Auto_orientation()
+     * @return the value of the '<em>Auto Orientation</em>' attribute.
+     * @see #setAutoOrientation(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getMovePath_AutoOrientation()
      * @model
      * @generated
      */
-    String getAuto_orientation();
+    String getAutoOrientation();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAuto_orientation <em>Auto orientation</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.MovePath#getAutoOrientation <em>Auto Orientation</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Auto orientation</em>' attribute.
-     * @see #getAuto_orientation()
+     * @param value the new value of the '<em>Auto Orientation</em>' attribute.
+     * @see #getAutoOrientation()
      * @generated
      */
-    void setAuto_orientation(String value);
+    void setAutoOrientation(String value);
 
 } // MovePath

@@ -41,8 +41,8 @@ import org.w3c.dom.svg.SVGPoint;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getPath <em>Path</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAnchor_point <em>Anchor point</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAuto_orientation <em>Auto orientation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAnchorPoint <em>Anchor Point</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.impl.MovePathImpl#getAutoOrientation <em>Auto Orientation</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,35 +80,38 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
     protected static final String ANCHOR_POINT_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getAnchor_point() <em>Anchor point</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getAnchor_point()
+     * The cached value of the '{@link #getAnchorPoint() <em>Anchor Point</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnchorPoint()
      * @generated
      * @ordered
      */
-    protected String anchor_point = ANCHOR_POINT_EDEFAULT;
+    protected String anchorPoint = ANCHOR_POINT_EDEFAULT;
+    
+    
+    private Point point = null;
+
+    private HashMap<String, HashMap<String, String>> hashMapList = null;
 
     /**
-     * The default value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
+     * The default value of the '{@link #getAutoOrientation() <em>Auto Orientation</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see #getAuto_orientation()
+     * @see #getAutoOrientation()
      * @generated
      * @ordered
      */
     protected static final String AUTO_ORIENTATION_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getAuto_orientation() <em>Auto orientation</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see #getAuto_orientation()
+     * The cached value of the '{@link #getAutoOrientation() <em>Auto Orientation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAutoOrientation()
      * @generated
      * @ordered
      */
-    protected String auto_orientation = AUTO_ORIENTATION_EDEFAULT;
-
-    private HashMap<String, HashMap<String, String>> hashMapList = null;
-    Point anchorPoint = null;
+    protected String autoOrientation = AUTO_ORIENTATION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -147,41 +150,45 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getAnchor_point() {
-        return anchor_point;
+    public String getAnchorPoint() {
+        return anchorPoint;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setAnchor_point(String newAnchor_point) {
-        String oldAnchor_point = anchor_point;
-        anchor_point = newAnchor_point;
+    public void setAnchorPoint(String newAnchorPoint) {
+        String oldAnchorPoint = anchorPoint;
+        anchorPoint = newAnchorPoint;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchor_point, anchor_point));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__ANCHOR_POINT, oldAnchorPoint, anchorPoint));
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public String getAuto_orientation() {
-        return auto_orientation;
+    public String getAutoOrientation() {
+        return autoOrientation;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setAuto_orientation(String newAuto_orientation) {
-        String oldAuto_orientation = auto_orientation;
-        auto_orientation = newAuto_orientation;
+    public void setAutoOrientation(String newAutoOrientation) {
+        String oldAutoOrientation = autoOrientation;
+        autoOrientation = newAutoOrientation;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAuto_orientation, auto_orientation));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE_PATH__AUTO_ORIENTATION, oldAutoOrientation, autoOrientation));
     }
 
     /**
@@ -194,9 +201,9 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             case MappingPackage.MOVE_PATH__PATH:
                 return getPath();
             case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-                return getAnchor_point();
+                return getAnchorPoint();
             case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-                return getAuto_orientation();
+                return getAutoOrientation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -212,10 +219,10 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                 setPath((String)newValue);
                 return;
             case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-                setAnchor_point((String)newValue);
+                setAnchorPoint((String)newValue);
                 return;
             case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-                setAuto_orientation((String)newValue);
+                setAutoOrientation((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -232,10 +239,10 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                 setPath(PATH_EDEFAULT);
                 return;
             case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-                setAnchor_point(ANCHOR_POINT_EDEFAULT);
+                setAnchorPoint(ANCHOR_POINT_EDEFAULT);
                 return;
             case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-                setAuto_orientation(AUTO_ORIENTATION_EDEFAULT);
+                setAutoOrientation(AUTO_ORIENTATION_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -251,9 +258,9 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             case MappingPackage.MOVE_PATH__PATH:
                 return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
             case MappingPackage.MOVE_PATH__ANCHOR_POINT:
-                return ANCHOR_POINT_EDEFAULT == null ? anchor_point != null : !ANCHOR_POINT_EDEFAULT.equals(anchor_point);
+                return ANCHOR_POINT_EDEFAULT == null ? anchorPoint != null : !ANCHOR_POINT_EDEFAULT.equals(anchorPoint);
             case MappingPackage.MOVE_PATH__AUTO_ORIENTATION:
-                return AUTO_ORIENTATION_EDEFAULT == null ? auto_orientation != null : !AUTO_ORIENTATION_EDEFAULT.equals(auto_orientation);
+                return AUTO_ORIENTATION_EDEFAULT == null ? autoOrientation != null : !AUTO_ORIENTATION_EDEFAULT.equals(autoOrientation);
         }
         return super.eIsSet(featureID);
     }
@@ -269,10 +276,10 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (path: ");
         result.append(path);
-        result.append(", anchor_point: ");
-        result.append(anchor_point);
-        result.append(", auto_orientation: ");
-        result.append(auto_orientation);
+        result.append(", anchorPoint: ");
+        result.append(anchorPoint);
+        result.append(", autoOrientation: ");
+        result.append(autoOrientation);
         result.append(')');
         return result.toString();
     }
@@ -309,7 +316,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         //System.out.println("Mapanimation pointer: "+currentMapAnimation);
        // if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
-            if (getKey() == null || getKey().isEmpty()) {
+            if (getKey() == null || getKey().equals("")) {
                 setKey(svgElementID);
             } else {
                 String jsonKey = getKey();
@@ -331,32 +338,32 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
             if (getPath() == null) {
                 setPath("");
             }
-            if (getAuto_orientation() == null) {
-                setAuto_orientation("");
+            if (getAutoOrientation() == null) {
+                setAutoOrientation("");
             }
-            if (getAnchor_point() == null) {
-                setAnchor_point("");
+            if (getAnchorPoint() == null) {
+                setAnchorPoint("");
             }
             if (getInput() == null) {
                 setInput("");
             }
     
             // Set auto_orientation per default to false
-            if (getAuto_orientation() == null || !getAuto_orientation().equalsIgnoreCase("true")) {
-                setAuto_orientation("false");
+            if (getAutoOrientation() == null || !getAutoOrientation().equalsIgnoreCase("true")) {
+                setAutoOrientation("false");
             } else {
-                if (getAuto_orientation().equalsIgnoreCase("true")) {
+                if (getAutoOrientation().equalsIgnoreCase("true")) {
                     // This check is needed to get a valid boolean for later access
-                    setAuto_orientation("true");
+                    setAutoOrientation("true");
                 }
             }
             // Initialize the anchorpoint
-            anchorPoint = new Point();
+            point = new Point();
     
-            if (getAnchor_point() != null && !getAnchor_point().isEmpty()) {
-                if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchor_point())) {
-                    String[] anchorPointValues = getAnchor_point().split(",");
-                    anchorPoint.setLocation(Float.parseFloat(anchorPointValues[0]), Float
+            if (getAnchorPoint() != null && !getAnchorPoint().equals("")) {
+                if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchorPoint())) {
+                    String[] anchorPointValues = getAnchorPoint().split(",");
+                    point.setLocation(Float.parseFloat(anchorPointValues[0]), Float
                             .parseFloat(anchorPointValues[1]));
                 }
             }
@@ -433,9 +440,9 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
-        if (getAccessID() != null && !getAccessID().isEmpty()) {
+        if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
-            if (jsonValue.isEmpty()) {
+            if (jsonValue.equals("")) {
                 return;
             }
         } else {
@@ -464,7 +471,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                         }
                     } else {
                         xValue = Double.toString(Float.parseFloat(xValue)
-                                - locatable.getBBox().getX() - anchorPoint.getX());
+                                - locatable.getBBox().getX() - point.getX());
                     }
 
                     if (yValue == null) {
@@ -474,7 +481,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                         }
                     } else {
                         yValue = Double.toString(Float.parseFloat(yValue)
-                                - locatable.getBBox().getY() - anchorPoint.getY());
+                                - locatable.getBBox().getY() - point.getY());
                     }
 
                     String attrib = "translate(" + xValue + "," + yValue + ")";
@@ -485,12 +492,12 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                     // "BBox-Width-Height: "+locatable.getBBox().getWidth()+
                     // ", "+locatable.getBBox().getHeight());
 
-                    if (angleValue != null && !angleValue.isEmpty() && xValue != null
-                            && !xValue.isEmpty() && yValue != null && !yValue.isEmpty()) {
-                        if (getAuto_orientation().equals("true")) {
+                    if (angleValue != null && !angleValue.equals("") && xValue != null
+                            && !xValue.equals("") && yValue != null && !yValue.equals("")) {
+                        if (getAutoOrientation().equals("true")) {
                             elem.setAttribute("transform", attrib + "rotate(" + angleValue
-                                    + "," + (locatable.getBBox().getX() + anchorPoint.getX())
-                                    + "," + (locatable.getBBox().getY() + anchorPoint.getY())
+                                    + "," + (locatable.getBBox().getX() + point.getX())
+                                    + "," + (locatable.getBBox().getY() + point.getY())
                                     + ")");
                         }
                     }

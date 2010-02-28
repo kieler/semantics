@@ -283,16 +283,16 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
         String jsonValue = null;
          
         //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
-        if (getInput() != null && !getInput().isEmpty()) {
+        if (getInput() != null && !getInput().equals("")) {
             //check whether the value contains an id or not
             
             //Wenn der Key leer ist, setzt ihn per default auf die svgElementId
-            if (getKey() == null || getKey().isEmpty()) {
+            if (getKey() == null || getKey().equals("")) {
                 setKey(svgElementID);
             }
             
             //If we have an accessID, the jsonValue must be an JSONArray
-            if (getAccessID() != null && !getAccessID().isEmpty()) {
+            if (getAccessID() != null && !getAccessID().equals("")) {
                 try {
                     int pos = Integer.parseInt(getAccessID());
                     JSONArray jsonArray = ((JSONObject) jsonObject).optJSONArray(getKey());

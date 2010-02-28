@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import org.apache.batik.bridge.UpdateManager;
-import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.RunnableQueue;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -36,13 +34,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.w3c.dom.svg.SVGDocument;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.Animation;
-import de.cau.cs.kieler.kev.mapping.Colorize;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.SVGElement;
 import de.cau.cs.kieler.kev.mapping.SVGFile;
@@ -55,7 +51,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * @kieler.rating 2010-02-17 proposed yellow
  */
-public class MapAnimations {
+public final class MapAnimations {
 
     /**
      * SVGFile is an instance of the created model .mapping file.
@@ -87,7 +83,7 @@ public class MapAnimations {
     /**
      * List with animations which have to be triggered in each step, because no input values were specified
      */
-    private HashMap<String, ArrayList<Animation>> animateAlways = null;
+    private HashMap<String, ArrayList<Pair<String, Animation>>> defaultKeyToAnimationsMap = null;
     
     /**
      * The default constructor.
@@ -229,7 +225,7 @@ public class MapAnimations {
             // System.out.println("Size: "+resource.getContents().size());
             svgFile = (SVGFile) resource.getContents().get(0);
             //createHashMap(svgFile);
-            if (!svgFile.getFilename().isEmpty()) {
+            if (!svgFile.getFilename().equals("")) {
                 loadSpecifiedSVGFile(svgFile.getFilename());
             } else {
                 Activator
@@ -277,7 +273,7 @@ public class MapAnimations {
             svgFile = (SVGFile) resource.getContents().get(0);
             //createHashMap(svgFile);
 
-            if (!svgFile.getFilename().isEmpty()) {
+            if (!svgFile.getFilename().equals("")) {
                 // Filename is absolute
                 if (svgFile.getFilename().contains("file:/")
                         || svgFile.getFilename().contains(":/")) {
@@ -371,6 +367,9 @@ public class MapAnimations {
             return;
         }
         HashMap<String, ArrayList<String>> cloneMap = new HashMap<String, ArrayList<String>>();
+        
+        HashMap tempMap = new HashMap<Pair<String, String>, String>();
+        Pair<String, String> pair;
 
         svgElementsHashMap = new HashMap<String, EList<Animation>>();
         Iterator<SVGElement> elementIterator = currentMappingFile.getSvgElement().iterator();
@@ -410,28 +409,36 @@ public class MapAnimations {
         Pair<String, Animation> newPair;
         Iterator<String> it = svgElementsHashMap.keySet().iterator();
         HashMap<String, ArrayList<Pair<String, Animation>>> keyToAnimationsMap = new HashMap<String, ArrayList<Pair<String, Animation>>>();
-        animateAlways = new HashMap<String, ArrayList<Animation>>();
+        setDefaultKeyToAnimationsMap(new HashMap<String, ArrayList<Pair<String, Animation>>>());
         while (it.hasNext()) {
             Animation animation;
             svgElementID = it.next();
             Iterator<Animation> animations = svgElementsHashMap.get(svgElementID).iterator();
             while (animations.hasNext()) {
                 animation = animations.next();
-                // Save all animations to an extra list which have no input value
-                if (animation.getInput() == null || animation.getInput().isEmpty()) {
-                    if (!animateAlways.containsKey(svgElementID)) {
-                        animateAlways.put(svgElementID, new ArrayList<Animation>());
-                    }
-                    animateAlways.get(svgElementID).add(animation);
-                }
-                if (!keyToAnimationsMap.containsKey(animation.getKey())) {
-                    keyToAnimationsMap.put(animation.getKey(), new ArrayList<Pair<String, Animation>>());
-                }
                 newPair = new Pair<String, Animation>(svgElementID, animation);
-                keyToAnimationsMap.get(animation.getKey()).add(newPair);
+                if (animation.getInput() == null || animation.getInput().equals("")) {
+                    // Save all animations to an extra list which have no input value
+                    if (!getDefaultKeyToAnimationsMap().containsKey(animation.getKey())) {
+                        getDefaultKeyToAnimationsMap().put(animation.getKey(), new ArrayList<Pair<String, Animation>>());
+                    }
+                    getDefaultKeyToAnimationsMap().get(animation.getKey()).add(newPair);
+                } else {
+                    if (!keyToAnimationsMap.containsKey(animation.getKey())) {
+                        keyToAnimationsMap.put(animation.getKey(), new ArrayList<Pair<String, Animation>>());
+                    }
+                    keyToAnimationsMap.get(animation.getKey()).add(newPair);
+                }
             }
         }
 // --------------------- Output for Testing -----------------------------------------------
+//        System.out.println(defaultKeyToAnimationsMap.keySet());
+//        Iterator<String> it1 = defaultKeyToAnimationsMap.keySet().iterator();//svgElementsHashMap.keySet().iterator();
+//        while (it1.hasNext()) {
+//            String name = it1.next();
+//            System.out.println("defaultKey Name: " + name + " Number of Animations: "+defaultKeyToAnimationsMap.get(name).size());
+//            //for (String s : svgElementsHashMap.get(name)) System.out.println("clone: "+s);
+//        }
 //        System.out.println(keyToAnimationsMap.keySet());
 //        Iterator<String> it2 = keyToAnimationsMap.keySet().iterator();//svgElementsHashMap.keySet().iterator();
 //        while (it2.hasNext()) {
@@ -442,7 +449,7 @@ public class MapAnimations {
 //      --------------------- Output for Testing -----------------------------------------------
 
         // Now all possible JSON keys need to  be mapped to possible input values and afterwards to all possible animations
-        jsonKeyToInputValuesToAnimationsMap = new HashMap<String, HashMap<String, ArrayList<Pair<String, Animation>>>>();
+        setJsonKeyToInputValuesToAnimationsMap(new HashMap<String, HashMap<String, ArrayList<Pair<String, Animation>>>>());
         HashMap<String, ArrayList<Pair<String, Animation>>> inputValuesToAnimationsMap;
         //2), 3) create a inputValuesToAnimationsMap for each JSON key
         it = keyToAnimationsMap.keySet().iterator();
@@ -460,7 +467,7 @@ public class MapAnimations {
             }
         
             //4)
-            jsonKeyToInputValuesToAnimationsMap.put(jsonKey, inputValuesToAnimationsMap);
+            getJsonKeyToInputValuesToAnimationsMap().put(jsonKey, inputValuesToAnimationsMap);
 //            System.out.println("Input values for Key: " + jsonKey + " " + inputValuesToAnimationsMap.keySet());
         }  
 //        System.out.println("Number of SVG-Elements (including clones): "+svgElementsHashMap.keySet().size());
@@ -483,7 +490,7 @@ public class MapAnimations {
         
     }
     
-    private JSONObject lastObject = null;
+    private JSONObject oldJSONObject = null;
     
     /**
      * Applies the Animations for all JSON-Keys which exists in the mapping file.
@@ -494,96 +501,156 @@ public class MapAnimations {
     public void doAnimations(final JSONObject jsonObject) {
         // Check whether the HashMap has been created
         if (svgElementsHashMap != null) {
+            RunnableQueue runnableQueue = EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue();
+            JSONObject newJSONObject;
             try {
-                // Now we have to make the JSONobject flat, so that we can address all key by "."
-                // notation.
-                JSONObject resultObject, flatJSONObject;
-                flatJSONObject = makeItFlat(jsonObject);
-                // if the lastObject exists, we want to compare the actual jsonOject and the last one to compute the difference between them
-//                if (lastObject != null) {
-//                    resultObject = compareDifference(lastObject, flatJSONObject);
-//                } else {
-//                    resultObject = flatJSONObject;
-//                }
-                
-//                lastObject = flatJSONObject;
-                resultObject = flatJSONObject;
-                
-                Iterator<String> jsonKeyIterator;
-                jsonKeyIterator = resultObject.keys();
-                String jsonKey, jsonValue, svgElementID;
-                Animation animation;
-                
+//                System.out.println("Old object: "+oldJSONObject);
+                newJSONObject = makeItFlat(jsonObject);
+                RunnableAnimation runnableAnimation = new RunnableAnimation(oldJSONObject, newJSONObject);
+                oldJSONObject = newJSONObject;
+//                System.out.println("New object: "+newJSONObject);
 
-                RunnableQueue runnableQueue = EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue();
-                if (runnableQueue.getQueueState() == RunnableQueue.RUNNING) {
-                    runnableQueue.suspendExecution(true);
-                }
-                
-                // Now apply all animations, which have no inputvalue set -> animate always
-                // So first we apply the default values and afterwards we overwrite it with more specific ones if exists -> OVERHEAD!
-                Iterator<String> svgElementIDs = animateAlways.keySet().iterator();
-                while (svgElementIDs.hasNext()) {
-                    svgElementID = svgElementIDs.next();
-                    for (Animation ani : animateAlways.get(svgElementID)) {
-                        ani.apply(flatJSONObject, svgElementID);
-//                        System.out.println(ani);
-//                        System.out.println(flatJSONObject.optString(ani.getKey()));
-                        
-                    }
-                }
-                
-                while (jsonKeyIterator.hasNext()) {
-                    jsonKey = jsonKeyIterator.next();
-//                    System.out.println("KEY: "+jsonKey + " Value: "+jsonKeyToInputValuesToAnimationsMap.get(jsonKey));
-                    if (jsonKeyToInputValuesToAnimationsMap.containsKey(jsonKey)) {
-                        jsonValue = resultObject.optString(jsonKey);
-                        if (jsonKeyToInputValuesToAnimationsMap.get(jsonKey).containsKey(jsonValue)) {
-                            for (Pair<String, Animation> pair : jsonKeyToInputValuesToAnimationsMap.
-                                    get(jsonKey).get(resultObject.opt(jsonKey))) {
-                                svgElementID = pair.getFirst();
-                                animation = pair.getSecond();
-                                
-                                animation.apply(flatJSONObject, svgElementID);
-                            } // if this matches, we know that the jsonValue is a valid double value
-                        } else if (resultObject.optDouble(jsonKey) != Double.NaN) {
-                                Iterator<String> ranges = jsonKeyToInputValuesToAnimationsMap.get(jsonKey).keySet().iterator();
-                                String range;
-                                while (ranges.hasNext()) {
-                                    range = ranges.next();
-                                    if (valueMatchesRange(resultObject.optString(jsonKey), range)) {
-                                        for (Pair<String, Animation> pair : jsonKeyToInputValuesToAnimationsMap.
-                                                get(jsonKey).get(range)) {
-                                            svgElementID = pair.getFirst();
-                                            animation = pair.getSecond();
-                                            //System.out.println("Ist im Bereich! -> "+range+ " SVGElementID: "+svgElementID);
-
-                                            animation.apply(flatJSONObject, svgElementID);
-                                        }                                        
-                                    }
-                                }
-                            }
-                        } 
-                }
-                
-                if (runnableQueue.getQueueState() == RunnableQueue.SUSPENDED) {
-                    runnableQueue.invokeLater(new RunnableAnimation());
-                    runnableQueue.resumeExecution();
-                }
-
-                
+                runnableQueue.invokeLater(runnableAnimation);
             } catch (JSONException e) {
-                // Something went wrong with the JSONObject.
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         } else {
             Activator
-                    .reportErrorMessage("Hashmap is not initialized! -> " 
-                            + "Mapping-File may have a wrong format");
+            .reportErrorMessage("Hashmap is not initialized! -> " 
+                    + "Mapping-File may have a wrong format");
         }
     }
     
+    
+//    public void doAnimations(final JSONObject jsonObject) {
+//        // Check whether the HashMap has been created
+//        if (svgElementsHashMap != null) {
+//            try {
+//                // Now we have to make the JSONobject flat, so that we can address all key by "."
+//                // notation.
+//                JSONObject resultObject, flatJSONObject;
+//                flatJSONObject = makeItFlat(jsonObject);
+//                
+//                HashSet<String> alreadyAppliedAnimationTypes = new HashSet<String>();
+//                
+//                // if the lastObject exists, we want to compare the actual jsonOject and the last one to compute the difference between them
+////                if (lastObject != null) {
+////                    resultObject = compareDifference(lastObject, flatJSONObject);
+////                } else {
+////                    resultObject = flatJSONObject;
+////                }
+//                
+////                lastObject = flatJSONObject;
+//                resultObject = flatJSONObject;
+//               
+//                Iterator<String> jsonKeyIterator;
+//                jsonKeyIterator = resultObject.keys();
+//                String jsonKey, jsonValue, svgElementID;
+//                Animation animation;
+//                
+//                
+//                
+//
+//                RunnableQueue runnableQueue = EclipseJSVGCanvas.getInstance().getUpdateManager().getUpdateRunnableQueue();
+//                if (runnableQueue.getQueueState() == RunnableQueue.RUNNING) {
+//                    runnableQueue.suspendExecution(true);
+//                }
+//
+//                int aniCounter = 0;
+//                while (jsonKeyIterator.hasNext()) {
+//                    
+//                    
+//                    
+//                
+//                    jsonKey = jsonKeyIterator.next();
+//                    jsonValue = resultObject.optString(jsonKey);
+//                    //System.out.println("KEY: "+jsonKey + " Value: "+jsonKeyToInputValuesToAnimationsMap.get(jsonKey));
+//                    if (getJsonKeyToInputValuesToAnimationsMap().containsKey(jsonKey)) {
+//                        if (getJsonKeyToInputValuesToAnimationsMap().get(jsonKey).containsKey(jsonValue)) {
+//                            for (Pair<String, Animation> pair : getJsonKeyToInputValuesToAnimationsMap().
+//                                    get(jsonKey).get(resultObject.opt(jsonKey))) {
+//                                svgElementID = pair.getFirst();
+//                                animation = pair.getSecond();
+//                                
+////                                System.out.println("Type of Animation: "+animation.eClass().getName());
+//                                alreadyAppliedAnimationTypes.add(animation.eClass().getName()); // It's the type of the animation e.g. Opacity
+//                                animation.apply(flatJSONObject, svgElementID);
+//                                aniCounter++;
+//                            }
+//                        } else if (resultObject.optDouble(jsonKey) != Double.NaN) {
+////                            System.out.println(jsonKeyToInputValuesToAnimationsMap.get(jsonKey).keySet());
+//                            Iterator<String> ranges = getJsonKeyToInputValuesToAnimationsMap().get(jsonKey).keySet().iterator();
+//                            String range;
+//                            while (ranges.hasNext()) {
+//                                range = ranges.next();
+//                                if (valueMatchesRange(resultObject.optString(jsonKey), range)) {
+//                                    for (Pair<String, Animation> pair : getJsonKeyToInputValuesToAnimationsMap().
+//                                            get(jsonKey).get(range)) {
+//                                        svgElementID = pair.getFirst();
+//                                        animation = pair.getSecond();
+////                                        System.out.println("Ist im Bereich! -> "+range+ " SVGElementID: "+svgElementID);
+//                                        
+//                                        animation.apply(flatJSONObject, svgElementID);
+//                                        alreadyAppliedAnimationTypes.add(animation.eClass().getName()); // It's the type of the animation e.g. Opacity
+//                                        aniCounter++;
+//                                    }
+//                                }
+//                            } 
+//                        }
+//                        if (getDefaultKeyToAnimationsMap().containsKey(jsonKey)) { // Check if an default animation exists
+//                            // if this matches, we know that the jsonValue is a valid double value
+////                            System.out.println("Fall 1 -> "+jsonKey+ " Number of Animations: "+defaultKeyToAnimationsMap.get(jsonKey).size() );
+//                            for (Pair<String, Animation> pair : getDefaultKeyToAnimationsMap().get(jsonKey)) {
+//                                svgElementID = pair.getFirst();
+//                                animation = pair.getSecond();
+//
+//                                // Apply only these animations, which have not applied before.
+//                                if (!alreadyAppliedAnimationTypes.contains(animation.eClass().getName())) {
+//                                    animation.apply(flatJSONObject, svgElementID);
+////                                    System.out.println("Für "+animation.eClass().getName()+" wurde kein wert gefunden -> wende Defaultwert an!");
+//                                    aniCounter++;
+//                                }
+//                            }
+//                        }
+//                    } else if (getDefaultKeyToAnimationsMap().containsKey(jsonKey)) {
+//                        // if this matches, we know that the jsonValue is a valid double value
+//                        System.out.println("Fall 2 -> Range: "+jsonKey+ " Number of Animations: "+getDefaultKeyToAnimationsMap().get(jsonKey).size() );
+//                        for (Pair<String, Animation> pair : getDefaultKeyToAnimationsMap().get(jsonKey)) {
+//                            svgElementID = pair.getFirst();
+//                            animation = pair.getSecond();
+//
+//                            // Apply only these animations, which have not applied before.
+//                            if (!alreadyAppliedAnimationTypes.contains(animation.eClass().getName())) {
+//                                animation.apply(flatJSONObject, svgElementID);
+////                                System.out.println("Für "+animation.eClass().getName()+" wurde kein wert gefunden -> wende Defaultwert an!");
+//                                aniCounter++;
+//                            }
+//                        }                        
+//                    } 
+////                    System.out.println("Applied Animation-Types in this Tick: "+alreadyAppliedAnimationTypes);
+//                    alreadyAppliedAnimationTypes.clear(); // Clear hashset for next json value
+//
+//                }
+//                System.out.println("Es wurden "+aniCounter+ " Animationen in diesem Tick ausgeführt!");
+//                if (runnableQueue.getQueueState() == RunnableQueue.SUSPENDED) {
+//                    runnableQueue.invokeLater(new RunnableAnimation());
+//                    runnableQueue.resumeExecution();
+//                }
+//
+//                
+//            } catch (JSONException e) {
+//                // Something went wrong with the JSONObject.
+//            }
+//        } else {
+//            Activator
+//                    .reportErrorMessage("Hashmap is not initialized! -> " 
+//                            + "Mapping-File may have a wrong format");
+//        }
+//    }
+    
     public boolean valueMatchesRange(String value, String range) {
-        if (range.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
+        if (range.matches("[-]?\\d+[.]{2,3}[-]?\\d+") && !value.equals("")) {
             Scanner s = new Scanner(range).useDelimiter("[.]{2,3}");
             double leftValue, rightValue, currentValue;
             leftValue = s.nextDouble();
@@ -866,19 +933,19 @@ public class MapAnimations {
         String[] keys = JSONObject.getNames(inputObject);
         if (keys == null) {
             // If there exists no key try it must be an empty json object
-            if (!adressKey.isEmpty()) {
+            if (!adressKey.equals("")) {
                 flatOne.put(adressKey, new JSONObject());
             }
         } else {
             for (String key : keys) {
                 if (inputObject.optJSONObject(key) == null) {
-                    if (adressKey.isEmpty()) {
+                    if (adressKey.equals("")) {
                         flatOne.put(key, inputObject.optString(key));
                     } else {
                         flatOne.put(adressKey + "." + key, inputObject.optString(key));
                     }
                 } else {
-                    if (adressKey.isEmpty()) {
+                    if (adressKey.equals("")) {
                         makeItFlat(flatOne, key, inputObject.optJSONObject(key));
                         // Add the toplevel objects to the result object (that are the svgelement
                         // id's)
@@ -891,5 +958,34 @@ public class MapAnimations {
         }
         // System.out.println(flatOne);
         return flatOne;
+    }
+
+    /**
+     * @param jsonKeyToInputValuesToAnimationsMap the jsonKeyToInputValuesToAnimationsMap to set
+     */
+    public void setJsonKeyToInputValuesToAnimationsMap(
+            HashMap<String, HashMap<String, ArrayList<Pair<String, Animation>>>> jsonKeyToInputValuesToAnimationsMap) {
+        this.jsonKeyToInputValuesToAnimationsMap = jsonKeyToInputValuesToAnimationsMap;
+    }
+
+    /**
+     * @return the jsonKeyToInputValuesToAnimationsMap
+     */
+    public HashMap<String, HashMap<String, ArrayList<Pair<String, Animation>>>> getJsonKeyToInputValuesToAnimationsMap() {
+        return jsonKeyToInputValuesToAnimationsMap;
+    }
+
+    /**
+     * @param defaultKeyToAnimationsMap the defaultKeyToAnimationsMap to set
+     */
+    public void setDefaultKeyToAnimationsMap(HashMap<String, ArrayList<Pair<String, Animation>>> defaultKeyToAnimationsMap) {
+        this.defaultKeyToAnimationsMap = defaultKeyToAnimationsMap;
+    }
+
+    /**
+     * @return the defaultKeyToAnimationsMap
+     */
+    public HashMap<String, ArrayList<Pair<String, Animation>>> getDefaultKeyToAnimationsMap() {
+        return defaultKeyToAnimationsMap;
     }
 }

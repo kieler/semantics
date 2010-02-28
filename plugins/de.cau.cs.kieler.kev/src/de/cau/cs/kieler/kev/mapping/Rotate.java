@@ -15,8 +15,8 @@ package de.cau.cs.kieler.kev.mapping;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngle_range <em>Angle range</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngleRange <em>Angle Range</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchorPoint <em>Anchor Point</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,55 +26,55 @@ package de.cau.cs.kieler.kev.mapping;
  */
 public interface Rotate extends Animation {
     /**
-     * Returns the value of the '<em><b>Angle range</b></em>' attribute.
+     * Returns the value of the '<em><b>Angle Range</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Angle range</em>' attribute isn't clear,
+     * If the meaning of the '<em>Angle Range</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Angle range</em>' attribute.
-     * @see #setAngle_range(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getRotate_Angle_range()
+     * @return the value of the '<em>Angle Range</em>' attribute.
+     * @see #setAngleRange(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getRotate_AngleRange()
      * @model
      * @generated
      */
-    String getAngle_range();
+    String getAngleRange();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngle_range <em>Angle range</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAngleRange <em>Angle Range</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Angle range</em>' attribute.
-     * @see #getAngle_range()
+     * @param value the new value of the '<em>Angle Range</em>' attribute.
+     * @see #getAngleRange()
      * @generated
      */
-    void setAngle_range(String value);
+    void setAngleRange(String value);
 
     /**
-     * Returns the value of the '<em><b>Anchor point</b></em>' attribute.
+     * Returns the value of the '<em><b>Anchor Point</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Anchor point</em>' attribute isn't clear,
+     * If the meaning of the '<em>Anchor Point</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Anchor point</em>' attribute.
-     * @see #setAnchor_point(String)
-     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getRotate_Anchor_point()
+     * @return the value of the '<em>Anchor Point</em>' attribute.
+     * @see #setAnchorPoint(String)
+     * @see de.cau.cs.kieler.kev.mapping.MappingPackage#getRotate_AnchorPoint()
      * @model
      * @generated
      */
-    String getAnchor_point();
+    String getAnchorPoint();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchor_point <em>Anchor point</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kev.mapping.Rotate#getAnchorPoint <em>Anchor Point</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Anchor point</em>' attribute.
-     * @see #getAnchor_point()
+     * @param value the new value of the '<em>Anchor Point</em>' attribute.
+     * @see #getAnchorPoint()
      * @generated
      */
-    void setAnchor_point(String value);
+    void setAnchorPoint(String value);
 
 } // Rotate

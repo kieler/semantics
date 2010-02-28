@@ -15,14 +15,12 @@ package de.cau.cs.kieler.kev.extension.dataobserver;
 import java.util.Iterator;
 
 import org.apache.batik.util.RunnableQueue;
-import org.apache.batik.util.RunnableQueue.RunnableQueueState;
 import org.eclipse.ui.PartInitException;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.SVGElement;
 import de.cau.cs.kieler.kev.mapping.SVGFile;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
-import de.cau.cs.kieler.kev.mapping.animations.RunnableAnimation;
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 import de.cau.cs.kieler.kev.views.KevView;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;

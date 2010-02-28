@@ -296,7 +296,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMovePath_Anchor_point() {
+    public EAttribute getMovePath_AnchorPoint() {
         return (EAttribute)movePathEClass.getEStructuralFeatures().get(1);
     }
 
@@ -305,7 +305,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMovePath_Auto_orientation() {
+    public EAttribute getMovePath_AutoOrientation() {
         return (EAttribute)movePathEClass.getEStructuralFeatures().get(2);
     }
 
@@ -323,7 +323,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getRotate_Angle_range() {
+    public EAttribute getRotate_AngleRange() {
         return (EAttribute)rotateEClass.getEStructuralFeatures().get(0);
     }
 
@@ -332,7 +332,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getRotate_Anchor_point() {
+    public EAttribute getRotate_AnchorPoint() {
         return (EAttribute)rotateEClass.getEStructuralFeatures().get(1);
     }
 
@@ -350,7 +350,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMove_X_range() {
+    public EAttribute getMove_XRange() {
         return (EAttribute)moveEClass.getEStructuralFeatures().get(0);
     }
 
@@ -359,7 +359,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMove_Y_range() {
+    public EAttribute getMove_YRange() {
         return (EAttribute)moveEClass.getEStructuralFeatures().get(1);
     }
 
@@ -377,7 +377,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getColorize_Fill_color() {
+    public EAttribute getColorize_FillColor() {
         return (EAttribute)colorizeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -386,7 +386,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getColorize_Stroke_color() {
+    public EAttribute getColorize_StrokeColor() {
         return (EAttribute)colorizeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -395,7 +395,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getColorize_Stroke_width() {
+    public EAttribute getColorize_StrokeWidth() {
         return (EAttribute)colorizeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -413,7 +413,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getText_Text_value() {
+    public EAttribute getText_TextValue() {
         return (EAttribute)textEClass.getEStructuralFeatures().get(0);
     }
 
@@ -422,7 +422,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getText_Font_size() {
+    public EAttribute getText_FontSize() {
         return (EAttribute)textEClass.getEStructuralFeatures().get(1);
     }
 
@@ -431,7 +431,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getText_Font_family() {
+    public EAttribute getText_FontFamily() {
         return (EAttribute)textEClass.getEStructuralFeatures().get(2);
     }
 
@@ -579,26 +579,26 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         initEClass(movePathEClass, MovePath.class, "MovePath", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMovePath_Path(), ecorePackage.getEString(), "path", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getMovePath_Anchor_point(), ecorePackage.getEString(), "anchor_point", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getMovePath_Auto_orientation(), ecorePackage.getEString(), "auto_orientation", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMovePath_AnchorPoint(), ecorePackage.getEString(), "anchorPoint", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMovePath_AutoOrientation(), ecorePackage.getEString(), "autoOrientation", null, 0, 1, MovePath.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(rotateEClass, Rotate.class, "Rotate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getRotate_Angle_range(), ecorePackage.getEString(), "angle_range", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getRotate_Anchor_point(), ecorePackage.getEString(), "anchor_point", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRotate_AngleRange(), ecorePackage.getEString(), "angleRange", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRotate_AnchorPoint(), ecorePackage.getEString(), "anchorPoint", null, 0, 1, Rotate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(moveEClass, Move.class, "Move", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMove_X_range(), ecorePackage.getEString(), "x_range", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getMove_Y_range(), ecorePackage.getEString(), "y_range", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMove_XRange(), ecorePackage.getEString(), "xRange", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMove_YRange(), ecorePackage.getEString(), "yRange", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(colorizeEClass, Colorize.class, "Colorize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getColorize_Fill_color(), ecorePackage.getEString(), "fill_color", null, 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getColorize_Stroke_color(), ecorePackage.getEString(), "stroke_color", "", 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getColorize_Stroke_width(), ecorePackage.getEString(), "stroke_width", null, 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getColorize_FillColor(), ecorePackage.getEString(), "fillColor", null, 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getColorize_StrokeColor(), ecorePackage.getEString(), "strokeColor", "", 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getColorize_StrokeWidth(), ecorePackage.getEString(), "strokeWidth", null, 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getText_Text_value(), ecorePackage.getEString(), "text_value", "", 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getText_Font_size(), ecorePackage.getEString(), "font_size", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getText_Font_family(), ecorePackage.getEString(), "font_family", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getText_TextValue(), ecorePackage.getEString(), "textValue", "", 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getText_FontSize(), ecorePackage.getEString(), "fontSize", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getText_FontFamily(), ecorePackage.getEString(), "fontFamily", null, 0, 1, Text.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(moveToEClass, MoveTo.class, "MoveTo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
