@@ -88,7 +88,7 @@ public class KitsProjectCreator extends DefaultProjectCreator {
 		output.addOutlet(new Outlet(false, getEncoding(), null, true, project.getLocation().makeAbsolute().toOSString()));
 
 		XpandExecutionContextImpl execCtx = new XpandExecutionContextImpl(output, null);
-		execCtx.setFileEncoding("UTF-8");
+		execCtx.setFileEncoding("ISO-8859-1");
 		execCtx.registerMetaModel(new JavaBeansMetaModel());
 
 		XpandFacade facade = XpandFacade.create(execCtx);

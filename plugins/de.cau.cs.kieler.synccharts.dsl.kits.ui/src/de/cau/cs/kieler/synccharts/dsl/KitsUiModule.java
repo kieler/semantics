@@ -29,19 +29,21 @@ public class KitsUiModule extends
         return KitsLabelProvider.class;
     }
 
-    /**
-     * Register a text style for transition types that are not highlighted may
-     * be that is not necessary as we will use the keyword text style that is
-     * registered in the default highlighting configuration
-     * 
-     * @return custom text type registration
-     */
-    public Class<? extends ILexicalHighlightingConfiguration> bindILexicalHighlightingConfiguration() {
-        return TransitionTypeHighlighter.class;
-    }
-
-    public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-        return AntlrTokenToAttributeIdMapper.class;
-    }
+	// /**
+	// * Register a text style for transition types that are not highlighted may
+	// * be that is not necessary as we will use the keyword text style that is
+	// * registered in the default highlighting configuration
+	// *
+	// * @return custom text type registration
+	// */
+	// public Class<? extends ILexicalHighlightingConfiguration>
+	// bindILexicalHighlightingConfiguration() {
+	// return TransitionTypeHighlighter.class;
+	// }
+	//
+	// public Class<? extends AbstractAntlrTokenToAttributeIdMapper>
+	// bindAbstractAntlrTokenToAttributeIdMapper() {
+	// return AntlrTokenToAttributeIdMapper.class;
+	// }
 
 }
