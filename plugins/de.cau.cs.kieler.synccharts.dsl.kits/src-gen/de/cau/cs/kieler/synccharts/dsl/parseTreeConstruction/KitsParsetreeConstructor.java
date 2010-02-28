@@ -39,38 +39,37 @@ protected class ThisRootNode extends RootToken {
 			case 1: return new State_Group(this, this, 1, inst);
 			case 2: return new Transition_Group(this, this, 2, inst);
 			case 3: return new TextualTransition_Group(this, this, 3, inst);
-			case 4: return new TransitionState_Group(this, this, 4, inst);
-			case 5: return new ValuedObject_Alternatives(this, this, 5, inst);
-			case 6: return new Variable_Group(this, this, 6, inst);
-			case 7: return new Signal_Group(this, this, 7, inst);
-			case 8: return new Action_Group(this, this, 8, inst);
-			case 9: return new Effect_Alternatives(this, this, 9, inst);
-			case 10: return new Emission_Group(this, this, 10, inst);
-			case 11: return new Assignment_Group(this, this, 11, inst);
-			case 12: return new SignalReference_SignalAssignment(this, this, 12, inst);
-			case 13: return new VariableReference_VariableAssignment(this, this, 13, inst);
-			case 14: return new IntValue_ValueAssignment(this, this, 14, inst);
-			case 15: return new FloatValue_ValueAssignment(this, this, 15, inst);
-			case 16: return new BooleanValue_ValueAssignment(this, this, 16, inst);
-			case 17: return new Value_Alternatives(this, this, 17, inst);
-			case 18: return new ValOperation_Group(this, this, 18, inst);
-			case 19: return new ValueExpression_PlusOperationParserRuleCall(this, this, 19, inst);
-			case 20: return new ParanthesedValueExpression_Alternatives(this, this, 20, inst);
-			case 21: return new PlusOperation_Group(this, this, 21, inst);
-			case 22: return new MultOrDivOperation_Alternatives(this, this, 22, inst);
-			case 23: return new MultOperation_Group(this, this, 23, inst);
-			case 24: return new DivOperation_Group(this, this, 24, inst);
-			case 25: return new PreArithmOperation_Group(this, this, 25, inst);
-			case 26: return new PreOrNormalValueExpression_Alternatives(this, this, 26, inst);
-			case 27: return new CompareOperation_Group(this, this, 27, inst);
-			case 28: return new UnaryOperation_Group(this, this, 28, inst);
-			case 29: return new UnaryParanthesedOperation_Group(this, this, 29, inst);
-			case 30: return new UnaryOrNormalExpression_Alternatives(this, this, 30, inst);
-			case 31: return new AndOperation_Group(this, this, 31, inst);
-			case 32: return new OrOperation_Group(this, this, 32, inst);
-			case 33: return new ParanthesedBooleanExpression_Alternatives(this, this, 33, inst);
-			case 34: return new BooleanExpression_OrOperationParserRuleCall(this, this, 34, inst);
-			case 35: return new HostCode_Group(this, this, 35, inst);
+			case 4: return new ValuedObject_Alternatives(this, this, 4, inst);
+			case 5: return new Variable_Group(this, this, 5, inst);
+			case 6: return new Signal_Group(this, this, 6, inst);
+			case 7: return new Action_Group(this, this, 7, inst);
+			case 8: return new Effect_Alternatives(this, this, 8, inst);
+			case 9: return new Emission_Group(this, this, 9, inst);
+			case 10: return new Assignment_Group(this, this, 10, inst);
+			case 11: return new SignalReference_SignalAssignment(this, this, 11, inst);
+			case 12: return new VariableReference_VariableAssignment(this, this, 12, inst);
+			case 13: return new IntValue_ValueAssignment(this, this, 13, inst);
+			case 14: return new FloatValue_ValueAssignment(this, this, 14, inst);
+			case 15: return new BooleanValue_ValueAssignment(this, this, 15, inst);
+			case 16: return new Value_Alternatives(this, this, 16, inst);
+			case 17: return new ValOperation_Group(this, this, 17, inst);
+			case 18: return new ValueExpression_PlusOperationParserRuleCall(this, this, 18, inst);
+			case 19: return new ParanthesedValueExpression_Alternatives(this, this, 19, inst);
+			case 20: return new PlusOperation_Group(this, this, 20, inst);
+			case 21: return new MultOrDivOperation_Alternatives(this, this, 21, inst);
+			case 22: return new MultOperation_Group(this, this, 22, inst);
+			case 23: return new DivOperation_Group(this, this, 23, inst);
+			case 24: return new PreArithmOperation_Group(this, this, 24, inst);
+			case 25: return new PreOrNormalValueExpression_Alternatives(this, this, 25, inst);
+			case 26: return new CompareOperation_Group(this, this, 26, inst);
+			case 27: return new UnaryOperation_Group(this, this, 27, inst);
+			case 28: return new UnaryParanthesedOperation_Group(this, this, 28, inst);
+			case 29: return new UnaryOrNormalExpression_Alternatives(this, this, 29, inst);
+			case 30: return new AndOperation_Group(this, this, 30, inst);
+			case 31: return new OrOperation_Group(this, this, 31, inst);
+			case 32: return new ParanthesedBooleanExpression_Alternatives(this, this, 32, inst);
+			case 33: return new BooleanExpression_OrOperationParserRuleCall(this, this, 33, inst);
+			case 34: return new HostCode_Group(this, this, 34, inst);
 			default: return null;
 		}	
 	}	
@@ -83,26 +82,16 @@ protected class ThisRootNode extends RootToken {
  *   {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
  *   innerStates+=State+;  
  * 
- * // IO Declarations --- come before state declarations #2009-11-26
- * // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
  *     
- * // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
- *     
- *           // region ID's are introduced by the keyword "region". 
- *    //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
- *    //computes a unique ID for the region. An ID without the keyword "region" is not allowed
- *    //because it could be a local signal or a state ID also!
+ *    
+ *           // region ID's are introduced by the keyword "region".
  *
  **/
 
 // {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
 // innerStates+=State+ 
-// // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
-//     
-//           // region ID's are introduced by the keyword "region". 
-//    //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
-//    //computes a unique ID for the region. An ID without the keyword "region" is not allowed
-//    //because it could be a local signal or a state ID also!
+//    
+//           // region ID's are introduced by the keyword "region".
 protected class Region_Group extends GroupToken {
 	
 	public Region_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -129,8 +118,7 @@ protected class Region_Group extends GroupToken {
 	}
 }
 
-// {sync::Region} 
-// // GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
+// {sync::Region}
 protected class Region_RegionAction_0 extends ActionToken  {
 
 	public Region_RegionAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -260,10 +248,7 @@ protected class Region_IdAssignment_1_0_1 extends AssignmentToken  {
 
 
 
-// (variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region". 
-//    //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
-//    //computes a unique ID for the region. An ID without the keyword "region" is not allowed
-//    //because it could be a local signal or a state ID also!
+// (variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region".
 protected class Region_Alternatives_2 extends AlternativesToken {
 
 	public Region_Alternatives_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -439,142 +424,40 @@ protected class Region_InnerStatesAssignment_3 extends AssignmentToken  {
 /************ begin Rule State ****************
  *
  * State returns sync::State:
- *   {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
- *   FullStateID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
+ *   {sync::State} isInitial?="init"? isFinal?="final"? type=[sync::StateType]? "state"?
+ *   id=FULLSTATEID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
  *   "oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* ("suspension"
  *   suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)* "}")? ("{"
  *   bodyText=STRING "}")? outgoingTransitions+=( Transition | TextualTransition )*; 
  *   
  *     
- *     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
- *         
+ *    
+ *        
  *      
- *   // State_Group_1_1
- *    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
- *    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
- *    //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
- *    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
- *    //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
- *    //    |((isInitial?='init') (isFinal?='final'))
- *    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
- *    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
- *    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
- *    //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
- *    //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
- *    //    |((isFinal?='final') (isInitial?='init')) 'state'
- *    //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
- *    //    |((isFinal?='final') (isInitial?='init'))
- *    //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
- *    //    |(isInitial?='init') (type=StateType) 'state'
- *    //    |(isInitial?='init') (type=StateType) id=FullStateID
- *    //    |(isInitial?='init') 'state' id=FullStateID
- *    //    |(isInitial?='init') (type=StateType)
- *    //    |(isInitial?='init') 'state'// State_Group_1_21
- *    //    |(isInitial?='init') id=FullStateID
- *    //    |(isInitial?='init')
- *    //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
- *    //    |(isFinal?='final') (type=StateType) 'state'
- *    //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
- *    //    |(isFinal?='final') 'state' id=FullStateID
- *    //    |(isFinal?='final') (type=StateType)
- *    //    |(isFinal?='final') 'state' id=FullStateID
- *    //    |(isFinal?='final') id=FullStateID
- *    //    |(isFinal?='final')// State_Group_1_31
- *    //    |(type=StateType) 'state' id=FullStateID
- *    //    |(type=StateType) 'state'
- *    //    |(type=StateType) id=FullStateID
- *    //    |(type=StateType)
- *    //    |'state' id=FullStateID// State_Group_1_36
- *    //    |'state'
- *    //    |id=FullStateID)// State_Group_1_38 
- *   
- *   //change the datatype of label (from FullStateID) to STRING 
- *    //to prevent wrong parsing in this case: 
- *    //init A
- *    //final B
- *    //A --> B;
- * //  	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
- *   
- *   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
- *     
+ *   // (',' (signals+=Signal))* ';')?  
+ *       
  *      
  *      
  *      
- *       // kein effect, kein delay, kein immediate
- *    // we allow both body text and regions in grammar #2010-02-05 (meeting)
- *    // body text is embraced by braces #2010-02-05 (meeting)
- *               
+ *            
+ *    
  *   
- *   
- * // Renamings are stored in the bodyText
- * // hence the renaming rule is not necessary anymore #2010-02-05 (meeting)
- * // Renaming returns sync::Renaming:
- * // oldID=STRING '/' newID=STRING;
+ * 
+ * //========================================================================================
+ * //===  									    TRANSITION 					               ===
+ * //========================================================================================
  *
  **/
 
-// {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-// FullStateID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
+// {sync::State} isInitial?="init"? isFinal?="final"? type=[sync::StateType]? "state"?
+// id=FULLSTATEID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
 // "oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* ("suspension"
 // suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)* "}")? ("{"
 // bodyText=STRING "}")? outgoingTransitions+=( Transition | TextualTransition )* 
-//     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
-//         
+//    
+//        
 //      
-//   // State_Group_1_1
-//    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-//    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-//    //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-//    //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-//    //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-//    //    |((isInitial?='init') (isFinal?='final'))
-//    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-//    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-//    //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-//    //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-//    //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-//    //    |((isFinal?='final') (isInitial?='init')) 'state'
-//    //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-//    //    |((isFinal?='final') (isInitial?='init'))
-//    //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-//    //    |(isInitial?='init') (type=StateType) 'state'
-//    //    |(isInitial?='init') (type=StateType) id=FullStateID
-//    //    |(isInitial?='init') 'state' id=FullStateID
-//    //    |(isInitial?='init') (type=StateType)
-//    //    |(isInitial?='init') 'state'// State_Group_1_21
-//    //    |(isInitial?='init') id=FullStateID
-//    //    |(isInitial?='init')
-//    //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-//    //    |(isFinal?='final') (type=StateType) 'state'
-//    //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-//    //    |(isFinal?='final') 'state' id=FullStateID
-//    //    |(isFinal?='final') (type=StateType)
-//    //    |(isFinal?='final') 'state' id=FullStateID
-//    //    |(isFinal?='final') id=FullStateID
-//    //    |(isFinal?='final')// State_Group_1_31
-//    //    |(type=StateType) 'state' id=FullStateID
-//    //    |(type=StateType) 'state'
-//    //    |(type=StateType) id=FullStateID
-//    //    |(type=StateType)
-//    //    |'state' id=FullStateID// State_Group_1_36
-//    //    |'state'
-//    //    |id=FullStateID)// State_Group_1_38 
-//   
-//   //change the datatype of label (from FullStateID) to STRING 
-//    //to prevent wrong parsing in this case: 
-//    //init A
-//    //final B
-//    //A --> B;
-// //  	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-//   
-//   // order of actions has been fixed ---conform to thinkccharts#2009-11-26
-//     
-//      
-//      
-//      
-//       // kein effect, kein delay, kein immediate
-//    // we allow both body text and regions in grammar #2010-02-05 (meeting)
-//    // body text is embraced by braces #2010-02-05 (meeting)
+//   // (',' (signals+=Signal))* ';')?
 protected class State_Group extends GroupToken {
 	
 	public State_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -610,8 +493,7 @@ protected class State_Group extends GroupToken {
 	}
 }
 
-// {sync::State} 
-//     // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26
+// {sync::State}
 protected class State_StateAction_0 extends ActionToken  {
 
 	public State_StateAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -708,7 +590,7 @@ protected class State_IsFinalAssignment_2 extends AssignmentToken  {
 
 }
 
-// type=StateType?
+// type=[sync::StateType]?
 protected class State_TypeAssignment_3 extends AssignmentToken  {
 	
 	public State_TypeAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -734,17 +616,20 @@ protected class State_TypeAssignment_3 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("type",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_3_0();
-			return obj;
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getStateAccess().getTypeStateTypeCrossReference_3_0().getType().getClassifier())) {
+				type = AssignmentType.CR;
+				element = grammarAccess.getStateAccess().getTypeStateTypeCrossReference_3_0(); 
+				return obj;
+			}
 		}
 		return null;
 	}
 
 }
 
-// id=FullStateID
+// id=FULLSTATEID
 protected class State_IdAssignment_5 extends AssignmentToken  {
 	
 	public State_IdAssignment_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -771,9 +656,9 @@ protected class State_IdAssignment_5 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_5_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFULLSTATEIDTerminalRuleCall_5_0();
 			return obj;
 		}
 		return null;
@@ -1633,52 +1518,22 @@ protected class State_OutgoingTransitionsAssignment_14 extends AssignmentToken  
 /************ end Rule State ****************/
 
 
-
 /************ begin Rule Transition ****************
  *
  * Transition returns sync::Transition:
- *   type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
+ *   type=TransitionType targetState=[sync::State|FULLSTATEID] ("with" isImmediate?="#"?
  *   ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ("," effects
- *   +=Effect)*)?)?))? isHistory?=" history"? ";";  
- *   
- * //========================================================================================
- * //===  									    ACTIONS  					               ===
- * //========================================================================================
- * //Action returns sync::Action:
- * //  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+ *   +=Effect)*)?)?))? isHistory?=" history"? ";"; 
+ * 
  * //========================================================================================
  * //===  									    TRANSITION 					               ===
  * //========================================================================================
- * 
- * 
- *     
- * 
- *    
- *    
- *          
- *    // Transition effects must be delimited by ","
- *      // "," should only appear between effects 
- *      // and NOT at the end of the effects #2010-02-95(meeting)
- *               
- *    
- *    
- *    
- *  
- *   
- *  //TextualTransition extends Transition
  *
  **/
 
-// type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
+// type=TransitionType targetState=[sync::State|FULLSTATEID] ("with" isImmediate?="#"?
 // ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (effects+=Effect ("," effects
-// +=Effect)*)?)?))? isHistory?=" history"? ";" 
-// 
-//    
-//    
-//          
-//    // Transition effects must be delimited by ","
-//      // "," should only appear between effects 
-//      // and NOT at the end of the effects #2010-02-95(meeting)
+// +=Effect)*)?)?))? isHistory?=" history"? ";"
 protected class Transition_Group extends GroupToken {
 	
 	public Transition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1738,7 +1593,7 @@ protected class Transition_TypeAssignment_0 extends AssignmentToken  {
 
 }
 
-// targetState=[sync::State|FullStateID]
+// targetState=[sync::State|FULLSTATEID]
 protected class Transition_TargetStateAssignment_1 extends AssignmentToken  {
 	
 	public Transition_TargetStateAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1776,10 +1631,7 @@ protected class Transition_TargetStateAssignment_1 extends AssignmentToken  {
 }
 
 // ("with" isImmediate?="#"? ("delay:=" delay=INT)? (trigger=BooleanExpression? ("/" (
-// effects+=Effect ("," effects+=Effect)*)?)?))?        
-//    // Transition effects must be delimited by ","
-//      // "," should only appear between effects 
-//      // and NOT at the end of the effects #2010-02-95(meeting)
+// effects+=Effect ("," effects+=Effect)*)?)?))?
 protected class Transition_Group_2 extends GroupToken {
 	
 	public Transition_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1937,9 +1789,7 @@ protected class Transition_DelayAssignment_2_2_1 extends AssignmentToken  {
 }
 
 
-// trigger=BooleanExpression? ("/" (effects+=Effect ("," effects+=Effect)*)?)? // Transition effects must be delimited by ","
-//      // "," should only appear between effects 
-//      // and NOT at the end of the effects #2010-02-95(meeting)
+// trigger=BooleanExpression? ("/" (effects+=Effect ("," effects+=Effect)*)?)?
 protected class Transition_Group_2_3 extends GroupToken {
 	
 	public Transition_Group_2_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2289,46 +2139,32 @@ protected class Transition_SemicolonKeyword_4 extends KeywordToken  {
 /************ begin Rule TextualTransition ****************
  *
  * TextualTransition returns textualsync::TextualTransition:
- *   type=TransitionType (makeConditional?=( "cond" | "conditional" )|"state"|makeFinal?=
- *   "final") targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)
+ *   type=TransitionType ("state"|makeConditional?=( "cond" | "conditional" )|makeFinal?=
+ *   "final") targetStateProxy=FULLSTATEID ("with" isImmediate?="#"? ("delay:=" delay=INT)
  *   ? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"
- *   ? ";";  
- *   
- *  //TextualTransition extends Transition
- *         
- *   
- * // make sure that one of the following three comes after the transition type 
- * // because otherwise the transition is parsed as a textual transition 
- * // effectively resulting in a linking error
- *            
- *    
- *       
+ *   ? ";";    
  * 
- *  
- *           
- *          
- *  
- *   
- *   
- * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
- * //|({sync::State} name=FullStateID)
- * //  |
- * //  (TransitionState))
- * //TargetState returns sync::Transition:
- * //	{sync::Transition}
- * //	//(isInitial?='init')? (isFinal?='final')
- * //;
+ *       
+ * 	 
+ * 	 	    
+ * 		           
+ * 		    
+ * 	
+ * 	
+ * 	       
+ * 	        
+ * 	   
+ * 
+ * //========================================================================================
+ * //===  									    VAR,SIG  					               ===
+ * //========================================================================================
  *
  **/
 
-// type=TransitionType (makeConditional?=( "cond" | "conditional" )|"state"|makeFinal?=
-// "final") targetStateProxy=FullStateID ("with" isImmediate?="#"? ("delay:=" delay=INT)
+// type=TransitionType ("state"|makeConditional?=( "cond" | "conditional" )|makeFinal?=
+// "final") targetStateProxy=FULLSTATEID ("with" isImmediate?="#"? ("delay:=" delay=INT)
 // ? (trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?))? isHistory?=" history"
-// ? ";" 
-//   
-// // make sure that one of the following three comes after the transition type 
-// // because otherwise the transition is parsed as a textual transition 
-// // effectively resulting in a linking error
+// ? ";"
 protected class TextualTransition_Group extends GroupToken {
 	
 	public TextualTransition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2355,11 +2191,7 @@ protected class TextualTransition_Group extends GroupToken {
 	}
 }
 
-// type=TransitionType 
-//   
-// // make sure that one of the following three comes after the transition type 
-// // because otherwise the transition is parsed as a textual transition 
-// // effectively resulting in a linking error
+// type=TransitionType
 protected class TextualTransition_TypeAssignment_0 extends AssignmentToken  {
 	
 	public TextualTransition_TypeAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2392,10 +2224,7 @@ protected class TextualTransition_TypeAssignment_0 extends AssignmentToken  {
 
 }
 
-// makeConditional?=( "cond" | "conditional" )|"state"|makeFinal?="final"  
-// // make sure that one of the following three comes after the transition type 
-// // because otherwise the transition is parsed as a textual transition 
-// // effectively resulting in a linking error
+// "state"|makeConditional?=( "cond" | "conditional" )|makeFinal?="final"
 protected class TextualTransition_Alternatives_1 extends AlternativesToken {
 
 	public TextualTransition_Alternatives_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2410,8 +2239,8 @@ protected class TextualTransition_Alternatives_1 extends AlternativesToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new TextualTransition_MakeConditionalAssignment_1_0(parent, this, 0, inst);
-			case 1: return new TextualTransition_StateKeyword_1_1(parent, this, 1, inst);
+			case 0: return new TextualTransition_StateKeyword_1_0(parent, this, 0, inst);
+			case 1: return new TextualTransition_MakeConditionalAssignment_1_1(parent, this, 1, inst);
 			case 2: return new TextualTransition_MakeFinalAssignment_1_2(parent, this, 2, inst);
 			default: return null;
 		}	
@@ -2419,16 +2248,38 @@ protected class TextualTransition_Alternatives_1 extends AlternativesToken {
 		
 }
 
-// makeConditional?=( "cond" | "conditional" )
-protected class TextualTransition_MakeConditionalAssignment_1_0 extends AssignmentToken  {
+// "state"
+protected class TextualTransition_StateKeyword_1_0 extends KeywordToken  {
 	
-	public TextualTransition_MakeConditionalAssignment_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public TextualTransition_StateKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTextualTransitionAccess().getStateKeyword_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TextualTransition_TypeAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// makeConditional?=( "cond" | "conditional" )
+protected class TextualTransition_MakeConditionalAssignment_1_1 extends AssignmentToken  {
+	
+	public TextualTransition_MakeConditionalAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTextualTransitionAccess().getMakeConditionalAssignment_1_0();
+		return grammarAccess.getTextualTransitionAccess().getMakeConditionalAssignment_1_1();
 	}
 
     @Override
@@ -2445,39 +2296,17 @@ protected class TextualTransition_MakeConditionalAssignment_1_0 extends Assignme
 		IInstanceDescription obj = current.cloneAndConsume("makeConditional");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTextualTransitionAccess().getMakeConditionalCondKeyword_1_0_0_0();
+			element = grammarAccess.getTextualTransitionAccess().getMakeConditionalCondKeyword_1_1_0_0();
 			return obj;
 		}
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTextualTransitionAccess().getMakeConditionalConditionalKeyword_1_0_0_1();
+			element = grammarAccess.getTextualTransitionAccess().getMakeConditionalConditionalKeyword_1_1_0_1();
 			return obj;
 		}
 		return null;
 	}
 
-}
-
-// "state"
-protected class TextualTransition_StateKeyword_1_1 extends KeywordToken  {
-	
-	public TextualTransition_StateKeyword_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTextualTransitionAccess().getStateKeyword_1_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TextualTransition_TypeAssignment_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
 }
 
 // makeFinal?="final"
@@ -2515,7 +2344,7 @@ protected class TextualTransition_MakeFinalAssignment_1_2 extends AssignmentToke
 }
 
 
-// targetStateProxy=FullStateID
+// targetStateProxy=FULLSTATEID
 protected class TextualTransition_TargetStateProxyAssignment_2 extends AssignmentToken  {
 	
 	public TextualTransition_TargetStateProxyAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2539,9 +2368,9 @@ protected class TextualTransition_TargetStateProxyAssignment_2 extends Assignmen
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("targetStateProxy",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("targetStateProxy");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getTextualTransitionAccess().getTargetStateProxyFullStateIDParserRuleCall_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getTextualTransitionAccess().getTargetStateProxyFULLSTATEIDTerminalRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -2963,330 +2792,20 @@ protected class TextualTransition_SemicolonKeyword_5 extends KeywordToken  {
 /************ end Rule TextualTransition ****************/
 
 
-/************ begin Rule TransitionState ****************
- *
- * TransitionState returns sync::State:
- *   {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
- *   FullStateID; 
- *   
- *   
- * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
- * //|({sync::State} name=FullStateID)
- * //  |
- * //  (TransitionState))
- * //TargetState returns sync::Transition:
- * //	{sync::Transition}
- * //	//(isInitial?='init')? (isFinal?='final')
- * //;
- * 
- * 
- *     
- *             
- *     //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
- * //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
- * //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
- * //  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
- * //  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
- * //  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
- * //  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
- * //  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
- * //  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
- * //  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
- * //  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
- * //  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
- * //  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
- * //  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
- * //  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
- * //  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
- * //  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
- * //  FullStateID|'state'|id=FullStateID); 
- * //========================================================================================
- * //===  									    VAR,SIG  					               ===
- * //========================================================================================
- * //
- *
- **/
-
-// {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
-// FullStateID
-protected class TransitionState_Group extends GroupToken {
-	
-	public TransitionState_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getGroup();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_IdAssignment_5(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getTransitionStateRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-}
-
-// {sync::State}
-protected class TransitionState_StateAction_0 extends ActionToken  {
-
-	public TransitionState_StateAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Action getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getStateAction_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	
-    @Override
-	protected IInstanceDescription tryConsumeVal() {
-		if(!current.isInstanceOf(grammarAccess.getTransitionStateAccess().getStateAction_0().getType().getClassifier())) return null;
-		if(!current.isConsumed()) return null;
-		return current;
-	}
-}
-
-// isInitial?="init"
-protected class TransitionState_IsInitialAssignment_1 extends AssignmentToken  {
-	
-	public TransitionState_IsInitialAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getIsInitialAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_StateAction_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionStateAccess().getIsInitialInitKeyword_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isFinal?="final"
-protected class TransitionState_IsFinalAssignment_2 extends AssignmentToken  {
-	
-	public TransitionState_IsFinalAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getIsFinalAssignment_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_IsInitialAssignment_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionStateAccess().getIsFinalFinalKeyword_2_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// type=StateType
-protected class TransitionState_TypeAssignment_3 extends AssignmentToken  {
-	
-	public TransitionState_TypeAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getTypeAssignment_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_IsFinalAssignment_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("type",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getTransitionStateAccess().getTypeStateTypeEnumRuleCall_3_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// "state"
-protected class TransitionState_StateKeyword_4 extends KeywordToken  {
-	
-	public TransitionState_StateKeyword_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getStateKeyword_4();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_TypeAssignment_3(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// id=FullStateID
-protected class TransitionState_IdAssignment_5 extends AssignmentToken  {
-	
-	public TransitionState_IdAssignment_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionStateAccess().getIdAssignment_5();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new TransitionState_StateKeyword_4(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("id",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getTransitionStateAccess().getIdFullStateIDParserRuleCall_5_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-/************ end Rule TransitionState ****************/
-
-
 /************ begin Rule ValuedObject ****************
  *
  * ValuedObject returns sync::ValuedObject:
- *   Signal|Variable;   //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
- * //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
- * //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
- * //  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
- * //  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
- * //  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
- * //  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
- * //  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
- * //  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
- * //  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
- * //  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
- * //  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
- * //  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
- * //  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
- * //  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
- * //  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
- * //  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
- * //  FullStateID|'state'|id=FullStateID); 
+ *   Signal|Variable; 
  * //========================================================================================
  * //===  									    VAR,SIG  					               ===
  * //========================================================================================
- * //
  *
  **/
 
-// Signal|Variable   //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
-// //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
-// //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
-// //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
-// //  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
-// //  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
-// //  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
-// //  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
-// //  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
-// //  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
-// //  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
-// //  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
-// //  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
-// //  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
-// //  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
-// //  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
-// //  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
-// //  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
-// //  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
-// //  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
-// //  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
-// //  FullStateID|'state'|id=FullStateID); 
+// Signal|Variable 
 // //========================================================================================
 // //===  									    VAR,SIG  					               ===
 // //========================================================================================
-// //
 protected class ValuedObject_Alternatives extends AlternativesToken {
 
 	public ValuedObject_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3391,13 +2910,11 @@ protected class ValuedObject_VariableParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule Variable ****************
  *
  * Variable returns sync::Variable:
- *   "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=[sync::ValueType])
- *   ";";
+ *   "var" name=ID ((":=" initialValue=VARSIGVALUE)? ": " type=ValueType) ";";
  *
  **/
 
-// "var" name=ID ((":=" initialValue=VariableSignalValue)? ": " type=[sync::ValueType])
-// ";"
+// "var" name=ID ((":=" initialValue=VARSIGVALUE)? ": " type=ValueType) ";"
 protected class Variable_Group extends GroupToken {
 	
 	public Variable_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3479,7 +2996,7 @@ protected class Variable_NameAssignment_1 extends AssignmentToken  {
 
 }
 
-// (":=" initialValue=VariableSignalValue)? ": " type=[sync::ValueType]
+// (":=" initialValue=VARSIGVALUE)? ": " type=ValueType
 protected class Variable_Group_2 extends GroupToken {
 	
 	public Variable_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3501,7 +3018,7 @@ protected class Variable_Group_2 extends GroupToken {
 		
 }
 
-// (":=" initialValue=VariableSignalValue)?
+// (":=" initialValue=VARSIGVALUE)?
 protected class Variable_Group_2_0 extends GroupToken {
 	
 	public Variable_Group_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3545,7 +3062,7 @@ protected class Variable_ColonEqualsSignKeyword_2_0_0 extends KeywordToken  {
 		
 }
 
-// initialValue=VariableSignalValue
+// initialValue=VARSIGVALUE
 protected class Variable_InitialValueAssignment_2_0_1 extends AssignmentToken  {
 	
 	public Variable_InitialValueAssignment_2_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3569,9 +3086,9 @@ protected class Variable_InitialValueAssignment_2_0_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("initialValue",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getVariableAccess().getInitialValueVariableSignalValueParserRuleCall_2_0_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getInitialValueVARSIGVALUETerminalRuleCall_2_0_1_0();
 			return obj;
 		}
 		return null;
@@ -3603,7 +3120,7 @@ protected class Variable_ColonSpaceKeyword_2_1 extends KeywordToken  {
 		
 }
 
-// type=[sync::ValueType]
+// type=ValueType
 protected class Variable_TypeAssignment_2_2 extends AssignmentToken  {
 	
 	public Variable_TypeAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3627,13 +3144,10 @@ protected class Variable_TypeAssignment_2_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("type",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getVariableAccess().getTypeValueTypeCrossReference_2_2_0().getType().getClassifier())) {
-				type = AssignmentType.CR;
-				element = grammarAccess.getVariableAccess().getTypeValueTypeCrossReference_2_2_0(); 
-				return obj;
-			}
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_2_2_0();
+			return obj;
 		}
 		return null;
 	}
@@ -3670,29 +3184,26 @@ protected class Variable_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule Signal ****************
  *
  * Signal returns sync::Signal:
- *   (isInput?="input"? isOutput?="output"?|"signal") name=QualifiedName ((":="
- *   initialValue=VariableSignalValue)? (": " type=[sync::ValueType]|": combine" type=[
- *   sync::ValueType] "with" (combineOperator=[sync::CombineOperator]|
- *   hostCombineOperator=STRING)))? ";"; 
+ *   (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+ *   initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
+ *   combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
  * 
  *     
- * // a state signal is defined with the keyword "signal"
- * // while a root region signal might be input or output thus it is preceeded by "input" or "output"
- *          // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
- *    //default signal type is PURE
- *    // after the initial value, either the type or the combine type has to come
+ *       
+ *    
+ *        
+ *           
+ *   
+ *   
+ * //========================================================================================
+ * //===  							   TERMINALS, ENUMS  					               ===
+ * //========================================================================================
  *
  **/
 
-// (isInput?="input"? isOutput?="output"?|"signal") name=QualifiedName ((":="
-// initialValue=VariableSignalValue)? (": " type=[sync::ValueType]|": combine" type=[
-// sync::ValueType] "with" (combineOperator=[sync::CombineOperator]|
-// hostCombineOperator=STRING)))? ";" 
-// // a state signal is defined with the keyword "signal"
-// // while a root region signal might be input or output thus it is preceeded by "input" or "output"
-//          // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-//    //default signal type is PURE
-//    // after the initial value, either the type or the combine type has to come
+// (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+// initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
+// combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"
 protected class Signal_Group extends GroupToken {
 	
 	public Signal_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3719,9 +3230,7 @@ protected class Signal_Group extends GroupToken {
 	}
 }
 
-// isInput?="input"? isOutput?="output"?|"signal" 
-// // a state signal is defined with the keyword "signal"
-// // while a root region signal might be input or output thus it is preceeded by "input" or "output"
+// isInput?="input"? isOutput?="output"?|"signal"?
 protected class Signal_Alternatives_0 extends AlternativesToken {
 
 	public Signal_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3835,7 +3344,7 @@ protected class Signal_IsOutputAssignment_0_0_1 extends AssignmentToken  {
 }
 
 
-// "signal"
+// "signal"?
 protected class Signal_SignalKeyword_0_1 extends KeywordToken  {
 	
 	public Signal_SignalKeyword_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3857,9 +3366,7 @@ protected class Signal_SignalKeyword_0_1 extends KeywordToken  {
 }
 
 
-// name=QualifiedName   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-//    //default signal type is PURE
-//    // after the initial value, either the type or the combine type has to come
+// name=QUALIFIEDNAME
 protected class Signal_NameAssignment_1 extends AssignmentToken  {
 	
 	public Signal_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3883,9 +3390,9 @@ protected class Signal_NameAssignment_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("name",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("name");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getSignalAccess().getNameQualifiedNameParserRuleCall_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getSignalAccess().getNameQUALIFIEDNAMETerminalRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -3893,9 +3400,8 @@ protected class Signal_NameAssignment_1 extends AssignmentToken  {
 
 }
 
-// ((":=" initialValue=VariableSignalValue)? (": " type=[sync::ValueType]|": combine"
-// type=[sync::ValueType] "with" (combineOperator=[sync::CombineOperator]|
-// hostCombineOperator=STRING)))?
+// ((":=" initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType
+// "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)))?
 protected class Signal_Group_2 extends GroupToken {
 	
 	public Signal_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3917,7 +3423,7 @@ protected class Signal_Group_2 extends GroupToken {
 		
 }
 
-// (":=" initialValue=VariableSignalValue)?
+// (":=" initialValue=VARSIGVALUE)?
 protected class Signal_Group_2_0 extends GroupToken {
 	
 	public Signal_Group_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3961,7 +3467,7 @@ protected class Signal_ColonEqualsSignKeyword_2_0_0 extends KeywordToken  {
 		
 }
 
-// initialValue=VariableSignalValue
+// initialValue=VARSIGVALUE
 protected class Signal_InitialValueAssignment_2_0_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_2_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3985,9 +3491,9 @@ protected class Signal_InitialValueAssignment_2_0_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("initialValue",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getSignalAccess().getInitialValueVariableSignalValueParserRuleCall_2_0_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getSignalAccess().getInitialValueVARSIGVALUETerminalRuleCall_2_0_1_0();
 			return obj;
 		}
 		return null;
@@ -3996,8 +3502,8 @@ protected class Signal_InitialValueAssignment_2_0_1 extends AssignmentToken  {
 }
 
 
-// ": " type=[sync::ValueType]|": combine" type=[sync::ValueType] "with" (
-// combineOperator=[sync::CombineOperator]|hostCombineOperator=STRING)
+// ": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
+// CombineOperator|hostCombineOperator=STRING)
 protected class Signal_Alternatives_2_1 extends AlternativesToken {
 
 	public Signal_Alternatives_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4020,7 +3526,7 @@ protected class Signal_Alternatives_2_1 extends AlternativesToken {
 		
 }
 
-// ": " type=[sync::ValueType]
+// ": " type=ValueType
 protected class Signal_Group_2_1_0 extends GroupToken {
 	
 	public Signal_Group_2_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4065,7 +3571,7 @@ protected class Signal_ColonSpaceKeyword_2_1_0_0 extends KeywordToken  {
 		
 }
 
-// type=[sync::ValueType]
+// type=ValueType
 protected class Signal_TypeAssignment_2_1_0_1 extends AssignmentToken  {
 	
 	public Signal_TypeAssignment_2_1_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4089,13 +3595,10 @@ protected class Signal_TypeAssignment_2_1_0_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("type",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalAccess().getTypeValueTypeCrossReference_2_1_0_1_0().getType().getClassifier())) {
-				type = AssignmentType.CR;
-				element = grammarAccess.getSignalAccess().getTypeValueTypeCrossReference_2_1_0_1_0(); 
-				return obj;
-			}
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_2_1_0_1_0();
+			return obj;
 		}
 		return null;
 	}
@@ -4103,7 +3606,7 @@ protected class Signal_TypeAssignment_2_1_0_1 extends AssignmentToken  {
 }
 
 
-// ": combine" type=[sync::ValueType] "with" (combineOperator=[sync::CombineOperator]|
+// ": combine" type=ValueType "with" (combineOperator=CombineOperator|
 // hostCombineOperator=STRING)
 protected class Signal_Group_2_1_1 extends GroupToken {
 	
@@ -4149,7 +3652,7 @@ protected class Signal_CombineKeyword_2_1_1_0 extends KeywordToken  {
 		
 }
 
-// type=[sync::ValueType]
+// type=ValueType
 protected class Signal_TypeAssignment_2_1_1_1 extends AssignmentToken  {
 	
 	public Signal_TypeAssignment_2_1_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4173,13 +3676,10 @@ protected class Signal_TypeAssignment_2_1_1_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("type",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalAccess().getTypeValueTypeCrossReference_2_1_1_1_0().getType().getClassifier())) {
-				type = AssignmentType.CR;
-				element = grammarAccess.getSignalAccess().getTypeValueTypeCrossReference_2_1_1_1_0(); 
-				return obj;
-			}
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_2_1_1_1_0();
+			return obj;
 		}
 		return null;
 	}
@@ -4208,7 +3708,7 @@ protected class Signal_WithKeyword_2_1_1_2 extends KeywordToken  {
 		
 }
 
-// combineOperator=[sync::CombineOperator]|hostCombineOperator=STRING
+// combineOperator=CombineOperator|hostCombineOperator=STRING
 protected class Signal_Alternatives_2_1_1_3 extends AlternativesToken {
 
 	public Signal_Alternatives_2_1_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4231,7 +3731,7 @@ protected class Signal_Alternatives_2_1_1_3 extends AlternativesToken {
 		
 }
 
-// combineOperator=[sync::CombineOperator]
+// combineOperator=CombineOperator
 protected class Signal_CombineOperatorAssignment_2_1_1_3_0 extends AssignmentToken  {
 	
 	public Signal_CombineOperatorAssignment_2_1_1_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4255,13 +3755,10 @@ protected class Signal_CombineOperatorAssignment_2_1_1_3_0 extends AssignmentTok
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("combineOperator",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("combineOperator");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorCrossReference_2_1_1_3_0_0().getType().getClassifier())) {
-				type = AssignmentType.CR;
-				element = grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorCrossReference_2_1_1_3_0_0(); 
-				return obj;
-			}
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_2_1_1_3_0_0();
+			return obj;
 		}
 		return null;
 	}
@@ -4333,17 +3830,15 @@ protected class Signal_SemicolonKeyword_3 extends KeywordToken  {
 /************ end Rule Signal ****************/
 
 
-
-
 /************ begin Rule Action ****************
  *
- * Action returns synccharts::Action:
+ * Action returns sync::Action:
  *   isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
- *   ?; 
- * //import "synccharts" as synchcharts
- * 
+ *   ?;  
+ *   
+ *   
  * //==============================================================================
- * // Basic Actions
+ * // Actions
  * //==============================================================================
  *
  **/
@@ -4617,7 +4112,7 @@ protected class Action_EffectsAssignment_3_1_0 extends AssignmentToken  {
 
 /************ begin Rule Effect ****************
  *
- * Effect returns synccharts::Effect:
+ * Effect returns sync::Effect:
  *   Emission|Assignment|HostCode;
  *
  **/
@@ -4762,13 +4257,13 @@ protected class Effect_HostCodeParserRuleCall_2 extends RuleCallToken {
 
 /************ begin Rule Emission ****************
  *
- * Emission returns synccharts::Emission:
- *   signal=[synccharts::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+ * Emission returns sync::Emission:
+ *   signal=[sync::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
  *   BooleanExpression ")")?;
  *
  **/
 
-// signal=[synccharts::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+// signal=[sync::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
 // BooleanExpression ")")?
 protected class Emission_Group extends GroupToken {
 	
@@ -4797,7 +4292,7 @@ protected class Emission_Group extends GroupToken {
 	}
 }
 
-// signal=[synccharts::Signal]
+// signal=[sync::Signal]
 protected class Emission_SignalAssignment_0 extends AssignmentToken  {
 	
 	public Emission_SignalAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5089,13 +4584,13 @@ protected class Emission_RightParenthesisKeyword_1_1_2 extends KeywordToken  {
 
 /************ begin Rule Assignment ****************
  *
- * Assignment returns synccharts::Assignment:
- *   variable=[synccharts::Variable] ":=" (expression=ValueExpression|expression=
+ * Assignment returns sync::Assignment:
+ *   variable=[sync::Variable] ":=" (expression=ValueExpression|expression=
  *   BooleanExpression);
  *
  **/
 
-// variable=[synccharts::Variable] ":=" (expression=ValueExpression|expression=
+// variable=[sync::Variable] ":=" (expression=ValueExpression|expression=
 // BooleanExpression)
 protected class Assignment_Group extends GroupToken {
 	
@@ -5123,7 +4618,7 @@ protected class Assignment_Group extends GroupToken {
 	}
 }
 
-// variable=[synccharts::Variable]
+// variable=[sync::Variable]
 protected class Assignment_VariableAssignment_0 extends AssignmentToken  {
 	
 	public Assignment_VariableAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5303,12 +4798,12 @@ protected class Assignment_ExpressionAssignment_2_1 extends AssignmentToken  {
 
 /************ begin Rule SignalReference ****************
  *
- * SignalReference returns synccharts::SignalReference:
- *   signal=[synccharts::Signal];
+ * SignalReference returns sync::SignalReference:
+ *   signal=[sync::Signal];
  *
  **/
 
-// signal=[synccharts::Signal]
+// signal=[sync::Signal]
 protected class SignalReference_SignalAssignment extends AssignmentToken  {
 	
 	public SignalReference_SignalAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5354,12 +4849,20 @@ protected class SignalReference_SignalAssignment extends AssignmentToken  {
 
 /************ begin Rule VariableReference ****************
  *
- * VariableReference returns synccharts::VariableReference:
- *   variable=[synccharts::Variable];
+ * VariableReference returns sync::VariableReference:
+ *   variable=[sync::Variable]; 
+ * 
+ *     
+ * 	    
+ * 
+ * //==============================================================================
+ * // Values
+ * //==============================================================================
+ * // redefine INT terminal to allow negative numbers
  *
  **/
 
-// variable=[synccharts::Variable]
+// variable=[sync::Variable]
 protected class VariableReference_VariableAssignment extends AssignmentToken  {
 	
 	public VariableReference_VariableAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5405,7 +4908,7 @@ protected class VariableReference_VariableAssignment extends AssignmentToken  {
 
 /************ begin Rule IntValue ****************
  *
- * IntValue returns synccharts::IntValue:
+ * IntValue returns sync::IntValue:
  *   value=INT;
  *
  **/
@@ -5453,7 +4956,7 @@ protected class IntValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule FloatValue ****************
  *
- * FloatValue returns synccharts::FloatValue:
+ * FloatValue returns sync::FloatValue:
  *   value=Float;
  *
  **/
@@ -5501,7 +5004,7 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule BooleanValue ****************
  *
- * BooleanValue returns synccharts::BooleanValue:
+ * BooleanValue returns sync::BooleanValue:
  *   value=Boolean;
  *
  **/
@@ -5549,11 +5052,10 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule Value ****************
  *
- * Value returns synccharts::Value:
+ * Value returns sync::Value:
  *   IntValue|FloatValue|BooleanValue; 
  *     
  * 	        
- * 
  * // make sure the Float rule does not shadow the INT rule
  *
  **/
@@ -5561,7 +5063,6 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 // IntValue|FloatValue|BooleanValue 
 //     
 // 	        
-// 
 // // make sure the Float rule does not shadow the INT rule
 protected class Value_Alternatives extends AlternativesToken {
 
@@ -5702,7 +5203,7 @@ protected class Value_BooleanValueParserRuleCall_2 extends RuleCallToken {
 
 /************ begin Rule ValOperation ****************
  *
- * ValOperation returns synccharts::ComplexExpression:
+ * ValOperation returns sync::ComplexExpression:
  *   operator=ValOperator subExpressions+=SignalReference; 
  * 
  * //==============================================================================
@@ -5829,7 +5330,7 @@ protected class ValOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 
 /************ begin Rule ValueExpression ****************
  *
- * ValueExpression returns synccharts::Expression:
+ * ValueExpression returns sync::Expression:
  *   PlusOperation; 
  * 
  * // everything that evaluates to a primitive number value
@@ -5885,7 +5386,7 @@ protected class ValueExpression_PlusOperationParserRuleCall extends RuleCallToke
 
 /************ begin Rule ParanthesedValueExpression ****************
  *
- * ParanthesedValueExpression returns synccharts::Expression:
+ * ParanthesedValueExpression returns sync::Expression:
  *   IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
  *   "(" DivOperation ")"; 
  * 
@@ -6322,16 +5823,16 @@ protected class ParanthesedValueExpression_RightParenthesisKeyword_6_2 extends K
 
 /************ begin Rule PlusOperation ****************
  *
- * PlusOperation returns synccharts::Expression:
- *   MultOrDivOperation ({synccharts::ComplexExpression.subExpressions+=current}
- *   operator=PlusOperator subExpressions+=MultOrDivOperation)*; 
+ * PlusOperation returns sync::Expression:
+ *   MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+ *   PlusOperator subExpressions+=MultOrDivOperation)*; 
  * 
  * // Example: 1 + 2, varA - ?B
  *
  **/
 
-// MultOrDivOperation ({synccharts::ComplexExpression.subExpressions+=current}
-// operator=PlusOperator subExpressions+=MultOrDivOperation)*
+// MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+// PlusOperator subExpressions+=MultOrDivOperation)*
 protected class PlusOperation_Group extends GroupToken {
 	
 	public PlusOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6394,7 +5895,7 @@ protected class PlusOperation_MultOrDivOperationParserRuleCall_0 extends RuleCal
 	}	
 }
 
-// ({synccharts::ComplexExpression.subExpressions+=current} operator=PlusOperator
+// ({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator
 // subExpressions+=MultOrDivOperation)*
 protected class PlusOperation_Group_1 extends GroupToken {
 	
@@ -6417,7 +5918,7 @@ protected class PlusOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class PlusOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public PlusOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6536,7 +6037,7 @@ protected class PlusOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
 
 /************ begin Rule MultOrDivOperation ****************
  *
- * MultOrDivOperation returns synccharts::Expression:
+ * MultOrDivOperation returns sync::Expression:
  *   MultOperation|"(" DivOperation ")"; 
  * 
  *     
@@ -6722,9 +6223,9 @@ protected class MultOrDivOperation_RightParenthesisKeyword_1_2 extends KeywordTo
 
 /************ begin Rule MultOperation ****************
  *
- * MultOperation returns synccharts::Expression:
- *   PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
- *   current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
+ * MultOperation returns sync::Expression:
+ *   PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+ *   operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
  * 
  * // Example: 2 * 4, varA mod ?B
  *     
@@ -6735,8 +6236,8 @@ protected class MultOrDivOperation_RightParenthesisKeyword_1_2 extends KeywordTo
  *
  **/
 
-// PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
-// current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*
+// PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+// operator=MultOperator subExpressions+=PreOrNormalValueExpression)*
 protected class MultOperation_Group extends GroupToken {
 	
 	public MultOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6799,7 +6300,7 @@ protected class MultOperation_PreOrNormalValueExpressionParserRuleCall_0 extends
 	}	
 }
 
-// ({synccharts::ComplexExpression.subExpressions+=current} operator=MultOperator
+// ({sync::ComplexExpression.subExpressions+=current} operator=MultOperator
 // subExpressions+=PreOrNormalValueExpression)*
 protected class MultOperation_Group_1 extends GroupToken {
 	
@@ -6822,7 +6323,7 @@ protected class MultOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class MultOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public MultOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6941,9 +6442,9 @@ protected class MultOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
 
 /************ begin Rule DivOperation ****************
  *
- * DivOperation returns synccharts::Expression:
- *   PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
- *   current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*; 
+ * DivOperation returns sync::Expression:
+ *   PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+ *   operator=DivOperator subExpressions+=PreOrNormalValueExpression)*; 
  * 
  * // Example: (2 / 4)
  * // note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
@@ -6954,8 +6455,8 @@ protected class MultOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
  *
  **/
 
-// PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
-// current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*
+// PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+// operator=DivOperator subExpressions+=PreOrNormalValueExpression)*
 protected class DivOperation_Group extends GroupToken {
 	
 	public DivOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -7018,7 +6519,7 @@ protected class DivOperation_PreOrNormalValueExpressionParserRuleCall_0 extends 
 	}	
 }
 
-// ({synccharts::ComplexExpression.subExpressions+=current} operator=DivOperator
+// ({sync::ComplexExpression.subExpressions+=current} operator=DivOperator
 // subExpressions+=PreOrNormalValueExpression)*
 protected class DivOperation_Group_1 extends GroupToken {
 	
@@ -7041,7 +6542,7 @@ protected class DivOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class DivOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public DivOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -7160,7 +6661,7 @@ protected class DivOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
 
 /************ begin Rule PreArithmOperation ****************
  *
- * PreArithmOperation returns synccharts::ComplexExpression:
+ * PreArithmOperation returns sync::ComplexExpression:
  *   operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")"; 
  * 
  * // Example: pre (? A)
@@ -7323,7 +6824,7 @@ protected class PreArithmOperation_RightParenthesisKeyword_3 extends KeywordToke
 
 /************ begin Rule PreOrNormalValueExpression ****************
  *
- * PreOrNormalValueExpression returns synccharts::Expression:
+ * PreOrNormalValueExpression returns sync::Expression:
  *   PreArithmOperation|ParanthesedValueExpression; 
  * 	
  *     
@@ -7450,8 +6951,8 @@ protected class PreOrNormalValueExpression_ParanthesedValueExpressionParserRuleC
 
 /************ begin Rule CompareOperation ****************
  *
- * CompareOperation returns synccharts::Expression:
- *   ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+ * CompareOperation returns sync::Expression:
+ *   ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=
  *   CompareOperator subExpressions+=ValueExpression); 
  * 
  * //==============================================================================
@@ -7467,7 +6968,7 @@ protected class PreOrNormalValueExpression_ParanthesedValueExpressionParserRuleC
  *
  **/
 
-// ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+// ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=
 // CompareOperator subExpressions+=ValueExpression)
 protected class CompareOperation_Group extends GroupToken {
 	
@@ -7530,7 +7031,7 @@ protected class CompareOperation_ValueExpressionParserRuleCall_0 extends RuleCal
 	}	
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current} operator=CompareOperator
+// {sync::ComplexExpression.subExpressions+=current} operator=CompareOperator
 // subExpressions+=ValueExpression
 protected class CompareOperation_Group_1 extends GroupToken {
 	
@@ -7553,7 +7054,7 @@ protected class CompareOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class CompareOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public CompareOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -7671,7 +7172,7 @@ protected class CompareOperation_SubExpressionsAssignment_1_2 extends Assignment
 
 /************ begin Rule UnaryOperation ****************
  *
- * UnaryOperation returns synccharts::ComplexExpression:
+ * UnaryOperation returns sync::ComplexExpression:
  *   operator=UnaryOperator subExpressions+=( ParanthesedBooleanExpression |
  *   UnaryParanthesedOperation );   	
  * 
@@ -7803,7 +7304,7 @@ protected class UnaryOperation_SubExpressionsAssignment_1 extends AssignmentToke
 
 /************ begin Rule UnaryParanthesedOperation ****************
  *
- * UnaryParanthesedOperation returns synccharts::ComplexExpression:
+ * UnaryParanthesedOperation returns sync::ComplexExpression:
  *   operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"; 
  * 
  *     
@@ -7969,7 +7470,7 @@ protected class UnaryParanthesedOperation_RightParenthesisKeyword_3 extends Keyw
 
 /************ begin Rule UnaryOrNormalExpression ****************
  *
- * UnaryOrNormalExpression returns synccharts::Expression:
+ * UnaryOrNormalExpression returns sync::Expression:
  *   UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression; 
  * 
  * // Example: either negated or normal expression (with parantheses) 
@@ -8126,8 +7627,8 @@ protected class UnaryOrNormalExpression_ParanthesedBooleanExpressionParserRuleCa
 
 /************ begin Rule AndOperation ****************
  *
- * AndOperation returns synccharts::Expression:
- *   UnaryOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+ * AndOperation returns sync::Expression:
+ *   UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current}
  *   operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*; 
  * 
  * // Example: A and B, not C and 42 <= ?D
@@ -8138,7 +7639,7 @@ protected class UnaryOrNormalExpression_ParanthesedBooleanExpressionParserRuleCa
  *
  **/
 
-// UnaryOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+// UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current}
 // operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*
 protected class AndOperation_Group extends GroupToken {
 	
@@ -8202,7 +7703,7 @@ protected class AndOperation_UnaryOrNormalExpressionParserRuleCall_0 extends Rul
 	}	
 }
 
-// ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd
+// ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd
 // subExpressions+=UnaryOrNormalExpression)*
 protected class AndOperation_Group_1 extends GroupToken {
 	
@@ -8225,7 +7726,7 @@ protected class AndOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class AndOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public AndOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -8344,8 +7845,8 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
 
 /************ begin Rule OrOperation ****************
  *
- * OrOperation returns synccharts::Expression:
- *   AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+ * OrOperation returns sync::Expression:
+ *   AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=
  *   OperatorOr subExpressions+=AndOperation)*; 
  * 
  * // Example: A or B, C and B or D and not E 
@@ -8357,7 +7858,7 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
  *
  **/
 
-// AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+// AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=
 // OperatorOr subExpressions+=AndOperation)*
 protected class OrOperation_Group extends GroupToken {
 	
@@ -8421,7 +7922,7 @@ protected class OrOperation_AndOperationParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorOr
+// ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr
 // subExpressions+=AndOperation)*
 protected class OrOperation_Group_1 extends GroupToken {
 	
@@ -8444,7 +7945,7 @@ protected class OrOperation_Group_1 extends GroupToken {
 		
 }
 
-// {synccharts::ComplexExpression.subExpressions+=current}
+// {sync::ComplexExpression.subExpressions+=current}
 protected class OrOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
 	public OrOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -8563,7 +8064,7 @@ protected class OrOperation_SubExpressionsAssignment_1_2 extends AssignmentToken
 
 /************ begin Rule ParanthesedBooleanExpression ****************
  *
- * ParanthesedBooleanExpression returns synccharts::Expression:
+ * ParanthesedBooleanExpression returns sync::Expression:
  *   BooleanValue|CompareOperation|SignalReference|ValOperation|HostCode|"("
  *   OrOperation ")"; 
  * 
@@ -8899,7 +8400,7 @@ protected class ParanthesedBooleanExpression_RightParenthesisKeyword_5_2 extends
 
 /************ begin Rule BooleanExpression ****************
  *
- * BooleanExpression returns synccharts::Expression:
+ * BooleanExpression returns sync::Expression:
  *   OrOperation; 
  * 
  * // Example: not D and C or ?E = 42 or not (A and (B or C))
@@ -8957,7 +8458,7 @@ protected class BooleanExpression_OrOperationParserRuleCall extends RuleCallToke
 
 /************ begin Rule HostCode ****************
  *
- * HostCode returns synccharts::HostCode:
+ * HostCode returns sync::HostCode:
  *   code=STRING ("(" type=ID ")")?; 
  * 
  * 

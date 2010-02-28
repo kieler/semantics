@@ -17,7 +17,7 @@ public class KitsStandaloneSetup implements ISetup {
 	}
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup.doSetup();
+		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

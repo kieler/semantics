@@ -1,202 +1,259 @@
-grammar de.cau.cs.kieler.synccharts.dsl.Kits with de.cau.cs.kieler.synccharts.labelparser.ActionLabel      
+grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
 import "platform:/resource/de.cau.cs.kieler.synccharts.textual/model/textualsynccharts.ecore" as textualsync
+import "platform:/resource/de.cau.cs.kieler.synccharts.interfacedeclparser/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl.ecore" as interface
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore 
 
-// IO Declarations --- come before state declarations #2009-11-26
-// There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)#2009-11-26 
 Region returns sync::Region:
-// GMF does not like empty models so avoid them by forcing Xtext to create a region object even if the model is empty:
   {sync::Region} 
-  ('region' id=ID | "region")? // region ID's are introduced by the keyword "region". 
-  //if the keyword "region" is typed without any ID, the {@link SyncchartsContentAdapter#handleRegion()}
-  //computes a unique ID for the region. An ID without the keyword "region" is not allowed
-  //because it could be a local signal or a state ID also!      
+  ('region' id=ID | 'region')? // region ID's are introduced by the keyword "region".       
   (variables+=Variable|signals+=Signal)* 
   (innerStates+=State)+;
   
 State returns sync::State:
-  {sync::State} // order of state modifiers and type has been fixed --- could be relaxed in future by uncommenting the following lines #2009-11-26 
-  (isInitial?='init')? (isFinal?='final')? (type=StateType)? 
-  ('state')? (id=FullStateID)(label=STRING)? 
-  // State_Group_1_1
-  //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-  //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-  //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-  //    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-  //    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-  //    |((isInitial?='init') (isFinal?='final'))
-  //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-  //    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-  //    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-  //    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-  //    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-  //    |((isFinal?='final') (isInitial?='init')) 'state'
-  //    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-  //    |((isFinal?='final') (isInitial?='init'))
-  //    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-  //    |(isInitial?='init') (type=StateType) 'state'
-  //    |(isInitial?='init') (type=StateType) id=FullStateID
-  //    |(isInitial?='init') 'state' id=FullStateID
-  //    |(isInitial?='init') (type=StateType)
-  //    |(isInitial?='init') 'state'// State_Group_1_21
-  //    |(isInitial?='init') id=FullStateID
-  //    |(isInitial?='init')
-  //    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-  //    |(isFinal?='final') (type=StateType) 'state'
-  //    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-  //    |(isFinal?='final') 'state' id=FullStateID
-  //    |(isFinal?='final') (type=StateType)
-  //    |(isFinal?='final') 'state' id=FullStateID
-  //    |(isFinal?='final') id=FullStateID
-  //    |(isFinal?='final')// State_Group_1_31
-  //    |(type=StateType) 'state' id=FullStateID
-  //    |(type=StateType) 'state'
-  //    |(type=StateType) id=FullStateID
-  //    |(type=StateType)
-  //    |'state' id=FullStateID// State_Group_1_36
-  //    |'state'
-  //    |id=FullStateID)// State_Group_1_38 
-  
-  //change the datatype of label (from FullStateID) to STRING 
-  //to prevent wrong parsing in this case: 
-  //init A
-  //final B
-  //A --> B;
-//  	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-  
-  // order of actions has been fixed ---conform to thinkccharts#2009-11-26
-  (signals+=Signal)* 
+  {sync::State} 
+  (isInitial?='init')? (isFinal?='final')? (type=[sync::StateType])? 
+  ('state')? (id=FULLSTATEID)(label=STRING)? 
+  (signals+=Signal)*// (',' (signals+=Signal))* ';')?  
   ('onentry' entryActions+=Action)* 
   ('oninner' innerActions+=Action)* 
   ('onexit' exitActions+=Action)* 
-  ('suspension' suspensionTrigger=Action)? // kein effect, kein delay, kein immediate
-  // we allow both body text and regions in grammar #2010-02-05 (meeting)
-  // body text is embraced by braces #2010-02-05 (meeting)
-  ('{' regions+=Region ('||' regions+=Region)* '}')? ('{'bodyText=STRING'}')? 
+  ('suspension' suspensionTrigger=Action)? 
+  ('{' regions+=Region ('||' regions+=Region)* '}')? 
+  ('{'bodyText=STRING'}')? 
   (outgoingTransitions+=(Transition|TextualTransition)*);
-  
-// Renamings are stored in the bodyText
-// hence the renaming rule is not necessary anymore #2010-02-05 (meeting)
-// Renaming returns sync::Renaming:
-// oldID=STRING '/' newID=STRING;
 
-FullStateID:
-  ((ID '@')? ID); 
-  
-//========================================================================================
-//===  									    ACTIONS  					               ===
-//========================================================================================
-//Action returns sync::Action:
-//  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
 //========================================================================================
 //===  									    TRANSITION 					               ===
 //========================================================================================
-
-
 Transition returns sync::Transition:
+	type=TransitionType 
+	targetState=[sync::State|FULLSTATEID] 
+	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
+	 (
+	  ( trigger=BooleanExpression)?('/' (effects+=Effect (','effects+=Effect)*)? )?
+	 )
+	)? 
+	(isHistory?=' history')? ';'
+;   
 
-  type=TransitionType 
-  targetState=[sync::State|FullStateID] 
-  ('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
-   (// Transition effects must be delimited by ","
-    // "," should only appear between effects 
-    // and NOT at the end of the effects #2010-02-95(meeting)
-     ( trigger=BooleanExpression)?('/' (effects+=Effect (','effects+=Effect)*)? )?
-   )
-  )? 
- (isHistory?=' history')? ';'
-; 
-  
- //TextualTransition extends Transition
- TextualTransition returns textualsync::TextualTransition :
- type=TransitionType 
-// make sure that one of the following three comes after the transition type 
-// because otherwise the transition is parsed as a textual transition 
-// effectively resulting in a linking error
-( (makeConditional ?= ("cond" | "conditional")) 
-| "state" 
-| (makeFinal ?= "final")
-)
- targetStateProxy=FullStateID
- ('with' (isImmediate?='#')? ("delay:=" delay=INT)? (((trigger=BooleanExpression)? 
- ('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history')? ';'
- ;
-  
-  
-//  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-//|({sync::State} name=FullStateID)
-//  |
-//  (TransitionState))
-//TargetState returns sync::Transition:
-//	{sync::Transition}
-//	//(isInitial?='init')? (isFinal?='final')
-//;
-
-
-TransitionState returns sync::State:
-  {sync::State} (isInitial?='init') (isFinal?='final') (type=StateType) 'state' id=
-  FullStateID; //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
-//  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
-//  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
-//  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
-//  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
-//  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
-//  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
-//  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
-//  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
-//  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
-//  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
-//  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
-//  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
-//  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
-//  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
-//  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
-//  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
-//  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
-//  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
-//  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
-//  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
-//  FullStateID|'state'|id=FullStateID); 
+TextualTransition returns textualsync::TextualTransition :
+	type=TransitionType 
+	( 	"state" | 
+		(makeConditional ?= ("cond" | "conditional")) | 
+		(makeFinal ?= "final")
+	)
+	targetStateProxy=FULLSTATEID
+	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
+	( ((trigger=BooleanExpression)?('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history'
+	 )? ';'
+;
 //========================================================================================
 //===  									    VAR,SIG  					               ===
 //========================================================================================
-//
-
-
 ValuedObject returns sync::ValuedObject:
   Signal|Variable;
 
 Variable returns sync::Variable:
-  'var' name=ID ((':=' initialValue=VariableSignalValue)? ': ' type=[sync::ValueType]) ";";
+  'var' name=ID ((':=' initialValue=VARSIGVALUE)? ': ' type=ValueType) ";";
 
 Signal returns sync::Signal:
-// a state signal is defined with the keyword "signal"
-// while a root region signal might be input or output thus it is preceeded by "input" or "output"
-  ((isInput?='input')? (isOutput?='output')? |('signal')) name=QualifiedName// Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-  //default signal type is PURE
-  // after the initial value, either the type or the combine type has to come
-  ((':=' initialValue=VariableSignalValue)? 
-   ((': ' type=[sync::ValueType]) | (': combine' type=[sync::ValueType] 'with' (combineOperator=[sync::CombineOperator]|hostCombineOperator=STRING) )
-   )
-  )? ";";
-
-VariableSignalValue returns ecore::EString:
-// add float to the enumeration # 2010-05-02 (meeting)
+((isInput?='input')? (isOutput?='output')? |('signal')?) name=QUALIFIEDNAME
+((':=' initialValue=VARSIGVALUE)? 
+  ((': ' type=ValueType) | 
+  (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
+  )
+)? ";";
+//========================================================================================
+//===  							   TERMINALS, ENUMS  					               ===
+//========================================================================================
+terminal FULLSTATEID returns ecore::EString:
+  ((ID '@')? ID); 
+  
+terminal VARSIGVALUE returns ecore::EString:
   (INT|ID|Boolean|STRING|Float)+;
 
-QualifiedName:
+terminal QUALIFIEDNAME:
   (ID ".")* ID;
 
 enum StateType returns sync::StateType:
   NORMAL | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual';
 
-//enum CombineOperator returns sync::CombineOperator:
-//  NONE | ADD='+' | MULT='*' | AND='AND' | OR='OR' | HOST='hostCombineOperator';
+enum CombineOperator returns sync::CombineOperator:
+  NONE | ADD='+' | MULT='*' | AND='AND' | OR='OR' | HOST='hostCombineOperator';
 
-//enum ValueType returns sync::ValueType:
-//  PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST=
-//  'hostType';
+enum ValueType returns sync::ValueType:
+  PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';
 
 enum TransitionType returns sync::TransitionType:
   WEAKABORT='-->' | STRONGABORT='o->' | NORMALTERMINATION='>->'; 
+  
+  
+//==============================================================================
+// Actions
+//==============================================================================
+
+Action returns sync::Action:
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
+
+Effect returns sync::Effect: 
+	Emission | Assignment | HostCode;
+		
+Emission returns sync::Emission:
+	signal=[sync::Signal]	
+	(("(" newValue=ValueExpression ")")
+   |("(" newValue=BooleanExpression ")") )?;
+
+Assignment returns sync::Assignment:
+	variable=[sync::Variable] ":=" 
+	 ( expression=ValueExpression
+	 | expression=BooleanExpression);
+
+SignalReference returns sync::SignalReference:
+	signal = [sync::Signal];
+
+VariableReference returns sync::VariableReference:
+	variable = [sync::Variable];
+
+//==============================================================================
+// Values
+//==============================================================================
+// redefine INT terminal to allow negative numbers
+terminal INT returns ecore::EInt:
+ '-'?('0'..'9')+;
+IntValue returns sync::IntValue: 
+	value=INT;
+FloatValue returns sync::FloatValue:
+    value=Float ; 
+BooleanValue returns sync::BooleanValue :
+    value=Boolean;
+Value returns sync::Value:
+	IntValue | FloatValue | BooleanValue;
+// make sure the Float rule does not shadow the INT rule
+terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
+terminal Boolean returns ecore::EBooleanObject : "true" | "false";
+
+//==============================================================================
+// Arithmetic Expressions
+//==============================================================================
+
+// Example: ?A	
+ValOperation returns sync::ComplexExpression:
+	operator=ValOperator subExpressions+=SignalReference;
+
+// everything that evaluates to a primitive number value
+ValueExpression returns sync::Expression:
+	PlusOperation;
+
+// Example: 42, 42.2, ?A, var1, (1+2*3)
+ParanthesedValueExpression returns sync::Expression:
+    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
+
+// Example: 1 + 2, varA - ?B
+PlusOperation returns sync::Expression:
+	MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
+
+MultOrDivOperation returns sync::Expression:
+	MultOperation | '('DivOperation')';
+
+// Example: 2 * 4, varA mod ?B
+MultOperation returns sync::Expression:
+	PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
+
+// Example: (2 / 4)
+// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+DivOperation returns sync::Expression:
+	PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
+
+// Example: pre (? A)
+PreArithmOperation returns sync::ComplexExpression:
+	operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
+	
+PreOrNormalValueExpression returns sync::Expression:
+	PreArithmOperation | ParanthesedValueExpression;
+
+//==============================================================================
+// Boolean Expressions
+//==============================================================================
+
+// Example: 42 <= ?A
+CompareOperation returns sync::Expression:
+	ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
+UnaryOperation returns sync::ComplexExpression:
+	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
+
+UnaryParanthesedOperation returns sync::ComplexExpression:
+    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
+
+// Example: either negated or normal expression (with parantheses) 
+UnaryOrNormalExpression returns sync::Expression:
+	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
+
+// Example: A and B, not C and 42 <= ?D
+AndOperation returns sync::Expression:
+	UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
+
+// Example: A or B, C and B or D and not E 
+OrOperation returns sync::Expression:
+	AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+
+// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+ParanthesedBooleanExpression returns sync::Expression:
+    BooleanValue | CompareOperation | SignalReference | ValOperation | HostCode | '('OrOperation')' ;
+
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns sync::Expression:
+	OrOperation;
+
+//==============================================================================
+// Operators
+//==============================================================================
+	
+enum OperatorType returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
+
+enum ValOperator returns sync::OperatorType:
+	VAL="?";
+
+enum CompareOperator returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+
+// not A	
+enum UnaryOperator returns sync::OperatorType:
+	NOT="not";
+
+// pre(A)
+enum UnaryParanthesedOperator returns sync::OperatorType:
+	PRE="pre";
+
+enum OperatorOr returns sync::OperatorType:
+	OR="or";
+
+enum OperatorAnd returns sync::OperatorType:
+	AND="and";
+
+enum OperatorPre returns sync::OperatorType:
+    PRE="pre";
+
+enum PlusOperator returns sync::OperatorType:
+	ADD="+" | SUB="-";
+	
+enum MultOperator returns sync::OperatorType:	
+	MULT="*" | MOD="mod";
+
+enum DivOperator returns sync::OperatorType:	
+	DIV="/";
+
+
+//==============================================================================
+// Misc
+//==============================================================================
+	
+HostCode returns sync::HostCode:
+	//"'"code=STRING"'";
+	code=STRING ("(" type=ID ")")?; 	
+	
