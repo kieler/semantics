@@ -116,6 +116,24 @@ public class TextualsyncchartsPackageImpl extends EPackageImpl implements Textua
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTextualState_InputSignals() {
+		return (EReference)textualStateEClass.getEStructuralFeatures().get(0);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTextualState_OutputSignals() {
+		return (EReference)textualStateEClass.getEStructuralFeatures().get(1);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -179,6 +197,8 @@ public class TextualsyncchartsPackageImpl extends EPackageImpl implements Textua
 
 		// Create classes and their features
 		textualStateEClass = createEClass(TEXTUAL_STATE);
+		createEReference(textualStateEClass, TEXTUAL_STATE__INPUT_SIGNALS);
+		createEReference(textualStateEClass, TEXTUAL_STATE__OUTPUT_SIGNALS);
 
 		textualTransitionEClass = createEClass(TEXTUAL_TRANSITION);
 		createEAttribute(textualTransitionEClass, TEXTUAL_TRANSITION__TARGET_STATE_PROXY);
@@ -222,6 +242,8 @@ public class TextualsyncchartsPackageImpl extends EPackageImpl implements Textua
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(textualStateEClass, TextualState.class, "TextualState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTextualState_InputSignals(), theSyncchartsPackage.getSignal(), null, "inputSignals", null, 0, -1, TextualState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTextualState_OutputSignals(), theSyncchartsPackage.getSignal(), null, "outputSignals", null, 0, -1, TextualState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(textualTransitionEClass, TextualTransition.class, "TextualTransition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTextualTransition_TargetStateProxy(), ecorePackage.getEString(), "targetStateProxy", null, 0, 1, TextualTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

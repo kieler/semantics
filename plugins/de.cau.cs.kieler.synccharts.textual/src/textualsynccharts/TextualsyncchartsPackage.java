@@ -207,13 +207,58 @@ public interface TextualsyncchartsPackage extends EPackage {
     int TEXTUAL_STATE__BODY_TEXT = SyncchartsPackage.STATE__BODY_TEXT;
 
     /**
+	 * The feature id for the '<em><b>Body Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXTUAL_STATE__BODY_REFERENCE = SyncchartsPackage.STATE__BODY_REFERENCE;
+
+				/**
+	 * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXTUAL_STATE__BODY_CONTENTS = SyncchartsPackage.STATE__BODY_CONTENTS;
+
+				/**
+	 * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXTUAL_STATE__INTERFACE_DECLARATION = SyncchartsPackage.STATE__INTERFACE_DECLARATION;
+
+				/**
+	 * The feature id for the '<em><b>Input Signals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXTUAL_STATE__INPUT_SIGNALS = SyncchartsPackage.STATE_FEATURE_COUNT + 0;
+
+				/**
+	 * The feature id for the '<em><b>Output Signals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXTUAL_STATE__OUTPUT_SIGNALS = SyncchartsPackage.STATE_FEATURE_COUNT + 1;
+
+				/**
 	 * The number of structural features of the '<em>Textual State</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int TEXTUAL_STATE_FEATURE_COUNT = SyncchartsPackage.STATE_FEATURE_COUNT + 0;
+    int TEXTUAL_STATE_FEATURE_COUNT = SyncchartsPackage.STATE_FEATURE_COUNT + 2;
 
     /**
 	 * The meta object id for the '{@link textualsynccharts.impl.TextualTransitionImpl <em>Textual Transition</em>}' class.
@@ -399,6 +444,28 @@ public interface TextualsyncchartsPackage extends EPackage {
     EClass getTextualState();
 
     /**
+	 * Returns the meta object for the containment reference list '{@link textualsynccharts.TextualState#getInputSignals <em>Input Signals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Input Signals</em>'.
+	 * @see textualsynccharts.TextualState#getInputSignals()
+	 * @see #getTextualState()
+	 * @generated
+	 */
+	EReference getTextualState_InputSignals();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link textualsynccharts.TextualState#getOutputSignals <em>Output Signals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Output Signals</em>'.
+	 * @see textualsynccharts.TextualState#getOutputSignals()
+	 * @see #getTextualState()
+	 * @generated
+	 */
+	EReference getTextualState_OutputSignals();
+
+				/**
 	 * Returns the meta object for class '{@link textualsynccharts.TextualTransition <em>Textual Transition</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -474,6 +541,22 @@ public interface TextualsyncchartsPackage extends EPackage {
         EClass TEXTUAL_STATE = eINSTANCE.getTextualState();
 
         /**
+		 * The meta object literal for the '<em><b>Input Signals</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEXTUAL_STATE__INPUT_SIGNALS = eINSTANCE.getTextualState_InputSignals();
+
+								/**
+		 * The meta object literal for the '<em><b>Output Signals</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEXTUAL_STATE__OUTPUT_SIGNALS = eINSTANCE.getTextualState_OutputSignals();
+
+								/**
 		 * The meta object literal for the '{@link textualsynccharts.impl.TextualTransitionImpl <em>Textual Transition</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
