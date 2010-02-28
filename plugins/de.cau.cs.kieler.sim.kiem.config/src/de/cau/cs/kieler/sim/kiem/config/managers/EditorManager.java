@@ -309,8 +309,10 @@ public final class EditorManager extends AbstractManager {
 
             StringBuilder builder = new StringBuilder();
             for (EditorDefinition e : editors) {
+                if (e != null) {
                 builder.append(Tools.putValue(Tools.EDITOR_NAME, e
                         .toSerialString()));
+                }
             }
 
             super.save(Tools.EDITOR_IDS_KEY, builder.toString());
