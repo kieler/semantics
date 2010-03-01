@@ -148,6 +148,18 @@ state.setParentRegion(null) ->
 null
 ;
 
+//Adds an initial state to a region
+Void addInitialState(Region target):
+ let parent = target.parentState :
+ let state = new State:
+ (parent != null) ?
+ (state.setLabel("Initial") ->
+ state.setIsInitial(true) ->
+ target.innerStates.add(state) ->
+ setSelection(state)) :
+ createDefault(target)
+;
+
 //Copies a state, i.e. stores a reference in a 
 //Java class
 Void copyState(State source):

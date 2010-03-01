@@ -50,7 +50,7 @@
 					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">
 				</transformation>
 				<transformation icon="icons/default.gif" name="Create Default"
-					transformation="createDefault" transformationId="de.cau.cs.kieler.ksbase.empty">
+					transformation="addInitialState" transformationId="de.cau.cs.kieler.ksbase.empty">
 				</transformation>
     <transformation
           icon="icons/reconnect_target.gif"
@@ -229,6 +229,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.empty">
           </transformationCommand>
     </menuContribution>
 
