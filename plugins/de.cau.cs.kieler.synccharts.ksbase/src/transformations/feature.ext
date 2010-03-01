@@ -175,13 +175,17 @@ Void createDefault(Region rootRegion):
 let state = new State:
 let innerState = new State:
 let region = new Region:
-state.setLabel("SyncChart") ->
+state.setLabel(getFileNameOfActiveEditor()) ->
 state.regions.add(region) ->
 innerState.setLabel("Initial") ->
 innerState.setIsInitial(true) -> 
 region.innerStates.add(innerState) ->
 rootRegion.innerStates.add(state) ->
 setSelection(innerState)
+;
+
+String getFileNameOfActiveEditor():
+JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
 ;
 
 //Good ol' ABRO

@@ -189,6 +189,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.empty">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
