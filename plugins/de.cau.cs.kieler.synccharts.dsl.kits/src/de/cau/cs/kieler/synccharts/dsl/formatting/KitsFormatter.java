@@ -42,18 +42,20 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 				f.getStateAccess().getExitActionsAssignment_10_1());
 		config.setLinewrap().before(f.getStateRule());
 		config.setLinewrap().before(
-				f.getStateAccess().getRightCurlyBracketKeyword_12_3());
+				f.getStateAccess().getRightCurlyBracketKeyword_12_1_0_3());
 		config.setLinewrap().after(
-				f.getStateAccess().getRightCurlyBracketKeyword_13_2());
+				f.getStateAccess().getRightCurlyBracketKeyword_12_1_1_2());
 		config.setLinewrap().after(
-				f.getStateAccess().getLeftCurlyBracketKeyword_12_0());
+				f.getStateAccess().getLeftCurlyBracketKeyword_12_1_0_0());
 		// parallel regions
 		config.setLinewrap().after(
-				f.getStateAccess().getVerticalLineVerticalLineKeyword_12_2_0());
+				f.getStateAccess().getVerticalLineVerticalLineKeyword_12_1_0_2_0());
+	              config.setLinewrap().before(
+                              f.getStateAccess().getVerticalLineVerticalLineKeyword_12_1_0_2_0());
 		// indent "{" --- "}"
 		config.setIndentation(f.getStateAccess()
-				.getLeftCurlyBracketKeyword_13_0(), f.getStateAccess()
-				.getRightCurlyBracketKeyword_12_3());
+				.getLeftCurlyBracketKeyword_12_1_0_0(), f.getStateAccess()
+				.getRightCurlyBracketKeyword_12_1_0_3());
 		config.setIndentation(f.getRegionAccess().getInnerStatesAssignment_3(),
 				f.getRegionAccess().getInnerStatesAssignment_3());
 
@@ -73,10 +75,10 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 		// .getStateAccess().getRightCurlyBracketKeyword_13_3());
 
 		/** SIGNALS **/
-		config.setLinewrap().before(
-				f.getSignalAccess().getIsInputInputKeyword_0_0_0_0());
-		config.setLinewrap().before(
-				f.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0());
+//		config.setLinewrap().before(
+//				f.getSignalAccess().getIsInputInputKeyword_0_0_0_0());
+//		config.setLinewrap().before(
+//				f.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0());
 		// variable
 		config.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
 

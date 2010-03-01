@@ -125,8 +125,8 @@ VariableReference returns sync::VariableReference:
 // Values
 //==============================================================================
 // redefine INT terminal to allow negative numbers
-terminal INT returns ecore::EInt:
- '-'?('0'..'9')+;
+//terminal INT returns ecore::EInt:
+// '-'?('0'..'9')+;
 IntValue returns sync::IntValue: 
 	value=INT;
 FloatValue returns sync::FloatValue:
@@ -135,16 +135,19 @@ BooleanValue returns sync::BooleanValue :
     value=BOOLEAN;
 Value returns sync::Value:
 	IntValue | FloatValue | BooleanValue;
-// no minus values in floats meeting#05022010
-terminal NAT returns ecore::EInt :
-('0'..'9')+;
-// make sure the Float rule does not shadow the INT rule
-terminal FLOAT returns ecore::EFloatObject : ((INT"."NAT | 
-                                               INT("."NAT)?("e"|"E")("+")?NAT
+
+terminal FLOAT returns ecore::EFloatObject : (( '-'?INT"."INT | 
+                                                '-'?INT("."INT)?("e"|"E")("+")? '-'?INT
                                                )
                                               )"f"? 
                                               
-                                              | INT"f";
+                                              |  '-'?INT"f";
+// no minus values in floats meeting#05022010
+// make sure the FLOAT rule does not shadow the INT rule
+//terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+)   
+//                                              | INT("."(('0'..'9')+))?("e"|"E")("+")?(('0'..'9')+)
+//                                              ))"f"?                                              
+//                                             | INT"f";
 terminal BOOLEAN returns ecore::EBooleanObject : "true" | "false";
 
 //==============================================================================

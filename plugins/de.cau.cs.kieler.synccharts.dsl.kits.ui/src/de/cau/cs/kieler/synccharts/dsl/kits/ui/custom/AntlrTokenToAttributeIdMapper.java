@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.kits.ui.custom;
 
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.common.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper;
 
 /**
- * @author oba
- * maps the tokens to 
+ * @author oba maps the tokens to
  */
 public class AntlrTokenToAttributeIdMapper extends
         DefaultAntlrTokenToAttributeIdMapper {
@@ -36,7 +36,15 @@ public class AntlrTokenToAttributeIdMapper extends
             return TransitionTypeHighlighter.NORMALTERMINATION_KEYWORD;
         } else if ("'-->'".equals(tokenName)) {
             return TransitionTypeHighlighter.WEAKABORT_KEYWORD;
+        } else if ("BOOLEAN".equals(tokenName)) {
+            return DefaultHighlightingConfiguration.KEYWORD_ID;
         }
+        // else if ("'true'".equals(tokenName)) {
+        // return TransitionTypeHighlighter.TRUE_KEYWORD;
+        // } else if ("false".equals(tokenName)) {
+        // return TransitionTypeHighlighter.FALSE_KEYWORD;
+        // }
+
         return super.calculateId(tokenName, tokenType);
     }
 }

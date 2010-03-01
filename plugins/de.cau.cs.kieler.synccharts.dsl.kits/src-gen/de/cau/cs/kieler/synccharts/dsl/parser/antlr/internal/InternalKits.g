@@ -1281,11 +1281,11 @@ ruleSignal returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-((((
+(((
 (
 		lv_isInput_0_0=	'input' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0_0_0(), "isInput"); 
+        createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0_0(), "isInput"); 
     }
  
 	    {
@@ -1302,11 +1302,12 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)?(
+)
+    |(
 (
 		lv_isOutput_1_0=	'output' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0(), "isOutput"); 
+        createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_1_0(), "isOutput"); 
     }
  
 	    {
@@ -1323,12 +1324,12 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)?)
-    |(	'signal' 
+)
+    |	'signal' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getSignalKeyword_0_1(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getSignalKeyword_0_2(), null); 
     }
-)?)(
+)(
 (
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getNameQUALIFIEDNAMEParserRuleCall_1_0(), currentNode); 
@@ -1576,12 +1577,12 @@ ruleVARSIGVALUE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTok
     createLeafNode(grammarAccess.getVARSIGVALUEAccess().getIDTerminalRuleCall_1(), null); 
     }
 
-    |    this_Boolean_2=RULE_BOOLEAN    {
-		$current.merge(this_Boolean_2);
+    |    this_BOOLEAN_2=RULE_BOOLEAN    {
+		$current.merge(this_BOOLEAN_2);
     }
 
     { 
-    createLeafNode(grammarAccess.getVARSIGVALUEAccess().getBooleanTerminalRuleCall_2(), null); 
+    createLeafNode(grammarAccess.getVARSIGVALUEAccess().getBOOLEANTerminalRuleCall_2(), null); 
     }
 
     |    this_STRING_3=RULE_STRING    {
@@ -1592,12 +1593,12 @@ ruleVARSIGVALUE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTok
     createLeafNode(grammarAccess.getVARSIGVALUEAccess().getSTRINGTerminalRuleCall_3(), null); 
     }
 
-    |    this_Float_4=RULE_FLOAT    {
-		$current.merge(this_Float_4);
+    |    this_FLOAT_4=RULE_FLOAT    {
+		$current.merge(this_FLOAT_4);
     }
 
     { 
-    createLeafNode(grammarAccess.getVARSIGVALUEAccess().getFloatTerminalRuleCall_4(), null); 
+    createLeafNode(grammarAccess.getVARSIGVALUEAccess().getFLOATTerminalRuleCall_4(), null); 
     }
 )+
     ;
@@ -2179,7 +2180,7 @@ ruleFloatValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_FLOAT
 		{
-			createLeafNode(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0(), "value"); 
+			createLeafNode(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0(), "value"); 
 		}
 		{
 	        if ($current==null) {
@@ -2191,7 +2192,7 @@ ruleFloatValue returns [EObject current=null]
 	       			$current, 
 	       			"value",
 	        		lv_value_0_0, 
-	        		"Float", 
+	        		"FLOAT", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -2226,7 +2227,7 @@ ruleBooleanValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_BOOLEAN
 		{
-			createLeafNode(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0(), "value"); 
+			createLeafNode(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0(), "value"); 
 		}
 		{
 	        if ($current==null) {
@@ -2238,7 +2239,7 @@ ruleBooleanValue returns [EObject current=null]
 	       			$current, 
 	       			"value",
 	        		lv_value_0_0, 
-	        		"Boolean", 
+	        		"BOOLEAN", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -4073,13 +4074,13 @@ ruleDivOperator returns [Enumerator current=null]
 
 
 
-RULE_INT : '-'? ('0'..'9')+;
-
-RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
+RULE_FLOAT : (('-'? RULE_INT '.' RULE_INT|'-'? RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? '-'? RULE_INT) 'f'?|'-'? RULE_INT 'f');
 
 RULE_BOOLEAN : ('true'|'false');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+
+RULE_INT : ('0'..'9')+;
 
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 

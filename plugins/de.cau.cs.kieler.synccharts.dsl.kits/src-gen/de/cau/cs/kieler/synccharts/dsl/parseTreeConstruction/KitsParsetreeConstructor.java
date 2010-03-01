@@ -3265,24 +3265,24 @@ protected class Variable_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule Signal ****************
  *
  * Signal returns sync::Signal:
- *   (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+ *   (isInput?="input"|isOutput?="output"|"signal") name=QUALIFIEDNAME ((":="
  *   initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
  *   combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
  * 
  *     
- *       
+ *           
  *    
  *        
  *           
  *   
  *   
  * //========================================================================================
- * //===  							   TERMINALS, ENUMS  					               ===
+ * //===  							            MISC    					               ===
  * //========================================================================================
  *
  **/
 
-// (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+// (isInput?="input"|isOutput?="output"|"signal") name=QUALIFIEDNAME ((":="
 // initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
 // combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"
 protected class Signal_Group extends GroupToken {
@@ -3311,7 +3311,7 @@ protected class Signal_Group extends GroupToken {
 	}
 }
 
-// isInput?="input"? isOutput?="output"?|"signal"?
+// isInput?="input"|isOutput?="output"|"signal"
 protected class Signal_Alternatives_0 extends AlternativesToken {
 
 	public Signal_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3326,47 +3326,25 @@ protected class Signal_Alternatives_0 extends AlternativesToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Group_0_0(parent, this, 0, inst);
-			case 1: return new Signal_SignalKeyword_0_1(parent, this, 1, inst);
+			case 0: return new Signal_IsInputAssignment_0_0(parent, this, 0, inst);
+			case 1: return new Signal_IsOutputAssignment_0_1(parent, this, 1, inst);
+			case 2: return new Signal_SignalKeyword_0_2(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// isInput?="input"? isOutput?="output"?
-protected class Signal_Group_0_0 extends GroupToken {
+// isInput?="input"
+protected class Signal_IsInputAssignment_0_0 extends AssignmentToken  {
 	
-	public Signal_Group_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup_0_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_IsOutputAssignment_0_0_1(parent, this, 0, inst);
-			case 1: return new Signal_IsInputAssignment_0_0_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// isInput?="input"?
-protected class Signal_IsInputAssignment_0_0_0 extends AssignmentToken  {
-	
-	public Signal_IsInputAssignment_0_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_IsInputAssignment_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsInputAssignment_0_0_0();
+		return grammarAccess.getSignalAccess().getIsInputAssignment_0_0();
 	}
 
     @Override
@@ -3378,11 +3356,11 @@ protected class Signal_IsInputAssignment_0_0_0 extends AssignmentToken  {
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInput",false)) == null) return null;
+		if((value = current.getConsumable("isInput",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("isInput");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0_0_0();
+			element = grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0_0();
 			return obj;
 		}
 		return null;
@@ -3390,33 +3368,32 @@ protected class Signal_IsInputAssignment_0_0_0 extends AssignmentToken  {
 
 }
 
-// isOutput?="output"?
-protected class Signal_IsOutputAssignment_0_0_1 extends AssignmentToken  {
+// isOutput?="output"
+protected class Signal_IsOutputAssignment_0_1 extends AssignmentToken  {
 	
-	public Signal_IsOutputAssignment_0_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_IsOutputAssignment_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsOutputAssignment_0_0_1();
+		return grammarAccess.getSignalAccess().getIsOutputAssignment_0_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_IsInputAssignment_0_0_0(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isOutput",false)) == null) return null;
+		if((value = current.getConsumable("isOutput",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("isOutput");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0();
+			element = grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_1_0();
 			return obj;
 		}
 		return null;
@@ -3424,17 +3401,16 @@ protected class Signal_IsOutputAssignment_0_0_1 extends AssignmentToken  {
 
 }
 
-
-// "signal"?
-protected class Signal_SignalKeyword_0_1 extends KeywordToken  {
+// "signal"
+protected class Signal_SignalKeyword_0_2 extends KeywordToken  {
 	
-	public Signal_SignalKeyword_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_SignalKeyword_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getSignalKeyword_0_1();
+		return grammarAccess.getSignalAccess().getSignalKeyword_0_2();
 	}
 
     @Override
@@ -4943,6 +4919,8 @@ protected class SignalReference_SignalAssignment extends AssignmentToken  {
  * // Values
  * //==============================================================================
  * // redefine INT terminal to allow negative numbers
+ * //terminal INT returns ecore::EInt:
+ * // '-'?('0'..'9')+;
  *
  **/
 
@@ -4993,7 +4971,14 @@ protected class VariableReference_VariableAssignment extends AssignmentToken  {
 /************ begin Rule IntValue ****************
  *
  * IntValue returns sync::IntValue:
- *   value=INT;
+ *   value=INT; 
+ * 
+ * //==============================================================================
+ * // Values
+ * //==============================================================================
+ * // redefine INT terminal to allow negative numbers
+ * //terminal INT returns ecore::EInt:
+ * // '-'?('0'..'9')+;
  *
  **/
 
@@ -5041,11 +5026,11 @@ protected class IntValue_ValueAssignment extends AssignmentToken  {
 /************ begin Rule FloatValue ****************
  *
  * FloatValue returns sync::FloatValue:
- *   value=Float;
+ *   value=FLOAT;
  *
  **/
 
-// value=Float
+// value=FLOAT
 protected class FloatValue_ValueAssignment extends AssignmentToken  {
 	
 	public FloatValue_ValueAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5075,7 +5060,7 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("value");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0();
+			element = grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0();
 			return obj;
 		}
 		return null;
@@ -5089,11 +5074,11 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 /************ begin Rule BooleanValue ****************
  *
  * BooleanValue returns sync::BooleanValue:
- *   value=Boolean;
+ *   value=BOOLEAN;
  *
  **/
 
-// value=Boolean
+// value=BOOLEAN
 protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 	
 	public BooleanValue_ValueAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5123,7 +5108,7 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("value");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0();
+			element = grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0();
 			return obj;
 		}
 		return null;
@@ -5137,17 +5122,11 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 /************ begin Rule Value ****************
  *
  * Value returns sync::Value:
- *   IntValue|FloatValue|BooleanValue; 
- *     
- * 	        
- * // make sure the Float rule does not shadow the INT rule
+ *   IntValue|FloatValue|BooleanValue;
  *
  **/
 
-// IntValue|FloatValue|BooleanValue 
-//     
-// 	        
-// // make sure the Float rule does not shadow the INT rule
+// IntValue|FloatValue|BooleanValue
 protected class Value_Alternatives extends AlternativesToken {
 
 	public Value_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {

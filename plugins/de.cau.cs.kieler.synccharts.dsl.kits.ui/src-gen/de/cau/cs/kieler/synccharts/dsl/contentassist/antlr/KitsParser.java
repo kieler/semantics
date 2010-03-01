@@ -94,7 +94,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableAccess().getGroup_2(), "rule__Variable__Group_2__0");
 					put(grammarAccess.getVariableAccess().getGroup_2_0(), "rule__Variable__Group_2_0__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
-					put(grammarAccess.getSignalAccess().getGroup_0_0(), "rule__Signal__Group_0_0__0");
 					put(grammarAccess.getSignalAccess().getGroup_2(), "rule__Signal__Group_2__0");
 					put(grammarAccess.getSignalAccess().getGroup_2_0(), "rule__Signal__Group_2_0__0");
 					put(grammarAccess.getSignalAccess().getGroup_2_1_0(), "rule__Signal__Group_2_1_0__0");
@@ -170,8 +169,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableAccess().getNameAssignment_1(), "rule__Variable__NameAssignment_1");
 					put(grammarAccess.getVariableAccess().getInitialValueAssignment_2_0_1(), "rule__Variable__InitialValueAssignment_2_0_1");
 					put(grammarAccess.getVariableAccess().getTypeAssignment_2_2(), "rule__Variable__TypeAssignment_2_2");
-					put(grammarAccess.getSignalAccess().getIsInputAssignment_0_0_0(), "rule__Signal__IsInputAssignment_0_0_0");
-					put(grammarAccess.getSignalAccess().getIsOutputAssignment_0_0_1(), "rule__Signal__IsOutputAssignment_0_0_1");
+					put(grammarAccess.getSignalAccess().getIsInputAssignment_0_0(), "rule__Signal__IsInputAssignment_0_0");
+					put(grammarAccess.getSignalAccess().getIsOutputAssignment_0_1(), "rule__Signal__IsOutputAssignment_0_1");
 					put(grammarAccess.getSignalAccess().getNameAssignment_1(), "rule__Signal__NameAssignment_1");
 					put(grammarAccess.getSignalAccess().getInitialValueAssignment_2_0_1(), "rule__Signal__InitialValueAssignment_2_0_1");
 					put(grammarAccess.getSignalAccess().getTypeAssignment_2_1_0_1(), "rule__Signal__TypeAssignment_2_1_0_1");

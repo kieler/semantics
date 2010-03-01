@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts.dsl.kits.ui.custom;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.xtext.ui.common.editor.syntaxcoloring.DefaultLexicalHighlightingConfiguration;
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.common.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
 import org.eclipse.xtext.ui.core.editor.utils.TextStyle;
 
@@ -24,10 +24,14 @@ import org.eclipse.xtext.ui.core.editor.utils.TextStyle;
  * 
  */
 public class TransitionTypeHighlighter extends
-        DefaultLexicalHighlightingConfiguration {
+// DefaultLexicalHighlightingConfiguration {
+        DefaultHighlightingConfiguration {
 
     public static final String WEAKABORT_KEYWORD = "-->";
     public static final String NORMALTERMINATION_KEYWORD = ">->";
+
+    // public static final String TRUE_KEYWORD = "true";
+    // public static final String FALSE_KEYWORD = "false";
 
     /*
      * (non-Javadoc)
@@ -44,6 +48,10 @@ public class TransitionTypeHighlighter extends
                 "NormalTermination", keywordTextStyle());
         acceptor.acceptDefaultHighlighting(WEAKABORT_KEYWORD, "WeakAbort",
                 keywordTextStyle());
+        // acceptor.acceptDefaultHighlighting(FALSE_KEYWORD, "False",
+        // keywordTextStyle());
+        // acceptor.acceptDefaultHighlighting(TRUE_KEYWORD, "True",
+        // keywordTextStyle());
         super.configure(acceptor);
     }
 

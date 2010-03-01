@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.xtend.type.impl.java.JavaBeansMetaModel;
 import org.eclipse.xpand2.XpandExecutionContextImpl;
 import org.eclipse.xpand2.XpandFacade;
@@ -38,38 +39,66 @@ public class KitsProjectCreator extends DefaultProjectCreator {
 
 	@Override
 	protected void execute(final IProgressMonitor monitor)
-			throws CoreException, InvocationTargetException,
-			InterruptedException {
-		monitor.beginTask("Creating model project " + getProjectInfo().getProjectName(), 3);
-
-		final IProject project = createProject(monitor);
-		monitor.worked(1);
-		if (project == null)
-			return;
-
-		initializeProject(project, monitor);
-		monitor.worked(1);
-
-		IFile modelFile = getModelFile(project);
-		setResult(modelFile);
-		monitor.worked(1);
+			throws CoreException, InvocationTargetException, InterruptedException {
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 
+				"Creating model project " + getProjectInfo().getProjectName(), 
+				2);
+		try {
+			final IProject project = createProject(subMonitor.newChild(1));
+			if (project == null)
+				return;
+			initializeProject(project, subMonitor.newChild(1));
+			IFile modelFile = getModelFile(project);
+			setResult(modelFile);
+		} finally {
+			subMonitor.done();
+		}
 	}
 
-	protected IProject createProject(final IProgressMonitor monitor) {
+	protected IProject createProject(IProgressMonitor monitor) {
 		final IProject project = EclipseResourceUtil.createProject(
-				getProjectInfo().getProjectName(), SRC_FOLDER_LIST, Collections
-						.<IProject> emptyList(),
+				getProjectInfo().getProjectName(),
+				getSourceFolders(), 
+				getReferencedProjects(),
 				Sets.newLinkedHashSet(getRequiredBundles()), 
-				null,
-				Lists.newArrayList("org.apache.log4j"),
-				null,
+				getExportedPackages(),
+				getImportedPackages(), 
+				getActivatorClassName(),
 				monitor,
 				null,
-				new String[] { "org.eclipse.jdt.core.javanature", "org.eclipse.pde.PluginNature" });
-
+				getProjectNatures()
+		);
 		return project;
 	}
+	
+	protected List<String> getSourceFolders() {
+        return SRC_FOLDER_LIST;
+    }
 
+	protected List<IProject> getReferencedProjects() {
+        return Collections.<IProject> emptyList();
+    }
+
+    protected List<String> getExportedPackages() {
+        return null;
+    }
+
+    protected List<String> getImportedPackages() {
+        return Lists.newArrayList("org.apache.log4j");
+    }
+
+    protected String getActivatorClassName() {
+        return null;
+    }
+    
+    protected String[] getProjectNatures() {
+        return new String[] {
+        	"org.eclipse.jdt.core.javanature",
+			"org.eclipse.pde.PluginNature",
+			"org.eclipse.xtext.builder.xtextNature"
+		};
+    }
+    
 	protected List<String> getRequiredBundles() {
 		return Lists.newArrayList(
 			"com.ibm.icu",
@@ -88,7 +117,7 @@ public class KitsProjectCreator extends DefaultProjectCreator {
 		output.addOutlet(new Outlet(false, getEncoding(), null, true, project.getLocation().makeAbsolute().toOSString()));
 
 		XpandExecutionContextImpl execCtx = new XpandExecutionContextImpl(output, null);
-		execCtx.setFileEncoding("ISO-8859-1");
+		execCtx.setFileEncoding("UTF-8");
 		execCtx.registerMetaModel(new JavaBeansMetaModel());
 
 		XpandFacade facade = XpandFacade.create(execCtx);

@@ -739,12 +739,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Group cGroup_0_0 = (Group)cAlternatives_0.eContents().get(0);
-		private final Assignment cIsInputAssignment_0_0_0 = (Assignment)cGroup_0_0.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_0_0_0 = (Keyword)cIsInputAssignment_0_0_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_0_0_1_0 = (Keyword)cIsOutputAssignment_0_0_1.eContents().get(0);
-		private final Keyword cSignalKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Assignment cIsInputAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0_0 = (Keyword)cIsInputAssignment_0_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_1_0 = (Keyword)cIsOutputAssignment_0_1.eContents().get(0);
+		private final Keyword cSignalKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameQUALIFIEDNAMEParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
@@ -770,47 +769,44 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Signal returns sync::Signal:
-		//  (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+		//  (isInput?="input"|isOutput?="output"|"signal") name=QUALIFIEDNAME ((":="
 		//  initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
 		//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 		//
 		//    
-		//      
+		//          
 		//   
 		//       
 		//          
 		//  
 		//  
 		////========================================================================================
-		////===  							   TERMINALS, ENUMS  					               ===
+		////===  							            MISC    					               ===
 		////========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//(isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+		//(isInput?="input"|isOutput?="output"|"signal") name=QUALIFIEDNAME ((":="
 		//initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
 		//combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"
 		public Group getGroup() { return cGroup; }
 
-		//isInput?="input"? isOutput?="output"?|"signal"?
+		//isInput?="input"|isOutput?="output"|"signal"
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//isInput?="input"? isOutput?="output"?
-		public Group getGroup_0_0() { return cGroup_0_0; }
-
-		//isInput?="input"?
-		public Assignment getIsInputAssignment_0_0_0() { return cIsInputAssignment_0_0_0; }
+		//isInput?="input"
+		public Assignment getIsInputAssignment_0_0() { return cIsInputAssignment_0_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_0_0_0() { return cIsInputInputKeyword_0_0_0_0; }
+		public Keyword getIsInputInputKeyword_0_0_0() { return cIsInputInputKeyword_0_0_0; }
 
-		//isOutput?="output"?
-		public Assignment getIsOutputAssignment_0_0_1() { return cIsOutputAssignment_0_0_1; }
+		//isOutput?="output"
+		public Assignment getIsOutputAssignment_0_1() { return cIsOutputAssignment_0_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_0_1_0() { return cIsOutputOutputKeyword_0_0_1_0; }
+		public Keyword getIsOutputOutputKeyword_0_1_0() { return cIsOutputOutputKeyword_0_1_0; }
 
-		//"signal"?
-		public Keyword getSignalKeyword_0_1() { return cSignalKeyword_0_1; }
+		//"signal"
+		public Keyword getSignalKeyword_0_2() { return cSignalKeyword_0_2; }
 
 		//name=QUALIFIEDNAME
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -896,7 +892,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//FULLSTATEID returns ecore::EString:
 		//  (ID "@")? ID; 
 		////========================================================================================
-		////===  							   TERMINALS, ENUMS  					               ===
+		////===  							            MISC    					               ===
 		////========================================================================================
 		public ParserRule getRule() { return rule; }
 
@@ -921,15 +917,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cBOOLEANTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSTRINGTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cFloatTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cFLOATTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//VARSIGVALUE returns ecore::EString:
-		//  (INT|ID|Boolean|STRING|Float)+;
+		//  (INT|ID|BOOLEAN|STRING|FLOAT)+;
 		public ParserRule getRule() { return rule; }
 
-		//(INT|ID|Boolean|STRING|Float)+
+		//(INT|ID|BOOLEAN|STRING|FLOAT)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//INT
@@ -938,14 +934,14 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
 
-		//Boolean
-		public RuleCall getBooleanTerminalRuleCall_2() { return cBooleanTerminalRuleCall_2; }
+		//BOOLEAN
+		public RuleCall getBOOLEANTerminalRuleCall_2() { return cBOOLEANTerminalRuleCall_2; }
 
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_3() { return cSTRINGTerminalRuleCall_3; }
 
-		//Float
-		public RuleCall getFloatTerminalRuleCall_4() { return cFloatTerminalRuleCall_4; }
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall_4() { return cFLOATTerminalRuleCall_4; }
 	}
 
 	public class QUALIFIEDNAMEElements extends AbstractParserRuleElementFinder {
@@ -1223,6 +1219,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Values
 		////==============================================================================
 		//// redefine INT terminal to allow negative numbers
+		////terminal INT returns ecore::EInt:
+		//// '-'?('0'..'9')+;
 		public ParserRule getRule() { return rule; }
 
 		//variable=[sync::Variable]
@@ -1241,7 +1239,14 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//IntValue returns sync::IntValue:
-		//  value=INT;
+		//  value=INT; 
+		//
+		////==============================================================================
+		//// Values
+		////==============================================================================
+		//// redefine INT terminal to allow negative numbers
+		////terminal INT returns ecore::EInt:
+		//// '-'?('0'..'9')+;
 		public ParserRule getRule() { return rule; }
 
 		//value=INT
@@ -1254,33 +1259,33 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	public class FloatValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//FloatValue returns sync::FloatValue:
-		//  value=Float;
+		//  value=FLOAT;
 		public ParserRule getRule() { return rule; }
 
-		//value=Float
+		//value=FLOAT
 		public Assignment getValueAssignment() { return cValueAssignment; }
 
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
+		//FLOAT
+		public RuleCall getValueFLOATTerminalRuleCall_0() { return cValueFLOATTerminalRuleCall_0; }
 	}
 
 	public class BooleanValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		private final RuleCall cValueBOOLEANTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//BooleanValue returns sync::BooleanValue:
-		//  value=Boolean;
+		//  value=BOOLEAN;
 		public ParserRule getRule() { return rule; }
 
-		//value=Boolean
+		//value=BOOLEAN
 		public Assignment getValueAssignment() { return cValueAssignment; }
 
-		//Boolean
-		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
+		//BOOLEAN
+		public RuleCall getValueBOOLEANTerminalRuleCall_0() { return cValueBOOLEANTerminalRuleCall_0; }
 	}
 
 	public class ValueElements extends AbstractParserRuleElementFinder {
@@ -1291,16 +1296,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Value returns sync::Value:
-		//  IntValue|FloatValue|BooleanValue; 
-		//    
-		//	        
-		//// make sure the Float rule does not shadow the INT rule
+		//  IntValue|FloatValue|BooleanValue;
 		public ParserRule getRule() { return rule; }
 
-		//IntValue|FloatValue|BooleanValue 
-		//    
-		//	        
-		//// make sure the Float rule does not shadow the INT rule
+		//IntValue|FloatValue|BooleanValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -2758,13 +2757,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private AssignmentElements pAssignment;
 	private SignalReferenceElements pSignalReference;
 	private VariableReferenceElements pVariableReference;
-	private TerminalRule tINT;
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BooleanValueElements pBooleanValue;
 	private ValueElements pValue;
-	private TerminalRule tFloat;
-	private TerminalRule tBoolean;
+	private TerminalRule tFLOAT;
+	private TerminalRule tBOOLEAN;
 	private ValOperationElements pValOperation;
 	private ValueExpressionElements pValueExpression;
 	private ParanthesedValueExpressionElements pParanthesedValueExpression;
@@ -2936,19 +2934,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signal returns sync::Signal:
-	//  (isInput?="input"? isOutput?="output"?|"signal"?) name=QUALIFIEDNAME ((":="
+	//  (isInput?="input"|isOutput?="output"|"signal") name=QUALIFIEDNAME ((":="
 	//  initialValue=VARSIGVALUE)? (": " type=ValueType|": combine" type=ValueType "with" (
 	//  combineOperator=CombineOperator|hostCombineOperator=STRING)))? ";"; 
 	//
 	//    
-	//      
+	//          
 	//   
 	//       
 	//          
 	//  
 	//  
 	////========================================================================================
-	////===  							   TERMINALS, ENUMS  					               ===
+	////===  							            MISC    					               ===
 	////========================================================================================
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
@@ -2961,7 +2959,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//FULLSTATEID returns ecore::EString:
 	//  (ID "@")? ID; 
 	////========================================================================================
-	////===  							   TERMINALS, ENUMS  					               ===
+	////===  							            MISC    					               ===
 	////========================================================================================
 	public FULLSTATEIDElements getFULLSTATEIDAccess() {
 		return (pFULLSTATEID != null) ? pFULLSTATEID : (pFULLSTATEID = new FULLSTATEIDElements());
@@ -2972,7 +2970,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VARSIGVALUE returns ecore::EString:
-	//  (INT|ID|Boolean|STRING|Float)+;
+	//  (INT|ID|BOOLEAN|STRING|FLOAT)+;
 	public VARSIGVALUEElements getVARSIGVALUEAccess() {
 		return (pVARSIGVALUE != null) ? pVARSIGVALUE : (pVARSIGVALUE = new VARSIGVALUEElements());
 	}
@@ -3108,6 +3106,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Values
 	////==============================================================================
 	//// redefine INT terminal to allow negative numbers
+	////terminal INT returns ecore::EInt:
+	//// '-'?('0'..'9')+;
 	public VariableReferenceElements getVariableReferenceAccess() {
 		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
 	}
@@ -3116,19 +3116,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableReferenceAccess().getRule();
 	}
 
-	//terminal INT returns ecore::EInt:
-	//  "-"? "0".."9"+; 
+	//IntValue returns sync::IntValue:
+	//  value=INT; 
 	//
 	////==============================================================================
 	//// Values
 	////==============================================================================
 	//// redefine INT terminal to allow negative numbers
-	public TerminalRule getINTRule() {
-		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
-	} 
-
-	//IntValue returns sync::IntValue:
-	//  value=INT;
+	////terminal INT returns ecore::EInt:
+	//// '-'?('0'..'9')+;
 	public IntValueElements getIntValueAccess() {
 		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
 	}
@@ -3138,7 +3134,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FloatValue returns sync::FloatValue:
-	//  value=Float;
+	//  value=FLOAT;
 	public FloatValueElements getFloatValueAccess() {
 		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
 	}
@@ -3148,7 +3144,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanValue returns sync::BooleanValue:
-	//  value=Boolean;
+	//  value=BOOLEAN;
 	public BooleanValueElements getBooleanValueAccess() {
 		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
 	}
@@ -3158,10 +3154,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Value returns sync::Value:
-	//  IntValue|FloatValue|BooleanValue; 
-	//    
-	//	        
-	//// make sure the Float rule does not shadow the INT rule
+	//  IntValue|FloatValue|BooleanValue;
 	public ValueElements getValueAccess() {
 		return (pValue != null) ? pValue : (pValue = new ValueElements());
 	}
@@ -3170,15 +3163,33 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValueAccess().getRule();
 	}
 
-	//terminal Float returns ecore::EFloatObject:
-	//  (INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f"; 
-	//// make sure the Float rule does not shadow the INT rule
-	public TerminalRule getFloatRule() {
-		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
+	//terminal FLOAT returns ecore::EFloatObject:
+	//  ("-"? INT "." INT | "-"? INT ("." INT)? ("e" | "E") "+"? "-"? INT) "f"? | "-"? INT "f"; 
+	//
+	//               
+	//                                                  
+	//                                               
+	//                                               
+	//                                              
+	//                                                 
+	//// no minus values in floats meeting#05022010
+	//// make sure the FLOAT rule does not shadow the INT rule
+	////terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+)   
+	////                                              | INT("."(('0'..'9')+))?("e"|"E")("+")?(('0'..'9')+)
+	////                                              ))"f"?                                              
+	////                                             | INT"f";
+	public TerminalRule getFLOATRule() {
+		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
 	} 
 
-	//terminal Boolean returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//  "true" | "false"; 
+	//// no minus values in floats meeting#05022010
+	//// make sure the FLOAT rule does not shadow the INT rule
+	////terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+)   
+	////                                              | INT("."(('0'..'9')+))?("e"|"E")("+")?(('0'..'9')+)
+	////                                              ))"f"?                                              
+	////                                             | INT"f";
 	//              
 	//
 	////==============================================================================
@@ -3186,8 +3197,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////==============================================================================
 	//
 	//// Example: ?A
-	public TerminalRule getBooleanRule() {
-		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
+	public TerminalRule getBOOLEANRule() {
+		return (tBOOLEAN != null) ? tBOOLEAN : (tBOOLEAN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOLEAN"));
 	} 
 
 	//ValOperation returns sync::ComplexExpression:
@@ -3634,6 +3645,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
+	} 
+
+	//terminal INT returns ecore::EInt:
+	//  "0".."9"+;
+	public TerminalRule getINTRule() {
+		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:

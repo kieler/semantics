@@ -4,10 +4,8 @@
 package de.cau.cs.kieler.synccharts.dsl;
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.xtext.ui.common.editor.syntaxcoloring.ILexicalHighlightingConfiguration;
-import org.eclipse.xtext.ui.common.editor.syntaxcoloring.antlr.AbstractAntlrTokenToAttributeIdMapper;
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 
-import de.cau.cs.kieler.synccharts.dsl.kits.ui.custom.AntlrTokenToAttributeIdMapper;
 import de.cau.cs.kieler.synccharts.dsl.kits.ui.custom.TransitionTypeHighlighter;
 import de.cau.cs.kieler.synccharts.dsl.labeling.KitsLabelProvider;
 
@@ -29,21 +27,20 @@ public class KitsUiModule extends
         return KitsLabelProvider.class;
     }
 
-	// /**
-	// * Register a text style for transition types that are not highlighted may
-	// * be that is not necessary as we will use the keyword text style that is
-	// * registered in the default highlighting configuration
-	// *
-	// * @return custom text type registration
-	// */
-	// public Class<? extends ILexicalHighlightingConfiguration>
-	// bindILexicalHighlightingConfiguration() {
-	// return TransitionTypeHighlighter.class;
-	// }
-	//
-	// public Class<? extends AbstractAntlrTokenToAttributeIdMapper>
-	// bindAbstractAntlrTokenToAttributeIdMapper() {
-	// return AntlrTokenToAttributeIdMapper.class;
-	// }
+    /**
+     * Register a text style for transition types that are not highlighted may
+     * be that is not necessary as we will use the keyword text style that is
+     * registered in the default highlighting configuration
+     * 
+     * @return custom text type registration
+     */
+    public Class<? extends DefaultHighlightingConfiguration> bindILexicalHighlightingConfiguration() {
+        return TransitionTypeHighlighter.class;
+    }
+    //
+    // public Class<? extends AbstractAntlrTokenToAttributeIdMapper>
+    // bindAbstractAntlrTokenToAttributeIdMapper() {
+    // return AntlrTokenToAttributeIdMapper.class;
+    // }
 
 }
