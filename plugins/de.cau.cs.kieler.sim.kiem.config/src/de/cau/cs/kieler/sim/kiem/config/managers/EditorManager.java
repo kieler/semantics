@@ -231,6 +231,11 @@ public final class EditorManager extends AbstractManager {
                 break;
             }
         }
+        if (result == null) {
+            result = new EditorDefinition(getDefaultEditorName(),
+                    getDefaultEditorId());
+            editors.add(result);
+        }
         return result;
     }
 
@@ -310,8 +315,8 @@ public final class EditorManager extends AbstractManager {
             StringBuilder builder = new StringBuilder();
             for (EditorDefinition e : editors) {
                 if (e != null) {
-                builder.append(Tools.putValue(Tools.EDITOR_NAME, e
-                        .toSerialString()));
+                    builder.append(Tools.putValue(Tools.EDITOR_NAME, e
+                            .toSerialString()));
                 }
             }
 
