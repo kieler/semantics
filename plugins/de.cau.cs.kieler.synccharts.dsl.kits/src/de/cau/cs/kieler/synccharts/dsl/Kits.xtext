@@ -12,16 +12,22 @@ Region returns sync::Region:
   
 State returns sync::State:
   {sync::State} 
-  (isInitial?='init')? (isFinal?='final')? (type=[sync::StateType])? 
+  (isInitial?='init')? (isFinal?='final')? (type=StateType)? 
   ('state')? (id=FULLSTATEID)(label=STRING)? 
   (signals+=Signal)*// (',' (signals+=Signal))* ';')?  
   ('onentry' entryActions+=Action)* 
   ('oninner' innerActions+=Action)* 
   ('onexit' exitActions+=Action)* 
   ('suspension' suspensionTrigger=Action)? 
-  ('{' regions+=Region ('||' regions+=Region)* '}')? 
-  ('{'bodyText=STRING'}')? 
-  (outgoingTransitions+=(Transition|TextualTransition)*);
+  // if a state does not contain any regions, body text or transitions
+  // we close it with a semicolon
+  (';'  |
+   (('{' regions+=Region ('||' regions+=Region)* '}')? 
+    ('{'bodyText=STRING'}')? 
+    (outgoingTransitions+=(Transition|TextualTransition)*)
+   )
+  )
+  ;
 
 //========================================================================================
 //===  									    TRANSITION 					               ===
@@ -58,22 +64,22 @@ Variable returns sync::Variable:
   'var' name=ID ((':=' initialValue=VARSIGVALUE)? ': ' type=ValueType) ";";
 
 Signal returns sync::Signal:
-((isInput?='input')? (isOutput?='output')? |('signal')?) name=QUALIFIEDNAME
+((isInput?='input') | (isOutput?='output') | ('signal')) name=QUALIFIEDNAME
 ((':=' initialValue=VARSIGVALUE)? 
   ((': ' type=ValueType) | 
   (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
   )
 )? ";";
 //========================================================================================
-//===  							   TERMINALS, ENUMS  					               ===
+//===  							            MISC    					               ===
 //========================================================================================
-terminal FULLSTATEID returns ecore::EString:
+FULLSTATEID returns ecore::EString:
   ((ID '@')? ID); 
   
-terminal VARSIGVALUE returns ecore::EString:
-  (INT|ID|Boolean|STRING|Float)+;
+VARSIGVALUE returns ecore::EString:
+  (INT|ID|BOOLEAN|STRING|FLOAT)+;
 
-terminal QUALIFIEDNAME:
+QUALIFIEDNAME returns ecore::EString:
   (ID ".")* ID;
 
 enum StateType returns sync::StateType:
@@ -124,14 +130,22 @@ terminal INT returns ecore::EInt:
 IntValue returns sync::IntValue: 
 	value=INT;
 FloatValue returns sync::FloatValue:
-    value=Float ; 
+    value=FLOAT ; 
 BooleanValue returns sync::BooleanValue :
-    value=Boolean;
+    value=BOOLEAN;
 Value returns sync::Value:
 	IntValue | FloatValue | BooleanValue;
+// no minus values in floats meeting#05022010
+terminal NAT returns ecore::EInt :
+('0'..'9')+;
 // make sure the Float rule does not shadow the INT rule
-terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-terminal Boolean returns ecore::EBooleanObject : "true" | "false";
+terminal FLOAT returns ecore::EFloatObject : ((INT"."NAT | 
+                                               INT("."NAT)?("e"|"E")("+")?NAT
+                                               )
+                                              )"f"? 
+                                              
+                                              | INT"f";
+terminal BOOLEAN returns ecore::EBooleanObject : "true" | "false";
 
 //==============================================================================
 // Arithmetic Expressions
