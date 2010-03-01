@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kiem.config.managers;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -84,18 +85,23 @@ public final class EditorManager extends AbstractManager {
     public EditorDefinition addEditor(final EditorDefinition newDefinition) {
         EditorDefinition result = null;
 
-        // check to see if editor exists
-        for (EditorDefinition editor : getEditors()) {
-            if (editor.getEditorId().equals(newDefinition.getEditorId())) {
-                result = editor;
-                break;
+        if (newDefinition != null) {
+            // check to see if editor exists
+            for (EditorDefinition editor : getEditors()) {
+                if (editor != null) {
+                    if (editor.getEditorId()
+                            .equals(newDefinition.getEditorId())) {
+                        result = editor;
+                        break;
+                    }
+                }
             }
-        }
 
-        if (result == null) {
-            // editor doesn't exist, create it
-            result = newDefinition;
-            editors.add(newDefinition);
+            if (result == null) {
+                // editor doesn't exist, create it
+                result = newDefinition;
+                editors.add(newDefinition);
+            }
         }
         return result;
     }
@@ -266,6 +272,12 @@ public final class EditorManager extends AbstractManager {
      */
     public List<EditorDefinition> getEditors() {
         load();
+        Iterator<EditorDefinition> iter = editors.iterator();
+        while (iter.hasNext()) {
+            if (iter.next() == null) {
+                iter.remove();
+            }
+        }
         return editors;
     }
 

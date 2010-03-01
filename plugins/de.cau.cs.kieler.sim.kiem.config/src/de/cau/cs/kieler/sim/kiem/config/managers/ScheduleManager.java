@@ -768,8 +768,11 @@ public final class ScheduleManager extends AbstractManager implements
                                                         new EditorDefinition(
                                                                 editorName,
                                                                 wrapper));
-                                        editor.setLocked(true);
-                                        addSchedule(editor, path, priority);
+
+                                        if (editor != null) {
+                                            editor.setLocked(true);
+                                            addSchedule(editor, path, priority);
+                                        }
                                     }
                                 } catch (NumberFormatException e0) {
                                     // not a number in editorId, ignore this
