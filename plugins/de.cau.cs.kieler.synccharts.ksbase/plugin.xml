@@ -31,15 +31,20 @@
           keyboardShortcut="M1+R C"
           name="Add Choice"
           transformation="addChoice"
-          transformationId="de.cau.cs.kieler.ksbase.addChoice">
+          transformationId="de.cau.cs.kieler.ksbase.addChoice"
+          validation="isNoRootState">
 				</transformation>
 				<transformation icon="icons/flip.gif"
 					keyboardShortcut="M1+R F" name="Flip Transition" 
 					transformation="flipTransition" transformationId="de.cau.cs.kieler.ksbase.flip">
 				</transformation>
-				<transformation icon="icons/connect.gif"
-					keyboardShortcut="M1+R W" name="Connect States" 
-					transformation="connectStates" transformationId="de.cau.cs.kieler.ksbase.connect">
+				<transformation
+          icon="icons/connect.gif"
+          keyboardShortcut="M1+R W"
+          name="Connect States"
+          transformation="connectStates"
+          transformationId="de.cau.cs.kieler.ksbase.connect"
+          validation="isNoRootState">
 				</transformation>
 				<transformation icon="icons/abro.gif" name="Add ABRO"
 					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">
@@ -52,14 +57,16 @@
           keyboardShortcut="M1+R T"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
-          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
+          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget"
+          validation="isNoRootState">
        </transformation>
        <transformation
              icon="icons/reconnect_source.gif"
              keyboardShortcut="M1+R J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
-             transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
+             transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
+             validation="isNoRootState">
     	</transformation>
        <transformation
              icon="icons/upgrade.gif"
@@ -81,7 +88,8 @@
              keyboardShortcut="M1+R O"
              name="Add Self Loop"
              transformation="addSelfLoop"
-             transformationId="de.cau.cs.kieler.ksbase.selfLoop">
+             transformationId="de.cau.cs.kieler.ksbase.selfLoop"
+             validation="isNoRootState">
        </transformation>
        <transformation
              icon="icons/encapsulate.gif"
@@ -101,7 +109,8 @@
              icon="icons/connect.gif"
              name="Add Successor States"
              transformation="addSuccessorStates"
-             transformationId="de.cau.cs.kieler.ksbase.addSucs">
+             transformationId="de.cau.cs.kieler.ksbase.addSucs"
+             validation="isNoRootState">
        </transformation>
 			</transformations>
 			<menus>
