@@ -67,9 +67,11 @@ public class InterfaceDeclTransientValueService extends DefaultTransientValueSer
                     && (sig.getInitialValue() != null)) {
                 // initial value
                 return false;
-            } else if ((feature.equals(sync.getValuedObject_HostType()) && sig.getHostType() != null)
-                    || (feature.equals(sync.getSignal_HostCombineOperator()) && sig
-                            .getHostCombineOperator() != null)) {
+            } else if ((feature.equals(sync.getValuedObject_HostType())
+                    && sig.getHostType() != null && sig.getHostType().length() > 0)
+                    || (feature.equals(sync.getSignal_HostCombineOperator())
+                            && sig.getHostCombineOperator() != null && sig.getHostCombineOperator()
+                            .length() > 0)) {
                 // hosttype and hostcombine op
                 return false;
             } else if (feature.equals(sync.getValuedObject_Name())) {

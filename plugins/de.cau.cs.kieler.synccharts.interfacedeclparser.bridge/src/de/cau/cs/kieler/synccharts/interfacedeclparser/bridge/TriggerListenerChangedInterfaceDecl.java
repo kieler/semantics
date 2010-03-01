@@ -63,8 +63,11 @@ public class TriggerListenerChangedInterfaceDecl extends FireOnceTriggerListener
         // if new interface declaration was created, first set the string and
         // then parse
         if (notification.getOldStringValue() == null) {
-            cc.appendIfCanExecute(new SetCommand(domain, state, SyncchartsPackage.eINSTANCE
-                    .getState_InterfaceDeclaration(), notification.getNewStringValue()));
+            // dont know why we actually useded this.
+            // cc.appendIfCanExecute(new SetCommand(domain, state,
+            // SyncchartsPackage.eINSTANCE
+            // .getState_InterfaceDeclaration(),
+            // notification.getNewStringValue()));
             cc.appendIfCanExecute(interfaceDeclProcessor.getParseCommand(state));
             return cc;
         }

@@ -112,9 +112,9 @@ public class InterfaceDeclProcessorWrapper {
     private Command getSerializationCommandPr(final State state, final EObject changedSignalOrVar,
             final String oldName, final int occurredChange) {
 
-        XtextResource res = new InterfaceDeclParseCommand(state, injector).getParsedResource();
         PossiblyEmptyCompoundCommand pecc = new PossiblyEmptyCompoundCommand();
-        pecc.append(new InterfaceDeclSerializeCommand(state, changedSignalOrVar, res, oldName,
+        // pass a null resource. prior serializing the resource is freshly received
+        pecc.append(new InterfaceDeclSerializeCommand(state, changedSignalOrVar, null, oldName,
                 injector, occurredChange));
         return pecc;
     }

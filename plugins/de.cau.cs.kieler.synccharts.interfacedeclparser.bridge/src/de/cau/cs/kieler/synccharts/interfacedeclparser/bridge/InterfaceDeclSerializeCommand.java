@@ -78,8 +78,8 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
      * determines that a region's variable was modified.
      */
     public static final int REGION_VARIABLE = 8;
-    public static final int REGION_VARIABLE_NEW = 8;
-    public static final int REGION_VARIABLE_DELETE = 8;
+    public static final int REGION_VARIABLE_NEW = 9;
+    public static final int REGION_VARIABLE_DELETE = 10;
     /**
      * determines that the modification is not further specified.
      */
@@ -104,7 +104,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
 
     // support for undo
     private XtextResource oldResource;
-    private String olfInterfaceDecl;
+    private String oldInterfaceDecl;
 
     /**
      * Constructor being used if the name of a signal has changed or a new
@@ -140,7 +140,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         // .clone(new XtextResourceSet(), theResource.getResourceSet());
         // // TODO check if this is save
         // this.oldResource = (XtextResource) rs.getResources().get(0);
-        this.olfInterfaceDecl = theRootState.getInterfaceDeclaration();
+        this.oldInterfaceDecl = theRootState.getInterfaceDeclaration();
         this.resource = theResource;
         this.oldName = theOldName;
         this.occurredChange = theOccurredChange;
@@ -172,7 +172,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         // // TODO check if this is save
         // this.oldResource = (XtextResource) rs.getResources().get(0);
         // }
-        this.olfInterfaceDecl = theRootState.getInterfaceDeclaration();
+        this.oldInterfaceDecl = theRootState.getInterfaceDeclaration();
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
@@ -189,6 +189,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             prepareSerialize();
             serialize();
         } catch (Exception e) {
+//            e.printStackTrace();
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error serializing Signals.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -209,7 +210,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
             // serialize();
 
             // TODO validate this!
-            rootState.setInterfaceDeclaration(this.olfInterfaceDecl);
+            rootState.setInterfaceDeclaration(this.oldInterfaceDecl);
             new InterfaceDeclProcessorWrapper();
             InterfaceDeclProcessorWrapper.processInterfaceDecl(rootState,
                     InterfaceDeclProcessorWrapper.PARSE);
@@ -239,6 +240,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         try {
             serialize();
         } catch (Exception e) {
+//            e.printStackTrace();
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error in canonical serialization.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -284,13 +286,19 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         StateExtend se;
         // check if old interface declaration exist
         if (resource == null) {
-            // create a new resource and StateExtend object
-            XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-            resource = (XtextResource) resourceSet.createResource(URI
-                    .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
-                            + "interfacedeclparser/dummy.ifd"));
-            se = InterfaceDeclFactory.eINSTANCE.createStateExtend();
-            resource.getContents().add(se);
+            if (rootState.getInterfaceDeclaration() == null
+                    || rootState.getInterfaceDeclaration().length() == 0) {
+                // create a new resource and StateExtend object
+                XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+                resource = (XtextResource) resourceSet.createResource(URI
+                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
+                                + "interfacedeclparser/dummy.ifd"));
+                se = InterfaceDeclFactory.eINSTANCE.createStateExtend();
+                resource.getContents().add(se);
+            } else {
+                resource = new InterfaceDeclParseCommand(rootState, injector).getParsedResource();
+                se = (StateExtend) resource.getContents().get(0);
+            }
         } else {
             se = (StateExtend) resource.getContents().get(0);
         }

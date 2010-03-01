@@ -76,7 +76,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      */
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        //System.out.println("RegionTrigger: " + notification);
+        // System.out.println("RegionTrigger: " + notification);
 
         CompoundCommand cc = new CompoundCommand();
         // as a region name should be unique, the easiest way to react to an id
@@ -96,6 +96,11 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                         .getState_InterfaceDeclaration(), ifdecl));
                 return cc;
             }
+            return null;
+        }
+
+        // in other case has to be a valued object, else return
+        if (!(notification.getNotifier() instanceof ValuedObject)) {
             return null;
         }
 

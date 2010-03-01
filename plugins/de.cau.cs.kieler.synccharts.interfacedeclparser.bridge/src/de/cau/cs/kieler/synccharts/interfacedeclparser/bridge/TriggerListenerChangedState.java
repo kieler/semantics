@@ -30,6 +30,8 @@ import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
  * added states and regions for consistency between the interface declaration
  * and the containing signals/variables.
  * 
+ * @deprecated shouldnt be needed any more
+ * 
  * @author uru
  * @author car
  * 

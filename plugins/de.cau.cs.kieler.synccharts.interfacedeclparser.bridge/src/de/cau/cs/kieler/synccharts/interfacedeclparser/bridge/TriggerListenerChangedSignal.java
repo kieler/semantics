@@ -62,7 +62,10 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
                         .getSignal_IsOutput())).or(
                 NotificationFilter.createFeatureFilter(
                         SyncchartsPackage.eINSTANCE.getState_Signals()).and(
-                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))));
+                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
+                NotificationFilter.createFeatureFilter(
+                        SyncchartsPackage.eINSTANCE.getState_Signals()).and(
+                        NotificationFilter.createEventTypeFilter(Notification.ADD))));
     }
 
     /**
@@ -77,7 +80,8 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
         // System.out
-        //        .println("-SIGNALCHANGE " + this.getClass().getSimpleName() + ": " + notification);
+        // .println("-SIGNALCHANGE " + this.getClass().getSimpleName() + ": " +
+        // notification);
         if (notification.getNotifier() instanceof Variable) {
             // case is handled within different trigger listener
             return null;
@@ -85,11 +89,12 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
 
         Signal sig = null;
         State state = null;
+        CompoundCommand cc = new CompoundCommand();
+
         // depending on changed/new signal or deleted signal the incoming
         // notifier is either Signal or State
         if (notification.getNotifier() instanceof Signal) {
             sig = (Signal) notification.getNotifier();
-
             // get either parent region or state
             if (sig.eContainer() instanceof State) {
                 state = (State) sig.eContainer();
@@ -100,15 +105,30 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
                 // TODO handle
             }
         } else {
-            // signal was deleted, so old value is the signal
+            // signal was either deleted or added
             state = (State) notification.getNotifier();
-            sig = (Signal) notification.getOldValue();
+            if (notification.getEventType() == Notification.ADD) {
+                sig = (Signal) notification.getNewValue();
+                // if signal already has a name, add it to the signals
+                if (sig.getName() != null && notification.getPosition() == -1) {
+                    cc.append(interfaceDeclProcessor.getSerializationCommand(state, sig, null,
+                            InterfaceDeclSerializeCommand.NEW));
+                    return cc;
+                } else {
+                    return null;
+                }
+            } else if (notification.getEventType() == Notification.REMOVE) {
+                // if signal was deleted, its the old value of the notification
+                sig = (Signal) notification.getOldValue();
+            }
+
         }
 
-        // stop here if nothing to serialize but care about deleted signal
+        // stop here if nothing to serialize but care about deleted or added
+        // signals
         if (state.getSignals().size() == 0
-                && !notification.getFeature()
-                        .equals(SyncchartsPackage.eINSTANCE.getState_Signals())) {
+                && !(notification.getEventType() == Notification.REMOVE || notification
+                        .getEventType() == Notification.ADD)) {
             return null;
         }
 
@@ -127,11 +147,10 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
         } else if (notification.getFeature().equals(
                 SyncchartsPackage.eINSTANCE.getSignal_IsOutput())) {
             occuredChange = InterfaceDeclSerializeCommand.OUTPUT;
-        } else if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Signals())) {
+        } else if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Signals())
+                && notification.getEventType() == Notification.REMOVE) {
             occuredChange = InterfaceDeclSerializeCommand.DELETE;
         }
-
-        CompoundCommand cc = new CompoundCommand();
 
         try {
             // renaming
