@@ -373,7 +373,6 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
      * @generated NOT
      */
     protected void performDirectEdit(Point eventLocation) {
-        //TODO-cku: add this to gmf-template 
         if (getManager() instanceof TextDirectEditManager) {
             ((TextDirectEditManager) getManager()).show(eventLocation
                     .getSWTPoint());
