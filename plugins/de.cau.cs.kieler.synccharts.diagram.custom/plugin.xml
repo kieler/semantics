@@ -108,6 +108,13 @@
             optional="false">
       </commandParameter>
    </command>
+         <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ReInitDiagramCommand"
+            description="Reinitialize the diagram for the selected kixs file."
+            id="de.cau.cs.kieler.core.ui.reinitDiagram"
+            name="Reinitialize synccharts diagram">
+      </command>
    </extension>
    
    <extension
@@ -265,6 +272,20 @@
                         definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
                   </reference>
                </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+            <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler"
+               label="KIELER"
+               mnemonic="K">
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.reinitDiagram"
+                  label="Reinitialize synccharts diagram"
+                  style="push"
+                  tooltip="Reinitialize the diagram of the currently selected file.">
             </command>
          </menu>
       </menuContribution>
