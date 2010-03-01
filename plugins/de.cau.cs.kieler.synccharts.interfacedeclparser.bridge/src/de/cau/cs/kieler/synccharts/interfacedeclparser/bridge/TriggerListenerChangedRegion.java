@@ -43,6 +43,9 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      * Constructor. Create filter for regions signals and variables
      * 
      * CARE : this isn't validated so far.
+     * 
+     * TODO handle adding new signals or variables via trigger listener!
+     * 
      */
     public TriggerListenerChangedRegion() {
         super(NotificationFilter.createFeatureFilter(
@@ -97,8 +100,9 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                 return cc;
             }
             return null;
-        }
+        } 
 
+        // old value of region == null --> new region created, so stop here
         // in other case has to be a valued object, else return
         if (!(notification.getNotifier() instanceof ValuedObject)) {
             return null;
