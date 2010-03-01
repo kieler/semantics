@@ -65,3 +65,21 @@
 		return manager;
 	}
 «ENDDEFINE»
+
+
+«DEFINE performDirectEditAtPoint FOR gmfgen::GenCommonBase-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
+		protected void performDirectEdit(org.eclipse.draw2d.geometry.Point eventLocation) {
+		if (getManager() instanceof org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) {
+			((org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) getManager()).show(eventLocation.getSWTPoint());
+		}
+	}
+	«ELSE»
+	protected void performDirectEdit(org.eclipse.draw2d.geometry.Point eventLocation) {
+		if (getManager().getClass() == org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager.class) {
+			((org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) getManager()).show(eventLocation.getSWTPoint());
+		}
+	}
+	«ENDIF»
+«ENDDEFINE»
