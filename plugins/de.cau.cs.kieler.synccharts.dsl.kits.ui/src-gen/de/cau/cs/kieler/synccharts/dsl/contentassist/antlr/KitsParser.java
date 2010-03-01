@@ -39,13 +39,15 @@ public class KitsParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getRegionAccess().getAlternatives_1(), "rule__Region__Alternatives_1");
 					put(grammarAccess.getRegionAccess().getAlternatives_2(), "rule__Region__Alternatives_2");
-					put(grammarAccess.getStateAccess().getOutgoingTransitionsAlternatives_14_0(), "rule__State__OutgoingTransitionsAlternatives_14_0");
+					put(grammarAccess.getStateAccess().getAlternatives_12(), "rule__State__Alternatives_12");
+					put(grammarAccess.getStateAccess().getOutgoingTransitionsAlternatives_12_1_2_0(), "rule__State__OutgoingTransitionsAlternatives_12_1_2_0");
 					put(grammarAccess.getTextualTransitionAccess().getAlternatives_1(), "rule__TextualTransition__Alternatives_1");
 					put(grammarAccess.getTextualTransitionAccess().getMakeConditionalAlternatives_1_1_0(), "rule__TextualTransition__MakeConditionalAlternatives_1_1_0");
 					put(grammarAccess.getValuedObjectAccess().getAlternatives(), "rule__ValuedObject__Alternatives");
 					put(grammarAccess.getSignalAccess().getAlternatives_0(), "rule__Signal__Alternatives_0");
 					put(grammarAccess.getSignalAccess().getAlternatives_2_1(), "rule__Signal__Alternatives_2_1");
 					put(grammarAccess.getSignalAccess().getAlternatives_2_1_1_3(), "rule__Signal__Alternatives_2_1_1_3");
+					put(grammarAccess.getVARSIGVALUEAccess().getAlternatives(), "rule__VARSIGVALUE__Alternatives");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 					put(grammarAccess.getEmissionAccess().getAlternatives_1(), "rule__Emission__Alternatives_1");
 					put(grammarAccess.getAssignmentAccess().getAlternatives_2(), "rule__Assignment__Alternatives_2");
@@ -56,6 +58,7 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0(), "rule__UnaryOperation__SubExpressionsAlternatives_1_0");
 					put(grammarAccess.getUnaryOrNormalExpressionAccess().getAlternatives(), "rule__UnaryOrNormalExpression__Alternatives");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
+					put(grammarAccess.getStateTypeAccess().getAlternatives(), "rule__StateType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getTransitionTypeAccess().getAlternatives(), "rule__TransitionType__Alternatives");
@@ -70,9 +73,10 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_9(), "rule__State__Group_9__0");
 					put(grammarAccess.getStateAccess().getGroup_10(), "rule__State__Group_10__0");
 					put(grammarAccess.getStateAccess().getGroup_11(), "rule__State__Group_11__0");
-					put(grammarAccess.getStateAccess().getGroup_12(), "rule__State__Group_12__0");
-					put(grammarAccess.getStateAccess().getGroup_12_2(), "rule__State__Group_12_2__0");
-					put(grammarAccess.getStateAccess().getGroup_13(), "rule__State__Group_13__0");
+					put(grammarAccess.getStateAccess().getGroup_12_1(), "rule__State__Group_12_1__0");
+					put(grammarAccess.getStateAccess().getGroup_12_1_0(), "rule__State__Group_12_1_0__0");
+					put(grammarAccess.getStateAccess().getGroup_12_1_0_2(), "rule__State__Group_12_1_0_2__0");
+					put(grammarAccess.getStateAccess().getGroup_12_1_1(), "rule__State__Group_12_1_1__0");
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 					put(grammarAccess.getTransitionAccess().getGroup_2(), "rule__Transition__Group_2__0");
 					put(grammarAccess.getTransitionAccess().getGroup_2_2(), "rule__Transition__Group_2_2__0");
@@ -95,6 +99,10 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getGroup_2_0(), "rule__Signal__Group_2_0__0");
 					put(grammarAccess.getSignalAccess().getGroup_2_1_0(), "rule__Signal__Group_2_1_0__0");
 					put(grammarAccess.getSignalAccess().getGroup_2_1_1(), "rule__Signal__Group_2_1_1__0");
+					put(grammarAccess.getFULLSTATEIDAccess().getGroup(), "rule__FULLSTATEID__Group__0");
+					put(grammarAccess.getFULLSTATEIDAccess().getGroup_0(), "rule__FULLSTATEID__Group_0__0");
+					put(grammarAccess.getQUALIFIEDNAMEAccess().getGroup(), "rule__QUALIFIEDNAME__Group__0");
+					put(grammarAccess.getQUALIFIEDNAMEAccess().getGroup_0(), "rule__QUALIFIEDNAME__Group_0__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_3(), "rule__Action__Group_3__0");
 					put(grammarAccess.getActionAccess().getGroup_3_1(), "rule__Action__Group_3_1__0");
@@ -138,10 +146,10 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getInnerActionsAssignment_9_1(), "rule__State__InnerActionsAssignment_9_1");
 					put(grammarAccess.getStateAccess().getExitActionsAssignment_10_1(), "rule__State__ExitActionsAssignment_10_1");
 					put(grammarAccess.getStateAccess().getSuspensionTriggerAssignment_11_1(), "rule__State__SuspensionTriggerAssignment_11_1");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_12_1(), "rule__State__RegionsAssignment_12_1");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_12_2_1(), "rule__State__RegionsAssignment_12_2_1");
-					put(grammarAccess.getStateAccess().getBodyTextAssignment_13_1(), "rule__State__BodyTextAssignment_13_1");
-					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_14(), "rule__State__OutgoingTransitionsAssignment_14");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_12_1_0_1(), "rule__State__RegionsAssignment_12_1_0_1");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_12_1_0_2_1(), "rule__State__RegionsAssignment_12_1_0_2_1");
+					put(grammarAccess.getStateAccess().getBodyTextAssignment_12_1_1_1(), "rule__State__BodyTextAssignment_12_1_1_1");
+					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_12_1_2(), "rule__State__OutgoingTransitionsAssignment_12_1_2");
 					put(grammarAccess.getTransitionAccess().getTypeAssignment_0(), "rule__Transition__TypeAssignment_0");
 					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_1(), "rule__Transition__TargetStateAssignment_1");
 					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2_1(), "rule__Transition__IsImmediateAssignment_2_1");
