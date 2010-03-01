@@ -370,7 +370,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
     }
 
     /**
-     * @generated NOT
+     * @generated
      */
     protected void performDirectEdit(Point eventLocation) {
         if (getManager() instanceof TextDirectEditManager) {
