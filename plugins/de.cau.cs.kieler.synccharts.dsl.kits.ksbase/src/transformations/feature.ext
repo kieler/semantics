@@ -88,7 +88,14 @@ source.outgoingTransitions.add(t)
 
 //Adds a parallel region to the given state
 Void upgradeState(State parentState):
- parentState.setIsFinal(true)
+let region = new Region:
+let state = new State:
+state.setIsInitial(true) ->
+state.setLabel("Initial") ->
+state.setId("ids0") ->
+region.innerStates.add(state) ->
+region.setId("R000") ->
+parentState.regions.add(region)
 ;
 
 Void downgradeState(State parentState):
@@ -156,6 +163,7 @@ Void addInitialState(Region target):
 
 
 
+
 /////////////////////////
 //     Templates      ///
 /////////////////////////
@@ -172,6 +180,10 @@ innerState.setIsInitial(true) ->
 region.innerStates.add(innerState) ->
 rootRegion.innerStates.add(state) ->
 setSelection(innerState)
+;
+
+Void makeFinal (State state):
+state.setIsFinal(true)
 ;
 
 String getFileNameOfActiveEditor():
@@ -202,30 +214,24 @@ let sigO = new Signal:
 let root = new State:
 //ABRO Root State
 root.setLabel("ABRO") ->
+root.setId("ABRO") ->
 //ABRO Signal definition:
-sigA.setName("A") ->
-sigA.setIsInput(true) ->
-sigB.setName("B") ->
-sigB.setIsInput(true) ->
-sigR.setName("R") ->
-sigR.setIsInput(true) ->
-sigO.setName("O") ->
-sigO.setIsOutput(true) ->
-root.signals.add(sigA) ->
-root.signals.add(sigB) ->
-root.signals.add(sigR) ->
-root.signals.add(sigO) ->
+
 //Inner State ABO
 ABO.setLabel("ABO") ->
+ABO.setId("ABO") ->
 ABO.setIsInitial(true) ->
 //Inner state Wait A and B
 waitAB.setLabel("WaitAB") ->
+waitAB.setId("WaitAB") ->
 waitAB.setIsInitial(true) ->
 //Region for 'wait for a' 
 wAInitial.setLabel("wA") ->
+wAInitial.setId("wA") ->
 wAInitial.setIsInitial(true) ->
 wA.innerStates.add(wAInitial) ->
 wAFinal.setLabel("dA") ->
+wAFinal.setId("dA") ->
 wAFinal.setIsFinal(true) ->
 wA.innerStates.add(wAFinal) ->
 wATrans.setSourceState(wAInitial) ->
@@ -234,9 +240,11 @@ wATrans.setTriggersAndEffects("A") ->
 waitAB.regions.add(wA) ->
 //Region for 'wait for b'
 wBInitial.setLabel("wB") ->
+wBInitial.setId("wB") ->
 wBInitial.setIsInitial(true) ->
 wB.innerStates.add(wBInitial) ->
 wBFinal.setLabel("dB") ->
+wBFinal.setId("dB") ->
 wBFinal.setIsFinal(true) ->
 wB.innerStates.add(wBFinal) ->
 wBTrans.setSourceState(wBInitial) ->
@@ -245,6 +253,7 @@ wBTrans.setTriggersAndEffects("B") ->
 waitAB.regions.add(wB) ->
 //ABO final state
 ABOFinal.setLabel("done") ->
+ABOFinal.setId("done") ->
 waitABToFinal.setSourceState(waitAB) ->
 waitABToFinal.setTargetState(ABOFinal) ->
 waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->

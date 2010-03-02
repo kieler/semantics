@@ -14,12 +14,10 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.dsl.kits.ksbase;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -27,31 +25,22 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.parsetree.NodeUtil;
-import org.eclipse.xtext.resource.EObjectHandleImpl;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
-import org.eclipse.xtext.ui.common.editor.outline.actions.ContentOutlineNodeAdapter;
-import org.eclipse.xtext.ui.common.editor.outline.actions.DefaultContentOutlineNodeAdapterFactory;
-import org.eclipse.xtext.ui.common.editor.outline.actions.IContentOutlineNodeAdapterFactory;
 import org.eclipse.xtext.util.concurrent.IEObjectHandle;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
-import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformation;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.ksbase.core.EditorTransformationSettings;
 import de.cau.cs.kieler.ksbase.core.KSBasETransformation;
 import de.cau.cs.kieler.ksbase.core.TransformationManager;
 import de.cau.cs.kieler.ksbase.ui.KSBasEUIPlugin;
-import de.cau.cs.kieler.ksbase.ui.TransformationUIManager;
 
 /**
  * The generic transformation handler used for all UI actions.
@@ -63,17 +52,19 @@ import de.cau.cs.kieler.ksbase.ui.TransformationUIManager;
 public class OutlineTransformationCommandHandler extends AbstractHandler {
 
     /**
-     * The list of classes an editor has to implement/extend to be valid for this framework.
+     * The list of classes an editor has to implement/extend to be valid for
+     * this framework.
      **/
     public static final String EDITOR_PARAM = "de.cau.cs.kieler.ksbase.editorParameter";
     /**
-     * The list of classes a diagram element has to implement/extend to be valid for this framework.
+     * The list of classes a diagram element has to implement/extend to be valid
+     * for this framework.
      **/
     public static final String TRANSFORMATION_PARAM = "de.cau.cs.kieler.ksbase.transformationParameter";
 
-    private ITransformationFramework framework;
+    private final ITransformationFramework framework;
     protected LinkedList<EObject> targetList;
-    
+
     /**
      * Creates a new command handler.
      */
@@ -85,28 +76,31 @@ public class OutlineTransformationCommandHandler extends AbstractHandler {
     private LinkedList<EObject> getObjectsFromXtextOutline() {
         if (PlatformUI.getWorkbench() != null
                 && PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null
-                && PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService() != null) {
-            ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getSelectionService().getSelection();
+                && PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getSelectionService() != null) {
+            ISelection sel = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getSelectionService()
+                    .getSelection();
             LinkedList<EObject> eo = new LinkedList<EObject>();
             if (sel instanceof StructuredSelection) {
                 Iterator<?> it = ((StructuredSelection) sel).iterator();
                 while (it.hasNext()) {
                     Object next = it.next();
                     if (next instanceof ContentOutlineNode) {
-                        
-                        //NodeUtil.getASTElementForRootNode(null);
-                        IEObjectHandle<EObject> handle = ((ContentOutlineNode)next).getEObjectHandle();
-                        
+
+                        // NodeUtil.getASTElementForRootNode(null);
+                        IEObjectHandle<EObject> handle = ((ContentOutlineNode) next)
+                                .getEObjectHandle();
+
                         handle.readOnly(new IUnitOfWork<Object, EObject>() {
 
                             public Object exec(EObject state) throws Exception {
-                               targetList.add(state);
+                                targetList.add(state);
                                 return null;
                             }
-                            
+
                         });
-                        
+
                     }
                 }
             }
@@ -115,9 +109,11 @@ public class OutlineTransformationCommandHandler extends AbstractHandler {
             return null;
         }
     }
+
     /**
-     * Executes a transformation. The editor and transformation settings are given by the extension
-     * point parameters Uses the TransformationUI manager to create and execute the transformation.
+     * Executes a transformation. The editor and transformation settings are
+     * given by the extension point parameters Uses the TransformationUI manager
+     * to create and execute the transformation.
      * 
      * @param event
      *            The source event
@@ -127,42 +123,44 @@ public class OutlineTransformationCommandHandler extends AbstractHandler {
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
 
-        EditorTransformationSettings editor = TransformationManager.INSTANCE.getEditorById(event
-                .getParameter(EDITOR_PARAM));
+        EditorTransformationSettings editor = TransformationManager.INSTANCE
+                .getEditorById(event.getParameter(EDITOR_PARAM));
         if (editor != null) {
             targetList.clear();
             KSBasETransformation t = editor.getTransformationByName(event
                     .getParameter(TRANSFORMATION_PARAM));
-            //Selection
+            // Selection
             getObjectsFromXtextOutline();
-            framework.setParameters(targetList.toArray(new Object[targetList.size()]));
+            framework.setParameters(targetList.toArray(new Object[targetList
+                    .size()]));
 
-            framework.initializeTransformation(editor.getTransformationFile(), t
-                    .getTransformation(), editor.getModelPackageClass());
+            framework.initializeTransformation(editor.getTransformationFile(),
+                    t.getTransformation(), editor.getModelPackageClass());
             Object res = framework.executeTransformation();
-            
-                Resource x = targetList.get(0).eResource().getContents().get(0).eResource();
-                
-                try {
-                    x.save(null);
-                    x.load(x.getResourceSet().getLoadOptions());
-                    //x.save(x.getResourceSet().get;
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                InputStream in;
-                try {
-                    org.eclipse.emf.common.util.URI eUri = x.getURI();
-                    String platformString = eUri.toPlatformString(true);
-                    
-                    in = new FileInputStream(ResourcesPlugin.getWorkspace().getRoot().findMember(platformString).getLocation().toFile());
 
-                    ((XtextResource)x).getParser().parse(in);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            Resource x = targetList.get(0).eResource().getContents().get(0)
+                    .eResource();
+
+            try {
+                x.save(null);
+                x.load(x.getResourceSet().getLoadOptions());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            InputStream in;
+            try {
+                org.eclipse.emf.common.util.URI eUri = x.getURI();
+                String platformString = eUri.toPlatformString(true);
+
+                in = new FileInputStream(ResourcesPlugin.getWorkspace()
+                        .getRoot().findMember(platformString).getLocation()
+                        .toFile());
+
+                ((XtextResource) x).getParser().parse(in);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
         } else {
             KSBasEUIPlugin.getDefault().logError(
