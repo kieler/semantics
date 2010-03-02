@@ -1,6 +1,18 @@
 import synccharts;
 import utilities;
 
+Void duplicateTransition(State source, Transition transition, List[State] targets):
+	targets.forAll(e|connectWithTriggers(source,transition,e))	
+;
+
+Void connectWithTriggers(State source, Transition triggers, State target):
+ let transition = new Transition:
+ 	transition.setTriggersAndEffects(triggers.triggersAndEffects) ->
+ 	transition.setSourceState(source) ->
+ 	transition.setTargetState(target) ->
+ 	source.outgoingTransitions.add(transition)
+;
+
 //Adds a successor to the given state 
 Void addSuccessorState(State source):
  let target = new State:
