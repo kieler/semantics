@@ -88,6 +88,7 @@ public class ConcurrentModificationObserver implements IPartListener,
              * get the editor from its reference without trying to restore it
              */
             IEditorPart editor = editorReference.getEditor(false);
+
             if (editor instanceof SyncchartsDiagramEditor) {
                 ((DiagramEditor) editor).getEditingDomain()
                         .addResourceSetListener(this);
@@ -101,6 +102,24 @@ public class ConcurrentModificationObserver implements IPartListener,
                 if (sourceViewer instanceof ITextViewerExtension) {
                     ((ITextViewerExtension) sourceViewer)
                             .appendVerifyKeyListener(this);
+                    // register trigger listeners for content adapting
+                    // if (editorReference.getPart(false) )
+                    // XtextEditor xtextEditor = ((XtextEditor) editor);
+                    //
+                    // IUnitOfWork<String, XtextResource> x = new
+                    // IUnitOfWork<String, XtextResource>() {
+                    //
+                    // public String exec(XtextResource state)
+                    // throws Exception {
+                    // // TODO Auto-generated method stub
+                    // // Region r = (Region)state.getContents().get(0);
+                    // // (Region)state.getContents().get(0).
+                    //
+                    // return null;
+                    // }
+                    // };
+                    // xtextEditor.getDocument().modify(x);
+
                 }
             }
         }

@@ -79,6 +79,7 @@ public class KitsRuntimeModule extends
     @Override
     public Class<? extends IValueConverterService> bindIValueConverterService() {
         return ActionLabelValueConverter.class;
+       
     }
 
 }
