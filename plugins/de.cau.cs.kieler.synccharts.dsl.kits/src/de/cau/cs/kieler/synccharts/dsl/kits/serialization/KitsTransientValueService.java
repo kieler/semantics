@@ -52,12 +52,16 @@ public class KitsTransientValueService implements ITransientValueService {
         // if the feature is not set
         (!(owner.eIsSet(feature)))
         // State > ParentRegion,SuspensionTrigger, StateType
-                || (owner instanceof State && (
-                           (feature.equals(syncPack.getState_ParentRegion()))
-                        || (feature.equals(syncPack.getState_SuspensionTrigger())) 
-                        || (feature.equals(syncPack.getState_Type()) && feature.getDefaultValue().equals(syncPack.getState_Type())))
-                        || (feature.equals(syncPack.getState_Label())&& isStateIdEqualToLabel((State)owner, feature))
-                        
+                || (owner instanceof State
+                        && ((feature.equals(syncPack.getState_ParentRegion()))
+                                || (feature.equals(syncPack
+                                        .getState_SuspensionTrigger())) || (feature
+                                .equals(syncPack.getState_Type()) && feature
+                                .getDefaultValue().equals(
+                                        syncPack.getState_Type()))) || (feature
+                        .equals(syncPack.getState_Label()) && isStateIdEqualToLabel(
+                        (State) owner, feature))
+
                 )
                 // Region > ParentState
                 || (owner instanceof Region && (feature.equals(syncPack
@@ -88,10 +92,7 @@ public class KitsTransientValueService implements ITransientValueService {
                 // the GMF diagram or from the order
                 // of their appearances in the text file
                 (feature.equals(syncPack.getTransition_Priority()))))
-        // &&
-        // feature.getDefaultValue().equals(syncPack.getTransition_Priority())
 
-        // && !(owner.eIsSet(feature))))
         /**
          * It is important that you mark features that are not set as transient.
          * See

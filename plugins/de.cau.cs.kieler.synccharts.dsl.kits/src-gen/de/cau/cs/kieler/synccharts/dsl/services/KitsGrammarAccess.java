@@ -19,78 +19,121 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class RegionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Region");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cRegionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
-		private final Keyword cRegionKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final Assignment cIdAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cIdIDTerminalRuleCall_1_0_1_0 = (RuleCall)cIdAssignment_1_0_1.eContents().get(0);
-		private final Keyword cRegionKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Assignment cVariablesAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_2_0_0 = (RuleCall)cVariablesAssignment_2_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_2_1_0 = (RuleCall)cSignalsAssignment_2_1.eContents().get(0);
-		private final Assignment cInnerStatesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cInnerStatesStateParserRuleCall_3_0 = (RuleCall)cInnerStatesAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cRegionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
+		private final Group cGroup_0_1_0 = (Group)cGroup_0_1.eContents().get(0);
+		private final Keyword cRegionKeyword_0_1_0_0 = (Keyword)cGroup_0_1_0.eContents().get(0);
+		private final Assignment cIdAssignment_0_1_0_1 = (Assignment)cGroup_0_1_0.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_0_1_0_1_0 = (RuleCall)cIdAssignment_0_1_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_0_1_1 = (Alternatives)cGroup_0_1.eContents().get(1);
+		private final Assignment cVariablesAssignment_0_1_1_0 = (Assignment)cAlternatives_0_1_1.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_0_1_1_0_0 = (RuleCall)cVariablesAssignment_0_1_1_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_0_1_1_1 = (Assignment)cAlternatives_0_1_1.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_0_1_1_1_0 = (RuleCall)cSignalsAssignment_0_1_1_1.eContents().get(0);
+		private final Assignment cInnerStatesAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
+		private final RuleCall cInnerStatesStateParserRuleCall_0_1_2_0 = (RuleCall)cInnerStatesAssignment_0_1_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cRegionKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_1_0 = (RuleCall)cIdAssignment_1_1.eContents().get(0);
 		
 		//Region returns sync::Region:
-		//  {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
-		//  innerStates+=State+;  
+		//  {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
+		//  +=State+)|"region" id=ID?;  
 		//
 		//    
 		//   
-		//          // region ID's are introduced by the keyword "region".
+		//          // region ID's are introduced by the keyword "region".       
+		//      
+		//     
+		//   
+		//
+		//  // even if a region without any contents is not valid
+		//   // it should be serializable
 		public ParserRule getRule() { return rule; }
 
-		//{sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
-		//innerStates+=State+ 
+		//{sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
+		//+=State+)|"region" id=ID?  
+		//
+		//    
+		//   
+		//          // region ID's are introduced by the keyword "region".       
+		//      
+		//     
+		//   
+		//
+		//  // even if a region without any contents is not valid
+		//   // it should be serializable
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
+		//+=State+) 
 		//   
 		//          // region ID's are introduced by the keyword "region".
-		public Group getGroup() { return cGroup; }
+		public Group getGroup_0() { return cGroup_0; }
 
 		//{sync::Region}
-		public Action getRegionAction_0() { return cRegionAction_0; }
+		public Action getRegionAction_0_0() { return cRegionAction_0_0; }
 
-		//("region" id=ID|"region")?
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		//("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates+=State+         // region ID's are introduced by the keyword "region".
+		public Group getGroup_0_1() { return cGroup_0_1; }
 
-		//"region" id=ID
-		public Group getGroup_1_0() { return cGroup_1_0; }
+		//("region" id=ID)?
+		public Group getGroup_0_1_0() { return cGroup_0_1_0; }
 
 		//"region"
-		public Keyword getRegionKeyword_1_0_0() { return cRegionKeyword_1_0_0; }
+		public Keyword getRegionKeyword_0_1_0_0() { return cRegionKeyword_0_1_0_0; }
 
 		//id=ID
-		public Assignment getIdAssignment_1_0_1() { return cIdAssignment_1_0_1; }
+		public Assignment getIdAssignment_0_1_0_1() { return cIdAssignment_0_1_0_1; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_1_0_1_0() { return cIdIDTerminalRuleCall_1_0_1_0; }
-
-		//"region"
-		public Keyword getRegionKeyword_1_1() { return cRegionKeyword_1_1; }
+		public RuleCall getIdIDTerminalRuleCall_0_1_0_1_0() { return cIdIDTerminalRuleCall_0_1_0_1_0; }
 
 		//(variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region".
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		public Alternatives getAlternatives_0_1_1() { return cAlternatives_0_1_1; }
 
 		//variables+=Variable
-		public Assignment getVariablesAssignment_2_0() { return cVariablesAssignment_2_0; }
+		public Assignment getVariablesAssignment_0_1_1_0() { return cVariablesAssignment_0_1_1_0; }
 
 		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_2_0_0() { return cVariablesVariableParserRuleCall_2_0_0; }
+		public RuleCall getVariablesVariableParserRuleCall_0_1_1_0_0() { return cVariablesVariableParserRuleCall_0_1_1_0_0; }
 
 		//signals+=Signal
-		public Assignment getSignalsAssignment_2_1() { return cSignalsAssignment_2_1; }
+		public Assignment getSignalsAssignment_0_1_1_1() { return cSignalsAssignment_0_1_1_1; }
 
 		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_2_1_0() { return cSignalsSignalParserRuleCall_2_1_0; }
+		public RuleCall getSignalsSignalParserRuleCall_0_1_1_1_0() { return cSignalsSignalParserRuleCall_0_1_1_1_0; }
 
 		//innerStates+=State+
-		public Assignment getInnerStatesAssignment_3() { return cInnerStatesAssignment_3; }
+		public Assignment getInnerStatesAssignment_0_1_2() { return cInnerStatesAssignment_0_1_2; }
 
 		//State
-		public RuleCall getInnerStatesStateParserRuleCall_3_0() { return cInnerStatesStateParserRuleCall_3_0; }
+		public RuleCall getInnerStatesStateParserRuleCall_0_1_2_0() { return cInnerStatesStateParserRuleCall_0_1_2_0; }
+
+		//"region" id=ID? 
+		//   
+		//          // region ID's are introduced by the keyword "region".       
+		//      
+		//     
+		//   
+		//
+		//  // even if a region without any contents is not valid
+		//   // it should be serializable
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"region" 
+		//  // even if a region without any contents is not valid
+		//   // it should be serializable
+		public Keyword getRegionKeyword_1_0() { return cRegionKeyword_1_0; }
+
+		//id=ID?
+		public Assignment getIdAssignment_1_1() { return cIdAssignment_1_1; }
+
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_1_1_0() { return cIdIDTerminalRuleCall_1_1_0; }
 	}
 
 	public class StateElements extends AbstractParserRuleElementFinder {
@@ -110,57 +153,61 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_6_0 = (RuleCall)cLabelAssignment_6.eContents().get(0);
 		private final Assignment cSignalsAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cSignalsSignalParserRuleCall_7_0 = (RuleCall)cSignalsAssignment_7.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cOnentryKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cEntryActionsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cEntryActionsActionParserRuleCall_8_1_0 = (RuleCall)cEntryActionsAssignment_8_1.eContents().get(0);
+		private final Assignment cInterfaceDeclarationAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cInterfaceDeclarationSTRINGTerminalRuleCall_8_0 = (RuleCall)cInterfaceDeclarationAssignment_8.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cOninnerKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cInnerActionsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cInnerActionsActionParserRuleCall_9_1_0 = (RuleCall)cInnerActionsAssignment_9_1.eContents().get(0);
+		private final Keyword cOnentryKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cEntryActionsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cEntryActionsActionParserRuleCall_9_1_0 = (RuleCall)cEntryActionsAssignment_9_1.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cOnexitKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cExitActionsAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final RuleCall cExitActionsActionParserRuleCall_10_1_0 = (RuleCall)cExitActionsAssignment_10_1.eContents().get(0);
+		private final Keyword cOninnerKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cInnerActionsAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final RuleCall cInnerActionsActionParserRuleCall_10_1_0 = (RuleCall)cInnerActionsAssignment_10_1.eContents().get(0);
 		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
-		private final Keyword cSuspensionKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Assignment cSuspensionTriggerAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
-		private final RuleCall cSuspensionTriggerActionParserRuleCall_11_1_0 = (RuleCall)cSuspensionTriggerAssignment_11_1.eContents().get(0);
-		private final Alternatives cAlternatives_12 = (Alternatives)cGroup.eContents().get(12);
-		private final Keyword cSemicolonKeyword_12_0 = (Keyword)cAlternatives_12.eContents().get(0);
-		private final Group cGroup_12_1 = (Group)cAlternatives_12.eContents().get(1);
-		private final Group cGroup_12_1_0 = (Group)cGroup_12_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_12_1_0_0 = (Keyword)cGroup_12_1_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_12_1_0_1 = (Assignment)cGroup_12_1_0.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_12_1_0_1_0 = (RuleCall)cRegionsAssignment_12_1_0_1.eContents().get(0);
-		private final Group cGroup_12_1_0_2 = (Group)cGroup_12_1_0.eContents().get(2);
-		private final Keyword cVerticalLineVerticalLineKeyword_12_1_0_2_0 = (Keyword)cGroup_12_1_0_2.eContents().get(0);
-		private final Assignment cRegionsAssignment_12_1_0_2_1 = (Assignment)cGroup_12_1_0_2.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_12_1_0_2_1_0 = (RuleCall)cRegionsAssignment_12_1_0_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_12_1_0_3 = (Keyword)cGroup_12_1_0.eContents().get(3);
-		private final Group cGroup_12_1_1 = (Group)cGroup_12_1.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_12_1_1_0 = (Keyword)cGroup_12_1_1.eContents().get(0);
-		private final Assignment cBodyTextAssignment_12_1_1_1 = (Assignment)cGroup_12_1_1.eContents().get(1);
-		private final RuleCall cBodyTextSTRINGTerminalRuleCall_12_1_1_1_0 = (RuleCall)cBodyTextAssignment_12_1_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_12_1_1_2 = (Keyword)cGroup_12_1_1.eContents().get(2);
-		private final Assignment cOutgoingTransitionsAssignment_12_1_2 = (Assignment)cGroup_12_1.eContents().get(2);
-		private final Alternatives cOutgoingTransitionsAlternatives_12_1_2_0 = (Alternatives)cOutgoingTransitionsAssignment_12_1_2.eContents().get(0);
-		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_12_1_2_0_0 = (RuleCall)cOutgoingTransitionsAlternatives_12_1_2_0.eContents().get(0);
-		private final RuleCall cOutgoingTransitionsTextualTransitionParserRuleCall_12_1_2_0_1 = (RuleCall)cOutgoingTransitionsAlternatives_12_1_2_0.eContents().get(1);
+		private final Keyword cOnexitKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cExitActionsAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final RuleCall cExitActionsActionParserRuleCall_11_1_0 = (RuleCall)cExitActionsAssignment_11_1.eContents().get(0);
+		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
+		private final Keyword cSuspensionKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Assignment cSuspensionTriggerAssignment_12_1 = (Assignment)cGroup_12.eContents().get(1);
+		private final RuleCall cSuspensionTriggerActionParserRuleCall_12_1_0 = (RuleCall)cSuspensionTriggerAssignment_12_1.eContents().get(0);
+		private final Alternatives cAlternatives_13 = (Alternatives)cGroup.eContents().get(13);
+		private final Keyword cSemicolonKeyword_13_0 = (Keyword)cAlternatives_13.eContents().get(0);
+		private final Group cGroup_13_1 = (Group)cAlternatives_13.eContents().get(1);
+		private final Group cGroup_13_1_0 = (Group)cGroup_13_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_13_1_0_0 = (Keyword)cGroup_13_1_0.eContents().get(0);
+		private final Assignment cRegionsAssignment_13_1_0_1 = (Assignment)cGroup_13_1_0.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_13_1_0_1_0 = (RuleCall)cRegionsAssignment_13_1_0_1.eContents().get(0);
+		private final Group cGroup_13_1_0_2 = (Group)cGroup_13_1_0.eContents().get(2);
+		private final Keyword cVerticalLineVerticalLineKeyword_13_1_0_2_0 = (Keyword)cGroup_13_1_0_2.eContents().get(0);
+		private final Assignment cRegionsAssignment_13_1_0_2_1 = (Assignment)cGroup_13_1_0_2.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_13_1_0_2_1_0 = (RuleCall)cRegionsAssignment_13_1_0_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13_1_0_3 = (Keyword)cGroup_13_1_0.eContents().get(3);
+		private final Group cGroup_13_1_1 = (Group)cGroup_13_1.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_13_1_1_0 = (Keyword)cGroup_13_1_1.eContents().get(0);
+		private final Assignment cBodyTextAssignment_13_1_1_1 = (Assignment)cGroup_13_1_1.eContents().get(1);
+		private final RuleCall cBodyTextSTRINGTerminalRuleCall_13_1_1_1_0 = (RuleCall)cBodyTextAssignment_13_1_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13_1_1_2 = (Keyword)cGroup_13_1_1.eContents().get(2);
+		private final Assignment cOutgoingTransitionsAssignment_13_1_2 = (Assignment)cGroup_13_1.eContents().get(2);
+		private final Alternatives cOutgoingTransitionsAlternatives_13_1_2_0 = (Alternatives)cOutgoingTransitionsAssignment_13_1_2.eContents().get(0);
+		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_13_1_2_0_0 = (RuleCall)cOutgoingTransitionsAlternatives_13_1_2_0.eContents().get(0);
+		private final RuleCall cOutgoingTransitionsTextualTransitionParserRuleCall_13_1_2_0_1 = (RuleCall)cOutgoingTransitionsAlternatives_13_1_2_0.eContents().get(1);
 		
 		//State returns sync::State:
 		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-		//  FULLSTATEID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
-		//  "oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* ("suspension"
-		//  suspensionTrigger=Action)? (";"|("{" regions+=Region ("||" regions+=Region)* "}")? (
-		//  "{" bodyText=STRING "}")? outgoingTransitions+=( Transition | TextualTransition )*); 
+		//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+		//  entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
+		//  Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
+		//  regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
+		//  TextualTransition )*); 
 		//  
 		//    
 		//   
 		//       
 		//     
 		//  // (',' (signals+=Signal))* ';')?  
-		//      
+		//   
+		//     
 		//     
 		//     
 		//     
@@ -180,15 +227,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-		//FULLSTATEID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
-		//"oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* ("suspension"
-		//suspensionTrigger=Action)? (";"|("{" regions+=Region ("||" regions+=Region)* "}")? (
-		//"{" bodyText=STRING "}")? outgoingTransitions+=( Transition | TextualTransition )*) 
+		//FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+		//entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
+		//Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
+		//regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
+		//TextualTransition )*) 
 		//   
 		//       
 		//     
 		//  // (',' (signals+=Signal))* ';')?  
-		//      
+		//   
+		//     
 		//     
 		//     
 		//     
@@ -238,120 +287,126 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_7_0() { return cSignalsSignalParserRuleCall_7_0; }
 
+		//interfaceDeclaration=STRING // (',' (signals+=Signal))* ';')?
+		public Assignment getInterfaceDeclarationAssignment_8() { return cInterfaceDeclarationAssignment_8; }
+
+		//STRING
+		public RuleCall getInterfaceDeclarationSTRINGTerminalRuleCall_8_0() { return cInterfaceDeclarationSTRINGTerminalRuleCall_8_0; }
+
 		//("onentry" entryActions+=Action)*
-		public Group getGroup_8() { return cGroup_8; }
-
-		//"onentry"
-		public Keyword getOnentryKeyword_8_0() { return cOnentryKeyword_8_0; }
-
-		//entryActions+=Action
-		public Assignment getEntryActionsAssignment_8_1() { return cEntryActionsAssignment_8_1; }
-
-		//Action
-		public RuleCall getEntryActionsActionParserRuleCall_8_1_0() { return cEntryActionsActionParserRuleCall_8_1_0; }
-
-		//("oninner" innerActions+=Action)*
 		public Group getGroup_9() { return cGroup_9; }
 
-		//"oninner"
-		public Keyword getOninnerKeyword_9_0() { return cOninnerKeyword_9_0; }
+		//"onentry"
+		public Keyword getOnentryKeyword_9_0() { return cOnentryKeyword_9_0; }
 
-		//innerActions+=Action
-		public Assignment getInnerActionsAssignment_9_1() { return cInnerActionsAssignment_9_1; }
+		//entryActions+=Action
+		public Assignment getEntryActionsAssignment_9_1() { return cEntryActionsAssignment_9_1; }
 
 		//Action
-		public RuleCall getInnerActionsActionParserRuleCall_9_1_0() { return cInnerActionsActionParserRuleCall_9_1_0; }
+		public RuleCall getEntryActionsActionParserRuleCall_9_1_0() { return cEntryActionsActionParserRuleCall_9_1_0; }
 
-		//("onexit" exitActions+=Action)*
+		//("oninner" innerActions+=Action)*
 		public Group getGroup_10() { return cGroup_10; }
 
-		//"onexit"
-		public Keyword getOnexitKeyword_10_0() { return cOnexitKeyword_10_0; }
+		//"oninner"
+		public Keyword getOninnerKeyword_10_0() { return cOninnerKeyword_10_0; }
 
-		//exitActions+=Action
-		public Assignment getExitActionsAssignment_10_1() { return cExitActionsAssignment_10_1; }
+		//innerActions+=Action
+		public Assignment getInnerActionsAssignment_10_1() { return cInnerActionsAssignment_10_1; }
 
 		//Action
-		public RuleCall getExitActionsActionParserRuleCall_10_1_0() { return cExitActionsActionParserRuleCall_10_1_0; }
+		public RuleCall getInnerActionsActionParserRuleCall_10_1_0() { return cInnerActionsActionParserRuleCall_10_1_0; }
 
-		//("suspension" suspensionTrigger=Action)?
+		//("onexit" exitActions+=Action)*
 		public Group getGroup_11() { return cGroup_11; }
 
-		//"suspension"
-		public Keyword getSuspensionKeyword_11_0() { return cSuspensionKeyword_11_0; }
+		//"onexit"
+		public Keyword getOnexitKeyword_11_0() { return cOnexitKeyword_11_0; }
 
-		//suspensionTrigger=Action
-		public Assignment getSuspensionTriggerAssignment_11_1() { return cSuspensionTriggerAssignment_11_1; }
+		//exitActions+=Action
+		public Assignment getExitActionsAssignment_11_1() { return cExitActionsAssignment_11_1; }
 
 		//Action
-		public RuleCall getSuspensionTriggerActionParserRuleCall_11_1_0() { return cSuspensionTriggerActionParserRuleCall_11_1_0; }
+		public RuleCall getExitActionsActionParserRuleCall_11_1_0() { return cExitActionsActionParserRuleCall_11_1_0; }
+
+		//("suspension" suspensionTrigger=Action)?
+		public Group getGroup_12() { return cGroup_12; }
+
+		//"suspension"
+		public Keyword getSuspensionKeyword_12_0() { return cSuspensionKeyword_12_0; }
+
+		//suspensionTrigger=Action
+		public Assignment getSuspensionTriggerAssignment_12_1() { return cSuspensionTriggerAssignment_12_1; }
+
+		//Action
+		public RuleCall getSuspensionTriggerActionParserRuleCall_12_1_0() { return cSuspensionTriggerActionParserRuleCall_12_1_0; }
 
 		//";"|("{" regions+=Region ("||" regions+=Region)* "}")? ("{" bodyText=STRING "}")?
 		//outgoingTransitions+=( Transition | TextualTransition )*  
 		//  // if a state does not contain any regions, body text or transitions
 		//   // we close it with a semicolon
-		public Alternatives getAlternatives_12() { return cAlternatives_12; }
+		public Alternatives getAlternatives_13() { return cAlternatives_13; }
 
 		//";"
-		public Keyword getSemicolonKeyword_12_0() { return cSemicolonKeyword_12_0; }
+		public Keyword getSemicolonKeyword_13_0() { return cSemicolonKeyword_13_0; }
 
 		//("{" regions+=Region ("||" regions+=Region)* "}")? ("{" bodyText=STRING "}")?
 		//outgoingTransitions+=( Transition | TextualTransition )*
-		public Group getGroup_12_1() { return cGroup_12_1; }
+		public Group getGroup_13_1() { return cGroup_13_1; }
 
 		//("{" regions+=Region ("||" regions+=Region)* "}")?
-		public Group getGroup_12_1_0() { return cGroup_12_1_0; }
+		public Group getGroup_13_1_0() { return cGroup_13_1_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_12_1_0_0() { return cLeftCurlyBracketKeyword_12_1_0_0; }
+		public Keyword getLeftCurlyBracketKeyword_13_1_0_0() { return cLeftCurlyBracketKeyword_13_1_0_0; }
 
 		//regions+=Region
-		public Assignment getRegionsAssignment_12_1_0_1() { return cRegionsAssignment_12_1_0_1; }
+		public Assignment getRegionsAssignment_13_1_0_1() { return cRegionsAssignment_13_1_0_1; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_12_1_0_1_0() { return cRegionsRegionParserRuleCall_12_1_0_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_13_1_0_1_0() { return cRegionsRegionParserRuleCall_13_1_0_1_0; }
 
 		//("||" regions+=Region)*
-		public Group getGroup_12_1_0_2() { return cGroup_12_1_0_2; }
+		public Group getGroup_13_1_0_2() { return cGroup_13_1_0_2; }
 
 		//"||"
-		public Keyword getVerticalLineVerticalLineKeyword_12_1_0_2_0() { return cVerticalLineVerticalLineKeyword_12_1_0_2_0; }
+		public Keyword getVerticalLineVerticalLineKeyword_13_1_0_2_0() { return cVerticalLineVerticalLineKeyword_13_1_0_2_0; }
 
 		//regions+=Region
-		public Assignment getRegionsAssignment_12_1_0_2_1() { return cRegionsAssignment_12_1_0_2_1; }
+		public Assignment getRegionsAssignment_13_1_0_2_1() { return cRegionsAssignment_13_1_0_2_1; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_12_1_0_2_1_0() { return cRegionsRegionParserRuleCall_12_1_0_2_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_13_1_0_2_1_0() { return cRegionsRegionParserRuleCall_13_1_0_2_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_12_1_0_3() { return cRightCurlyBracketKeyword_12_1_0_3; }
+		public Keyword getRightCurlyBracketKeyword_13_1_0_3() { return cRightCurlyBracketKeyword_13_1_0_3; }
 
 		//("{" bodyText=STRING "}")?
-		public Group getGroup_12_1_1() { return cGroup_12_1_1; }
+		public Group getGroup_13_1_1() { return cGroup_13_1_1; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_12_1_1_0() { return cLeftCurlyBracketKeyword_12_1_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_13_1_1_0() { return cLeftCurlyBracketKeyword_13_1_1_0; }
 
 		//bodyText=STRING
-		public Assignment getBodyTextAssignment_12_1_1_1() { return cBodyTextAssignment_12_1_1_1; }
+		public Assignment getBodyTextAssignment_13_1_1_1() { return cBodyTextAssignment_13_1_1_1; }
 
 		//STRING
-		public RuleCall getBodyTextSTRINGTerminalRuleCall_12_1_1_1_0() { return cBodyTextSTRINGTerminalRuleCall_12_1_1_1_0; }
+		public RuleCall getBodyTextSTRINGTerminalRuleCall_13_1_1_1_0() { return cBodyTextSTRINGTerminalRuleCall_13_1_1_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_12_1_1_2() { return cRightCurlyBracketKeyword_12_1_1_2; }
+		public Keyword getRightCurlyBracketKeyword_13_1_1_2() { return cRightCurlyBracketKeyword_13_1_1_2; }
 
 		//outgoingTransitions+=( Transition | TextualTransition )*
-		public Assignment getOutgoingTransitionsAssignment_12_1_2() { return cOutgoingTransitionsAssignment_12_1_2; }
+		public Assignment getOutgoingTransitionsAssignment_13_1_2() { return cOutgoingTransitionsAssignment_13_1_2; }
 
 		//Transition|TextualTransition
-		public Alternatives getOutgoingTransitionsAlternatives_12_1_2_0() { return cOutgoingTransitionsAlternatives_12_1_2_0; }
+		public Alternatives getOutgoingTransitionsAlternatives_13_1_2_0() { return cOutgoingTransitionsAlternatives_13_1_2_0; }
 
 		//Transition
-		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_12_1_2_0_0() { return cOutgoingTransitionsTransitionParserRuleCall_12_1_2_0_0; }
+		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_13_1_2_0_0() { return cOutgoingTransitionsTransitionParserRuleCall_13_1_2_0_0; }
 
 		//TextualTransition
-		public RuleCall getOutgoingTransitionsTextualTransitionParserRuleCall_12_1_2_0_1() { return cOutgoingTransitionsTextualTransitionParserRuleCall_12_1_2_0_1; }
+		public RuleCall getOutgoingTransitionsTextualTransitionParserRuleCall_13_1_2_0_1() { return cOutgoingTransitionsTextualTransitionParserRuleCall_13_1_2_0_1; }
 	}
 
 	public class TransitionElements extends AbstractParserRuleElementFinder {
@@ -1219,8 +1274,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Values
 		////==============================================================================
 		//// redefine INT terminal to allow negative numbers
-		////terminal INT returns ecore::EInt:
-		//// '-'?('0'..'9')+;
 		public ParserRule getRule() { return rule; }
 
 		//variable=[sync::Variable]
@@ -1239,14 +1292,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//IntValue returns sync::IntValue:
-		//  value=INT; 
-		//
-		////==============================================================================
-		//// Values
-		////==============================================================================
-		//// redefine INT terminal to allow negative numbers
-		////terminal INT returns ecore::EInt:
-		//// '-'?('0'..'9')+;
+		//  value=INT;
 		public ParserRule getRule() { return rule; }
 
 		//value=INT
@@ -1296,10 +1342,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Value returns sync::Value:
-		//  IntValue|FloatValue|BooleanValue;
+		//  IntValue|FloatValue|BooleanValue; 
+		//    
+		//	        
+		//// no minus in floats meeting#05022010
 		public ParserRule getRule() { return rule; }
 
-		//IntValue|FloatValue|BooleanValue
+		//IntValue|FloatValue|BooleanValue 
+		//    
+		//	        
+		//// no minus in floats meeting#05022010
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -2757,6 +2809,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private AssignmentElements pAssignment;
 	private SignalReferenceElements pSignalReference;
 	private VariableReferenceElements pVariableReference;
+	private TerminalRule tINT;
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BooleanValueElements pBooleanValue;
@@ -2815,12 +2868,18 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns sync::Region:
-	//  {sync::Region} ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
-	//  innerStates+=State+;  
+	//  {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
+	//  +=State+)|"region" id=ID?;  
 	//
 	//    
 	//   
-	//          // region ID's are introduced by the keyword "region".
+	//          // region ID's are introduced by the keyword "region".       
+	//      
+	//     
+	//   
+	//
+	//  // even if a region without any contents is not valid
+	//   // it should be serializable
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -2831,17 +2890,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//State returns sync::State:
 	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-	//  FULLSTATEID label=STRING? signals+=Signal* ("onentry" entryActions+=Action)* (
-	//  "oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* ("suspension"
-	//  suspensionTrigger=Action)? (";"|("{" regions+=Region ("||" regions+=Region)* "}")? (
-	//  "{" bodyText=STRING "}")? outgoingTransitions+=( Transition | TextualTransition )*); 
+	//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+	//  entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
+	//  Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
+	//  regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
+	//  TextualTransition )*); 
 	//  
 	//    
 	//   
 	//       
 	//     
 	//  // (',' (signals+=Signal))* ';')?  
-	//      
+	//   
+	//     
 	//     
 	//     
 	//     
@@ -3106,8 +3167,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Values
 	////==============================================================================
 	//// redefine INT terminal to allow negative numbers
-	////terminal INT returns ecore::EInt:
-	//// '-'?('0'..'9')+;
 	public VariableReferenceElements getVariableReferenceAccess() {
 		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
 	}
@@ -3116,15 +3175,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableReferenceAccess().getRule();
 	}
 
-	//IntValue returns sync::IntValue:
-	//  value=INT; 
+	//terminal INT returns ecore::EInt:
+	//  "-"? "0".."9"+; 
 	//
 	////==============================================================================
 	//// Values
 	////==============================================================================
 	//// redefine INT terminal to allow negative numbers
-	////terminal INT returns ecore::EInt:
-	//// '-'?('0'..'9')+;
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
+	//IntValue returns sync::IntValue:
+	//  value=INT;
 	public IntValueElements getIntValueAccess() {
 		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
 	}
@@ -3154,7 +3217,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Value returns sync::Value:
-	//  IntValue|FloatValue|BooleanValue;
+	//  IntValue|FloatValue|BooleanValue; 
+	//    
+	//	        
+	//// no minus in floats meeting#05022010
 	public ValueElements getValueAccess() {
 		return (pValue != null) ? pValue : (pValue = new ValueElements());
 	}
@@ -3164,32 +3230,14 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal FLOAT returns ecore::EFloatObject:
-	//  ("-"? INT "." INT | "-"? INT ("." INT)? ("e" | "E") "+"? "-"? INT) "f"? | "-"? INT "f"; 
-	//
-	//               
-	//                                                  
-	//                                               
-	//                                               
-	//                                              
-	//                                                 
-	//// no minus values in floats meeting#05022010
-	//// make sure the FLOAT rule does not shadow the INT rule
-	////terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+)   
-	////                                              | INT("."(('0'..'9')+))?("e"|"E")("+")?(('0'..'9')+)
-	////                                              ))"f"?                                              
-	////                                             | INT"f";
+	//  (INT "." "0".."9"+ | INT ("." "0".."9"+)? ("e" | "E") "+"? INT) "f"? | INT "f"; 
+	//// no minus in floats meeting#05022010
 	public TerminalRule getFLOATRule() {
 		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
 	} 
 
 	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//  "true" | "false"; 
-	//// no minus values in floats meeting#05022010
-	//// make sure the FLOAT rule does not shadow the INT rule
-	////terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+)   
-	////                                              | INT("."(('0'..'9')+))?("e"|"E")("+")?(('0'..'9')+)
-	////                                              ))"f"?                                              
-	////                                             | INT"f";
 	//              
 	//
 	////==============================================================================
@@ -3645,12 +3693,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//  "0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:

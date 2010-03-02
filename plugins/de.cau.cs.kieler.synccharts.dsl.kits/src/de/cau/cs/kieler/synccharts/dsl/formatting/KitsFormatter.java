@@ -21,97 +21,108 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  */
 public class KitsFormatter extends AbstractDeclarativeFormatter {
 
-	@Override
-	protected void configureFormatting(FormattingConfig config) {
-		de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
+    @Override
+    protected void configureFormatting(FormattingConfig config) {
+        de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
 
-		/** REGIONS **/
-		config.setLinewrap().after(f.getRegionRule());
-		config.setLinewrap().after(f.getRegionAccess().getIdAssignment_1_0_1());
+        /** REGIONS **/
+        config.setLinewrap().after(
+                f.getRegionAccess().getRegionKeyword_0_1_0_0());
+        config.setLinewrap().after(f.getRegionAccess().getRegionKeyword_1_0());
+        config.setLinewrap().after(
+                f.getRegionAccess().getIdAssignment_0_1_0_1());
 
-		/** STATES **/
-		config.setLinewrap().before(
-				f.getStateAccess().getIsInitialInitKeyword_1_0());
-		config.setLinewrap().before(
-				f.getStateAccess().getIsFinalFinalKeyword_2_0());
-		config.setLinewrap().before(
-				f.getStateAccess().getEntryActionsAssignment_8_1());
-		config.setLinewrap().before(
-				f.getStateAccess().getInnerActionsAssignment_9_1());
-		config.setLinewrap().before(
-				f.getStateAccess().getExitActionsAssignment_10_1());
-		config.setLinewrap().before(f.getStateRule());
-		config.setLinewrap().before(
-				f.getStateAccess().getRightCurlyBracketKeyword_12_1_0_3());
-		config.setLinewrap().after(
-				f.getStateAccess().getRightCurlyBracketKeyword_12_1_1_2());
-		config.setLinewrap().after(
-				f.getStateAccess().getLeftCurlyBracketKeyword_12_1_0_0());
-		// parallel regions
-		config.setLinewrap().after(
-				f.getStateAccess().getVerticalLineVerticalLineKeyword_12_1_0_2_0());
-	              config.setLinewrap().before(
-                              f.getStateAccess().getVerticalLineVerticalLineKeyword_12_1_0_2_0());
-		// indent "{" --- "}"
-		config.setIndentation(f.getStateAccess()
-				.getLeftCurlyBracketKeyword_12_1_0_0(), f.getStateAccess()
-				.getRightCurlyBracketKeyword_12_1_0_3());
-		config.setIndentation(f.getRegionAccess().getInnerStatesAssignment_3(),
-				f.getRegionAccess().getInnerStatesAssignment_3());
+        /** STATES **/
+        config.setLinewrap().before(
+                f.getStateAccess().getIsInitialInitKeyword_1_0());
+        config.setLinewrap().before(
+                f.getStateAccess().getIsFinalFinalKeyword_2_0());
+        config.setLinewrap().before(
+                f.getStateAccess().getEntryActionsAssignment_9_1());
+        config.setLinewrap().before(
+                f.getStateAccess().getInnerActionsAssignment_10_1());
+        config.setLinewrap().before(
+                f.getStateAccess().getExitActionsAssignment_11_1());
+        config.setLinewrap().before(f.getStateRule());
+        config.setLinewrap().before(
+                f.getStateAccess().getRightCurlyBracketKeyword_13_1_0_3());
+        config.setLinewrap().after(
+                f.getStateAccess().getRightCurlyBracketKeyword_13_1_1_2());
+        config.setLinewrap().after(
+                f.getStateAccess().getLeftCurlyBracketKeyword_13_1_0_0());
+        config.setLinewrap().after(
+                f.getStateAccess().getLeftCurlyBracketKeyword_13_1_1_0());
+        // parallel regions
+        config.setLinewrap().after(
+                f.getStateAccess()
+                        .getVerticalLineVerticalLineKeyword_13_1_0_2_0());
+        config.setLinewrap().before(
+                f.getStateAccess()
+                        .getVerticalLineVerticalLineKeyword_13_1_0_2_0());
+        // indent "{" --- "}"
+        config.setIndentation(f.getStateAccess()
+                .getLeftCurlyBracketKeyword_13_1_0_0(), f.getStateAccess()
+                .getRightCurlyBracketKeyword_13_1_0_3());
+        config.setIndentation(f.getStateAccess()
+                .getLeftCurlyBracketKeyword_13_1_1_0(), f.getStateAccess()
+                .getRightCurlyBracketKeyword_13_1_1_2());
+        config.setIndentation(f.getRegionAccess()
+                .getInnerStatesAssignment_0_1_2(), f.getRegionAccess()
+                .getInnerStatesAssignment_0_1_2());
 
-		// indent init --- id
-		// config.setIndentation(f.getStateAccess().getIsInitialAssignment_1(),
-		// f
-		// .getStateAccess().getIdAssignment_6());
-		// // indent final --- id
-		// config.setIndentation(f.getStateAccess().getIsFinalAssignment_2(), f
-		// .getStateAccess().getIdAssignment_6());
-		// indent init --- "}"
-		// config.setIndentation(f.getStateAccess().getIsInitialAssignment_1(),
-		// f
-		// .getStateAccess().getRightCurlyBracketKeyword_13_3());
-		// indent final --- "}"
-		// config.setIndentation(f.getStateAccess().getIsFinalAssignment_2(), f
-		// .getStateAccess().getRightCurlyBracketKeyword_13_3());
+        // indent init --- id
+        // config.setIndentation(f.getStateAccess().getIsInitialAssignment_1(),
+        // f
+        // .getStateAccess().getIdAssignment_6());
+        // // indent final --- id
+        // config.setIndentation(f.getStateAccess().getIsFinalAssignment_2(), f
+        // .getStateAccess().getIdAssignment_6());
+        // indent init --- "}"
+        // config.setIndentation(f.getStateAccess().getIsInitialAssignment_1(),
+        // f
+        // .getStateAccess().getRightCurlyBracketKeyword_13_3());
+        // indent final --- "}"
+        // config.setIndentation(f.getStateAccess().getIsFinalAssignment_2(), f
+        // .getStateAccess().getRightCurlyBracketKeyword_13_3());
 
-		/** SIGNALS **/
-//		config.setLinewrap().before(
-//				f.getSignalAccess().getIsInputInputKeyword_0_0_0_0());
-//		config.setLinewrap().before(
-//				f.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0());
-		// variable
-		config.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
+        /** SIGNALS **/
+        // config.setLinewrap().before(
+        // f.getSignalAccess().getIsInputInputKeyword_0_0_0_0());
+        // config.setLinewrap().before(
+        // f.getSignalAccess().getIsOutputOutputKeyword_0_0_1_0());
+        // variable
+        config.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
 
-		/** TRANSITIONS **/
-		// indent transitionType --- ";"
-		// config.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_5());
-		// config.setIndentation(f.getTransitionAccess().getTypeAssignment_0(),
-		// f
-		// .getTransitionAccess().getSemicolonKeyword_5());
-		config.setLinewrap().before(
-				f.getTransitionTypeAccess()
-						.getWEAKABORTEnumLiteralDeclaration_0());
-		config
-				.setLinewrap()
-				.before(
-						f
-								.getTransitionTypeAccess()
-								.getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0());
-		config.setLinewrap().before(
-				f.getTransitionTypeAccess().getSTRONGABORTOKeyword_1_0());
-		config
-				.setLinewrap()
-				.before(
-						f
-								.getTransitionTypeAccess()
-								.getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0());
-		config.setLinewrap().after(
-				f.getTransitionAccess().getSemicolonKeyword_4());
+        /** TRANSITIONS **/
+        // indent transitionType --- ";"
+        // config.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_5());
+        // config.setIndentation(f.getTransitionAccess().getTypeAssignment_0(),
+        // f
+        // .getTransitionAccess().getSemicolonKeyword_5());
+        config.setLinewrap().before(
+                f.getTransitionTypeAccess()
+                        .getWEAKABORTEnumLiteralDeclaration_0());
+        config
+                .setLinewrap()
+                .before(
+                        f
+                                .getTransitionTypeAccess()
+                                .getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0());
+        config.setLinewrap().before(
+                f.getTransitionTypeAccess().getSTRONGABORTOKeyword_1_0());
+        config
+                .setLinewrap()
+                .before(
+                        f
+                                .getTransitionTypeAccess()
+                                .getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0());
+        config.setLinewrap().after(
+                f.getTransitionAccess().getSemicolonKeyword_4());
 
-		/** COMMENTS **/
-		config.setLinewrap().before(f.getSL_COMMENTRule());
-		config.setLinewrap().after(f.getSL_COMMENTRule());
-		config.setLinewrap().after(f.getML_COMMENTRule());
+        /** COMMENTS **/
+        config.setLinewrap().before(f.getSL_COMMENTRule());
+        config.setLinewrap().after(f.getSL_COMMENTRule());
+        config.setLinewrap().after(f.getML_COMMENTRule());
 
-	}
+    }
 }
