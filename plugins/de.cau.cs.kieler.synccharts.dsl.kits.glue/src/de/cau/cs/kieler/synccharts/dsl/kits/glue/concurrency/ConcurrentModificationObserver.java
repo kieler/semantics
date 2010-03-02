@@ -173,10 +173,13 @@ public class ConcurrentModificationObserver implements IPartListener,
 
     public void partBroughtToTop(final IWorkbenchPart part) {
         // trigger layout
-        tryLayoutWholeDiagram(part);
-        System.out.println("=====================");
-        System.out.println("AutoLayout-PartBroughtToTop: " + part.getTitle());
-        System.out.println("=====================");
+        if (part instanceof SyncchartsDiagramEditor) {
+            tryLayoutWholeDiagram(part);
+            System.out.println("=====================");
+            System.out.println("AutoLayout-PartBroughtToTop: "
+                    + part.getTitle());
+            System.out.println("=====================");
+        }
     }
 
     public NotificationFilter getFilter() {

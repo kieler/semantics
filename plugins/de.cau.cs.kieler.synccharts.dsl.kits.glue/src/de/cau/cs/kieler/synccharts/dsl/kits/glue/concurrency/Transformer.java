@@ -27,9 +27,11 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.impl.RegionImpl;
 
 /**
+ * @deprecated
  * @author oba
  * 
  */
+@Deprecated
 public class Transformer {
     public Transformer() {
         // TODO Auto-generated constructor stub
@@ -54,7 +56,7 @@ public class Transformer {
     void setLabel2Id(Region region) {
         /** get the workbench and editing domain */
         IWorkbenchPart workbenchPart = getIWorkbenchPart();
-        TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) ((SyncchartsDiagramEditor) workbenchPart)
+        TransactionalEditingDomain editingDomain = ((SyncchartsDiagramEditor) workbenchPart)
                 .getEditingDomain();
         /** if the region has inner states */
         if (region.getInnerStates() != null) {
@@ -143,7 +145,7 @@ public class Transformer {
         for (IEditorReference editorReference : editorReferences) {
             editor = editorReference.getEditor(false);
             if (editor instanceof DiagramEditor) {
-                editor = ((DiagramEditor) editor);
+                editor = (editor);
 
             }
 

@@ -26,11 +26,13 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
         de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
 
         /** REGIONS **/
-        config.setLinewrap().after(
-                f.getRegionAccess().getRegionKeyword_0_1_0_0());
-        config.setLinewrap().after(f.getRegionAccess().getRegionKeyword_1_0());
-        config.setLinewrap().after(
-                f.getRegionAccess().getIdAssignment_0_1_0_1());
+        config.setLinewrap().after(f.getRegionRule());
+        // System.out.println("Formatter: Region info?: "
+        // + f.getRegionRule().eGet(
+        // SyncchartsPackage.eINSTANCE.getRegion_Id()).toString());
+        // config.setLinewrap().after(f.getRegionAccess().getRegionKeyword_0_1_0_0());
+        // config.setLinewrap().after(f.getRegionAccess().getRegionKeyword_1_0());
+        // config.setLinewrap().after(f.getRegionAccess().getIdAssignment_0_1_0_1());
 
         /** STATES **/
         config.setLinewrap().before(

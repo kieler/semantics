@@ -25,11 +25,14 @@
             </type>
           </tokens>
           <tokens xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Group" cardinality="?">
-              <tokens xsi:type="xtext:Keyword" value="region"/>
-              <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
-              </tokens>
+            <tokens xsi:type="xtext:Alternatives" cardinality="?">
+              <groups xsi:type="xtext:Group">
+                <tokens xsi:type="xtext:Keyword" value="region"/>
+                <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                </tokens>
+              </groups>
+              <groups xsi:type="xtext:Keyword" value="region"/>
             </tokens>
             <tokens xsi:type="xtext:Alternatives" cardinality="*">
               <groups xsi:type="xtext:Assignment" feature="variables" operator="+=">
@@ -81,7 +84,7 @@
         <tokens xsi:type="xtext:Assignment" cardinality="*" feature="signals" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
         </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="interfaceDeclaration" operator="=">
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="interfaceDeclaration" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
         <tokens xsi:type="xtext:Group" cardinality="*">

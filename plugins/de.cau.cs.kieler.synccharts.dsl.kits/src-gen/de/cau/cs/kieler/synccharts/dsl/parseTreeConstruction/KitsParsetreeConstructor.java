@@ -79,12 +79,12 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Region ****************
  *
  * Region returns sync::Region:
- *   {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
- *   +=State+)|"region" id=ID?;  
+ *   {sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+ *   innerStates+=State+)|"region" id=ID?;  
  * 
  *     
  *    
- *           // region ID's are introduced by the keyword "region".       
+ *             // region ID's are introduced by the keyword "region".       
  *       
  *      
  *    
@@ -94,12 +94,12 @@ protected class ThisRootNode extends RootToken {
  *
  **/
 
-// {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-// +=State+)|"region" id=ID?  
+// {sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+// innerStates+=State+)|"region" id=ID?  
 // 
 //     
 //    
-//           // region ID's are introduced by the keyword "region".       
+//             // region ID's are introduced by the keyword "region".       
 //       
 //      
 //    
@@ -133,10 +133,10 @@ protected class Region_Alternatives extends AlternativesToken {
 	}
 }
 
-// {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-// +=State+) 
+// {sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+// innerStates+=State+) 
 //    
-//           // region ID's are introduced by the keyword "region".
+//             // region ID's are introduced by the keyword "region".
 protected class Region_Group_0 extends GroupToken {
 	
 	public Region_Group_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -186,7 +186,8 @@ protected class Region_RegionAction_0_0 extends ActionToken  {
 	}
 }
 
-// ("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates+=State+         // region ID's are introduced by the keyword "region".
+// ("region" id=ID|"region")? (variables+=Variable|signals+=Signal)* innerStates+=
+// State+           // region ID's are introduced by the keyword "region".
 protected class Region_Group_0_1 extends GroupToken {
 	
 	public Region_Group_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -208,22 +209,44 @@ protected class Region_Group_0_1 extends GroupToken {
 		
 }
 
-// ("region" id=ID)?
-protected class Region_Group_0_1_0 extends GroupToken {
-	
-	public Region_Group_0_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// ("region" id=ID|"region")?
+protected class Region_Alternatives_0_1_0 extends AlternativesToken {
+
+	public Region_Alternatives_0_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getRegionAccess().getGroup_0_1_0();
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getRegionAccess().getAlternatives_0_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Region_IdAssignment_0_1_0_1(parent, this, 0, inst);
+			case 0: return new Region_Group_0_1_0_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "region" id=ID
+protected class Region_Group_0_1_0_0 extends GroupToken {
+	
+	public Region_Group_0_1_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRegionAccess().getGroup_0_1_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Region_IdAssignment_0_1_0_0_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -231,15 +254,15 @@ protected class Region_Group_0_1_0 extends GroupToken {
 }
 
 // "region"
-protected class Region_RegionKeyword_0_1_0_0 extends KeywordToken  {
+protected class Region_RegionKeyword_0_1_0_0_0 extends KeywordToken  {
 	
-	public Region_RegionKeyword_0_1_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Region_RegionKeyword_0_1_0_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionAccess().getRegionKeyword_0_1_0_0();
+		return grammarAccess.getRegionAccess().getRegionKeyword_0_1_0_0_0();
 	}
 
     @Override
@@ -253,38 +276,39 @@ protected class Region_RegionKeyword_0_1_0_0 extends KeywordToken  {
 }
 
 // id=ID
-protected class Region_IdAssignment_0_1_0_1 extends AssignmentToken  {
+protected class Region_IdAssignment_0_1_0_0_1 extends AssignmentToken  {
 	
-	public Region_IdAssignment_0_1_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Region_IdAssignment_0_1_0_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getRegionAccess().getIdAssignment_0_1_0_1();
+		return grammarAccess.getRegionAccess().getIdAssignment_0_1_0_0_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Region_RegionKeyword_0_1_0_0(parent, this, 0, inst);
+			case 0: return new Region_RegionKeyword_0_1_0_0_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("id",false)) == null) return null;
+		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_0_1_0_1_0();
+			element = grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_0_1_0_0_1_0();
 			return obj;
 		}
 		return null;
 	}
 
 }
+
 
 
 // (variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region".
@@ -351,7 +375,7 @@ protected class Region_VariablesAssignment_0_1_1_0 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Region_Alternatives_0_1_1(parent, next, actIndex, consumed);
-			case 1: return new Region_Group_0_1_0(parent, next, actIndex, consumed);
+			case 1: return new Region_Alternatives_0_1_0(parent, next, actIndex, consumed);
 			case 2: return new Region_RegionAction_0_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
@@ -399,7 +423,7 @@ protected class Region_SignalsAssignment_0_1_1_1 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Region_Alternatives_0_1_1(parent, next, actIndex, consumed);
-			case 1: return new Region_Group_0_1_0(parent, next, actIndex, consumed);
+			case 1: return new Region_Alternatives_0_1_0(parent, next, actIndex, consumed);
 			case 2: return new Region_RegionAction_0_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
@@ -449,7 +473,7 @@ protected class Region_InnerStatesAssignment_0_1_2 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_InnerStatesAssignment_0_1_2(parent, next, actIndex, consumed);
 			case 1: return new Region_Alternatives_0_1_1(parent, next, actIndex, consumed);
-			case 2: return new Region_Group_0_1_0(parent, next, actIndex, consumed);
+			case 2: return new Region_Alternatives_0_1_0(parent, next, actIndex, consumed);
 			case 3: return new Region_RegionAction_0_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
@@ -460,7 +484,7 @@ protected class Region_InnerStatesAssignment_0_1_2 extends AssignmentToken  {
 
 // "region" id=ID? 
 //    
-//           // region ID's are introduced by the keyword "region".       
+//             // region ID's are introduced by the keyword "region".       
 //       
 //      
 //    
@@ -555,7 +579,7 @@ protected class Region_IdAssignment_1_1 extends AssignmentToken  {
  *
  * State returns sync::State:
  *   {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
- *   FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+ *   FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING? ("onentry"
  *   entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
  *   Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
  *   regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
@@ -588,7 +612,7 @@ protected class Region_IdAssignment_1_1 extends AssignmentToken  {
  **/
 
 // {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-// FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+// FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING? ("onentry"
 // entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
 // Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
 // regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
@@ -882,7 +906,7 @@ protected class State_SignalsAssignment_7 extends AssignmentToken  {
 	}	
 }
 
-// interfaceDeclaration=STRING // (',' (signals+=Signal))* ';')?
+// interfaceDeclaration=STRING?
 protected class State_InterfaceDeclarationAssignment_8 extends AssignmentToken  {
 	
 	public State_InterfaceDeclarationAssignment_8(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -906,7 +930,7 @@ protected class State_InterfaceDeclarationAssignment_8 extends AssignmentToken  
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("interfaceDeclaration",true)) == null) return null;
+		if((value = current.getConsumable("interfaceDeclaration",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("interfaceDeclaration");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
@@ -957,6 +981,9 @@ protected class State_OnentryKeyword_9_0 extends KeywordToken  {
 		switch(index) {
 			case 0: return new State_Group_9(parent, this, 0, inst);
 			case 1: return new State_InterfaceDeclarationAssignment_8(parent, this, 1, inst);
+			case 2: return new State_SignalsAssignment_7(parent, this, 2, inst);
+			case 3: return new State_LabelAssignment_6(parent, this, 3, inst);
+			case 4: return new State_IdAssignment_5(parent, this, 4, inst);
 			default: return null;
 		}	
 	}	
@@ -1050,6 +1077,9 @@ protected class State_OninnerKeyword_10_0 extends KeywordToken  {
 			case 0: return new State_Group_10(parent, this, 0, inst);
 			case 1: return new State_Group_9(parent, this, 1, inst);
 			case 2: return new State_InterfaceDeclarationAssignment_8(parent, this, 2, inst);
+			case 3: return new State_SignalsAssignment_7(parent, this, 3, inst);
+			case 4: return new State_LabelAssignment_6(parent, this, 4, inst);
+			case 5: return new State_IdAssignment_5(parent, this, 5, inst);
 			default: return null;
 		}	
 	}	
@@ -1144,6 +1174,9 @@ protected class State_OnexitKeyword_11_0 extends KeywordToken  {
 			case 1: return new State_Group_10(parent, this, 1, inst);
 			case 2: return new State_Group_9(parent, this, 2, inst);
 			case 3: return new State_InterfaceDeclarationAssignment_8(parent, this, 3, inst);
+			case 4: return new State_SignalsAssignment_7(parent, this, 4, inst);
+			case 5: return new State_LabelAssignment_6(parent, this, 5, inst);
+			case 6: return new State_IdAssignment_5(parent, this, 6, inst);
 			default: return null;
 		}	
 	}	
@@ -1238,6 +1271,9 @@ protected class State_SuspensionKeyword_12_0 extends KeywordToken  {
 			case 1: return new State_Group_10(parent, this, 1, inst);
 			case 2: return new State_Group_9(parent, this, 2, inst);
 			case 3: return new State_InterfaceDeclarationAssignment_8(parent, this, 3, inst);
+			case 4: return new State_SignalsAssignment_7(parent, this, 4, inst);
+			case 5: return new State_LabelAssignment_6(parent, this, 5, inst);
+			case 6: return new State_IdAssignment_5(parent, this, 6, inst);
 			default: return null;
 		}	
 	}	
@@ -1337,6 +1373,9 @@ protected class State_SemicolonKeyword_13_0 extends KeywordToken  {
 			case 2: return new State_Group_10(parent, this, 2, inst);
 			case 3: return new State_Group_9(parent, this, 3, inst);
 			case 4: return new State_InterfaceDeclarationAssignment_8(parent, this, 4, inst);
+			case 5: return new State_SignalsAssignment_7(parent, this, 5, inst);
+			case 6: return new State_LabelAssignment_6(parent, this, 6, inst);
+			case 7: return new State_IdAssignment_5(parent, this, 7, inst);
 			default: return null;
 		}	
 	}	
@@ -1410,6 +1449,9 @@ protected class State_LeftCurlyBracketKeyword_13_1_0_0 extends KeywordToken  {
 			case 2: return new State_Group_10(parent, this, 2, inst);
 			case 3: return new State_Group_9(parent, this, 3, inst);
 			case 4: return new State_InterfaceDeclarationAssignment_8(parent, this, 4, inst);
+			case 5: return new State_SignalsAssignment_7(parent, this, 5, inst);
+			case 6: return new State_LabelAssignment_6(parent, this, 6, inst);
+			case 7: return new State_IdAssignment_5(parent, this, 7, inst);
 			default: return null;
 		}	
 	}	
@@ -1621,6 +1663,9 @@ protected class State_LeftCurlyBracketKeyword_13_1_1_0 extends KeywordToken  {
 			case 3: return new State_Group_10(parent, this, 3, inst);
 			case 4: return new State_Group_9(parent, this, 4, inst);
 			case 5: return new State_InterfaceDeclarationAssignment_8(parent, this, 5, inst);
+			case 6: return new State_SignalsAssignment_7(parent, this, 6, inst);
+			case 7: return new State_LabelAssignment_6(parent, this, 7, inst);
+			case 8: return new State_IdAssignment_5(parent, this, 8, inst);
 			default: return null;
 		}	
 	}	
@@ -1742,6 +1787,9 @@ protected class State_OutgoingTransitionsAssignment_13_1_2 extends AssignmentTok
 			case 5: return new State_Group_10(parent, next, actIndex, consumed);
 			case 6: return new State_Group_9(parent, next, actIndex, consumed);
 			case 7: return new State_InterfaceDeclarationAssignment_8(parent, next, actIndex, consumed);
+			case 8: return new State_SignalsAssignment_7(parent, next, actIndex, consumed);
+			case 9: return new State_LabelAssignment_6(parent, next, actIndex, consumed);
+			case 10: return new State_IdAssignment_5(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	

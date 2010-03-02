@@ -7,7 +7,11 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
-
+/**
+ * do not use
+ * @author oba
+ *
+ */
 @Deprecated
 public class AddStatesToDiagramCommand extends AbstractCommand implements
         Command {

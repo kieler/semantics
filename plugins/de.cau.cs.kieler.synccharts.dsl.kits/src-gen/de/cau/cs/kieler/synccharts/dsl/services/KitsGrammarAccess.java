@@ -23,10 +23,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cRegionAction_0_0 = (Action)cGroup_0.eContents().get(0);
 		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
-		private final Group cGroup_0_1_0 = (Group)cGroup_0_1.eContents().get(0);
-		private final Keyword cRegionKeyword_0_1_0_0 = (Keyword)cGroup_0_1_0.eContents().get(0);
-		private final Assignment cIdAssignment_0_1_0_1 = (Assignment)cGroup_0_1_0.eContents().get(1);
-		private final RuleCall cIdIDTerminalRuleCall_0_1_0_1_0 = (RuleCall)cIdAssignment_0_1_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_0_1_0 = (Alternatives)cGroup_0_1.eContents().get(0);
+		private final Group cGroup_0_1_0_0 = (Group)cAlternatives_0_1_0.eContents().get(0);
+		private final Keyword cRegionKeyword_0_1_0_0_0 = (Keyword)cGroup_0_1_0_0.eContents().get(0);
+		private final Assignment cIdAssignment_0_1_0_0_1 = (Assignment)cGroup_0_1_0_0.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_0_1_0_0_1_0 = (RuleCall)cIdAssignment_0_1_0_0_1.eContents().get(0);
+		private final Keyword cRegionKeyword_0_1_0_1 = (Keyword)cAlternatives_0_1_0.eContents().get(1);
 		private final Alternatives cAlternatives_0_1_1 = (Alternatives)cGroup_0_1.eContents().get(1);
 		private final Assignment cVariablesAssignment_0_1_1_0 = (Assignment)cAlternatives_0_1_1.eContents().get(0);
 		private final RuleCall cVariablesVariableParserRuleCall_0_1_1_0_0 = (RuleCall)cVariablesAssignment_0_1_1_0.eContents().get(0);
@@ -40,12 +42,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIdIDTerminalRuleCall_1_1_0 = (RuleCall)cIdAssignment_1_1.eContents().get(0);
 		
 		//Region returns sync::Region:
-		//  {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-		//  +=State+)|"region" id=ID?;  
+		//  {sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+		//  innerStates+=State+)|"region" id=ID?;  
 		//
 		//    
 		//   
-		//          // region ID's are introduced by the keyword "region".       
+		//            // region ID's are introduced by the keyword "region".       
 		//      
 		//     
 		//   
@@ -54,12 +56,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//   // it should be serializable
 		public ParserRule getRule() { return rule; }
 
-		//{sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-		//+=State+)|"region" id=ID?  
+		//{sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+		//innerStates+=State+)|"region" id=ID?  
 		//
 		//    
 		//   
-		//          // region ID's are introduced by the keyword "region".       
+		//            // region ID's are introduced by the keyword "region".       
 		//      
 		//     
 		//   
@@ -68,29 +70,36 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//   // it should be serializable
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//{sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-		//+=State+) 
+		//{sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+		//innerStates+=State+) 
 		//   
-		//          // region ID's are introduced by the keyword "region".
+		//            // region ID's are introduced by the keyword "region".
 		public Group getGroup_0() { return cGroup_0; }
 
 		//{sync::Region}
 		public Action getRegionAction_0_0() { return cRegionAction_0_0; }
 
-		//("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates+=State+         // region ID's are introduced by the keyword "region".
+		//("region" id=ID|"region")? (variables+=Variable|signals+=Signal)* innerStates+=
+		//State+           // region ID's are introduced by the keyword "region".
 		public Group getGroup_0_1() { return cGroup_0_1; }
 
-		//("region" id=ID)?
-		public Group getGroup_0_1_0() { return cGroup_0_1_0; }
+		//("region" id=ID|"region")?
+		public Alternatives getAlternatives_0_1_0() { return cAlternatives_0_1_0; }
+
+		//"region" id=ID
+		public Group getGroup_0_1_0_0() { return cGroup_0_1_0_0; }
 
 		//"region"
-		public Keyword getRegionKeyword_0_1_0_0() { return cRegionKeyword_0_1_0_0; }
+		public Keyword getRegionKeyword_0_1_0_0_0() { return cRegionKeyword_0_1_0_0_0; }
 
 		//id=ID
-		public Assignment getIdAssignment_0_1_0_1() { return cIdAssignment_0_1_0_1; }
+		public Assignment getIdAssignment_0_1_0_0_1() { return cIdAssignment_0_1_0_0_1; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_0_1_0_1_0() { return cIdIDTerminalRuleCall_0_1_0_1_0; }
+		public RuleCall getIdIDTerminalRuleCall_0_1_0_0_1_0() { return cIdIDTerminalRuleCall_0_1_0_0_1_0; }
+
+		//"region"
+		public Keyword getRegionKeyword_0_1_0_1() { return cRegionKeyword_0_1_0_1; }
 
 		//(variables+=Variable|signals+=Signal)*   // region ID's are introduced by the keyword "region".
 		public Alternatives getAlternatives_0_1_1() { return cAlternatives_0_1_1; }
@@ -115,7 +124,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"region" id=ID? 
 		//   
-		//          // region ID's are introduced by the keyword "region".       
+		//            // region ID's are introduced by the keyword "region".       
 		//      
 		//     
 		//   
@@ -195,7 +204,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//State returns sync::State:
 		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-		//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+		//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING? ("onentry"
 		//  entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
 		//  Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
 		//  regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
@@ -227,7 +236,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-		//FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+		//FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING? ("onentry"
 		//entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
 		//Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
 		//regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |
@@ -287,7 +296,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_7_0() { return cSignalsSignalParserRuleCall_7_0; }
 
-		//interfaceDeclaration=STRING // (',' (signals+=Signal))* ';')?
+		//interfaceDeclaration=STRING?
 		public Assignment getInterfaceDeclarationAssignment_8() { return cInterfaceDeclarationAssignment_8; }
 
 		//STRING
@@ -2868,12 +2877,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns sync::Region:
-	//  {sync::Region} (("region" id=ID)? (variables+=Variable|signals+=Signal)* innerStates
-	//  +=State+)|"region" id=ID?;  
+	//  {sync::Region} (("region" id=ID|"region")? (variables+=Variable|signals+=Signal)*
+	//  innerStates+=State+)|"region" id=ID?;  
 	//
 	//    
 	//   
-	//          // region ID's are introduced by the keyword "region".       
+	//            // region ID's are introduced by the keyword "region".       
 	//      
 	//     
 	//   
@@ -2890,7 +2899,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//State returns sync::State:
 	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? id=
-	//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING ("onentry"
+	//  FULLSTATEID label=STRING? signals+=Signal* interfaceDeclaration=STRING? ("onentry"
 	//  entryActions+=Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=
 	//  Action)* ("suspension" suspensionTrigger=Action)? (";"|("{" regions+=Region ("||"
 	//  regions+=Region)* "}")? ("{" bodyText=STRING "}")? outgoingTransitions+=( Transition |

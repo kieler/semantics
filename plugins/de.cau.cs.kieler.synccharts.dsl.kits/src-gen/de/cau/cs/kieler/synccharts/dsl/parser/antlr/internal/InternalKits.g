@@ -105,15 +105,15 @@ ruleRegion returns [EObject current=null]
     currentNode = newNode; 
         associateNodeWithAstElement(currentNode, $current); 
     }
-)((	'region' 
+)(((	'region' 
     {
-        createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_0_1_0_0(), null); 
+        createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_0_1_0_0_0(), null); 
     }
 (
 (
 		lv_id_2_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_0_1_0_1_0(), "id"); 
+			createLeafNode(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_0_1_0_0_1_0(), "id"); 
 		}
 		{
 	        if ($current==null) {
@@ -133,12 +133,17 @@ ruleRegion returns [EObject current=null]
 	    }
 
 )
-))?((
+))
+    |	'region' 
+    {
+        createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_0_1_0_1(), null); 
+    }
+)?((
 (
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_0_1_1_0_0(), currentNode); 
 	    }
-		lv_variables_3_0=ruleVariable		{
+		lv_variables_4_0=ruleVariable		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -147,7 +152,7 @@ ruleRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"variables",
-	        		lv_variables_3_0, 
+	        		lv_variables_4_0, 
 	        		"Variable", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -163,7 +168,7 @@ ruleRegion returns [EObject current=null]
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_0_1_1_1_0(), currentNode); 
 	    }
-		lv_signals_4_0=ruleSignal		{
+		lv_signals_5_0=ruleSignal		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -172,7 +177,7 @@ ruleRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"signals",
-	        		lv_signals_4_0, 
+	        		lv_signals_5_0, 
 	        		"Signal", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -187,7 +192,7 @@ ruleRegion returns [EObject current=null]
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_0_1_2_0(), currentNode); 
 	    }
-		lv_innerStates_5_0=ruleState		{
+		lv_innerStates_6_0=ruleState		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -196,7 +201,7 @@ ruleRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"innerStates",
-	        		lv_innerStates_5_0, 
+	        		lv_innerStates_6_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -213,7 +218,7 @@ ruleRegion returns [EObject current=null]
     }
 (
 (
-		lv_id_7_0=RULE_ID
+		lv_id_8_0=RULE_ID
 		{
 			createLeafNode(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_1_1_0(), "id"); 
 		}
@@ -226,7 +231,7 @@ ruleRegion returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"id",
-	        		lv_id_7_0, 
+	        		lv_id_8_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -438,7 +443,7 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)(	'onentry' 
+)?(	'onentry' 
     {
         createLeafNode(grammarAccess.getStateAccess().getOnentryKeyword_9_0(), null); 
     }
