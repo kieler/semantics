@@ -189,7 +189,7 @@
                 <!-- comma separated lib path patterns excluded at javadoc generation -->
             <arg value="-Ddoc.destination=${doc.destination}" />
                 <!-- destination folder for javadoc artifacts -->
-            <arg value="-Ddoc.doclets=${doc.doclet}" />
+            <arg value="-Ddoc.doclets=${doc.doclets}" />
                 <!-- qualified doclet class name-->
             <arg value="-Ddoc.docletPath=${doc.docletPath}" />
                 <!-- doclet class path -->
@@ -482,11 +482,14 @@
                 <!-- consider all but the first 5 lines of the file -->
                 <linecontainsregexp>
                     <regexp pattern="id=&quot;" />
-                    <!-- consider all but the first 5 lines of the file -->
+                    <!-- consider only those lines containing 'id="' -->
                 </linecontainsregexp>
                 <tokenfilter delimOutput=",">
+                    <!-- tokenize line; concat choosen tokens with ','  -->
                     <stringtokenizer delims="&quot;" />
+                    <!-- tokenize line at '"' -->
                     <containsregex pattern=".*\..*" flags="i" />
+                    <!-- use that token containing at least a '.' -->
                 </tokenfilter>
             </filterchain>
         </loadfile>
