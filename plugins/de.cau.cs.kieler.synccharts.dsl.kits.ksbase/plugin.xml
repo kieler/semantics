@@ -5,6 +5,7 @@
          point="de.cau.cs.kieler.ksbase.configurations">
       <configuration
             TransformationFile="src/transformations/feature.ext"
+            checkVisibility="false"
             editorId="de.cau.cs.kieler.synccharts.dsl.Kits"
             packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
          <menus>
