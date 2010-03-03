@@ -332,7 +332,7 @@
 
         <loadfile property="feature.classpath">
             <concat>
-                <fileset dir="plugins" includes="**/build.xml" />
+                <fileset dir="${basedir}/plugins" includes="**/build.xml" />
                 <filterchain>
                     <linecontainsregexp>
                         <regexp pattern="&lt;pathelement path=&quot;../../" />
@@ -472,17 +472,39 @@
 
     <!-- =========================================================================================== -->
 
-    <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts"
+    <target name="determineBundles" if="eclipse.running"
+        description="target for computing the bundles to be build - needed to backup MANIFESTs due to a bug in build file generation">
+
+        <loadfile property="bundles">
+            <fileset dir="${basedir}/features" includes="${feature}/feature.xml" />
+            <filterchain>
+                <headfilter lines="-1" skip="5" />
+                <!-- consider all but the first 5 lines of the file -->
+                <linecontainsregexp>
+                    <regexp pattern="id=&quot;" />
+                    <!-- consider all but the first 5 lines of the file -->
+                </linecontainsregexp>
+                <tokenfilter delimOutput=",">
+                    <stringtokenizer delims="&quot;" />
+                    <containsregex pattern=".*\..*" flags="i" />
+                </tokenfilter>
+            </filterchain>
+        </loadfile>
+
+    </target>
+
+    <!-- =========================================================================================== -->
+
+    <target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts, determineBundles"
         description="target for complete feature building, checking and publishing">
         
-        <for param="bundle">
-            <path>
-               <dirset dir="${basedir}/plugins" includes="${feature}*" />
-            </path>
+        <echo message="Bundles to be build: ${bundles}" />
+        
+        <for param="bundle" list="${bundles}">
             <sequential>
                 <copy overwrite="true"
-                      file="@{bundle}/META-INF/MANIFEST.MF" 
-                      tofile="@{bundle}/META-INF/MANIFEST.backup" />
+                      file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" 
+                      tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
             </sequential>
         </for>
  
@@ -514,14 +536,11 @@
         <!-- run feature's assemble.p2.xml: generate update site entry -->
         <antcall target="build.updatesiteEntry" />
         
-        <for param="bundle">
-            <path>
-               <dirset dir="${basedir}/plugins" includes="${feature}*" />
-            </path>
+        <for param="bundle" list="${bundles}">
             <sequential>
                 <copy overwrite="true"
-                      file="@{bundle}/META-INF/MANIFEST.backup"
-                      tofile="@{bundle}/META-INF/MANIFEST.MF" />
+                       file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup"
+                      tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
             </sequential>
         </for>
 
