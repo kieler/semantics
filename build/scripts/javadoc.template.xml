@@ -1,6 +1,6 @@
 	<target name="doc" unless="no.doc" 
 	    description="generate javadoc (configured by ${scriptdir}/build.xml)">
-		<property name="doc.includes" value="plugins/**/*.java" />
+		<property name="doc.include" value="plugins/**/*.java" />
 		<property name="doc.excludes" value=" " />
 		<property name="doc.basedir"  value="${basedir}" />
 		<property name="doc.doclet"   value="${doc.doclets}" />
@@ -35,7 +35,7 @@ ${feature.classpath}
 	    		 use="true"
 	    		 maxmemory="1024m"
 	    		 version="true">
-	    		<fileset dir="${doc.basedir}" includes="${doc.includes}" excludes="${doc.excludes}" />
+	    		<fileset dir="${doc.basedir}" includes="${doc.include}" excludes="${doc.excludes}" />
                 <!-- 2 tag definition for purpose of reducing warnings only -->
 	    		<tag name="Pt.ProposedRating" />
 	    		<tag name="Pt.AcceptedRating" />

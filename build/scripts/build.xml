@@ -124,6 +124,7 @@
         <mkdir dir="${build.basedir}" />
 
         <java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+            <jvmarg value="-Xmx512m"/> 
             <arg line="-configuration ${eclipseConfig}" />
             <arg line="-data ${eclipseWorkspace}" />
             <arg line="-application org.eclipse.ant.core.antRunner" />
@@ -402,7 +403,7 @@
 
     <!-- =========================================================================================== -->
 
-     <target name="editScripts.checkstyle" if="eclipse.running"  unless="no.checkstyle" depends="editScripts.loadFeatureClasspath" 
+     <target name="editScripts.checkstyle" if="eclipse.running" unless="no.checkstyle" depends="editScripts.loadFeatureClasspath" 
         description="target for loading the checkstyle target template to be injected in ${feature}'s build file">
 
         <!-- load checkstyle target template -->        
@@ -416,7 +417,7 @@
 
     <!-- =========================================================================================== -->
 
-     <target name="editScripts.pmd" if="eclipse.running"  unless="no.pmd" depends="editScripts.loadFeatureClasspath" 
+     <target name="editScripts.pmd" if="eclipse.running" unless="no.pmd" depends="editScripts.loadFeatureClasspath" 
         description="target for loading the pmd target template to be injected in ${feature}'s build file">
         <!-- deactivated analysis as it is pretty much similar to checkstyle -->
         
@@ -505,9 +506,14 @@
         
         <for param="bundle" list="${bundles}">
             <sequential>
-                <copy overwrite="true"
-                      file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" 
-                      tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
+                <if>
+                    <available file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
+                    <then>
+                        <copy overwrite="true"
+                              file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" 
+                              tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
+                    </then>
+                </if>    
             </sequential>
         </for>
  
@@ -541,9 +547,14 @@
         
         <for param="bundle" list="${bundles}">
             <sequential>
-                <copy overwrite="true"
-                       file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup"
-                      tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
+                <if>
+                    <available file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
+                    <then>
+                        <copy overwrite="true"
+                              file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup"
+                              tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
+                    </then>
+                </if>
             </sequential>
         </for>
 
@@ -696,6 +707,7 @@
 
     <target name="doc" description="target for overall javadoc generation">
         <property name="doc.packages" value="${scriptdir}/../package-lists" />
+        <property name="doc.include"  value="${doc.includes}" />
 
         <!-- first, we need to gather the classpath path entries from plugin's generated build files -->
         <loadfile property="feature.classpath">
