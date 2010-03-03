@@ -150,7 +150,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
         if (parameters == null) {
             return false;
         }
-        
+
         // removing file extension
         String withFileExt = fileName;
 
@@ -160,7 +160,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
         }
 
         xtendFacade = XtendFacade.create(withFileExt);
-        //Register all meta models
+        // Register all meta models
         for (String basePackage : basePackages) {
             // The EMFMetaMetaModel,
             EmfMetaModel metaModel;
@@ -212,7 +212,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 Reader reader = new InputStreamReader(fileName.openStream());
                 Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
                 if (o != null) {
-                    LinkedList<AbstractTransformation> transformations = new LinkedList<AbstractTransformation>();
+                    LinkedList<AbstractTransformation> transformations = 
+                        new LinkedList<AbstractTransformation>();
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods
@@ -224,7 +225,10 @@ public class XtendTransformationFramework implements ITransformationFramework {
                         for (DeclaredParameter param : ext.getFormalParameters()) {
                             params.add(param.getType().getValue());
                         }
-                        transformations.add(new XtendTransformation(ext.getName(), params));
+                        XtendTransformation xt = new XtendTransformation();
+                        xt.setTransformation(ext.getName());
+                        xt.addParameters(params);
+                        transformations.add(xt);
                     }
                     return transformations;
                 }

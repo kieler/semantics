@@ -30,7 +30,7 @@ import de.cau.cs.kieler.core.model.transformation.AbstractTransformation;
 public class XtendTransformation extends AbstractTransformation {
 
     /** List of parameters. **/
-    private List<String> parameters;
+    private List<List<String>> parameters;
     /** The transformation. **/
     private String transformation;
 
@@ -39,7 +39,7 @@ public class XtendTransformation extends AbstractTransformation {
      */
     public XtendTransformation() {
         this.transformation = "";
-        this.parameters = new LinkedList<String>();
+        this.parameters = new LinkedList<List<String>>();
     }
 
     /**
@@ -50,9 +50,9 @@ public class XtendTransformation extends AbstractTransformation {
      * @param params
      *            The transformation parameters
      */
-    public XtendTransformation(final String transformationName, final List<String> params) {
+    public XtendTransformation(final String transformationName, final List<List<String>> params) {
         this.transformation = transformationName;
-        this.parameters = new LinkedList<String>(params);
+        this.parameters = new LinkedList<List<String>>(params);
     }
 
     /**
@@ -60,10 +60,10 @@ public class XtendTransformation extends AbstractTransformation {
      * 
      * @return A list of parameters.
      */
-    public final List<String> getParameterList() {
+    public final List<List<String>> getParameterList() {
         Assert.isNotNull(this.parameters);
         // never return the references!
-        return new LinkedList<String>(parameters);
+        return new LinkedList<List<String>>(parameters);
     }
 
     /**
@@ -77,28 +77,13 @@ public class XtendTransformation extends AbstractTransformation {
     }
 
     /**
-     * @param param
-     *            The parameters for this transformation.
-     */
-    public final void setParameters(final String[] param) {
-        if (param != null && param.length > 0) {
-            this.parameters.clear();
-            for (String para : param) {
-                this.parameters.add(para);
-            }
-        }
-    }
-
-    /**
      * Sets the parameters for this transformation.
      * 
      * @param params
      *            a List of parameters
      */
-    public final void setParameters(final List<String> params) {
-        if (params != null) {
-            this.parameters = new LinkedList<String>(params);
-        }
+    public final void setParameters(final List<List<String>> params) {
+        this.parameters = new LinkedList<List<String>>(params);
     }
 
     /**
@@ -124,4 +109,30 @@ public class XtendTransformation extends AbstractTransformation {
         }
     }
 
+    /**
+     * Two transformations are equal if they have the same name & parameter.
+     * 
+     * @param obj
+     *            the object to check
+     * @return true if the transformations are equal.
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof AbstractTransformation) {
+            AbstractTransformation a = (AbstractTransformation) obj;
+            return a.getTransformation().equals(transformation)
+                    && a.getParameterList().equals(parameters);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return transformation.hashCode();
+    }
+
+    @Override
+    public void addParameters(final List<String> params) {
+        this.parameters.add(params);
+    }
 }
