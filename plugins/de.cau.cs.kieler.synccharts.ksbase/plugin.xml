@@ -5,6 +5,7 @@
        point="de.cau.cs.kieler.ksbase.configurations">
        		<configuration
                TransformationFile="src/transformations/feature.ext"
+               checkVisibility="true"
                contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
                defautlIcon="icons/obj16/State.gif"
                editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
