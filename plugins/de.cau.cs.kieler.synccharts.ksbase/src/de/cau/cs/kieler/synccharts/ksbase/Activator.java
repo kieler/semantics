@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.sbase;
+package de.cau.cs.kieler.synccharts.ksbase;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
     /** The plug-in ID. **/
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.sbase";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.ksbase";
 
     /** The shared instance. **/
     private static Activator plugin;

@@ -1,18 +1,6 @@
 import synccharts;
 import utilities;
 
-Void duplicateTransition(State source, Transition transition, List[State] targets):
-	targets.forAll(e|connectWithTriggers(source,transition,e))	
-;
-
-Void connectWithTriggers(State source, Transition triggers, State target):
- let transition = new Transition:
- 	transition.setTriggersAndEffects(triggers.triggersAndEffects) ->
- 	transition.setSourceState(source) ->
- 	transition.setTargetState(target) ->
- 	source.outgoingTransitions.add(transition)
-;
-
 //Adds a successor to the given state 
 Void addSuccessorState(State source):
  let target = new State:
@@ -31,8 +19,8 @@ let source = new State:
 connectStates(source,target) ->
 target.parentRegion.innerStates.add(source) ->
 (target.isInitial == true) ?
-	(target.setIsInitial(false) ->
-	source.setIsInitial(true)) : 
+    (target.setIsInitial(false) ->
+    source.setIsInitial(true)) : 
 setSelection(source)
 ;
 
@@ -118,7 +106,7 @@ if parentState.regions.size > 0 then
 //Returns true if the state is a complex state, 
 //i.e. it has at least one inner region
 Boolean isRegionState(State state):
-	state.regions.size > 0
+    state.regions.size > 0
 ;
 
 //Sets the object that should be selected after the transformation is executed
@@ -128,11 +116,11 @@ Void setSelection(Object object):
 
 //Checks if the state is the root state.
 Boolean isNoRootState(State state): 
-	state.parentRegion.parentState != null
+    state.parentRegion.parentState != null
 ;
 
 Boolean isNoRootState(List[State] states):
-	states.notExists(e|e.parentRegion.parentState == null)
+    states.notExists(e|e.parentRegion.parentState == null)
 ;
 // Add a state to the parent state and add all Regions
 // to that new State
@@ -160,35 +148,77 @@ state.setParentRegion(null) ->
 null
 ;
 
-//Adds an initial state to a region
-Void addInitialState(Region target):
- let parent = target.parentState :
- let state = new State:
- (parent != null) ?
- (state.setLabel("Initial") ->
- state.setIsInitial(true) ->
- target.innerStates.add(state) ->
- setSelection(state)) :
- createDefault(target)
+// Copy and Paste 
+Void copyStateToClipboard(State state):
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
 ;
 
-//Copies a state, i.e. stores a reference in a 
-//Java class
-Void copyState(State source):
-JAVA de.cau.cs.kieler.synccharts.sbase.Utils.copyState(de.cau.cs.kieler.synccharts.State)
+Void copyRegionToClipboard(Region region):
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionToClipboard(de.cau.cs.kieler.synccharts.Region)
 ;
 
-Void copyStates(List[State] states) :
-JAVA de.cau.cs.kieler.synccharts.sbase.Utils.copyStates(org.eclipse.emf.common.util.EList)
+Void copyTransitionToClipboard(Transition trans):
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.transitionToClipboard(de.cau.cs.kieler.synccharts.Transition)
 ;
 
-State getCopiedState():
-JAVA de.cau.cs.kieler.synccharts.sbase.Utils.getBufferedState();
-
-Void moveState(Region target):
-let source = getCopiedState():
-source.setParentRegion(target)
+State getStateFromClipboard():
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
 ;
+
+Region getRegionFromClipboard():
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionFromClipboard()
+;
+
+Transition getTransitionFromClipboard():
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getTransitionFromClipboard()
+;
+
+Void cut(Transition trans):
+ copyTransitionToClipboard(trans) ->
+ trans.sourceState.outgoingTransitions.remove(trans)
+ ;
+
+Void cut(State state):
+ copyStateToClipboard(state) ->
+ state.parentRegion.innerStates.remove(state)
+;
+
+Void cut(Region region):
+ copyRegionToClipboard(region) ->
+ (region.parentState != null) ?
+ region.parentState.regions.remove(region) : null
+;
+
+Void paste(Region target):
+ let region = getRegionFromClipboard():
+ let state = getStateFromClipboard():
+ (state != null) ?
+ target.innerStates.add(state) :
+ ((region != null) ? addStatesToRegion(target, region) : null)
+;
+
+Void addStatesToRegion(Region target, Region source):
+ target.innerStates.addAll(source.innerStates);
+
+Void paste(State target):
+ let region = getRegionFromClipboard():
+ let state = getStateFromClipboard():
+ let dummy = new Region:
+ (state != null) ?
+ (dummy.innerStates.add(state) ->
+  target.regions.add(dummy)) : 
+  ((region != null) ?
+   (target.regions.add(region))
+    : null)
+;
+
+Void paste(State source, State target):
+ let trans = getTransitionFromClipboard():
+ (trans != null) ?
+ (source.outgoingTransitions.add(trans) ->
+ trans.setTargetState(target)) :
+ null
+ ;
 
 /////////////////////////
 //     Templates      ///
@@ -210,6 +240,18 @@ setSelection(innerState)
 
 String getFileNameOfActiveEditor():
 JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+;
+
+//Adds an initial state to a region
+Void addInitialState(Region target):
+ let parent = target.parentState :
+ let state = new State:
+ (parent != null) ?
+ (state.setLabel("Initial") ->
+ state.setIsInitial(true) ->
+ target.innerStates.add(state) ->
+ setSelection(state)) :
+ createDefault(target)
 ;
 
 //Good ol' ABRO
