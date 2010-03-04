@@ -76,8 +76,8 @@ public class ModelingPerspective implements IPerspectiveFactory {
         layout.addShowViewShortcut(VIEW_VIEWMANAGEMENT);
         layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
         layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
-        // layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
-        layout.addShowViewShortcut(IPageLayout.ID_RES_NAV);
+        layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
+//        layout.addShowViewShortcut(IPageLayout.ID_RES_NAV);
         layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET);
 
     }
@@ -92,9 +92,9 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
         // TOP LEFT ==============================================
         IFolderLayout topLeft = layout.createFolder("topLeft", IPageLayout.LEFT, SMALL, editor);
-        addViewIfExists(topLeft, IPageLayout.ID_RES_NAV);
+//        addViewIfExists(topLeft, IPageLayout.ID_RES_NAV);
         // project explorer does not show the new wizard shortcuts...
-        // addViewIfExists(topLeft, IPageLayout.ID_PROJECT_EXPLORER);
+        addViewIfExists(topLeft, IPageLayout.ID_PROJECT_EXPLORER);
 
         // BOTTOM LEFT ==============================================
         IFolderLayout bottomLeft = layout.createFolder("bottomLeft", IPageLayout.BOTTOM, MEDIUM,
