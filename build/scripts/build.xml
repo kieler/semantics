@@ -24,21 +24,19 @@
     <property name="updateSiteCategoryDescriptorJobName" value="${system.updateSiteCategoryDescriptorJobName}" />
     <property name="updateSiteCategoryDescriptor"        value="${hudson.home}/jobs/${updateSiteCategoryDescriptorJobName}/workspace/de.cau.cs.kieler.updatesite/site.xml" />
     <property name="javadocTagletJobName"                value="${system.javadocTagletJobName}" />
-    <property name="doc.basedir"                         value="${hudson.home}/jobs/" />
-    <property name="doc.includes"                        value="*/workspace/plugins/**/*.java" />
-    <property name="doc.includes.buildfiles"             value="*/workspace/plugins/*/build.xml" />
+    <property name="doc.packages"                        value="${scriptdir}/../package-lists" />
     <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
     <property name="doc.destination"                     value="doc" />
     <property name="doc.doclets"                         value="com.sun.tools.doclets.standard.Standard" />
     <property name="doc.docletPath"                      value="." />
+    <property name="doc.excludes"                        value=" "/>
     
 
     <property name="plugin"              value=" "/>
     <!-- property name="feature"         value=" "/   # see declaration in call.antRunner -->
     <property name="product"             value=" "/>
     <property name="executables"         value=" "/>
-    <property name="doc.excludes"        value=" "/>
     <property name="checkstyle.excludes" value=" "/>
     <property name="pmd.excludes"        value=" "/>
     <property name="build.jars"          value="true"/>
@@ -88,10 +86,14 @@
         </path>
         <property name="pluginPath" value="${toString:pluginPath}" />
                 
-        <!-- default definitions: may be overwritten while calling this script if necessary
-             this is to give antRunner a reasonable value of ${featureParam}
+        <!-- default definitions: may be overwritten while calling this script if necessary -->
+        <!-- this is to give antRunner a reasonable value of ${featureParam}
              ${feature} must not be set widely in case of invoking the build.multiple.features target -->
-        <property name="feature"    value=" "/>
+        <property name="feature"                 value=" "/>
+        <!-- these are located here as I want to state different default values for overall javadoc generation -->
+        <property name="doc.basedir"             value="${build.basedir}" />
+        <property name="doc.includes"            value="plugins/**/*.java" />
+        <property name="doc.includes.buildfiles" value="plugins/*/build.xml" />
 
         <!-- the following conditions will check the presence of certain properties
              and write definite values to new properties in order to pass them to the antRunner -->
@@ -333,7 +335,7 @@
 
         <loadfile property="feature.classpath">
             <concat>
-                <fileset dir="${basedir}/plugins" includes="**/build.xml" />
+                <fileset dir="${doc.basedir}" includes="${doc.includes.buildfiles}" />
                 <filterchain>
                     <linecontainsregexp>
                         <regexp pattern="&lt;pathelement path=&quot;../../" />
@@ -377,6 +379,8 @@
 
     <target name="editScripts.doc" if="eclipse.running" unless="no.doc" depends="editScripts.loadFeatureClasspath" 
         description="target for loading the doc target template to be injected in ${feature}'s build file">
+
+		<property name="doc.doclet"   value="${doc.doclets}" />
 
         <!-- load javadoc target template, insert classpath entries (via property feature.classpath) -->        
         <loadfile property="doc.target" srcfile="${scriptdir}/javadoc.template.xml">
@@ -524,7 +528,6 @@
             <property name="plugin.destination" value="${basedir}/update-site/plugins" />
             <property name="feature.base" value="${basedir}/update-site/" />
             <property name="updateJar.omitRootfiles" value="true" />
-            <property name="doc.packages" value="${scriptdir}/../package-lists" />
             <!-- property name="findbugs.classes" value="${basedir}/update-site/plugins" / --><!-- defined above -->
             <property name="findbugs.sources" value="${basedir}/plugins" />
             <property name="checkstyle.sources" value="${basedir}/plugins" />
@@ -706,8 +709,9 @@
     <!-- =========================================================================================== -->
 
     <target name="doc" description="target for overall javadoc generation">
-        <property name="doc.packages" value="${scriptdir}/../package-lists" />
-        <property name="doc.include"  value="${doc.includes}" />
+        <property name="doc.basedir"             value="${hudson.home}/jobs" />
+        <property name="doc.includes"            value="*/workspace/plugins/**/*.java" />
+        <property name="doc.includes.buildfiles" value="*/workspace/plugins/*/build.xml" />
 
         <!-- first, we need to gather the classpath path entries from plugin's generated build files -->
         <loadfile property="feature.classpath">
