@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.synccharts.custom;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.draw2d.AbstractHintLayout;
 import org.eclipse.draw2d.IFigure;
@@ -157,8 +158,8 @@ public class StateLayout extends AbstractHintLayout {
         containsInsideActions = state.getInnerActions().size() > 0;
         containsExitActions = state.getExitActions().size() > 0;
         containsSuspensionTrigger = state.getSuspensionTrigger() != null;
-		containsInterfaceDeclaration = (state.getInterfaceDeclaration() != null 
-			&& state.getInterfaceDeclaration().length() > 0);
+        containsInterfaceDeclaration = (state.getInterfaceDeclaration() != null
+                && state.getInterfaceDeclaration().length() > 0);
 
         return (containsRegions || containsSignals || containsVariables || containsEntryActions
                 || containsInsideActions || containsExitActions || containsSuspensionTrigger || state
@@ -167,6 +168,13 @@ public class StateLayout extends AbstractHintLayout {
                 && state.getType() != StateType.CONDITIONAL;
     }
 
+    /** index of the state name label. */
+    private static final int LABEL_NAME = 0;
+    /** index of the body text label. */
+    private static final int LABEL_BODYTEXT = 1;
+    /** index of the interface declaration label. */
+    private static final int LABEL_IFDECL = 2;
+    
     /**
      * Apply layout for complex states.
      * 
@@ -182,14 +190,15 @@ public class StateLayout extends AbstractHintLayout {
         // collect preferred widths and heights
         int numChildren = children.size();
         int totalWidth = 0;
-        int totalHeight = 0;
+        int aboveSepHeight = 0, belowSepHeight = 0;
         int[] prefWidths = new int[numChildren];
         int[] prefHeights = new int[numChildren];
         Rectangle newBounds = new Rectangle();
-        int regionSeparatorHeight = 0;
-        int i = 0;
         int wrappingLabelCounter = 0;
-        for (IFigure childFigure : children) {
+        ListIterator<IFigure> figureIter = children.listIterator();
+        while (figureIter.hasNext()) {
+            IFigure childFigure = figureIter.next();
+            boolean belowSep = false;
             if (!(childFigure instanceof Polyline)) {
                 Dimension size;
                 // empty compartments are not considered
@@ -197,30 +206,30 @@ public class StateLayout extends AbstractHintLayout {
                     ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) childFigure;
                     String compartmentName = getName(compartment);
                     if (compartmentName.equals(REGION_COMP_NAME)) {
+                        belowSep = true;
                         if (containsRegions) {
                             size = compartment.getPreferredSize();
                         } else {
                             size = new Dimension();
+                            size.width = MIN_WIDTH;
+                            size.height = MIN_HEIGHT;
                         }
-                        // set the y position of the region separator polyline to the current
-                        // calculated total height = y position of region compartment
-                        // regionSeparatorHeight = totalHeight;
                     } else if (isEmptyCompartment(compartmentName) || !compartment.isExpanded()) {
                         size = new Dimension();
                         setTitleVisibility(compartment, false);
                     } else {
-                        size = compartment.getContentPane().getPreferredSize(clientArea.width - 2,
-                                -1);
-                        // make title label visible if the compartment is not a
-                        // region compartment
-                        // and has more than the title label as content
+                        size = compartment.getContentPane().getPreferredSize(clientArea.width - 2, -1);
+                        // make title label visible if the compartment is not a region
+                        // compartment and has more than the title label as content
                         setTitleVisibility(compartment, true);
                     }
                 } else {
                     size = childFigure.getPreferredSize();
                     if (childFigure instanceof WrappingLabel) {
-                        if (wrappingLabelCounter == 1) {
-                            regionSeparatorHeight = totalHeight;
+                        switch (wrappingLabelCounter) {
+                        case LABEL_BODYTEXT:
+                            belowSep = true;
+                        case LABEL_IFDECL:
                             if (((WrappingLabel) childFigure).getText().isEmpty()) {
                                 size = new Dimension();
                             }
@@ -230,18 +239,21 @@ public class StateLayout extends AbstractHintLayout {
                 }
 
                 // take maximum width and sum of heights
-                prefWidths[i] = size.width;
-                prefHeights[i] = size.height;
-                totalHeight += size.height;
+                prefWidths[figureIter.previousIndex()] = size.width;
+                prefHeights[figureIter.previousIndex()] = size.height;
+                if (belowSep) {
+                    belowSepHeight += size.height;
+                } else {
+                    aboveSepHeight += size.height;
+                }
                 if (size.width > totalWidth) {
                     totalWidth = size.width;
                 }
             }
-            i++;
         }
 
-        if (totalHeight < clientArea.height) {
-            totalHeight = clientArea.height;
+        if (aboveSepHeight + belowSepHeight < clientArea.height) {
+            belowSepHeight = clientArea.height - aboveSepHeight;
         }
         if (totalWidth < clientArea.width) {
             totalWidth = clientArea.width;
@@ -249,12 +261,12 @@ public class StateLayout extends AbstractHintLayout {
 
         // labels are centered in the upper area while compartments share the
         // rest of the space, always using the full available width
-        int offsetY = 0;
-        i = 0;
+        int offsetAboveSep = 0, offsetBelowSep = 0;
         wrappingLabelCounter = 0;
-        WrappingLabel bodyTextLabel = null;
-        int bodyTextIndex = 0;
-        for (IFigure childFigure : children) {
+        figureIter = children.listIterator();
+        while (figureIter.hasNext()) {
+            IFigure childFigure = figureIter.next();
+            int i = figureIter.previousIndex();
             if (childFigure instanceof Polyline) {
                 // handle region separator
                 Polyline regionSeparator = (Polyline) childFigure;
@@ -266,58 +278,59 @@ public class StateLayout extends AbstractHintLayout {
                     left += DoubleRoundedRectangle.BORDER_WIDTH;
                     right -= DoubleRoundedRectangle.BORDER_WIDTH;
                 }
-                if (regionSeparatorHeight < MIN_HEIGHT) {
+                if (aboveSepHeight < MIN_HEIGHT) {
                     // decrease line width a bit if the header labels are empty
                     left += 1;
                     right -= 1;
                 }
-                points.addPoint(new Point(left, regionSeparatorHeight));
-                points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
+                points.addPoint(new Point(left, aboveSepHeight));
+                points.addPoint(new Point(Math.max(left, right), aboveSepHeight));
                 regionSeparator.setPoints(points);
             } else if (childFigure instanceof WrappingLabel) {
-                // possible labels: State label and State body text
+                newBounds.width = prefWidths[i];
+                newBounds.height = prefHeights[i];
+                // possible labels: state name, body text, and interface declaration
                 // make first centered and all others left aligned
-                if (wrappingLabelCounter == 0) {
+                switch (wrappingLabelCounter) {
+                case LABEL_NAME:
                     newBounds.x = clientArea.x + (clientArea.width - prefWidths[i]) / 2;
-                    newBounds.y = clientArea.y + offsetY;
-                    newBounds.width = prefWidths[i];
-                    newBounds.height = prefHeights[i];
-                    childFigure.setBounds(newBounds);
-                } else {
-                    bodyTextLabel = (WrappingLabel) childFigure;
-                    bodyTextIndex = i;
-                    offsetY -= prefHeights[i];
+                    newBounds.y = clientArea.y + offsetAboveSep;
+                    offsetAboveSep += newBounds.height;
+                    break;
+                case LABEL_IFDECL:
+                    newBounds.x = clientArea.x;
+                    newBounds.y = clientArea.y + offsetAboveSep;
+                    offsetAboveSep += newBounds.height;
+                    break;
+                case LABEL_BODYTEXT:
+                    newBounds.x = clientArea.x;
+                    newBounds.y = clientArea.y + aboveSepHeight + offsetBelowSep;
+                    offsetBelowSep += newBounds.height;
+                    break;
                 }
+                childFigure.setBounds(newBounds);
                 wrappingLabelCounter++;
             } else if (childFigure instanceof ShapeCompartmentFigure) {
+                // leave a little border so that transition anchors
+                // can be moved freely by the user
+                newBounds.x = clientArea.x + 1;
                 if (i == (numChildren - 1)) {
-                    // insert the body text just before the last compartment
-                    if (bodyTextLabel != null) {
-                        newBounds.x = clientArea.x;
-                        newBounds.y = clientArea.y + offsetY;
-                        newBounds.width = prefWidths[bodyTextIndex];
-                        newBounds.height = prefHeights[bodyTextIndex];
-                        bodyTextLabel.setBounds(newBounds);
-                        offsetY += newBounds.height;
-                    }
+                    newBounds.y = clientArea.y + aboveSepHeight + offsetBelowSep;
                     // stretch the last element over the remaining space
-                    newBounds.height = totalHeight - offsetY;
+                    newBounds.height = belowSepHeight - offsetBelowSep;
+                    offsetBelowSep += newBounds.height;
                 } else {
+                    newBounds.y = clientArea.y + offsetAboveSep;
                     newBounds.height = prefHeights[i];
+                    offsetAboveSep += newBounds.height;
                 }
                 if (prefWidths[i] == 0) {
                     newBounds.width = 0;
                 } else {
                     newBounds.width = totalWidth - 2;
                 }
-                // leave a little border so that transition anchors
-                // can be moved freely by the user
-                newBounds.x = clientArea.x + 1;
-                newBounds.y = clientArea.y + offsetY;
                 childFigure.setBounds(newBounds);
             }
-            offsetY += prefHeights[i];
-            i++;
         }
     }
 
