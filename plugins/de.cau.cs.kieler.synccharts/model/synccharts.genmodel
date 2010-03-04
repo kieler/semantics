@@ -61,7 +61,7 @@
     <genClasses ecoreClass="synccharts.ecore#//Action">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Action/effects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Action/trigger"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/triggersAndEffects"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/triggersAndEffects"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Action/parentStateEntryAction"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Action/parentStateInnerAction"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Action/parentStateExitAction"/>

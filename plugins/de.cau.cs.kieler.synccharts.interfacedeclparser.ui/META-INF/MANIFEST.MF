@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.synccharts.interfacedeclparser.ui
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0
+Bundle-Name: SyncCharts Interface Declaration Parser UI
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.interfacedeclparser.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.synccharts.interfacedeclparser;visibility:=reexport,
@@ -14,7 +14,6 @@ Require-Bundle: de.cau.cs.kieler.synccharts.interfacedeclparser;visibility:=reex
  org.antlr.runtime,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.interfacedeclparser.contentassist,
  de.cau.cs.kieler.synccharts.interfacedeclparser.contentassist.antlr
 Bundle-Activator: de.cau.cs.kieler.synccharts.interfacedeclparser.internal.InterfaceDeclActivator

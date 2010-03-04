@@ -89,7 +89,7 @@ public class ActionItemProvider
                  getString("_UI_PropertyDescriptor_description", "_UI_Action_triggersAndEffects_feature", "_UI_Action_type"),
                  SyncchartsPackage.Literals.ACTION__TRIGGERS_AND_EFFECTS,
                  true,
-                 false,
+                 true,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
@@ -190,7 +190,7 @@ public class ActionItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((Action)object).getTriggersAndEffects();
+        String label = crop(((Action)object).getTriggersAndEffects());
         return label == null || label.length() == 0 ?
             getString("_UI_Action_type") :
             getString("_UI_Action_type") + " " + label;

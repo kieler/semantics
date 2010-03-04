@@ -56,8 +56,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsParserProvider;
 /**
  * @generated
  */
-public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
-        implements ITextAwareEditPart {
+public class TransitionTriggersAndEffectsEditPart extends LabelEditPart implements
+        ITextAwareEditPart {
 
     /**
      * @generated
@@ -106,20 +106,17 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE,
-                new LabelDirectEditPolicy());
+        installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new LabelDirectEditPolicy());
         installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
                 new SyncchartsTextSelectionEditPolicy());
-        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
-                new NonResizableLabelEditPolicy() {
+        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new NonResizableLabelEditPolicy() {
 
-                    protected List createSelectionHandles() {
-                        MoveHandle mh = new MoveHandle(
-                                (GraphicalEditPart) getHost());
-                        mh.setBorder(null);
-                        return Collections.singletonList(mh);
-                    }
-                });
+            protected List createSelectionHandles() {
+                MoveHandle mh = new MoveHandle((GraphicalEditPart) getHost());
+                mh.setBorder(null);
+                return Collections.singletonList(mh);
+            }
+        });
     }
 
     /**
@@ -219,8 +216,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         String text = null;
         EObject parserElement = getParserElement();
         if (parserElement != null && getParser() != null) {
-            text = getParser().getPrintString(
-                    new EObjectAdapter(parserElement),
+            text = getParser().getPrintString(new EObjectAdapter(parserElement),
                     getParserOptions().intValue());
         }
         if (text == null || text.length() == 0) {
@@ -236,13 +232,11 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         setLabelTextHelper(getFigure(), text);
         Object pdEditPolicy = getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
         if (pdEditPolicy instanceof SyncchartsTextSelectionEditPolicy) {
-            ((SyncchartsTextSelectionEditPolicy) pdEditPolicy)
-                    .refreshFeedback();
+            ((SyncchartsTextSelectionEditPolicy) pdEditPolicy).refreshFeedback();
         }
         Object sfEditPolicy = getEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE);
         if (sfEditPolicy instanceof SyncchartsTextSelectionEditPolicy) {
-            ((SyncchartsTextSelectionEditPolicy) sfEditPolicy)
-                    .refreshFeedback();
+            ((SyncchartsTextSelectionEditPolicy) sfEditPolicy).refreshFeedback();
         }
     }
 
@@ -253,8 +247,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         if (getParserElement() == null || getParser() == null) {
             return ""; //$NON-NLS-1$
         }
-        return getParser().getEditString(
-                new EObjectAdapter(getParserElement()),
+        return getParser().getEditString(new EObjectAdapter(getParserElement()),
                 getParserOptions().intValue());
     }
 
@@ -280,13 +273,12 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
                                 .runExclusive(new RunnableWithResult.Impl() {
 
                                     public void run() {
-                                        setResult(parser.isValidEditString(
-                                                new EObjectAdapter(element),
-                                                (String) value));
+                                        setResult(parser.isValidEditString(new EObjectAdapter(
+                                                element), (String) value));
                                     }
                                 });
-                        return valid.getCode() == ParserEditStatus.EDITABLE ? null
-                                : valid.getMessage();
+                        return valid.getCode() == ParserEditStatus.EDITABLE ? null : valid
+                                .getMessage();
                     } catch (InterruptedException ie) {
                         ie.printStackTrace();
                     }
@@ -305,8 +297,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         if (getParserElement() == null || getParser() == null) {
             return null;
         }
-        return getParser().getCompletionProcessor(
-                new EObjectAdapter(getParserElement()));
+        return getParser().getCompletionProcessor(new EObjectAdapter(getParserElement()));
     }
 
     /**
@@ -374,8 +365,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
      */
     protected void performDirectEdit(Point eventLocation) {
         if (getManager() instanceof TextDirectEditManager) {
-            ((TextDirectEditManager) getManager()).show(eventLocation
-                    .getSWTPoint());
+            ((TextDirectEditManager) getManager()).show(eventLocation.getSWTPoint());
         }
     }
 
@@ -400,14 +390,10 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
 
                 public void run() {
                     if (isActive() && isEditable()) {
-                        if (theRequest
-                                .getExtendedData()
-                                .get(
-                                        RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character) {
-                            Character initialChar = (Character) theRequest
-                                    .getExtendedData()
-                                    .get(
-                                            RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+                        if (theRequest.getExtendedData().get(
+                                RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character) {
+                            Character initialChar = (Character) theRequest.getExtendedData().get(
+                                    RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
                             performDirectEdit(initialChar.charValue());
                         } else if ((theRequest instanceof DirectEditRequest)
                                 && (getEditText().equals(getLabelText()))) {
@@ -444,13 +430,11 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         setLabelIconHelper(getFigure(), getLabelIcon());
         Object pdEditPolicy = getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
         if (pdEditPolicy instanceof SyncchartsTextSelectionEditPolicy) {
-            ((SyncchartsTextSelectionEditPolicy) pdEditPolicy)
-                    .refreshFeedback();
+            ((SyncchartsTextSelectionEditPolicy) pdEditPolicy).refreshFeedback();
         }
         Object sfEditPolicy = getEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE);
         if (sfEditPolicy instanceof SyncchartsTextSelectionEditPolicy) {
-            ((SyncchartsTextSelectionEditPolicy) sfEditPolicy)
-                    .refreshFeedback();
+            ((SyncchartsTextSelectionEditPolicy) sfEditPolicy).refreshFeedback();
         }
     }
 
@@ -472,8 +456,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
                 NotationPackage.eINSTANCE.getFontStyle());
         if (style != null && getFigure() instanceof WrappingLabel) {
-            ((WrappingLabel) getFigure()).setTextStrikeThrough(style
-                    .isStrikeThrough());
+            ((WrappingLabel) getFigure()).setTextStrikeThrough(style.isStrikeThrough());
         }
     }
 
@@ -484,8 +467,8 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
                 NotationPackage.eINSTANCE.getFontStyle());
         if (style != null) {
-            FontData fontData = new FontData(style.getFontName(), style
-                    .getFontHeight(), (style.isBold() ? SWT.BOLD : SWT.NORMAL)
+            FontData fontData = new FontData(style.getFontName(), style.getFontHeight(), (style
+                    .isBold() ? SWT.BOLD : SWT.NORMAL)
                     | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
             setFont(fontData);
         }
@@ -507,8 +490,7 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
             parserElements = ((ISemanticParser) getParser())
                     .getSemanticElementsBeingParsed(element);
             for (int i = 0; i < parserElements.size(); i++) {
-                addListenerFilter(
-                        "SemanticModel" + i, this, (EObject) parserElements.get(i)); //$NON-NLS-1$
+                addListenerFilter("SemanticModel" + i, this, (EObject) parserElements.get(i)); //$NON-NLS-1$
             }
         } else {
             super.addSemanticListeners();
@@ -558,25 +540,18 @@ public class TransitionTriggersAndEffectsEditPart extends LabelEditPart
         if (NotationPackage.eINSTANCE.getFontStyle_FontColor().equals(feature)) {
             Integer c = (Integer) event.getNewValue();
             setFontColor(DiagramColorRegistry.getInstance().getColor(c));
-        } else if (NotationPackage.eINSTANCE.getFontStyle_Underline().equals(
-                feature)) {
+        } else if (NotationPackage.eINSTANCE.getFontStyle_Underline().equals(feature)) {
             refreshUnderline();
-        } else if (NotationPackage.eINSTANCE.getFontStyle_StrikeThrough()
-                .equals(feature)) {
+        } else if (NotationPackage.eINSTANCE.getFontStyle_StrikeThrough().equals(feature)) {
             refreshStrikeThrough();
-        } else if (NotationPackage.eINSTANCE.getFontStyle_FontHeight().equals(
-                feature)
-                || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(
-                        feature)
-                || NotationPackage.eINSTANCE.getFontStyle_Bold()
-                        .equals(feature)
-                || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(
-                        feature)) {
+        } else if (NotationPackage.eINSTANCE.getFontStyle_FontHeight().equals(feature)
+                || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(feature)
+                || NotationPackage.eINSTANCE.getFontStyle_Bold().equals(feature)
+                || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(feature)) {
             refreshFont();
         } else {
             if (getParser() != null
-                    && getParser().isAffectingEvent(event,
-                            getParserOptions().intValue())) {
+                    && getParser().isAffectingEvent(event, getParserOptions().intValue())) {
                 refreshLabel();
             }
             if (getParser() instanceof ISemanticParser) {

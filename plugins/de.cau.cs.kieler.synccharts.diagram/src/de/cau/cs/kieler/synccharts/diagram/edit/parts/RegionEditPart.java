@@ -34,10 +34,8 @@ public class RegionEditPart extends DiagramEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new RegionItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-                new RegionCanonicalEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new RegionItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new RegionCanonicalEditPolicy());
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
     }
 

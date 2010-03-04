@@ -43,8 +43,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsModelingAssistantProvider extends
-        ModelingAssistantProvider {
+public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvider {
 
     /**
      * @generated
@@ -158,19 +157,16 @@ public class SyncchartsModelingAssistantProvider extends
     /**
      * @generated
      */
-    public List getRelTypesOnSourceAndTarget(IAdaptable source,
-            IAdaptable target) {
+    public List getRelTypesOnSourceAndTarget(IAdaptable source, IAdaptable target) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
                 .getAdapter(IGraphicalEditPart.class);
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
                 .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
-            return ((StateEditPart) sourceEditPart)
-                    .getMARelTypesOnSourceAndTarget(targetEditPart);
+            return ((StateEditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         if (sourceEditPart instanceof State2EditPart) {
-            return ((State2EditPart) sourceEditPart)
-                    .getMARelTypesOnSourceAndTarget(targetEditPart);
+            return ((State2EditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         return Collections.EMPTY_LIST;
     }
@@ -178,17 +174,14 @@ public class SyncchartsModelingAssistantProvider extends
     /**
      * @generated
      */
-    public List getTypesForSource(IAdaptable target,
-            IElementType relationshipType) {
+    public List getTypesForSource(IAdaptable target, IElementType relationshipType) {
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
                 .getAdapter(IGraphicalEditPart.class);
         if (targetEditPart instanceof StateEditPart) {
-            return ((StateEditPart) targetEditPart)
-                    .getMATypesForSource(relationshipType);
+            return ((StateEditPart) targetEditPart).getMATypesForSource(relationshipType);
         }
         if (targetEditPart instanceof State2EditPart) {
-            return ((State2EditPart) targetEditPart)
-                    .getMATypesForSource(relationshipType);
+            return ((State2EditPart) targetEditPart).getMATypesForSource(relationshipType);
         }
         return Collections.EMPTY_LIST;
     }
@@ -196,17 +189,14 @@ public class SyncchartsModelingAssistantProvider extends
     /**
      * @generated
      */
-    public List getTypesForTarget(IAdaptable source,
-            IElementType relationshipType) {
+    public List getTypesForTarget(IAdaptable source, IElementType relationshipType) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
                 .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
-            return ((StateEditPart) sourceEditPart)
-                    .getMATypesForTarget(relationshipType);
+            return ((StateEditPart) sourceEditPart).getMATypesForTarget(relationshipType);
         }
         if (sourceEditPart instanceof State2EditPart) {
-            return ((State2EditPart) sourceEditPart)
-                    .getMATypesForTarget(relationshipType);
+            return ((State2EditPart) sourceEditPart).getMATypesForTarget(relationshipType);
         }
         return Collections.EMPTY_LIST;
     }
@@ -214,19 +204,15 @@ public class SyncchartsModelingAssistantProvider extends
     /**
      * @generated
      */
-    public EObject selectExistingElementForSource(IAdaptable target,
-            IElementType relationshipType) {
-        return selectExistingElement(target, getTypesForSource(target,
-                relationshipType));
+    public EObject selectExistingElementForSource(IAdaptable target, IElementType relationshipType) {
+        return selectExistingElement(target, getTypesForSource(target, relationshipType));
     }
 
     /**
      * @generated
      */
-    public EObject selectExistingElementForTarget(IAdaptable source,
-            IElementType relationshipType) {
-        return selectExistingElement(source, getTypesForTarget(source,
-                relationshipType));
+    public EObject selectExistingElementForTarget(IAdaptable source, IElementType relationshipType) {
+        return selectExistingElement(source, getTypesForTarget(source, relationshipType));
     }
 
     /**
@@ -252,16 +238,14 @@ public class SyncchartsModelingAssistantProvider extends
         if (elements.isEmpty()) {
             return null;
         }
-        return selectElement((EObject[]) elements.toArray(new EObject[elements
-                .size()]));
+        return selectElement((EObject[]) elements.toArray(new EObject[elements.size()]));
     }
 
     /**
      * @generated
      */
     protected boolean isApplicableElement(EObject element, Collection types) {
-        IElementType type = ElementTypeRegistry.getInstance().getElementType(
-                element);
+        IElementType type = ElementTypeRegistry.getInstance().getElementType(element);
         return types.contains(type);
     }
 
@@ -271,10 +255,8 @@ public class SyncchartsModelingAssistantProvider extends
     protected EObject selectElement(EObject[] elements) {
         Shell shell = Display.getCurrent().getActiveShell();
         ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemProvidersAdapterFactory());
-        ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-                shell, labelProvider);
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+        ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
         dialog.setMessage(Messages.SyncchartsModelingAssistantProviderMessage);
         dialog.setTitle(Messages.SyncchartsModelingAssistantProviderTitle);
         dialog.setMultipleSelection(false);

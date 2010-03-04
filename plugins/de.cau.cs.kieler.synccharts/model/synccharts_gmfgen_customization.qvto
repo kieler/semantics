@@ -49,12 +49,15 @@ main() {
 	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
 	
 	// customize state edit parts so it shows textwrap for the body text
-	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure");
-	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure");
+	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
 		   
     // customize state edit parts so it shows textwrap for the interface declaration
-    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure");
-    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure");    
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    
+    // customize state edit parts so it shows textwrap for the transition labels
+    model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureTransitionTriggersAndEffectsFigure","TransitionFigure");
 }
 
 mapping inout GenCompartment::compartmentSettings(){
@@ -90,9 +93,9 @@ mapping inout GenCompartment::compartmentSettings(){
 	};
 }
 
-mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String){	
+mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String, in parentFigureName:String){	
 	// customize the Interface Declaration Label from a State
-    if (self.className = "StateFigure") then {
+    if (self.className = parentFigureName) then {
         var find := ("f").+(figureName).+(".setText(\"\");");
         var pre := self.classBody.substringBefore(find);
         // setting TextWrap to true enables multi line display and editing

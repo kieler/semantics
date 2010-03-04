@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.interfacedeclparser;bundle-version="0.1.0",
- de.cau.cs.kieler.core.model;bundle-version="1.0.0",
+ de.cau.cs.kieler.core.model;bundle-version="0.1.0",
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
  org.junit4
 Bundle-ActivationPolicy: lazy

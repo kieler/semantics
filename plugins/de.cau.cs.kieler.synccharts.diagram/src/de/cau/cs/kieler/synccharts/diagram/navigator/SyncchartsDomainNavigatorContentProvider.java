@@ -24,8 +24,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsDomainNavigatorContentProvider implements
-        ICommonContentProvider {
+public class SyncchartsDomainNavigatorContentProvider implements ICommonContentProvider {
 
     /**
      * @generated
@@ -62,8 +61,7 @@ public class SyncchartsDomainNavigatorContentProvider implements
      */
     public SyncchartsDomainNavigatorContentProvider() {
         myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemProvidersAdapterFactory());
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
@@ -88,41 +86,37 @@ public class SyncchartsDomainNavigatorContentProvider implements
                     }
 
                     public boolean handleResourceChanged(final Resource resource) {
-                        for (Iterator it = myEditingDomain.getResourceSet()
-                                .getResources().iterator(); it.hasNext();) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }
                         if (myViewer != null) {
-                            myViewer.getControl().getDisplay().asyncExec(
-                                    myViewerRefreshRunnable);
+                            myViewer.getControl().getDisplay().asyncExec(myViewerRefreshRunnable);
                         }
                         return true;
                     }
 
                     public boolean handleResourceDeleted(Resource resource) {
-                        for (Iterator it = myEditingDomain.getResourceSet()
-                                .getResources().iterator(); it.hasNext();) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }
                         if (myViewer != null) {
-                            myViewer.getControl().getDisplay().asyncExec(
-                                    myViewerRefreshRunnable);
+                            myViewer.getControl().getDisplay().asyncExec(myViewerRefreshRunnable);
                         }
                         return true;
                     }
 
-                    public boolean handleResourceMoved(Resource resource,
-                            final URI newURI) {
-                        for (Iterator it = myEditingDomain.getResourceSet()
-                                .getResources().iterator(); it.hasNext();) {
+                    public boolean handleResourceMoved(Resource resource, final URI newURI) {
+                        for (Iterator it = myEditingDomain.getResourceSet().getResources()
+                                .iterator(); it.hasNext();) {
                             Resource nextResource = (Resource) it.next();
                             nextResource.unload();
                         }
                         if (myViewer != null) {
-                            myViewer.getControl().getDisplay().asyncExec(
-                                    myViewerRefreshRunnable);
+                            myViewer.getControl().getDisplay().asyncExec(myViewerRefreshRunnable);
                         }
                         return true;
                     }
@@ -136,8 +130,7 @@ public class SyncchartsDomainNavigatorContentProvider implements
         myWorkspaceSynchronizer.dispose();
         myWorkspaceSynchronizer = null;
         myViewerRefreshRunnable = null;
-        for (Iterator it = myEditingDomain.getResourceSet().getResources()
-                .iterator(); it.hasNext();) {
+        for (Iterator it = myEditingDomain.getResourceSet().getResources().iterator(); it.hasNext();) {
             Resource resource = (Resource) it.next();
             resource.unload();
         }
@@ -183,19 +176,15 @@ public class SyncchartsDomainNavigatorContentProvider implements
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof IFile) {
             IFile file = (IFile) parentElement;
-            URI fileURI = URI.createPlatformResourceURI(file.getFullPath()
-                    .toString(), true);
-            Resource resource = myEditingDomain.getResourceSet().getResource(
-                    fileURI, true);
-            return wrapEObjects(myAdapterFctoryContentProvier
-                    .getChildren(resource), parentElement);
+            URI fileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+            Resource resource = myEditingDomain.getResourceSet().getResource(fileURI, true);
+            return wrapEObjects(myAdapterFctoryContentProvier.getChildren(resource), parentElement);
         }
 
         if (parentElement instanceof SyncchartsDomainNavigatorItem) {
-            return wrapEObjects(
-                    myAdapterFctoryContentProvier
-                            .getChildren(((SyncchartsDomainNavigatorItem) parentElement)
-                                    .getEObject()), parentElement);
+            return wrapEObjects(myAdapterFctoryContentProvier
+                    .getChildren(((SyncchartsDomainNavigatorItem) parentElement).getEObject()),
+                    parentElement);
         }
         return EMPTY_ARRAY;
     }
@@ -207,8 +196,7 @@ public class SyncchartsDomainNavigatorContentProvider implements
         Collection result = new ArrayList();
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof EObject) {
-                result.add(new SyncchartsDomainNavigatorItem(
-                        (EObject) objects[i], parentElement,
+                result.add(new SyncchartsDomainNavigatorItem((EObject) objects[i], parentElement,
                         myAdapterFctoryContentProvier));
             }
         }

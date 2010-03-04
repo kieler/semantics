@@ -13,7 +13,6 @@ public class DiagramPrintingPreferencePage extends PrintingPreferencePage {
      * @generated
      */
     public DiagramPrintingPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 }

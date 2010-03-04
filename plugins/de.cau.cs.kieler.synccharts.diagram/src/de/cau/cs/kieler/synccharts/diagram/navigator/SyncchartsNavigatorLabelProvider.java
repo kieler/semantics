@@ -51,16 +51,10 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     static {
-        SyncchartsDiagramEditorPlugin
-                .getInstance()
-                .getImageRegistry()
-                .put(
-                        "Navigator?UnknownElement", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
-        SyncchartsDiagramEditorPlugin
-                .getInstance()
-                .getImageRegistry()
-                .put(
-                        "Navigator?ImageNotFound", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
+        SyncchartsDiagramEditorPlugin.getInstance().getImageRegistry().put(
+                "Navigator?UnknownElement", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
+        SyncchartsDiagramEditorPlugin.getInstance().getImageRegistry().put(
+                "Navigator?ImageNotFound", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
     }
 
     /**
@@ -82,8 +76,7 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
     public Image getImage(Object element) {
         if (element instanceof SyncchartsNavigatorGroup) {
             SyncchartsNavigatorGroup group = (SyncchartsNavigatorGroup) element;
-            return SyncchartsDiagramEditorPlugin.getInstance().getBundledImage(
-                    group.getIcon());
+            return SyncchartsDiagramEditorPlugin.getInstance().getBundledImage(group.getIcon());
         }
 
         if (element instanceof SyncchartsNavigatorItem) {
@@ -140,8 +133,8 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private Image getImage(String key, IElementType elementType) {
-        ImageRegistry imageRegistry = SyncchartsDiagramEditorPlugin
-                .getInstance().getImageRegistry();
+        ImageRegistry imageRegistry = SyncchartsDiagramEditorPlugin.getInstance()
+                .getImageRegistry();
         Image image = imageRegistry.get(key);
         if (image == null && elementType != null
                 && SyncchartsElementTypes.isKnownElementType(elementType)) {
@@ -226,15 +219,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getState_2001Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.State_2001,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
-                        .getType(StateLabelEditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_2001, view
+                .getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                .getType(StateLabelEditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5008); //$NON-NLS-1$
@@ -246,14 +236,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getRegion_3001Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Region_3001,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(RegionIdEditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Region_3001,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                        .getType(RegionIdEditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5009); //$NON-NLS-1$
@@ -265,15 +253,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getState_3002Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.State_3002,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
-                        .getType(StateLabel2EditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_3002, view
+                .getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                .getType(StateLabel2EditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5007); //$NON-NLS-1$
@@ -285,15 +270,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getSignal_3003Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Signal_3003,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Signal_3003,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(SignalNameEditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5001); //$NON-NLS-1$
@@ -305,15 +287,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getAction_3004Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Action_3004,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3004,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(ActionTriggersAndEffectsEditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5002); //$NON-NLS-1$
@@ -325,15 +304,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getAction_3005Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Action_3005,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3005,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(ActionTriggersAndEffects2EditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5003); //$NON-NLS-1$
@@ -345,15 +321,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getAction_3006Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Action_3006,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3006,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(ActionTriggersAndEffects3EditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5004); //$NON-NLS-1$
@@ -365,15 +338,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getAction_3008Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.Action_3008,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3008,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
                         .getType(ActionTriggersAndEffects4EditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 5006); //$NON-NLS-1$
@@ -385,16 +355,12 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private String getTransition_4001Text(View view) {
-        IParser parser = SyncchartsParserProvider
-                .getParser(
-                        SyncchartsElementTypes.Transition_4001,
-                        view.getElement() != null ? view.getElement() : view,
-                        SyncchartsVisualIDRegistry
-                                .getType(TransitionTriggersAndEffectsEditPart.VISUAL_ID));
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Transition_4001,
+                view.getElement() != null ? view.getElement() : view, SyncchartsVisualIDRegistry
+                        .getType(TransitionTriggersAndEffectsEditPart.VISUAL_ID));
         if (parser != null) {
-            return parser.getPrintString(new EObjectAdapter(
-                    view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
+            return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view
+                    .getElement() : view), ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Parser was not found for label " + 6001); //$NON-NLS-1$
@@ -445,8 +411,7 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      * @generated
      */
     private boolean isOwnView(View view) {
-        return RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                .getModelID(view));
+        return RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(view));
     }
 
 }

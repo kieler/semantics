@@ -13,7 +13,6 @@ public class DiagramRulersAndGridPreferencePage extends RulerGridPreferencePage 
      * @generated
      */
     public DiagramRulersAndGridPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 }

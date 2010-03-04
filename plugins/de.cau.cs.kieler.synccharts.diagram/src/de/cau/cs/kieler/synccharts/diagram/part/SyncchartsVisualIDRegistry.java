@@ -71,8 +71,8 @@ public class SyncchartsVisualIDRegistry {
                 return -1;
             }
         }
-        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                .getVisualID(view.getType());
+        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry.getVisualID(view
+                .getType());
     }
 
     /**
@@ -97,11 +97,9 @@ public class SyncchartsVisualIDRegistry {
         try {
             return Integer.parseInt(type);
         } catch (NumberFormatException e) {
-            if (Boolean.TRUE.toString().equalsIgnoreCase(
-                    Platform.getDebugOption(DEBUG_KEY))) {
+            if (Boolean.TRUE.toString().equalsIgnoreCase(Platform.getDebugOption(DEBUG_KEY))) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Unable to parse view type as a visualID number: "
-                                + type);
+                        "Unable to parse view type as a visualID number: " + type);
             }
         }
         return -1;
@@ -121,8 +119,7 @@ public class SyncchartsVisualIDRegistry {
         if (domainElement == null) {
             return -1;
         }
-        if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                domainElement.eClass())
+        if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())
                 && isDiagram((Region) domainElement)) {
             return RegionEditPart.VISUAL_ID;
         }
@@ -154,86 +151,72 @@ public class SyncchartsVisualIDRegistry {
         }
         switch (containerVisualID) {
         case StateSignalEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getSignal().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
             break;
         case StateOnEntryActionEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return ActionEditPart.VISUAL_ID;
             }
             break;
         case StateOnInsideActionEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action2EditPart.VISUAL_ID;
             }
             break;
         case StateOnExitActionEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action3EditPart.VISUAL_ID;
             }
             break;
         case StateSuspendEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action4EditPart.VISUAL_ID;
             }
             break;
         case StateRegionCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
                 return Region2EditPart.VISUAL_ID;
             }
             break;
         case RegionStateCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
                 return State2EditPart.VISUAL_ID;
             }
             break;
         case StateSignal2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getSignal().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
             break;
         case StateOnEntryAction2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return ActionEditPart.VISUAL_ID;
             }
             break;
         case StateOnInsideAction2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action2EditPart.VISUAL_ID;
             }
             break;
         case StateOnExitAction2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action3EditPart.VISUAL_ID;
             }
             break;
         case StateSuspend2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return Action4EditPart.VISUAL_ID;
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
                 return Region2EditPart.VISUAL_ID;
             }
             break;
         case RegionEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
                 return StateEditPart.VISUAL_ID;
             }
             break;
@@ -442,8 +425,7 @@ public class SyncchartsVisualIDRegistry {
         if (domainElement == null) {
             return -1;
         }
-        if (SyncchartsPackage.eINSTANCE.getTransition().isSuperTypeOf(
-                domainElement.eClass())) {
+        if (SyncchartsPackage.eINSTANCE.getTransition().isSuperTypeOf(domainElement.eClass())) {
             return TransitionEditPart.VISUAL_ID;
         }
         return -1;

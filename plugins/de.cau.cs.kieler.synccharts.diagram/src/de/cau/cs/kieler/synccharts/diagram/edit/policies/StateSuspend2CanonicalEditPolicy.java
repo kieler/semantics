@@ -33,11 +33,8 @@ public class StateSuspend2CanonicalEditPolicy extends CanonicalEditPolicy {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
         for (Iterator it = SyncchartsDiagramUpdater
-                .getStateSuspend_7013SemanticChildren(viewObject).iterator(); it
-                .hasNext();) {
-            result
-                    .add(((SyncchartsNodeDescriptor) it.next())
-                            .getModelElement());
+                .getStateSuspend_7013SemanticChildren(viewObject).iterator(); it.hasNext();) {
+            result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
         }
         return result;
     }
@@ -69,8 +66,7 @@ public class StateSuspend2CanonicalEditPolicy extends CanonicalEditPolicy {
     protected Set getFeaturesToSynchronize() {
         if (myFeaturesToSynchronize == null) {
             myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
-                    .getState_SuspensionTrigger());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getState_SuspensionTrigger());
         }
         return myFeaturesToSynchronize;
     }
