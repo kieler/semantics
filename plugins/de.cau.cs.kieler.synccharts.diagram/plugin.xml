@@ -529,6 +529,20 @@
             </or>
          </enablement>
       </actionProvider>
+      <commonWizard
+            menuGroupId="de.cau.cs.kieler"
+            type="new"
+            wizardId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID">
+         <enablement>
+            <or>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
+               </adapt>
+               <adapt
+                     type="org.eclipse.core.resources.IFolder">
+               </adapt>
+            </or></enablement>
+      </commonWizard>
    </extension>
    
 	   <extension point="org.eclipse.ui.navigator.linkHelper" id="navigator-linkhelper">
