@@ -6,7 +6,7 @@
 	«IF (this.regions.size >= 1)-»
 		«EXPAND stateWithRegions FOR this-»
 	«ELSE-»
-		«getStateNameByFlag(this, 3)-»:
+		L_«getStateNameByFlag(this, 3)-»:
 	«ENDIF-»
 	«IF this.outgoingTransitions.isEmpty-»
 		«EXPAND stateWithoutTransitions FOR this»
@@ -16,9 +16,9 @@
 		«EXPAND onEntry FOR this-»
 		«EXPAND immediateWeak FOR this-»
 		«IF !(this.regions.isEmpty)-»
-			«getStateNameByFlag(this, 3)»_main_intern:
+			L_«getStateNameByFlag(this, 3)»_main_intern:
 		«ELSE-»
-			«getStateNameByFlag(this, 3)»_intern:
+			L_«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
 		«EXPAND CodegenMisc::callJSONState-»
 		«IF this.type != StateType::CONDITIONAL-»
@@ -47,28 +47,28 @@
 		«EXPAND generateForkMoreRegions FOR this-»
 	«ENDIF-»
 	«EXPAND CodegenRegion::region FOREACH this.regions-»
-	«getStateNameByFlag(this, 3)»_main:
+	L_«getStateNameByFlag(this, 3)»_main:
 «ENDDEFINE»
 
 «DEFINE generateForkOneRegion FOR State-»
-	«getStateNameByFlag(this, 3)»:
-	FORK(«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
-	FORKE(«getStateNameByFlag(this, 3)»_main);
+	L_«getStateNameByFlag(this, 3)»:
+	FORK(L_«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
+	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
-	«getStateNameByFlag(this, 3)»:
+	L_«getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
-		FORK(«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
+		FORK(L_«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
 	«ENDFOREACH»
-	FORKE(«getStateNameByFlag(this, 3)»_main);
+	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE returnForHierarchical FOR State-»
 	«IF !(this.regions.isEmpty)-»
-		GOTO(«getStateNameByFlag(this, 3)»_main_intern);
+		GOTO(L_«getStateNameByFlag(this, 3)»_main_intern);
 	«ELSE-»
-		GOTO(«getStateNameByFlag(this, 3)»_intern);
+		GOTO(L_«getStateNameByFlag(this, 3)»_intern);
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -79,9 +79,9 @@
 	«ELSE-»
 		«EXPAND onEntry FOR this-»
 		«IF !(this.regions.isEmpty)-»
-			«getStateNameByFlag(this, 3)»_main_intern:
+			L_«getStateNameByFlag(this, 3)»_main_intern:
 		«ELSE-»
-			«getStateNameByFlag(this, 3)»_intern:
+			L_«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
 		«EXPAND CodegenMisc::callJSONState-»
 		/* this should be HALT; but for simulation PAUSE and GOTO */

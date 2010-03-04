@@ -158,5 +158,5 @@
 «ENDDEFINE»
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
-	GOTO(«getStateNameByFlag(this.targetState, 3)»);
+	GOTO(L_«getStateNameByFlag(this.targetState, 3)»);
 «ENDDEFINE»
