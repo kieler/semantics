@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sim.kiem.config.data;
 
 import java.io.Serializable;
 
-
 /**
  * Definition class for the editor. Contains the name of the editor and an
  * editor id.
@@ -71,7 +70,11 @@ public class EditorDefinition implements Comparable<EditorDefinition>,
      * @return the name of the editor
      */
     public String getName() {
-        return name;
+        String result = name;
+        if (result == null) {
+            result = editorId.getString();
+        }
+        return result;
     }
 
     /**

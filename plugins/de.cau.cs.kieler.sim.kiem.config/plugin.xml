@@ -61,5 +61,21 @@
             name="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="examples/synccharts.execution">
+         <editor
+               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+               name="Synccharts Diagram Editing"
+               priority="10">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID"
+               name="Synccharts Model Editor"
+               priority="8">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
