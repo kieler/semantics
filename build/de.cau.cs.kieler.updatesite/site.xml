@@ -42,13 +42,16 @@
    <feature url="features/de.cau.cs.kieler.krep_0.1.0.qualifier.jar" id="de.cau.cs.kieler.krep" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.xkev_0.1.0.qualifier.jar" id="de.cau.cs.kieler.xkev" version="0.1.0.qualifier">
-      <category name="KIELER"/>
-   </feature>
    <feature url="features/de.cau.cs.kieler.quartz_0.1.0.qualifier.jar" id="de.cau.cs.kieler.quartz" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.sc_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sc" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kev_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kev" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/net.ogdf.lib_1.0.0.qualifier.jar" id="net.ogdf.lib" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
