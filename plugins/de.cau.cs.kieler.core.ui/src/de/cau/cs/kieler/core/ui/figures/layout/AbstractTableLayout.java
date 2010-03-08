@@ -45,6 +45,9 @@ import de.cau.cs.kieler.core.ui.figures.layout.container.LayoutSizes;
  * Auch ist die Nutzung von getMinimumSize nicht konsistent mit der ueblichen Verwendung, da zb bei 
  * einem WrappingLabel getMinimumSize das abgekuerzte Label liefert waehrend getPreferredSize das
  * ausgeschriebene Label liefert, welches wir nutzen wollen.
+ * Falls das Regioncompartment mal nicht das adjustabkeCompartment sein sollte, ist die Berechnung
+ * mit getMinimumSize nicht korrekt, da die Region die preferredSize braucht um ohne Scrollbalken
+ * angezeigt zu werden. 
  */
 /*
  * TODO : checkNweSize und correctSize haben fast die gleiche Wirkung sollten zusammengefasst werden
@@ -221,7 +224,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                         setTitleVisibility(compartment, false);
                     } else {
                         minimumSize = compartment.getContentPane().getMinimumSize();
-                        preferredSize = compartment.getContentPane().getPreferredSize();
+                        /* TODO : For regions we normaly would need here getPreferredSize.*/
+                        preferredSize = compartment.getContentPane().getMinimumSize();
                         
                         setTitleVisibility(compartment, true);
                     }
@@ -262,11 +266,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             }
 
             /* Set the widths for the complete row, to avoid scrollbars we add 1 pix each side. */
-            if (preferredRowWidth >= preferredStateWidth) {
-                preferredStateWidth = preferredRowWidth + 2;
+            preferredRowWidth += 2;
+            if (preferredRowWidth > preferredStateWidth) {
+                preferredStateWidth = preferredRowWidth ;
             }
-            if (minimumRowWidth >= minimumStateWidth) {
-                minimumStateWidth = minimumRowWidth + 2;
+            
+            minimumRowWidth += 2;
+            if (minimumRowWidth > minimumStateWidth) {
+                minimumStateWidth = minimumRowWidth ;
             }
 
             /* Set the height for the complete row */
