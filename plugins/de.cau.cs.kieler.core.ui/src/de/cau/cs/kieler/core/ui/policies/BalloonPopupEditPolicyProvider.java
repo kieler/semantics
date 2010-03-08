@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
-import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPoliciesOperation;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
 /**
@@ -46,11 +46,17 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      *            The editPart to register this policy with.
      */
     public void createEditPolicies(final EditPart editPart) {
-        if (getContributions() != null) {
-            editPart
-                    .installEditPolicy("BalloonPopups",
-                            new BalloonPopupBarEditPolicy(getContributions(),
-                                    editPart));
+        try {
+            if (getContributions() != null) {
+                BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
+                        getContributions(), editPart);
+                policy.setHost(editPart);
+                editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
+                        policy);
+                policy.activate();
+            }
+        } catch (RuntimeException e0) {
+            e0.printStackTrace();
         }
     }
 
@@ -113,7 +119,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      * @return True if this edit policy provides the given operation
      */
     public boolean provides(final IOperation operation) {
-        return operation instanceof CreateEditPoliciesOperation;
+        return true;
+        // return operation instanceof CreateEditPoliciesOperation;
     }
-
 }
