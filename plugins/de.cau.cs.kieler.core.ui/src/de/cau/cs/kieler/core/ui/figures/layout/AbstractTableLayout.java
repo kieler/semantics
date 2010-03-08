@@ -134,10 +134,6 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
          */
         LayoutSizes layoutSizes = calculateLayoutSizes(tableLayout, stateFigure);
 
-        /* Set the figure to correct outer bounds for figures with static bounds */
-        correctSize(stateFigure, new Dimension(layoutSizes.getMinimumWidth(), layoutSizes
-                .getMinimumHeight()));
-
         /*
          * If the state had been resized manually, we have to set the sizes correct and pretend that
          * the user-given size is the preferredSize
@@ -149,6 +145,10 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         if (layoutSizes.getPreferredWidth() < clientArea.width) {
             layoutSizes.setPreferredWidth(clientArea.width);
         }
+        
+        /* Set the figure to correct outer bounds for figures with static bounds */
+        correctSize(stateFigure, new Dimension(layoutSizes.getMinimumWidth(), layoutSizes
+                .getMinimumHeight()));
 
         /* Assign the calculated dimensions to the stateFigure */
         setAlignedLayout(tableLayout, stateFigure, layoutSizes);
@@ -222,7 +222,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     } else {
                         minimumSize = compartment.getContentPane().getMinimumSize();
                         preferredSize = compartment.getContentPane().getPreferredSize();
-
+                        
                         setTitleVisibility(compartment, true);
                     }
 
@@ -409,7 +409,10 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
                 /* full expanded from left to right */
                 int left = 1 + layout.padding;
-                int right = stateWidth - 1 - layout.padding;
+                /* TODO : had problems with old calculation via stateWidth, therefore fallback to
+                 * getParent().getBounds() as this gives right result. Old calculation resulted in 
+                 * separator overhanging the (right) state-border*/
+                int right = regionSeparator.getParent().getBounds().width - 1 - layout.padding;
 
                 /* It gets layouted direct under the predecessing row */
                 int regionSeparatorHeight = clientArea.y + offsetY;
