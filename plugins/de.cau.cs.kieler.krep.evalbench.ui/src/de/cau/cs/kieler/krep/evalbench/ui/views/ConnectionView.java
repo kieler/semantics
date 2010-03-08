@@ -102,15 +102,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * Enables or disables the program specific actions in this view.
-     * 
-     * @param enabled
-     *            the new state
-     */
-    public void setActionsEnabled(final boolean enabled) {
-    }
-
-    /**
      * @param msg
      *            message to display in the connection view
      * @return true if the message was displayed
@@ -151,11 +142,17 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         show(comment);
     }
 
+    /**
+     * Enable logging of the connection.
+     */   
     public void enable() {
         enabled = true;
         viewer.setEnabled(true);
     }
 
+    /**
+     * Disable logging of the connection.
+     */ 
     public void disable() {
         enabled = false;
         viewer.setEnabled(false);

@@ -15,9 +15,7 @@ package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
 import org.eclipse.jface.action.Action;
 
-import de.cau.cs.kieler.krep.evalbench.ui.Activator;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TextViewer;
 
 /**
  * @author ctr
@@ -31,8 +29,6 @@ public class EnableAction extends Action {
     /** Identifier string for this action. */
     private static final String ENABLE_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.enable";
 
-    /** Relative path to the icon to use for this action. */
-    // private static final String ICON_PATH = "icons/clear.gif";
 
     /**
      * @param connectionView
@@ -43,8 +39,7 @@ public class EnableAction extends Action {
         setId(ENABLE_ID);
         setText("Disable");
         setToolTipText("Enable connection view");
-        // setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
-        view = connectionView;
+       view = connectionView;
         enabled = true;
     }
 

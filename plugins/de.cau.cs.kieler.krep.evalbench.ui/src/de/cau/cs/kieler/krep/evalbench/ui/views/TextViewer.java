@@ -135,7 +135,13 @@ public class TextViewer extends ContentViewer {
         text.append(s);
     }
 
-    public void setEnabled(boolean enabled) {
+    /**
+     * Enable/Disable the current textviewer.
+     * 
+     * @param enabled
+     *            true to enable the viewer
+     */
+    public void setEnabled(final boolean enabled) {
         text.setEnabled(enabled);
     }
 
