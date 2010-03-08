@@ -66,7 +66,7 @@ import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 public class VerifyAction extends Action {
 
     /** Identifier string for this action. */
-    private static final String VERIFY_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.verify";
+    private static final String VERIFY_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.verify"; // TODO rename
 
     /** Relative path to the icon to use for this action. */
     private static final String ICON_PATH = "icons/run.gif";
@@ -109,6 +109,7 @@ public class VerifyAction extends Action {
         try {
             // IRunnableContext context =
             PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            // TODO check for null pointer, improve exception handling
             PlatformUI.getWorkbench().getProgressService().run(true, true, runnable);
         } catch (InvocationTargetException e) {
             // silently ignore exception
@@ -122,7 +123,7 @@ public class VerifyAction extends Action {
     @Override
     public void run() {
         // Tools.tic();
-        final Display display = Display.findDisplay(Thread.currentThread());
+        final Display display = Display.getDefault();
 
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
@@ -285,6 +286,13 @@ public class VerifyAction extends Action {
         });
     }
 
+    /**
+     * TODO comment.
+     * 
+     * @param path
+     * @return
+     * @throws ParseException
+     */
     private IAssembler parse(final File path) throws ParseException {
         IAssembler res = null;
         File file = null;

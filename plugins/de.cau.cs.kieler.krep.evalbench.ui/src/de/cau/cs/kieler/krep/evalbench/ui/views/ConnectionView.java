@@ -51,7 +51,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         // create text viewer
         viewer = new TextViewer(parent);
 
-        display = Display.findDisplay(Thread.currentThread());
+        display = Display.getDefault();
 
         // create actions
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
@@ -102,6 +102,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
+     * TODO comment, method name.
      * @param msg
      *            message to display in the connection view
      * @return true if the message was displayed

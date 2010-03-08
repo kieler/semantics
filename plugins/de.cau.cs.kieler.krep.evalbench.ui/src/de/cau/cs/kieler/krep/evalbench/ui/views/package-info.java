@@ -13,7 +13,7 @@
  */
 
 /**
- * views for the KREP evalbench.
+ * Views for the KReP Evalbench.
  *
  * @author ctr
  */

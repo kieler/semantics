@@ -33,6 +33,7 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
 
 /**
  * A Viewer for displaying some sort of text content.
+ * TODO move to core.ui
  * 
  * @author msp, ctr
  * 
@@ -58,7 +59,7 @@ public class TextViewer extends ContentViewer {
         super();
         text = new Text(parent, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         text.setEditable(false);
-        text.setFont(new Font(Display.getCurrent(), FONT_NAME, FONT_SIZE, SWT.NORMAL));
+        text.setFont(new Font(Display.getDefault(), FONT_NAME, FONT_SIZE, SWT.NORMAL));
     }
 
     /*

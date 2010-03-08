@@ -13,7 +13,7 @@
  */
 
 /**
- * Special editors for input languages for the Kiel REactive Processors.
+ * Special editors for input languages for the Kiel Reactive Processors.
  * 
  * @author ctr
  */

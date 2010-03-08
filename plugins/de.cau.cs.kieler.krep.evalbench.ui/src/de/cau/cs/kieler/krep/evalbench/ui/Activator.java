@@ -57,6 +57,7 @@ public class Activator extends AbstractUIPlugin {
     }
 
     /**
+     * TODO comment.
      * @return Viewer to display the current assembler.
      */
     public AssemblerView getViewer() {

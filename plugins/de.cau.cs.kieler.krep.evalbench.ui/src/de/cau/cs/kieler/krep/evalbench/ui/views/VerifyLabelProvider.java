@@ -29,11 +29,11 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
  * @author ctr
  * 
  * @kieler.rating 2010-02-01 proposed yellow ctr
- * 
+ * TODO extend LabelProvider
  */
 public class VerifyLabelProvider implements ITableLabelProvider {
     /** Relative path to the image to use for present signals. */
-    private static final String PRESENT_PATH = "icons/present.gif";
+    private static final String PRESENT_PATH = "icons/present.gif"; // TODO rename 
     /** Relative path to the image to use for absent signals. */
     private static final String ABSENT_PATH = "icons/absent.gif";
 

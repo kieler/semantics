@@ -18,6 +18,7 @@ import org.eclipse.jface.action.Action;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 
 /**
+ * TODO propose & comment, choose icon or move to view menu.
  * @author ctr
  * 
  */
@@ -39,7 +40,7 @@ public class EnableAction extends Action {
         setId(ENABLE_ID);
         setText("Disable");
         setToolTipText("Enable connection view");
-       view = connectionView;
+        view = connectionView;
         enabled = true;
     }
 

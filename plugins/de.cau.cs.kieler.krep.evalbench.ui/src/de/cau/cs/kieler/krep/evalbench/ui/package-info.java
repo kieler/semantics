@@ -13,6 +13,6 @@
  */
 
 /**
- * Perspective and preferences pages for the krep evalbench.
+ * Perspective and preference page for the KReP Evalbench.
  */
 package de.cau.cs.kieler.krep.evalbench.ui;

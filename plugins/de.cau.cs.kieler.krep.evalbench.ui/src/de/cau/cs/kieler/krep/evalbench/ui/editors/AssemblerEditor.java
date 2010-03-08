@@ -41,6 +41,7 @@ import de.cau.cs.kieler.krep.evalbench.program.ParseException;
  * The basic editor for displaying assembler instructions in the evaluation bench. Subclasses of
  * this abstract class must create a suitable implementation of the <code>IAssembler</code>
  * interface.
+ * TODO is this editor really needed?
  * 
  * @kieler.rating 2010-02-04 proposed yellow ctr
  * 
@@ -56,7 +57,7 @@ public abstract class AssemblerEditor extends EditorPart {
     private static final int[] COLUMN_ALIGN = { SWT.RIGHT, SWT.NONE, SWT.NONE, SWT.NONE };
 
     /** The embedded table. */
-    private Table table = null;;
+    private Table table = null;
     /** The viewer used to display program instructions. */
     private TableViewer viewer;
 
@@ -68,6 +69,7 @@ public abstract class AssemblerEditor extends EditorPart {
 
     /**
      * setter for the assembler. This should only be used once by each subclass.
+     * TODO put this into a constructor
      * 
      * @param asm
      *            the assembler used by this editor
@@ -97,7 +99,7 @@ public abstract class AssemblerEditor extends EditorPart {
      */
     private void updateProgram(final File inputFile) throws IOException, ParseException {
         // read input file
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer(); // TODO use StringBuilder
         FileReader reader = new FileReader(inputFile);
         try {
             int c;

@@ -24,6 +24,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 /**
  * Perspective related to the evaluation bench. This extends the KIELER perspective by the assembler
  * view and the connection log.
+ * TODO extend the KIELER perspective
  * 
  * @author msp, ctr
  * 

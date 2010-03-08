@@ -109,7 +109,7 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage implement
         addField(file);
 
         // Verify
-        fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path the benchmarks:",
+        fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path to the benchmarks:",
                 getFieldEditorParent());
         addField(fieldEditor);
 

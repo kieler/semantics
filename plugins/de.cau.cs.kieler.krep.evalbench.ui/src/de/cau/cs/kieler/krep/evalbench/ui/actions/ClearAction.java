@@ -24,7 +24,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TextViewer;
  * @author ctr
  * 
  * @kieler.rating 2010-02-01 proposed yellow ctr
- * 
+ * TODO consider moving to core.ui
  */
 public class ClearAction extends Action {
 
@@ -43,7 +43,7 @@ public class ClearAction extends Action {
     public ClearAction(final TextViewer textViewer) {
         super();
         setId(CLEAR_ID);
-        setText("C&lear");
+        setText("Clear");
         setToolTipText("Verify all benchmarks");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
         viewer = textViewer;
