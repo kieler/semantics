@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.LinkedList;
-import de.cau.cs.kieler.krep.evalbench.program.IConfig;
-import de.cau.cs.kieler.krep.evalbench.util.EsiLogger;
 
 /**
  * Connection to software emulation of the processor via java native interfaces.
