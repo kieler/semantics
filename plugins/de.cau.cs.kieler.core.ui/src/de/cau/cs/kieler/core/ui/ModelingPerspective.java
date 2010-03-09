@@ -66,7 +66,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
      * 
      * @param layout
      */
-    private void createViewShortcuts(final IPageLayout layout) {
+    protected void createViewShortcuts(final IPageLayout layout) {
         layout.addShowViewShortcut(VIEW_KEV);
         layout.addShowViewShortcut(VIEW_KIML_EXECUTION);
         layout.addShowViewShortcut(VIEW_KIML_LAYOUTGRAPH);
@@ -87,7 +87,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
      * 
      * @param layout
      */
-    private void createViewLayout(final IPageLayout layout) {
+    protected void createViewLayout(final IPageLayout layout) {
         String editor = layout.getEditorArea();
 
         // TOP LEFT ==============================================
@@ -126,7 +126,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
      * 
      * @param layout
      */
-    private void createNewWizardShortcuts(final IPageLayout layout) {
+    protected void createNewWizardShortcuts(final IPageLayout layout) {
         layout.addNewWizardShortcut(WIZ_PROJECT);
         layout.addNewWizardShortcut(WIZ_FILE);
         layout.addNewWizardShortcut(WIZ_SYNCCHART);
