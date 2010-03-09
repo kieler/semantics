@@ -1,9 +1,5 @@
-#Wed Jan 06 17:54:56 CET 2010
+#Mon Mar 08 16:47:11 PST 2010
 eclipse.preferences.version=1
-encoding//model/ecore.ecore_diagram=UTF-8
-encoding//model/ecore.ecorediag=UTF-8
-encoding//model/step_activitydiagram.uml=UTF-8
-encoding//model/step_activitydiagram.umlact=UTF-8
 encoding//model/synccharts.ecore_diagram=UTF-8
 encoding//model/synccharts.ecorediag=UTF-8
 encoding//src/de/cau/cs/kieler/synccharts/sim/ptolemy/default.uml=UTF-8
