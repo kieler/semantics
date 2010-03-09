@@ -33,7 +33,7 @@ public class RifTrace implements ITrace {
 
     private int pos;
 
-    public RifTrace(Trace t) {
+    public RifTrace(final Trace t) {
         pos = 0;
         this.trace = t;
     }

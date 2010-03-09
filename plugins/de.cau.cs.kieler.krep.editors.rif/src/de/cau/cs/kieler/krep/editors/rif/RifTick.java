@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 
-import de.cau.cs.kieler.krep.editors.rif.rif.Data;
 import de.cau.cs.kieler.krep.editors.rif.rif.Tick;
 import de.cau.cs.kieler.krep.editors.rif.rif.decl;
 import de.cau.cs.kieler.sim.trace.ITick;
@@ -38,7 +37,7 @@ public class RifTick implements ITick {
      * @param inputs
      * @param theTick
      */
-    public RifTick(EList<decl> inputs, EList<decl> outputs, Tick theTick) {
+    public RifTick(final EList<decl> inputs, final EList<decl> outputs, final Tick theTick) {
         this.tick = theTick;
         in = inputs;
         out = outputs;
@@ -51,10 +50,12 @@ public class RifTick implements ITick {
         LinkedList<Signal> res = new LinkedList<Signal>();
         for (int i = 0; i < tick.getInput().size(); i++) {
             int val = tick.getInput().get(i).getVal();
-            if (tick.getInput().get(i).getTrue() != null)
+            if (tick.getInput().get(i).getTrue() != null) {
                 val = 1;
-            if (tick.getInput().get(i).getFalse() != null)
+            }
+            if (tick.getInput().get(i).getFalse() != null) {
                 val = 0;
+            }
             res.add(new Signal(in.get(i).getName(), val));
         }
         return res;
@@ -67,10 +68,12 @@ public class RifTick implements ITick {
         LinkedList<Signal> res = new LinkedList<Signal>();
         for (int i = 0; i < tick.getOutput().size(); i++) {
             int val = tick.getOutput().get(i).getVal();
-            if (tick.getOutput().get(i).getTrue() != null)
+            if (tick.getOutput().get(i).getTrue() != null) {
                 val = 1;
-            if (tick.getOutput().get(i).getFalse() != null)
+            }
+            if (tick.getOutput().get(i).getFalse() != null) {
                 val = 0;
+            }
 
             res.add(new Signal(out.get(i).getName(), val));
         }

@@ -16,9 +16,7 @@ package de.cau.cs.kieler.krep.editors.rif;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.ISetup;
@@ -31,7 +29,6 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.krep.editors.rif.rif.Trace;
-import de.cau.cs.kieler.sim.trace.ITrace;
 import de.cau.cs.kieler.sim.trace.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
@@ -41,11 +38,9 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  */
 public class RifFile implements ITraceProvider {
 
-    private final static String[] EXTENSIONS = { "rif" };
+    private static final String[] EXTENSIONS = { "rif" };
 
-    private RifTrace trace;
-    private int pos = 0;
-
+    /** {@inheritDoc} */
     public LinkedList<RifTrace> loadTrace(final String fileName) throws KiemInitializationException {
         LinkedList<RifTrace> res = new LinkedList<RifTrace>();
         ISetup setup = new RifStandaloneSetup();
@@ -61,7 +56,6 @@ public class RifFile implements ITraceProvider {
 
         InputStream in;
         try {
-
             if (fileName != null && fileName.length() > 0) {
                 in = new FileInputStream(fileName);
             } else {
@@ -79,57 +73,7 @@ public class RifFile implements ITraceProvider {
             res.add(new RifTrace((Trace) parseResult.getRootASTElement()));
         } catch (FileNotFoundException e) {
             throw new KiemInitializationException("File not found", false, e);
-            // } catch (Exception e) {
-            // throw new KiemInitializationException("Unknown error", false, e);
         }
-        return res;
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public ITrace current() {
-        return trace;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public int getRemaining() {
-        return 1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean hasNext() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ITrace next() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Set<String> getInputs() {
-        HashSet<String> res = new HashSet<String>();
-
-        return res;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Set<String> getOutputs() {
-        HashSet<String> res = new HashSet<String>();
-
         return res;
     }
 
