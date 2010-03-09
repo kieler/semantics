@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.draw2d.AbstractHintLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Polyline;
+import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
@@ -423,6 +424,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
                 /* It gets layouted direct under the predecessing row */
                 int regionSeparatorHeight = clientArea.y + offsetY;
+                
+                /*For ie RoundedRectangles the shape has rounded corners, therefore we have to introduce
+                 * a padding when we paint the separator next to the corners.*/
+                if(regionSeparatorHeight < layout.getMinHeight() / 2){
+                	left++;
+                	right--;
+                }
+                	
                 points.addPoint(new Point(left, regionSeparatorHeight));
                 points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
                 regionSeparator.setPoints(points);
