@@ -190,58 +190,28 @@
       </actionSet>
    </extension>
 <%}%>
-<%for (GenPackage genPackage : genModel.getAllGenPackagesWithClassifiers()) {%>
-  <%if (genPackage.hasConcreteClasses()){%>
-    <%if (genPackage.isGenerateModelWizard()) {%>
-      <%if (genModel.isRichClientPlatform()) {%>
-
-   <extension point="org.eclipse.ui.actionSets">
-      <actionSet
-            label="%_UI_<%=genPackage.getModelWizardClassName()%>_ActionSet_label"
-            visible="true"
-            id="<%=genPackage.getQualifiedActionBarContributorClassName()%>ActionSet">
-         <action
-               label="%_UI_<%=genPackage.getModelWizardClassName()%>_label"
-               class="<%=genPackage.getQualifiedActionBarContributorClassName()%>$NewAction"
-               menubarPath="file/new/additions"
-               id="<%=genPackage.getQualifiedActionBarContributorClassName()%>NewAction"/>
-      </actionSet>
-   </extension>
-      <%} else {%>
 
    <extension point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
-            id="<%=genPackage.getQualifiedModelWizardClassName()%>ID"
-            name="%_UI_<%=genPackage.getModelWizardClassName()%>_label"
-            class="<%=genPackage.getQualifiedModelWizardClassName()%>"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/<%=genPackage.getPrefix()%>ModelFile.gif">
-         <description>%_UI_<%=genPackage.getModelWizardClassName()%>_description</description>
+            id="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizardID"
+            name="%_UI_SyncchartsModelWizard_label"
+            class="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizard"
+            category="de.cau.cs.kieler"
+            icon="icons/full/obj16/SyncchartsModelFile.gif">
+         <description>%_UI_SyncchartsModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
-      <%}%>
-    <%}%>
 
    <extension point="org.eclipse.ui.editors">
       <editor
-            id="<%=genPackage.getQualifiedEditorClassName()%>ID"
-            name="%_UI_<%=genPackage.getEditorClassName()%>_label"
-            icon="icons/full/obj16/<%=genPackage.getPrefix()%>ModelFile.gif"
-    <%if (!genPackage.isContentType()) {%>
-            extensions="<%=genPackage.getFileExtension()%>"
-    <%}%>
-            class="<%=genPackage.getQualifiedEditorClassName()%>"
-            contributorClass="<%=genPackage.getQualifiedActionBarContributorClassName()%>">
-    <%if (genPackage.isContentType()) {%>
-         <contentTypeBinding contentTypeId="<%=genPackage.getQualifiedContentTypeIdentifier()%>"/>
-    <%}%>
+            id="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID"
+            name="%_UI_SyncchartsEditor_label"
+            icon="icons/full/obj16/SyncchartsModelFile.gif"
+            extensions="kixs"
+            class="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor"
+            contributorClass="de.cau.cs.kieler.synccharts.presentation.SyncchartsActionBarContributor">
       </editor>
    </extension>
-  <%}%>
-<%}%>
 
 </plugin>
