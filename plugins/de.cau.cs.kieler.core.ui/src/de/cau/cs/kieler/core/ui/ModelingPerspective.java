@@ -138,7 +138,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
      * Add a view to a folder only if the view exists. This method can be used to add views from
      * other plugins to get no exceptions if the plugin is not loaded.
      */
-    private void addViewIfExists(final IFolderLayout folder, final String id) {
+    protected void addViewIfExists(final IFolderLayout folder, final String id) {
         // first search the view and only add it, if it is available
         if (PlatformUI.getWorkbench().getViewRegistry().find(id) != null) {
             folder.addView(id);
