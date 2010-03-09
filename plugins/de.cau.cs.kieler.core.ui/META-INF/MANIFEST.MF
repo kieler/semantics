@@ -28,7 +28,8 @@ Export-Package: de.cau.cs.kieler.core.ui,
  de.cau.cs.kieler.core.ui.listeners,
  de.cau.cs.kieler.core.ui.policies,
  de.cau.cs.kieler.core.ui.preferences,
- de.cau.cs.kieler.core.ui.util
+ de.cau.cs.kieler.core.ui.util,
+ de.cau.cs.kieler.core.ui.views
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Activator: de.cau.cs.kieler.core.ui.CoreUIPlugin
