@@ -24,7 +24,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
  * 
  * @author ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
+ * @kieler.rating 2010-03-09 yellow 
+ *   review by msp, soh
  */
 public class Activator extends AbstractUIPlugin {
 
@@ -57,7 +58,7 @@ public class Activator extends AbstractUIPlugin {
     }
 
     /**
-     * TODO comment.
+     * Return the uniqe assembler view.
      * @return Viewer to display the current assembler.
      */
     public AssemblerView getViewer() {
@@ -65,9 +66,10 @@ public class Activator extends AbstractUIPlugin {
     }
 
     /**
-     * @param v
-     *            AssemblerView to display the current assembler. Only one assembler is shown at a
+     * Set the AssemblerView to display the current assembler. Only one assembler is shown at a
      *            time, as only one assembler can be currently on the processor.
+     * @param v the assembler view
+     *            
      */
     public void setViewer(final AssemblerView v) {
         this.viewer = v;
