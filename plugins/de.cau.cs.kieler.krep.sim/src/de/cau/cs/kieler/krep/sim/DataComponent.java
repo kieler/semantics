@@ -18,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -276,13 +275,13 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                 if (page != null) {
 
                     try {
-                        viewer = (AssemblerView) (page.showView(AssemblerView.VIEW_ID));
+                        viewer = (AssemblerView) (page.showView(AssemblerView.ID));
                     } catch (PartInitException e) {
                         throw new KiemInitializationException("Cannot show assembler view", true, e);
                     }
 
                     try {
-                        krepView = (ConnectionView) (page.showView(ConnectionView.VIEW_ID, null,
+                        krepView = (ConnectionView) (page.showView(ConnectionView.ID, null,
                                 IWorkbenchPage.VIEW_VISIBLE));
                     } catch (PartInitException e) {
                         throw new KiemInitializationException("Cannot show target view", true, e);
@@ -348,7 +347,7 @@ public final class DataComponent extends JSONObjectDataComponent implements IAut
                     viewer.setAssembler(assembler);
                 }
                 if (krepView != null) {
-                    krepView.show(protocol.getTargetInfo());
+                    krepView.comment(protocol.getTargetInfo());
                 }
 
                 protocol.loadProgram(assembler, null);
