@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_abtTUdbBEd60kMQAj3Tdqw">
+  <elementImport xmi:id="_afSLwNbBEd60kMQAj3Tdqw">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_afbVsNbBEd60kMQAj3Tdqw">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_afbVsdbBEd60kMQAj3Tdqw">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <elementImport xmi:id="_afbVstbBEd60kMQAj3Tdqw">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_mRkHANbBEd60kMQAj3Tdqw" name="Execution step of KlePto Simulation Engine">
+    <node xmi:type="uml:InitialNode" xmi:id="_O4ZLsNbCEd60kMQAj3Tdqw" outgoing="_WAA5MNbDEd60kMQAj3Tdqw"/>
+    <node xmi:type="uml:CallOperationAction" xmi:id="_HPAjANbDEd60kMQAj3Tdqw" name="call Ptolemy.iterate()" outgoing="_YLkKwNbDEd60kMQAj3Tdqw" incoming="_XtXL0NbDEd60kMQAj3Tdqw"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_vMkoQNbDEd60kMQAj3Tdqw" incoming="_yC0coNbDEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_WAA5MNbDEd60kMQAj3Tdqw" source="_O4ZLsNbCEd60kMQAj3Tdqw" target="_yNTq0NbCEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_XModUNbDEd60kMQAj3Tdqw" source="_yNTq0NbCEd60kMQAj3Tdqw" target="_0sylANbCEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_XtXL0NbDEd60kMQAj3Tdqw" source="_0sylANbCEd60kMQAj3Tdqw" target="_HPAjANbDEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_YLkKwNbDEd60kMQAj3Tdqw" source="_HPAjANbDEd60kMQAj3Tdqw" target="_NK1BMNbDEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_YniVENbDEd60kMQAj3Tdqw" source="_NK1BMNbDEd60kMQAj3Tdqw" target="_PL0BgNbDEd60kMQAj3Tdqw"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_yC0coNbDEd60kMQAj3Tdqw" source="_PL0BgNbDEd60kMQAj3Tdqw" target="_vMkoQNbDEd60kMQAj3Tdqw"/>
+    <group xmi:type="uml:LoopNode" xmi:id="_yNTq0NbCEd60kMQAj3Tdqw" name="reset all output signals to absent " outgoing="_XModUNbDEd60kMQAj3Tdqw" incoming="_WAA5MNbDEd60kMQAj3Tdqw"/>
+    <group xmi:type="uml:LoopNode" xmi:id="_0sylANbCEd60kMQAj3Tdqw" name="set all Kieler IO Actors to environment input" outgoing="_XtXL0NbDEd60kMQAj3Tdqw" incoming="_XModUNbDEd60kMQAj3Tdqw"/>
+    <group xmi:type="uml:LoopNode" xmi:id="_NK1BMNbDEd60kMQAj3Tdqw" name="search for active states" outgoing="_YniVENbDEd60kMQAj3Tdqw" incoming="_YLkKwNbDEd60kMQAj3Tdqw"/>
+    <group xmi:type="uml:LoopNode" xmi:id="_PL0BgNbDEd60kMQAj3Tdqw" name="iterate thru all output Combine Actors" outgoing="_yC0coNbDEd60kMQAj3Tdqw" incoming="_YniVENbDEd60kMQAj3Tdqw"/>
+  </packagedElement>
+</uml:Package>
