@@ -106,5 +106,146 @@
             value="RIGHT">
       </option>
    </extension>
-
+   <extension
+         point="de.cau.cs.kieler.ksbase.configurations">
+      <configuration
+            XtendFile="src/transformations/features.ext"
+            contextId="org.eclipse.uml2.diagram.clazz.ui.diagramContext"
+            editor="org.eclipse.uml2.diagram.clazz.part.UMLDiagramEditor"
+            packageName="org.eclipse.uml2.uml.UMLPackage">
+       <transformations>
+         <transformation
+         transformationId="de.cau.cs.kieler.uml2.addImpl"
+               name="Add Implementation"
+               selectionCount="1"
+               transformation="createImplements">
+               <diagramElements>
+               <diagramElement class="org.eclipse.uml2.diagram.clazz.edit.parts.Interface2EditPart" />
+            	<diagramElement class="org.eclipse.uml2.diagram.component.edit.parts.Interface2EditPart" />
+            </diagramElements>
+         </transformation>
+            <transformation
+                  name="Startup"
+                  transformation="startUp"
+                  transformationId="de.cau.cs.kieler.uml2.startUp">
+            </transformation>
+            <transformation
+                  name="Add Actor to Use Case"
+                  transformation="addActorToUseCase"
+                  transformationId="de.cau.cs.kieler.uml2.addActorToUseCase">
+            </transformation>
+            <transformation
+                  name="Add Use Case to Subject"
+                  transformation="addUseCasetoSubject"
+                  transformationId="de.cau.cs.kieler.uml2.addUseCasetoSubject">
+            </transformation>
+            <transformation
+                  name="Add Use Case to Actor"
+                  transformation="addUseCaseToActor"
+                  transformationId="de.cau.cs.kieler.uml2.addUseCaseToActor">
+            </transformation>
+            <transformation
+                  name="Add Actor Generalization"
+                  transformation="addActorGeneralization"
+                  transformationId="de.cau.cs.kieler.uml2.addActorGeneralization">
+            </transformation>
+            <transformation
+                  name="Add Use Case Extension"
+                  transformation="addUseCaseExtension"
+                  transformationId="de.cau.cs.kieler.uml2.addUseCaseExtension">
+            </transformation>
+            <transformation
+                  name="Add Use Case Generalization"
+                  transformation="addUseCaseGeneralization"
+                  transformationId="de.cau.cs.kieler.uml2.addUseCaseGeneralization">
+            </transformation>
+            <transformation
+                  name="Add Use Case Inclusion"
+                  transformation="addUseCaseInclusion"
+                  transformationId="de.cau.cs.kieler.uml2.addUseCaseInclusion">
+            </transformation>
+            <transformation
+                  name="Inclusion to Extend"
+                  transformation="inclusionToExtend"
+                  transformationId="de.cau.cs.kieler.uml2.inclusionToExtend">
+            </transformation>
+            <transformation
+                  name="Extend to Inclusion"
+                  transformation="extendToInclusion"
+                  transformationId="de.cau.cs.kieler.uml2.extendToInclusion">
+            </transformation>
+            <transformation
+                  name="Extend to Generalization"
+                  transformation="extendToGeneralization"
+                  transformationId="de.cau.cs.kieler.uml2.extendToGeneralization">
+            </transformation>
+            <transformation
+                  name="Include to Generalization"
+                  transformation="includeToGeneralization"
+                  transformationId="de.cau.cs.kieler.uml2.includeToGeneralization">
+            </transformation>
+            <transformation
+                  name="Add Extension Point to Use Case"
+                  transformation="addExtensionPointToUseCase"
+                  transformationId="de.cau.cs.kieler.uml2.addExtensionPointToUseCase">
+            </transformation>
+            <transformation
+                  name="Add Constraint to Extension"
+                  transformation="addConstraintToExtension"
+                  transformationId="de.cau.cs.kieler.uml2.addConstraintToExtension">
+            </transformation>
+       </transformations>
+       <menus>
+          <menuContribution
+                locationURI="menu:de.cau.cs.kieler">
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.addImpl">
+             </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.startUp">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addActorToUseCase">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addUseCasetoSubject">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addUseCaseToActor">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addActorGeneralization">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addUseCaseExtension">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addUseCaseGeneralization">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addUseCaseInclusion">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.inclusionToExtend">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.extendToInclusion">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.extendToGeneralization">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.includeToGeneralization">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addExtensionPointToUseCase">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.addConstraintToExtension">
+               </transformationCommand>
+          </menuContribution>
+       </menus>
+      </configuration>
+   </extension>
+   
 </plugin>
