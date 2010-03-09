@@ -2,6 +2,33 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         id="de.cau.cs.kieler.uml2.layout.class"
+         name="Class Diagram Layout"
+         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
+      <option
+            class="org.eclipse.uml2.diagram.clazz.edit.parts.PackageEditPart"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.classDiagram">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Generalization"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="GENERALIZATION">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Association"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="ASSOCIATION">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Dependency"
+            option="de.cau.cs.kieler.layout.options.edgeType"
+            value="DEPENDENCY">
+      </option>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.uml2.layout.activity"
+         name="Activity Diagram Layout"
          point="de.cau.cs.kieler.kiml.layout.layoutInfo">
       <option
             class="org.eclipse.uml2.diagram.activity.edit.parts.PackageEditPart"
@@ -28,25 +55,55 @@
             option="de.cau.cs.kieler.layout.options.minSpacing"
             value="25.0">
       </option>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.uml2.layout.useCase"
+         name="Use Case Diagram Layout"
+         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
       <option
-            class="org.eclipse.uml2.diagram.clazz.edit.parts.PackageEditPart"
+            class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
             option="de.cau.cs.kieler.layout.options.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.classDiagram">
+            value="de.cau.cs.kieler.layout.diagrams.usecaseDiagram">
       </option>
       <option
-            class="org.eclipse.uml2.uml.Generalization"
-            option="de.cau.cs.kieler.layout.options.edgeType"
-            value="GENERALIZATION">
+            class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="40.0">
       </option>
       <option
-            class="org.eclipse.uml2.uml.Association"
-            option="de.cau.cs.kieler.layout.options.edgeType"
-            value="ASSOCIATION">
+            class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
+            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            value="20.0">
+      </option>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.uml2.layout.stateMachine"
+         name="State Machine Diagram Layout"
+         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
+      <option
+            class="org.eclipse.uml2.diagram.statemachine.edit.parts.PackageEditPart"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
-            class="org.eclipse.uml2.uml.Dependency"
-            option="de.cau.cs.kieler.layout.options.edgeType"
-            value="DEPENDENCY">
+            class="org.eclipse.uml2.uml.StateMachine"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.StateMachine"
+            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            value="1.0">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Region"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.Region"
+            option="de.cau.cs.kieler.layout.options.layoutDirection"
+            value="RIGHT">
       </option>
    </extension>
 
