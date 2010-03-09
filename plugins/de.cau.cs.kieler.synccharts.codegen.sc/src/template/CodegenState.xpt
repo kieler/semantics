@@ -29,7 +29,6 @@
 		«EXPAND allStrong FOR this-»
 		«EXPAND onInside FOR this-»
 		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-			// PRIO für WEAK setzen
 			PRIO(«getWeakThreadPriority(this)»);
 		«ENDIF-»
 		«EXPAND allWeak FOR this-»
