@@ -487,10 +487,9 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Assignment cNameAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_1_0_0 = (RuleCall)cNameAssignment_1_0.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
-		private final Keyword cColonEqualsSignKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
-		private final Assignment cInitialValueAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cInitialValueSTRINGTerminalRuleCall_1_1_1_0 = (RuleCall)cInitialValueAssignment_1_1_1.eContents().get(0);
+		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cTypeAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cTypeValueTypeEnumRuleCall_1_2_0 = (RuleCall)cTypeAssignment_1_2.eContents().get(0);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
 		private final Assignment cNameAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_2_0_0 = (RuleCall)cNameAssignment_2_0.eContents().get(0);
@@ -498,8 +497,6 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonEqualsSignKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
 		private final Assignment cInitialValueAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
 		private final RuleCall cInitialValueSTRINGTerminalRuleCall_2_1_1_0 = (RuleCall)cInitialValueAssignment_2_1_1.eContents().get(0);
-		private final Assignment cTypeAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cTypeValueTypeEnumRuleCall_2_2_0 = (RuleCall)cTypeAssignment_2_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Assignment cNameAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_3_0_0 = (RuleCall)cNameAssignment_3_0.eContents().get(0);
@@ -507,13 +504,9 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonEqualsSignKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
 		private final Assignment cInitialValueAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
 		private final RuleCall cInitialValueSTRINGTerminalRuleCall_3_1_1_0 = (RuleCall)cInitialValueAssignment_3_1_1.eContents().get(0);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Keyword cCombineKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final Assignment cTypeAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_2_1_0 = (RuleCall)cTypeAssignment_3_2_1.eContents().get(0);
-		private final Keyword cWithKeyword_3_2_2 = (Keyword)cGroup_3_2.eContents().get(2);
-		private final Assignment cCombineOperatorAssignment_3_2_3 = (Assignment)cGroup_3_2.eContents().get(3);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0 = (RuleCall)cCombineOperatorAssignment_3_2_3.eContents().get(0);
+		private final Keyword cColonKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Assignment cTypeAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
+		private final RuleCall cTypeValueTypeEnumRuleCall_3_3_0 = (RuleCall)cTypeAssignment_3_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
 		private final Assignment cNameAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_4_0_0 = (RuleCall)cNameAssignment_4_0.eContents().get(0);
@@ -521,64 +514,85 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonEqualsSignKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
 		private final Assignment cInitialValueAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
 		private final RuleCall cInitialValueSTRINGTerminalRuleCall_4_1_1_0 = (RuleCall)cInitialValueAssignment_4_1_1.eContents().get(0);
-		private final Assignment cHostTypeAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cHostTypeAssignment_4_2.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
+		private final Keyword cCombineKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Assignment cTypeAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_4_2_1_0 = (RuleCall)cTypeAssignment_4_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_4_2_2 = (Keyword)cGroup_4_2.eContents().get(2);
+		private final Assignment cCombineOperatorAssignment_4_2_3 = (Assignment)cGroup_4_2.eContents().get(3);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0 = (RuleCall)cCombineOperatorAssignment_4_2_3.eContents().get(0);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Assignment cNameAssignment_5_0 = (Assignment)cGroup_5.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_5_0_0 = (RuleCall)cNameAssignment_5_0.eContents().get(0);
-		private final Group cGroup_5_1 = (Group)cGroup_5.eContents().get(1);
-		private final Keyword cColonEqualsSignKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
-		private final Assignment cInitialValueAssignment_5_1_1 = (Assignment)cGroup_5_1.eContents().get(1);
-		private final RuleCall cInitialValueSTRINGTerminalRuleCall_5_1_1_0 = (RuleCall)cInitialValueAssignment_5_1_1.eContents().get(0);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cCombineKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Assignment cHostTypeAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_2_1_0 = (RuleCall)cHostTypeAssignment_5_2_1.eContents().get(0);
-		private final Keyword cWithKeyword_5_2_2 = (Keyword)cGroup_5_2.eContents().get(2);
-		private final Assignment cHostCombineOperatorAssignment_5_2_3 = (Assignment)cGroup_5_2.eContents().get(3);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0 = (RuleCall)cHostCombineOperatorAssignment_5_2_3.eContents().get(0);
+		private final Keyword cColonKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cHostTypeAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cHostTypeAssignment_5_2.eContents().get(0);
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
 		private final Assignment cNameAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_6_0_0 = (RuleCall)cNameAssignment_6_0.eContents().get(0);
 		private final Group cGroup_6_1 = (Group)cGroup_6.eContents().get(1);
-		private final Keyword cCombineKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
-		private final Assignment cTypeAssignment_6_1_1 = (Assignment)cGroup_6_1.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_6_1_1_0 = (RuleCall)cTypeAssignment_6_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_6_1_2 = (Keyword)cGroup_6_1.eContents().get(2);
-		private final Assignment cCombineOperatorAssignment_6_1_3 = (Assignment)cGroup_6_1.eContents().get(3);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0 = (RuleCall)cCombineOperatorAssignment_6_1_3.eContents().get(0);
+		private final Keyword cColonEqualsSignKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
+		private final Assignment cInitialValueAssignment_6_1_1 = (Assignment)cGroup_6_1.eContents().get(1);
+		private final RuleCall cInitialValueSTRINGTerminalRuleCall_6_1_1_0 = (RuleCall)cInitialValueAssignment_6_1_1.eContents().get(0);
+		private final Keyword cColonKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Assignment cHostTypeAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_6_3_0 = (RuleCall)cHostTypeAssignment_6_3.eContents().get(0);
 		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
 		private final Assignment cNameAssignment_7_0 = (Assignment)cGroup_7.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_7_0_0 = (RuleCall)cNameAssignment_7_0.eContents().get(0);
 		private final Group cGroup_7_1 = (Group)cGroup_7.eContents().get(1);
-		private final Keyword cCombineKeyword_7_1_0 = (Keyword)cGroup_7_1.eContents().get(0);
-		private final Assignment cHostTypeAssignment_7_1_1 = (Assignment)cGroup_7_1.eContents().get(1);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_7_1_1_0 = (RuleCall)cHostTypeAssignment_7_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_7_1_2 = (Keyword)cGroup_7_1.eContents().get(2);
-		private final Assignment cHostCombineOperatorAssignment_7_1_3 = (Assignment)cGroup_7_1.eContents().get(3);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0 = (RuleCall)cHostCombineOperatorAssignment_7_1_3.eContents().get(0);
+		private final Keyword cColonEqualsSignKeyword_7_1_0 = (Keyword)cGroup_7_1.eContents().get(0);
+		private final Assignment cInitialValueAssignment_7_1_1 = (Assignment)cGroup_7_1.eContents().get(1);
+		private final RuleCall cInitialValueSTRINGTerminalRuleCall_7_1_1_0 = (RuleCall)cInitialValueAssignment_7_1_1.eContents().get(0);
+		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
+		private final Keyword cCombineKeyword_7_2_0 = (Keyword)cGroup_7_2.eContents().get(0);
+		private final Assignment cHostTypeAssignment_7_2_1 = (Assignment)cGroup_7_2.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_7_2_1_0 = (RuleCall)cHostTypeAssignment_7_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_7_2_2 = (Keyword)cGroup_7_2.eContents().get(2);
+		private final Assignment cHostCombineOperatorAssignment_7_2_3 = (Assignment)cGroup_7_2.eContents().get(3);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0 = (RuleCall)cHostCombineOperatorAssignment_7_2_3.eContents().get(0);
+		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
+		private final Assignment cNameAssignment_8_0 = (Assignment)cGroup_8.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_8_0_0 = (RuleCall)cNameAssignment_8_0.eContents().get(0);
+		private final Group cGroup_8_1 = (Group)cGroup_8.eContents().get(1);
+		private final Keyword cCombineKeyword_8_1_0 = (Keyword)cGroup_8_1.eContents().get(0);
+		private final Assignment cTypeAssignment_8_1_1 = (Assignment)cGroup_8_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_8_1_1_0 = (RuleCall)cTypeAssignment_8_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_8_1_2 = (Keyword)cGroup_8_1.eContents().get(2);
+		private final Assignment cCombineOperatorAssignment_8_1_3 = (Assignment)cGroup_8_1.eContents().get(3);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0 = (RuleCall)cCombineOperatorAssignment_8_1_3.eContents().get(0);
+		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
+		private final Assignment cNameAssignment_9_0 = (Assignment)cGroup_9.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_9_0_0 = (RuleCall)cNameAssignment_9_0.eContents().get(0);
+		private final Group cGroup_9_1 = (Group)cGroup_9.eContents().get(1);
+		private final Keyword cCombineKeyword_9_1_0 = (Keyword)cGroup_9_1.eContents().get(0);
+		private final Assignment cHostTypeAssignment_9_1_1 = (Assignment)cGroup_9_1.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_9_1_1_0 = (RuleCall)cHostTypeAssignment_9_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_9_1_2 = (Keyword)cGroup_9_1.eContents().get(2);
+		private final Assignment cHostCombineOperatorAssignment_9_1_3 = (Assignment)cGroup_9_1.eContents().get(3);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0 = (RuleCall)cHostCombineOperatorAssignment_9_1_3.eContents().get(0);
 		
 		//Signal returns synccharts::Signal:
-		//  name=ID|name=ID (":=" initialValue=STRING)|name=ID (":=" initialValue=STRING) type=
-		//  ValueType|name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with"
-		//  combineOperator=CombineOperator)|name=ID (":=" initialValue=STRING) hostType=STRING
-		//  |name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
-		//  hostCombineOperator=STRING)|name=ID ("combine" type=ValueType "with" combineOperator
-		//  =CombineOperator)|name=ID ("combine" hostType=STRING "with" hostCombineOperator=
-		//  STRING); 
+		//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING)|name=ID (":="
+		//  initialValue=STRING) ":" type=ValueType|name=ID (":=" initialValue=STRING) ("combine"
+		//  type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType=STRING|
+		//  name=ID (":=" initialValue=STRING) ":" hostType=STRING|name=ID (":=" initialValue=
+		//  STRING) ("combine" hostType=STRING "with" hostCombineOperator=STRING)|name=ID (
+		//  "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ("combine"
+		//  hostType=STRING "with" hostCombineOperator=STRING); 
 		//
 		////==============================================================================
 		//// synccharts elements as needed
 		////==============================================================================
 		public ParserRule getRule() { return rule; }
 
-		//name=ID|name=ID (":=" initialValue=STRING)|name=ID (":=" initialValue=STRING) type=
-		//ValueType|name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with"
-		//combineOperator=CombineOperator)|name=ID (":=" initialValue=STRING) hostType=STRING
-		//|name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
-		//hostCombineOperator=STRING)|name=ID ("combine" type=ValueType "with" combineOperator
-		//=CombineOperator)|name=ID ("combine" hostType=STRING "with" hostCombineOperator=
-		//STRING)
+		//name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING)|name=ID (":="
+		//initialValue=STRING) ":" type=ValueType|name=ID (":=" initialValue=STRING) ("combine"
+		//type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType=STRING|
+		//name=ID (":=" initialValue=STRING) ":" hostType=STRING|name=ID (":=" initialValue=
+		//STRING) ("combine" hostType=STRING "with" hostCombineOperator=STRING)|name=ID (
+		//"combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ("combine"
+		//hostType=STRING "with" hostCombineOperator=STRING)
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//name=ID
@@ -587,7 +601,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 
-		//name=ID (":=" initialValue=STRING)
+		//name=ID ":" type=ValueType
 		public Group getGroup_1() { return cGroup_1; }
 
 		//name=ID
@@ -596,19 +610,16 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0_0() { return cNameIDTerminalRuleCall_1_0_0; }
 
-		//":=" initialValue=STRING
-		public Group getGroup_1_1() { return cGroup_1_1; }
+		//":"
+		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
 
-		//":="
-		public Keyword getColonEqualsSignKeyword_1_1_0() { return cColonEqualsSignKeyword_1_1_0; }
+		//type=ValueType
+		public Assignment getTypeAssignment_1_2() { return cTypeAssignment_1_2; }
 
-		//initialValue=STRING
-		public Assignment getInitialValueAssignment_1_1_1() { return cInitialValueAssignment_1_1_1; }
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_1_2_0() { return cTypeValueTypeEnumRuleCall_1_2_0; }
 
-		//STRING
-		public RuleCall getInitialValueSTRINGTerminalRuleCall_1_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_1_1_1_0; }
-
-		//name=ID (":=" initialValue=STRING) type=ValueType
+		//name=ID (":=" initialValue=STRING)
 		public Group getGroup_2() { return cGroup_2; }
 
 		//name=ID
@@ -629,14 +640,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getInitialValueSTRINGTerminalRuleCall_2_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_2_1_1_0; }
 
-		//type=ValueType
-		public Assignment getTypeAssignment_2_2() { return cTypeAssignment_2_2; }
-
-		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_2_2_0() { return cTypeValueTypeEnumRuleCall_2_2_0; }
-
-		//name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with" combineOperator=
-		//CombineOperator)
+		//name=ID (":=" initialValue=STRING) ":" type=ValueType
 		public Group getGroup_3() { return cGroup_3; }
 
 		//name=ID
@@ -657,28 +661,17 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getInitialValueSTRINGTerminalRuleCall_3_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_3_1_1_0; }
 
-		//"combine" type=ValueType "with" combineOperator=CombineOperator
-		public Group getGroup_3_2() { return cGroup_3_2; }
-
-		//"combine"
-		public Keyword getCombineKeyword_3_2_0() { return cCombineKeyword_3_2_0; }
+		//":"
+		public Keyword getColonKeyword_3_2() { return cColonKeyword_3_2; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_2_1() { return cTypeAssignment_3_2_1; }
+		public Assignment getTypeAssignment_3_3() { return cTypeAssignment_3_3; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_2_1_0() { return cTypeValueTypeEnumRuleCall_3_2_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_3_3_0() { return cTypeValueTypeEnumRuleCall_3_3_0; }
 
-		//"with"
-		public Keyword getWithKeyword_3_2_2() { return cWithKeyword_3_2_2; }
-
-		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_3_2_3() { return cCombineOperatorAssignment_3_2_3; }
-
-		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0; }
-
-		//name=ID (":=" initialValue=STRING) hostType=STRING
+		//name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with" combineOperator=
+		//CombineOperator)
 		public Group getGroup_4() { return cGroup_4; }
 
 		//name=ID
@@ -699,14 +692,28 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getInitialValueSTRINGTerminalRuleCall_4_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_4_1_1_0; }
 
-		//hostType=STRING
-		public Assignment getHostTypeAssignment_4_2() { return cHostTypeAssignment_4_2; }
+		//"combine" type=ValueType "with" combineOperator=CombineOperator
+		public Group getGroup_4_2() { return cGroup_4_2; }
 
-		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_4_2_0() { return cHostTypeSTRINGTerminalRuleCall_4_2_0; }
+		//"combine"
+		public Keyword getCombineKeyword_4_2_0() { return cCombineKeyword_4_2_0; }
 
-		//name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
-		//hostCombineOperator=STRING)
+		//type=ValueType
+		public Assignment getTypeAssignment_4_2_1() { return cTypeAssignment_4_2_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_4_2_1_0() { return cTypeValueTypeEnumRuleCall_4_2_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_4_2_2() { return cWithKeyword_4_2_2; }
+
+		//combineOperator=CombineOperator
+		public Assignment getCombineOperatorAssignment_4_2_3() { return cCombineOperatorAssignment_4_2_3; }
+
+		//CombineOperator
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0; }
+
+		//name=ID ":" hostType=STRING
 		public Group getGroup_5() { return cGroup_5; }
 
 		//name=ID
@@ -715,40 +722,16 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_5_0_0() { return cNameIDTerminalRuleCall_5_0_0; }
 
-		//":=" initialValue=STRING
-		public Group getGroup_5_1() { return cGroup_5_1; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_5_1_0() { return cColonEqualsSignKeyword_5_1_0; }
-
-		//initialValue=STRING
-		public Assignment getInitialValueAssignment_5_1_1() { return cInitialValueAssignment_5_1_1; }
-
-		//STRING
-		public RuleCall getInitialValueSTRINGTerminalRuleCall_5_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_5_1_1_0; }
-
-		//"combine" hostType=STRING "with" hostCombineOperator=STRING
-		public Group getGroup_5_2() { return cGroup_5_2; }
-
-		//"combine"
-		public Keyword getCombineKeyword_5_2_0() { return cCombineKeyword_5_2_0; }
+		//":"
+		public Keyword getColonKeyword_5_1() { return cColonKeyword_5_1; }
 
 		//hostType=STRING
-		public Assignment getHostTypeAssignment_5_2_1() { return cHostTypeAssignment_5_2_1; }
+		public Assignment getHostTypeAssignment_5_2() { return cHostTypeAssignment_5_2; }
 
 		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_2_1_0; }
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_2_0() { return cHostTypeSTRINGTerminalRuleCall_5_2_0; }
 
-		//"with"
-		public Keyword getWithKeyword_5_2_2() { return cWithKeyword_5_2_2; }
-
-		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_5_2_3() { return cHostCombineOperatorAssignment_5_2_3; }
-
-		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0; }
-
-		//name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)
+		//name=ID (":=" initialValue=STRING) ":" hostType=STRING
 		public Group getGroup_6() { return cGroup_6; }
 
 		//name=ID
@@ -757,28 +740,29 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_6_0_0() { return cNameIDTerminalRuleCall_6_0_0; }
 
-		//"combine" type=ValueType "with" combineOperator=CombineOperator
+		//":=" initialValue=STRING
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
-		//"combine"
-		public Keyword getCombineKeyword_6_1_0() { return cCombineKeyword_6_1_0; }
+		//":="
+		public Keyword getColonEqualsSignKeyword_6_1_0() { return cColonEqualsSignKeyword_6_1_0; }
 
-		//type=ValueType
-		public Assignment getTypeAssignment_6_1_1() { return cTypeAssignment_6_1_1; }
+		//initialValue=STRING
+		public Assignment getInitialValueAssignment_6_1_1() { return cInitialValueAssignment_6_1_1; }
 
-		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_6_1_1_0() { return cTypeValueTypeEnumRuleCall_6_1_1_0; }
+		//STRING
+		public RuleCall getInitialValueSTRINGTerminalRuleCall_6_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_6_1_1_0; }
 
-		//"with"
-		public Keyword getWithKeyword_6_1_2() { return cWithKeyword_6_1_2; }
+		//":"
+		public Keyword getColonKeyword_6_2() { return cColonKeyword_6_2; }
 
-		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_6_1_3() { return cCombineOperatorAssignment_6_1_3; }
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_6_3() { return cHostTypeAssignment_6_3; }
 
-		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0; }
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_6_3_0() { return cHostTypeSTRINGTerminalRuleCall_6_3_0; }
 
-		//name=ID ("combine" hostType=STRING "with" hostCombineOperator=STRING)
+		//name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
+		//hostCombineOperator=STRING)
 		public Group getGroup_7() { return cGroup_7; }
 
 		//name=ID
@@ -787,26 +771,98 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_7_0_0() { return cNameIDTerminalRuleCall_7_0_0; }
 
-		//"combine" hostType=STRING "with" hostCombineOperator=STRING
+		//":=" initialValue=STRING
 		public Group getGroup_7_1() { return cGroup_7_1; }
 
+		//":="
+		public Keyword getColonEqualsSignKeyword_7_1_0() { return cColonEqualsSignKeyword_7_1_0; }
+
+		//initialValue=STRING
+		public Assignment getInitialValueAssignment_7_1_1() { return cInitialValueAssignment_7_1_1; }
+
+		//STRING
+		public RuleCall getInitialValueSTRINGTerminalRuleCall_7_1_1_0() { return cInitialValueSTRINGTerminalRuleCall_7_1_1_0; }
+
+		//"combine" hostType=STRING "with" hostCombineOperator=STRING
+		public Group getGroup_7_2() { return cGroup_7_2; }
+
 		//"combine"
-		public Keyword getCombineKeyword_7_1_0() { return cCombineKeyword_7_1_0; }
+		public Keyword getCombineKeyword_7_2_0() { return cCombineKeyword_7_2_0; }
 
 		//hostType=STRING
-		public Assignment getHostTypeAssignment_7_1_1() { return cHostTypeAssignment_7_1_1; }
+		public Assignment getHostTypeAssignment_7_2_1() { return cHostTypeAssignment_7_2_1; }
 
 		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_7_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_7_1_1_0; }
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_7_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_7_2_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_7_1_2() { return cWithKeyword_7_1_2; }
+		public Keyword getWithKeyword_7_2_2() { return cWithKeyword_7_2_2; }
 
 		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_7_1_3() { return cHostCombineOperatorAssignment_7_1_3; }
+		public Assignment getHostCombineOperatorAssignment_7_2_3() { return cHostCombineOperatorAssignment_7_2_3; }
 
 		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0; }
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0; }
+
+		//name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)
+		public Group getGroup_8() { return cGroup_8; }
+
+		//name=ID
+		public Assignment getNameAssignment_8_0() { return cNameAssignment_8_0; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_8_0_0() { return cNameIDTerminalRuleCall_8_0_0; }
+
+		//"combine" type=ValueType "with" combineOperator=CombineOperator
+		public Group getGroup_8_1() { return cGroup_8_1; }
+
+		//"combine"
+		public Keyword getCombineKeyword_8_1_0() { return cCombineKeyword_8_1_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_8_1_1() { return cTypeAssignment_8_1_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_8_1_1_0() { return cTypeValueTypeEnumRuleCall_8_1_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_8_1_2() { return cWithKeyword_8_1_2; }
+
+		//combineOperator=CombineOperator
+		public Assignment getCombineOperatorAssignment_8_1_3() { return cCombineOperatorAssignment_8_1_3; }
+
+		//CombineOperator
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0; }
+
+		//name=ID ("combine" hostType=STRING "with" hostCombineOperator=STRING)
+		public Group getGroup_9() { return cGroup_9; }
+
+		//name=ID
+		public Assignment getNameAssignment_9_0() { return cNameAssignment_9_0; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_9_0_0() { return cNameIDTerminalRuleCall_9_0_0; }
+
+		//"combine" hostType=STRING "with" hostCombineOperator=STRING
+		public Group getGroup_9_1() { return cGroup_9_1; }
+
+		//"combine"
+		public Keyword getCombineKeyword_9_1_0() { return cCombineKeyword_9_1_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_9_1_1() { return cHostTypeAssignment_9_1_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_9_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_9_1_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_9_1_2() { return cWithKeyword_9_1_2; }
+
+		//hostCombineOperator=STRING
+		public Assignment getHostCombineOperatorAssignment_9_1_3() { return cHostCombineOperatorAssignment_9_1_3; }
+
+		//STRING
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0; }
 	}
 
 	public class VariableElements extends AbstractParserRuleElementFinder {
@@ -1115,13 +1171,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signal returns synccharts::Signal:
-	//  name=ID|name=ID (":=" initialValue=STRING)|name=ID (":=" initialValue=STRING) type=
-	//  ValueType|name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with"
-	//  combineOperator=CombineOperator)|name=ID (":=" initialValue=STRING) hostType=STRING
-	//  |name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
-	//  hostCombineOperator=STRING)|name=ID ("combine" type=ValueType "with" combineOperator
-	//  =CombineOperator)|name=ID ("combine" hostType=STRING "with" hostCombineOperator=
-	//  STRING); 
+	//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING)|name=ID (":="
+	//  initialValue=STRING) ":" type=ValueType|name=ID (":=" initialValue=STRING) ("combine"
+	//  type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType=STRING|
+	//  name=ID (":=" initialValue=STRING) ":" hostType=STRING|name=ID (":=" initialValue=
+	//  STRING) ("combine" hostType=STRING "with" hostCombineOperator=STRING)|name=ID (
+	//  "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ("combine"
+	//  hostType=STRING "with" hostCombineOperator=STRING); 
 	//
 	////==============================================================================
 	//// synccharts elements as needed

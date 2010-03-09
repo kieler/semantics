@@ -69,13 +69,15 @@ Signal returns synccharts::Signal:
  
 	(
 	name=ID |
+	name=ID ":" (type=ValueType) |
 	name=ID (":=" initialValue=STRING) |
-	name=ID (":=" initialValue=STRING) (type=ValueType) |
-	name=ID (":=" initialValue=STRING)  ("combine" (type=ValueType) "with" (combineOperator=CombineOperator)) |
-	name=ID (":=" initialValue=STRING) (hostType=STRING) |
-	name=ID (":=" initialValue=STRING)  ("combine" (hostType=STRING) "with" (hostCombineOperator=STRING)) |
+	name=ID (":=" initialValue=STRING) ":" (type=ValueType) |
+	name=ID (":=" initialValue=STRING) ("combine" (type=ValueType) "with" (combineOperator=CombineOperator)) |
+	name=ID ":" (hostType=STRING) |
+	name=ID (":=" initialValue=STRING) ":" (hostType=STRING) |
+	name=ID (":=" initialValue=STRING) ("combine" (hostType=STRING) "with" (hostCombineOperator=STRING)) | 
 	name=ID ("combine" (type=ValueType) "with" (combineOperator=CombineOperator)) |
-	name=ID ("combine" (hostType=STRING) "with" (hostCombineOperator=STRING))
+	name=ID ("combine" (hostType=STRING) "with" (hostCombineOperator=STRING))	
 	)
 	;
 		

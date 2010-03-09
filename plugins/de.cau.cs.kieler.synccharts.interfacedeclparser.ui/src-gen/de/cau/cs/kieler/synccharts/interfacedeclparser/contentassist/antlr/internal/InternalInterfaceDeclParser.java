@@ -1086,11 +1086,11 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
             if ( (LA4_0==31) ) {
                 int LA4_1 = input.LA(2);
 
-                if ( (LA4_1==30) ) {
-                    alt4=1;
-                }
-                else if ( (LA4_1==27) ) {
+                if ( (LA4_1==27) ) {
                     alt4=2;
+                }
+                else if ( (LA4_1==30) ) {
+                    alt4=1;
                 }
                 else {
                     NoViableAltException nvae =
@@ -1172,67 +1172,88 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Alternatives
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );
     public final void rule__Signal__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:417:1: ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) )
-            int alt5=8;
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:417:1: ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) )
+            int alt5=10;
             int LA5_0 = input.LA(1);
 
             if ( (LA5_0==RULE_ID) ) {
                 switch ( input.LA(2) ) {
-                case 32:
+                case 28:
                     {
                     int LA5_2 = input.LA(3);
 
                     if ( (LA5_2==RULE_STRING) ) {
-                        switch ( input.LA(4) ) {
-                        case 33:
-                            {
-                            int LA5_8 = input.LA(5);
+                        alt5=6;
+                    }
+                    else if ( ((LA5_2>=11 && LA5_2<=16)) ) {
+                        alt5=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 2, input);
 
-                            if ( ((LA5_8>=11 && LA5_8<=16)) ) {
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 32:
+                    {
+                    int LA5_3 = input.LA(3);
+
+                    if ( (LA5_3==RULE_STRING) ) {
+                        switch ( input.LA(4) ) {
+                        case EOF:
+                        case 29:
+                        case 31:
+                            {
+                            alt5=3;
+                            }
+                            break;
+                        case 28:
+                            {
+                            int LA5_12 = input.LA(5);
+
+                            if ( ((LA5_12>=11 && LA5_12<=16)) ) {
                                 alt5=4;
                             }
-                            else if ( (LA5_8==RULE_STRING) ) {
-                                alt5=6;
+                            else if ( (LA5_12==RULE_STRING) ) {
+                                alt5=7;
                             }
                             else {
                                 NoViableAltException nvae =
-                                    new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 8, input);
+                                    new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 12, input);
 
                                 throw nvae;
                             }
                             }
                             break;
-                        case EOF:
-                        case 29:
-                        case 31:
+                        case 33:
                             {
-                            alt5=2;
+                            int LA5_13 = input.LA(5);
+
+                            if ( (LA5_13==RULE_STRING) ) {
+                                alt5=8;
                             }
-                            break;
-                        case 11:
-                        case 12:
-                        case 13:
-                        case 14:
-                        case 15:
-                        case 16:
-                            {
-                            alt5=3;
+                            else if ( ((LA5_13>=11 && LA5_13<=16)) ) {
+                                alt5=5;
                             }
-                            break;
-                        case RULE_STRING:
-                            {
-                            alt5=5;
+                            else {
+                                NoViableAltException nvae =
+                                    new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 13, input);
+
+                                throw nvae;
+                            }
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 5, input);
+                                new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 8, input);
 
                             throw nvae;
                         }
@@ -1240,7 +1261,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 2, input);
+                            new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 3, input);
 
                         throw nvae;
                     }
@@ -1248,17 +1269,17 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     break;
                 case 33:
                     {
-                    int LA5_3 = input.LA(3);
+                    int LA5_4 = input.LA(3);
 
-                    if ( (LA5_3==RULE_STRING) ) {
-                        alt5=8;
+                    if ( ((LA5_4>=11 && LA5_4<=16)) ) {
+                        alt5=9;
                     }
-                    else if ( ((LA5_3>=11 && LA5_3<=16)) ) {
-                        alt5=7;
+                    else if ( (LA5_4==RULE_STRING) ) {
+                        alt5=10;
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 3, input);
+                            new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 4, input);
 
                         throw nvae;
                     }
@@ -1273,7 +1294,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 1, input);
+                        new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 1, input);
 
                     throw nvae;
                 }
@@ -1281,7 +1302,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) );", 5, 0, input);
+                    new NoViableAltException("413:1: rule__Signal__Alternatives : ( ( ( rule__Signal__NameAssignment_0 ) ) | ( ( rule__Signal__Group_1__0 ) ) | ( ( rule__Signal__Group_2__0 ) ) | ( ( rule__Signal__Group_3__0 ) ) | ( ( rule__Signal__Group_4__0 ) ) | ( ( rule__Signal__Group_5__0 ) ) | ( ( rule__Signal__Group_6__0 ) ) | ( ( rule__Signal__Group_7__0 ) ) | ( ( rule__Signal__Group_8__0 ) ) | ( ( rule__Signal__Group_9__0 ) ) );", 5, 0, input);
 
                 throw nvae;
             }
@@ -1478,6 +1499,54 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                     }
                     break;
+                case 9 :
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:466:6: ( ( rule__Signal__Group_8__0 ) )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:466:6: ( ( rule__Signal__Group_8__0 ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:467:1: ( rule__Signal__Group_8__0 )
+                    {
+                     before(grammarAccess.getSignalAccess().getGroup_8()); 
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:468:1: ( rule__Signal__Group_8__0 )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:468:2: rule__Signal__Group_8__0
+                    {
+                    pushFollow(FOLLOW_rule__Signal__Group_8__0_in_rule__Signal__Alternatives998);
+                    rule__Signal__Group_8__0();
+                    _fsp--;
+
+
+                    }
+
+                     after(grammarAccess.getSignalAccess().getGroup_8()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 10 :
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:472:6: ( ( rule__Signal__Group_9__0 ) )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:472:6: ( ( rule__Signal__Group_9__0 ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:473:1: ( rule__Signal__Group_9__0 )
+                    {
+                     before(grammarAccess.getSignalAccess().getGroup_9()); 
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:474:1: ( rule__Signal__Group_9__0 )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:474:2: rule__Signal__Group_9__0
+                    {
+                    pushFollow(FOLLOW_rule__Signal__Group_9__0_in_rule__Signal__Alternatives1016);
+                    rule__Signal__Group_9__0();
+                    _fsp--;
+
+
+                    }
+
+                     after(grammarAccess.getSignalAccess().getGroup_9()); 
+
+                    }
+
+
+                    }
+                    break;
 
             }
         }
@@ -1496,13 +1565,13 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__ValueType__Alternatives
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:471:1: rule__ValueType__Alternatives : ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) );
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:483:1: rule__ValueType__Alternatives : ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) );
     public final void rule__ValueType__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:475:1: ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:487:1: ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) )
             int alt6=6;
             switch ( input.LA(1) ) {
             case 11:
@@ -1537,23 +1606,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("471:1: rule__ValueType__Alternatives : ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) );", 6, 0, input);
+                    new NoViableAltException("483:1: rule__ValueType__Alternatives : ( ( ( 'PURE' ) ) | ( ( 'BOOL' ) ) | ( ( 'UNSIGNED' ) ) | ( ( 'INT' ) ) | ( ( 'FLOAT' ) ) | ( ( 'HOST' ) ) );", 6, 0, input);
 
                 throw nvae;
             }
 
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:476:1: ( ( 'PURE' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:488:1: ( ( 'PURE' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:476:1: ( ( 'PURE' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:477:1: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:488:1: ( ( 'PURE' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:489:1: ( 'PURE' )
                     {
                      before(grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:478:1: ( 'PURE' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:478:3: 'PURE'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:490:1: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:490:3: 'PURE'
                     {
-                    match(input,11,FOLLOW_11_in_rule__ValueType__Alternatives1014); 
+                    match(input,11,FOLLOW_11_in_rule__ValueType__Alternatives1050); 
 
                     }
 
@@ -1565,16 +1634,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:483:6: ( ( 'BOOL' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:495:6: ( ( 'BOOL' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:483:6: ( ( 'BOOL' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:484:1: ( 'BOOL' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:495:6: ( ( 'BOOL' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:496:1: ( 'BOOL' )
                     {
                      before(grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:485:1: ( 'BOOL' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:485:3: 'BOOL'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:497:1: ( 'BOOL' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:497:3: 'BOOL'
                     {
-                    match(input,12,FOLLOW_12_in_rule__ValueType__Alternatives1035); 
+                    match(input,12,FOLLOW_12_in_rule__ValueType__Alternatives1071); 
 
                     }
 
@@ -1586,16 +1655,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:490:6: ( ( 'UNSIGNED' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:502:6: ( ( 'UNSIGNED' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:490:6: ( ( 'UNSIGNED' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:491:1: ( 'UNSIGNED' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:502:6: ( ( 'UNSIGNED' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:503:1: ( 'UNSIGNED' )
                     {
                      before(grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:492:1: ( 'UNSIGNED' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:492:3: 'UNSIGNED'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:504:1: ( 'UNSIGNED' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:504:3: 'UNSIGNED'
                     {
-                    match(input,13,FOLLOW_13_in_rule__ValueType__Alternatives1056); 
+                    match(input,13,FOLLOW_13_in_rule__ValueType__Alternatives1092); 
 
                     }
 
@@ -1607,16 +1676,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:497:6: ( ( 'INT' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:509:6: ( ( 'INT' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:497:6: ( ( 'INT' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:498:1: ( 'INT' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:509:6: ( ( 'INT' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:510:1: ( 'INT' )
                     {
                      before(grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:499:1: ( 'INT' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:499:3: 'INT'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:511:1: ( 'INT' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:511:3: 'INT'
                     {
-                    match(input,14,FOLLOW_14_in_rule__ValueType__Alternatives1077); 
+                    match(input,14,FOLLOW_14_in_rule__ValueType__Alternatives1113); 
 
                     }
 
@@ -1628,16 +1697,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:504:6: ( ( 'FLOAT' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:516:6: ( ( 'FLOAT' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:504:6: ( ( 'FLOAT' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:505:1: ( 'FLOAT' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:516:6: ( ( 'FLOAT' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:517:1: ( 'FLOAT' )
                     {
                      before(grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:506:1: ( 'FLOAT' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:506:3: 'FLOAT'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:518:1: ( 'FLOAT' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:518:3: 'FLOAT'
                     {
-                    match(input,15,FOLLOW_15_in_rule__ValueType__Alternatives1098); 
+                    match(input,15,FOLLOW_15_in_rule__ValueType__Alternatives1134); 
 
                     }
 
@@ -1649,16 +1718,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:511:6: ( ( 'HOST' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:523:6: ( ( 'HOST' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:511:6: ( ( 'HOST' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:512:1: ( 'HOST' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:523:6: ( ( 'HOST' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:524:1: ( 'HOST' )
                     {
                      before(grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_5()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:513:1: ( 'HOST' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:513:3: 'HOST'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:525:1: ( 'HOST' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:525:3: 'HOST'
                     {
-                    match(input,16,FOLLOW_16_in_rule__ValueType__Alternatives1119); 
+                    match(input,16,FOLLOW_16_in_rule__ValueType__Alternatives1155); 
 
                     }
 
@@ -1687,13 +1756,13 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__CombineOperator__Alternatives
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:523:1: rule__CombineOperator__Alternatives : ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) );
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:535:1: rule__CombineOperator__Alternatives : ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) );
     public final void rule__CombineOperator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:527:1: ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:539:1: ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) )
             int alt7=8;
             switch ( input.LA(1) ) {
             case 17:
@@ -1738,23 +1807,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("523:1: rule__CombineOperator__Alternatives : ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) );", 7, 0, input);
+                    new NoViableAltException("535:1: rule__CombineOperator__Alternatives : ( ( ( 'NONE' ) ) | ( ( '+' ) ) | ( ( '*' ) ) | ( ( 'max' ) ) | ( ( 'min' ) ) | ( ( 'or' ) ) | ( ( 'and' ) ) | ( ( 'host' ) ) );", 7, 0, input);
 
                 throw nvae;
             }
 
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:528:1: ( ( 'NONE' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:540:1: ( ( 'NONE' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:528:1: ( ( 'NONE' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:529:1: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:540:1: ( ( 'NONE' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:541:1: ( 'NONE' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:530:1: ( 'NONE' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:530:3: 'NONE'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:542:1: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:542:3: 'NONE'
                     {
-                    match(input,17,FOLLOW_17_in_rule__CombineOperator__Alternatives1155); 
+                    match(input,17,FOLLOW_17_in_rule__CombineOperator__Alternatives1191); 
 
                     }
 
@@ -1766,16 +1835,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:535:6: ( ( '+' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:547:6: ( ( '+' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:535:6: ( ( '+' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:536:1: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:547:6: ( ( '+' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:548:1: ( '+' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:537:1: ( '+' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:537:3: '+'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:549:1: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:549:3: '+'
                     {
-                    match(input,18,FOLLOW_18_in_rule__CombineOperator__Alternatives1176); 
+                    match(input,18,FOLLOW_18_in_rule__CombineOperator__Alternatives1212); 
 
                     }
 
@@ -1787,16 +1856,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:542:6: ( ( '*' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:554:6: ( ( '*' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:542:6: ( ( '*' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:543:1: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:554:6: ( ( '*' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:555:1: ( '*' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:544:1: ( '*' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:544:3: '*'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:556:1: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:556:3: '*'
                     {
-                    match(input,19,FOLLOW_19_in_rule__CombineOperator__Alternatives1197); 
+                    match(input,19,FOLLOW_19_in_rule__CombineOperator__Alternatives1233); 
 
                     }
 
@@ -1808,16 +1877,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:549:6: ( ( 'max' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:561:6: ( ( 'max' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:549:6: ( ( 'max' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:550:1: ( 'max' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:561:6: ( ( 'max' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:562:1: ( 'max' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:551:1: ( 'max' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:551:3: 'max'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:563:1: ( 'max' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:563:3: 'max'
                     {
-                    match(input,20,FOLLOW_20_in_rule__CombineOperator__Alternatives1218); 
+                    match(input,20,FOLLOW_20_in_rule__CombineOperator__Alternatives1254); 
 
                     }
 
@@ -1829,16 +1898,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:556:6: ( ( 'min' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:568:6: ( ( 'min' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:556:6: ( ( 'min' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:557:1: ( 'min' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:568:6: ( ( 'min' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:569:1: ( 'min' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:558:1: ( 'min' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:558:3: 'min'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:570:1: ( 'min' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:570:3: 'min'
                     {
-                    match(input,21,FOLLOW_21_in_rule__CombineOperator__Alternatives1239); 
+                    match(input,21,FOLLOW_21_in_rule__CombineOperator__Alternatives1275); 
 
                     }
 
@@ -1850,16 +1919,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:563:6: ( ( 'or' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:575:6: ( ( 'or' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:563:6: ( ( 'or' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:564:1: ( 'or' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:575:6: ( ( 'or' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:576:1: ( 'or' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:565:1: ( 'or' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:565:3: 'or'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:577:1: ( 'or' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:577:3: 'or'
                     {
-                    match(input,22,FOLLOW_22_in_rule__CombineOperator__Alternatives1260); 
+                    match(input,22,FOLLOW_22_in_rule__CombineOperator__Alternatives1296); 
 
                     }
 
@@ -1871,16 +1940,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:570:6: ( ( 'and' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:582:6: ( ( 'and' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:570:6: ( ( 'and' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:571:1: ( 'and' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:582:6: ( ( 'and' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:583:1: ( 'and' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:572:1: ( 'and' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:572:3: 'and'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:584:1: ( 'and' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:584:3: 'and'
                     {
-                    match(input,23,FOLLOW_23_in_rule__CombineOperator__Alternatives1281); 
+                    match(input,23,FOLLOW_23_in_rule__CombineOperator__Alternatives1317); 
 
                     }
 
@@ -1892,16 +1961,16 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:577:6: ( ( 'host' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:589:6: ( ( 'host' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:577:6: ( ( 'host' ) )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:578:1: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:589:6: ( ( 'host' ) )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:590:1: ( 'host' )
                     {
                      before(grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7()); 
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:579:1: ( 'host' )
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:579:3: 'host'
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:591:1: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:591:3: 'host'
                     {
-                    match(input,24,FOLLOW_24_in_rule__CombineOperator__Alternatives1302); 
+                    match(input,24,FOLLOW_24_in_rule__CombineOperator__Alternatives1338); 
 
                     }
 
@@ -1930,25 +1999,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:591:1: rule__StateExtend__Group_1__0 : ( 'input' ) rule__StateExtend__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:603:1: rule__StateExtend__Group_1__0 : ( 'input' ) rule__StateExtend__Group_1__1 ;
     public final void rule__StateExtend__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:595:1: ( ( 'input' ) rule__StateExtend__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:596:1: ( 'input' ) rule__StateExtend__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:607:1: ( ( 'input' ) rule__StateExtend__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:608:1: ( 'input' ) rule__StateExtend__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:596:1: ( 'input' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:597:1: 'input'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:608:1: ( 'input' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:609:1: 'input'
             {
              before(grammarAccess.getStateExtendAccess().getInputKeyword_1_0()); 
-            match(input,25,FOLLOW_25_in_rule__StateExtend__Group_1__01340); 
+            match(input,25,FOLLOW_25_in_rule__StateExtend__Group_1__01376); 
              after(grammarAccess.getStateExtendAccess().getInputKeyword_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__StateExtend__Group_1__1_in_rule__StateExtend__Group_1__01350);
+            pushFollow(FOLLOW_rule__StateExtend__Group_1__1_in_rule__StateExtend__Group_1__01386);
             rule__StateExtend__Group_1__1();
             _fsp--;
 
@@ -1971,25 +2040,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:611:1: rule__StateExtend__Group_1__1 : ( 'output' ) rule__StateExtend__Group_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:623:1: rule__StateExtend__Group_1__1 : ( 'output' ) rule__StateExtend__Group_1__2 ;
     public final void rule__StateExtend__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:615:1: ( ( 'output' ) rule__StateExtend__Group_1__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:616:1: ( 'output' ) rule__StateExtend__Group_1__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:627:1: ( ( 'output' ) rule__StateExtend__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:628:1: ( 'output' ) rule__StateExtend__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:616:1: ( 'output' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:617:1: 'output'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:628:1: ( 'output' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:629:1: 'output'
             {
              before(grammarAccess.getStateExtendAccess().getOutputKeyword_1_1()); 
-            match(input,26,FOLLOW_26_in_rule__StateExtend__Group_1__11379); 
+            match(input,26,FOLLOW_26_in_rule__StateExtend__Group_1__11415); 
              after(grammarAccess.getStateExtendAccess().getOutputKeyword_1_1()); 
 
             }
 
-            pushFollow(FOLLOW_rule__StateExtend__Group_1__2_in_rule__StateExtend__Group_1__11389);
+            pushFollow(FOLLOW_rule__StateExtend__Group_1__2_in_rule__StateExtend__Group_1__11425);
             rule__StateExtend__Group_1__2();
             _fsp--;
 
@@ -2012,23 +2081,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_1__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:631:1: rule__StateExtend__Group_1__2 : ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:643:1: rule__StateExtend__Group_1__2 : ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) ) ;
     public final void rule__StateExtend__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:635:1: ( ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:636:1: ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:647:1: ( ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:648:1: ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:636:1: ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:637:1: ( rule__StateExtend__InOutputSignalsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:648:1: ( ( rule__StateExtend__InOutputSignalsAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:649:1: ( rule__StateExtend__InOutputSignalsAssignment_1_2 )
             {
              before(grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_1_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:638:1: ( rule__StateExtend__InOutputSignalsAssignment_1_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:638:2: rule__StateExtend__InOutputSignalsAssignment_1_2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:650:1: ( rule__StateExtend__InOutputSignalsAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:650:2: rule__StateExtend__InOutputSignalsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__StateExtend__InOutputSignalsAssignment_1_2_in_rule__StateExtend__Group_1__21417);
+            pushFollow(FOLLOW_rule__StateExtend__InOutputSignalsAssignment_1_2_in_rule__StateExtend__Group_1__21453);
             rule__StateExtend__InOutputSignalsAssignment_1_2();
             _fsp--;
 
@@ -2058,25 +2127,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:654:1: rule__StateExtend__Group_2__0 : ( 'output' ) rule__StateExtend__Group_2__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:666:1: rule__StateExtend__Group_2__0 : ( 'output' ) rule__StateExtend__Group_2__1 ;
     public final void rule__StateExtend__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:658:1: ( ( 'output' ) rule__StateExtend__Group_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:659:1: ( 'output' ) rule__StateExtend__Group_2__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:670:1: ( ( 'output' ) rule__StateExtend__Group_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:671:1: ( 'output' ) rule__StateExtend__Group_2__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:659:1: ( 'output' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:660:1: 'output'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:671:1: ( 'output' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:672:1: 'output'
             {
              before(grammarAccess.getStateExtendAccess().getOutputKeyword_2_0()); 
-            match(input,26,FOLLOW_26_in_rule__StateExtend__Group_2__01458); 
+            match(input,26,FOLLOW_26_in_rule__StateExtend__Group_2__01494); 
              after(grammarAccess.getStateExtendAccess().getOutputKeyword_2_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__StateExtend__Group_2__1_in_rule__StateExtend__Group_2__01468);
+            pushFollow(FOLLOW_rule__StateExtend__Group_2__1_in_rule__StateExtend__Group_2__01504);
             rule__StateExtend__Group_2__1();
             _fsp--;
 
@@ -2099,23 +2168,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:674:1: rule__StateExtend__Group_2__1 : ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:686:1: rule__StateExtend__Group_2__1 : ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) ) ;
     public final void rule__StateExtend__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:678:1: ( ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:679:1: ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:690:1: ( ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:691:1: ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:679:1: ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:680:1: ( rule__StateExtend__OutputSignalsAssignment_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:691:1: ( ( rule__StateExtend__OutputSignalsAssignment_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:692:1: ( rule__StateExtend__OutputSignalsAssignment_2_1 )
             {
              before(grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:681:1: ( rule__StateExtend__OutputSignalsAssignment_2_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:681:2: rule__StateExtend__OutputSignalsAssignment_2_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:693:1: ( rule__StateExtend__OutputSignalsAssignment_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:693:2: rule__StateExtend__OutputSignalsAssignment_2_1
             {
-            pushFollow(FOLLOW_rule__StateExtend__OutputSignalsAssignment_2_1_in_rule__StateExtend__Group_2__11496);
+            pushFollow(FOLLOW_rule__StateExtend__OutputSignalsAssignment_2_1_in_rule__StateExtend__Group_2__11532);
             rule__StateExtend__OutputSignalsAssignment_2_1();
             _fsp--;
 
@@ -2145,25 +2214,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_3__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:695:1: rule__StateExtend__Group_3__0 : ( 'input' ) rule__StateExtend__Group_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:707:1: rule__StateExtend__Group_3__0 : ( 'input' ) rule__StateExtend__Group_3__1 ;
     public final void rule__StateExtend__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:699:1: ( ( 'input' ) rule__StateExtend__Group_3__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:700:1: ( 'input' ) rule__StateExtend__Group_3__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:711:1: ( ( 'input' ) rule__StateExtend__Group_3__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:712:1: ( 'input' ) rule__StateExtend__Group_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:700:1: ( 'input' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:701:1: 'input'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:712:1: ( 'input' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:713:1: 'input'
             {
              before(grammarAccess.getStateExtendAccess().getInputKeyword_3_0()); 
-            match(input,25,FOLLOW_25_in_rule__StateExtend__Group_3__01535); 
+            match(input,25,FOLLOW_25_in_rule__StateExtend__Group_3__01571); 
              after(grammarAccess.getStateExtendAccess().getInputKeyword_3_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__StateExtend__Group_3__1_in_rule__StateExtend__Group_3__01545);
+            pushFollow(FOLLOW_rule__StateExtend__Group_3__1_in_rule__StateExtend__Group_3__01581);
             rule__StateExtend__Group_3__1();
             _fsp--;
 
@@ -2186,23 +2255,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_3__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:715:1: rule__StateExtend__Group_3__1 : ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:727:1: rule__StateExtend__Group_3__1 : ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) ) ;
     public final void rule__StateExtend__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:719:1: ( ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:720:1: ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:731:1: ( ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:732:1: ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:720:1: ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:721:1: ( rule__StateExtend__InputSignalsAssignment_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:732:1: ( ( rule__StateExtend__InputSignalsAssignment_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:733:1: ( rule__StateExtend__InputSignalsAssignment_3_1 )
             {
              before(grammarAccess.getStateExtendAccess().getInputSignalsAssignment_3_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:722:1: ( rule__StateExtend__InputSignalsAssignment_3_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:722:2: rule__StateExtend__InputSignalsAssignment_3_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:734:1: ( rule__StateExtend__InputSignalsAssignment_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:734:2: rule__StateExtend__InputSignalsAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__StateExtend__InputSignalsAssignment_3_1_in_rule__StateExtend__Group_3__11573);
+            pushFollow(FOLLOW_rule__StateExtend__InputSignalsAssignment_3_1_in_rule__StateExtend__Group_3__11609);
             rule__StateExtend__InputSignalsAssignment_3_1();
             _fsp--;
 
@@ -2232,25 +2301,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_4__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:736:1: rule__StateExtend__Group_4__0 : ( 'signal' ) rule__StateExtend__Group_4__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:748:1: rule__StateExtend__Group_4__0 : ( 'signal' ) rule__StateExtend__Group_4__1 ;
     public final void rule__StateExtend__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:740:1: ( ( 'signal' ) rule__StateExtend__Group_4__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:741:1: ( 'signal' ) rule__StateExtend__Group_4__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:752:1: ( ( 'signal' ) rule__StateExtend__Group_4__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:753:1: ( 'signal' ) rule__StateExtend__Group_4__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:741:1: ( 'signal' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:742:1: 'signal'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:753:1: ( 'signal' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:754:1: 'signal'
             {
              before(grammarAccess.getStateExtendAccess().getSignalKeyword_4_0()); 
-            match(input,27,FOLLOW_27_in_rule__StateExtend__Group_4__01612); 
+            match(input,27,FOLLOW_27_in_rule__StateExtend__Group_4__01648); 
              after(grammarAccess.getStateExtendAccess().getSignalKeyword_4_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__StateExtend__Group_4__1_in_rule__StateExtend__Group_4__01622);
+            pushFollow(FOLLOW_rule__StateExtend__Group_4__1_in_rule__StateExtend__Group_4__01658);
             rule__StateExtend__Group_4__1();
             _fsp--;
 
@@ -2273,23 +2342,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__Group_4__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:756:1: rule__StateExtend__Group_4__1 : ( ( rule__StateExtend__SignalsAssignment_4_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:768:1: rule__StateExtend__Group_4__1 : ( ( rule__StateExtend__SignalsAssignment_4_1 ) ) ;
     public final void rule__StateExtend__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:760:1: ( ( ( rule__StateExtend__SignalsAssignment_4_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:761:1: ( ( rule__StateExtend__SignalsAssignment_4_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:772:1: ( ( ( rule__StateExtend__SignalsAssignment_4_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:773:1: ( ( rule__StateExtend__SignalsAssignment_4_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:761:1: ( ( rule__StateExtend__SignalsAssignment_4_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:762:1: ( rule__StateExtend__SignalsAssignment_4_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:773:1: ( ( rule__StateExtend__SignalsAssignment_4_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:774:1: ( rule__StateExtend__SignalsAssignment_4_1 )
             {
              before(grammarAccess.getStateExtendAccess().getSignalsAssignment_4_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:763:1: ( rule__StateExtend__SignalsAssignment_4_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:763:2: rule__StateExtend__SignalsAssignment_4_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:775:1: ( rule__StateExtend__SignalsAssignment_4_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:775:2: rule__StateExtend__SignalsAssignment_4_1
             {
-            pushFollow(FOLLOW_rule__StateExtend__SignalsAssignment_4_1_in_rule__StateExtend__Group_4__11650);
+            pushFollow(FOLLOW_rule__StateExtend__SignalsAssignment_4_1_in_rule__StateExtend__Group_4__11686);
             rule__StateExtend__SignalsAssignment_4_1();
             _fsp--;
 
@@ -2319,23 +2388,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:777:1: rule__RegionSignalDec__Group__0 : ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:789:1: rule__RegionSignalDec__Group__0 : ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1 ;
     public final void rule__RegionSignalDec__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:781:1: ( ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:782:1: ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:793:1: ( ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:794:1: ( ( rule__RegionSignalDec__RegionAssignment_0 ) ) rule__RegionSignalDec__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:782:1: ( ( rule__RegionSignalDec__RegionAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:783:1: ( rule__RegionSignalDec__RegionAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:794:1: ( ( rule__RegionSignalDec__RegionAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:795:1: ( rule__RegionSignalDec__RegionAssignment_0 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getRegionAssignment_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:784:1: ( rule__RegionSignalDec__RegionAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:784:2: rule__RegionSignalDec__RegionAssignment_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:796:1: ( rule__RegionSignalDec__RegionAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:796:2: rule__RegionSignalDec__RegionAssignment_0
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__RegionAssignment_0_in_rule__RegionSignalDec__Group__01688);
+            pushFollow(FOLLOW_rule__RegionSignalDec__RegionAssignment_0_in_rule__RegionSignalDec__Group__01724);
             rule__RegionSignalDec__RegionAssignment_0();
             _fsp--;
 
@@ -2346,7 +2415,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group__1_in_rule__RegionSignalDec__Group__01697);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group__1_in_rule__RegionSignalDec__Group__01733);
             rule__RegionSignalDec__Group__1();
             _fsp--;
 
@@ -2369,25 +2438,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:795:1: rule__RegionSignalDec__Group__1 : ( ':' ) rule__RegionSignalDec__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:807:1: rule__RegionSignalDec__Group__1 : ( ':' ) rule__RegionSignalDec__Group__2 ;
     public final void rule__RegionSignalDec__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:799:1: ( ( ':' ) rule__RegionSignalDec__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:800:1: ( ':' ) rule__RegionSignalDec__Group__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:811:1: ( ( ':' ) rule__RegionSignalDec__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:812:1: ( ':' ) rule__RegionSignalDec__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:800:1: ( ':' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:801:1: ':'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:812:1: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:813:1: ':'
             {
              before(grammarAccess.getRegionSignalDecAccess().getColonKeyword_1()); 
-            match(input,28,FOLLOW_28_in_rule__RegionSignalDec__Group__11726); 
+            match(input,28,FOLLOW_28_in_rule__RegionSignalDec__Group__11762); 
              after(grammarAccess.getRegionSignalDecAccess().getColonKeyword_1()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group__2_in_rule__RegionSignalDec__Group__11736);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group__2_in_rule__RegionSignalDec__Group__11772);
             rule__RegionSignalDec__Group__2();
             _fsp--;
 
@@ -2410,23 +2479,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:815:1: rule__RegionSignalDec__Group__2 : ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:827:1: rule__RegionSignalDec__Group__2 : ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3 ;
     public final void rule__RegionSignalDec__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:819:1: ( ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:820:1: ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:831:1: ( ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:832:1: ( ( rule__RegionSignalDec__Alternatives_2 ) ) rule__RegionSignalDec__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:820:1: ( ( rule__RegionSignalDec__Alternatives_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:821:1: ( rule__RegionSignalDec__Alternatives_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:832:1: ( ( rule__RegionSignalDec__Alternatives_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:833:1: ( rule__RegionSignalDec__Alternatives_2 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getAlternatives_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:822:1: ( rule__RegionSignalDec__Alternatives_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:822:2: rule__RegionSignalDec__Alternatives_2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:834:1: ( rule__RegionSignalDec__Alternatives_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:834:2: rule__RegionSignalDec__Alternatives_2
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__Alternatives_2_in_rule__RegionSignalDec__Group__21764);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Alternatives_2_in_rule__RegionSignalDec__Group__21800);
             rule__RegionSignalDec__Alternatives_2();
             _fsp--;
 
@@ -2437,7 +2506,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group__3_in_rule__RegionSignalDec__Group__21773);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group__3_in_rule__RegionSignalDec__Group__21809);
             rule__RegionSignalDec__Group__3();
             _fsp--;
 
@@ -2460,20 +2529,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:833:1: rule__RegionSignalDec__Group__3 : ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:845:1: rule__RegionSignalDec__Group__3 : ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4 ;
     public final void rule__RegionSignalDec__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:837:1: ( ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:838:1: ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:849:1: ( ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:850:1: ( ( rule__RegionSignalDec__Alternatives_3 )* ) rule__RegionSignalDec__Group__4
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:838:1: ( ( rule__RegionSignalDec__Alternatives_3 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:839:1: ( rule__RegionSignalDec__Alternatives_3 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:850:1: ( ( rule__RegionSignalDec__Alternatives_3 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:851:1: ( rule__RegionSignalDec__Alternatives_3 )*
             {
              before(grammarAccess.getRegionSignalDecAccess().getAlternatives_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:840:1: ( rule__RegionSignalDec__Alternatives_3 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:852:1: ( rule__RegionSignalDec__Alternatives_3 )*
             loop8:
             do {
                 int alt8=2;
@@ -2486,9 +2555,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:840:2: rule__RegionSignalDec__Alternatives_3
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:852:2: rule__RegionSignalDec__Alternatives_3
             	    {
-            	    pushFollow(FOLLOW_rule__RegionSignalDec__Alternatives_3_in_rule__RegionSignalDec__Group__31801);
+            	    pushFollow(FOLLOW_rule__RegionSignalDec__Alternatives_3_in_rule__RegionSignalDec__Group__31837);
             	    rule__RegionSignalDec__Alternatives_3();
             	    _fsp--;
 
@@ -2505,7 +2574,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group__4_in_rule__RegionSignalDec__Group__31811);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group__4_in_rule__RegionSignalDec__Group__31847);
             rule__RegionSignalDec__Group__4();
             _fsp--;
 
@@ -2528,20 +2597,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group__4
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:851:1: rule__RegionSignalDec__Group__4 : ( ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:863:1: rule__RegionSignalDec__Group__4 : ( ';' ) ;
     public final void rule__RegionSignalDec__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:855:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:856:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:867:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:868:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:856:1: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:857:1: ';'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:868:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:869:1: ';'
             {
              before(grammarAccess.getRegionSignalDecAccess().getSemicolonKeyword_4()); 
-            match(input,29,FOLLOW_29_in_rule__RegionSignalDec__Group__41840); 
+            match(input,29,FOLLOW_29_in_rule__RegionSignalDec__Group__41876); 
              after(grammarAccess.getRegionSignalDecAccess().getSemicolonKeyword_4()); 
 
             }
@@ -2565,25 +2634,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:880:1: rule__RegionSignalDec__Group_2_0__0 : ( 'var' ) rule__RegionSignalDec__Group_2_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:892:1: rule__RegionSignalDec__Group_2_0__0 : ( 'var' ) rule__RegionSignalDec__Group_2_0__1 ;
     public final void rule__RegionSignalDec__Group_2_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:884:1: ( ( 'var' ) rule__RegionSignalDec__Group_2_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:885:1: ( 'var' ) rule__RegionSignalDec__Group_2_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:896:1: ( ( 'var' ) rule__RegionSignalDec__Group_2_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:897:1: ( 'var' ) rule__RegionSignalDec__Group_2_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:885:1: ( 'var' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:886:1: 'var'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:897:1: ( 'var' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:898:1: 'var'
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarKeyword_2_0_0()); 
-            match(input,30,FOLLOW_30_in_rule__RegionSignalDec__Group_2_0__01886); 
+            match(input,30,FOLLOW_30_in_rule__RegionSignalDec__Group_2_0__01922); 
              after(grammarAccess.getRegionSignalDecAccess().getVarKeyword_2_0_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0__1_in_rule__RegionSignalDec__Group_2_0__01896);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0__1_in_rule__RegionSignalDec__Group_2_0__01932);
             rule__RegionSignalDec__Group_2_0__1();
             _fsp--;
 
@@ -2606,23 +2675,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:900:1: rule__RegionSignalDec__Group_2_0__1 : ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:912:1: rule__RegionSignalDec__Group_2_0__1 : ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2 ;
     public final void rule__RegionSignalDec__Group_2_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:904:1: ( ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:905:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:916:1: ( ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:917:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) ) rule__RegionSignalDec__Group_2_0__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:905:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:906:1: ( rule__RegionSignalDec__VarsAssignment_2_0_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:917:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:918:1: ( rule__RegionSignalDec__VarsAssignment_2_0_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:907:1: ( rule__RegionSignalDec__VarsAssignment_2_0_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:907:2: rule__RegionSignalDec__VarsAssignment_2_0_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:919:1: ( rule__RegionSignalDec__VarsAssignment_2_0_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:919:2: rule__RegionSignalDec__VarsAssignment_2_0_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_1_in_rule__RegionSignalDec__Group_2_0__11924);
+            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_1_in_rule__RegionSignalDec__Group_2_0__11960);
             rule__RegionSignalDec__VarsAssignment_2_0_1();
             _fsp--;
 
@@ -2633,7 +2702,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0__2_in_rule__RegionSignalDec__Group_2_0__11933);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0__2_in_rule__RegionSignalDec__Group_2_0__11969);
             rule__RegionSignalDec__Group_2_0__2();
             _fsp--;
 
@@ -2656,20 +2725,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_0__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:918:1: rule__RegionSignalDec__Group_2_0__2 : ( ( rule__RegionSignalDec__Group_2_0_2__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:930:1: rule__RegionSignalDec__Group_2_0__2 : ( ( rule__RegionSignalDec__Group_2_0_2__0 )* ) ;
     public final void rule__RegionSignalDec__Group_2_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:922:1: ( ( ( rule__RegionSignalDec__Group_2_0_2__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:923:1: ( ( rule__RegionSignalDec__Group_2_0_2__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:934:1: ( ( ( rule__RegionSignalDec__Group_2_0_2__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:935:1: ( ( rule__RegionSignalDec__Group_2_0_2__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:923:1: ( ( rule__RegionSignalDec__Group_2_0_2__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:924:1: ( rule__RegionSignalDec__Group_2_0_2__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:935:1: ( ( rule__RegionSignalDec__Group_2_0_2__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:936:1: ( rule__RegionSignalDec__Group_2_0_2__0 )*
             {
              before(grammarAccess.getRegionSignalDecAccess().getGroup_2_0_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:925:1: ( rule__RegionSignalDec__Group_2_0_2__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:937:1: ( rule__RegionSignalDec__Group_2_0_2__0 )*
             loop9:
             do {
                 int alt9=2;
@@ -2688,9 +2757,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:925:2: rule__RegionSignalDec__Group_2_0_2__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:937:2: rule__RegionSignalDec__Group_2_0_2__0
             	    {
-            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0_2__0_in_rule__RegionSignalDec__Group_2_0__21961);
+            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0_2__0_in_rule__RegionSignalDec__Group_2_0__21997);
             	    rule__RegionSignalDec__Group_2_0_2__0();
             	    _fsp--;
 
@@ -2726,25 +2795,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_0_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:941:1: rule__RegionSignalDec__Group_2_0_2__0 : ( ',' ) rule__RegionSignalDec__Group_2_0_2__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:953:1: rule__RegionSignalDec__Group_2_0_2__0 : ( ',' ) rule__RegionSignalDec__Group_2_0_2__1 ;
     public final void rule__RegionSignalDec__Group_2_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:945:1: ( ( ',' ) rule__RegionSignalDec__Group_2_0_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:946:1: ( ',' ) rule__RegionSignalDec__Group_2_0_2__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:957:1: ( ( ',' ) rule__RegionSignalDec__Group_2_0_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:958:1: ( ',' ) rule__RegionSignalDec__Group_2_0_2__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:946:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:947:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:958:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:959:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_0_2_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_2_0_2__02003); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_2_0_2__02039); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_0_2_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0_2__1_in_rule__RegionSignalDec__Group_2_0_2__02013);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_0_2__1_in_rule__RegionSignalDec__Group_2_0_2__02049);
             rule__RegionSignalDec__Group_2_0_2__1();
             _fsp--;
 
@@ -2767,23 +2836,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_0_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:961:1: rule__RegionSignalDec__Group_2_0_2__1 : ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:973:1: rule__RegionSignalDec__Group_2_0_2__1 : ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) ) ;
     public final void rule__RegionSignalDec__Group_2_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:965:1: ( ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:966:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:977:1: ( ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:978:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:966:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:967:1: ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:978:1: ( ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:979:1: ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:968:1: ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:968:2: rule__RegionSignalDec__VarsAssignment_2_0_2_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:980:1: ( rule__RegionSignalDec__VarsAssignment_2_0_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:980:2: rule__RegionSignalDec__VarsAssignment_2_0_2_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_2_1_in_rule__RegionSignalDec__Group_2_0_2__12041);
+            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_2_1_in_rule__RegionSignalDec__Group_2_0_2__12077);
             rule__RegionSignalDec__VarsAssignment_2_0_2_1();
             _fsp--;
 
@@ -2813,25 +2882,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:982:1: rule__RegionSignalDec__Group_2_1__0 : ( 'signal' ) rule__RegionSignalDec__Group_2_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:994:1: rule__RegionSignalDec__Group_2_1__0 : ( 'signal' ) rule__RegionSignalDec__Group_2_1__1 ;
     public final void rule__RegionSignalDec__Group_2_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:986:1: ( ( 'signal' ) rule__RegionSignalDec__Group_2_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:987:1: ( 'signal' ) rule__RegionSignalDec__Group_2_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:998:1: ( ( 'signal' ) rule__RegionSignalDec__Group_2_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:999:1: ( 'signal' ) rule__RegionSignalDec__Group_2_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:987:1: ( 'signal' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:988:1: 'signal'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:999:1: ( 'signal' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1000:1: 'signal'
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalKeyword_2_1_0()); 
-            match(input,27,FOLLOW_27_in_rule__RegionSignalDec__Group_2_1__02080); 
+            match(input,27,FOLLOW_27_in_rule__RegionSignalDec__Group_2_1__02116); 
              after(grammarAccess.getRegionSignalDecAccess().getSignalKeyword_2_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1__1_in_rule__RegionSignalDec__Group_2_1__02090);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1__1_in_rule__RegionSignalDec__Group_2_1__02126);
             rule__RegionSignalDec__Group_2_1__1();
             _fsp--;
 
@@ -2854,23 +2923,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1002:1: rule__RegionSignalDec__Group_2_1__1 : ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1014:1: rule__RegionSignalDec__Group_2_1__1 : ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2 ;
     public final void rule__RegionSignalDec__Group_2_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1006:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1007:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1018:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1019:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) ) rule__RegionSignalDec__Group_2_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1007:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1008:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1019:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1020:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_2_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1009:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1009:2: rule__RegionSignalDec__SignalsAssignment_2_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1021:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1021:2: rule__RegionSignalDec__SignalsAssignment_2_1_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_1_in_rule__RegionSignalDec__Group_2_1__12118);
+            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_1_in_rule__RegionSignalDec__Group_2_1__12154);
             rule__RegionSignalDec__SignalsAssignment_2_1_1();
             _fsp--;
 
@@ -2881,7 +2950,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1__2_in_rule__RegionSignalDec__Group_2_1__12127);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1__2_in_rule__RegionSignalDec__Group_2_1__12163);
             rule__RegionSignalDec__Group_2_1__2();
             _fsp--;
 
@@ -2904,20 +2973,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_1__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1020:1: rule__RegionSignalDec__Group_2_1__2 : ( ( rule__RegionSignalDec__Group_2_1_2__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1032:1: rule__RegionSignalDec__Group_2_1__2 : ( ( rule__RegionSignalDec__Group_2_1_2__0 )* ) ;
     public final void rule__RegionSignalDec__Group_2_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1024:1: ( ( ( rule__RegionSignalDec__Group_2_1_2__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1025:1: ( ( rule__RegionSignalDec__Group_2_1_2__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1036:1: ( ( ( rule__RegionSignalDec__Group_2_1_2__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1037:1: ( ( rule__RegionSignalDec__Group_2_1_2__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1025:1: ( ( rule__RegionSignalDec__Group_2_1_2__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1026:1: ( rule__RegionSignalDec__Group_2_1_2__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1037:1: ( ( rule__RegionSignalDec__Group_2_1_2__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1038:1: ( rule__RegionSignalDec__Group_2_1_2__0 )*
             {
              before(grammarAccess.getRegionSignalDecAccess().getGroup_2_1_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1027:1: ( rule__RegionSignalDec__Group_2_1_2__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1039:1: ( rule__RegionSignalDec__Group_2_1_2__0 )*
             loop10:
             do {
                 int alt10=2;
@@ -2936,9 +3005,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt10) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1027:2: rule__RegionSignalDec__Group_2_1_2__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1039:2: rule__RegionSignalDec__Group_2_1_2__0
             	    {
-            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1_2__0_in_rule__RegionSignalDec__Group_2_1__22155);
+            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1_2__0_in_rule__RegionSignalDec__Group_2_1__22191);
             	    rule__RegionSignalDec__Group_2_1_2__0();
             	    _fsp--;
 
@@ -2974,25 +3043,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_1_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1043:1: rule__RegionSignalDec__Group_2_1_2__0 : ( ',' ) rule__RegionSignalDec__Group_2_1_2__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1055:1: rule__RegionSignalDec__Group_2_1_2__0 : ( ',' ) rule__RegionSignalDec__Group_2_1_2__1 ;
     public final void rule__RegionSignalDec__Group_2_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1047:1: ( ( ',' ) rule__RegionSignalDec__Group_2_1_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1048:1: ( ',' ) rule__RegionSignalDec__Group_2_1_2__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1059:1: ( ( ',' ) rule__RegionSignalDec__Group_2_1_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1060:1: ( ',' ) rule__RegionSignalDec__Group_2_1_2__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1048:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1049:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1060:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1061:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_1_2_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_2_1_2__02197); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_2_1_2__02233); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_2_1_2_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1_2__1_in_rule__RegionSignalDec__Group_2_1_2__02207);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_2_1_2__1_in_rule__RegionSignalDec__Group_2_1_2__02243);
             rule__RegionSignalDec__Group_2_1_2__1();
             _fsp--;
 
@@ -3015,23 +3084,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_2_1_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1063:1: rule__RegionSignalDec__Group_2_1_2__1 : ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1075:1: rule__RegionSignalDec__Group_2_1_2__1 : ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) ) ;
     public final void rule__RegionSignalDec__Group_2_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1067:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1068:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1079:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1080:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1068:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1069:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1080:1: ( ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1081:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_2_1_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1070:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1070:2: rule__RegionSignalDec__SignalsAssignment_2_1_2_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1082:1: ( rule__RegionSignalDec__SignalsAssignment_2_1_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1082:2: rule__RegionSignalDec__SignalsAssignment_2_1_2_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_2_1_in_rule__RegionSignalDec__Group_2_1_2__12235);
+            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_2_1_in_rule__RegionSignalDec__Group_2_1_2__12271);
             rule__RegionSignalDec__SignalsAssignment_2_1_2_1();
             _fsp--;
 
@@ -3061,25 +3130,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1084:1: rule__RegionSignalDec__Group_3_0__0 : ( ',' ) rule__RegionSignalDec__Group_3_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1096:1: rule__RegionSignalDec__Group_3_0__0 : ( ',' ) rule__RegionSignalDec__Group_3_0__1 ;
     public final void rule__RegionSignalDec__Group_3_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1088:1: ( ( ',' ) rule__RegionSignalDec__Group_3_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1089:1: ( ',' ) rule__RegionSignalDec__Group_3_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1100:1: ( ( ',' ) rule__RegionSignalDec__Group_3_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1101:1: ( ',' ) rule__RegionSignalDec__Group_3_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1089:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1090:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1101:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1102:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_0__02274); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_0__02310); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__1_in_rule__RegionSignalDec__Group_3_0__02284);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__1_in_rule__RegionSignalDec__Group_3_0__02320);
             rule__RegionSignalDec__Group_3_0__1();
             _fsp--;
 
@@ -3102,25 +3171,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1104:1: rule__RegionSignalDec__Group_3_0__1 : ( 'var' ) rule__RegionSignalDec__Group_3_0__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1116:1: rule__RegionSignalDec__Group_3_0__1 : ( 'var' ) rule__RegionSignalDec__Group_3_0__2 ;
     public final void rule__RegionSignalDec__Group_3_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1108:1: ( ( 'var' ) rule__RegionSignalDec__Group_3_0__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1109:1: ( 'var' ) rule__RegionSignalDec__Group_3_0__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1120:1: ( ( 'var' ) rule__RegionSignalDec__Group_3_0__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1121:1: ( 'var' ) rule__RegionSignalDec__Group_3_0__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1109:1: ( 'var' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1110:1: 'var'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1121:1: ( 'var' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1122:1: 'var'
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarKeyword_3_0_1()); 
-            match(input,30,FOLLOW_30_in_rule__RegionSignalDec__Group_3_0__12313); 
+            match(input,30,FOLLOW_30_in_rule__RegionSignalDec__Group_3_0__12349); 
              after(grammarAccess.getRegionSignalDecAccess().getVarKeyword_3_0_1()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__2_in_rule__RegionSignalDec__Group_3_0__12323);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__2_in_rule__RegionSignalDec__Group_3_0__12359);
             rule__RegionSignalDec__Group_3_0__2();
             _fsp--;
 
@@ -3143,23 +3212,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1124:1: rule__RegionSignalDec__Group_3_0__2 : ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1136:1: rule__RegionSignalDec__Group_3_0__2 : ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3 ;
     public final void rule__RegionSignalDec__Group_3_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1128:1: ( ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1129:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1140:1: ( ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1141:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) ) rule__RegionSignalDec__Group_3_0__3
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1129:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1130:1: ( rule__RegionSignalDec__VarsAssignment_3_0_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1141:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1142:1: ( rule__RegionSignalDec__VarsAssignment_3_0_2 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_0_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1131:1: ( rule__RegionSignalDec__VarsAssignment_3_0_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1131:2: rule__RegionSignalDec__VarsAssignment_3_0_2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1143:1: ( rule__RegionSignalDec__VarsAssignment_3_0_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1143:2: rule__RegionSignalDec__VarsAssignment_3_0_2
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_2_in_rule__RegionSignalDec__Group_3_0__22351);
+            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_2_in_rule__RegionSignalDec__Group_3_0__22387);
             rule__RegionSignalDec__VarsAssignment_3_0_2();
             _fsp--;
 
@@ -3170,7 +3239,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__3_in_rule__RegionSignalDec__Group_3_0__22360);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0__3_in_rule__RegionSignalDec__Group_3_0__22396);
             rule__RegionSignalDec__Group_3_0__3();
             _fsp--;
 
@@ -3193,20 +3262,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1142:1: rule__RegionSignalDec__Group_3_0__3 : ( ( rule__RegionSignalDec__Group_3_0_3__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1154:1: rule__RegionSignalDec__Group_3_0__3 : ( ( rule__RegionSignalDec__Group_3_0_3__0 )* ) ;
     public final void rule__RegionSignalDec__Group_3_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1146:1: ( ( ( rule__RegionSignalDec__Group_3_0_3__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1147:1: ( ( rule__RegionSignalDec__Group_3_0_3__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1158:1: ( ( ( rule__RegionSignalDec__Group_3_0_3__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1159:1: ( ( rule__RegionSignalDec__Group_3_0_3__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1147:1: ( ( rule__RegionSignalDec__Group_3_0_3__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1148:1: ( rule__RegionSignalDec__Group_3_0_3__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1159:1: ( ( rule__RegionSignalDec__Group_3_0_3__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1160:1: ( rule__RegionSignalDec__Group_3_0_3__0 )*
             {
              before(grammarAccess.getRegionSignalDecAccess().getGroup_3_0_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1149:1: ( rule__RegionSignalDec__Group_3_0_3__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1161:1: ( rule__RegionSignalDec__Group_3_0_3__0 )*
             loop11:
             do {
                 int alt11=2;
@@ -3225,9 +3294,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt11) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1149:2: rule__RegionSignalDec__Group_3_0_3__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1161:2: rule__RegionSignalDec__Group_3_0_3__0
             	    {
-            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0_3__0_in_rule__RegionSignalDec__Group_3_0__32388);
+            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0_3__0_in_rule__RegionSignalDec__Group_3_0__32424);
             	    rule__RegionSignalDec__Group_3_0_3__0();
             	    _fsp--;
 
@@ -3263,25 +3332,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0_3__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1167:1: rule__RegionSignalDec__Group_3_0_3__0 : ( ',' ) rule__RegionSignalDec__Group_3_0_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1179:1: rule__RegionSignalDec__Group_3_0_3__0 : ( ',' ) rule__RegionSignalDec__Group_3_0_3__1 ;
     public final void rule__RegionSignalDec__Group_3_0_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1171:1: ( ( ',' ) rule__RegionSignalDec__Group_3_0_3__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1172:1: ( ',' ) rule__RegionSignalDec__Group_3_0_3__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1183:1: ( ( ',' ) rule__RegionSignalDec__Group_3_0_3__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1184:1: ( ',' ) rule__RegionSignalDec__Group_3_0_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1172:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1173:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1184:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1185:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_3_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_0_3__02432); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_0_3__02468); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_0_3_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0_3__1_in_rule__RegionSignalDec__Group_3_0_3__02442);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_0_3__1_in_rule__RegionSignalDec__Group_3_0_3__02478);
             rule__RegionSignalDec__Group_3_0_3__1();
             _fsp--;
 
@@ -3304,23 +3373,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_0_3__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1187:1: rule__RegionSignalDec__Group_3_0_3__1 : ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1199:1: rule__RegionSignalDec__Group_3_0_3__1 : ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) ) ;
     public final void rule__RegionSignalDec__Group_3_0_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1191:1: ( ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1192:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1203:1: ( ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1204:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1192:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1193:1: ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1204:1: ( ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1205:1: ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_0_3_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1194:1: ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1194:2: rule__RegionSignalDec__VarsAssignment_3_0_3_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1206:1: ( rule__RegionSignalDec__VarsAssignment_3_0_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1206:2: rule__RegionSignalDec__VarsAssignment_3_0_3_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_3_1_in_rule__RegionSignalDec__Group_3_0_3__12470);
+            pushFollow(FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_3_1_in_rule__RegionSignalDec__Group_3_0_3__12506);
             rule__RegionSignalDec__VarsAssignment_3_0_3_1();
             _fsp--;
 
@@ -3350,25 +3419,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1208:1: rule__RegionSignalDec__Group_3_1__0 : ( ',' ) rule__RegionSignalDec__Group_3_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1220:1: rule__RegionSignalDec__Group_3_1__0 : ( ',' ) rule__RegionSignalDec__Group_3_1__1 ;
     public final void rule__RegionSignalDec__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1212:1: ( ( ',' ) rule__RegionSignalDec__Group_3_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1213:1: ( ',' ) rule__RegionSignalDec__Group_3_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1224:1: ( ( ',' ) rule__RegionSignalDec__Group_3_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1225:1: ( ',' ) rule__RegionSignalDec__Group_3_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1213:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1214:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1225:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1226:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_1__02509); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_1__02545); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__1_in_rule__RegionSignalDec__Group_3_1__02519);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__1_in_rule__RegionSignalDec__Group_3_1__02555);
             rule__RegionSignalDec__Group_3_1__1();
             _fsp--;
 
@@ -3391,25 +3460,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1228:1: rule__RegionSignalDec__Group_3_1__1 : ( 'signal' ) rule__RegionSignalDec__Group_3_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1240:1: rule__RegionSignalDec__Group_3_1__1 : ( 'signal' ) rule__RegionSignalDec__Group_3_1__2 ;
     public final void rule__RegionSignalDec__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1232:1: ( ( 'signal' ) rule__RegionSignalDec__Group_3_1__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1233:1: ( 'signal' ) rule__RegionSignalDec__Group_3_1__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1244:1: ( ( 'signal' ) rule__RegionSignalDec__Group_3_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1245:1: ( 'signal' ) rule__RegionSignalDec__Group_3_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1233:1: ( 'signal' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1234:1: 'signal'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1245:1: ( 'signal' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1246:1: 'signal'
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalKeyword_3_1_1()); 
-            match(input,27,FOLLOW_27_in_rule__RegionSignalDec__Group_3_1__12548); 
+            match(input,27,FOLLOW_27_in_rule__RegionSignalDec__Group_3_1__12584); 
              after(grammarAccess.getRegionSignalDecAccess().getSignalKeyword_3_1_1()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__2_in_rule__RegionSignalDec__Group_3_1__12558);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__2_in_rule__RegionSignalDec__Group_3_1__12594);
             rule__RegionSignalDec__Group_3_1__2();
             _fsp--;
 
@@ -3432,23 +3501,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1248:1: rule__RegionSignalDec__Group_3_1__2 : ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1260:1: rule__RegionSignalDec__Group_3_1__2 : ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3 ;
     public final void rule__RegionSignalDec__Group_3_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1252:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1253:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1264:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1265:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) ) rule__RegionSignalDec__Group_3_1__3
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1253:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1254:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1265:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1266:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_2 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1255:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1255:2: rule__RegionSignalDec__SignalsAssignment_3_1_2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1267:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1267:2: rule__RegionSignalDec__SignalsAssignment_3_1_2
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_2_in_rule__RegionSignalDec__Group_3_1__22586);
+            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_2_in_rule__RegionSignalDec__Group_3_1__22622);
             rule__RegionSignalDec__SignalsAssignment_3_1_2();
             _fsp--;
 
@@ -3459,7 +3528,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__3_in_rule__RegionSignalDec__Group_3_1__22595);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1__3_in_rule__RegionSignalDec__Group_3_1__22631);
             rule__RegionSignalDec__Group_3_1__3();
             _fsp--;
 
@@ -3482,20 +3551,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1266:1: rule__RegionSignalDec__Group_3_1__3 : ( ( rule__RegionSignalDec__Group_3_1_3__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1278:1: rule__RegionSignalDec__Group_3_1__3 : ( ( rule__RegionSignalDec__Group_3_1_3__0 )* ) ;
     public final void rule__RegionSignalDec__Group_3_1__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1270:1: ( ( ( rule__RegionSignalDec__Group_3_1_3__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1271:1: ( ( rule__RegionSignalDec__Group_3_1_3__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1282:1: ( ( ( rule__RegionSignalDec__Group_3_1_3__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1283:1: ( ( rule__RegionSignalDec__Group_3_1_3__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1271:1: ( ( rule__RegionSignalDec__Group_3_1_3__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1272:1: ( rule__RegionSignalDec__Group_3_1_3__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1283:1: ( ( rule__RegionSignalDec__Group_3_1_3__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1284:1: ( rule__RegionSignalDec__Group_3_1_3__0 )*
             {
              before(grammarAccess.getRegionSignalDecAccess().getGroup_3_1_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1273:1: ( rule__RegionSignalDec__Group_3_1_3__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1285:1: ( rule__RegionSignalDec__Group_3_1_3__0 )*
             loop12:
             do {
                 int alt12=2;
@@ -3514,9 +3583,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt12) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1273:2: rule__RegionSignalDec__Group_3_1_3__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1285:2: rule__RegionSignalDec__Group_3_1_3__0
             	    {
-            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1_3__0_in_rule__RegionSignalDec__Group_3_1__32623);
+            	    pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1_3__0_in_rule__RegionSignalDec__Group_3_1__32659);
             	    rule__RegionSignalDec__Group_3_1_3__0();
             	    _fsp--;
 
@@ -3552,25 +3621,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1_3__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1291:1: rule__RegionSignalDec__Group_3_1_3__0 : ( ',' ) rule__RegionSignalDec__Group_3_1_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1303:1: rule__RegionSignalDec__Group_3_1_3__0 : ( ',' ) rule__RegionSignalDec__Group_3_1_3__1 ;
     public final void rule__RegionSignalDec__Group_3_1_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1295:1: ( ( ',' ) rule__RegionSignalDec__Group_3_1_3__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1296:1: ( ',' ) rule__RegionSignalDec__Group_3_1_3__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1307:1: ( ( ',' ) rule__RegionSignalDec__Group_3_1_3__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1308:1: ( ',' ) rule__RegionSignalDec__Group_3_1_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1296:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1297:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1308:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1309:1: ','
             {
              before(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_3_0()); 
-            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_1_3__02667); 
+            match(input,31,FOLLOW_31_in_rule__RegionSignalDec__Group_3_1_3__02703); 
              after(grammarAccess.getRegionSignalDecAccess().getCommaKeyword_3_1_3_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1_3__1_in_rule__RegionSignalDec__Group_3_1_3__02677);
+            pushFollow(FOLLOW_rule__RegionSignalDec__Group_3_1_3__1_in_rule__RegionSignalDec__Group_3_1_3__02713);
             rule__RegionSignalDec__Group_3_1_3__1();
             _fsp--;
 
@@ -3593,23 +3662,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__Group_3_1_3__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1311:1: rule__RegionSignalDec__Group_3_1_3__1 : ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1323:1: rule__RegionSignalDec__Group_3_1_3__1 : ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) ) ;
     public final void rule__RegionSignalDec__Group_3_1_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1315:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1316:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1327:1: ( ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1328:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1316:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1317:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1328:1: ( ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1329:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 )
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_3_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1318:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1318:2: rule__RegionSignalDec__SignalsAssignment_3_1_3_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1330:1: ( rule__RegionSignalDec__SignalsAssignment_3_1_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1330:2: rule__RegionSignalDec__SignalsAssignment_3_1_3_1
             {
-            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_3_1_in_rule__RegionSignalDec__Group_3_1_3__12705);
+            pushFollow(FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_3_1_in_rule__RegionSignalDec__Group_3_1_3__12741);
             rule__RegionSignalDec__SignalsAssignment_3_1_3_1();
             _fsp--;
 
@@ -3639,23 +3708,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1332:1: rule__Signals__Group__0 : ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1344:1: rule__Signals__Group__0 : ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1 ;
     public final void rule__Signals__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1336:1: ( ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1337:1: ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1348:1: ( ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1349:1: ( ( rule__Signals__Group_0__0 ) ) rule__Signals__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1337:1: ( ( rule__Signals__Group_0__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1338:1: ( rule__Signals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1349:1: ( ( rule__Signals__Group_0__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1350:1: ( rule__Signals__Group_0__0 )
             {
              before(grammarAccess.getSignalsAccess().getGroup_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1339:1: ( rule__Signals__Group_0__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1339:2: rule__Signals__Group_0__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1351:1: ( rule__Signals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1351:2: rule__Signals__Group_0__0
             {
-            pushFollow(FOLLOW_rule__Signals__Group_0__0_in_rule__Signals__Group__02743);
+            pushFollow(FOLLOW_rule__Signals__Group_0__0_in_rule__Signals__Group__02779);
             rule__Signals__Group_0__0();
             _fsp--;
 
@@ -3666,7 +3735,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signals__Group__1_in_rule__Signals__Group__02752);
+            pushFollow(FOLLOW_rule__Signals__Group__1_in_rule__Signals__Group__02788);
             rule__Signals__Group__1();
             _fsp--;
 
@@ -3689,20 +3758,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1350:1: rule__Signals__Group__1 : ( ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1362:1: rule__Signals__Group__1 : ( ';' ) ;
     public final void rule__Signals__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1354:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1355:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1366:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1367:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1355:1: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1356:1: ';'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1367:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1368:1: ';'
             {
              before(grammarAccess.getSignalsAccess().getSemicolonKeyword_1()); 
-            match(input,29,FOLLOW_29_in_rule__Signals__Group__12781); 
+            match(input,29,FOLLOW_29_in_rule__Signals__Group__12817); 
              after(grammarAccess.getSignalsAccess().getSemicolonKeyword_1()); 
 
             }
@@ -3726,23 +3795,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1373:1: rule__Signals__Group_0__0 : ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1385:1: rule__Signals__Group_0__0 : ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1 ;
     public final void rule__Signals__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1377:1: ( ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1378:1: ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1389:1: ( ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1390:1: ( ( rule__Signals__SignalsAssignment_0_0 ) ) rule__Signals__Group_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1378:1: ( ( rule__Signals__SignalsAssignment_0_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1379:1: ( rule__Signals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1390:1: ( ( rule__Signals__SignalsAssignment_0_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1391:1: ( rule__Signals__SignalsAssignment_0_0 )
             {
              before(grammarAccess.getSignalsAccess().getSignalsAssignment_0_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1380:1: ( rule__Signals__SignalsAssignment_0_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1380:2: rule__Signals__SignalsAssignment_0_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1392:1: ( rule__Signals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1392:2: rule__Signals__SignalsAssignment_0_0
             {
-            pushFollow(FOLLOW_rule__Signals__SignalsAssignment_0_0_in_rule__Signals__Group_0__02820);
+            pushFollow(FOLLOW_rule__Signals__SignalsAssignment_0_0_in_rule__Signals__Group_0__02856);
             rule__Signals__SignalsAssignment_0_0();
             _fsp--;
 
@@ -3753,7 +3822,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signals__Group_0__1_in_rule__Signals__Group_0__02829);
+            pushFollow(FOLLOW_rule__Signals__Group_0__1_in_rule__Signals__Group_0__02865);
             rule__Signals__Group_0__1();
             _fsp--;
 
@@ -3776,20 +3845,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1391:1: rule__Signals__Group_0__1 : ( ( rule__Signals__Group_0_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1403:1: rule__Signals__Group_0__1 : ( ( rule__Signals__Group_0_1__0 )* ) ;
     public final void rule__Signals__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1395:1: ( ( ( rule__Signals__Group_0_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1396:1: ( ( rule__Signals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1407:1: ( ( ( rule__Signals__Group_0_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1408:1: ( ( rule__Signals__Group_0_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1396:1: ( ( rule__Signals__Group_0_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1397:1: ( rule__Signals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1408:1: ( ( rule__Signals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1409:1: ( rule__Signals__Group_0_1__0 )*
             {
              before(grammarAccess.getSignalsAccess().getGroup_0_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1398:1: ( rule__Signals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1410:1: ( rule__Signals__Group_0_1__0 )*
             loop13:
             do {
                 int alt13=2;
@@ -3802,9 +3871,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt13) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1398:2: rule__Signals__Group_0_1__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1410:2: rule__Signals__Group_0_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__Signals__Group_0_1__0_in_rule__Signals__Group_0__12857);
+            	    pushFollow(FOLLOW_rule__Signals__Group_0_1__0_in_rule__Signals__Group_0__12893);
             	    rule__Signals__Group_0_1__0();
             	    _fsp--;
 
@@ -3840,25 +3909,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group_0_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1412:1: rule__Signals__Group_0_1__0 : ( ',' ) rule__Signals__Group_0_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1424:1: rule__Signals__Group_0_1__0 : ( ',' ) rule__Signals__Group_0_1__1 ;
     public final void rule__Signals__Group_0_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1416:1: ( ( ',' ) rule__Signals__Group_0_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1417:1: ( ',' ) rule__Signals__Group_0_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1428:1: ( ( ',' ) rule__Signals__Group_0_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1429:1: ( ',' ) rule__Signals__Group_0_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1417:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1418:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1429:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1430:1: ','
             {
              before(grammarAccess.getSignalsAccess().getCommaKeyword_0_1_0()); 
-            match(input,31,FOLLOW_31_in_rule__Signals__Group_0_1__02897); 
+            match(input,31,FOLLOW_31_in_rule__Signals__Group_0_1__02933); 
              after(grammarAccess.getSignalsAccess().getCommaKeyword_0_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signals__Group_0_1__1_in_rule__Signals__Group_0_1__02907);
+            pushFollow(FOLLOW_rule__Signals__Group_0_1__1_in_rule__Signals__Group_0_1__02943);
             rule__Signals__Group_0_1__1();
             _fsp--;
 
@@ -3881,23 +3950,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__Group_0_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1432:1: rule__Signals__Group_0_1__1 : ( ( rule__Signals__SignalsAssignment_0_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1444:1: rule__Signals__Group_0_1__1 : ( ( rule__Signals__SignalsAssignment_0_1_1 ) ) ;
     public final void rule__Signals__Group_0_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1436:1: ( ( ( rule__Signals__SignalsAssignment_0_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1437:1: ( ( rule__Signals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1448:1: ( ( ( rule__Signals__SignalsAssignment_0_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1449:1: ( ( rule__Signals__SignalsAssignment_0_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1437:1: ( ( rule__Signals__SignalsAssignment_0_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1438:1: ( rule__Signals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1449:1: ( ( rule__Signals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1450:1: ( rule__Signals__SignalsAssignment_0_1_1 )
             {
              before(grammarAccess.getSignalsAccess().getSignalsAssignment_0_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1439:1: ( rule__Signals__SignalsAssignment_0_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1439:2: rule__Signals__SignalsAssignment_0_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1451:1: ( rule__Signals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1451:2: rule__Signals__SignalsAssignment_0_1_1
             {
-            pushFollow(FOLLOW_rule__Signals__SignalsAssignment_0_1_1_in_rule__Signals__Group_0_1__12935);
+            pushFollow(FOLLOW_rule__Signals__SignalsAssignment_0_1_1_in_rule__Signals__Group_0_1__12971);
             rule__Signals__SignalsAssignment_0_1_1();
             _fsp--;
 
@@ -3927,23 +3996,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1453:1: rule__InputSignals__Group__0 : ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1465:1: rule__InputSignals__Group__0 : ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1 ;
     public final void rule__InputSignals__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1457:1: ( ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1458:1: ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1469:1: ( ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1470:1: ( ( rule__InputSignals__Group_0__0 ) ) rule__InputSignals__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1458:1: ( ( rule__InputSignals__Group_0__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1459:1: ( rule__InputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1470:1: ( ( rule__InputSignals__Group_0__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1471:1: ( rule__InputSignals__Group_0__0 )
             {
              before(grammarAccess.getInputSignalsAccess().getGroup_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1460:1: ( rule__InputSignals__Group_0__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1460:2: rule__InputSignals__Group_0__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1472:1: ( rule__InputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1472:2: rule__InputSignals__Group_0__0
             {
-            pushFollow(FOLLOW_rule__InputSignals__Group_0__0_in_rule__InputSignals__Group__02973);
+            pushFollow(FOLLOW_rule__InputSignals__Group_0__0_in_rule__InputSignals__Group__03009);
             rule__InputSignals__Group_0__0();
             _fsp--;
 
@@ -3954,7 +4023,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__InputSignals__Group__1_in_rule__InputSignals__Group__02982);
+            pushFollow(FOLLOW_rule__InputSignals__Group__1_in_rule__InputSignals__Group__03018);
             rule__InputSignals__Group__1();
             _fsp--;
 
@@ -3977,20 +4046,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1471:1: rule__InputSignals__Group__1 : ( ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1483:1: rule__InputSignals__Group__1 : ( ';' ) ;
     public final void rule__InputSignals__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1475:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1476:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1487:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1488:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1476:1: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1477:1: ';'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1488:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1489:1: ';'
             {
              before(grammarAccess.getInputSignalsAccess().getSemicolonKeyword_1()); 
-            match(input,29,FOLLOW_29_in_rule__InputSignals__Group__13011); 
+            match(input,29,FOLLOW_29_in_rule__InputSignals__Group__13047); 
              after(grammarAccess.getInputSignalsAccess().getSemicolonKeyword_1()); 
 
             }
@@ -4014,23 +4083,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1494:1: rule__InputSignals__Group_0__0 : ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1506:1: rule__InputSignals__Group_0__0 : ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1 ;
     public final void rule__InputSignals__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1498:1: ( ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1499:1: ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1510:1: ( ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1511:1: ( ( rule__InputSignals__SignalsAssignment_0_0 ) ) rule__InputSignals__Group_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1499:1: ( ( rule__InputSignals__SignalsAssignment_0_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1500:1: ( rule__InputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1511:1: ( ( rule__InputSignals__SignalsAssignment_0_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1512:1: ( rule__InputSignals__SignalsAssignment_0_0 )
             {
              before(grammarAccess.getInputSignalsAccess().getSignalsAssignment_0_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1501:1: ( rule__InputSignals__SignalsAssignment_0_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1501:2: rule__InputSignals__SignalsAssignment_0_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1513:1: ( rule__InputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1513:2: rule__InputSignals__SignalsAssignment_0_0
             {
-            pushFollow(FOLLOW_rule__InputSignals__SignalsAssignment_0_0_in_rule__InputSignals__Group_0__03050);
+            pushFollow(FOLLOW_rule__InputSignals__SignalsAssignment_0_0_in_rule__InputSignals__Group_0__03086);
             rule__InputSignals__SignalsAssignment_0_0();
             _fsp--;
 
@@ -4041,7 +4110,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__InputSignals__Group_0__1_in_rule__InputSignals__Group_0__03059);
+            pushFollow(FOLLOW_rule__InputSignals__Group_0__1_in_rule__InputSignals__Group_0__03095);
             rule__InputSignals__Group_0__1();
             _fsp--;
 
@@ -4064,20 +4133,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1512:1: rule__InputSignals__Group_0__1 : ( ( rule__InputSignals__Group_0_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1524:1: rule__InputSignals__Group_0__1 : ( ( rule__InputSignals__Group_0_1__0 )* ) ;
     public final void rule__InputSignals__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1516:1: ( ( ( rule__InputSignals__Group_0_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1517:1: ( ( rule__InputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1528:1: ( ( ( rule__InputSignals__Group_0_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1529:1: ( ( rule__InputSignals__Group_0_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1517:1: ( ( rule__InputSignals__Group_0_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1518:1: ( rule__InputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1529:1: ( ( rule__InputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1530:1: ( rule__InputSignals__Group_0_1__0 )*
             {
              before(grammarAccess.getInputSignalsAccess().getGroup_0_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1519:1: ( rule__InputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1531:1: ( rule__InputSignals__Group_0_1__0 )*
             loop14:
             do {
                 int alt14=2;
@@ -4090,9 +4159,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1519:2: rule__InputSignals__Group_0_1__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1531:2: rule__InputSignals__Group_0_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__InputSignals__Group_0_1__0_in_rule__InputSignals__Group_0__13087);
+            	    pushFollow(FOLLOW_rule__InputSignals__Group_0_1__0_in_rule__InputSignals__Group_0__13123);
             	    rule__InputSignals__Group_0_1__0();
             	    _fsp--;
 
@@ -4128,25 +4197,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group_0_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1533:1: rule__InputSignals__Group_0_1__0 : ( ',' ) rule__InputSignals__Group_0_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1545:1: rule__InputSignals__Group_0_1__0 : ( ',' ) rule__InputSignals__Group_0_1__1 ;
     public final void rule__InputSignals__Group_0_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1537:1: ( ( ',' ) rule__InputSignals__Group_0_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1538:1: ( ',' ) rule__InputSignals__Group_0_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1549:1: ( ( ',' ) rule__InputSignals__Group_0_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1550:1: ( ',' ) rule__InputSignals__Group_0_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1538:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1539:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1550:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1551:1: ','
             {
              before(grammarAccess.getInputSignalsAccess().getCommaKeyword_0_1_0()); 
-            match(input,31,FOLLOW_31_in_rule__InputSignals__Group_0_1__03127); 
+            match(input,31,FOLLOW_31_in_rule__InputSignals__Group_0_1__03163); 
              after(grammarAccess.getInputSignalsAccess().getCommaKeyword_0_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__InputSignals__Group_0_1__1_in_rule__InputSignals__Group_0_1__03137);
+            pushFollow(FOLLOW_rule__InputSignals__Group_0_1__1_in_rule__InputSignals__Group_0_1__03173);
             rule__InputSignals__Group_0_1__1();
             _fsp--;
 
@@ -4169,23 +4238,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__Group_0_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1553:1: rule__InputSignals__Group_0_1__1 : ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1565:1: rule__InputSignals__Group_0_1__1 : ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) ) ;
     public final void rule__InputSignals__Group_0_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1557:1: ( ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1558:1: ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1569:1: ( ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1570:1: ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1558:1: ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1559:1: ( rule__InputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1570:1: ( ( rule__InputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1571:1: ( rule__InputSignals__SignalsAssignment_0_1_1 )
             {
              before(grammarAccess.getInputSignalsAccess().getSignalsAssignment_0_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1560:1: ( rule__InputSignals__SignalsAssignment_0_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1560:2: rule__InputSignals__SignalsAssignment_0_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1572:1: ( rule__InputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1572:2: rule__InputSignals__SignalsAssignment_0_1_1
             {
-            pushFollow(FOLLOW_rule__InputSignals__SignalsAssignment_0_1_1_in_rule__InputSignals__Group_0_1__13165);
+            pushFollow(FOLLOW_rule__InputSignals__SignalsAssignment_0_1_1_in_rule__InputSignals__Group_0_1__13201);
             rule__InputSignals__SignalsAssignment_0_1_1();
             _fsp--;
 
@@ -4215,23 +4284,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1574:1: rule__OutputSignals__Group__0 : ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1586:1: rule__OutputSignals__Group__0 : ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1 ;
     public final void rule__OutputSignals__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1578:1: ( ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1579:1: ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1590:1: ( ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1591:1: ( ( rule__OutputSignals__Group_0__0 ) ) rule__OutputSignals__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1579:1: ( ( rule__OutputSignals__Group_0__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1580:1: ( rule__OutputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1591:1: ( ( rule__OutputSignals__Group_0__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1592:1: ( rule__OutputSignals__Group_0__0 )
             {
              before(grammarAccess.getOutputSignalsAccess().getGroup_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1581:1: ( rule__OutputSignals__Group_0__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1581:2: rule__OutputSignals__Group_0__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1593:1: ( rule__OutputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1593:2: rule__OutputSignals__Group_0__0
             {
-            pushFollow(FOLLOW_rule__OutputSignals__Group_0__0_in_rule__OutputSignals__Group__03203);
+            pushFollow(FOLLOW_rule__OutputSignals__Group_0__0_in_rule__OutputSignals__Group__03239);
             rule__OutputSignals__Group_0__0();
             _fsp--;
 
@@ -4242,7 +4311,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__OutputSignals__Group__1_in_rule__OutputSignals__Group__03212);
+            pushFollow(FOLLOW_rule__OutputSignals__Group__1_in_rule__OutputSignals__Group__03248);
             rule__OutputSignals__Group__1();
             _fsp--;
 
@@ -4265,20 +4334,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1592:1: rule__OutputSignals__Group__1 : ( ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1604:1: rule__OutputSignals__Group__1 : ( ';' ) ;
     public final void rule__OutputSignals__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1596:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1597:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1608:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1609:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1597:1: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1598:1: ';'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1609:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1610:1: ';'
             {
              before(grammarAccess.getOutputSignalsAccess().getSemicolonKeyword_1()); 
-            match(input,29,FOLLOW_29_in_rule__OutputSignals__Group__13241); 
+            match(input,29,FOLLOW_29_in_rule__OutputSignals__Group__13277); 
              after(grammarAccess.getOutputSignalsAccess().getSemicolonKeyword_1()); 
 
             }
@@ -4302,23 +4371,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1615:1: rule__OutputSignals__Group_0__0 : ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1627:1: rule__OutputSignals__Group_0__0 : ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1 ;
     public final void rule__OutputSignals__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1619:1: ( ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1620:1: ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1631:1: ( ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1632:1: ( ( rule__OutputSignals__SignalsAssignment_0_0 ) ) rule__OutputSignals__Group_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1620:1: ( ( rule__OutputSignals__SignalsAssignment_0_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1621:1: ( rule__OutputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1632:1: ( ( rule__OutputSignals__SignalsAssignment_0_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1633:1: ( rule__OutputSignals__SignalsAssignment_0_0 )
             {
              before(grammarAccess.getOutputSignalsAccess().getSignalsAssignment_0_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1622:1: ( rule__OutputSignals__SignalsAssignment_0_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1622:2: rule__OutputSignals__SignalsAssignment_0_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1634:1: ( rule__OutputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1634:2: rule__OutputSignals__SignalsAssignment_0_0
             {
-            pushFollow(FOLLOW_rule__OutputSignals__SignalsAssignment_0_0_in_rule__OutputSignals__Group_0__03280);
+            pushFollow(FOLLOW_rule__OutputSignals__SignalsAssignment_0_0_in_rule__OutputSignals__Group_0__03316);
             rule__OutputSignals__SignalsAssignment_0_0();
             _fsp--;
 
@@ -4329,7 +4398,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__OutputSignals__Group_0__1_in_rule__OutputSignals__Group_0__03289);
+            pushFollow(FOLLOW_rule__OutputSignals__Group_0__1_in_rule__OutputSignals__Group_0__03325);
             rule__OutputSignals__Group_0__1();
             _fsp--;
 
@@ -4352,20 +4421,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1633:1: rule__OutputSignals__Group_0__1 : ( ( rule__OutputSignals__Group_0_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1645:1: rule__OutputSignals__Group_0__1 : ( ( rule__OutputSignals__Group_0_1__0 )* ) ;
     public final void rule__OutputSignals__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1637:1: ( ( ( rule__OutputSignals__Group_0_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1638:1: ( ( rule__OutputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1649:1: ( ( ( rule__OutputSignals__Group_0_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1650:1: ( ( rule__OutputSignals__Group_0_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1638:1: ( ( rule__OutputSignals__Group_0_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1639:1: ( rule__OutputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1650:1: ( ( rule__OutputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1651:1: ( rule__OutputSignals__Group_0_1__0 )*
             {
              before(grammarAccess.getOutputSignalsAccess().getGroup_0_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1640:1: ( rule__OutputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1652:1: ( rule__OutputSignals__Group_0_1__0 )*
             loop15:
             do {
                 int alt15=2;
@@ -4378,9 +4447,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt15) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1640:2: rule__OutputSignals__Group_0_1__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1652:2: rule__OutputSignals__Group_0_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__OutputSignals__Group_0_1__0_in_rule__OutputSignals__Group_0__13317);
+            	    pushFollow(FOLLOW_rule__OutputSignals__Group_0_1__0_in_rule__OutputSignals__Group_0__13353);
             	    rule__OutputSignals__Group_0_1__0();
             	    _fsp--;
 
@@ -4416,25 +4485,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group_0_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1654:1: rule__OutputSignals__Group_0_1__0 : ( ',' ) rule__OutputSignals__Group_0_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1666:1: rule__OutputSignals__Group_0_1__0 : ( ',' ) rule__OutputSignals__Group_0_1__1 ;
     public final void rule__OutputSignals__Group_0_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1658:1: ( ( ',' ) rule__OutputSignals__Group_0_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1659:1: ( ',' ) rule__OutputSignals__Group_0_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1670:1: ( ( ',' ) rule__OutputSignals__Group_0_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1671:1: ( ',' ) rule__OutputSignals__Group_0_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1659:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1660:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1671:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1672:1: ','
             {
              before(grammarAccess.getOutputSignalsAccess().getCommaKeyword_0_1_0()); 
-            match(input,31,FOLLOW_31_in_rule__OutputSignals__Group_0_1__03357); 
+            match(input,31,FOLLOW_31_in_rule__OutputSignals__Group_0_1__03393); 
              after(grammarAccess.getOutputSignalsAccess().getCommaKeyword_0_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__OutputSignals__Group_0_1__1_in_rule__OutputSignals__Group_0_1__03367);
+            pushFollow(FOLLOW_rule__OutputSignals__Group_0_1__1_in_rule__OutputSignals__Group_0_1__03403);
             rule__OutputSignals__Group_0_1__1();
             _fsp--;
 
@@ -4457,23 +4526,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__Group_0_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1674:1: rule__OutputSignals__Group_0_1__1 : ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1686:1: rule__OutputSignals__Group_0_1__1 : ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) ) ;
     public final void rule__OutputSignals__Group_0_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1678:1: ( ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1679:1: ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1690:1: ( ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1691:1: ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1679:1: ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1680:1: ( rule__OutputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1691:1: ( ( rule__OutputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1692:1: ( rule__OutputSignals__SignalsAssignment_0_1_1 )
             {
              before(grammarAccess.getOutputSignalsAccess().getSignalsAssignment_0_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1681:1: ( rule__OutputSignals__SignalsAssignment_0_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1681:2: rule__OutputSignals__SignalsAssignment_0_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1693:1: ( rule__OutputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1693:2: rule__OutputSignals__SignalsAssignment_0_1_1
             {
-            pushFollow(FOLLOW_rule__OutputSignals__SignalsAssignment_0_1_1_in_rule__OutputSignals__Group_0_1__13395);
+            pushFollow(FOLLOW_rule__OutputSignals__SignalsAssignment_0_1_1_in_rule__OutputSignals__Group_0_1__13431);
             rule__OutputSignals__SignalsAssignment_0_1_1();
             _fsp--;
 
@@ -4503,23 +4572,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1695:1: rule__InOutputSignals__Group__0 : ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1707:1: rule__InOutputSignals__Group__0 : ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1 ;
     public final void rule__InOutputSignals__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1699:1: ( ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1700:1: ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1711:1: ( ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1712:1: ( ( rule__InOutputSignals__Group_0__0 ) ) rule__InOutputSignals__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1700:1: ( ( rule__InOutputSignals__Group_0__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1701:1: ( rule__InOutputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1712:1: ( ( rule__InOutputSignals__Group_0__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1713:1: ( rule__InOutputSignals__Group_0__0 )
             {
              before(grammarAccess.getInOutputSignalsAccess().getGroup_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1702:1: ( rule__InOutputSignals__Group_0__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1702:2: rule__InOutputSignals__Group_0__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1714:1: ( rule__InOutputSignals__Group_0__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1714:2: rule__InOutputSignals__Group_0__0
             {
-            pushFollow(FOLLOW_rule__InOutputSignals__Group_0__0_in_rule__InOutputSignals__Group__03433);
+            pushFollow(FOLLOW_rule__InOutputSignals__Group_0__0_in_rule__InOutputSignals__Group__03469);
             rule__InOutputSignals__Group_0__0();
             _fsp--;
 
@@ -4530,7 +4599,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__InOutputSignals__Group__1_in_rule__InOutputSignals__Group__03442);
+            pushFollow(FOLLOW_rule__InOutputSignals__Group__1_in_rule__InOutputSignals__Group__03478);
             rule__InOutputSignals__Group__1();
             _fsp--;
 
@@ -4553,20 +4622,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1713:1: rule__InOutputSignals__Group__1 : ( ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1725:1: rule__InOutputSignals__Group__1 : ( ';' ) ;
     public final void rule__InOutputSignals__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1717:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1718:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1729:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1730:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1718:1: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1719:1: ';'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1730:1: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1731:1: ';'
             {
              before(grammarAccess.getInOutputSignalsAccess().getSemicolonKeyword_1()); 
-            match(input,29,FOLLOW_29_in_rule__InOutputSignals__Group__13471); 
+            match(input,29,FOLLOW_29_in_rule__InOutputSignals__Group__13507); 
              after(grammarAccess.getInOutputSignalsAccess().getSemicolonKeyword_1()); 
 
             }
@@ -4590,23 +4659,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group_0__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1736:1: rule__InOutputSignals__Group_0__0 : ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1748:1: rule__InOutputSignals__Group_0__0 : ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1 ;
     public final void rule__InOutputSignals__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1740:1: ( ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1741:1: ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1752:1: ( ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1753:1: ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) ) rule__InOutputSignals__Group_0__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1741:1: ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1742:1: ( rule__InOutputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1753:1: ( ( rule__InOutputSignals__SignalsAssignment_0_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1754:1: ( rule__InOutputSignals__SignalsAssignment_0_0 )
             {
              before(grammarAccess.getInOutputSignalsAccess().getSignalsAssignment_0_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1743:1: ( rule__InOutputSignals__SignalsAssignment_0_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1743:2: rule__InOutputSignals__SignalsAssignment_0_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1755:1: ( rule__InOutputSignals__SignalsAssignment_0_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1755:2: rule__InOutputSignals__SignalsAssignment_0_0
             {
-            pushFollow(FOLLOW_rule__InOutputSignals__SignalsAssignment_0_0_in_rule__InOutputSignals__Group_0__03510);
+            pushFollow(FOLLOW_rule__InOutputSignals__SignalsAssignment_0_0_in_rule__InOutputSignals__Group_0__03546);
             rule__InOutputSignals__SignalsAssignment_0_0();
             _fsp--;
 
@@ -4617,7 +4686,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__InOutputSignals__Group_0__1_in_rule__InOutputSignals__Group_0__03519);
+            pushFollow(FOLLOW_rule__InOutputSignals__Group_0__1_in_rule__InOutputSignals__Group_0__03555);
             rule__InOutputSignals__Group_0__1();
             _fsp--;
 
@@ -4640,20 +4709,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group_0__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1754:1: rule__InOutputSignals__Group_0__1 : ( ( rule__InOutputSignals__Group_0_1__0 )* ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1766:1: rule__InOutputSignals__Group_0__1 : ( ( rule__InOutputSignals__Group_0_1__0 )* ) ;
     public final void rule__InOutputSignals__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1758:1: ( ( ( rule__InOutputSignals__Group_0_1__0 )* ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1759:1: ( ( rule__InOutputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1770:1: ( ( ( rule__InOutputSignals__Group_0_1__0 )* ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1771:1: ( ( rule__InOutputSignals__Group_0_1__0 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1759:1: ( ( rule__InOutputSignals__Group_0_1__0 )* )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1760:1: ( rule__InOutputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1771:1: ( ( rule__InOutputSignals__Group_0_1__0 )* )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1772:1: ( rule__InOutputSignals__Group_0_1__0 )*
             {
              before(grammarAccess.getInOutputSignalsAccess().getGroup_0_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1761:1: ( rule__InOutputSignals__Group_0_1__0 )*
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1773:1: ( rule__InOutputSignals__Group_0_1__0 )*
             loop16:
             do {
                 int alt16=2;
@@ -4666,9 +4735,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
                 switch (alt16) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1761:2: rule__InOutputSignals__Group_0_1__0
+            	    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1773:2: rule__InOutputSignals__Group_0_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__InOutputSignals__Group_0_1__0_in_rule__InOutputSignals__Group_0__13547);
+            	    pushFollow(FOLLOW_rule__InOutputSignals__Group_0_1__0_in_rule__InOutputSignals__Group_0__13583);
             	    rule__InOutputSignals__Group_0_1__0();
             	    _fsp--;
 
@@ -4704,25 +4773,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group_0_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1775:1: rule__InOutputSignals__Group_0_1__0 : ( ',' ) rule__InOutputSignals__Group_0_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1787:1: rule__InOutputSignals__Group_0_1__0 : ( ',' ) rule__InOutputSignals__Group_0_1__1 ;
     public final void rule__InOutputSignals__Group_0_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1779:1: ( ( ',' ) rule__InOutputSignals__Group_0_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1780:1: ( ',' ) rule__InOutputSignals__Group_0_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1791:1: ( ( ',' ) rule__InOutputSignals__Group_0_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1792:1: ( ',' ) rule__InOutputSignals__Group_0_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1780:1: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1781:1: ','
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1792:1: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1793:1: ','
             {
              before(grammarAccess.getInOutputSignalsAccess().getCommaKeyword_0_1_0()); 
-            match(input,31,FOLLOW_31_in_rule__InOutputSignals__Group_0_1__03587); 
+            match(input,31,FOLLOW_31_in_rule__InOutputSignals__Group_0_1__03623); 
              after(grammarAccess.getInOutputSignalsAccess().getCommaKeyword_0_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__InOutputSignals__Group_0_1__1_in_rule__InOutputSignals__Group_0_1__03597);
+            pushFollow(FOLLOW_rule__InOutputSignals__Group_0_1__1_in_rule__InOutputSignals__Group_0_1__03633);
             rule__InOutputSignals__Group_0_1__1();
             _fsp--;
 
@@ -4745,23 +4814,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__Group_0_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1795:1: rule__InOutputSignals__Group_0_1__1 : ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1807:1: rule__InOutputSignals__Group_0_1__1 : ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) ) ;
     public final void rule__InOutputSignals__Group_0_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1799:1: ( ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1800:1: ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1811:1: ( ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1812:1: ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1800:1: ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1801:1: ( rule__InOutputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1812:1: ( ( rule__InOutputSignals__SignalsAssignment_0_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1813:1: ( rule__InOutputSignals__SignalsAssignment_0_1_1 )
             {
              before(grammarAccess.getInOutputSignalsAccess().getSignalsAssignment_0_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1802:1: ( rule__InOutputSignals__SignalsAssignment_0_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1802:2: rule__InOutputSignals__SignalsAssignment_0_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1814:1: ( rule__InOutputSignals__SignalsAssignment_0_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1814:2: rule__InOutputSignals__SignalsAssignment_0_1_1
             {
-            pushFollow(FOLLOW_rule__InOutputSignals__SignalsAssignment_0_1_1_in_rule__InOutputSignals__Group_0_1__13625);
+            pushFollow(FOLLOW_rule__InOutputSignals__SignalsAssignment_0_1_1_in_rule__InOutputSignals__Group_0_1__13661);
             rule__InOutputSignals__SignalsAssignment_0_1_1();
             _fsp--;
 
@@ -4791,23 +4860,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1816:1: rule__Signal__Group_1__0 : ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1828:1: rule__Signal__Group_1__0 : ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1 ;
     public final void rule__Signal__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1820:1: ( ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1821:1: ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1832:1: ( ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1833:1: ( ( rule__Signal__NameAssignment_1_0 ) ) rule__Signal__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1821:1: ( ( rule__Signal__NameAssignment_1_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1822:1: ( rule__Signal__NameAssignment_1_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1833:1: ( ( rule__Signal__NameAssignment_1_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1834:1: ( rule__Signal__NameAssignment_1_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_1_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1823:1: ( rule__Signal__NameAssignment_1_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1823:2: rule__Signal__NameAssignment_1_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1835:1: ( rule__Signal__NameAssignment_1_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1835:2: rule__Signal__NameAssignment_1_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_1_0_in_rule__Signal__Group_1__03663);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_1_0_in_rule__Signal__Group_1__03699);
             rule__Signal__NameAssignment_1_0();
             _fsp--;
 
@@ -4818,7 +4887,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__03672);
+            pushFollow(FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__03708);
             rule__Signal__Group_1__1();
             _fsp--;
 
@@ -4841,32 +4910,27 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1834:1: rule__Signal__Group_1__1 : ( ( rule__Signal__Group_1_1__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1846:1: rule__Signal__Group_1__1 : ( ':' ) rule__Signal__Group_1__2 ;
     public final void rule__Signal__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1838:1: ( ( ( rule__Signal__Group_1_1__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1839:1: ( ( rule__Signal__Group_1_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1850:1: ( ( ':' ) rule__Signal__Group_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1851:1: ( ':' ) rule__Signal__Group_1__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1839:1: ( ( rule__Signal__Group_1_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1840:1: ( rule__Signal__Group_1_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1851:1: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1852:1: ':'
             {
-             before(grammarAccess.getSignalAccess().getGroup_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1841:1: ( rule__Signal__Group_1_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1841:2: rule__Signal__Group_1_1__0
-            {
-            pushFollow(FOLLOW_rule__Signal__Group_1_1__0_in_rule__Signal__Group_1__13700);
-            rule__Signal__Group_1_1__0();
+             before(grammarAccess.getSignalAccess().getColonKeyword_1_1()); 
+            match(input,28,FOLLOW_28_in_rule__Signal__Group_1__13737); 
+             after(grammarAccess.getSignalAccess().getColonKeyword_1_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_1__2_in_rule__Signal__Group_1__13747);
+            rule__Signal__Group_1__2();
             _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getGroup_1_1()); 
-
-            }
 
 
             }
@@ -4886,72 +4950,31 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_1__1
 
 
-    // $ANTLR start rule__Signal__Group_1_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1855:1: rule__Signal__Group_1_1__0 : ( ':=' ) rule__Signal__Group_1_1__1 ;
-    public final void rule__Signal__Group_1_1__0() throws RecognitionException {
+    // $ANTLR start rule__Signal__Group_1__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1866:1: rule__Signal__Group_1__2 : ( ( rule__Signal__TypeAssignment_1_2 ) ) ;
+    public final void rule__Signal__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1859:1: ( ( ':=' ) rule__Signal__Group_1_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1860:1: ( ':=' ) rule__Signal__Group_1_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1870:1: ( ( ( rule__Signal__TypeAssignment_1_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1871:1: ( ( rule__Signal__TypeAssignment_1_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1860:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1861:1: ':='
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1871:1: ( ( rule__Signal__TypeAssignment_1_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1872:1: ( rule__Signal__TypeAssignment_1_2 )
             {
-             before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Signal__Group_1_1__03739); 
-             after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_1_0()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_1_1__1_in_rule__Signal__Group_1_1__03749);
-            rule__Signal__Group_1_1__1();
+             before(grammarAccess.getSignalAccess().getTypeAssignment_1_2()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1873:1: ( rule__Signal__TypeAssignment_1_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1873:2: rule__Signal__TypeAssignment_1_2
+            {
+            pushFollow(FOLLOW_rule__Signal__TypeAssignment_1_2_in_rule__Signal__Group_1__23775);
+            rule__Signal__TypeAssignment_1_2();
             _fsp--;
 
 
             }
 
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_1_1__0
-
-
-    // $ANTLR start rule__Signal__Group_1_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1875:1: rule__Signal__Group_1_1__1 : ( ( rule__Signal__InitialValueAssignment_1_1_1 ) ) ;
-    public final void rule__Signal__Group_1_1__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1879:1: ( ( ( rule__Signal__InitialValueAssignment_1_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1880:1: ( ( rule__Signal__InitialValueAssignment_1_1_1 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1880:1: ( ( rule__Signal__InitialValueAssignment_1_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1881:1: ( rule__Signal__InitialValueAssignment_1_1_1 )
-            {
-             before(grammarAccess.getSignalAccess().getInitialValueAssignment_1_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1882:1: ( rule__Signal__InitialValueAssignment_1_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1882:2: rule__Signal__InitialValueAssignment_1_1_1
-            {
-            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_1_1_1_in_rule__Signal__Group_1_1__13777);
-            rule__Signal__InitialValueAssignment_1_1_1();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getInitialValueAssignment_1_1_1()); 
+             after(grammarAccess.getSignalAccess().getTypeAssignment_1_2()); 
 
             }
 
@@ -4970,25 +4993,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1_1__1
+    // $ANTLR end rule__Signal__Group_1__2
 
 
     // $ANTLR start rule__Signal__Group_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1896:1: rule__Signal__Group_2__0 : ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1889:1: rule__Signal__Group_2__0 : ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1 ;
     public final void rule__Signal__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1900:1: ( ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1901:1: ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1893:1: ( ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1894:1: ( ( rule__Signal__NameAssignment_2_0 ) ) rule__Signal__Group_2__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1901:1: ( ( rule__Signal__NameAssignment_2_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1902:1: ( rule__Signal__NameAssignment_2_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1894:1: ( ( rule__Signal__NameAssignment_2_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1895:1: ( rule__Signal__NameAssignment_2_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_2_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1903:1: ( rule__Signal__NameAssignment_2_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1903:2: rule__Signal__NameAssignment_2_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1896:1: ( rule__Signal__NameAssignment_2_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1896:2: rule__Signal__NameAssignment_2_0
             {
             pushFollow(FOLLOW_rule__Signal__NameAssignment_2_0_in_rule__Signal__Group_2__03815);
             rule__Signal__NameAssignment_2_0();
@@ -5024,21 +5047,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1914:1: rule__Signal__Group_2__1 : ( ( rule__Signal__Group_2_1__0 ) ) rule__Signal__Group_2__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1907:1: rule__Signal__Group_2__1 : ( ( rule__Signal__Group_2_1__0 ) ) ;
     public final void rule__Signal__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1918:1: ( ( ( rule__Signal__Group_2_1__0 ) ) rule__Signal__Group_2__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1919:1: ( ( rule__Signal__Group_2_1__0 ) ) rule__Signal__Group_2__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1911:1: ( ( ( rule__Signal__Group_2_1__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1912:1: ( ( rule__Signal__Group_2_1__0 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1919:1: ( ( rule__Signal__Group_2_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1920:1: ( rule__Signal__Group_2_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1912:1: ( ( rule__Signal__Group_2_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1913:1: ( rule__Signal__Group_2_1__0 )
             {
              before(grammarAccess.getSignalAccess().getGroup_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1921:1: ( rule__Signal__Group_2_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1921:2: rule__Signal__Group_2_1__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1914:1: ( rule__Signal__Group_2_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1914:2: rule__Signal__Group_2_1__0
             {
             pushFollow(FOLLOW_rule__Signal__Group_2_1__0_in_rule__Signal__Group_2__13852);
             rule__Signal__Group_2_1__0();
@@ -5050,10 +5073,6 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
              after(grammarAccess.getSignalAccess().getGroup_2_1()); 
 
             }
-
-            pushFollow(FOLLOW_rule__Signal__Group_2__2_in_rule__Signal__Group_2__13861);
-            rule__Signal__Group_2__2();
-            _fsp--;
 
 
             }
@@ -5073,72 +5092,26 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_2__1
 
 
-    // $ANTLR start rule__Signal__Group_2__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1932:1: rule__Signal__Group_2__2 : ( ( rule__Signal__TypeAssignment_2_2 ) ) ;
-    public final void rule__Signal__Group_2__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1936:1: ( ( ( rule__Signal__TypeAssignment_2_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1937:1: ( ( rule__Signal__TypeAssignment_2_2 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1937:1: ( ( rule__Signal__TypeAssignment_2_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1938:1: ( rule__Signal__TypeAssignment_2_2 )
-            {
-             before(grammarAccess.getSignalAccess().getTypeAssignment_2_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1939:1: ( rule__Signal__TypeAssignment_2_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1939:2: rule__Signal__TypeAssignment_2_2
-            {
-            pushFollow(FOLLOW_rule__Signal__TypeAssignment_2_2_in_rule__Signal__Group_2__23889);
-            rule__Signal__TypeAssignment_2_2();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getTypeAssignment_2_2()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_2__2
-
-
     // $ANTLR start rule__Signal__Group_2_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1955:1: rule__Signal__Group_2_1__0 : ( ':=' ) rule__Signal__Group_2_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1928:1: rule__Signal__Group_2_1__0 : ( ':=' ) rule__Signal__Group_2_1__1 ;
     public final void rule__Signal__Group_2_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1959:1: ( ( ':=' ) rule__Signal__Group_2_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1960:1: ( ':=' ) rule__Signal__Group_2_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1932:1: ( ( ':=' ) rule__Signal__Group_2_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1933:1: ( ':=' ) rule__Signal__Group_2_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1960:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1961:1: ':='
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1933:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1934:1: ':='
             {
              before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_2_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Signal__Group_2_1__03930); 
+            match(input,32,FOLLOW_32_in_rule__Signal__Group_2_1__03891); 
              after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_2_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_2_1__1_in_rule__Signal__Group_2_1__03940);
+            pushFollow(FOLLOW_rule__Signal__Group_2_1__1_in_rule__Signal__Group_2_1__03901);
             rule__Signal__Group_2_1__1();
             _fsp--;
 
@@ -5161,23 +5134,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_2_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1975:1: rule__Signal__Group_2_1__1 : ( ( rule__Signal__InitialValueAssignment_2_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1948:1: rule__Signal__Group_2_1__1 : ( ( rule__Signal__InitialValueAssignment_2_1_1 ) ) ;
     public final void rule__Signal__Group_2_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1979:1: ( ( ( rule__Signal__InitialValueAssignment_2_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1980:1: ( ( rule__Signal__InitialValueAssignment_2_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1952:1: ( ( ( rule__Signal__InitialValueAssignment_2_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1953:1: ( ( rule__Signal__InitialValueAssignment_2_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1980:1: ( ( rule__Signal__InitialValueAssignment_2_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1981:1: ( rule__Signal__InitialValueAssignment_2_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1953:1: ( ( rule__Signal__InitialValueAssignment_2_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1954:1: ( rule__Signal__InitialValueAssignment_2_1_1 )
             {
              before(grammarAccess.getSignalAccess().getInitialValueAssignment_2_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1982:1: ( rule__Signal__InitialValueAssignment_2_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1982:2: rule__Signal__InitialValueAssignment_2_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1955:1: ( rule__Signal__InitialValueAssignment_2_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1955:2: rule__Signal__InitialValueAssignment_2_1_1
             {
-            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_2_1_1_in_rule__Signal__Group_2_1__13968);
+            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_2_1_1_in_rule__Signal__Group_2_1__13929);
             rule__Signal__InitialValueAssignment_2_1_1();
             _fsp--;
 
@@ -5207,23 +5180,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_3__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1996:1: rule__Signal__Group_3__0 : ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1969:1: rule__Signal__Group_3__0 : ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1 ;
     public final void rule__Signal__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2000:1: ( ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2001:1: ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1973:1: ( ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1974:1: ( ( rule__Signal__NameAssignment_3_0 ) ) rule__Signal__Group_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2001:1: ( ( rule__Signal__NameAssignment_3_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2002:1: ( rule__Signal__NameAssignment_3_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1974:1: ( ( rule__Signal__NameAssignment_3_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1975:1: ( rule__Signal__NameAssignment_3_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_3_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2003:1: ( rule__Signal__NameAssignment_3_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2003:2: rule__Signal__NameAssignment_3_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1976:1: ( rule__Signal__NameAssignment_3_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1976:2: rule__Signal__NameAssignment_3_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_3_0_in_rule__Signal__Group_3__04006);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_3_0_in_rule__Signal__Group_3__03967);
             rule__Signal__NameAssignment_3_0();
             _fsp--;
 
@@ -5234,7 +5207,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_3__1_in_rule__Signal__Group_3__04015);
+            pushFollow(FOLLOW_rule__Signal__Group_3__1_in_rule__Signal__Group_3__03976);
             rule__Signal__Group_3__1();
             _fsp--;
 
@@ -5257,23 +5230,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_3__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2014:1: rule__Signal__Group_3__1 : ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1987:1: rule__Signal__Group_3__1 : ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2 ;
     public final void rule__Signal__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2018:1: ( ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2019:1: ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1991:1: ( ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1992:1: ( ( rule__Signal__Group_3_1__0 ) ) rule__Signal__Group_3__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2019:1: ( ( rule__Signal__Group_3_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2020:1: ( rule__Signal__Group_3_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1992:1: ( ( rule__Signal__Group_3_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1993:1: ( rule__Signal__Group_3_1__0 )
             {
              before(grammarAccess.getSignalAccess().getGroup_3_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2021:1: ( rule__Signal__Group_3_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2021:2: rule__Signal__Group_3_1__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1994:1: ( rule__Signal__Group_3_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:1994:2: rule__Signal__Group_3_1__0
             {
-            pushFollow(FOLLOW_rule__Signal__Group_3_1__0_in_rule__Signal__Group_3__14043);
+            pushFollow(FOLLOW_rule__Signal__Group_3_1__0_in_rule__Signal__Group_3__14004);
             rule__Signal__Group_3_1__0();
             _fsp--;
 
@@ -5284,7 +5257,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_3__2_in_rule__Signal__Group_3__14052);
+            pushFollow(FOLLOW_rule__Signal__Group_3__2_in_rule__Signal__Group_3__14013);
             rule__Signal__Group_3__2();
             _fsp--;
 
@@ -5307,32 +5280,27 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_3__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2032:1: rule__Signal__Group_3__2 : ( ( rule__Signal__Group_3_2__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2005:1: rule__Signal__Group_3__2 : ( ':' ) rule__Signal__Group_3__3 ;
     public final void rule__Signal__Group_3__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2036:1: ( ( ( rule__Signal__Group_3_2__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2037:1: ( ( rule__Signal__Group_3_2__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2009:1: ( ( ':' ) rule__Signal__Group_3__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2010:1: ( ':' ) rule__Signal__Group_3__3
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2037:1: ( ( rule__Signal__Group_3_2__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2038:1: ( rule__Signal__Group_3_2__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2010:1: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2011:1: ':'
             {
-             before(grammarAccess.getSignalAccess().getGroup_3_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2039:1: ( rule__Signal__Group_3_2__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2039:2: rule__Signal__Group_3_2__0
-            {
-            pushFollow(FOLLOW_rule__Signal__Group_3_2__0_in_rule__Signal__Group_3__24080);
-            rule__Signal__Group_3_2__0();
+             before(grammarAccess.getSignalAccess().getColonKeyword_3_2()); 
+            match(input,28,FOLLOW_28_in_rule__Signal__Group_3__24042); 
+             after(grammarAccess.getSignalAccess().getColonKeyword_3_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_3__3_in_rule__Signal__Group_3__24052);
+            rule__Signal__Group_3__3();
             _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getGroup_3_2()); 
-
-            }
 
 
             }
@@ -5352,26 +5320,72 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_3__2
 
 
+    // $ANTLR start rule__Signal__Group_3__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2025:1: rule__Signal__Group_3__3 : ( ( rule__Signal__TypeAssignment_3_3 ) ) ;
+    public final void rule__Signal__Group_3__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2029:1: ( ( ( rule__Signal__TypeAssignment_3_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2030:1: ( ( rule__Signal__TypeAssignment_3_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2030:1: ( ( rule__Signal__TypeAssignment_3_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2031:1: ( rule__Signal__TypeAssignment_3_3 )
+            {
+             before(grammarAccess.getSignalAccess().getTypeAssignment_3_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2032:1: ( rule__Signal__TypeAssignment_3_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2032:2: rule__Signal__TypeAssignment_3_3
+            {
+            pushFollow(FOLLOW_rule__Signal__TypeAssignment_3_3_in_rule__Signal__Group_3__34080);
+            rule__Signal__TypeAssignment_3_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getTypeAssignment_3_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_3__3
+
+
     // $ANTLR start rule__Signal__Group_3_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2055:1: rule__Signal__Group_3_1__0 : ( ':=' ) rule__Signal__Group_3_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2050:1: rule__Signal__Group_3_1__0 : ( ':=' ) rule__Signal__Group_3_1__1 ;
     public final void rule__Signal__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2059:1: ( ( ':=' ) rule__Signal__Group_3_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2060:1: ( ':=' ) rule__Signal__Group_3_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2054:1: ( ( ':=' ) rule__Signal__Group_3_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2055:1: ( ':=' ) rule__Signal__Group_3_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2060:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2061:1: ':='
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2055:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2056:1: ':='
             {
              before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_3_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Signal__Group_3_1__04121); 
+            match(input,32,FOLLOW_32_in_rule__Signal__Group_3_1__04123); 
              after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_3_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_3_1__1_in_rule__Signal__Group_3_1__04131);
+            pushFollow(FOLLOW_rule__Signal__Group_3_1__1_in_rule__Signal__Group_3_1__04133);
             rule__Signal__Group_3_1__1();
             _fsp--;
 
@@ -5394,23 +5408,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_3_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2075:1: rule__Signal__Group_3_1__1 : ( ( rule__Signal__InitialValueAssignment_3_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2070:1: rule__Signal__Group_3_1__1 : ( ( rule__Signal__InitialValueAssignment_3_1_1 ) ) ;
     public final void rule__Signal__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2079:1: ( ( ( rule__Signal__InitialValueAssignment_3_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2080:1: ( ( rule__Signal__InitialValueAssignment_3_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2074:1: ( ( ( rule__Signal__InitialValueAssignment_3_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2075:1: ( ( rule__Signal__InitialValueAssignment_3_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2080:1: ( ( rule__Signal__InitialValueAssignment_3_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2081:1: ( rule__Signal__InitialValueAssignment_3_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2075:1: ( ( rule__Signal__InitialValueAssignment_3_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2076:1: ( rule__Signal__InitialValueAssignment_3_1_1 )
             {
              before(grammarAccess.getSignalAccess().getInitialValueAssignment_3_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2082:1: ( rule__Signal__InitialValueAssignment_3_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2082:2: rule__Signal__InitialValueAssignment_3_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2077:1: ( rule__Signal__InitialValueAssignment_3_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2077:2: rule__Signal__InitialValueAssignment_3_1_1
             {
-            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_3_1_1_in_rule__Signal__Group_3_1__14159);
+            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_3_1_1_in_rule__Signal__Group_3_1__14161);
             rule__Signal__InitialValueAssignment_3_1_1();
             _fsp--;
 
@@ -5439,202 +5453,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_3_1__1
 
 
-    // $ANTLR start rule__Signal__Group_3_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2096:1: rule__Signal__Group_3_2__0 : ( 'combine' ) rule__Signal__Group_3_2__1 ;
-    public final void rule__Signal__Group_3_2__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2100:1: ( ( 'combine' ) rule__Signal__Group_3_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2101:1: ( 'combine' ) rule__Signal__Group_3_2__1
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2101:1: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2102:1: 'combine'
-            {
-             before(grammarAccess.getSignalAccess().getCombineKeyword_3_2_0()); 
-            match(input,33,FOLLOW_33_in_rule__Signal__Group_3_2__04198); 
-             after(grammarAccess.getSignalAccess().getCombineKeyword_3_2_0()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_3_2__1_in_rule__Signal__Group_3_2__04208);
-            rule__Signal__Group_3_2__1();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_3_2__0
-
-
-    // $ANTLR start rule__Signal__Group_3_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2116:1: rule__Signal__Group_3_2__1 : ( ( rule__Signal__TypeAssignment_3_2_1 ) ) rule__Signal__Group_3_2__2 ;
-    public final void rule__Signal__Group_3_2__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2120:1: ( ( ( rule__Signal__TypeAssignment_3_2_1 ) ) rule__Signal__Group_3_2__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2121:1: ( ( rule__Signal__TypeAssignment_3_2_1 ) ) rule__Signal__Group_3_2__2
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2121:1: ( ( rule__Signal__TypeAssignment_3_2_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2122:1: ( rule__Signal__TypeAssignment_3_2_1 )
-            {
-             before(grammarAccess.getSignalAccess().getTypeAssignment_3_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2123:1: ( rule__Signal__TypeAssignment_3_2_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2123:2: rule__Signal__TypeAssignment_3_2_1
-            {
-            pushFollow(FOLLOW_rule__Signal__TypeAssignment_3_2_1_in_rule__Signal__Group_3_2__14236);
-            rule__Signal__TypeAssignment_3_2_1();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getTypeAssignment_3_2_1()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_3_2__2_in_rule__Signal__Group_3_2__14245);
-            rule__Signal__Group_3_2__2();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_3_2__1
-
-
-    // $ANTLR start rule__Signal__Group_3_2__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2134:1: rule__Signal__Group_3_2__2 : ( 'with' ) rule__Signal__Group_3_2__3 ;
-    public final void rule__Signal__Group_3_2__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2138:1: ( ( 'with' ) rule__Signal__Group_3_2__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2139:1: ( 'with' ) rule__Signal__Group_3_2__3
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2139:1: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2140:1: 'with'
-            {
-             before(grammarAccess.getSignalAccess().getWithKeyword_3_2_2()); 
-            match(input,34,FOLLOW_34_in_rule__Signal__Group_3_2__24274); 
-             after(grammarAccess.getSignalAccess().getWithKeyword_3_2_2()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_3_2__3_in_rule__Signal__Group_3_2__24284);
-            rule__Signal__Group_3_2__3();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_3_2__2
-
-
-    // $ANTLR start rule__Signal__Group_3_2__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2154:1: rule__Signal__Group_3_2__3 : ( ( rule__Signal__CombineOperatorAssignment_3_2_3 ) ) ;
-    public final void rule__Signal__Group_3_2__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2158:1: ( ( ( rule__Signal__CombineOperatorAssignment_3_2_3 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2159:1: ( ( rule__Signal__CombineOperatorAssignment_3_2_3 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2159:1: ( ( rule__Signal__CombineOperatorAssignment_3_2_3 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2160:1: ( rule__Signal__CombineOperatorAssignment_3_2_3 )
-            {
-             before(grammarAccess.getSignalAccess().getCombineOperatorAssignment_3_2_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2161:1: ( rule__Signal__CombineOperatorAssignment_3_2_3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2161:2: rule__Signal__CombineOperatorAssignment_3_2_3
-            {
-            pushFollow(FOLLOW_rule__Signal__CombineOperatorAssignment_3_2_3_in_rule__Signal__Group_3_2__34312);
-            rule__Signal__CombineOperatorAssignment_3_2_3();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getCombineOperatorAssignment_3_2_3()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_3_2__3
-
-
     // $ANTLR start rule__Signal__Group_4__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2179:1: rule__Signal__Group_4__0 : ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2091:1: rule__Signal__Group_4__0 : ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1 ;
     public final void rule__Signal__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2183:1: ( ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2184:1: ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2095:1: ( ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2096:1: ( ( rule__Signal__NameAssignment_4_0 ) ) rule__Signal__Group_4__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2184:1: ( ( rule__Signal__NameAssignment_4_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2185:1: ( rule__Signal__NameAssignment_4_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2096:1: ( ( rule__Signal__NameAssignment_4_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2097:1: ( rule__Signal__NameAssignment_4_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_4_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2186:1: ( rule__Signal__NameAssignment_4_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2186:2: rule__Signal__NameAssignment_4_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2098:1: ( rule__Signal__NameAssignment_4_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2098:2: rule__Signal__NameAssignment_4_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_4_0_in_rule__Signal__Group_4__04354);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_4_0_in_rule__Signal__Group_4__04199);
             rule__Signal__NameAssignment_4_0();
             _fsp--;
 
@@ -5645,7 +5481,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_4__1_in_rule__Signal__Group_4__04363);
+            pushFollow(FOLLOW_rule__Signal__Group_4__1_in_rule__Signal__Group_4__04208);
             rule__Signal__Group_4__1();
             _fsp--;
 
@@ -5668,23 +5504,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_4__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2197:1: rule__Signal__Group_4__1 : ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2109:1: rule__Signal__Group_4__1 : ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2 ;
     public final void rule__Signal__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2201:1: ( ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2202:1: ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2113:1: ( ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2114:1: ( ( rule__Signal__Group_4_1__0 ) ) rule__Signal__Group_4__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2202:1: ( ( rule__Signal__Group_4_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2203:1: ( rule__Signal__Group_4_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2114:1: ( ( rule__Signal__Group_4_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2115:1: ( rule__Signal__Group_4_1__0 )
             {
              before(grammarAccess.getSignalAccess().getGroup_4_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2204:1: ( rule__Signal__Group_4_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2204:2: rule__Signal__Group_4_1__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2116:1: ( rule__Signal__Group_4_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2116:2: rule__Signal__Group_4_1__0
             {
-            pushFollow(FOLLOW_rule__Signal__Group_4_1__0_in_rule__Signal__Group_4__14391);
+            pushFollow(FOLLOW_rule__Signal__Group_4_1__0_in_rule__Signal__Group_4__14236);
             rule__Signal__Group_4_1__0();
             _fsp--;
 
@@ -5695,7 +5531,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_4__2_in_rule__Signal__Group_4__14400);
+            pushFollow(FOLLOW_rule__Signal__Group_4__2_in_rule__Signal__Group_4__14245);
             rule__Signal__Group_4__2();
             _fsp--;
 
@@ -5718,30 +5554,30 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_4__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2215:1: rule__Signal__Group_4__2 : ( ( rule__Signal__HostTypeAssignment_4_2 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2127:1: rule__Signal__Group_4__2 : ( ( rule__Signal__Group_4_2__0 ) ) ;
     public final void rule__Signal__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2219:1: ( ( ( rule__Signal__HostTypeAssignment_4_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2220:1: ( ( rule__Signal__HostTypeAssignment_4_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2131:1: ( ( ( rule__Signal__Group_4_2__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2132:1: ( ( rule__Signal__Group_4_2__0 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2220:1: ( ( rule__Signal__HostTypeAssignment_4_2 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2221:1: ( rule__Signal__HostTypeAssignment_4_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2132:1: ( ( rule__Signal__Group_4_2__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2133:1: ( rule__Signal__Group_4_2__0 )
             {
-             before(grammarAccess.getSignalAccess().getHostTypeAssignment_4_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2222:1: ( rule__Signal__HostTypeAssignment_4_2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2222:2: rule__Signal__HostTypeAssignment_4_2
+             before(grammarAccess.getSignalAccess().getGroup_4_2()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2134:1: ( rule__Signal__Group_4_2__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2134:2: rule__Signal__Group_4_2__0
             {
-            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_4_2_in_rule__Signal__Group_4__24428);
-            rule__Signal__HostTypeAssignment_4_2();
+            pushFollow(FOLLOW_rule__Signal__Group_4_2__0_in_rule__Signal__Group_4__24273);
+            rule__Signal__Group_4_2__0();
             _fsp--;
 
 
             }
 
-             after(grammarAccess.getSignalAccess().getHostTypeAssignment_4_2()); 
+             after(grammarAccess.getSignalAccess().getGroup_4_2()); 
 
             }
 
@@ -5764,25 +5600,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_4_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2238:1: rule__Signal__Group_4_1__0 : ( ':=' ) rule__Signal__Group_4_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2150:1: rule__Signal__Group_4_1__0 : ( ':=' ) rule__Signal__Group_4_1__1 ;
     public final void rule__Signal__Group_4_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2242:1: ( ( ':=' ) rule__Signal__Group_4_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2243:1: ( ':=' ) rule__Signal__Group_4_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2154:1: ( ( ':=' ) rule__Signal__Group_4_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2155:1: ( ':=' ) rule__Signal__Group_4_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2243:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2244:1: ':='
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2155:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2156:1: ':='
             {
              before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_4_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Signal__Group_4_1__04469); 
+            match(input,32,FOLLOW_32_in_rule__Signal__Group_4_1__04314); 
              after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_4_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_4_1__1_in_rule__Signal__Group_4_1__04479);
+            pushFollow(FOLLOW_rule__Signal__Group_4_1__1_in_rule__Signal__Group_4_1__04324);
             rule__Signal__Group_4_1__1();
             _fsp--;
 
@@ -5805,23 +5641,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_4_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2258:1: rule__Signal__Group_4_1__1 : ( ( rule__Signal__InitialValueAssignment_4_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2170:1: rule__Signal__Group_4_1__1 : ( ( rule__Signal__InitialValueAssignment_4_1_1 ) ) ;
     public final void rule__Signal__Group_4_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2262:1: ( ( ( rule__Signal__InitialValueAssignment_4_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2263:1: ( ( rule__Signal__InitialValueAssignment_4_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2174:1: ( ( ( rule__Signal__InitialValueAssignment_4_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2175:1: ( ( rule__Signal__InitialValueAssignment_4_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2263:1: ( ( rule__Signal__InitialValueAssignment_4_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2264:1: ( rule__Signal__InitialValueAssignment_4_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2175:1: ( ( rule__Signal__InitialValueAssignment_4_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2176:1: ( rule__Signal__InitialValueAssignment_4_1_1 )
             {
              before(grammarAccess.getSignalAccess().getInitialValueAssignment_4_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2265:1: ( rule__Signal__InitialValueAssignment_4_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2265:2: rule__Signal__InitialValueAssignment_4_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2177:1: ( rule__Signal__InitialValueAssignment_4_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2177:2: rule__Signal__InitialValueAssignment_4_1_1
             {
-            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_4_1_1_in_rule__Signal__Group_4_1__14507);
+            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_4_1_1_in_rule__Signal__Group_4_1__14352);
             rule__Signal__InitialValueAssignment_4_1_1();
             _fsp--;
 
@@ -5850,24 +5686,202 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_4_1__1
 
 
+    // $ANTLR start rule__Signal__Group_4_2__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2191:1: rule__Signal__Group_4_2__0 : ( 'combine' ) rule__Signal__Group_4_2__1 ;
+    public final void rule__Signal__Group_4_2__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2195:1: ( ( 'combine' ) rule__Signal__Group_4_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2196:1: ( 'combine' ) rule__Signal__Group_4_2__1
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2196:1: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2197:1: 'combine'
+            {
+             before(grammarAccess.getSignalAccess().getCombineKeyword_4_2_0()); 
+            match(input,33,FOLLOW_33_in_rule__Signal__Group_4_2__04391); 
+             after(grammarAccess.getSignalAccess().getCombineKeyword_4_2_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_4_2__1_in_rule__Signal__Group_4_2__04401);
+            rule__Signal__Group_4_2__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_4_2__0
+
+
+    // $ANTLR start rule__Signal__Group_4_2__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2211:1: rule__Signal__Group_4_2__1 : ( ( rule__Signal__TypeAssignment_4_2_1 ) ) rule__Signal__Group_4_2__2 ;
+    public final void rule__Signal__Group_4_2__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2215:1: ( ( ( rule__Signal__TypeAssignment_4_2_1 ) ) rule__Signal__Group_4_2__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2216:1: ( ( rule__Signal__TypeAssignment_4_2_1 ) ) rule__Signal__Group_4_2__2
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2216:1: ( ( rule__Signal__TypeAssignment_4_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2217:1: ( rule__Signal__TypeAssignment_4_2_1 )
+            {
+             before(grammarAccess.getSignalAccess().getTypeAssignment_4_2_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2218:1: ( rule__Signal__TypeAssignment_4_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2218:2: rule__Signal__TypeAssignment_4_2_1
+            {
+            pushFollow(FOLLOW_rule__Signal__TypeAssignment_4_2_1_in_rule__Signal__Group_4_2__14429);
+            rule__Signal__TypeAssignment_4_2_1();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getTypeAssignment_4_2_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_4_2__2_in_rule__Signal__Group_4_2__14438);
+            rule__Signal__Group_4_2__2();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_4_2__1
+
+
+    // $ANTLR start rule__Signal__Group_4_2__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2229:1: rule__Signal__Group_4_2__2 : ( 'with' ) rule__Signal__Group_4_2__3 ;
+    public final void rule__Signal__Group_4_2__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2233:1: ( ( 'with' ) rule__Signal__Group_4_2__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2234:1: ( 'with' ) rule__Signal__Group_4_2__3
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2234:1: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2235:1: 'with'
+            {
+             before(grammarAccess.getSignalAccess().getWithKeyword_4_2_2()); 
+            match(input,34,FOLLOW_34_in_rule__Signal__Group_4_2__24467); 
+             after(grammarAccess.getSignalAccess().getWithKeyword_4_2_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_4_2__3_in_rule__Signal__Group_4_2__24477);
+            rule__Signal__Group_4_2__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_4_2__2
+
+
+    // $ANTLR start rule__Signal__Group_4_2__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2249:1: rule__Signal__Group_4_2__3 : ( ( rule__Signal__CombineOperatorAssignment_4_2_3 ) ) ;
+    public final void rule__Signal__Group_4_2__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2253:1: ( ( ( rule__Signal__CombineOperatorAssignment_4_2_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2254:1: ( ( rule__Signal__CombineOperatorAssignment_4_2_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2254:1: ( ( rule__Signal__CombineOperatorAssignment_4_2_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2255:1: ( rule__Signal__CombineOperatorAssignment_4_2_3 )
+            {
+             before(grammarAccess.getSignalAccess().getCombineOperatorAssignment_4_2_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2256:1: ( rule__Signal__CombineOperatorAssignment_4_2_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2256:2: rule__Signal__CombineOperatorAssignment_4_2_3
+            {
+            pushFollow(FOLLOW_rule__Signal__CombineOperatorAssignment_4_2_3_in_rule__Signal__Group_4_2__34505);
+            rule__Signal__CombineOperatorAssignment_4_2_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getCombineOperatorAssignment_4_2_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_4_2__3
+
+
     // $ANTLR start rule__Signal__Group_5__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2279:1: rule__Signal__Group_5__0 : ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2274:1: rule__Signal__Group_5__0 : ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1 ;
     public final void rule__Signal__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2283:1: ( ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2284:1: ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2278:1: ( ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2279:1: ( ( rule__Signal__NameAssignment_5_0 ) ) rule__Signal__Group_5__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2284:1: ( ( rule__Signal__NameAssignment_5_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2285:1: ( rule__Signal__NameAssignment_5_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2279:1: ( ( rule__Signal__NameAssignment_5_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2280:1: ( rule__Signal__NameAssignment_5_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_5_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2286:1: ( rule__Signal__NameAssignment_5_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2286:2: rule__Signal__NameAssignment_5_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2281:1: ( rule__Signal__NameAssignment_5_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2281:2: rule__Signal__NameAssignment_5_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_5_0_in_rule__Signal__Group_5__04545);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_5_0_in_rule__Signal__Group_5__04547);
             rule__Signal__NameAssignment_5_0();
             _fsp--;
 
@@ -5878,7 +5892,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_5__1_in_rule__Signal__Group_5__04554);
+            pushFollow(FOLLOW_rule__Signal__Group_5__1_in_rule__Signal__Group_5__04556);
             rule__Signal__Group_5__1();
             _fsp--;
 
@@ -5901,34 +5915,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_5__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2297:1: rule__Signal__Group_5__1 : ( ( rule__Signal__Group_5_1__0 ) ) rule__Signal__Group_5__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2292:1: rule__Signal__Group_5__1 : ( ':' ) rule__Signal__Group_5__2 ;
     public final void rule__Signal__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2301:1: ( ( ( rule__Signal__Group_5_1__0 ) ) rule__Signal__Group_5__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2302:1: ( ( rule__Signal__Group_5_1__0 ) ) rule__Signal__Group_5__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2296:1: ( ( ':' ) rule__Signal__Group_5__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2297:1: ( ':' ) rule__Signal__Group_5__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2302:1: ( ( rule__Signal__Group_5_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2303:1: ( rule__Signal__Group_5_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2297:1: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2298:1: ':'
             {
-             before(grammarAccess.getSignalAccess().getGroup_5_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2304:1: ( rule__Signal__Group_5_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2304:2: rule__Signal__Group_5_1__0
-            {
-            pushFollow(FOLLOW_rule__Signal__Group_5_1__0_in_rule__Signal__Group_5__14582);
-            rule__Signal__Group_5_1__0();
-            _fsp--;
-
+             before(grammarAccess.getSignalAccess().getColonKeyword_5_1()); 
+            match(input,28,FOLLOW_28_in_rule__Signal__Group_5__14585); 
+             after(grammarAccess.getSignalAccess().getColonKeyword_5_1()); 
 
             }
 
-             after(grammarAccess.getSignalAccess().getGroup_5_1()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_5__2_in_rule__Signal__Group_5__14591);
+            pushFollow(FOLLOW_rule__Signal__Group_5__2_in_rule__Signal__Group_5__14595);
             rule__Signal__Group_5__2();
             _fsp--;
 
@@ -5951,30 +5956,30 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_5__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2315:1: rule__Signal__Group_5__2 : ( ( rule__Signal__Group_5_2__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2312:1: rule__Signal__Group_5__2 : ( ( rule__Signal__HostTypeAssignment_5_2 ) ) ;
     public final void rule__Signal__Group_5__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2319:1: ( ( ( rule__Signal__Group_5_2__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2320:1: ( ( rule__Signal__Group_5_2__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2316:1: ( ( ( rule__Signal__HostTypeAssignment_5_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2317:1: ( ( rule__Signal__HostTypeAssignment_5_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2320:1: ( ( rule__Signal__Group_5_2__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2321:1: ( rule__Signal__Group_5_2__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2317:1: ( ( rule__Signal__HostTypeAssignment_5_2 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2318:1: ( rule__Signal__HostTypeAssignment_5_2 )
             {
-             before(grammarAccess.getSignalAccess().getGroup_5_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2322:1: ( rule__Signal__Group_5_2__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2322:2: rule__Signal__Group_5_2__0
+             before(grammarAccess.getSignalAccess().getHostTypeAssignment_5_2()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2319:1: ( rule__Signal__HostTypeAssignment_5_2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2319:2: rule__Signal__HostTypeAssignment_5_2
             {
-            pushFollow(FOLLOW_rule__Signal__Group_5_2__0_in_rule__Signal__Group_5__24619);
-            rule__Signal__Group_5_2__0();
+            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_5_2_in_rule__Signal__Group_5__24623);
+            rule__Signal__HostTypeAssignment_5_2();
             _fsp--;
 
 
             }
 
-             after(grammarAccess.getSignalAccess().getGroup_5_2()); 
+             after(grammarAccess.getSignalAccess().getHostTypeAssignment_5_2()); 
 
             }
 
@@ -5996,289 +6001,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_5__2
 
 
-    // $ANTLR start rule__Signal__Group_5_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2338:1: rule__Signal__Group_5_1__0 : ( ':=' ) rule__Signal__Group_5_1__1 ;
-    public final void rule__Signal__Group_5_1__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2342:1: ( ( ':=' ) rule__Signal__Group_5_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2343:1: ( ':=' ) rule__Signal__Group_5_1__1
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2343:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2344:1: ':='
-            {
-             before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_5_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Signal__Group_5_1__04660); 
-             after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_5_1_0()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_5_1__1_in_rule__Signal__Group_5_1__04670);
-            rule__Signal__Group_5_1__1();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_1__0
-
-
-    // $ANTLR start rule__Signal__Group_5_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2358:1: rule__Signal__Group_5_1__1 : ( ( rule__Signal__InitialValueAssignment_5_1_1 ) ) ;
-    public final void rule__Signal__Group_5_1__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2362:1: ( ( ( rule__Signal__InitialValueAssignment_5_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2363:1: ( ( rule__Signal__InitialValueAssignment_5_1_1 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2363:1: ( ( rule__Signal__InitialValueAssignment_5_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2364:1: ( rule__Signal__InitialValueAssignment_5_1_1 )
-            {
-             before(grammarAccess.getSignalAccess().getInitialValueAssignment_5_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2365:1: ( rule__Signal__InitialValueAssignment_5_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2365:2: rule__Signal__InitialValueAssignment_5_1_1
-            {
-            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_5_1_1_in_rule__Signal__Group_5_1__14698);
-            rule__Signal__InitialValueAssignment_5_1_1();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getInitialValueAssignment_5_1_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_1__1
-
-
-    // $ANTLR start rule__Signal__Group_5_2__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2379:1: rule__Signal__Group_5_2__0 : ( 'combine' ) rule__Signal__Group_5_2__1 ;
-    public final void rule__Signal__Group_5_2__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2383:1: ( ( 'combine' ) rule__Signal__Group_5_2__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2384:1: ( 'combine' ) rule__Signal__Group_5_2__1
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2384:1: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2385:1: 'combine'
-            {
-             before(grammarAccess.getSignalAccess().getCombineKeyword_5_2_0()); 
-            match(input,33,FOLLOW_33_in_rule__Signal__Group_5_2__04737); 
-             after(grammarAccess.getSignalAccess().getCombineKeyword_5_2_0()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_5_2__1_in_rule__Signal__Group_5_2__04747);
-            rule__Signal__Group_5_2__1();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_2__0
-
-
-    // $ANTLR start rule__Signal__Group_5_2__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2399:1: rule__Signal__Group_5_2__1 : ( ( rule__Signal__HostTypeAssignment_5_2_1 ) ) rule__Signal__Group_5_2__2 ;
-    public final void rule__Signal__Group_5_2__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2403:1: ( ( ( rule__Signal__HostTypeAssignment_5_2_1 ) ) rule__Signal__Group_5_2__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2404:1: ( ( rule__Signal__HostTypeAssignment_5_2_1 ) ) rule__Signal__Group_5_2__2
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2404:1: ( ( rule__Signal__HostTypeAssignment_5_2_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2405:1: ( rule__Signal__HostTypeAssignment_5_2_1 )
-            {
-             before(grammarAccess.getSignalAccess().getHostTypeAssignment_5_2_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2406:1: ( rule__Signal__HostTypeAssignment_5_2_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2406:2: rule__Signal__HostTypeAssignment_5_2_1
-            {
-            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_5_2_1_in_rule__Signal__Group_5_2__14775);
-            rule__Signal__HostTypeAssignment_5_2_1();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getHostTypeAssignment_5_2_1()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_5_2__2_in_rule__Signal__Group_5_2__14784);
-            rule__Signal__Group_5_2__2();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_2__1
-
-
-    // $ANTLR start rule__Signal__Group_5_2__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2417:1: rule__Signal__Group_5_2__2 : ( 'with' ) rule__Signal__Group_5_2__3 ;
-    public final void rule__Signal__Group_5_2__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2421:1: ( ( 'with' ) rule__Signal__Group_5_2__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2422:1: ( 'with' ) rule__Signal__Group_5_2__3
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2422:1: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2423:1: 'with'
-            {
-             before(grammarAccess.getSignalAccess().getWithKeyword_5_2_2()); 
-            match(input,34,FOLLOW_34_in_rule__Signal__Group_5_2__24813); 
-             after(grammarAccess.getSignalAccess().getWithKeyword_5_2_2()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_5_2__3_in_rule__Signal__Group_5_2__24823);
-            rule__Signal__Group_5_2__3();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_2__2
-
-
-    // $ANTLR start rule__Signal__Group_5_2__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2437:1: rule__Signal__Group_5_2__3 : ( ( rule__Signal__HostCombineOperatorAssignment_5_2_3 ) ) ;
-    public final void rule__Signal__Group_5_2__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2441:1: ( ( ( rule__Signal__HostCombineOperatorAssignment_5_2_3 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2442:1: ( ( rule__Signal__HostCombineOperatorAssignment_5_2_3 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2442:1: ( ( rule__Signal__HostCombineOperatorAssignment_5_2_3 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2443:1: ( rule__Signal__HostCombineOperatorAssignment_5_2_3 )
-            {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_5_2_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2444:1: ( rule__Signal__HostCombineOperatorAssignment_5_2_3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2444:2: rule__Signal__HostCombineOperatorAssignment_5_2_3
-            {
-            pushFollow(FOLLOW_rule__Signal__HostCombineOperatorAssignment_5_2_3_in_rule__Signal__Group_5_2__34851);
-            rule__Signal__HostCombineOperatorAssignment_5_2_3();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_5_2_3()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_5_2__3
-
-
     // $ANTLR start rule__Signal__Group_6__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2462:1: rule__Signal__Group_6__0 : ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2335:1: rule__Signal__Group_6__0 : ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1 ;
     public final void rule__Signal__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2466:1: ( ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2467:1: ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2339:1: ( ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2340:1: ( ( rule__Signal__NameAssignment_6_0 ) ) rule__Signal__Group_6__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2467:1: ( ( rule__Signal__NameAssignment_6_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2468:1: ( rule__Signal__NameAssignment_6_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2340:1: ( ( rule__Signal__NameAssignment_6_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2341:1: ( rule__Signal__NameAssignment_6_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_6_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2469:1: ( rule__Signal__NameAssignment_6_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2469:2: rule__Signal__NameAssignment_6_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2342:1: ( rule__Signal__NameAssignment_6_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2342:2: rule__Signal__NameAssignment_6_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_6_0_in_rule__Signal__Group_6__04893);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_6_0_in_rule__Signal__Group_6__04663);
             rule__Signal__NameAssignment_6_0();
             _fsp--;
 
@@ -6289,7 +6029,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_6__1_in_rule__Signal__Group_6__04902);
+            pushFollow(FOLLOW_rule__Signal__Group_6__1_in_rule__Signal__Group_6__04672);
             rule__Signal__Group_6__1();
             _fsp--;
 
@@ -6312,23 +6052,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_6__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2480:1: rule__Signal__Group_6__1 : ( ( rule__Signal__Group_6_1__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2353:1: rule__Signal__Group_6__1 : ( ( rule__Signal__Group_6_1__0 ) ) rule__Signal__Group_6__2 ;
     public final void rule__Signal__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2484:1: ( ( ( rule__Signal__Group_6_1__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2485:1: ( ( rule__Signal__Group_6_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2357:1: ( ( ( rule__Signal__Group_6_1__0 ) ) rule__Signal__Group_6__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2358:1: ( ( rule__Signal__Group_6_1__0 ) ) rule__Signal__Group_6__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2485:1: ( ( rule__Signal__Group_6_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2486:1: ( rule__Signal__Group_6_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2358:1: ( ( rule__Signal__Group_6_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2359:1: ( rule__Signal__Group_6_1__0 )
             {
              before(grammarAccess.getSignalAccess().getGroup_6_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2487:1: ( rule__Signal__Group_6_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2487:2: rule__Signal__Group_6_1__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2360:1: ( rule__Signal__Group_6_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2360:2: rule__Signal__Group_6_1__0
             {
-            pushFollow(FOLLOW_rule__Signal__Group_6_1__0_in_rule__Signal__Group_6__14930);
+            pushFollow(FOLLOW_rule__Signal__Group_6_1__0_in_rule__Signal__Group_6__14700);
             rule__Signal__Group_6_1__0();
             _fsp--;
 
@@ -6338,6 +6078,10 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
              after(grammarAccess.getSignalAccess().getGroup_6_1()); 
 
             }
+
+            pushFollow(FOLLOW_rule__Signal__Group_6__2_in_rule__Signal__Group_6__14709);
+            rule__Signal__Group_6__2();
+            _fsp--;
 
 
             }
@@ -6357,26 +6101,113 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_6__1
 
 
+    // $ANTLR start rule__Signal__Group_6__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2371:1: rule__Signal__Group_6__2 : ( ':' ) rule__Signal__Group_6__3 ;
+    public final void rule__Signal__Group_6__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2375:1: ( ( ':' ) rule__Signal__Group_6__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2376:1: ( ':' ) rule__Signal__Group_6__3
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2376:1: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2377:1: ':'
+            {
+             before(grammarAccess.getSignalAccess().getColonKeyword_6_2()); 
+            match(input,28,FOLLOW_28_in_rule__Signal__Group_6__24738); 
+             after(grammarAccess.getSignalAccess().getColonKeyword_6_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_6__3_in_rule__Signal__Group_6__24748);
+            rule__Signal__Group_6__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_6__2
+
+
+    // $ANTLR start rule__Signal__Group_6__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2391:1: rule__Signal__Group_6__3 : ( ( rule__Signal__HostTypeAssignment_6_3 ) ) ;
+    public final void rule__Signal__Group_6__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2395:1: ( ( ( rule__Signal__HostTypeAssignment_6_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2396:1: ( ( rule__Signal__HostTypeAssignment_6_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2396:1: ( ( rule__Signal__HostTypeAssignment_6_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2397:1: ( rule__Signal__HostTypeAssignment_6_3 )
+            {
+             before(grammarAccess.getSignalAccess().getHostTypeAssignment_6_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2398:1: ( rule__Signal__HostTypeAssignment_6_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2398:2: rule__Signal__HostTypeAssignment_6_3
+            {
+            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_6_3_in_rule__Signal__Group_6__34776);
+            rule__Signal__HostTypeAssignment_6_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getHostTypeAssignment_6_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_6__3
+
+
     // $ANTLR start rule__Signal__Group_6_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2501:1: rule__Signal__Group_6_1__0 : ( 'combine' ) rule__Signal__Group_6_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2416:1: rule__Signal__Group_6_1__0 : ( ':=' ) rule__Signal__Group_6_1__1 ;
     public final void rule__Signal__Group_6_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2505:1: ( ( 'combine' ) rule__Signal__Group_6_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2506:1: ( 'combine' ) rule__Signal__Group_6_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2420:1: ( ( ':=' ) rule__Signal__Group_6_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2421:1: ( ':=' ) rule__Signal__Group_6_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2506:1: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2507:1: 'combine'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2421:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2422:1: ':='
             {
-             before(grammarAccess.getSignalAccess().getCombineKeyword_6_1_0()); 
-            match(input,33,FOLLOW_33_in_rule__Signal__Group_6_1__04969); 
-             after(grammarAccess.getSignalAccess().getCombineKeyword_6_1_0()); 
+             before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_6_1_0()); 
+            match(input,32,FOLLOW_32_in_rule__Signal__Group_6_1__04819); 
+             after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_6_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_6_1__1_in_rule__Signal__Group_6_1__04979);
+            pushFollow(FOLLOW_rule__Signal__Group_6_1__1_in_rule__Signal__Group_6_1__04829);
             rule__Signal__Group_6_1__1();
             _fsp--;
 
@@ -6399,36 +6230,32 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_6_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2521:1: rule__Signal__Group_6_1__1 : ( ( rule__Signal__TypeAssignment_6_1_1 ) ) rule__Signal__Group_6_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2436:1: rule__Signal__Group_6_1__1 : ( ( rule__Signal__InitialValueAssignment_6_1_1 ) ) ;
     public final void rule__Signal__Group_6_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2525:1: ( ( ( rule__Signal__TypeAssignment_6_1_1 ) ) rule__Signal__Group_6_1__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2526:1: ( ( rule__Signal__TypeAssignment_6_1_1 ) ) rule__Signal__Group_6_1__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2440:1: ( ( ( rule__Signal__InitialValueAssignment_6_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2441:1: ( ( rule__Signal__InitialValueAssignment_6_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2526:1: ( ( rule__Signal__TypeAssignment_6_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2527:1: ( rule__Signal__TypeAssignment_6_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2441:1: ( ( rule__Signal__InitialValueAssignment_6_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2442:1: ( rule__Signal__InitialValueAssignment_6_1_1 )
             {
-             before(grammarAccess.getSignalAccess().getTypeAssignment_6_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2528:1: ( rule__Signal__TypeAssignment_6_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2528:2: rule__Signal__TypeAssignment_6_1_1
+             before(grammarAccess.getSignalAccess().getInitialValueAssignment_6_1_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2443:1: ( rule__Signal__InitialValueAssignment_6_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2443:2: rule__Signal__InitialValueAssignment_6_1_1
             {
-            pushFollow(FOLLOW_rule__Signal__TypeAssignment_6_1_1_in_rule__Signal__Group_6_1__15007);
-            rule__Signal__TypeAssignment_6_1_1();
+            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_6_1_1_in_rule__Signal__Group_6_1__14857);
+            rule__Signal__InitialValueAssignment_6_1_1();
             _fsp--;
 
 
             }
 
-             after(grammarAccess.getSignalAccess().getTypeAssignment_6_1_1()); 
+             after(grammarAccess.getSignalAccess().getInitialValueAssignment_6_1_1()); 
 
             }
-
-            pushFollow(FOLLOW_rule__Signal__Group_6_1__2_in_rule__Signal__Group_6_1__15016);
-            rule__Signal__Group_6_1__2();
-            _fsp--;
 
 
             }
@@ -6448,111 +6275,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_6_1__1
 
 
-    // $ANTLR start rule__Signal__Group_6_1__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2539:1: rule__Signal__Group_6_1__2 : ( 'with' ) rule__Signal__Group_6_1__3 ;
-    public final void rule__Signal__Group_6_1__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2543:1: ( ( 'with' ) rule__Signal__Group_6_1__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2544:1: ( 'with' ) rule__Signal__Group_6_1__3
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2544:1: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2545:1: 'with'
-            {
-             before(grammarAccess.getSignalAccess().getWithKeyword_6_1_2()); 
-            match(input,34,FOLLOW_34_in_rule__Signal__Group_6_1__25045); 
-             after(grammarAccess.getSignalAccess().getWithKeyword_6_1_2()); 
-
-            }
-
-            pushFollow(FOLLOW_rule__Signal__Group_6_1__3_in_rule__Signal__Group_6_1__25055);
-            rule__Signal__Group_6_1__3();
-            _fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_6_1__2
-
-
-    // $ANTLR start rule__Signal__Group_6_1__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2559:1: rule__Signal__Group_6_1__3 : ( ( rule__Signal__CombineOperatorAssignment_6_1_3 ) ) ;
-    public final void rule__Signal__Group_6_1__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2563:1: ( ( ( rule__Signal__CombineOperatorAssignment_6_1_3 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2564:1: ( ( rule__Signal__CombineOperatorAssignment_6_1_3 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2564:1: ( ( rule__Signal__CombineOperatorAssignment_6_1_3 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2565:1: ( rule__Signal__CombineOperatorAssignment_6_1_3 )
-            {
-             before(grammarAccess.getSignalAccess().getCombineOperatorAssignment_6_1_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2566:1: ( rule__Signal__CombineOperatorAssignment_6_1_3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2566:2: rule__Signal__CombineOperatorAssignment_6_1_3
-            {
-            pushFollow(FOLLOW_rule__Signal__CombineOperatorAssignment_6_1_3_in_rule__Signal__Group_6_1__35083);
-            rule__Signal__CombineOperatorAssignment_6_1_3();
-            _fsp--;
-
-
-            }
-
-             after(grammarAccess.getSignalAccess().getCombineOperatorAssignment_6_1_3()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__Group_6_1__3
-
-
     // $ANTLR start rule__Signal__Group_7__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2584:1: rule__Signal__Group_7__0 : ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2457:1: rule__Signal__Group_7__0 : ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1 ;
     public final void rule__Signal__Group_7__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2588:1: ( ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2589:1: ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2461:1: ( ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2462:1: ( ( rule__Signal__NameAssignment_7_0 ) ) rule__Signal__Group_7__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2589:1: ( ( rule__Signal__NameAssignment_7_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2590:1: ( rule__Signal__NameAssignment_7_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2462:1: ( ( rule__Signal__NameAssignment_7_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2463:1: ( rule__Signal__NameAssignment_7_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_7_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2591:1: ( rule__Signal__NameAssignment_7_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2591:2: rule__Signal__NameAssignment_7_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2464:1: ( rule__Signal__NameAssignment_7_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2464:2: rule__Signal__NameAssignment_7_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_7_0_in_rule__Signal__Group_7__05125);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_7_0_in_rule__Signal__Group_7__04895);
             rule__Signal__NameAssignment_7_0();
             _fsp--;
 
@@ -6563,7 +6303,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_7__1_in_rule__Signal__Group_7__05134);
+            pushFollow(FOLLOW_rule__Signal__Group_7__1_in_rule__Signal__Group_7__04904);
             rule__Signal__Group_7__1();
             _fsp--;
 
@@ -6586,23 +6326,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_7__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2602:1: rule__Signal__Group_7__1 : ( ( rule__Signal__Group_7_1__0 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2475:1: rule__Signal__Group_7__1 : ( ( rule__Signal__Group_7_1__0 ) ) rule__Signal__Group_7__2 ;
     public final void rule__Signal__Group_7__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2606:1: ( ( ( rule__Signal__Group_7_1__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2607:1: ( ( rule__Signal__Group_7_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2479:1: ( ( ( rule__Signal__Group_7_1__0 ) ) rule__Signal__Group_7__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2480:1: ( ( rule__Signal__Group_7_1__0 ) ) rule__Signal__Group_7__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2607:1: ( ( rule__Signal__Group_7_1__0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2608:1: ( rule__Signal__Group_7_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2480:1: ( ( rule__Signal__Group_7_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2481:1: ( rule__Signal__Group_7_1__0 )
             {
              before(grammarAccess.getSignalAccess().getGroup_7_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2609:1: ( rule__Signal__Group_7_1__0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2609:2: rule__Signal__Group_7_1__0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2482:1: ( rule__Signal__Group_7_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2482:2: rule__Signal__Group_7_1__0
             {
-            pushFollow(FOLLOW_rule__Signal__Group_7_1__0_in_rule__Signal__Group_7__15162);
+            pushFollow(FOLLOW_rule__Signal__Group_7_1__0_in_rule__Signal__Group_7__14932);
             rule__Signal__Group_7_1__0();
             _fsp--;
 
@@ -6612,6 +6352,10 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
              after(grammarAccess.getSignalAccess().getGroup_7_1()); 
 
             }
+
+            pushFollow(FOLLOW_rule__Signal__Group_7__2_in_rule__Signal__Group_7__14941);
+            rule__Signal__Group_7__2();
+            _fsp--;
 
 
             }
@@ -6631,26 +6375,72 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_7__1
 
 
+    // $ANTLR start rule__Signal__Group_7__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2493:1: rule__Signal__Group_7__2 : ( ( rule__Signal__Group_7_2__0 ) ) ;
+    public final void rule__Signal__Group_7__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2497:1: ( ( ( rule__Signal__Group_7_2__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2498:1: ( ( rule__Signal__Group_7_2__0 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2498:1: ( ( rule__Signal__Group_7_2__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2499:1: ( rule__Signal__Group_7_2__0 )
+            {
+             before(grammarAccess.getSignalAccess().getGroup_7_2()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2500:1: ( rule__Signal__Group_7_2__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2500:2: rule__Signal__Group_7_2__0
+            {
+            pushFollow(FOLLOW_rule__Signal__Group_7_2__0_in_rule__Signal__Group_7__24969);
+            rule__Signal__Group_7_2__0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getGroup_7_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_7__2
+
+
     // $ANTLR start rule__Signal__Group_7_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2623:1: rule__Signal__Group_7_1__0 : ( 'combine' ) rule__Signal__Group_7_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2516:1: rule__Signal__Group_7_1__0 : ( ':=' ) rule__Signal__Group_7_1__1 ;
     public final void rule__Signal__Group_7_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2627:1: ( ( 'combine' ) rule__Signal__Group_7_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2628:1: ( 'combine' ) rule__Signal__Group_7_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2520:1: ( ( ':=' ) rule__Signal__Group_7_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2521:1: ( ':=' ) rule__Signal__Group_7_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2628:1: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2629:1: 'combine'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2521:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2522:1: ':='
             {
-             before(grammarAccess.getSignalAccess().getCombineKeyword_7_1_0()); 
-            match(input,33,FOLLOW_33_in_rule__Signal__Group_7_1__05201); 
-             after(grammarAccess.getSignalAccess().getCombineKeyword_7_1_0()); 
+             before(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_7_1_0()); 
+            match(input,32,FOLLOW_32_in_rule__Signal__Group_7_1__05010); 
+             after(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_7_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_7_1__1_in_rule__Signal__Group_7_1__05211);
+            pushFollow(FOLLOW_rule__Signal__Group_7_1__1_in_rule__Signal__Group_7_1__05020);
             rule__Signal__Group_7_1__1();
             _fsp--;
 
@@ -6673,36 +6463,32 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__Group_7_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2643:1: rule__Signal__Group_7_1__1 : ( ( rule__Signal__HostTypeAssignment_7_1_1 ) ) rule__Signal__Group_7_1__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2536:1: rule__Signal__Group_7_1__1 : ( ( rule__Signal__InitialValueAssignment_7_1_1 ) ) ;
     public final void rule__Signal__Group_7_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2647:1: ( ( ( rule__Signal__HostTypeAssignment_7_1_1 ) ) rule__Signal__Group_7_1__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2648:1: ( ( rule__Signal__HostTypeAssignment_7_1_1 ) ) rule__Signal__Group_7_1__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2540:1: ( ( ( rule__Signal__InitialValueAssignment_7_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2541:1: ( ( rule__Signal__InitialValueAssignment_7_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2648:1: ( ( rule__Signal__HostTypeAssignment_7_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2649:1: ( rule__Signal__HostTypeAssignment_7_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2541:1: ( ( rule__Signal__InitialValueAssignment_7_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2542:1: ( rule__Signal__InitialValueAssignment_7_1_1 )
             {
-             before(grammarAccess.getSignalAccess().getHostTypeAssignment_7_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2650:1: ( rule__Signal__HostTypeAssignment_7_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2650:2: rule__Signal__HostTypeAssignment_7_1_1
+             before(grammarAccess.getSignalAccess().getInitialValueAssignment_7_1_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2543:1: ( rule__Signal__InitialValueAssignment_7_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2543:2: rule__Signal__InitialValueAssignment_7_1_1
             {
-            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_7_1_1_in_rule__Signal__Group_7_1__15239);
-            rule__Signal__HostTypeAssignment_7_1_1();
+            pushFollow(FOLLOW_rule__Signal__InitialValueAssignment_7_1_1_in_rule__Signal__Group_7_1__15048);
+            rule__Signal__InitialValueAssignment_7_1_1();
             _fsp--;
 
 
             }
 
-             after(grammarAccess.getSignalAccess().getHostTypeAssignment_7_1_1()); 
+             after(grammarAccess.getSignalAccess().getInitialValueAssignment_7_1_1()); 
 
             }
-
-            pushFollow(FOLLOW_rule__Signal__Group_7_1__2_in_rule__Signal__Group_7_1__15248);
-            rule__Signal__Group_7_1__2();
-            _fsp--;
 
 
             }
@@ -6722,27 +6508,27 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__Group_7_1__1
 
 
-    // $ANTLR start rule__Signal__Group_7_1__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2661:1: rule__Signal__Group_7_1__2 : ( 'with' ) rule__Signal__Group_7_1__3 ;
-    public final void rule__Signal__Group_7_1__2() throws RecognitionException {
+    // $ANTLR start rule__Signal__Group_7_2__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2557:1: rule__Signal__Group_7_2__0 : ( 'combine' ) rule__Signal__Group_7_2__1 ;
+    public final void rule__Signal__Group_7_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2665:1: ( ( 'with' ) rule__Signal__Group_7_1__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2666:1: ( 'with' ) rule__Signal__Group_7_1__3
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2561:1: ( ( 'combine' ) rule__Signal__Group_7_2__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2562:1: ( 'combine' ) rule__Signal__Group_7_2__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2666:1: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2667:1: 'with'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2562:1: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2563:1: 'combine'
             {
-             before(grammarAccess.getSignalAccess().getWithKeyword_7_1_2()); 
-            match(input,34,FOLLOW_34_in_rule__Signal__Group_7_1__25277); 
-             after(grammarAccess.getSignalAccess().getWithKeyword_7_1_2()); 
+             before(grammarAccess.getSignalAccess().getCombineKeyword_7_2_0()); 
+            match(input,33,FOLLOW_33_in_rule__Signal__Group_7_2__05087); 
+             after(grammarAccess.getSignalAccess().getCombineKeyword_7_2_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Signal__Group_7_1__3_in_rule__Signal__Group_7_1__25287);
-            rule__Signal__Group_7_1__3();
+            pushFollow(FOLLOW_rule__Signal__Group_7_2__1_in_rule__Signal__Group_7_2__05097);
+            rule__Signal__Group_7_2__1();
             _fsp--;
 
 
@@ -6760,34 +6546,125 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_7_1__2
+    // $ANTLR end rule__Signal__Group_7_2__0
 
 
-    // $ANTLR start rule__Signal__Group_7_1__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2681:1: rule__Signal__Group_7_1__3 : ( ( rule__Signal__HostCombineOperatorAssignment_7_1_3 ) ) ;
-    public final void rule__Signal__Group_7_1__3() throws RecognitionException {
+    // $ANTLR start rule__Signal__Group_7_2__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2577:1: rule__Signal__Group_7_2__1 : ( ( rule__Signal__HostTypeAssignment_7_2_1 ) ) rule__Signal__Group_7_2__2 ;
+    public final void rule__Signal__Group_7_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2685:1: ( ( ( rule__Signal__HostCombineOperatorAssignment_7_1_3 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2686:1: ( ( rule__Signal__HostCombineOperatorAssignment_7_1_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2581:1: ( ( ( rule__Signal__HostTypeAssignment_7_2_1 ) ) rule__Signal__Group_7_2__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2582:1: ( ( rule__Signal__HostTypeAssignment_7_2_1 ) ) rule__Signal__Group_7_2__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2686:1: ( ( rule__Signal__HostCombineOperatorAssignment_7_1_3 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2687:1: ( rule__Signal__HostCombineOperatorAssignment_7_1_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2582:1: ( ( rule__Signal__HostTypeAssignment_7_2_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2583:1: ( rule__Signal__HostTypeAssignment_7_2_1 )
             {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_7_1_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2688:1: ( rule__Signal__HostCombineOperatorAssignment_7_1_3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2688:2: rule__Signal__HostCombineOperatorAssignment_7_1_3
+             before(grammarAccess.getSignalAccess().getHostTypeAssignment_7_2_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2584:1: ( rule__Signal__HostTypeAssignment_7_2_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2584:2: rule__Signal__HostTypeAssignment_7_2_1
             {
-            pushFollow(FOLLOW_rule__Signal__HostCombineOperatorAssignment_7_1_3_in_rule__Signal__Group_7_1__35315);
-            rule__Signal__HostCombineOperatorAssignment_7_1_3();
+            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_7_2_1_in_rule__Signal__Group_7_2__15125);
+            rule__Signal__HostTypeAssignment_7_2_1();
             _fsp--;
 
 
             }
 
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_7_1_3()); 
+             after(grammarAccess.getSignalAccess().getHostTypeAssignment_7_2_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_7_2__2_in_rule__Signal__Group_7_2__15134);
+            rule__Signal__Group_7_2__2();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_7_2__1
+
+
+    // $ANTLR start rule__Signal__Group_7_2__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2595:1: rule__Signal__Group_7_2__2 : ( 'with' ) rule__Signal__Group_7_2__3 ;
+    public final void rule__Signal__Group_7_2__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2599:1: ( ( 'with' ) rule__Signal__Group_7_2__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2600:1: ( 'with' ) rule__Signal__Group_7_2__3
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2600:1: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2601:1: 'with'
+            {
+             before(grammarAccess.getSignalAccess().getWithKeyword_7_2_2()); 
+            match(input,34,FOLLOW_34_in_rule__Signal__Group_7_2__25163); 
+             after(grammarAccess.getSignalAccess().getWithKeyword_7_2_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_7_2__3_in_rule__Signal__Group_7_2__25173);
+            rule__Signal__Group_7_2__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_7_2__2
+
+
+    // $ANTLR start rule__Signal__Group_7_2__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2615:1: rule__Signal__Group_7_2__3 : ( ( rule__Signal__HostCombineOperatorAssignment_7_2_3 ) ) ;
+    public final void rule__Signal__Group_7_2__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2619:1: ( ( ( rule__Signal__HostCombineOperatorAssignment_7_2_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2620:1: ( ( rule__Signal__HostCombineOperatorAssignment_7_2_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2620:1: ( ( rule__Signal__HostCombineOperatorAssignment_7_2_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2621:1: ( rule__Signal__HostCombineOperatorAssignment_7_2_3 )
+            {
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_7_2_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2622:1: ( rule__Signal__HostCombineOperatorAssignment_7_2_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2622:2: rule__Signal__HostCombineOperatorAssignment_7_2_3
+            {
+            pushFollow(FOLLOW_rule__Signal__HostCombineOperatorAssignment_7_2_3_in_rule__Signal__Group_7_2__35201);
+            rule__Signal__HostCombineOperatorAssignment_7_2_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_7_2_3()); 
 
             }
 
@@ -6806,27 +6683,575 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_7_1__3
+    // $ANTLR end rule__Signal__Group_7_2__3
+
+
+    // $ANTLR start rule__Signal__Group_8__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2640:1: rule__Signal__Group_8__0 : ( ( rule__Signal__NameAssignment_8_0 ) ) rule__Signal__Group_8__1 ;
+    public final void rule__Signal__Group_8__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2644:1: ( ( ( rule__Signal__NameAssignment_8_0 ) ) rule__Signal__Group_8__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2645:1: ( ( rule__Signal__NameAssignment_8_0 ) ) rule__Signal__Group_8__1
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2645:1: ( ( rule__Signal__NameAssignment_8_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2646:1: ( rule__Signal__NameAssignment_8_0 )
+            {
+             before(grammarAccess.getSignalAccess().getNameAssignment_8_0()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2647:1: ( rule__Signal__NameAssignment_8_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2647:2: rule__Signal__NameAssignment_8_0
+            {
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_8_0_in_rule__Signal__Group_8__05243);
+            rule__Signal__NameAssignment_8_0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getNameAssignment_8_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_8__1_in_rule__Signal__Group_8__05252);
+            rule__Signal__Group_8__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8__0
+
+
+    // $ANTLR start rule__Signal__Group_8__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2658:1: rule__Signal__Group_8__1 : ( ( rule__Signal__Group_8_1__0 ) ) ;
+    public final void rule__Signal__Group_8__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2662:1: ( ( ( rule__Signal__Group_8_1__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2663:1: ( ( rule__Signal__Group_8_1__0 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2663:1: ( ( rule__Signal__Group_8_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2664:1: ( rule__Signal__Group_8_1__0 )
+            {
+             before(grammarAccess.getSignalAccess().getGroup_8_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2665:1: ( rule__Signal__Group_8_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2665:2: rule__Signal__Group_8_1__0
+            {
+            pushFollow(FOLLOW_rule__Signal__Group_8_1__0_in_rule__Signal__Group_8__15280);
+            rule__Signal__Group_8_1__0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getGroup_8_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8__1
+
+
+    // $ANTLR start rule__Signal__Group_8_1__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2679:1: rule__Signal__Group_8_1__0 : ( 'combine' ) rule__Signal__Group_8_1__1 ;
+    public final void rule__Signal__Group_8_1__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2683:1: ( ( 'combine' ) rule__Signal__Group_8_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2684:1: ( 'combine' ) rule__Signal__Group_8_1__1
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2684:1: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2685:1: 'combine'
+            {
+             before(grammarAccess.getSignalAccess().getCombineKeyword_8_1_0()); 
+            match(input,33,FOLLOW_33_in_rule__Signal__Group_8_1__05319); 
+             after(grammarAccess.getSignalAccess().getCombineKeyword_8_1_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_8_1__1_in_rule__Signal__Group_8_1__05329);
+            rule__Signal__Group_8_1__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8_1__0
+
+
+    // $ANTLR start rule__Signal__Group_8_1__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2699:1: rule__Signal__Group_8_1__1 : ( ( rule__Signal__TypeAssignment_8_1_1 ) ) rule__Signal__Group_8_1__2 ;
+    public final void rule__Signal__Group_8_1__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2703:1: ( ( ( rule__Signal__TypeAssignment_8_1_1 ) ) rule__Signal__Group_8_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2704:1: ( ( rule__Signal__TypeAssignment_8_1_1 ) ) rule__Signal__Group_8_1__2
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2704:1: ( ( rule__Signal__TypeAssignment_8_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2705:1: ( rule__Signal__TypeAssignment_8_1_1 )
+            {
+             before(grammarAccess.getSignalAccess().getTypeAssignment_8_1_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2706:1: ( rule__Signal__TypeAssignment_8_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2706:2: rule__Signal__TypeAssignment_8_1_1
+            {
+            pushFollow(FOLLOW_rule__Signal__TypeAssignment_8_1_1_in_rule__Signal__Group_8_1__15357);
+            rule__Signal__TypeAssignment_8_1_1();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getTypeAssignment_8_1_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_8_1__2_in_rule__Signal__Group_8_1__15366);
+            rule__Signal__Group_8_1__2();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8_1__1
+
+
+    // $ANTLR start rule__Signal__Group_8_1__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2717:1: rule__Signal__Group_8_1__2 : ( 'with' ) rule__Signal__Group_8_1__3 ;
+    public final void rule__Signal__Group_8_1__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2721:1: ( ( 'with' ) rule__Signal__Group_8_1__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2722:1: ( 'with' ) rule__Signal__Group_8_1__3
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2722:1: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2723:1: 'with'
+            {
+             before(grammarAccess.getSignalAccess().getWithKeyword_8_1_2()); 
+            match(input,34,FOLLOW_34_in_rule__Signal__Group_8_1__25395); 
+             after(grammarAccess.getSignalAccess().getWithKeyword_8_1_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_8_1__3_in_rule__Signal__Group_8_1__25405);
+            rule__Signal__Group_8_1__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8_1__2
+
+
+    // $ANTLR start rule__Signal__Group_8_1__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2737:1: rule__Signal__Group_8_1__3 : ( ( rule__Signal__CombineOperatorAssignment_8_1_3 ) ) ;
+    public final void rule__Signal__Group_8_1__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2741:1: ( ( ( rule__Signal__CombineOperatorAssignment_8_1_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2742:1: ( ( rule__Signal__CombineOperatorAssignment_8_1_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2742:1: ( ( rule__Signal__CombineOperatorAssignment_8_1_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2743:1: ( rule__Signal__CombineOperatorAssignment_8_1_3 )
+            {
+             before(grammarAccess.getSignalAccess().getCombineOperatorAssignment_8_1_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2744:1: ( rule__Signal__CombineOperatorAssignment_8_1_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2744:2: rule__Signal__CombineOperatorAssignment_8_1_3
+            {
+            pushFollow(FOLLOW_rule__Signal__CombineOperatorAssignment_8_1_3_in_rule__Signal__Group_8_1__35433);
+            rule__Signal__CombineOperatorAssignment_8_1_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getCombineOperatorAssignment_8_1_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_8_1__3
+
+
+    // $ANTLR start rule__Signal__Group_9__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2762:1: rule__Signal__Group_9__0 : ( ( rule__Signal__NameAssignment_9_0 ) ) rule__Signal__Group_9__1 ;
+    public final void rule__Signal__Group_9__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2766:1: ( ( ( rule__Signal__NameAssignment_9_0 ) ) rule__Signal__Group_9__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2767:1: ( ( rule__Signal__NameAssignment_9_0 ) ) rule__Signal__Group_9__1
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2767:1: ( ( rule__Signal__NameAssignment_9_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2768:1: ( rule__Signal__NameAssignment_9_0 )
+            {
+             before(grammarAccess.getSignalAccess().getNameAssignment_9_0()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2769:1: ( rule__Signal__NameAssignment_9_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2769:2: rule__Signal__NameAssignment_9_0
+            {
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_9_0_in_rule__Signal__Group_9__05475);
+            rule__Signal__NameAssignment_9_0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getNameAssignment_9_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_9__1_in_rule__Signal__Group_9__05484);
+            rule__Signal__Group_9__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9__0
+
+
+    // $ANTLR start rule__Signal__Group_9__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2780:1: rule__Signal__Group_9__1 : ( ( rule__Signal__Group_9_1__0 ) ) ;
+    public final void rule__Signal__Group_9__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2784:1: ( ( ( rule__Signal__Group_9_1__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2785:1: ( ( rule__Signal__Group_9_1__0 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2785:1: ( ( rule__Signal__Group_9_1__0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2786:1: ( rule__Signal__Group_9_1__0 )
+            {
+             before(grammarAccess.getSignalAccess().getGroup_9_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2787:1: ( rule__Signal__Group_9_1__0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2787:2: rule__Signal__Group_9_1__0
+            {
+            pushFollow(FOLLOW_rule__Signal__Group_9_1__0_in_rule__Signal__Group_9__15512);
+            rule__Signal__Group_9_1__0();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getGroup_9_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9__1
+
+
+    // $ANTLR start rule__Signal__Group_9_1__0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2801:1: rule__Signal__Group_9_1__0 : ( 'combine' ) rule__Signal__Group_9_1__1 ;
+    public final void rule__Signal__Group_9_1__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2805:1: ( ( 'combine' ) rule__Signal__Group_9_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2806:1: ( 'combine' ) rule__Signal__Group_9_1__1
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2806:1: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2807:1: 'combine'
+            {
+             before(grammarAccess.getSignalAccess().getCombineKeyword_9_1_0()); 
+            match(input,33,FOLLOW_33_in_rule__Signal__Group_9_1__05551); 
+             after(grammarAccess.getSignalAccess().getCombineKeyword_9_1_0()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_9_1__1_in_rule__Signal__Group_9_1__05561);
+            rule__Signal__Group_9_1__1();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9_1__0
+
+
+    // $ANTLR start rule__Signal__Group_9_1__1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2821:1: rule__Signal__Group_9_1__1 : ( ( rule__Signal__HostTypeAssignment_9_1_1 ) ) rule__Signal__Group_9_1__2 ;
+    public final void rule__Signal__Group_9_1__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2825:1: ( ( ( rule__Signal__HostTypeAssignment_9_1_1 ) ) rule__Signal__Group_9_1__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2826:1: ( ( rule__Signal__HostTypeAssignment_9_1_1 ) ) rule__Signal__Group_9_1__2
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2826:1: ( ( rule__Signal__HostTypeAssignment_9_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2827:1: ( rule__Signal__HostTypeAssignment_9_1_1 )
+            {
+             before(grammarAccess.getSignalAccess().getHostTypeAssignment_9_1_1()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2828:1: ( rule__Signal__HostTypeAssignment_9_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2828:2: rule__Signal__HostTypeAssignment_9_1_1
+            {
+            pushFollow(FOLLOW_rule__Signal__HostTypeAssignment_9_1_1_in_rule__Signal__Group_9_1__15589);
+            rule__Signal__HostTypeAssignment_9_1_1();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getHostTypeAssignment_9_1_1()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_9_1__2_in_rule__Signal__Group_9_1__15598);
+            rule__Signal__Group_9_1__2();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9_1__1
+
+
+    // $ANTLR start rule__Signal__Group_9_1__2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2839:1: rule__Signal__Group_9_1__2 : ( 'with' ) rule__Signal__Group_9_1__3 ;
+    public final void rule__Signal__Group_9_1__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2843:1: ( ( 'with' ) rule__Signal__Group_9_1__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2844:1: ( 'with' ) rule__Signal__Group_9_1__3
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2844:1: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2845:1: 'with'
+            {
+             before(grammarAccess.getSignalAccess().getWithKeyword_9_1_2()); 
+            match(input,34,FOLLOW_34_in_rule__Signal__Group_9_1__25627); 
+             after(grammarAccess.getSignalAccess().getWithKeyword_9_1_2()); 
+
+            }
+
+            pushFollow(FOLLOW_rule__Signal__Group_9_1__3_in_rule__Signal__Group_9_1__25637);
+            rule__Signal__Group_9_1__3();
+            _fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9_1__2
+
+
+    // $ANTLR start rule__Signal__Group_9_1__3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2859:1: rule__Signal__Group_9_1__3 : ( ( rule__Signal__HostCombineOperatorAssignment_9_1_3 ) ) ;
+    public final void rule__Signal__Group_9_1__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2863:1: ( ( ( rule__Signal__HostCombineOperatorAssignment_9_1_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2864:1: ( ( rule__Signal__HostCombineOperatorAssignment_9_1_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2864:1: ( ( rule__Signal__HostCombineOperatorAssignment_9_1_3 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2865:1: ( rule__Signal__HostCombineOperatorAssignment_9_1_3 )
+            {
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_9_1_3()); 
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2866:1: ( rule__Signal__HostCombineOperatorAssignment_9_1_3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2866:2: rule__Signal__HostCombineOperatorAssignment_9_1_3
+            {
+            pushFollow(FOLLOW_rule__Signal__HostCombineOperatorAssignment_9_1_3_in_rule__Signal__Group_9_1__35665);
+            rule__Signal__HostCombineOperatorAssignment_9_1_3();
+            _fsp--;
+
+
+            }
+
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_9_1_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__Group_9_1__3
 
 
     // $ANTLR start rule__Variable__Group__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2706:1: rule__Variable__Group__0 : ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2884:1: rule__Variable__Group__0 : ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1 ;
     public final void rule__Variable__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2710:1: ( ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2711:1: ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2888:1: ( ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2889:1: ( ( rule__Variable__NameAssignment_0 ) ) rule__Variable__Group__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2711:1: ( ( rule__Variable__NameAssignment_0 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2712:1: ( rule__Variable__NameAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2889:1: ( ( rule__Variable__NameAssignment_0 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2890:1: ( rule__Variable__NameAssignment_0 )
             {
              before(grammarAccess.getVariableAccess().getNameAssignment_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2713:1: ( rule__Variable__NameAssignment_0 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2713:2: rule__Variable__NameAssignment_0
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2891:1: ( rule__Variable__NameAssignment_0 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2891:2: rule__Variable__NameAssignment_0
             {
-            pushFollow(FOLLOW_rule__Variable__NameAssignment_0_in_rule__Variable__Group__05357);
+            pushFollow(FOLLOW_rule__Variable__NameAssignment_0_in_rule__Variable__Group__05707);
             rule__Variable__NameAssignment_0();
             _fsp--;
 
@@ -6837,7 +7262,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Variable__Group__1_in_rule__Variable__Group__05366);
+            pushFollow(FOLLOW_rule__Variable__Group__1_in_rule__Variable__Group__05716);
             rule__Variable__Group__1();
             _fsp--;
 
@@ -6860,20 +7285,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2724:1: rule__Variable__Group__1 : ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2902:1: rule__Variable__Group__1 : ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2 ;
     public final void rule__Variable__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2728:1: ( ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2729:1: ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2906:1: ( ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2907:1: ( ( rule__Variable__Group_1__0 )? ) rule__Variable__Group__2
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2729:1: ( ( rule__Variable__Group_1__0 )? )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2730:1: ( rule__Variable__Group_1__0 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2907:1: ( ( rule__Variable__Group_1__0 )? )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2908:1: ( rule__Variable__Group_1__0 )?
             {
              before(grammarAccess.getVariableAccess().getGroup_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2731:1: ( rule__Variable__Group_1__0 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2909:1: ( rule__Variable__Group_1__0 )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -6882,9 +7307,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
             }
             switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2731:2: rule__Variable__Group_1__0
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2909:2: rule__Variable__Group_1__0
                     {
-                    pushFollow(FOLLOW_rule__Variable__Group_1__0_in_rule__Variable__Group__15394);
+                    pushFollow(FOLLOW_rule__Variable__Group_1__0_in_rule__Variable__Group__15744);
                     rule__Variable__Group_1__0();
                     _fsp--;
 
@@ -6898,7 +7323,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Variable__Group__2_in_rule__Variable__Group__15404);
+            pushFollow(FOLLOW_rule__Variable__Group__2_in_rule__Variable__Group__15754);
             rule__Variable__Group__2();
             _fsp--;
 
@@ -6921,20 +7346,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group__2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2742:1: rule__Variable__Group__2 : ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2920:1: rule__Variable__Group__2 : ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3 ;
     public final void rule__Variable__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2746:1: ( ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2747:1: ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2924:1: ( ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2925:1: ( ( rule__Variable__TypeAssignment_2 )? ) rule__Variable__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2747:1: ( ( rule__Variable__TypeAssignment_2 )? )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2748:1: ( rule__Variable__TypeAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2925:1: ( ( rule__Variable__TypeAssignment_2 )? )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2926:1: ( rule__Variable__TypeAssignment_2 )?
             {
              before(grammarAccess.getVariableAccess().getTypeAssignment_2()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2749:1: ( rule__Variable__TypeAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2927:1: ( rule__Variable__TypeAssignment_2 )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -6943,9 +7368,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
             }
             switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2749:2: rule__Variable__TypeAssignment_2
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2927:2: rule__Variable__TypeAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__Variable__TypeAssignment_2_in_rule__Variable__Group__25432);
+                    pushFollow(FOLLOW_rule__Variable__TypeAssignment_2_in_rule__Variable__Group__25782);
                     rule__Variable__TypeAssignment_2();
                     _fsp--;
 
@@ -6959,7 +7384,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
             }
 
-            pushFollow(FOLLOW_rule__Variable__Group__3_in_rule__Variable__Group__25442);
+            pushFollow(FOLLOW_rule__Variable__Group__3_in_rule__Variable__Group__25792);
             rule__Variable__Group__3();
             _fsp--;
 
@@ -6982,20 +7407,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group__3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2760:1: rule__Variable__Group__3 : ( ( rule__Variable__Group_3__0 )? ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2938:1: rule__Variable__Group__3 : ( ( rule__Variable__Group_3__0 )? ) ;
     public final void rule__Variable__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2764:1: ( ( ( rule__Variable__Group_3__0 )? ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2765:1: ( ( rule__Variable__Group_3__0 )? )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2942:1: ( ( ( rule__Variable__Group_3__0 )? ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2943:1: ( ( rule__Variable__Group_3__0 )? )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2765:1: ( ( rule__Variable__Group_3__0 )? )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2766:1: ( rule__Variable__Group_3__0 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2943:1: ( ( rule__Variable__Group_3__0 )? )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2944:1: ( rule__Variable__Group_3__0 )?
             {
              before(grammarAccess.getVariableAccess().getGroup_3()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2767:1: ( rule__Variable__Group_3__0 )?
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2945:1: ( rule__Variable__Group_3__0 )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -7004,9 +7429,9 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2767:2: rule__Variable__Group_3__0
+                    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2945:2: rule__Variable__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Variable__Group_3__0_in_rule__Variable__Group__35470);
+                    pushFollow(FOLLOW_rule__Variable__Group_3__0_in_rule__Variable__Group__35820);
                     rule__Variable__Group_3__0();
                     _fsp--;
 
@@ -7039,25 +7464,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group_1__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2785:1: rule__Variable__Group_1__0 : ( ':=' ) rule__Variable__Group_1__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2963:1: rule__Variable__Group_1__0 : ( ':=' ) rule__Variable__Group_1__1 ;
     public final void rule__Variable__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2789:1: ( ( ':=' ) rule__Variable__Group_1__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2790:1: ( ':=' ) rule__Variable__Group_1__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2967:1: ( ( ':=' ) rule__Variable__Group_1__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2968:1: ( ':=' ) rule__Variable__Group_1__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2790:1: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2791:1: ':='
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2968:1: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2969:1: ':='
             {
              before(grammarAccess.getVariableAccess().getColonEqualsSignKeyword_1_0()); 
-            match(input,32,FOLLOW_32_in_rule__Variable__Group_1__05514); 
+            match(input,32,FOLLOW_32_in_rule__Variable__Group_1__05864); 
              after(grammarAccess.getVariableAccess().getColonEqualsSignKeyword_1_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Variable__Group_1__1_in_rule__Variable__Group_1__05524);
+            pushFollow(FOLLOW_rule__Variable__Group_1__1_in_rule__Variable__Group_1__05874);
             rule__Variable__Group_1__1();
             _fsp--;
 
@@ -7080,23 +7505,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group_1__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2805:1: rule__Variable__Group_1__1 : ( ( rule__Variable__InitialValueAssignment_1_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2983:1: rule__Variable__Group_1__1 : ( ( rule__Variable__InitialValueAssignment_1_1 ) ) ;
     public final void rule__Variable__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2809:1: ( ( ( rule__Variable__InitialValueAssignment_1_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2810:1: ( ( rule__Variable__InitialValueAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2987:1: ( ( ( rule__Variable__InitialValueAssignment_1_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2988:1: ( ( rule__Variable__InitialValueAssignment_1_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2810:1: ( ( rule__Variable__InitialValueAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2811:1: ( rule__Variable__InitialValueAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2988:1: ( ( rule__Variable__InitialValueAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2989:1: ( rule__Variable__InitialValueAssignment_1_1 )
             {
              before(grammarAccess.getVariableAccess().getInitialValueAssignment_1_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2812:1: ( rule__Variable__InitialValueAssignment_1_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2812:2: rule__Variable__InitialValueAssignment_1_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2990:1: ( rule__Variable__InitialValueAssignment_1_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2990:2: rule__Variable__InitialValueAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__Variable__InitialValueAssignment_1_1_in_rule__Variable__Group_1__15552);
+            pushFollow(FOLLOW_rule__Variable__InitialValueAssignment_1_1_in_rule__Variable__Group_1__15902);
             rule__Variable__InitialValueAssignment_1_1();
             _fsp--;
 
@@ -7126,25 +7551,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group_3__0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2826:1: rule__Variable__Group_3__0 : ( 'host' ) rule__Variable__Group_3__1 ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3004:1: rule__Variable__Group_3__0 : ( 'host' ) rule__Variable__Group_3__1 ;
     public final void rule__Variable__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2830:1: ( ( 'host' ) rule__Variable__Group_3__1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2831:1: ( 'host' ) rule__Variable__Group_3__1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3008:1: ( ( 'host' ) rule__Variable__Group_3__1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3009:1: ( 'host' ) rule__Variable__Group_3__1
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2831:1: ( 'host' )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2832:1: 'host'
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3009:1: ( 'host' )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3010:1: 'host'
             {
              before(grammarAccess.getVariableAccess().getHostKeyword_3_0()); 
-            match(input,24,FOLLOW_24_in_rule__Variable__Group_3__05591); 
+            match(input,24,FOLLOW_24_in_rule__Variable__Group_3__05941); 
              after(grammarAccess.getVariableAccess().getHostKeyword_3_0()); 
 
             }
 
-            pushFollow(FOLLOW_rule__Variable__Group_3__1_in_rule__Variable__Group_3__05601);
+            pushFollow(FOLLOW_rule__Variable__Group_3__1_in_rule__Variable__Group_3__05951);
             rule__Variable__Group_3__1();
             _fsp--;
 
@@ -7167,23 +7592,23 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__Group_3__1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2846:1: rule__Variable__Group_3__1 : ( ( rule__Variable__HostTypeAssignment_3_1 ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3024:1: rule__Variable__Group_3__1 : ( ( rule__Variable__HostTypeAssignment_3_1 ) ) ;
     public final void rule__Variable__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2850:1: ( ( ( rule__Variable__HostTypeAssignment_3_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2851:1: ( ( rule__Variable__HostTypeAssignment_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3028:1: ( ( ( rule__Variable__HostTypeAssignment_3_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3029:1: ( ( rule__Variable__HostTypeAssignment_3_1 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2851:1: ( ( rule__Variable__HostTypeAssignment_3_1 ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2852:1: ( rule__Variable__HostTypeAssignment_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3029:1: ( ( rule__Variable__HostTypeAssignment_3_1 ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3030:1: ( rule__Variable__HostTypeAssignment_3_1 )
             {
              before(grammarAccess.getVariableAccess().getHostTypeAssignment_3_1()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2853:1: ( rule__Variable__HostTypeAssignment_3_1 )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2853:2: rule__Variable__HostTypeAssignment_3_1
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3031:1: ( rule__Variable__HostTypeAssignment_3_1 )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3031:2: rule__Variable__HostTypeAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Variable__HostTypeAssignment_3_1_in_rule__Variable__Group_3__15629);
+            pushFollow(FOLLOW_rule__Variable__HostTypeAssignment_3_1_in_rule__Variable__Group_3__15979);
             rule__Variable__HostTypeAssignment_3_1();
             _fsp--;
 
@@ -7213,20 +7638,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__RegionsAssignment_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2867:1: rule__StateExtend__RegionsAssignment_0 : ( ruleRegionSignalDec ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3045:1: rule__StateExtend__RegionsAssignment_0 : ( ruleRegionSignalDec ) ;
     public final void rule__StateExtend__RegionsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2871:1: ( ( ruleRegionSignalDec ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2872:1: ( ruleRegionSignalDec )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3049:1: ( ( ruleRegionSignalDec ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3050:1: ( ruleRegionSignalDec )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2872:1: ( ruleRegionSignalDec )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2873:1: ruleRegionSignalDec
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3050:1: ( ruleRegionSignalDec )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3051:1: ruleRegionSignalDec
             {
              before(grammarAccess.getStateExtendAccess().getRegionsRegionSignalDecParserRuleCall_0_0()); 
-            pushFollow(FOLLOW_ruleRegionSignalDec_in_rule__StateExtend__RegionsAssignment_05667);
+            pushFollow(FOLLOW_ruleRegionSignalDec_in_rule__StateExtend__RegionsAssignment_06017);
             ruleRegionSignalDec();
             _fsp--;
 
@@ -7253,20 +7678,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__InOutputSignalsAssignment_1_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2882:1: rule__StateExtend__InOutputSignalsAssignment_1_2 : ( ruleInOutputSignals ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3060:1: rule__StateExtend__InOutputSignalsAssignment_1_2 : ( ruleInOutputSignals ) ;
     public final void rule__StateExtend__InOutputSignalsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2886:1: ( ( ruleInOutputSignals ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2887:1: ( ruleInOutputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3064:1: ( ( ruleInOutputSignals ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3065:1: ( ruleInOutputSignals )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2887:1: ( ruleInOutputSignals )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2888:1: ruleInOutputSignals
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3065:1: ( ruleInOutputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3066:1: ruleInOutputSignals
             {
              before(grammarAccess.getStateExtendAccess().getInOutputSignalsInOutputSignalsParserRuleCall_1_2_0()); 
-            pushFollow(FOLLOW_ruleInOutputSignals_in_rule__StateExtend__InOutputSignalsAssignment_1_25698);
+            pushFollow(FOLLOW_ruleInOutputSignals_in_rule__StateExtend__InOutputSignalsAssignment_1_26048);
             ruleInOutputSignals();
             _fsp--;
 
@@ -7293,20 +7718,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__OutputSignalsAssignment_2_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2897:1: rule__StateExtend__OutputSignalsAssignment_2_1 : ( ruleOutputSignals ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3075:1: rule__StateExtend__OutputSignalsAssignment_2_1 : ( ruleOutputSignals ) ;
     public final void rule__StateExtend__OutputSignalsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2901:1: ( ( ruleOutputSignals ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2902:1: ( ruleOutputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3079:1: ( ( ruleOutputSignals ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3080:1: ( ruleOutputSignals )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2902:1: ( ruleOutputSignals )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2903:1: ruleOutputSignals
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3080:1: ( ruleOutputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3081:1: ruleOutputSignals
             {
              before(grammarAccess.getStateExtendAccess().getOutputSignalsOutputSignalsParserRuleCall_2_1_0()); 
-            pushFollow(FOLLOW_ruleOutputSignals_in_rule__StateExtend__OutputSignalsAssignment_2_15729);
+            pushFollow(FOLLOW_ruleOutputSignals_in_rule__StateExtend__OutputSignalsAssignment_2_16079);
             ruleOutputSignals();
             _fsp--;
 
@@ -7333,20 +7758,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__InputSignalsAssignment_3_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2912:1: rule__StateExtend__InputSignalsAssignment_3_1 : ( ruleInputSignals ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3090:1: rule__StateExtend__InputSignalsAssignment_3_1 : ( ruleInputSignals ) ;
     public final void rule__StateExtend__InputSignalsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2916:1: ( ( ruleInputSignals ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2917:1: ( ruleInputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3094:1: ( ( ruleInputSignals ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3095:1: ( ruleInputSignals )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2917:1: ( ruleInputSignals )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2918:1: ruleInputSignals
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3095:1: ( ruleInputSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3096:1: ruleInputSignals
             {
              before(grammarAccess.getStateExtendAccess().getInputSignalsInputSignalsParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleInputSignals_in_rule__StateExtend__InputSignalsAssignment_3_15760);
+            pushFollow(FOLLOW_ruleInputSignals_in_rule__StateExtend__InputSignalsAssignment_3_16110);
             ruleInputSignals();
             _fsp--;
 
@@ -7373,20 +7798,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__StateExtend__SignalsAssignment_4_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2927:1: rule__StateExtend__SignalsAssignment_4_1 : ( ruleSignals ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3105:1: rule__StateExtend__SignalsAssignment_4_1 : ( ruleSignals ) ;
     public final void rule__StateExtend__SignalsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2931:1: ( ( ruleSignals ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2932:1: ( ruleSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3109:1: ( ( ruleSignals ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3110:1: ( ruleSignals )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2932:1: ( ruleSignals )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2933:1: ruleSignals
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3110:1: ( ruleSignals )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3111:1: ruleSignals
             {
              before(grammarAccess.getStateExtendAccess().getSignalsSignalsParserRuleCall_4_1_0()); 
-            pushFollow(FOLLOW_ruleSignals_in_rule__StateExtend__SignalsAssignment_4_15791);
+            pushFollow(FOLLOW_ruleSignals_in_rule__StateExtend__SignalsAssignment_4_16141);
             ruleSignals();
             _fsp--;
 
@@ -7413,24 +7838,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__RegionAssignment_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2942:1: rule__RegionSignalDec__RegionAssignment_0 : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3120:1: rule__RegionSignalDec__RegionAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__RegionSignalDec__RegionAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2946:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2947:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3124:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3125:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2947:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2948:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3125:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3126:1: ( RULE_ID )
             {
              before(grammarAccess.getRegionSignalDecAccess().getRegionRegionCrossReference_0_0()); 
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2949:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2950:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3127:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3128:1: RULE_ID
             {
              before(grammarAccess.getRegionSignalDecAccess().getRegionRegionIDTerminalRuleCall_0_0_1()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__RegionSignalDec__RegionAssignment_05826); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__RegionSignalDec__RegionAssignment_06176); 
              after(grammarAccess.getRegionSignalDecAccess().getRegionRegionIDTerminalRuleCall_0_0_1()); 
 
             }
@@ -7458,20 +7883,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__VarsAssignment_2_0_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2961:1: rule__RegionSignalDec__VarsAssignment_2_0_1 : ( ruleVariable ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3139:1: rule__RegionSignalDec__VarsAssignment_2_0_1 : ( ruleVariable ) ;
     public final void rule__RegionSignalDec__VarsAssignment_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2965:1: ( ( ruleVariable ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2966:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3143:1: ( ( ruleVariable ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3144:1: ( ruleVariable )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2966:1: ( ruleVariable )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2967:1: ruleVariable
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3144:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3145:1: ruleVariable
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_2_0_1_0()); 
-            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_15861);
+            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_16211);
             ruleVariable();
             _fsp--;
 
@@ -7498,20 +7923,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__VarsAssignment_2_0_2_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2976:1: rule__RegionSignalDec__VarsAssignment_2_0_2_1 : ( ruleVariable ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3154:1: rule__RegionSignalDec__VarsAssignment_2_0_2_1 : ( ruleVariable ) ;
     public final void rule__RegionSignalDec__VarsAssignment_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2980:1: ( ( ruleVariable ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2981:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3158:1: ( ( ruleVariable ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3159:1: ( ruleVariable )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2981:1: ( ruleVariable )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2982:1: ruleVariable
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3159:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3160:1: ruleVariable
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_2_0_2_1_0()); 
-            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_2_15892);
+            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_2_16242);
             ruleVariable();
             _fsp--;
 
@@ -7538,20 +7963,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__SignalsAssignment_2_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2991:1: rule__RegionSignalDec__SignalsAssignment_2_1_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3169:1: rule__RegionSignalDec__SignalsAssignment_2_1_1 : ( ruleSignal ) ;
     public final void rule__RegionSignalDec__SignalsAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2995:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2996:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3173:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3174:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2996:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:2997:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3174:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3175:1: ruleSignal
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_2_1_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_15923);
+            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_16273);
             ruleSignal();
             _fsp--;
 
@@ -7578,20 +8003,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__SignalsAssignment_2_1_2_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3006:1: rule__RegionSignalDec__SignalsAssignment_2_1_2_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3184:1: rule__RegionSignalDec__SignalsAssignment_2_1_2_1 : ( ruleSignal ) ;
     public final void rule__RegionSignalDec__SignalsAssignment_2_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3010:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3011:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3188:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3189:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3011:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3012:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3189:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3190:1: ruleSignal
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_2_1_2_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_2_15954);
+            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_2_16304);
             ruleSignal();
             _fsp--;
 
@@ -7618,20 +8043,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__VarsAssignment_3_0_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3021:1: rule__RegionSignalDec__VarsAssignment_3_0_2 : ( ruleVariable ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3199:1: rule__RegionSignalDec__VarsAssignment_3_0_2 : ( ruleVariable ) ;
     public final void rule__RegionSignalDec__VarsAssignment_3_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3025:1: ( ( ruleVariable ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3026:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3203:1: ( ( ruleVariable ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3204:1: ( ruleVariable )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3026:1: ( ruleVariable )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3027:1: ruleVariable
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3204:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3205:1: ruleVariable
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_3_0_2_0()); 
-            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_25985);
+            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_26335);
             ruleVariable();
             _fsp--;
 
@@ -7658,20 +8083,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__VarsAssignment_3_0_3_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3036:1: rule__RegionSignalDec__VarsAssignment_3_0_3_1 : ( ruleVariable ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3214:1: rule__RegionSignalDec__VarsAssignment_3_0_3_1 : ( ruleVariable ) ;
     public final void rule__RegionSignalDec__VarsAssignment_3_0_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3040:1: ( ( ruleVariable ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3041:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3218:1: ( ( ruleVariable ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3219:1: ( ruleVariable )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3041:1: ( ruleVariable )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3042:1: ruleVariable
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3219:1: ( ruleVariable )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3220:1: ruleVariable
             {
              before(grammarAccess.getRegionSignalDecAccess().getVarsVariableParserRuleCall_3_0_3_1_0()); 
-            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_3_16016);
+            pushFollow(FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_3_16366);
             ruleVariable();
             _fsp--;
 
@@ -7698,20 +8123,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__SignalsAssignment_3_1_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3051:1: rule__RegionSignalDec__SignalsAssignment_3_1_2 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3229:1: rule__RegionSignalDec__SignalsAssignment_3_1_2 : ( ruleSignal ) ;
     public final void rule__RegionSignalDec__SignalsAssignment_3_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3055:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3056:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3233:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3234:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3056:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3057:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3234:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3235:1: ruleSignal
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_3_1_2_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_26047);
+            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_26397);
             ruleSignal();
             _fsp--;
 
@@ -7738,20 +8163,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__RegionSignalDec__SignalsAssignment_3_1_3_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3066:1: rule__RegionSignalDec__SignalsAssignment_3_1_3_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3244:1: rule__RegionSignalDec__SignalsAssignment_3_1_3_1 : ( ruleSignal ) ;
     public final void rule__RegionSignalDec__SignalsAssignment_3_1_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3070:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3071:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3248:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3249:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3071:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3072:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3249:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3250:1: ruleSignal
             {
              before(grammarAccess.getRegionSignalDecAccess().getSignalsSignalParserRuleCall_3_1_3_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_3_16078);
+            pushFollow(FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_3_16428);
             ruleSignal();
             _fsp--;
 
@@ -7778,20 +8203,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__SignalsAssignment_0_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3081:1: rule__Signals__SignalsAssignment_0_0 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3259:1: rule__Signals__SignalsAssignment_0_0 : ( ruleSignal ) ;
     public final void rule__Signals__SignalsAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3085:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3086:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3263:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3264:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3086:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3087:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3264:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3265:1: ruleSignal
             {
              before(grammarAccess.getSignalsAccess().getSignalsSignalParserRuleCall_0_0_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_06109);
+            pushFollow(FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_06459);
             ruleSignal();
             _fsp--;
 
@@ -7818,20 +8243,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signals__SignalsAssignment_0_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3096:1: rule__Signals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3274:1: rule__Signals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
     public final void rule__Signals__SignalsAssignment_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3100:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3101:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3278:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3279:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3101:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3102:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3279:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3280:1: ruleSignal
             {
              before(grammarAccess.getSignalsAccess().getSignalsSignalParserRuleCall_0_1_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_1_16140);
+            pushFollow(FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_1_16490);
             ruleSignal();
             _fsp--;
 
@@ -7858,20 +8283,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__SignalsAssignment_0_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3111:1: rule__InputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3289:1: rule__InputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
     public final void rule__InputSignals__SignalsAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3115:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3116:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3293:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3294:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3116:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3117:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3294:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3295:1: ruleSignal
             {
              before(grammarAccess.getInputSignalsAccess().getSignalsSignalParserRuleCall_0_0_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_06171);
+            pushFollow(FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_06521);
             ruleSignal();
             _fsp--;
 
@@ -7898,20 +8323,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InputSignals__SignalsAssignment_0_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3126:1: rule__InputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3304:1: rule__InputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
     public final void rule__InputSignals__SignalsAssignment_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3130:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3131:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3308:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3309:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3131:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3132:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3309:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3310:1: ruleSignal
             {
              before(grammarAccess.getInputSignalsAccess().getSignalsSignalParserRuleCall_0_1_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_1_16202);
+            pushFollow(FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_1_16552);
             ruleSignal();
             _fsp--;
 
@@ -7938,20 +8363,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__SignalsAssignment_0_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3141:1: rule__OutputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3319:1: rule__OutputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
     public final void rule__OutputSignals__SignalsAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3145:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3146:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3323:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3324:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3146:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3147:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3324:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3325:1: ruleSignal
             {
              before(grammarAccess.getOutputSignalsAccess().getSignalsSignalParserRuleCall_0_0_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_06233);
+            pushFollow(FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_06583);
             ruleSignal();
             _fsp--;
 
@@ -7978,20 +8403,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__OutputSignals__SignalsAssignment_0_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3156:1: rule__OutputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3334:1: rule__OutputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
     public final void rule__OutputSignals__SignalsAssignment_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3160:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3161:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3338:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3339:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3161:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3162:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3339:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3340:1: ruleSignal
             {
              before(grammarAccess.getOutputSignalsAccess().getSignalsSignalParserRuleCall_0_1_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_1_16264);
+            pushFollow(FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_1_16614);
             ruleSignal();
             _fsp--;
 
@@ -8018,20 +8443,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__SignalsAssignment_0_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3171:1: rule__InOutputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3349:1: rule__InOutputSignals__SignalsAssignment_0_0 : ( ruleSignal ) ;
     public final void rule__InOutputSignals__SignalsAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3175:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3176:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3353:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3354:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3176:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3177:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3354:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3355:1: ruleSignal
             {
              before(grammarAccess.getInOutputSignalsAccess().getSignalsSignalParserRuleCall_0_0_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_06295);
+            pushFollow(FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_06645);
             ruleSignal();
             _fsp--;
 
@@ -8058,20 +8483,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__InOutputSignals__SignalsAssignment_0_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3186:1: rule__InOutputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3364:1: rule__InOutputSignals__SignalsAssignment_0_1_1 : ( ruleSignal ) ;
     public final void rule__InOutputSignals__SignalsAssignment_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3190:1: ( ( ruleSignal ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3191:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3368:1: ( ( ruleSignal ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3369:1: ( ruleSignal )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3191:1: ( ruleSignal )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3192:1: ruleSignal
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3369:1: ( ruleSignal )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3370:1: ruleSignal
             {
              before(grammarAccess.getInOutputSignalsAccess().getSignalsSignalParserRuleCall_0_1_1_0()); 
-            pushFollow(FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_1_16326);
+            pushFollow(FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_1_16676);
             ruleSignal();
             _fsp--;
 
@@ -8098,20 +8523,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__NameAssignment_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3201:1: rule__Signal__NameAssignment_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3379:1: rule__Signal__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3205:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3206:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3383:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3384:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3206:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3207:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3384:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3385:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_06357); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_06707); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_0_0()); 
 
             }
@@ -8135,20 +8560,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__NameAssignment_1_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3216:1: rule__Signal__NameAssignment_1_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3394:1: rule__Signal__NameAssignment_1_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3220:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3221:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3398:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3399:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3221:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3222:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3399:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3400:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_1_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_1_06388); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_1_06738); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_1_0_0()); 
 
             }
@@ -8171,22 +8596,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__NameAssignment_1_0
 
 
-    // $ANTLR start rule__Signal__InitialValueAssignment_1_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3231:1: rule__Signal__InitialValueAssignment_1_1_1 : ( RULE_STRING ) ;
-    public final void rule__Signal__InitialValueAssignment_1_1_1() throws RecognitionException {
+    // $ANTLR start rule__Signal__TypeAssignment_1_2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3409:1: rule__Signal__TypeAssignment_1_2 : ( ruleValueType ) ;
+    public final void rule__Signal__TypeAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3235:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3236:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3413:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3414:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3236:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3237:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3414:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3415:1: ruleValueType
             {
-             before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_1_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_1_1_16419); 
-             after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_1_1_1_0()); 
+             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_1_2_0()); 
+            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_1_26769);
+            ruleValueType();
+            _fsp--;
+
+             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_1_2_0()); 
 
             }
 
@@ -8205,24 +8633,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__InitialValueAssignment_1_1_1
+    // $ANTLR end rule__Signal__TypeAssignment_1_2
 
 
     // $ANTLR start rule__Signal__NameAssignment_2_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3246:1: rule__Signal__NameAssignment_2_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3424:1: rule__Signal__NameAssignment_2_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3250:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3251:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3428:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3429:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3251:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3252:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3429:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3430:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_2_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_2_06450); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_2_06800); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_2_0_0()); 
 
             }
@@ -8246,20 +8674,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__InitialValueAssignment_2_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3261:1: rule__Signal__InitialValueAssignment_2_1_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3439:1: rule__Signal__InitialValueAssignment_2_1_1 : ( RULE_STRING ) ;
     public final void rule__Signal__InitialValueAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3265:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3266:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3443:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3444:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3266:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3267:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3444:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3445:1: RULE_STRING
             {
              before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_2_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_2_1_16481); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_2_1_16831); 
              after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_2_1_1_0()); 
 
             }
@@ -8282,61 +8710,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__InitialValueAssignment_2_1_1
 
 
-    // $ANTLR start rule__Signal__TypeAssignment_2_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3276:1: rule__Signal__TypeAssignment_2_2 : ( ruleValueType ) ;
-    public final void rule__Signal__TypeAssignment_2_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3280:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3281:1: ( ruleValueType )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3281:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3282:1: ruleValueType
-            {
-             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_2_2_0()); 
-            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_2_26512);
-            ruleValueType();
-            _fsp--;
-
-             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_2_2_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__TypeAssignment_2_2
-
-
     // $ANTLR start rule__Signal__NameAssignment_3_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3291:1: rule__Signal__NameAssignment_3_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3454:1: rule__Signal__NameAssignment_3_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3295:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3296:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3458:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3459:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3296:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3297:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3459:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3460:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_3_06543); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_3_06862); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0_0()); 
 
             }
@@ -8360,20 +8748,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__InitialValueAssignment_3_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3306:1: rule__Signal__InitialValueAssignment_3_1_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3469:1: rule__Signal__InitialValueAssignment_3_1_1 : ( RULE_STRING ) ;
     public final void rule__Signal__InitialValueAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3310:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3311:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3473:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3474:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3311:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3312:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3474:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3475:1: RULE_STRING
             {
              before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_3_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_3_1_16574); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_3_1_16893); 
              after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_3_1_1_0()); 
 
             }
@@ -8396,25 +8784,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__InitialValueAssignment_3_1_1
 
 
-    // $ANTLR start rule__Signal__TypeAssignment_3_2_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3321:1: rule__Signal__TypeAssignment_3_2_1 : ( ruleValueType ) ;
-    public final void rule__Signal__TypeAssignment_3_2_1() throws RecognitionException {
+    // $ANTLR start rule__Signal__TypeAssignment_3_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3484:1: rule__Signal__TypeAssignment_3_3 : ( ruleValueType ) ;
+    public final void rule__Signal__TypeAssignment_3_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3325:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3326:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3488:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3489:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3326:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3327:1: ruleValueType
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3489:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3490:1: ruleValueType
             {
-             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_2_1_0()); 
-            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_3_2_16605);
+             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_3_0()); 
+            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_3_36924);
             ruleValueType();
             _fsp--;
 
-             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_2_1_0()); 
+             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_3_0()); 
 
             }
 
@@ -8433,64 +8821,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__TypeAssignment_3_2_1
-
-
-    // $ANTLR start rule__Signal__CombineOperatorAssignment_3_2_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3336:1: rule__Signal__CombineOperatorAssignment_3_2_3 : ( ruleCombineOperator ) ;
-    public final void rule__Signal__CombineOperatorAssignment_3_2_3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3340:1: ( ( ruleCombineOperator ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3341:1: ( ruleCombineOperator )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3341:1: ( ruleCombineOperator )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3342:1: ruleCombineOperator
-            {
-             before(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0()); 
-            pushFollow(FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_3_2_36636);
-            ruleCombineOperator();
-            _fsp--;
-
-             after(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__CombineOperatorAssignment_3_2_3
+    // $ANTLR end rule__Signal__TypeAssignment_3_3
 
 
     // $ANTLR start rule__Signal__NameAssignment_4_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3351:1: rule__Signal__NameAssignment_4_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3499:1: rule__Signal__NameAssignment_4_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3355:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3356:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3503:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3504:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3356:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3357:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3504:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3505:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_4_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_4_06667); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_4_06955); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_4_0_0()); 
 
             }
@@ -8514,20 +8862,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__InitialValueAssignment_4_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3366:1: rule__Signal__InitialValueAssignment_4_1_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3514:1: rule__Signal__InitialValueAssignment_4_1_1 : ( RULE_STRING ) ;
     public final void rule__Signal__InitialValueAssignment_4_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3370:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3371:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3518:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3519:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3371:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3372:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3519:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3520:1: RULE_STRING
             {
              before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_4_1_16698); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_4_1_16986); 
              after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_1_0()); 
 
             }
@@ -8550,22 +8898,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__InitialValueAssignment_4_1_1
 
 
-    // $ANTLR start rule__Signal__HostTypeAssignment_4_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3381:1: rule__Signal__HostTypeAssignment_4_2 : ( RULE_STRING ) ;
-    public final void rule__Signal__HostTypeAssignment_4_2() throws RecognitionException {
+    // $ANTLR start rule__Signal__TypeAssignment_4_2_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3529:1: rule__Signal__TypeAssignment_4_2_1 : ( ruleValueType ) ;
+    public final void rule__Signal__TypeAssignment_4_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3385:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3386:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3533:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3534:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3386:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3387:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3534:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3535:1: ruleValueType
             {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_4_2_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_4_26729); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_4_2_0()); 
+             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_4_2_1_0()); 
+            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_4_2_17017);
+            ruleValueType();
+            _fsp--;
+
+             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_4_2_1_0()); 
 
             }
 
@@ -8584,24 +8935,64 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__HostTypeAssignment_4_2
+    // $ANTLR end rule__Signal__TypeAssignment_4_2_1
+
+
+    // $ANTLR start rule__Signal__CombineOperatorAssignment_4_2_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3544:1: rule__Signal__CombineOperatorAssignment_4_2_3 : ( ruleCombineOperator ) ;
+    public final void rule__Signal__CombineOperatorAssignment_4_2_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3548:1: ( ( ruleCombineOperator ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3549:1: ( ruleCombineOperator )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3549:1: ( ruleCombineOperator )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3550:1: ruleCombineOperator
+            {
+             before(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0()); 
+            pushFollow(FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_4_2_37048);
+            ruleCombineOperator();
+            _fsp--;
+
+             after(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__CombineOperatorAssignment_4_2_3
 
 
     // $ANTLR start rule__Signal__NameAssignment_5_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3396:1: rule__Signal__NameAssignment_5_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3559:1: rule__Signal__NameAssignment_5_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3400:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3401:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3563:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3564:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3401:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3402:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3564:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3565:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_5_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_5_06760); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_5_07079); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_5_0_0()); 
 
             }
@@ -8624,22 +9015,22 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__NameAssignment_5_0
 
 
-    // $ANTLR start rule__Signal__InitialValueAssignment_5_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3411:1: rule__Signal__InitialValueAssignment_5_1_1 : ( RULE_STRING ) ;
-    public final void rule__Signal__InitialValueAssignment_5_1_1() throws RecognitionException {
+    // $ANTLR start rule__Signal__HostTypeAssignment_5_2
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3574:1: rule__Signal__HostTypeAssignment_5_2 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostTypeAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3415:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3416:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3578:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3579:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3416:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3417:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3579:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3580:1: RULE_STRING
             {
-             before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_5_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_5_1_16791); 
-             after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_5_1_1_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_5_27110); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_0()); 
 
             }
 
@@ -8658,98 +9049,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__InitialValueAssignment_5_1_1
-
-
-    // $ANTLR start rule__Signal__HostTypeAssignment_5_2_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3426:1: rule__Signal__HostTypeAssignment_5_2_1 : ( RULE_STRING ) ;
-    public final void rule__Signal__HostTypeAssignment_5_2_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3430:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3431:1: ( RULE_STRING )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3431:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3432:1: RULE_STRING
-            {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_5_2_16822); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_1_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__HostTypeAssignment_5_2_1
-
-
-    // $ANTLR start rule__Signal__HostCombineOperatorAssignment_5_2_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3441:1: rule__Signal__HostCombineOperatorAssignment_5_2_3 : ( RULE_STRING ) ;
-    public final void rule__Signal__HostCombineOperatorAssignment_5_2_3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3445:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3446:1: ( RULE_STRING )
-            {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3446:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3447:1: RULE_STRING
-            {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_5_2_36853); 
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__Signal__HostCombineOperatorAssignment_5_2_3
+    // $ANTLR end rule__Signal__HostTypeAssignment_5_2
 
 
     // $ANTLR start rule__Signal__NameAssignment_6_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3456:1: rule__Signal__NameAssignment_6_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3589:1: rule__Signal__NameAssignment_6_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_6_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3460:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3461:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3593:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3594:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3461:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3462:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3594:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3595:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_6_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_6_06884); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_6_07141); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_6_0_0()); 
 
             }
@@ -8772,25 +9089,22 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__NameAssignment_6_0
 
 
-    // $ANTLR start rule__Signal__TypeAssignment_6_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3471:1: rule__Signal__TypeAssignment_6_1_1 : ( ruleValueType ) ;
-    public final void rule__Signal__TypeAssignment_6_1_1() throws RecognitionException {
+    // $ANTLR start rule__Signal__InitialValueAssignment_6_1_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3604:1: rule__Signal__InitialValueAssignment_6_1_1 : ( RULE_STRING ) ;
+    public final void rule__Signal__InitialValueAssignment_6_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3475:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3476:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3608:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3609:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3476:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3477:1: ruleValueType
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3609:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3610:1: RULE_STRING
             {
-             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_6_1_1_0()); 
-            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_6_1_16915);
-            ruleValueType();
-            _fsp--;
-
-             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_6_1_1_0()); 
+             before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_6_1_1_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_6_1_17172); 
+             after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_6_1_1_0()); 
 
             }
 
@@ -8809,28 +9123,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__TypeAssignment_6_1_1
+    // $ANTLR end rule__Signal__InitialValueAssignment_6_1_1
 
 
-    // $ANTLR start rule__Signal__CombineOperatorAssignment_6_1_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3486:1: rule__Signal__CombineOperatorAssignment_6_1_3 : ( ruleCombineOperator ) ;
-    public final void rule__Signal__CombineOperatorAssignment_6_1_3() throws RecognitionException {
+    // $ANTLR start rule__Signal__HostTypeAssignment_6_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3619:1: rule__Signal__HostTypeAssignment_6_3 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostTypeAssignment_6_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3490:1: ( ( ruleCombineOperator ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3491:1: ( ruleCombineOperator )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3623:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3624:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3491:1: ( ruleCombineOperator )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3492:1: ruleCombineOperator
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3624:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3625:1: RULE_STRING
             {
-             before(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0()); 
-            pushFollow(FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_6_1_36946);
-            ruleCombineOperator();
-            _fsp--;
-
-             after(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_6_3_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_6_37203); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_6_3_0()); 
 
             }
 
@@ -8849,24 +9160,24 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__CombineOperatorAssignment_6_1_3
+    // $ANTLR end rule__Signal__HostTypeAssignment_6_3
 
 
     // $ANTLR start rule__Signal__NameAssignment_7_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3501:1: rule__Signal__NameAssignment_7_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3634:1: rule__Signal__NameAssignment_7_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_7_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3505:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3506:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3638:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3639:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3506:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3507:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3639:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3640:1: RULE_ID
             {
              before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_7_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_7_06977); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_7_07234); 
              after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_7_0_0()); 
 
             }
@@ -8889,22 +9200,22 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     // $ANTLR end rule__Signal__NameAssignment_7_0
 
 
-    // $ANTLR start rule__Signal__HostTypeAssignment_7_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3516:1: rule__Signal__HostTypeAssignment_7_1_1 : ( RULE_STRING ) ;
-    public final void rule__Signal__HostTypeAssignment_7_1_1() throws RecognitionException {
+    // $ANTLR start rule__Signal__InitialValueAssignment_7_1_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3649:1: rule__Signal__InitialValueAssignment_7_1_1 : ( RULE_STRING ) ;
+    public final void rule__Signal__InitialValueAssignment_7_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3520:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3521:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3653:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3654:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3521:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3522:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3654:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3655:1: RULE_STRING
             {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_7_1_17008); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_1_1_0()); 
+             before(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_7_1_1_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_7_1_17265); 
+             after(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_7_1_1_0()); 
 
             }
 
@@ -8923,25 +9234,25 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__HostTypeAssignment_7_1_1
+    // $ANTLR end rule__Signal__InitialValueAssignment_7_1_1
 
 
-    // $ANTLR start rule__Signal__HostCombineOperatorAssignment_7_1_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3531:1: rule__Signal__HostCombineOperatorAssignment_7_1_3 : ( RULE_STRING ) ;
-    public final void rule__Signal__HostCombineOperatorAssignment_7_1_3() throws RecognitionException {
+    // $ANTLR start rule__Signal__HostTypeAssignment_7_2_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3664:1: rule__Signal__HostTypeAssignment_7_2_1 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostTypeAssignment_7_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3535:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3536:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3668:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3669:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3536:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3537:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3669:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3670:1: RULE_STRING
             {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_7_1_37039); 
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_7_2_17296); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0()); 
 
             }
 
@@ -8960,24 +9271,289 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
         }
         return ;
     }
-    // $ANTLR end rule__Signal__HostCombineOperatorAssignment_7_1_3
+    // $ANTLR end rule__Signal__HostTypeAssignment_7_2_1
+
+
+    // $ANTLR start rule__Signal__HostCombineOperatorAssignment_7_2_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3679:1: rule__Signal__HostCombineOperatorAssignment_7_2_3 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostCombineOperatorAssignment_7_2_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3683:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3684:1: ( RULE_STRING )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3684:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3685:1: RULE_STRING
+            {
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_7_2_37327); 
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__HostCombineOperatorAssignment_7_2_3
+
+
+    // $ANTLR start rule__Signal__NameAssignment_8_0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3694:1: rule__Signal__NameAssignment_8_0 : ( RULE_ID ) ;
+    public final void rule__Signal__NameAssignment_8_0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3698:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3699:1: ( RULE_ID )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3699:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3700:1: RULE_ID
+            {
+             before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_8_0_0()); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_8_07358); 
+             after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_8_0_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__NameAssignment_8_0
+
+
+    // $ANTLR start rule__Signal__TypeAssignment_8_1_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3709:1: rule__Signal__TypeAssignment_8_1_1 : ( ruleValueType ) ;
+    public final void rule__Signal__TypeAssignment_8_1_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3713:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3714:1: ( ruleValueType )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3714:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3715:1: ruleValueType
+            {
+             before(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_8_1_1_0()); 
+            pushFollow(FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_8_1_17389);
+            ruleValueType();
+            _fsp--;
+
+             after(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_8_1_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__TypeAssignment_8_1_1
+
+
+    // $ANTLR start rule__Signal__CombineOperatorAssignment_8_1_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3724:1: rule__Signal__CombineOperatorAssignment_8_1_3 : ( ruleCombineOperator ) ;
+    public final void rule__Signal__CombineOperatorAssignment_8_1_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3728:1: ( ( ruleCombineOperator ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3729:1: ( ruleCombineOperator )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3729:1: ( ruleCombineOperator )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3730:1: ruleCombineOperator
+            {
+             before(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0()); 
+            pushFollow(FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_8_1_37420);
+            ruleCombineOperator();
+            _fsp--;
+
+             after(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__CombineOperatorAssignment_8_1_3
+
+
+    // $ANTLR start rule__Signal__NameAssignment_9_0
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3739:1: rule__Signal__NameAssignment_9_0 : ( RULE_ID ) ;
+    public final void rule__Signal__NameAssignment_9_0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3743:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3744:1: ( RULE_ID )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3744:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3745:1: RULE_ID
+            {
+             before(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_9_0_0()); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_9_07451); 
+             after(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_9_0_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__NameAssignment_9_0
+
+
+    // $ANTLR start rule__Signal__HostTypeAssignment_9_1_1
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3754:1: rule__Signal__HostTypeAssignment_9_1_1 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostTypeAssignment_9_1_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3758:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3759:1: ( RULE_STRING )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3759:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3760:1: RULE_STRING
+            {
+             before(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_9_1_1_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_9_1_17482); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_9_1_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__HostTypeAssignment_9_1_1
+
+
+    // $ANTLR start rule__Signal__HostCombineOperatorAssignment_9_1_3
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3769:1: rule__Signal__HostCombineOperatorAssignment_9_1_3 : ( RULE_STRING ) ;
+    public final void rule__Signal__HostCombineOperatorAssignment_9_1_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3773:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3774:1: ( RULE_STRING )
+            {
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3774:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3775:1: RULE_STRING
+            {
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0()); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_9_1_37513); 
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__Signal__HostCombineOperatorAssignment_9_1_3
 
 
     // $ANTLR start rule__Variable__NameAssignment_0
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3546:1: rule__Variable__NameAssignment_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3784:1: rule__Variable__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__Variable__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3550:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3551:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3788:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3789:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3551:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3552:1: RULE_ID
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3789:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3790:1: RULE_ID
             {
              before(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_07070); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_07544); 
              after(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0()); 
 
             }
@@ -9001,20 +9577,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__InitialValueAssignment_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3561:1: rule__Variable__InitialValueAssignment_1_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3799:1: rule__Variable__InitialValueAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__Variable__InitialValueAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3565:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3566:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3803:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3804:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3566:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3567:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3804:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3805:1: RULE_STRING
             {
              before(grammarAccess.getVariableAccess().getInitialValueSTRINGTerminalRuleCall_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Variable__InitialValueAssignment_1_17101); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Variable__InitialValueAssignment_1_17575); 
              after(grammarAccess.getVariableAccess().getInitialValueSTRINGTerminalRuleCall_1_1_0()); 
 
             }
@@ -9038,20 +9614,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__TypeAssignment_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3576:1: rule__Variable__TypeAssignment_2 : ( ruleValueType ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3814:1: rule__Variable__TypeAssignment_2 : ( ruleValueType ) ;
     public final void rule__Variable__TypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3580:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3581:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3818:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3819:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3581:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3582:1: ruleValueType
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3819:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3820:1: ruleValueType
             {
              before(grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_27132);
+            pushFollow(FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_27606);
             ruleValueType();
             _fsp--;
 
@@ -9078,20 +9654,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__HostTypeAssignment_3_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3591:1: rule__Variable__HostTypeAssignment_3_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3829:1: rule__Variable__HostTypeAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__Variable__HostTypeAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3595:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3596:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3833:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3834:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3596:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3597:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3834:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/contentassist/antlr/internal/InternalInterfaceDecl.g:3835:1: RULE_STRING
             {
              before(grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_3_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Variable__HostTypeAssignment_3_17163); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Variable__HostTypeAssignment_3_17637); 
              after(grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_3_1_0()); 
 
             }
@@ -9160,248 +9736,268 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__Signal__Group_5__0_in_rule__Signal__Alternatives944 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group_6__0_in_rule__Signal__Alternatives962 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group_7__0_in_rule__Signal__Alternatives980 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_rule__ValueType__Alternatives1014 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_rule__ValueType__Alternatives1035 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_rule__ValueType__Alternatives1056 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__ValueType__Alternatives1077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__ValueType__Alternatives1098 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__ValueType__Alternatives1119 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__CombineOperator__Alternatives1155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__CombineOperator__Alternatives1176 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_rule__CombineOperator__Alternatives1197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rule__CombineOperator__Alternatives1218 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__CombineOperator__Alternatives1239 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_rule__CombineOperator__Alternatives1260 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_rule__CombineOperator__Alternatives1281 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__CombineOperator__Alternatives1302 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rule__StateExtend__Group_1__01340 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_rule__StateExtend__Group_1__1_in_rule__StateExtend__Group_1__01350 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_rule__StateExtend__Group_1__11379 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__StateExtend__Group_1__2_in_rule__StateExtend__Group_1__11389 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__StateExtend__InOutputSignalsAssignment_1_2_in_rule__StateExtend__Group_1__21417 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_rule__StateExtend__Group_2__01458 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__StateExtend__Group_2__1_in_rule__StateExtend__Group_2__01468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__StateExtend__OutputSignalsAssignment_2_1_in_rule__StateExtend__Group_2__11496 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rule__StateExtend__Group_3__01535 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__StateExtend__Group_3__1_in_rule__StateExtend__Group_3__01545 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__StateExtend__InputSignalsAssignment_3_1_in_rule__StateExtend__Group_3__11573 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__StateExtend__Group_4__01612 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__StateExtend__Group_4__1_in_rule__StateExtend__Group_4__01622 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__StateExtend__SignalsAssignment_4_1_in_rule__StateExtend__Group_4__11650 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__RegionAssignment_0_in_rule__RegionSignalDec__Group__01688 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__1_in_rule__RegionSignalDec__Group__01697 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__RegionSignalDec__Group__11726 = new BitSet(new long[]{0x0000000048000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__2_in_rule__RegionSignalDec__Group__11736 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Alternatives_2_in_rule__RegionSignalDec__Group__21764 = new BitSet(new long[]{0x00000000A0000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__3_in_rule__RegionSignalDec__Group__21773 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Alternatives_3_in_rule__RegionSignalDec__Group__31801 = new BitSet(new long[]{0x00000000A0000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__4_in_rule__RegionSignalDec__Group__31811 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__RegionSignalDec__Group__41840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__RegionSignalDec__Group_2_0__01886 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0__1_in_rule__RegionSignalDec__Group_2_0__01896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_1_in_rule__RegionSignalDec__Group_2_0__11924 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0__2_in_rule__RegionSignalDec__Group_2_0__11933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0_2__0_in_rule__RegionSignalDec__Group_2_0__21961 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_2_0_2__02003 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0_2__1_in_rule__RegionSignalDec__Group_2_0_2__02013 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_2_1_in_rule__RegionSignalDec__Group_2_0_2__12041 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__RegionSignalDec__Group_2_1__02080 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1__1_in_rule__RegionSignalDec__Group_2_1__02090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_1_in_rule__RegionSignalDec__Group_2_1__12118 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1__2_in_rule__RegionSignalDec__Group_2_1__12127 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1_2__0_in_rule__RegionSignalDec__Group_2_1__22155 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_2_1_2__02197 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1_2__1_in_rule__RegionSignalDec__Group_2_1_2__02207 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_2_1_in_rule__RegionSignalDec__Group_2_1_2__12235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_0__02274 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__1_in_rule__RegionSignalDec__Group_3_0__02284 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__RegionSignalDec__Group_3_0__12313 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__2_in_rule__RegionSignalDec__Group_3_0__12323 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_2_in_rule__RegionSignalDec__Group_3_0__22351 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__3_in_rule__RegionSignalDec__Group_3_0__22360 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0_3__0_in_rule__RegionSignalDec__Group_3_0__32388 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_0_3__02432 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0_3__1_in_rule__RegionSignalDec__Group_3_0_3__02442 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_3_1_in_rule__RegionSignalDec__Group_3_0_3__12470 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_1__02509 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__1_in_rule__RegionSignalDec__Group_3_1__02519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__RegionSignalDec__Group_3_1__12548 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__2_in_rule__RegionSignalDec__Group_3_1__12558 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_2_in_rule__RegionSignalDec__Group_3_1__22586 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__3_in_rule__RegionSignalDec__Group_3_1__22595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1_3__0_in_rule__RegionSignalDec__Group_3_1__32623 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_1_3__02667 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1_3__1_in_rule__RegionSignalDec__Group_3_1_3__02677 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_3_1_in_rule__RegionSignalDec__Group_3_1_3__12705 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signals__Group_0__0_in_rule__Signals__Group__02743 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__Signals__Group__1_in_rule__Signals__Group__02752 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Signals__Group__12781 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signals__SignalsAssignment_0_0_in_rule__Signals__Group_0__02820 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__Signals__Group_0__1_in_rule__Signals__Group_0__02829 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signals__Group_0_1__0_in_rule__Signals__Group_0__12857 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__Signals__Group_0_1__02897 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__Signals__Group_0_1__1_in_rule__Signals__Group_0_1__02907 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signals__SignalsAssignment_0_1_1_in_rule__Signals__Group_0_1__12935 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InputSignals__Group_0__0_in_rule__InputSignals__Group__02973 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__InputSignals__Group__1_in_rule__InputSignals__Group__02982 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__InputSignals__Group__13011 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InputSignals__SignalsAssignment_0_0_in_rule__InputSignals__Group_0__03050 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__InputSignals__Group_0__1_in_rule__InputSignals__Group_0__03059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InputSignals__Group_0_1__0_in_rule__InputSignals__Group_0__13087 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__InputSignals__Group_0_1__03127 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__InputSignals__Group_0_1__1_in_rule__InputSignals__Group_0_1__03137 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InputSignals__SignalsAssignment_0_1_1_in_rule__InputSignals__Group_0_1__13165 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OutputSignals__Group_0__0_in_rule__OutputSignals__Group__03203 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__OutputSignals__Group__1_in_rule__OutputSignals__Group__03212 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__OutputSignals__Group__13241 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OutputSignals__SignalsAssignment_0_0_in_rule__OutputSignals__Group_0__03280 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__OutputSignals__Group_0__1_in_rule__OutputSignals__Group_0__03289 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OutputSignals__Group_0_1__0_in_rule__OutputSignals__Group_0__13317 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__OutputSignals__Group_0_1__03357 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__OutputSignals__Group_0_1__1_in_rule__OutputSignals__Group_0_1__03367 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OutputSignals__SignalsAssignment_0_1_1_in_rule__OutputSignals__Group_0_1__13395 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0__0_in_rule__InOutputSignals__Group__03433 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__Group__1_in_rule__InOutputSignals__Group__03442 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__InOutputSignals__Group__13471 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__SignalsAssignment_0_0_in_rule__InOutputSignals__Group_0__03510 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0__1_in_rule__InOutputSignals__Group_0__03519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0_1__0_in_rule__InOutputSignals__Group_0__13547 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_rule__InOutputSignals__Group_0_1__03587 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0_1__1_in_rule__InOutputSignals__Group_0_1__03597 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__InOutputSignals__SignalsAssignment_0_1_1_in_rule__InOutputSignals__Group_0_1__13625 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_1_0_in_rule__Signal__Group_1__03663 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__03672 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_1_1__0_in_rule__Signal__Group_1__13700 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Signal__Group_1_1__03739 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_1_1__1_in_rule__Signal__Group_1_1__03749 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_1_1_1_in_rule__Signal__Group_1_1__13777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8__0_in_rule__Signal__Alternatives998 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9__0_in_rule__Signal__Alternatives1016 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_rule__ValueType__Alternatives1050 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_rule__ValueType__Alternatives1071 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_rule__ValueType__Alternatives1092 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_rule__ValueType__Alternatives1113 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__ValueType__Alternatives1134 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__ValueType__Alternatives1155 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__CombineOperator__Alternatives1191 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__CombineOperator__Alternatives1212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_rule__CombineOperator__Alternatives1233 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_rule__CombineOperator__Alternatives1254 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_rule__CombineOperator__Alternatives1275 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_rule__CombineOperator__Alternatives1296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_rule__CombineOperator__Alternatives1317 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__CombineOperator__Alternatives1338 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rule__StateExtend__Group_1__01376 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_rule__StateExtend__Group_1__1_in_rule__StateExtend__Group_1__01386 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_rule__StateExtend__Group_1__11415 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__StateExtend__Group_1__2_in_rule__StateExtend__Group_1__11425 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__StateExtend__InOutputSignalsAssignment_1_2_in_rule__StateExtend__Group_1__21453 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_rule__StateExtend__Group_2__01494 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__StateExtend__Group_2__1_in_rule__StateExtend__Group_2__01504 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__StateExtend__OutputSignalsAssignment_2_1_in_rule__StateExtend__Group_2__11532 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rule__StateExtend__Group_3__01571 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__StateExtend__Group_3__1_in_rule__StateExtend__Group_3__01581 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__StateExtend__InputSignalsAssignment_3_1_in_rule__StateExtend__Group_3__11609 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__StateExtend__Group_4__01648 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__StateExtend__Group_4__1_in_rule__StateExtend__Group_4__01658 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__StateExtend__SignalsAssignment_4_1_in_rule__StateExtend__Group_4__11686 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__RegionAssignment_0_in_rule__RegionSignalDec__Group__01724 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__1_in_rule__RegionSignalDec__Group__01733 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__RegionSignalDec__Group__11762 = new BitSet(new long[]{0x0000000048000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__2_in_rule__RegionSignalDec__Group__11772 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Alternatives_2_in_rule__RegionSignalDec__Group__21800 = new BitSet(new long[]{0x00000000A0000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__3_in_rule__RegionSignalDec__Group__21809 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Alternatives_3_in_rule__RegionSignalDec__Group__31837 = new BitSet(new long[]{0x00000000A0000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group__4_in_rule__RegionSignalDec__Group__31847 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__RegionSignalDec__Group__41876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__RegionSignalDec__Group_2_0__01922 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0__1_in_rule__RegionSignalDec__Group_2_0__01932 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_1_in_rule__RegionSignalDec__Group_2_0__11960 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0__2_in_rule__RegionSignalDec__Group_2_0__11969 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0_2__0_in_rule__RegionSignalDec__Group_2_0__21997 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_2_0_2__02039 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_0_2__1_in_rule__RegionSignalDec__Group_2_0_2__02049 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_2_0_2_1_in_rule__RegionSignalDec__Group_2_0_2__12077 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__RegionSignalDec__Group_2_1__02116 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1__1_in_rule__RegionSignalDec__Group_2_1__02126 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_1_in_rule__RegionSignalDec__Group_2_1__12154 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1__2_in_rule__RegionSignalDec__Group_2_1__12163 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1_2__0_in_rule__RegionSignalDec__Group_2_1__22191 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_2_1_2__02233 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_2_1_2__1_in_rule__RegionSignalDec__Group_2_1_2__02243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_2_1_2_1_in_rule__RegionSignalDec__Group_2_1_2__12271 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_0__02310 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__1_in_rule__RegionSignalDec__Group_3_0__02320 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__RegionSignalDec__Group_3_0__12349 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__2_in_rule__RegionSignalDec__Group_3_0__12359 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_2_in_rule__RegionSignalDec__Group_3_0__22387 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0__3_in_rule__RegionSignalDec__Group_3_0__22396 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0_3__0_in_rule__RegionSignalDec__Group_3_0__32424 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_0_3__02468 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_0_3__1_in_rule__RegionSignalDec__Group_3_0_3__02478 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__VarsAssignment_3_0_3_1_in_rule__RegionSignalDec__Group_3_0_3__12506 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_1__02545 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__1_in_rule__RegionSignalDec__Group_3_1__02555 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__RegionSignalDec__Group_3_1__12584 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__2_in_rule__RegionSignalDec__Group_3_1__12594 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_2_in_rule__RegionSignalDec__Group_3_1__22622 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1__3_in_rule__RegionSignalDec__Group_3_1__22631 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1_3__0_in_rule__RegionSignalDec__Group_3_1__32659 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__RegionSignalDec__Group_3_1_3__02703 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__Group_3_1_3__1_in_rule__RegionSignalDec__Group_3_1_3__02713 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__RegionSignalDec__SignalsAssignment_3_1_3_1_in_rule__RegionSignalDec__Group_3_1_3__12741 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signals__Group_0__0_in_rule__Signals__Group__02779 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__Signals__Group__1_in_rule__Signals__Group__02788 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Signals__Group__12817 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signals__SignalsAssignment_0_0_in_rule__Signals__Group_0__02856 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__Signals__Group_0__1_in_rule__Signals__Group_0__02865 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signals__Group_0_1__0_in_rule__Signals__Group_0__12893 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__Signals__Group_0_1__02933 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__Signals__Group_0_1__1_in_rule__Signals__Group_0_1__02943 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signals__SignalsAssignment_0_1_1_in_rule__Signals__Group_0_1__12971 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InputSignals__Group_0__0_in_rule__InputSignals__Group__03009 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__InputSignals__Group__1_in_rule__InputSignals__Group__03018 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__InputSignals__Group__13047 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InputSignals__SignalsAssignment_0_0_in_rule__InputSignals__Group_0__03086 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__InputSignals__Group_0__1_in_rule__InputSignals__Group_0__03095 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InputSignals__Group_0_1__0_in_rule__InputSignals__Group_0__13123 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__InputSignals__Group_0_1__03163 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__InputSignals__Group_0_1__1_in_rule__InputSignals__Group_0_1__03173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InputSignals__SignalsAssignment_0_1_1_in_rule__InputSignals__Group_0_1__13201 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OutputSignals__Group_0__0_in_rule__OutputSignals__Group__03239 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__OutputSignals__Group__1_in_rule__OutputSignals__Group__03248 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__OutputSignals__Group__13277 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OutputSignals__SignalsAssignment_0_0_in_rule__OutputSignals__Group_0__03316 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__OutputSignals__Group_0__1_in_rule__OutputSignals__Group_0__03325 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OutputSignals__Group_0_1__0_in_rule__OutputSignals__Group_0__13353 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__OutputSignals__Group_0_1__03393 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__OutputSignals__Group_0_1__1_in_rule__OutputSignals__Group_0_1__03403 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OutputSignals__SignalsAssignment_0_1_1_in_rule__OutputSignals__Group_0_1__13431 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0__0_in_rule__InOutputSignals__Group__03469 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__Group__1_in_rule__InOutputSignals__Group__03478 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__InOutputSignals__Group__13507 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__SignalsAssignment_0_0_in_rule__InOutputSignals__Group_0__03546 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0__1_in_rule__InOutputSignals__Group_0__03555 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0_1__0_in_rule__InOutputSignals__Group_0__13583 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_rule__InOutputSignals__Group_0_1__03623 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__Group_0_1__1_in_rule__InOutputSignals__Group_0_1__03633 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__InOutputSignals__SignalsAssignment_0_1_1_in_rule__InOutputSignals__Group_0_1__13661 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_1_0_in_rule__Signal__Group_1__03699 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__03708 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Signal__Group_1__13737 = new BitSet(new long[]{0x000000000001F800L});
+    public static final BitSet FOLLOW_rule__Signal__Group_1__2_in_rule__Signal__Group_1__13747 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_1_2_in_rule__Signal__Group_1__23775 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_2_0_in_rule__Signal__Group_2__03815 = new BitSet(new long[]{0x0000000100000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_2__1_in_rule__Signal__Group_2__03824 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2_1__0_in_rule__Signal__Group_2__13852 = new BitSet(new long[]{0x000000000001F800L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2__2_in_rule__Signal__Group_2__13861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_2_2_in_rule__Signal__Group_2__23889 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Signal__Group_2_1__03930 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2_1__1_in_rule__Signal__Group_2_1__03940 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_2_1_1_in_rule__Signal__Group_2_1__13968 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_3_0_in_rule__Signal__Group_3__04006 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3__1_in_rule__Signal__Group_3__04015 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_1__0_in_rule__Signal__Group_3__14043 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3__2_in_rule__Signal__Group_3__14052 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_2__0_in_rule__Signal__Group_3__24080 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Signal__Group_3_1__04121 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_1__1_in_rule__Signal__Group_3_1__04131 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_3_1_1_in_rule__Signal__Group_3_1__14159 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Signal__Group_3_2__04198 = new BitSet(new long[]{0x000000000001F800L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_2__1_in_rule__Signal__Group_3_2__04208 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_3_2_1_in_rule__Signal__Group_3_2__14236 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_2__2_in_rule__Signal__Group_3_2__14245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Signal__Group_3_2__24274 = new BitSet(new long[]{0x0000000001FE0000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_3_2__3_in_rule__Signal__Group_3_2__24284 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__CombineOperatorAssignment_3_2_3_in_rule__Signal__Group_3_2__34312 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_4_0_in_rule__Signal__Group_4__04354 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_4__1_in_rule__Signal__Group_4__04363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_4_1__0_in_rule__Signal__Group_4__14391 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_4__2_in_rule__Signal__Group_4__14400 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_4_2_in_rule__Signal__Group_4__24428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Signal__Group_4_1__04469 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_4_1__1_in_rule__Signal__Group_4_1__04479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_4_1_1_in_rule__Signal__Group_4_1__14507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_5_0_in_rule__Signal__Group_5__04545 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5__1_in_rule__Signal__Group_5__04554 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_1__0_in_rule__Signal__Group_5__14582 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5__2_in_rule__Signal__Group_5__14591 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_2__0_in_rule__Signal__Group_5__24619 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Signal__Group_5_1__04660 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_1__1_in_rule__Signal__Group_5_1__04670 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_5_1_1_in_rule__Signal__Group_5_1__14698 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Signal__Group_5_2__04737 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_2__1_in_rule__Signal__Group_5_2__04747 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_5_2_1_in_rule__Signal__Group_5_2__14775 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_2__2_in_rule__Signal__Group_5_2__14784 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Signal__Group_5_2__24813 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_5_2__3_in_rule__Signal__Group_5_2__24823 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_5_2_3_in_rule__Signal__Group_5_2__34851 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_6_0_in_rule__Signal__Group_6__04893 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_6__1_in_rule__Signal__Group_6__04902 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_6_1__0_in_rule__Signal__Group_6__14930 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Signal__Group_6_1__04969 = new BitSet(new long[]{0x000000000001F800L});
-    public static final BitSet FOLLOW_rule__Signal__Group_6_1__1_in_rule__Signal__Group_6_1__04979 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_6_1_1_in_rule__Signal__Group_6_1__15007 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_6_1__2_in_rule__Signal__Group_6_1__15016 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Signal__Group_6_1__25045 = new BitSet(new long[]{0x0000000001FE0000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_6_1__3_in_rule__Signal__Group_6_1__25055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__CombineOperatorAssignment_6_1_3_in_rule__Signal__Group_6_1__35083 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_7_0_in_rule__Signal__Group_7__05125 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_7__1_in_rule__Signal__Group_7__05134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_7_1__0_in_rule__Signal__Group_7__15162 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Signal__Group_7_1__05201 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_7_1__1_in_rule__Signal__Group_7_1__05211 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_7_1_1_in_rule__Signal__Group_7_1__15239 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_7_1__2_in_rule__Signal__Group_7_1__15248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Signal__Group_7_1__25277 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Signal__Group_7_1__3_in_rule__Signal__Group_7_1__25287 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_7_1_3_in_rule__Signal__Group_7_1__35315 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__NameAssignment_0_in_rule__Variable__Group__05357 = new BitSet(new long[]{0x000000010101F802L});
-    public static final BitSet FOLLOW_rule__Variable__Group__1_in_rule__Variable__Group__05366 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__Group_1__0_in_rule__Variable__Group__15394 = new BitSet(new long[]{0x000000000101F802L});
-    public static final BitSet FOLLOW_rule__Variable__Group__2_in_rule__Variable__Group__15404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__TypeAssignment_2_in_rule__Variable__Group__25432 = new BitSet(new long[]{0x0000000001000002L});
-    public static final BitSet FOLLOW_rule__Variable__Group__3_in_rule__Variable__Group__25442 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__Group_3__0_in_rule__Variable__Group__35470 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Variable__Group_1__05514 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Variable__Group_1__1_in_rule__Variable__Group_1__05524 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__InitialValueAssignment_1_1_in_rule__Variable__Group_1__15552 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__Variable__Group_3__05591 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Variable__Group_3__1_in_rule__Variable__Group_3__05601 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Variable__HostTypeAssignment_3_1_in_rule__Variable__Group_3__15629 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegionSignalDec_in_rule__StateExtend__RegionsAssignment_05667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInOutputSignals_in_rule__StateExtend__InOutputSignalsAssignment_1_25698 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOutputSignals_in_rule__StateExtend__OutputSignalsAssignment_2_15729 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInputSignals_in_rule__StateExtend__InputSignalsAssignment_3_15760 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignals_in_rule__StateExtend__SignalsAssignment_4_15791 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__RegionSignalDec__RegionAssignment_05826 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_15861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_2_15892 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_15923 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_2_15954 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_25985 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_3_16016 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_26047 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_3_16078 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_06109 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_1_16140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_06171 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_1_16202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_06233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_1_16264 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_06295 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_1_16326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_06357 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_1_06388 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_1_1_16419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_2_06450 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_2_1_16481 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_2_26512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_3_06543 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_3_1_16574 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_3_2_16605 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_3_2_36636 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_4_06667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_4_1_16698 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_4_26729 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_5_06760 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_5_1_16791 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_5_2_16822 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_5_2_36853 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_6_06884 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_6_1_16915 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_6_1_36946 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_7_06977 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_7_1_17008 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_7_1_37039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_07070 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Variable__InitialValueAssignment_1_17101 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_27132 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Variable__HostTypeAssignment_3_17163 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2_1__0_in_rule__Signal__Group_2__13852 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Signal__Group_2_1__03891 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2_1__1_in_rule__Signal__Group_2_1__03901 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_2_1_1_in_rule__Signal__Group_2_1__13929 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_3_0_in_rule__Signal__Group_3__03967 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_3__1_in_rule__Signal__Group_3__03976 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_3_1__0_in_rule__Signal__Group_3__14004 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_3__2_in_rule__Signal__Group_3__14013 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Signal__Group_3__24042 = new BitSet(new long[]{0x000000000001F800L});
+    public static final BitSet FOLLOW_rule__Signal__Group_3__3_in_rule__Signal__Group_3__24052 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_3_3_in_rule__Signal__Group_3__34080 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Signal__Group_3_1__04123 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_3_1__1_in_rule__Signal__Group_3_1__04133 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_3_1_1_in_rule__Signal__Group_3_1__14161 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_4_0_in_rule__Signal__Group_4__04199 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4__1_in_rule__Signal__Group_4__04208 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_1__0_in_rule__Signal__Group_4__14236 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4__2_in_rule__Signal__Group_4__14245 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_2__0_in_rule__Signal__Group_4__24273 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Signal__Group_4_1__04314 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_1__1_in_rule__Signal__Group_4_1__04324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_4_1_1_in_rule__Signal__Group_4_1__14352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Signal__Group_4_2__04391 = new BitSet(new long[]{0x000000000001F800L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_2__1_in_rule__Signal__Group_4_2__04401 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_4_2_1_in_rule__Signal__Group_4_2__14429 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_2__2_in_rule__Signal__Group_4_2__14438 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Signal__Group_4_2__24467 = new BitSet(new long[]{0x0000000001FE0000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_4_2__3_in_rule__Signal__Group_4_2__24477 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__CombineOperatorAssignment_4_2_3_in_rule__Signal__Group_4_2__34505 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_5_0_in_rule__Signal__Group_5__04547 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_5__1_in_rule__Signal__Group_5__04556 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Signal__Group_5__14585 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_5__2_in_rule__Signal__Group_5__14595 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_5_2_in_rule__Signal__Group_5__24623 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_6_0_in_rule__Signal__Group_6__04663 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_6__1_in_rule__Signal__Group_6__04672 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_6_1__0_in_rule__Signal__Group_6__14700 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_6__2_in_rule__Signal__Group_6__14709 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Signal__Group_6__24738 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_6__3_in_rule__Signal__Group_6__24748 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_6_3_in_rule__Signal__Group_6__34776 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Signal__Group_6_1__04819 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_6_1__1_in_rule__Signal__Group_6_1__04829 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_6_1_1_in_rule__Signal__Group_6_1__14857 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_7_0_in_rule__Signal__Group_7__04895 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7__1_in_rule__Signal__Group_7__04904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_1__0_in_rule__Signal__Group_7__14932 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7__2_in_rule__Signal__Group_7__14941 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_2__0_in_rule__Signal__Group_7__24969 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Signal__Group_7_1__05010 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_1__1_in_rule__Signal__Group_7_1__05020 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__InitialValueAssignment_7_1_1_in_rule__Signal__Group_7_1__15048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Signal__Group_7_2__05087 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_2__1_in_rule__Signal__Group_7_2__05097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_7_2_1_in_rule__Signal__Group_7_2__15125 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_2__2_in_rule__Signal__Group_7_2__15134 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Signal__Group_7_2__25163 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_7_2__3_in_rule__Signal__Group_7_2__25173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_7_2_3_in_rule__Signal__Group_7_2__35201 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_8_0_in_rule__Signal__Group_8__05243 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8__1_in_rule__Signal__Group_8__05252 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8_1__0_in_rule__Signal__Group_8__15280 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Signal__Group_8_1__05319 = new BitSet(new long[]{0x000000000001F800L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8_1__1_in_rule__Signal__Group_8_1__05329 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__TypeAssignment_8_1_1_in_rule__Signal__Group_8_1__15357 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8_1__2_in_rule__Signal__Group_8_1__15366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Signal__Group_8_1__25395 = new BitSet(new long[]{0x0000000001FE0000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_8_1__3_in_rule__Signal__Group_8_1__25405 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__CombineOperatorAssignment_8_1_3_in_rule__Signal__Group_8_1__35433 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_9_0_in_rule__Signal__Group_9__05475 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9__1_in_rule__Signal__Group_9__05484 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9_1__0_in_rule__Signal__Group_9__15512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Signal__Group_9_1__05551 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9_1__1_in_rule__Signal__Group_9_1__05561 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_9_1_1_in_rule__Signal__Group_9_1__15589 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9_1__2_in_rule__Signal__Group_9_1__15598 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Signal__Group_9_1__25627 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Signal__Group_9_1__3_in_rule__Signal__Group_9_1__25637 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_9_1_3_in_rule__Signal__Group_9_1__35665 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__NameAssignment_0_in_rule__Variable__Group__05707 = new BitSet(new long[]{0x000000010101F802L});
+    public static final BitSet FOLLOW_rule__Variable__Group__1_in_rule__Variable__Group__05716 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__Group_1__0_in_rule__Variable__Group__15744 = new BitSet(new long[]{0x000000000101F802L});
+    public static final BitSet FOLLOW_rule__Variable__Group__2_in_rule__Variable__Group__15754 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__TypeAssignment_2_in_rule__Variable__Group__25782 = new BitSet(new long[]{0x0000000001000002L});
+    public static final BitSet FOLLOW_rule__Variable__Group__3_in_rule__Variable__Group__25792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__Group_3__0_in_rule__Variable__Group__35820 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Variable__Group_1__05864 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Variable__Group_1__1_in_rule__Variable__Group_1__05874 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__InitialValueAssignment_1_1_in_rule__Variable__Group_1__15902 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__Variable__Group_3__05941 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Variable__Group_3__1_in_rule__Variable__Group_3__05951 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Variable__HostTypeAssignment_3_1_in_rule__Variable__Group_3__15979 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegionSignalDec_in_rule__StateExtend__RegionsAssignment_06017 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInOutputSignals_in_rule__StateExtend__InOutputSignalsAssignment_1_26048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOutputSignals_in_rule__StateExtend__OutputSignalsAssignment_2_16079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInputSignals_in_rule__StateExtend__InputSignalsAssignment_3_16110 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignals_in_rule__StateExtend__SignalsAssignment_4_16141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__RegionSignalDec__RegionAssignment_06176 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_16211 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_2_0_2_16242 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_16273 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_2_1_2_16304 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_26335 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_rule__RegionSignalDec__VarsAssignment_3_0_3_16366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_26397 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__RegionSignalDec__SignalsAssignment_3_1_3_16428 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_06459 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__Signals__SignalsAssignment_0_1_16490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_06521 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__InputSignals__SignalsAssignment_0_1_16552 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_06583 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__OutputSignals__SignalsAssignment_0_1_16614 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_06645 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_rule__InOutputSignals__SignalsAssignment_0_1_16676 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_06707 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_1_06738 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_1_26769 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_2_06800 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_2_1_16831 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_3_06862 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_3_1_16893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_3_36924 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_4_06955 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_4_1_16986 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_4_2_17017 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_4_2_37048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_5_07079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_5_27110 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_6_07141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_6_1_17172 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_6_37203 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_7_07234 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__InitialValueAssignment_7_1_17265 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_7_2_17296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_7_2_37327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_8_07358 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_8_1_17389 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_8_1_37420 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_9_07451 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostTypeAssignment_9_1_17482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Signal__HostCombineOperatorAssignment_9_1_37513 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_07544 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Variable__InitialValueAssignment_1_17575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_27606 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Variable__HostTypeAssignment_3_17637 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -204,6 +204,15 @@
           <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
           </tokens>
+          <tokens xsi:type="xtext:Keyword" value=":"/>
+          <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+          </tokens>
+        </groups>
+        <groups xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+          </tokens>
           <tokens xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Keyword" value=":="/>
             <tokens xsi:type="xtext:Assignment" feature="initialValue" operator="=">
@@ -221,6 +230,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
             </tokens>
           </tokens>
+          <tokens xsi:type="xtext:Keyword" value=":"/>
           <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
           </tokens>
@@ -250,12 +260,22 @@
           <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
           </tokens>
+          <tokens xsi:type="xtext:Keyword" value=":"/>
+          <tokens xsi:type="xtext:Assignment" feature="hostType" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </tokens>
+        </groups>
+        <groups xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+          </tokens>
           <tokens xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Keyword" value=":="/>
             <tokens xsi:type="xtext:Assignment" feature="initialValue" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
             </tokens>
           </tokens>
+          <tokens xsi:type="xtext:Keyword" value=":"/>
           <tokens xsi:type="xtext:Assignment" feature="hostType" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
           </tokens>

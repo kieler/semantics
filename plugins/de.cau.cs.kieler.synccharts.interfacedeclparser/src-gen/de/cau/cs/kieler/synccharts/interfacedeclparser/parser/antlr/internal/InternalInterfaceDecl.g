@@ -896,35 +896,35 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)(	':=' 
+)	':' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_1_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonKeyword_1_1(), null); 
     }
 (
 (
-		lv_initialValue_3_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_1_1_1_0(), "initialValue"); 
-		}
-		{
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_1_2_0(), currentNode); 
+	    }
+		lv_type_3_0=ruleValueType		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"initialValue",
-	        		lv_initialValue_3_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	       			"type",
+	        		lv_type_3_0, 
+	        		"ValueType", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
-)))
+))
     |((
 (
 		lv_name_4_0=RULE_ID
@@ -977,34 +977,10 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-))(
-(
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_2_2_0(), currentNode); 
-	    }
-		lv_type_7_0=ruleValueType		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"type",
-	        		lv_type_7_0, 
-	        		"ValueType", 
-	        		currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-
-)
-))
+)))
     |((
 (
-		lv_name_8_0=RULE_ID
+		lv_name_7_0=RULE_ID
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0_0(), "name"); 
 		}
@@ -1017,7 +993,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_8_0, 
+	        		lv_name_7_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1032,7 +1008,7 @@ ruleSignal returns [EObject current=null]
     }
 (
 (
-		lv_initialValue_10_0=RULE_STRING
+		lv_initialValue_9_0=RULE_STRING
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_3_1_1_0(), "initialValue"); 
 		}
@@ -1045,7 +1021,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"initialValue",
-	        		lv_initialValue_10_0, 
+	        		lv_initialValue_9_0, 
 	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1054,16 +1030,16 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-))(	'combine' 
+))	':' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_3_2_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonKeyword_3_2(), null); 
     }
 (
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_2_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_3_0(), currentNode); 
 	    }
-		lv_type_12_0=ruleValueType		{
+		lv_type_11_0=ruleValueType		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1072,7 +1048,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"type",
-	        		lv_type_12_0, 
+	        		lv_type_11_0, 
 	        		"ValueType", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1082,38 +1058,10 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)	'with' 
-    {
-        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_3_2_2(), null); 
-    }
-(
-(
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_2_3_0(), currentNode); 
-	    }
-		lv_combineOperator_14_0=ruleCombineOperator		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"combineOperator",
-	        		lv_combineOperator_14_0, 
-	        		"CombineOperator", 
-	        		currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-
-)
-)))
+))
     |((
 (
-		lv_name_15_0=RULE_ID
+		lv_name_12_0=RULE_ID
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_4_0_0(), "name"); 
 		}
@@ -1126,7 +1074,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_15_0, 
+	        		lv_name_12_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1141,7 +1089,7 @@ ruleSignal returns [EObject current=null]
     }
 (
 (
-		lv_initialValue_17_0=RULE_STRING
+		lv_initialValue_14_0=RULE_STRING
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_1_0(), "initialValue"); 
 		}
@@ -1154,7 +1102,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"initialValue",
-	        		lv_initialValue_17_0, 
+	        		lv_initialValue_14_0, 
 	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1163,31 +1111,63 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-))(
+))(	'combine' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_4_2_0(), null); 
+    }
 (
-		lv_hostType_18_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_4_2_0(), "hostType"); 
-		}
-		{
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_4_2_1_0(), currentNode); 
+	    }
+		lv_type_16_0=ruleValueType		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"hostType",
-	        		lv_hostType_18_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	       			"type",
+	        		lv_type_16_0, 
+	        		"ValueType", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
-))
+)	'with' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_4_2_2(), null); 
+    }
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0(), currentNode); 
+	    }
+		lv_combineOperator_18_0=ruleCombineOperator		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"combineOperator",
+	        		lv_combineOperator_18_0, 
+	        		"CombineOperator", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)))
     |((
 (
 		lv_name_19_0=RULE_ID
@@ -1212,43 +1192,15 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)(	':=' 
+)	':' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_5_1_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonKeyword_5_1(), null); 
     }
 (
 (
-		lv_initialValue_21_0=RULE_STRING
+		lv_hostType_21_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_5_1_1_0(), "initialValue"); 
-		}
-		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"initialValue",
-	        		lv_initialValue_21_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	    }
-
-)
-))(	'combine' 
-    {
-        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_5_2_0(), null); 
-    }
-(
-(
-		lv_hostType_23_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_1_0(), "hostType"); 
+			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_0(), "hostType"); 
 		}
 		{
 	        if ($current==null) {
@@ -1259,7 +1211,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"hostType",
-	        		lv_hostType_23_0, 
+	        		lv_hostType_21_0, 
 	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1268,38 +1220,10 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)	'with' 
-    {
-        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_5_2_2(), null); 
-    }
-(
-(
-		lv_hostCombineOperator_25_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_2_3_0(), "hostCombineOperator"); 
-		}
-		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"hostCombineOperator",
-	        		lv_hostCombineOperator_25_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	    }
-
-)
-)))
+))
     |((
 (
-		lv_name_26_0=RULE_ID
+		lv_name_22_0=RULE_ID
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_6_0_0(), "name"); 
 		}
@@ -1312,7 +1236,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_26_0, 
+	        		lv_name_22_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1321,66 +1245,66 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)(	'combine' 
+)(	':=' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_6_1_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_6_1_0(), null); 
     }
 (
 (
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_6_1_1_0(), currentNode); 
-	    }
-		lv_type_28_0=ruleValueType		{
+		lv_initialValue_24_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_6_1_1_0(), "initialValue"); 
+		}
+		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"type",
-	        		lv_type_28_0, 
-	        		"ValueType", 
-	        		currentNode);
+	       			"initialValue",
+	        		lv_initialValue_24_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
-	        currentNode = currentNode.getParent();
 	    }
 
 )
-)	'with' 
+))	':' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_6_1_2(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonKeyword_6_2(), null); 
     }
 (
 (
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_6_1_3_0(), currentNode); 
-	    }
-		lv_combineOperator_30_0=ruleCombineOperator		{
+		lv_hostType_26_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_6_3_0(), "hostType"); 
+		}
+		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"combineOperator",
-	        		lv_combineOperator_30_0, 
-	        		"CombineOperator", 
-	        		currentNode);
+	       			"hostType",
+	        		lv_hostType_26_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
-	        currentNode = currentNode.getParent();
 	    }
 
 )
-)))
+))
     |((
 (
-		lv_name_31_0=RULE_ID
+		lv_name_27_0=RULE_ID
 		{
 			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_7_0_0(), "name"); 
 		}
@@ -1393,7 +1317,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_31_0, 
+	        		lv_name_27_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1402,15 +1326,43 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)(	'combine' 
+)(	':=' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_7_1_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignKeyword_7_1_0(), null); 
     }
 (
 (
-		lv_hostType_33_0=RULE_STRING
+		lv_initialValue_29_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_1_1_0(), "hostType"); 
+			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_7_1_1_0(), "initialValue"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"initialValue",
+	        		lv_initialValue_29_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+))(	'combine' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_7_2_0(), null); 
+    }
+(
+(
+		lv_hostType_31_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0(), "hostType"); 
 		}
 		{
 	        if ($current==null) {
@@ -1421,7 +1373,7 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"hostType",
-	        		lv_hostType_33_0, 
+	        		lv_hostType_31_0, 
 	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1432,13 +1384,13 @@ ruleSignal returns [EObject current=null]
 )
 )	'with' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_7_1_2(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_7_2_2(), null); 
     }
 (
 (
-		lv_hostCombineOperator_35_0=RULE_STRING
+		lv_hostCombineOperator_33_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_1_3_0(), "hostCombineOperator"); 
+			createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0(), "hostCombineOperator"); 
 		}
 		{
 	        if ($current==null) {
@@ -1449,7 +1401,169 @@ ruleSignal returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"hostCombineOperator",
-	        		lv_hostCombineOperator_35_0, 
+	        		lv_hostCombineOperator_33_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)))
+    |((
+(
+		lv_name_34_0=RULE_ID
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_8_0_0(), "name"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"name",
+	        		lv_name_34_0, 
+	        		"ID", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)(	'combine' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_8_1_0(), null); 
+    }
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_8_1_1_0(), currentNode); 
+	    }
+		lv_type_36_0=ruleValueType		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"type",
+	        		lv_type_36_0, 
+	        		"ValueType", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)	'with' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_8_1_2(), null); 
+    }
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0(), currentNode); 
+	    }
+		lv_combineOperator_38_0=ruleCombineOperator		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"combineOperator",
+	        		lv_combineOperator_38_0, 
+	        		"CombineOperator", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)))
+    |((
+(
+		lv_name_39_0=RULE_ID
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_9_0_0(), "name"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"name",
+	        		lv_name_39_0, 
+	        		"ID", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)(	'combine' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_9_1_0(), null); 
+    }
+(
+(
+		lv_hostType_41_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_9_1_1_0(), "hostType"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"hostType",
+	        		lv_hostType_41_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)	'with' 
+    {
+        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_9_1_2(), null); 
+    }
+(
+(
+		lv_hostCombineOperator_43_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0(), "hostCombineOperator"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"hostCombineOperator",
+	        		lv_hostCombineOperator_43_0, 
 	        		"STRING", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
