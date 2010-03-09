@@ -13,6 +13,6 @@
  */
 
 /**
- * Generic KIELER editors that can be used or extended in different plugins.
+ * Generic KIELER views that can be used or extended in different plugins.
  */
-package de.cau.cs.kieler.core.ui.editors;
+package de.cau.cs.kieler.core.ui.views;
