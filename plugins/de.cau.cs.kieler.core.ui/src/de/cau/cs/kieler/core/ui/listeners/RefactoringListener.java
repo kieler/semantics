@@ -175,6 +175,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                 // line that is read at the moment
                 String s = br.readLine();
                 boolean done = false;
+                boolean found = false;
 
                 // search the file for references to the model file
                 while (s != null && !done) {
@@ -191,6 +192,10 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                         case MOVE:
                             done = true;
                             break;
+                        }
+                        if (!found) {
+                            found = true;
+                            result.add(root);
                         }
                     }
                     list.add(s);

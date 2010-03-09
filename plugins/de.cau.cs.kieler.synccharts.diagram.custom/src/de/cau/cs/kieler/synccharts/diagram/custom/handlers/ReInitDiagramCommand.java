@@ -13,10 +13,14 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +74,42 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  */
 public class ReInitDiagramCommand extends AbstractHandler {
 
+    /** File extension for diagram files. */
+    private static final String DIAGRAM_EXTENSION = "kids";
+
+    /** File extension for model files. */
+    private static final String MODEL_EXTENSION = "kixs";
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("restriction")
+    public void setEnabled(Object evaluationContext) {
+        if (evaluationContext instanceof EvaluationContext) {
+            EvaluationContext evalContext = (EvaluationContext) evaluationContext;
+            // get list of selected files
+            Object defVar = evalContext.getDefaultVariable();
+            if (defVar instanceof Iterable<?>) {
+                Iterable<?> iterable = (Iterable<?>) defVar;
+                Iterator<?> iter = iterable.iterator();
+                while (iter.hasNext()) {
+                    Object o = iter.next();
+                    if (o instanceof org.eclipse.core.internal.resources.File) {
+                        IPath path = ((org.eclipse.core.internal.resources.File) o)
+                                .getFullPath();
+                        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
+                            super.setBaseEnabled(true);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        super.setBaseEnabled(false);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -91,8 +131,6 @@ public class ReInitDiagramCommand extends AbstractHandler {
                                 .getFullPath();
                         try {
                             reinitialize(path);
-                        } catch (IOException e0) {
-                            e0.printStackTrace();
                         } catch (RuntimeException e0) {
                             e0.printStackTrace();
                             return null;
@@ -124,35 +162,35 @@ public class ReInitDiagramCommand extends AbstractHandler {
      * Reinitialize the diagram file.
      * 
      * @param path
-     *            the path of either the kids or the kixs file
-     * @throws IOException
-     *             if the operation failed
+     *            the path of the kixs file
      */
-    private void reinitialize(final IPath path) throws IOException {
-        IPath partner = getPartner(path);
+    private void reinitialize(final IPath path) {
+        List<IPath> partners = getPartners(path);
 
-        IPath kixsPath = path.getFileExtension().equals("kixs") ? path
-                : partner;
-        IPath kidsPath = path.getFileExtension().equals("kids") ? path
-                : partner;
-        File kidsFile = getFile(kidsPath);
+        for (IPath partner : partners) {
+            IPath kixsPath = path.getFileExtension().equals(MODEL_EXTENSION) ? path
+                    : partner;
+            IPath kidsPath = path.getFileExtension().equals(DIAGRAM_EXTENSION) ? path
+                    : partner;
+            File kidsFile = getFile(kidsPath);
 
-        // getDiagramSetup(kidsFile)
+            // getDiagramSetup(kidsFile)
 
-        // delete old diagram file
-        if (kidsFile != null) {
-            kidsFile.delete();
-        }
+            // delete old diagram file
+            if (kidsFile != null) {
+                kidsFile.delete();
+            }
 
-        reinitializeDiagram(kixsPath, kidsPath);
-        // kidsFile = getPartner(kixsFile)
-        // addDiagramSetup(kidsFile)
+            reinitializeDiagram(kixsPath, kidsPath);
+            // kidsFile = getPartner(kixsFile)
+            // addDiagramSetup(kidsFile)
 
-        // perform auto layout
-        IEditorPart editor = getActiveEditor();
-        EditPart part = null;
-        if (editor != null) {
-            DiagramLayoutManager.layout(editor, part, false, true);
+            // perform auto layout
+            IEditorPart editor = getActiveEditor();
+            EditPart part = null;
+            if (editor != null) {
+                DiagramLayoutManager.layout(editor, part, false, true);
+            }
         }
     }
 
@@ -177,24 +215,106 @@ public class ReInitDiagramCommand extends AbstractHandler {
         return result;
     }
 
+    // /**
+    // * Calculates the partner to a synccharts file.
+    // *
+    // * @param path
+    // * a file
+    // * @return the partner file
+    // * @throws IOException
+    // * if the partner file is not valid
+    // */
+    // private IPath getPartner(final IPath path) throws IOException {
+    // String ext = path.getFileExtension();
+    // String newExt = ext.equals("kixs") ? "kids" : "kixs";
+    // IPath partnerPath = path.removeFileExtension().addFileExtension(newExt);
+    // File result = getFile(partnerPath);
+    // if (result == null || (!result.exists() && newExt.equals("kixs"))) {
+    // throw new IOException("No kixs file.");
+    // }
+    // return partnerPath;
+    // }
+
     /**
-     * Calculates the partner to a synccharts file.
+     * Execute a refactoring operation.
      * 
      * @param path
-     *            a file
-     * @return the partner file
-     * @throws IOException
-     *             if the partner file is not valid
+     *            the old path of the file that was refactored.
+     * @param op
+     *            the operation
+     * @param newName
+     *            optionally the new name of the file
+     * @return the list of files that link to the refactored file
      */
-    private IPath getPartner(final IPath path) throws IOException {
-        String ext = path.getFileExtension();
-        String newExt = ext.equals("kixs") ? "kids" : "kixs";
-        IPath partnerPath = path.removeFileExtension().addFileExtension(newExt);
-        File result = getFile(partnerPath);
-        if (result == null || (!result.exists() && newExt.equals("kixs"))) {
-            throw new IOException("No kixs file.");
+    private List<IPath> getPartners(final IPath path) {
+        List<File> files = new LinkedList<File>();
+        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
+            findRec(files, Platform.getLocation().toFile(), path);
         }
-        return partnerPath;
+        List<IPath> result = new LinkedList<IPath>();
+        for (File file : files) {
+            if (file != null
+                    && (!file.exists() || path.getFileExtension().equals(
+                            MODEL_EXTENSION))) {
+                IPath filePath = Path.fromOSString(file.getPath());
+                result.add(filePath.makeRelativeTo(Platform.getLocation()));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Internal method to recursively search the whole workspace.
+     * 
+     * @param result
+     *            the list of affected files.
+     * @param root
+     *            the root file
+     * @param model
+     *            the model file
+     */
+    private void findRec(final List<File> result, final File root,
+            final IPath model) {
+        if (root.isDirectory()) {
+            // recursively look through all files in the directory
+            for (File file : root.listFiles()) {
+                findRec(result, file, model);
+            }
+        } else if (root.getPath().endsWith(DIAGRAM_EXTENSION)) {
+            // found relevant file
+            try {
+                InputStream is = new FileInputStream(root);
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+
+                // line that is read at the moment
+                String s = br.readLine();
+                boolean found = false;
+
+                // search the file for references to the model file
+                while (s != null && !found) {
+                    if (s.contains(model.toFile().getName())) {
+                        if (!found) {
+                            found = true;
+                            result.add(root);
+                        }
+                    }
+                    if (!found) {
+                        s = br.readLine();
+                    }
+                }
+
+                // close streams
+                br.close();
+                isr.close();
+                is.close();
+            } catch (FileNotFoundException e0) {
+                e0.printStackTrace();
+            } catch (IOException e0) {
+                e0.printStackTrace();
+            }
+
+        }
     }
 
     /**
