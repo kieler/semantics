@@ -4,10 +4,11 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&#xA;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xA;&#xA;Copyright 2009 by&#xA;+ Christian-Albrechts-University of Kiel&#xA;  + Department of Computer Science&#xA;    + Real-Time and Embedded Systems Group&#xA;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xA;See the file epl-v10.html for the license text."
     modelDirectory="/de.cau.cs.kieler.synccharts/src" editDirectory="/de.cau.cs.kieler.synccharts.edit/src"
     editorDirectory="/de.cau.cs.kieler.synccharts.editor/src" modelPluginID="de.cau.cs.kieler.synccharts"
-    modelName="Synccharts" modelPluginClass="" testsDirectory="/de.cau.cs.kieler.synccharts.tests/src"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    editPluginID="de.cau.cs.kieler.synccharts.edit" editorPluginID="de.cau.cs.kieler.synccharts.editor"
-    testsPluginID="de.cau.cs.kieler.synccharts.tests">
+    templateDirectory="de.cau.cs.kieler.synccharts/templates" dynamicTemplates="true"
+    redirection="" forceOverwrite="true" modelName="Synccharts" modelPluginClass=""
+    testsDirectory="/de.cau.cs.kieler.synccharts.tests/src" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.edit"
+    editorPluginID="de.cau.cs.kieler.synccharts.editor" testsPluginID="de.cau.cs.kieler.synccharts.tests">
   <foreignModel>synccharts.ecore</foreignModel>
   <genPackages prefix="Synccharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="kixs" ecorePackage="synccharts.ecore#/">
