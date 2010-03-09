@@ -46,6 +46,27 @@ Updating the gmfgen model:
 
 ================
 
+Changing the generated code for .editor, .edit, .model, .test plugins:
+
+- Look at .genmodel and make sure that under templates & merge the following
+is selected:
+    - Dynamic Templates : true
+    - Template Directory : de.cau.cs.kieler.synccharts/templates
+- Find the file you want to change:
+    - all files that can go into the templates folder are taken from
+    org.eclipse.emf.codegen.ecore
+    - for changing the plugin.xml you have to either look at
+    plugin.xmljet or manifest.mfjet
+- Edit the corresponding file
+    - for example to change the version id look at manifest.mfjet
+    and change "Bundle-Version: 0.1.0.qualifier" to 
+    "Bundle-Version: 0.2.0.qualifier"
+- Generate the corresponding plugin
+
+author: Soeren Hansen <soh@informatik...>
+
+================
+
 Files:
 
  model/synccharts.ecorediag
@@ -97,3 +118,8 @@ Files:
      the gmfgen model. They are necessary to generate custom code required
      for some special features of the editor, e.g. Attribute Awareness and
      other stuff.
+     
+ templates/*
+    Custom code generation templates for the .editor, .model, .edit, .test
+    plugins. They are used to generate the proper version ids and
+    add custom editors and wizards to the generated plugins.
