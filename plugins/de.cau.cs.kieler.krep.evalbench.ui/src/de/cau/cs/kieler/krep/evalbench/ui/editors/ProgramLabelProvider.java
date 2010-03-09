@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.editors;
 
-import java.util.LinkedList;
-
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -26,18 +24,7 @@ import org.eclipse.swt.graphics.Image;
  * 
  * @kieler.rating 2010-02-01 proposed yellow ctr
  */
-public class ProgramLabelProvider implements ITableLabelProvider {
-
-    /** List of label provider listeners. */
-    private LinkedList<ILabelProviderListener> listeners;
-
-    /**
-     * Initializes the program label provider.
-     */
-    public ProgramLabelProvider() {
-        // create list for label provider listeners
-        listeners = new LinkedList<ILabelProviderListener>();
-    }
+public class ProgramLabelProvider extends LabelProvider implements ITableLabelProvider {
 
     /**
      * {@inheritDoc}
@@ -64,37 +51,4 @@ public class ProgramLabelProvider implements ITableLabelProvider {
             return null;
         }
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void addListener(final ILabelProviderListener listener) {
-        listeners.add(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void removeListener(final ILabelProviderListener listener) {
-        listeners.remove(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void dispose() {
-        // clear list of label provider listeners
-        listeners.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isLabelProperty(final Object element, final String property) {
-        return true;
-    }
-
 }

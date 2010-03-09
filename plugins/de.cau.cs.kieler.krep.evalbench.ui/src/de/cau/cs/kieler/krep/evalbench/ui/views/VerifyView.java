@@ -16,7 +16,9 @@ package de.cau.cs.kieler.krep.evalbench.ui.views;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
@@ -31,12 +33,14 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
  * 
  * @author ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
+ * @deprecated
+ * 
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
  */
 public class VerifyView extends ViewPart {
 
     /** The identifier string for this view. */
-    public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.verify";
+    public static final String ID = "de.cau.cs.kieler.krep.evalbench.ui.views.verify";
 
     /** Column identifiers for the embedded table. */
     public static final String[] COLUMN_NAMES = { "module", "status", "reaction time", "wcrt",
@@ -67,7 +71,32 @@ public class VerifyView extends ViewPart {
         // create table viewer
         viewer = new TableViewer(table);
         viewer.setColumnProperties(COLUMN_NAMES);
-        viewer.setContentProvider(new VerifyContentProvider());
+        viewer.setContentProvider(new IStructuredContentProvider() {
+            /**
+             * {@inheritDoc}
+             * 
+             */
+            public Object[] getElements(final Object inputElement) {
+                if (inputElement instanceof String[][]) {
+                    return (String[][]) inputElement;
+                } else {
+                    return null;
+                }
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            public void dispose() { // nothing to do
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            public void inputChanged(final Viewer v, final Object oldInput, final Object newInput) {
+                // noting to do
+            }
+        });
         viewer.setLabelProvider(new VerifyLabelProvider());
 
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();

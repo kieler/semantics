@@ -15,15 +15,17 @@ package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
 import org.eclipse.jface.action.Action;
 
+import de.cau.cs.kieler.core.ui.views.TextViewer;
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TextViewer;
 
 /**
  * Erases the contents of a given text viewer.
  * 
  * @author ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
+ * @kieler.rating 2010-03-09 yellow 
+ *   review by msp, soh
+ *   
  * TODO consider moving to core.ui
  */
 public class ClearAction extends Action {
@@ -31,7 +33,7 @@ public class ClearAction extends Action {
     private TextViewer viewer;
 
     /** Identifier string for this action. */
-    private static final String CLEAR_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.clear";
+    private static final String ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.clear";
 
     /** Relative path to the icon to use for this action. */
     private static final String ICON_PATH = "icons/clear.gif";
@@ -42,7 +44,7 @@ public class ClearAction extends Action {
      */
     public ClearAction(final TextViewer textViewer) {
         super();
-        setId(CLEAR_ID);
+        setId(ID);
         setText("Clear");
         setToolTipText("Verify all benchmarks");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
@@ -54,5 +56,4 @@ public class ClearAction extends Action {
         viewer.setText("");
         viewer.refresh();
     }
-
 }

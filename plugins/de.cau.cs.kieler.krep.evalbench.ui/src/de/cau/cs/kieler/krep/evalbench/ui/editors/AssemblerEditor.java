@@ -20,7 +20,9 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
@@ -40,10 +42,8 @@ import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 /**
  * The basic editor for displaying assembler instructions in the evaluation bench. Subclasses of
  * this abstract class must create a suitable implementation of the <code>IAssembler</code>
- * interface.
- * TODO is this editor really needed?
  * 
- * @kieler.rating 2010-02-04 proposed yellow ctr
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
  * 
  * @author msp, ctr
  */
@@ -68,13 +68,12 @@ public abstract class AssemblerEditor extends EditorPart {
     private IAssembler assembler;
 
     /**
-     * setter for the assembler. This should only be used once by each subclass.
-     * TODO put this into a constructor
+     * Generate new editor which displays the given assembler.
      * 
      * @param asm
      *            the assembler used by this editor
      */
-    protected void setAssembler(final IAssembler asm) {
+    protected AssemblerEditor(final IAssembler asm) {
         this.assembler = asm;
     }
 
@@ -99,15 +98,15 @@ public abstract class AssemblerEditor extends EditorPart {
      */
     private void updateProgram(final File inputFile) throws IOException, ParseException {
         // read input file
-        StringBuffer stringBuffer = new StringBuffer(); // TODO use StringBuilder
+        StringBuilder str = new StringBuilder();
         FileReader reader = new FileReader(inputFile);
         try {
             int c;
 
             while ((c = reader.read()) >= 0) {
-                stringBuffer.append((char) c);
+                str.append((char) c);
             }
-            String source = stringBuffer.toString();
+            String source = str.toString();
             // execute assembler
             assembler.assemble(inputFile.getName(), source);
 
@@ -165,7 +164,27 @@ public abstract class AssemblerEditor extends EditorPart {
         // create table viewer
         viewer = new TableViewer(table);
         viewer.setColumnProperties(COLUMN_NAMES);
-        viewer.setContentProvider(new ProgramContentProvider());
+        viewer.setContentProvider(new IStructuredContentProvider() {
+
+            /** {@inheritDoc} */
+            public Object[] getElements(final Object inputElement) {
+                if (inputElement instanceof String[][]) {
+                    return (String[][]) inputElement;
+                } else {
+                    return null;
+                }
+            }
+
+            /** {@inheritDoc} */
+            public void dispose() {
+                // Nothing to do
+            }
+
+            /** {@inheritDoc} */
+            public void inputChanged(final Viewer v, final Object oldInput, final Object newInput) {
+                // Nothing to do
+            }
+        });
         viewer.setLabelProvider(new ProgramLabelProvider());
         // set viewer input
         viewer.setInput(assembler.getInstructions());

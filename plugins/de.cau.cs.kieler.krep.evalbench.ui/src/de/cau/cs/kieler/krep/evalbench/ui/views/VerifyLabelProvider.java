@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
-import java.util.LinkedList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import de.cau.cs.kieler.krep.evalbench.ui.Activator;
@@ -28,17 +27,17 @@ import de.cau.cs.kieler.krep.evalbench.ui.Activator;
  * 
  * @author ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
- * TODO extend LabelProvider
+ * @deprecated
+ * 
+ * @kieler.rating 2010-03-09 yellow 
+ *   review by msp, soh
+ *   
  */
-public class VerifyLabelProvider implements ITableLabelProvider {
+public class VerifyLabelProvider extends LabelProvider implements ITableLabelProvider {
     /** Relative path to the image to use for present signals. */
-    private static final String PRESENT_PATH = "icons/present.gif"; // TODO rename 
+    private static final String VALID_PATH = "icons/present.gif"; 
     /** Relative path to the image to use for absent signals. */
-    private static final String ABSENT_PATH = "icons/absent.gif";
-
-    /** List of label provider listeners. */
-    private LinkedList<ILabelProviderListener> listeners;
+    private static final String INVALID_PATH = "icons/absent.gif";
 
     /** Image to use for present signals. */
     private Image presentImage;
@@ -49,14 +48,12 @@ public class VerifyLabelProvider implements ITableLabelProvider {
      * Initializes the program label provider.
      */
     public VerifyLabelProvider() {
-        // create list for label provider listeners
-        listeners = new LinkedList<ILabelProviderListener>();
         // create images
         ImageDescriptor presentImageDescriptor = Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, PRESENT_PATH);
+                Activator.PLUGIN_ID, VALID_PATH);
         presentImage = presentImageDescriptor.createImage();
         ImageDescriptor absentImageDescriptor = Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ABSENT_PATH);
+                Activator.PLUGIN_ID, INVALID_PATH);
         absentImage = absentImageDescriptor.createImage();
     }
 
@@ -98,37 +95,5 @@ public class VerifyLabelProvider implements ITableLabelProvider {
         } else {
             return null;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void addListener(final ILabelProviderListener listener) {
-        listeners.add(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void removeListener(final ILabelProviderListener listener) {
-        listeners.remove(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    public void dispose() {
-        // clear list of label provider listeners
-        listeners.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isLabelProperty(final Object element, final String property) {
-        return true;
     }
 }

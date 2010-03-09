@@ -33,7 +33,11 @@ import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
  * 
  * @author msp, ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
+ * @deprecated
+ * 
+ * @kieler.rating 2010-03-09 yellow 
+ *   review by msp, soh
+ *   
  */
 public class EvalBenchPreferencePage extends FieldEditorPreferencePage implements
         IWorkbenchPreferencePage {

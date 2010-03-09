@@ -21,6 +21,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.core.ui.views.TextViewer;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ClearAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.EnableAction;
@@ -31,13 +32,14 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.EnableAction;
  * 
  * @author msp, ctr
  * 
- * @kieler.rating 2010-02-01 proposed yellow ctr
- * 
+ * @kieler.rating 2010-03-09 yellow 
+ *   review by msp, soh
+ *   
  */
 public class ConnectionView extends ViewPart implements ICommunicationListener {
 
     /** The identifier string for this view. */
-    public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
+    public static final String ID = "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
 
     /** The viewer used to display connection logs. */
     private TextViewer viewer = null;
@@ -56,7 +58,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         // create actions
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
         toolBarManager.add(new ClearAction(viewer));
-        toolBarManager.add(new EnableAction(this));
+        getViewSite().getActionBars().getMenuManager().add(new EnableAction(this));
         enabled = true;
     }
 
@@ -102,7 +104,8 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     }
 
     /**
-     * TODO comment, method name.
+     * Display the given message in the connection view if the view is open.
+     * 
      * @param msg
      *            message to display in the connection view
      * @return true if the message was displayed
@@ -113,39 +116,31 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         if (window == null) {
             return false;
         }
-        IViewPart connectionView = window.getActivePage().findView(ConnectionView.VIEW_ID);
+        IViewPart connectionView = window.getActivePage().findView(ConnectionView.ID);
         if (connectionView == null) {
             return false;
         }
 
-        ((ConnectionView) connectionView).show(msg + "\n");
+        ((ConnectionView) connectionView).comment(msg);
         return true;
-    }
-
-    /**
-     * @param msg
-     *            message to display in the connection view
-     */
-    public void show(final String msg) {
-        if (enabled && viewer != null && display != null) {
-            display.asyncExec(new Runnable() {
-                public void run() {
-                    viewer.append(msg + "\n");
-                }
-            });
-        }
     }
 
     /**
      * {@inheritDoc}
      */
     public void comment(final String comment) {
-        show(comment);
+        if (enabled && viewer != null && display != null) {
+            display.asyncExec(new Runnable() {
+                public void run() {
+                    viewer.append(comment + "\n");
+                }
+            });
+        }
     }
 
     /**
      * Enable logging of the connection.
-     */   
+     */
     public void enable() {
         enabled = true;
         viewer.setEnabled(true);
@@ -153,7 +148,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 
     /**
      * Disable logging of the connection.
-     */ 
+     */
     public void disable() {
         enabled = false;
         viewer.setEnabled(false);

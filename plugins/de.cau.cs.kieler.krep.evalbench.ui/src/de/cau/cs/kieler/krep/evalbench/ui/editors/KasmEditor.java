@@ -19,10 +19,10 @@ import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 /**
  * An editor for KEP assembler files that uses the functionality of the abstract
  * <code>AssemblerEditor</code>.
+ * @author ctr, msp
  * 
- * @kieler.rating 2010-02-04 proposed yellow ctr
- * 
- * @author msp
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
+ *
  */
 public class KasmEditor extends AssemblerEditor {
 
@@ -30,8 +30,7 @@ public class KasmEditor extends AssemblerEditor {
      * Creates a KASM editor using the external assembler.
      */
     public KasmEditor() {
-        super();
-        setAssembler(new KepAssembler());
+        super(new KepAssembler());
     }
 
     /*

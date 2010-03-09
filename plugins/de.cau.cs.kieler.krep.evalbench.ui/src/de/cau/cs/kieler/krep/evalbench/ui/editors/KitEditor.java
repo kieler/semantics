@@ -20,7 +20,7 @@ import de.cau.cs.kieler.krep.evalbench.smakc.KitAssembler;
  * An editor SyncCharts files in the kit format that uses the functionality of the abstract
  * <code>AssemblerEditor</code>.
  * 
- * @kieler.rating 2010-02-04 proposed yellow ctr
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
  * 
  * @author ctr
  */
@@ -30,15 +30,9 @@ public class KitEditor extends AssemblerEditor {
      * Creates a KASM editor using the external assembler.
      */
     public KitEditor() {
-        super();
-        setAssembler(new KitAssembler());
+        super(new KitAssembler());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see krep.evalbench.ui.editors.AssemblerEditor#getProtocolType()
-     */
     @Override
     public String getProtocolType() {
         // Kit files are related to the KEP protocol

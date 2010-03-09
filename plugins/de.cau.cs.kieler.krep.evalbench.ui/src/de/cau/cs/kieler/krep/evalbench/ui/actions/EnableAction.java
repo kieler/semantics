@@ -18,8 +18,11 @@ import org.eclipse.jface.action.Action;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 
 /**
- * TODO propose & comment, choose icon or move to view menu.
+ * Disable or enable logging of a TextViewer.
+ *  
  * @author ctr
+ * 
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
  * 
  */
 public class EnableAction extends Action {
@@ -28,8 +31,7 @@ public class EnableAction extends Action {
 
     private boolean enabled;
     /** Identifier string for this action. */
-    private static final String ENABLE_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.enable";
-
+    private static final String ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.enable";
 
     /**
      * @param connectionView
@@ -37,7 +39,7 @@ public class EnableAction extends Action {
      */
     public EnableAction(final ConnectionView connectionView) {
         super();
-        setId(ENABLE_ID);
+        setId(ID);
         setText("Disable");
         setToolTipText("Enable connection view");
         view = connectionView;
@@ -55,5 +57,4 @@ public class EnableAction extends Action {
             setText("Enable");
         }
     }
-
 }

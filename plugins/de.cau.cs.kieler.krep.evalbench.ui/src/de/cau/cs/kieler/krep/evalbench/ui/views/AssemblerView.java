@@ -13,7 +13,9 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -22,22 +24,20 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramContentProvider;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.ProgramLabelProvider;
 
 /**
  * Displays the assembler in a table, including labels, instructions and object code. Each assembler
  * instructions takes exactly one line in the table.
  * 
- * @kieler.rating 2010-02-04 proposed yellow ctr
- * 
  * @author ctr
  * 
+ * @kieler.rating 2010-03-09 yellow review by msp, soh
  */
 public class AssemblerView extends ViewPart {
 
     /** The identifier string for this view. */
-    public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.assembler";
+    public static final String ID = "de.cau.cs.kieler.krep.evalbench.ui.views.assembler";
 
     /** Column identifiers for the embedded table. */
     private static final String[] COLUMN_NAMES = { "index", "label", "instruction", "opcode" };
@@ -69,7 +69,27 @@ public class AssemblerView extends ViewPart {
         // create table viewer
         viewer = new TableViewer(table);
         viewer.setColumnProperties(COLUMN_NAMES);
-        viewer.setContentProvider(new ProgramContentProvider());
+        viewer.setContentProvider(new IStructuredContentProvider() {
+
+            /** {@inheritDoc} */
+            public Object[] getElements(final Object inputElement) {
+                if (inputElement instanceof String[][]) {
+                    return (String[][]) inputElement;
+                } else {
+                    return null;
+                }
+            }
+
+            /** {@inheritDoc} */
+            public void dispose() {
+                // Nothing to do
+            }
+
+            /** {@inheritDoc} */
+            public void inputChanged(final Viewer v, final Object oldInput, final Object newInput) {
+                // Nothing to do
+            }
+        });
         viewer.setLabelProvider(new ProgramLabelProvider());
     }
 
