@@ -47,11 +47,17 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
         splineModeCombo.add("On (cubic sections approximation)");
     }
 
+«REM»The following part is not working as static methods will not be overloaded,
+     hence, the following method will never be called!
+     Default definition is added to PreferenceInitializer.xpt!
+    
 	«EXPAND xpt::Common::generatedMemberComment»
     public static void initDefaults(org.eclipse.jface.preference.IPreferenceStore preferenceStore) {
         ConnectionsPreferencePage.initDefaults(preferenceStore);
         preferenceStore.setDefault(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.ui.figures.SplineConnection.SPLINE_OFF);
     }
+    
+«ENDREM»
     
     «EXPAND xpt::Common::generatedMemberComment»
     @Override
