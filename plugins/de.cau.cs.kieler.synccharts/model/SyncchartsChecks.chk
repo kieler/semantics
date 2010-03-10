@@ -125,6 +125,16 @@ context Signal
 	( parentRegion != null && parentRegion.signals.forAll(s| (s.name != name) || (s == this)) ||
 	  parentState != null && parentState.signals.forAll(s| (s.name != name) || (s == this)) )
 	;
+		
+context Signal if (isInput || (! isOutput && ! isInput))
+	WARNING "Signal never read." :
+	( parentState != null && parentState.eAllContents.typeSelect(SignalReference).select(reference|reference.signal == this).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(SignalReference).select(reference|reference.signal == this).size > 0);
+
+context Signal if (isOutput || (! isInput && ! isOutput))
+	WARNING "Signal never emitted." :
+	( parentState != null && parentState.eAllContents.typeSelect(Emission).select(emission|emission.signal == this).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(Emission).select(emission|emission.signal == this).size > 0);
 
 context Variable
 	ERROR "Variables need unique names in a Region declaration." :
