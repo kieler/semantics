@@ -148,7 +148,12 @@ state.setParentRegion(null) ->
 null
 ;
 
-// Copy and Paste 
+/////////////////////////
+// Copy, cut and Paste //
+/////////////////////////
+
+// Java escapes
+// copy methods
 Void copyStateToClipboard(State state):
 JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
 ;
@@ -161,6 +166,15 @@ Void copyTransitionToClipboard(Transition trans):
 JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.transitionToClipboard(de.cau.cs.kieler.synccharts.Transition)
 ;
 
+Void copyStatesToClipboard(List[State] states):
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.statesToClipboard(java.util.List)
+;
+ 
+Void copyRegionsToClipboard(List[Region] regions):
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionsToClipboard(java.util.List)
+;
+
+// paste methods
 State getStateFromClipboard():
 JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
 ;
@@ -173,6 +187,15 @@ Transition getTransitionFromClipboard():
 JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getTransitionFromClipboard()
 ;
 
+List[State] getStatesFromClipboard():
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStatesFromClipboard()
+;
+
+List[Region] getRegionsFromClipboard():
+JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionsFromClipboard()
+;
+
+// Cut
 Void cut(Transition trans):
  copyTransitionToClipboard(trans) ->
  trans.sourceState.outgoingTransitions.remove(trans)
@@ -180,36 +203,107 @@ Void cut(Transition trans):
 
 Void cut(State state):
  copyStateToClipboard(state) ->
- state.parentRegion.innerStates.remove(state)
+ state.removeFromParent()
 ;
 
 Void cut(Region region):
  copyRegionToClipboard(region) ->
+ region.removeFromParent()
+;
+
+Void cut(List[State] states):
+ copyStatesToClipboard(states) ->
+ states.removeFromParent()
+;
+
+Void removeFromParent(State state):
+ state.parentRegion.innerStates.remove(state)
+;
+
+Void removeFromParent(Region region):
  (region.parentState != null) ?
  region.parentState.regions.remove(region) : null
 ;
 
+Void cut(List[Region] regions):
+ copyRegionsToClipboard(regions) ->
+ regions.removeFromParent()
+;
+
+// Copy
+Void copy(Transition trans):
+ copyTransitionToClipboard(trans)
+;
+
+Void copy(State state):
+ copyStateToClipboard(state)
+;
+
+Void copy(Region region):
+ copyRegionToClipboard(region)
+;
+
+Void copy(List[Region] regions):
+ copyRegionsToClipboard(regions)
+;
+
+Void copy(List[State] states):
+ copyStatesToClipboard(states)
+;
+
+
+// Paste
 Void paste(Region target):
  let region = getRegionFromClipboard():
  let state = getStateFromClipboard():
- (state != null) ?
- target.innerStates.add(state) :
- ((region != null) ? addStatesToRegion(target, region) : null)
+ let regions = getRegionsFromClipboard():
+ let states = getStatesFromClipboard():
+ ((state != null) ? target.innerStates.add(state) : null) ->
+ ((region != null) ? addStatesToRegion(target, region.innerStates) : null) ->
+ ((states != null) ? addStatesToRegion(target, states) : null) ->
+ ((regions != null) ? pasteInternal(target, regions) : null)
 ;
 
-Void addStatesToRegion(Region target, Region source):
- target.innerStates.addAll(source.innerStates);
+Void pasteInternal(Region target, List[Region] regions): 
+ let dummy = new State :
+ (target.parentState != null) ?
+ (target.parentState.regions.addAll(regions)) :
+ (dummy.regions.addAll(regions) ->
+  target.innerStates.add(dummy) ->
+  dummy.setLabel(getFileNameOfActiveEditor()))
+;
+
+Void addStatesToRegion(Region target, List[State] states):
+ let dummy = new State :
+ let dummy2 = new Region :
+ (target.parentState != null) ?
+ target.innerStates.addAll(states) :
+ (dummy.setLabel(getFileNameOfActiveEditor()) ->
+ target.innerStates.add(dummy) ->
+ dummy.regions.add(dummy2) ->
+ dummy2.innerStates.addAll(states))
+;
 
 Void paste(State target):
  let region = getRegionFromClipboard():
  let state = getStateFromClipboard():
+ let regions = getRegionsFromClipboard():
+ let states = getStatesFromClipboard():
  let dummy = new Region:
- (state != null) ?
- (dummy.innerStates.add(state) ->
-  target.regions.add(dummy)) : 
-  ((region != null) ?
-   (target.regions.add(region))
-    : null)
+ ((state != null) ? 
+   (dummy.innerStates.add(state) ->
+    target.regions.add(dummy)) : 
+  null) ->
+ ((region != null) ? 
+   (target.regions.add(region)) : 
+  null) ->
+ ((states != null) ?
+   (dummy.innerStates.addAll(states) ->
+    target.regions.add(dummy)) :
+  null) ->
+  ((regions != null) ?
+   (target.regions.addAll(regions)) :
+  null)
 ;
 
 Void paste(State source, State target):
@@ -218,7 +312,7 @@ Void paste(State source, State target):
  (source.outgoingTransitions.add(trans) ->
  trans.setTargetState(target)) :
  null
- ;
+;
 
 /////////////////////////
 //     Templates      ///

@@ -121,6 +121,13 @@
              transformationId="de.cau.cs.kieler.synccharts.ksbase.cut">
        </transformation>
        <transformation
+             icon="icons/copy.gif"
+             keyboardShortcut="M1+C"
+             name="Copy"
+             transformation="copy"
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.copy">
+       </transformation>
+       <transformation
              icon="icons/paste.gif"
              keyboardShortcut="M1+V"
              name="Paste "
@@ -219,6 +226,8 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.cut">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.copy"></transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
           </transformationCommand>

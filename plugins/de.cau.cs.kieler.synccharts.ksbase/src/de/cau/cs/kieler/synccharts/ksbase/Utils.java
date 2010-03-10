@@ -14,6 +14,13 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.ksbase;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -38,7 +45,11 @@ public final class Utils {
     /** Clipboard for copy and paste. */
     private static volatile State stateClipBoard = null;
     /** Clipboard for copy and paste. */
+    private static volatile List<State> statesClipBoard = null;
+    /** Clipboard for copy and paste. */
     private static volatile Region regionClipBoard = null;
+    /** Clipboard for copy and paste. */
+    private static volatile List<Region> regionsClipBoard = null;
     /** Clipboard for copy and paste. */
     private static volatile Transition transitionClipBoard = null;
 
@@ -54,6 +65,17 @@ public final class Utils {
     }
 
     /**
+     * Copy a list of states to the clipboard.
+     * 
+     * @param states
+     *            the list of states
+     */
+    public static void statesToClipboard(final List<State> states) {
+        resetClipboard();
+        statesClipBoard = states;
+    }
+
+    /**
      * Copy a region to the clipboard.
      * 
      * @param region
@@ -62,6 +84,17 @@ public final class Utils {
     public static void regionToClipboard(final Region region) {
         resetClipboard();
         regionClipBoard = region;
+    }
+
+    /**
+     * Copy a list of regions to the clipboard.
+     * 
+     * @param regions
+     *            the list of regions
+     */
+    public static void regionsToClipboard(final List<Region> regions) {
+        resetClipboard();
+        regionsClipBoard = regions;
     }
 
     /**
@@ -80,7 +113,9 @@ public final class Utils {
      */
     private static void resetClipboard() {
         stateClipBoard = null;
+        statesClipBoard = null;
         regionClipBoard = null;
+        regionsClipBoard = null;
         transitionClipBoard = null;
     }
 
@@ -90,7 +125,47 @@ public final class Utils {
      * @return the state
      */
     public static State getStateFromClipboard() {
-        return stateClipBoard;
+        State newState = (State) EcoreUtil.copy(stateClipBoard);
+
+        // remove all non self loop transitions
+        Iterator<Transition> iter = newState.getOutgoingTransitions()
+                .iterator();
+        while (iter.hasNext()) {
+            Transition next = iter.next();
+            if (next.getTargetState() != newState) {
+                iter.remove();
+            }
+        }
+
+        return newState;
+    }
+
+    /**
+     * Get a list of states from the clipboard.
+     * 
+     * @return the states
+     */
+    public static List<State> getStatesFromClipboard() {
+        if (statesClipBoard != null) {
+            Collection<State> states = EcoreUtil.copyAll(statesClipBoard);
+            List<State> dummy = new LinkedList<State>();
+            for (State state : states) {
+                dummy.add(state);
+
+                // remove transitions that leave the current selection
+                Iterator<Transition> iter = state.getOutgoingTransitions()
+                        .iterator();
+                while (iter.hasNext()) {
+                    Transition trans = iter.next();
+                    if (!states.contains(trans.getTargetState())) {
+                        iter.remove();
+                    }
+                }
+            }
+
+            return dummy;
+        }
+        return null;
     }
 
     /**
@@ -99,7 +174,26 @@ public final class Utils {
      * @return the region
      */
     public static Region getRegionFromClipboard() {
-        return regionClipBoard;
+        Region newRegion = (Region) EcoreUtil.copy(regionClipBoard);
+        return newRegion;
+    }
+
+    /**
+     * Get a list of regions from the clipboard.
+     * 
+     * @return the regions
+     */
+    public static List<Region> getRegionsFromClipboard() {
+        if (regionsClipBoard != null) {
+            Collection<Region> regions = EcoreUtil.copyAll(regionsClipBoard);
+            List<Region> dummy = new LinkedList<Region>();
+            for (Region region : regions) {
+                dummy.add(region);
+            }
+
+            return dummy;
+        }
+        return null;
     }
 
     /**
@@ -108,6 +202,7 @@ public final class Utils {
      * @return the transition
      */
     public static Transition getTransitionFromClipboard() {
-        return transitionClipBoard;
+        Transition newTrans = (Transition) EcoreUtil.copy(transitionClipBoard);
+        return newTrans;
     }
 }
