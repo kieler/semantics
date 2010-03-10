@@ -21,8 +21,10 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.internal.xtend.expression.ast.DeclaredParameter;
 import org.eclipse.internal.xtend.xtend.XtendFile;
 import org.eclipse.internal.xtend.xtend.ast.Extension;
@@ -166,12 +168,20 @@ public class XtendTransformationFramework implements ITransformationFramework {
             EmfMetaModel metaModel;
 
             // Load the EPackage class by using EcoreUtils
-            EPackage pack = EcoreUtil2.getEPackageByClassName(basePackage);
+            EPackage pack = null;
+            try {
+                pack = EcoreUtil2.getEPackageByClassName(basePackage);
+            } catch (ConfigurationException ce) {
+                // package class could not be found
+                // this is bad and should not happen.
+                // We will return 'false' here and try
+                // again later.
+                return false;
+            }
             // create EMFMetaModel with the given EPackage
             metaModel = new EmfMetaModel(pack);
             xtendFacade.registerMetaModel(metaModel);
         }
-
         if (!xtendFacade.hasExtension(operation, parameters)) {
             return false;
         } else {
