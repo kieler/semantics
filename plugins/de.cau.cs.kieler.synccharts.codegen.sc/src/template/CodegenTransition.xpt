@@ -4,18 +4,16 @@
 
 «DEFINE transition FOR Transition-»
 	«IF this.type == TransitionType::NORMALTERMINATION-»
-		JOINELSE(L_«getStateNameByFlag(this.sourceState, 3)»_main_intern);
+		JOINELSE(L_«getStateNameByFlag(this.sourceState, 3)»_afterJoin);
 	«ENDIF-»
 	«IF (this.triggersAndEffects != null)-»
 		«IF (this.trigger != null)-»
-			/* TRIGGER != NULL */
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
 				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
 			«ENDIF-»
 		«ELSE-»
-			/* TRIGGER == NULL */
 			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 			«EXPAND stateAbortion FOR this-»
 		«ENDIF-»

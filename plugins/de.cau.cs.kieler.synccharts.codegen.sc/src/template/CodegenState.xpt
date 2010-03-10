@@ -14,25 +14,23 @@
 		«EXPAND immediateStrong FOR this-»
 		«EXPAND CodegenMisc::callJSONState-»
 		«EXPAND onEntry FOR this-»
+		«EXPAND weakPrio FOR this-»
 		«EXPAND immediateWeak FOR this-»
 		«IF !(this.regions.isEmpty)-»
 			L_«getStateNameByFlag(this, 3)»_main_intern:
 		«ELSE-»
 			L_«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
+		PRIO(«getRealThreadPriority(this)»);
 		«EXPAND CodegenMisc::callJSONState-»
-		«IF this.type != StateType::CONDITIONAL-»
-			«IF !(this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION))-»
-				PAUSE;
-			«ENDIF-»
+		«EXPAND normal FOR this-»
+		«IF this.type != StateType::CONDITIONAL && !this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)-»
+			PAUSE;
 		«ENDIF-»
 		«EXPAND allStrong FOR this-»
 		«EXPAND onInside FOR this-»
-		«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-			PRIO(«getWeakThreadPriority(this)»);
-		«ENDIF-»
+		«EXPAND weakPrio FOR this-»
 		«EXPAND allWeak FOR this-»
-		PRIO(«getRealThreadPriority(this)»);
 		«IF !(this.outgoingTransitions.forAll(t|t.trigger == null))-»
 			«EXPAND returnForHierarchical FOR this-»
 		«ENDIF-»
@@ -98,6 +96,12 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«DEFINE weakPrio FOR State-»
+	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		PRIO(«getWeakThreadPriority(this)»);
+	«ENDIF-»
+«ENDDEFINE»
+
 «DEFINE immediateWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type != TransitionType::STRONGABORT)-»
@@ -116,10 +120,21 @@
 
 «DEFINE allWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
-		«IF (((Transition)outTrans).type != TransitionType::STRONGABORT)-»
+		«IF (((Transition)outTrans).type == TransitionType::WEAKABORT)-»
 			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE normal FOR State-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF (((Transition)outTrans).type == TransitionType::NORMALTERMINATION)-»
+			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+	«IF this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)-»
+		L_«getStateNameByFlag(this, 3)»_afterJoin:
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE onEntry FOR State-»
