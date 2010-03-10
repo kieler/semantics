@@ -119,6 +119,10 @@ Boolean isNoRootState(State state):
     state.parentRegion.parentState != null
 ;
 
+Boolean isNoRootState(State s1, State s2):
+	s1.isNoRootState() && s2.isNoRootState()
+;
+
 Boolean isNoRootState(List[State] states):
     states.notExists(e|e.parentRegion.parentState == null)
 ;

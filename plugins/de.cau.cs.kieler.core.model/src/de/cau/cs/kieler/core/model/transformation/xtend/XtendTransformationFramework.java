@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.mwe.core.ConfigurationException;
@@ -78,16 +77,14 @@ public class XtendTransformationFramework implements ITransformationFramework {
     }
 
     /**
-     * Sets the transformation parameters by matching the current selection with the given list of
-     * types.
+     * Creates a mapping between the selected diagram elements and the given list of formal
+     * parameters.
      * 
      * @param parameter
-     *            The list of parameter types.
-     * 
-     * @return True if all parameters could be matched
+     *            The list of formal parameters
+     * @return The parameters or null if the mapping could not achieved
      */
-    public boolean setParameters(final String... parameter) {
-
+    public List<Object> createParameterMapping(final String... parameter) {
         List<EObject> slist = ModelingUtil.getModelElementsFromSelection();
         LinkedList<Object> params = new LinkedList<Object>();
 
@@ -132,8 +129,35 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 }
             }
         }
-        this.parameters = params.toArray(new Object[params.size()]);
-        return slist.size() == 0;
+        return slist.size() == 0 ? params : null;
+    }
+
+    /**
+     * Sets the transformation parameters by matching the current selection with the given list of
+     * types.
+     * 
+     * @param parameter
+     *            The list of parameter types.
+     * 
+     * @return True if all parameters could be matched
+     */
+    public boolean setParameters(final String... parameter) {
+
+        List<Object> mapping = createParameterMapping(parameter);
+        if (mapping != null) {
+            this.parameters = mapping.toArray(new Object[mapping.size()]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Resets the framework. This needs to be called if a transformation is initialized but not
+     * executed.
+     */
+    public void reset() {
+        initalized = false;
     }
 
     /**
@@ -149,6 +173,10 @@ public class XtendTransformationFramework implements ITransformationFramework {
      */
     public boolean initializeTransformation(final String fileName, final String operation,
             final String... basePackages) {
+        if (initalized) {
+            System.out.println("already initalized");
+            return false;
+        }
         if (parameters == null) {
             return false;
         }
@@ -183,6 +211,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
             xtendFacade.registerMetaModel(metaModel);
         }
         if (!xtendFacade.hasExtension(operation, parameters)) {
+            // Do NOT write a log message here, because this method is used A LOT to retrieve
+            // invalid menu contributions.
             return false;
         } else {
             this.extension = operation;
@@ -200,6 +230,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
         Object result = null;
         if (initalized) {
             result = xtendFacade.call(extension, parameters);
+            initalized = false;
         } else {
             CoreModelPlugin.getDefault().logError(
                     "Could not execute transformation: Transformation not initalized poroperly");

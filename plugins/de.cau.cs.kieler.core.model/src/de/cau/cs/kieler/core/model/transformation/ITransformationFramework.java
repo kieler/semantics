@@ -54,7 +54,16 @@ public interface ITransformationFramework {
      * 
      */
     boolean setParameters(String... parameter);
-
+    
+    /**
+     * Creates the actual mapping between the selected diagram elements and the given list of formal
+     * parameters.
+     * 
+     * @param parameter
+     *            The list of formal parameters
+     * @return The parameters or null if the mapping could not achieved
+     */
+    List<Object> createParameterMapping(String... parameter);
     /**
      * Sets the transformation parameters.
      * 
@@ -63,6 +72,11 @@ public interface ITransformationFramework {
      */
     void setParameters(Object... parameter);
 
+    /**
+     * Resets the transformation framework.
+     */
+    void reset();
+    
     /**
      * Initializes a transformation. This includes the parameter mapping, if necessary. The
      * parameter 'parameter' is only a string representation of the parameter types of the given
