@@ -112,26 +112,47 @@
             TransformationFile="src/features.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.activity.ui.diagramContext"
-            editor="org.eclipse.uml2.diagram.clazz.part.UMLDiagramEditor"
             editorId="org.eclipse.uml2.diagram.activity.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
        <transformations>
           <transformation
+                icon="icons/action.gif"
+                keyboardShortcut="M1+R A"
                 name="Create Successor"
                 transformation="activityCreateSuccessor"
                 transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
           </transformation>
           <transformation
+                icon="icons/flow.gif"
+                keyboardShortcut="M1+R F"
                 name="Create Control Flow"
                 transformation="activityControlFlow"
-                transformationId="de.cau.cs.kieler.uml2.activity.ControlFlow">
+                transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
+          </transformation>
+          <transformation
+                name="Toggle Action"
+                transformation="activityToggleAction"
+                transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
           </transformation>
        </transformations>
        <menus>
           <menuContribution
                 locationURI="menu:de.cau.cs.kieler">
              <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor"></transformationCommand>
+                   transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
+             </transformationCommand>
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
+             </transformationCommand>
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
+             </transformationCommand>
+          </menuContribution>
+          <menuContribution
+                locationURI="toolbar:de.cau.cs.kieler">
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
+             </transformationCommand>
              <transformationCommand
                    transformationId="de.cau.cs.kieler.uml2.activity.ControlFlow">
              </transformationCommand>
@@ -142,21 +163,20 @@
             TransformationFile="src/features.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.statemachine.ui.diagramContext"
-            editor="org.eclipse.uml2.diagram.clazz.part.UMLDiagramEditor"
             editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
          <transformations>
             <transformation
                   name="Create Composite"
                   transformation="statemCreateComposite"
-                  transformationId="de.cau.cs.kieler.uml2.statem.CreateComposite">
+                  transformationId="de.cau.cs.kieler.uml2.statem.createComposite">
             </transformation>
          </transformations>
          <menus>
             <menuContribution
                   locationURI="menu:de.cau.cs.kieler">
                <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.statem.CreateComposite">
+                     transformationId="de.cau.cs.kieler.uml2.statem.createComposite">
                </transformationCommand>
             </menuContribution>
          </menus>

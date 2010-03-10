@@ -16,12 +16,27 @@ Void activityCreateSuccessor(OpaqueAction action):
   activityControlFlow(action, newAction);
 
 // connect two actions via control flow
-Void activityControlFlow(Action action1, Action action2):
+Void activityControlFlow(OpaqueAction action1, OpaqueAction action2):
   let flow = new ControlFlow:
   flow.setActivity(action1.activity) ->
   action1.activity.edge.add(flow) ->
   flow.setSource(action1) ->
   flow.setTarget(action2);
+
+// toggle an opaque action to a call behavior action
+Void activityToggleAction(OpaqueAction action):
+  let newAction = new CallBehaviorAction:
+  action.copy(newAction) ->
+  action.setActivity(null);
+
+// copy the contents of the first action to the second action
+Void copy(Action action1, Action action2):
+  let incomings = action1.incoming:
+  let outgoings = action1.outgoing:
+  action2.setActivity(action1.activity) ->
+  action2.setName(action1.name) ->
+  incomings.setTarget(action2) ->
+  outgoings.setSource(action2);
 
 
 /** Transformations for State Machine Diagrams **
