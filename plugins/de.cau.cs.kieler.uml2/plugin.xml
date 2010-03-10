@@ -130,5 +130,11 @@
        </menus>
       </configuration>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.uml2.MetamodelRegistrator">
+      </startup>
+   </extension>
    
 </plugin>
