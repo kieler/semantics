@@ -111,6 +111,7 @@
       <configuration
             TransformationFile="src/features.ext"
             checkVisibility="true"
+            contextId="org.eclipse.uml2.diagram.activity.ui.diagramContext"
             editor="org.eclipse.uml2.diagram.clazz.part.UMLDiagramEditor"
             editorId="org.eclipse.uml2.diagram.activity.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
@@ -120,14 +121,45 @@
                 transformation="activityCreateSuccessor"
                 transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
           </transformation>
+          <transformation
+                name="Create Control Flow"
+                transformation="activityControlFlow"
+                transformationId="de.cau.cs.kieler.uml2.activity.ControlFlow">
+          </transformation>
        </transformations>
        <menus>
           <menuContribution
                 locationURI="menu:de.cau.cs.kieler">
              <transformationCommand
                    transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor"></transformationCommand>
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.activity.ControlFlow">
+             </transformationCommand>
           </menuContribution>
        </menus>
+      </configuration>
+      <configuration
+            TransformationFile="src/features.ext"
+            checkVisibility="true"
+            contextId="org.eclipse.uml2.diagram.statemachine.ui.diagramContext"
+            editor="org.eclipse.uml2.diagram.clazz.part.UMLDiagramEditor"
+            editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID"
+            packageName="org.eclipse.uml2.uml.UMLPackage">
+         <transformations>
+            <transformation
+                  name="Create Composite"
+                  transformation="statemCreateComposite"
+                  transformationId="de.cau.cs.kieler.uml2.statem.CreateComposite">
+            </transformation>
+         </transformations>
+         <menus>
+            <menuContribution
+                  locationURI="menu:de.cau.cs.kieler">
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.uml2.statem.CreateComposite">
+               </transformationCommand>
+            </menuContribution>
+         </menus>
       </configuration>
    </extension>
    <extension

@@ -10,9 +10,12 @@ import org.eclipse.ui.IStartup;
  */
 public class MetamodelRegistrator implements IStartup {
 
+    /**
+     * {@inheritDoc}
+     */
 	public void earlyStartup() {
 		// calling the class once statically will load the bundle
-		org.eclipse.uml2.uml.UMLPackage.eINSTANCE.eClass(); 
+		org.eclipse.uml2.uml.UMLPackage.eINSTANCE.eClass();
 	}
 
 }

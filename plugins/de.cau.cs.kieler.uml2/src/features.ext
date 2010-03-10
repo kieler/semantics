@@ -1,11 +1,47 @@
 import uml;
 
-/** Transformations for Activity diagrams **/
+// utility method to set the name of a named element
+Void setName(NamedElement element, String name):
+  JAVA de.cau.cs.kieler.uml2.EditingUtil.setName(org.eclipse.uml2.uml.NamedElement, java.lang.String);
 
-Void activityCreateSuccessor(Action action):
+
+/**   Transformations for Activity Diagrams    **
+ *----------------------------------------------*/
+
+// create a successor action
+Void activityCreateSuccessor(OpaqueAction action):
   let newAction = new OpaqueAction:
-  let flow = new ControlFlow:
-  newAction.setOwner(action.owner) ->
   newAction.setActivity(action.activity) ->
-  flow.setSource(action) ->
-  flow.setTarget(newAction);
+  newAction.setName("Action") ->
+  activityControlFlow(action, newAction);
+
+// connect two actions via control flow
+Void activityControlFlow(Action action1, Action action2):
+  let flow = new ControlFlow:
+  flow.setActivity(action1.activity) ->
+  action1.activity.edge.add(flow) ->
+  flow.setSource(action1) ->
+  flow.setTarget(action2);
+
+
+/** Transformations for State Machine Diagrams **
+ *----------------------------------------------*/
+
+// create a composite state with initial content
+Void statemCreateComposite(State originalState):
+  let compState = new State:
+  let initState = new State:
+  let simpleState = new State:
+  let innerRegion = new Region:
+  let oTrans = new Transition:
+  let iTrans = new Transition:
+  let parentRegion = originalState.container:
+  parentRegion.transition.add(oTrans) ->
+  oTrans.setSource(originalState) ->
+  oTrans.setTarget(compState) ->
+  compState.region.add(innerRegion) ->
+  innerRegion.subvertex.add(initState) ->
+  innerRegion.subvertex.add(simpleState) ->
+  innerRegion.transition.add(iTrans) ->
+  iTrans.setSource(initState) ->
+  iTrans.setTarget(simpleState);
