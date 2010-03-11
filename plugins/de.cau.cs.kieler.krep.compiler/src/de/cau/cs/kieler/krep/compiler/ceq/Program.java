@@ -636,7 +636,15 @@ public class Program {
         return vars.size();
     }
 
-    public static void addVar(String n, Variable variable) {
+    /**
+     * Add additional variable to the program.
+     * 
+     * @param n
+     *            name of the variable
+     * @param variable
+     *            the additional variable.
+     */
+    public static void addVar(final String n, final Variable variable) {
         if (vars.containsKey(n)) {
             System.err.println("variable " + n + " already defined");
         }
