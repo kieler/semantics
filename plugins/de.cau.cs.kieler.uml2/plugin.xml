@@ -130,6 +130,8 @@
                 transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
           </transformation>
           <transformation
+                icon="icons/toggle_action.gif"
+                keyboardShortcut="M1+R T"
                 name="Toggle Action"
                 transformation="activityToggleAction"
                 transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
@@ -154,7 +156,10 @@
                    transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
              </transformationCommand>
              <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.ControlFlow">
+                   transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
+             </transformationCommand>
+             <transformationCommand
+                   transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
              </transformationCommand>
           </menuContribution>
        </menus>

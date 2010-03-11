@@ -1,5 +1,9 @@
 import uml;
 
+// utility method to set the object that should be selected after the transformation is executed
+Void setSelection(Object object):
+  JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.setPostTransformationSelection(java.lang.Object);
+
 // utility method to set the name of a named element
 Void setName(NamedElement element, String name):
   JAVA de.cau.cs.kieler.uml2.EditingUtil.setName(org.eclipse.uml2.uml.NamedElement, java.lang.String);
@@ -13,7 +17,8 @@ Void activityCreateSuccessor(OpaqueAction action):
   let newAction = new OpaqueAction:
   newAction.setActivity(action.activity) ->
   newAction.setName("Action") ->
-  activityControlFlow(action, newAction);
+  activityControlFlow(action, newAction) ->
+  setSelection(newAction);
 
 // connect two actions via control flow
 Void activityControlFlow(OpaqueAction action1, OpaqueAction action2):
@@ -26,17 +31,49 @@ Void activityControlFlow(OpaqueAction action1, OpaqueAction action2):
 // toggle an opaque action to a call behavior action
 Void activityToggleAction(OpaqueAction action):
   let newAction = new CallBehaviorAction:
-  action.copy(newAction) ->
-  action.setActivity(null);
+  toggleAction(action, newAction);
+
+// toggle a call behavior action to a call operation action
+Void activityToggleAction(CallBehaviorAction action):
+  let newAction = new CallOperationAction:
+  toggleAction(action, newAction);
+
+// toggle a call operation action to a create object action
+Void activityToggleAction(CallOperationAction action):
+  let newAction = new CreateObjectAction:
+  toggleAction(action, newAction);
+
+// toggle a create object action to an accept event action
+Void activityToggleAction(CreateObjectAction action):
+  let newAction = new AcceptEventAction:
+  toggleAction(action, newAction);
+
+// toggle an accept event action to a send signal action
+Void activityToggleAction(AcceptEventAction action):
+  let newAction = new SendSignalAction:
+  toggleAction(action, newAction);
+
+// toggle a send signal action to an opaque action
+Void activityToggleAction(SendSignalAction action):
+  let newAction = new OpaqueAction:
+  toggleAction(action, newAction);
+
+// perform the toggling of actions
+Void toggleAction(Action oldAction, Action newAction):
+  oldAction.copy(newAction) ->
+  oldAction.setActivity(null) ->
+  setSelection(newAction);
 
 // copy the contents of the first action to the second action
 Void copy(Action action1, Action action2):
-  let incomings = action1.incoming:
-  let outgoings = action1.outgoing:
-  action2.setActivity(action1.activity) ->
-  action2.setName(action1.name) ->
+  let incomings = {}:
+  let outgoings = {}:
+  incomings.addAll(action1.incoming) ->
   incomings.setTarget(action2) ->
-  outgoings.setSource(action2);
+  outgoings.addAll(action1.outgoing) ->
+  outgoings.setSource(action2) ->
+  action2.setActivity(action1.activity) ->
+  action2.setName(action1.name);
 
 
 /** Transformations for State Machine Diagrams **
@@ -45,17 +82,19 @@ Void copy(Action action1, Action action2):
 // create a composite state with initial content
 Void statemCreateComposite(State originalState):
   let compState = new State:
-  let initState = new State:
+  let initState = new Pseudostate:
   let simpleState = new State:
   let innerRegion = new Region:
   let oTrans = new Transition:
   let iTrans = new Transition:
   let parentRegion = originalState.container:
+  parentRegion.subvertex.add(compState) ->
   parentRegion.transition.add(oTrans) ->
   oTrans.setSource(originalState) ->
   oTrans.setTarget(compState) ->
   compState.region.add(innerRegion) ->
   innerRegion.subvertex.add(initState) ->
+  initState.setKind(PseudostateKind::initial) ->
   innerRegion.subvertex.add(simpleState) ->
   innerRegion.transition.add(iTrans) ->
   iTrans.setSource(initState) ->
