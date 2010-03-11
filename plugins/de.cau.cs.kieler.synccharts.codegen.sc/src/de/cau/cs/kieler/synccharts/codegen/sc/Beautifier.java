@@ -40,7 +40,10 @@ public class Beautifier {
             newLineEnd(line, "TICKEND;");
             
             newLineBegin(line, "void");
+            newLineBegin(line, "typedef enum");
             newLineBegin(line, "int");
+            newLineBegin(line, "const char");
+            newLineBegin(line, "#define");
             
             if (!line.endsWith(":")) {
                 bw.write(tabs(tabNumber));
@@ -51,8 +54,6 @@ public class Beautifier {
             bw.newLine();
             newLineEnd(line, "isInit){");
             newLineEnd(line, "misc.h\"");
-            newLineEnd(line, "char*);");
-            newLineEnd(line, "};");
 
             if (line.endsWith("{")) {
                 tabNumber++;
@@ -63,6 +64,7 @@ public class Beautifier {
 
     private static String setNewLines() throws Exception {
         String line = getCleanString(inFile);
+        line = line.replaceAll(seperator + "int val", "\nint val");
         line = line.replaceAll(";" + seperator, ";\n");
         line = line.replaceAll(":" + seperator, ":\n");
         line = line.replaceAll("\\)\\{", ") {");
