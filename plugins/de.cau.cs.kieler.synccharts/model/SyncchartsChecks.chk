@@ -29,7 +29,8 @@ context State if (type == StateType::CONDITIONAL)
 //context State if (type != StateType::REFERENCE) ERROR "only reference states may contain signal renamings!" :
 //	(renamings == null) || (renamings.size == 0);
 
-context State if (type != StateType::REFERENCE || type!= StateType::TEXTUAL) ERROR "Only textual or reference states may contain body text!" :
+context State if (type != StateType::REFERENCE && type != StateType::TEXTUAL) 
+	ERROR "Only textual or reference states may contain body text!" :
 	(bodyText == null) || (bodyText.matches("\\s*"));
 // ================================================================================================
 // General States 
@@ -128,13 +129,13 @@ context Signal
 		
 context Signal if (isInput || (! isOutput && ! isInput))
 	WARNING "Signal never read." :
-	( parentState != null && parentState.eAllContents.typeSelect(SignalReference).select(reference|reference.signal == this).size > 0 ) ||
-	( parentRegion != null && parentRegion.eAllContents.typeSelect(SignalReference).select(reference|reference.signal == this).size > 0);
+	( parentState != null && parentState.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0);
 
 context Signal if (isOutput || (! isInput && ! isOutput))
 	WARNING "Signal never emitted." :
-	( parentState != null && parentState.eAllContents.typeSelect(Emission).select(emission|emission.signal == this).size > 0 ) ||
-	( parentRegion != null && parentRegion.eAllContents.typeSelect(Emission).select(emission|emission.signal == this).size > 0);
+	( parentState != null && parentState.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0);
 
 context Variable
 	ERROR "Variables need unique names in a Region declaration." :
@@ -167,7 +168,7 @@ context Transition if (type == TransitionType::NORMALTERMINATION)
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
 	ERROR "Simple states may not have a normal termination transition" :
-	(sourceState.regions.size!=0);
+	((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE));
 
 context Transition if(sourceState.outgoingTransitions.size > 1) 
     ERROR "Priorities of outgoing transitions need to be distinct!" :
@@ -203,4 +204,8 @@ context Action if (triggersAndEffects != null && triggersAndEffects.trim().compa
     ERROR "Triggers and Effects String has not correctly been parsed yet! Action children are empty
            but triggers and effects string contains text." :
     (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
-	
+    
+// Only Transitions have a trigger
+context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
+	ERROR "Triggers only allowed for transitions." :
+	trigger == null;
