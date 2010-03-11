@@ -18,13 +18,13 @@
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 extern const char *s2signame[];
 	
-// Define valued int signals
+/* Define valued int signals */
 #define valSigIntCnt «allSignals(this.innerStates.first()).size»
 extern int valSigInt[valSigIntCnt];
 
 void printDebugInfo(char* str);
 
-#endif /* MISC_H_*/
+#endif
 «ENDDEFINE»
 
 «DEFINE file FOR Region-»

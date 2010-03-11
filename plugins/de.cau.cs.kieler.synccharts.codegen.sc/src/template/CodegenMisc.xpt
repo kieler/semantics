@@ -21,7 +21,9 @@
 «ENDDEFINE»
 
 «DEFINE callJSONState FOR State-»
-	JSONstate("«getURI()»");
+	«IF (boolean)(GLOBALVAR sim)-»
+		JSONstate("«getURI()»");
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE generateInputSignal FOR Signal-»
@@ -64,7 +66,7 @@
 «ENDDEFINE»
 
 «DEFINE generateInitialize FOR Region-»
-	void initialize() {
+	int «((String)(GLOBALVAR name))»_reset() {
 		/* initialize all valued integer signals */
 		«FOREACH allSignals(this.innerStates.first()) AS signal-»
 			«IF ((Signal)signal).type == ValueType::INTEGER-»

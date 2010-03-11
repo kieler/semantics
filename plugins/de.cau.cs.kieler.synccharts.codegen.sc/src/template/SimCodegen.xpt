@@ -13,7 +13,7 @@
 		«EXPAND start-»
 		«EXPAND finish-»
 		«ENDFILE-»
-		«EXPAND CodegenData::main»
+		«EXPAND SimCodegenData::main»
 		«EXPAND CodegenHeader::main»
 	«ENDIF-»
 «ENDDEFINE»
@@ -23,10 +23,7 @@
 	#include "misc.h"
 	extern void JSONstate(char*);
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
-	/* Define valued int signals */
 	int valSigInt[valSigIntCnt];
-	/* Define valued boolean signals */
-	/* char valSigBool[valSigBoolCnt]; */
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»
@@ -35,7 +32,6 @@
 		«ENDIF-»
 	«ENDFOREACH-»
 	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
-	«EXPAND CodegenMisc::generateReset-»
 	int tick(int isInit){
 	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
 «ENDDEFINE»

@@ -38,10 +38,10 @@ public class Beautifier {
                 tabNumber--;
             }
             newLineEnd(line, "TICKEND;");
+            
             newLineBegin(line, "void");
-            if (!line.startsWith("int valSigInt")) {
-                newLineBegin(line, "int");
-            }
+            newLineBegin(line, "int");
+            
             if (!line.endsWith(":")) {
                 bw.write(tabs(tabNumber));
             } else {
@@ -76,8 +76,6 @@ public class Beautifier {
         line = addSurroundingSpaces(line, "==");
         line = addSurroundingSpaces(line, "\\|\\|");
         line = addSurroundingSpaces(line, "&&");
-        line = addSurroundingSpaces(line, "<=");
-        line = addSurroundingSpaces(line, ">=");
         line = line.replaceAll(seperator, "");
         return line;
     }

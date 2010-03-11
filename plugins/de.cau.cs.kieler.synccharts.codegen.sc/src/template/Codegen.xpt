@@ -3,107 +3,41 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-	«FILE innerStates.first().id + ".c"-»
-	
-/* generated SC-code */
-	«EXPAND init-»
-	«EXPAND start-»
-	«EXPAND finish-»
-	«ENDFILE-»
+	«IF this.innerStates.isEmpty-»
+		«error("There is no SyncChart to generate code for!")»
+	«ELSE-»
+		«computeThreadPriorities(this.innerStates.first())»
+		«FILE ((String)(GLOBALVAR name)) + ".c"-»
+		/* generated SC-code */
+		«EXPAND init-»
+		«EXPAND start-»
+		«EXPAND finish-»
+		«ENDFILE-»
+		«EXPAND CodegenData::main»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
-#include "sc.h"
+	extern void JSONstate(char*);
+	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
+	int valSigInt[valSigIntCnt];
+	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
-extern void JSONstate(char*);
-
-	«EXPAND CodegenMisc::generateSigType FOR innerStates.signals-»
-	«EXPAND CodegenMisc::generateSigArray FOR innerStates.signals-»
-
-	«FOREACH innerStates.signals AS signal-»
-		«IF signal.isInput-»
-			«EXPAND generateInputSignals FOR signal»
+	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»
+			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
 		«ENDIF-»
 	«ENDFOREACH-»
-	«EXPAND CodegenMisc::generateCallOutputs FOR innerStates.signals»
+	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
 	«EXPAND CodegenMisc::generateReset-»
-int tick(int isInit){
-
-			TICKSTART(isInit, «EXPAND computeMaxThread-»);
+	int tick(int isInit){
+	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
 «ENDDEFINE»
-
-«DEFINE generateInputSignals FOR Signal-»
-void «this.parentState.id»_I_«this.name»(){
-	signals = signals | (1 << «this.name»);
-}
-«ENDDEFINE»
-
-«DEFINE computeMaxThread FOR Region-»1«ENDDEFINE»
 
 «DEFINE start FOR Region-»
-	«FOREACH innerStates.regions.innerStates AS anyState-»
-		«EXPAND state FOR anyState-»
-	«ENDFOREACH-»
+	«EXPAND CodegenRegion::region FOR this-»
 «ENDDEFINE»
 
-«DEFINE state FOR State-»
-«this.id-»:
-	«EXPAND callJSONState-»
-	«FOREACH sortTransitionPrios(this) AS outTrans-»
-		«IF ((Transition)outTrans).isImmediate-»
-			«EXPAND transition FOR (Transition)outTrans-»
-		«ENDIF-»
-	«ENDFOREACH-»
-	
-«this.id»_depth:
-	«EXPAND callJSONState-»
-			PAUSE;
-	«FOREACH sortTransitionPrios(this) AS outTrans-»
-		«EXPAND transition FOR (Transition)outTrans-»
-	«ENDFOREACH-»
-			GOTO(«this.id»_depth);
-«ENDDEFINE»
-
-«DEFINE transition FOR Transition-»
-	«IF this.triggersAndEffects == null-»
-			GOTO(«this.targetState.id-»);
-	«ELSE-»
-		«IF !(this.trigger == null)-»
-			«IF (this.trigger.metaType == SignalReference)-»
-					«EXPAND simpleTrigger FOR this-»
-			«ELSE-»
-					«EXPAND complexTrigger FOR this-»
-			«ENDIF-»
-		«ELSE-»
-	«EXPAND transitionEffects FOR this-»
-		«ENDIF-»
-	«ENDIF-»
-«ENDDEFINE»
-
-«DEFINE simpleTrigger FOR Transition-»
-			if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
-	«EXPAND transitionEffects FOR this-»
-				GOTO(«this.targetState.id»);
-			}
-«ENDDEFINE»
-
-«DEFINE complexTrigger FOR Transition-»
-	/* TODO: complex Trigger */
-«ENDDEFINE»
-
-«DEFINE transitionEffects FOR Transition-»
-	«IF !(effects.isEmpty)-»
-		«FOREACH this.effects AS effect-»
-				EMIT(«((Emission)effect).signal.name-»);
-		«ENDFOREACH-»
-	«ENDIF-»
-«ENDDEFINE»
-
-«DEFINE finish FOR Region»
-			TICKEND;
-}
-«ENDDEFINE»
-
-«DEFINE callJSONState FOR State-»
-			JSONstate("«getURI()»");
+«DEFINE finish FOR Region-»
+	TICKEND;}
 «ENDDEFINE»

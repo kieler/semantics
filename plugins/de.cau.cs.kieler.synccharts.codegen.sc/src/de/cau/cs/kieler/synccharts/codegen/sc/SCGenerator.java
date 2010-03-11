@@ -28,25 +28,10 @@ import org.eclipse.core.commands.IHandler;
  */
 public class SCGenerator extends AbstractHandler implements IHandler {
 
-    private WorkflowGenerator wf = new WorkflowGenerator();
-
-    /**
-     * @param workflow
-     *            the workflow generator to set
-     */
-    public void setWf(final WorkflowGenerator workflow) {
-        this.wf = workflow;
-    }
-
-    /**
-     * @return the workflow generator
-     */
-    public WorkflowGenerator getWf() {
-        return wf;
-    }
-
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        // TODO Auto-generated method stub
+        WorkflowGenerator wf = new WorkflowGenerator();
+        System.out.println("ich bin hier");
+        wf.invokeWorkflow(false, "");
         return null;
     }
 }

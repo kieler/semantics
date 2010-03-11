@@ -3,11 +3,12 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-	«FILE innerStates.first().id + "_data.c"-»
+	«FILE "sim_data.c"-»
 /* generated SC-code */
 	«EXPAND init-»
 	«EXPAND generateSetInputs-»
 	«EXPAND generatePrintOutputs-»
+	«EXPAND CodegenMisc::generateReset-»
 	«EXPAND generateMain-»
 	«ENDFILE-»
 «ENDDEFINE»
@@ -33,7 +34,6 @@ void JSONstate(char *state){
 
 void selectCid() {
 	int act;
-
 	_cid = 0;
 	for (act = active; act > 1; act >>= 1){
 		_cid++;
@@ -49,13 +49,13 @@ void selectCid() {
 «DEFINE generateSetInputs FOR Region»
 void setInputs(){
   char buffer[2048];
-  int i=0;
+  int i = 0;
   char c;
-  // read next line
-  for (i=0; (c=getchar())!='\n'; i++){
-    buffer[i]=c;
+  /* read next line */
+  for (i = 0; (c = getchar()) != '\n'; i++){
+    buffer[i] = c;
   }
-  buffer[i]=0;
+  buffer[i] = 0;
   
 	cJSON* object = 0;
 	cJSON* child = 0;
@@ -96,7 +96,7 @@ void printOutputs(){
 
 «DEFINE generateMain FOR Region»
 int main(int argc, const char* argv[]){
-	initialize();
+	«((String)(GLOBALVAR name))»_reset();
 	stateArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
 	setInputs();
@@ -108,8 +108,8 @@ int main(int argc, const char* argv[]){
 		printf("DEBUGEND%s\n", outString);
 		fflush(stdout);
 		reset();
-		stateArray = cJSON_CreateArray();
 		output = cJSON_CreateObject();
+		stateArray = cJSON_CreateArray();
 		setInputs();
 		tick(0);
 	}

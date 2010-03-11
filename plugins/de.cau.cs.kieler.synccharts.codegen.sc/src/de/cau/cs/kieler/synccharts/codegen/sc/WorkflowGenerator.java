@@ -26,6 +26,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
+import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.synccharts.Region;
@@ -71,7 +72,7 @@ public class WorkflowGenerator {
         uri = URI.createURI(uriString);
         ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.getResource(uri, true);
-        Region rootRegion = (Region) resource.getContents().get(0); 
+        Region rootRegion = (Region) resource.getContents().get(0);
         myModel = (EObject) rootRegion;
     }
 
@@ -89,12 +90,17 @@ public class WorkflowGenerator {
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
         emfReader.setModelSlot("model");
+        
+        // name of the file (from root state)
+        String filename = ((Region) myModel).getInnerStates().get(0).getId();
 
         // Meta model
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
             outPath = path;
+        } else {
+            //outPath
         }
 
         // Outlet
@@ -106,11 +112,21 @@ public class WorkflowGenerator {
         generator.addMetaModel(metaModel);
         generator.addOutlet(outlet);
 
+        GlobalVar varName = new GlobalVar();
+        varName.setName("name");
+        varName.setValue(filename);
+        
+        GlobalVar varSim = new GlobalVar();
+        varSim.setName("sim");
         if (sim) {
+            varSim.setValue(true);
             generator.setExpand("template::SimCodegen::main FOR model");
         } else {
+            varSim.setValue(false);
             generator.setExpand("template::Codegen::main FOR model");
         }
+        generator.addGlobalVar(varSim);
+        generator.addGlobalVar(varName);
 
         Workflow workflow = new Workflow();
 
@@ -139,12 +155,20 @@ public class WorkflowGenerator {
         StatusManager.getManager().handle(
                 new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue.toString(), null),
                 StatusManager.LOG);
-        bueatifyFiles();
+       
+        if (sim) {
+            File simFile = new File(outPath + "sim.c");
+            beautifyFiles(simFile);
+            simFile = new File(outPath + "sim_data.c");
+            beautifyFiles(simFile);
+        } else {
+            File file = new File(outPath + filename + ".c");
+            beautifyFiles(file);
+        }
     }
-    
-    private static void bueatifyFiles() {
-        File simFile = new File(outPath + "sim.c");
-        Beautifier simBeautifier = new Beautifier(simFile, simFile);
+
+    private static void beautifyFiles(final File file) {
+        Beautifier simBeautifier = new Beautifier(file, file);
         simBeautifier.bueatify();
     }
 

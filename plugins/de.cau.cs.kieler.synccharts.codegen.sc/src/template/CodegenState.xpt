@@ -81,10 +81,18 @@
 			L_«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
 		«EXPAND CodegenMisc::callJSONState-»
+		«EXPAND HALTAssignment FOR this-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE HALTAssignment FOR State-»
+	«IF ((boolean)(GLOBALVAR sim)) || !this.innerActions.isEmpty-»
 		/* this should be HALT; but for simulation PAUSE and GOTO */
 		PAUSE;
 		«EXPAND onInside FOR this-»
 		«EXPAND returnForHierarchical FOR this-»
+	«ELSE-»
+		HALT;
 	«ENDIF-»
 «ENDDEFINE»
 
