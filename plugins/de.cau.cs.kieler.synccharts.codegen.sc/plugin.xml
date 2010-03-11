@@ -22,9 +22,28 @@
                mnemonic="generate SC-Code"
                style="push"
                tooltip="generate SC-Code for the current SyncChart">
-               <visibleWhen
+            <visibleWhen
                   checkEnabled="true">
-               		<with
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
+               label="generate SC-Code"
+               mnemonic="generate SC-Code"
+               style="push"
+               tooltip="generate SC-Code for the current SyncChart">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
                      variable="activeEditorId">
                   <equals
                         value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">

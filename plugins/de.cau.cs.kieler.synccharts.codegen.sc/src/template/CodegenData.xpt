@@ -3,115 +3,70 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-	«FILE innerStates.first().id + "_data.c"-»
+«FILE innerStates.first().id + "_data.c"-»
 /* generated SC-code */
-	«EXPAND init-»
-	«EXPAND generateSetInputs-»
-	«EXPAND generatePrintOutputs-»
-	«EXPAND generateMain-»
-	«ENDFILE-»
+«EXPAND init-»
+«EXPAND generateSetInputs-»
+«EXPAND generateMain(innerStates.first().id)-»
+«ENDFILE-»
 «ENDDEFINE»
 
 «DEFINE init FOR Region»
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "sc.h"
-#include "cJSON.h"
-#include "misc.h"
-
-cJSON* output = 0;
-cJSON* value = 0;
-cJSON* stateArray = 0;
-
-void JSONstate(char *state){
-	cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
-	if (cJSON_GetObjectItem(output, "state") == NULL){
-		cJSON_AddItemToObject(output, "state", stateArray);
-	}
-}
-
-void selectCid() {
-	int act;
-
-	_cid = 0;
-	for (act = active; act > 1; act >>= 1){
-		_cid++;
-	}
-}
-	«FOREACH allSignals(this.innerStates.first()) AS signal-»
-		«IF !((Signal)signal).isInput-»
-			«EXPAND CodegenMisc::generateOutputSignals FOR ((Signal)signal)»
-		«ENDIF-»
-	«ENDFOREACH-»
 «ENDDEFINE»
 
 «DEFINE generateSetInputs FOR Region»
 void setInputs(){
-  char buffer[2048];
-  int i=0;
-  char c;
-  // read next line
-  for (i=0; (c=getchar())!='\n'; i++){
-    buffer[i]=c;
-  }
-  buffer[i]=0;
-  
-	cJSON* object = 0;
-	cJSON* child = 0;
-	cJSON* present = 0;
-	cJSON* value = 0;
-
-	object = cJSON_Parse(buffer);
-	
+  int rand = random();
+  int i =0;
   «FOREACH allSignals(this.innerStates.first()) AS signal-»
-  	«IF !((Signal)signal).isOutput-»
-  child = cJSON_GetObjectItem(object, "«((Signal)signal).name»");
-	if (child != NULL){
-		present = cJSON_GetObjectItem(child, "present");
-		value = cJSON_GetObjectItem(child, "value");
-		«EXPAND setSignalValue FOR (Signal)signal-»
-		if (present != NULL && present->type) {
-			«((Signal)signal).parentState.id»_I_sig_«((Signal)signal).name»();
-		}
-	}
+  	«IF ((Signal)signal).isInput-»
+    if ((1<<i) & rand) {
+      «((Signal)signal).parentState.id»_I_«((Signal)signal).name»();
+    }
+    i++;
   	«ENDIF-»
   «ENDFOREACH-»
 }
 «ENDDEFINE»
 
-«DEFINE generatePrintOutputs FOR Region»
-void printOutputs(){
-	printf("%s \n", cJSON_Print(output));
+
+«DEFINE generateMain(String name) FOR Region»
+
+«FOREACH allSignals(this.innerStates.first()) AS signal-»
+  	«IF ((Signal)signal).isOutput»
+  int «((Signal)signal).name»=0;
+  void «name»_O_«((Signal)signal).name»(){
+    «((Signal)signal).name»++;
+  }
+  	«ENDIF-»
+  «ENDFOREACH-»
+
+__inline__ unsigned long long int rdtsc()
+{
+    unsigned long long int x;
+    __asm__ volatile ("rdtsc" : "=A" (x));
+    return x;
 }
-«ENDDEFINE»
 
-«DEFINE setSignalValue FOR Signal-»
-	«IF this.type == ValueType::INTEGER || this.type == ValueType::BOOL-»
-		if (value != NULL && value->type == 3) { 
-			valSigInt[sig_«this.name»] = value->valueint;
-		}
-	«ENDIF-»
-«ENDDEFINE»
-
-«DEFINE generateMain FOR Region»
 int main(int argc, const char* argv[]){
-	initialize();
-	stateArray = cJSON_CreateArray();
-	output = cJSON_CreateObject();
-	setInputs();
-	tick(1);
-	while(1){
-		callOutputs(); 
-		char* outString = cJSON_Print(output);
-		strip_white_spaces(outString);
-		printf("DEBUGEND%s\n", outString);
-		fflush(stdout);
-		reset();
-		stateArray = cJSON_CreateArray();
-		output = cJSON_CreateObject();
-		setInputs();
-		tick(0);
-	}
+  unsigned long long int tick, toc, duration=0;
+  int i =1000*1000;    
+  setInputs();
+  «name»_reset();
+  for(;i>0;i--){
+    setInputs();
+    tick = rdtsc(); //printf("tick: %llu\n", tick);
+    «name»();
+    toc = rdtsc(); //printf("toc: %llu\n", toc);
+    unsigned long long t=  toc-tick;
+   //printf("%llu\n", t);
+    duration += (t);
+  }   
+
+  printf("%llu\n", duration/(1000*1000));
+  return 0;
 }
 «ENDDEFINE»
