@@ -12,6 +12,7 @@
 		«EXPAND init-»
 		«EXPAND start-»
 		«EXPAND finish-»
+		«EXPAND step-»
 		«ENDFILE-»
 		«EXPAND CodegenData::main»
 	«ENDIF-»
@@ -33,6 +34,8 @@
 	«ENDFOREACH-»
 	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
 	«EXPAND CodegenMisc::generateReset-»
+#ifndef EXTERNTICK //;
+	
 	int tick(int isInit){
 	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
 	/* should move to sc.h ?? */
@@ -45,4 +48,13 @@
 
 «DEFINE finish FOR Region-»
 	TICKEND;}
+#endif //;
+«ENDDEFINE»
+
+«DEFINE step FOR Region»
+int init=0;
+int «innerStates.first().id»(){
+  init=1;
+  return tick(init);
+}
 «ENDDEFINE»
