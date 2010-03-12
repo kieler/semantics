@@ -6,7 +6,7 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.krep" id="de.cau.cs.kieler.krep.trace.listener" name="de.cau.cs.kieler.krep.tracel.istener"/>
       </appinfo>
       <documentation>
-         Listener that is notified by everycommunication with a reactive processor.
+         Listener that is notified by every communication with a reactive processor.
       </documentation>
    </annotation>
 
@@ -49,7 +49,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.1.0
       </documentation>
    </annotation>
 

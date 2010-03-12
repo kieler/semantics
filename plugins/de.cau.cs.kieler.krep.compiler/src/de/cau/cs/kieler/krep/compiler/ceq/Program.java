@@ -72,8 +72,6 @@ public class Program {
      */
     private DepGraph depGraph = null;
 
-    // private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
-
     private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
 
     private static int labels;
