@@ -124,16 +124,6 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
      * @throws KiemInitializationException
      */
     public void initialize() throws KiemInitializationException {
-        /*
-         * IExtensionRegistry reg = Platform.getExtensionRegistry(); for (IConfigurationElement
-         * bundle : reg .getConfigurationElementsFor("de.cau.cs.kieler.sim.trace.traceprovider")) {
-         * try { ITraceProvider p = (ITraceProvider) bundle.createExecutableExtension("class"); for
-         * (String s : p.getExtensions()) { provider.put(s, p);
-         * 
-         * } } catch (InvalidRegistryObjectException e) { throw new
-         * KiemInitializationException("Trace Error", true, e); } catch (CoreException e) { throw
-         * new KiemInitializationException("Trace Error", true, e); } }
-         */
         if (fileProperty != null) {
             fileProperty.setFilterNames(provider.keySet().toArray(
                     new String[provider.keySet().size()]));
@@ -168,7 +158,11 @@ public class TraceReader extends JSONObjectDataComponent implements IAutomatedCo
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
-        if (tracelist == null) {
+        if (tracelist != null) {
+            if (current != null) {
+                current.reset();
+            }
+        } else {
             tracelist = null;
             // load new trace
             try {
