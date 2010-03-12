@@ -6,22 +6,19 @@
 	«IF this.type == TransitionType::NORMALTERMINATION-»
 		JOINELSE(L_«getStateNameByFlag(this.sourceState, 3)»_afterJoin);
 	«ENDIF-»
-	«IF (this.triggersAndEffects != null)-»
-		«IF (this.trigger != null)-»
-			«IF (this.trigger.metaType == SignalReference)-»
-				«EXPAND simpleTrigger FOR this-»
-			«ELSE-»
-				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
-			«ENDIF-»
-		«ELSE-»
-			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
-			«EXPAND stateAbortion FOR this-»
-		«ENDIF-»
-	«ELSE»
-		«EXPAND stateAbortion FOR this-»
-	«ENDIF-»
+	«EXPAND triggersAndEffects FOR this-»
 	«IF hasDependentState(this)-»
 		PRIO(«getSmallestThreadPriority(this.sourceState)»);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE oneTransition FOR Transition-»
+	«IF this.type == TransitionType::NORMALTERMINATION-»
+		JOIN;
+		GOTO(L_«getStateNameByFlag(this.targetState, 3)»);
+	«ELSE-»
+		AWAIT(sig_i);
+		GOTO(L_«getStateNameByFlag(this.targetState, 3)»);
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -48,6 +45,23 @@
 		«EXPAND CodegenPriority::priorityReduction FOR this-»
 	«ENDIF-»
 	«EXPAND transitionWithoutTriggersAndEffects FOR this-»
+«ENDDEFINE»
+
+«DEFINE triggersAndEffects FOR Transition-»
+	«IF (this.triggersAndEffects != null)-»
+		«IF (this.trigger != null)-»
+			«IF (this.trigger.metaType == SignalReference)-»
+				«EXPAND simpleTrigger FOR this-»
+			«ELSE-»
+				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
+			«ENDIF-»
+		«ELSE-»
+			«EXPAND CodegenTriggerAndEffect::effects FOR this-»
+			«EXPAND stateAbortion FOR this-»
+		«ENDIF-»
+	«ELSE»
+		«EXPAND stateAbortion FOR this-»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
