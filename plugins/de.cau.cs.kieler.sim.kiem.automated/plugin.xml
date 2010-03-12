@@ -21,7 +21,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            allowMultiple="true"
+            allowMultiple="false"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView"
             icon="icons/kiemAutomated.png"
