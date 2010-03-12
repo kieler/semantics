@@ -12,14 +12,16 @@
                packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
 			<transformations>
 				<transformation
+          tooltip="Create a successor for the selected states"
           icon="icons/successor_state.gif"
           keyboardShortcut="M1+R S"
           name="Add Successor State"
-          transformation="addSuccessorState"
+          transformation="addSuccessorStates"
           transformationId="de.cau.cs.kieler.ksbase.addSuc"
           validation="isNoRootState">
 				</transformation>
 				<transformation
+          tooltip="Create a predecessor for the selected state"
           icon="icons/predecessor_state.gif"
           keyboardShortcut="M1+R P"
           name="Add Predecessor State"
@@ -28,6 +30,7 @@
           validation="isNoRootState">
 				</transformation>
 				<transformation
+          tooltip="Add a choice construct"
           icon="icons/choice.gif"
           keyboardShortcut="M1+R C"
           name="Add Choice"
@@ -35,11 +38,16 @@
           transformationId="de.cau.cs.kieler.ksbase.addChoice"
           validation="isNoRootState">
 				</transformation>
-				<transformation icon="icons/flip.gif"
-					keyboardShortcut="M1+R F" name="Flip Transition" 
-					transformation="flipTransition" transformationId="de.cau.cs.kieler.ksbase.flip">
+				<transformation
+          tooltip="Flip source and target of the transition"
+          icon="icons/flip.gif"
+          keyboardShortcut="M1+R F"
+          name="Flip Transition"
+          transformation="flipTransition"
+          transformationId="de.cau.cs.kieler.ksbase.flip">
 				</transformation>
 				<transformation
+          tooltip="Connect both states"
           icon="icons/connect.gif"
           keyboardShortcut="M1+R W"
           name="Connect States"
@@ -47,13 +55,22 @@
           transformationId="de.cau.cs.kieler.ksbase.connect"
           validation="isNoRootState,statesOnSameHierarchy">
 				</transformation>
-				<transformation icon="icons/abro.gif" name="Add ABRO"
-					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">
+				<transformation
+          tooltip="Create an ABRO SyncChart"
+          icon="icons/abro.gif"
+          name="Add ABRO"
+          transformation="addABRO"
+          transformationId="de.cau.cs.kieler.ksbase.addABRO">
 				</transformation>
-				<transformation icon="icons/default.gif" name="Create Default"
-					transformation="addInitialState" transformationId="de.cau.cs.kieler.ksbase.empty">
+				<transformation
+          tooltip="Create a default SyncChart"
+          icon="icons/default.gif"
+          name="Create Default"
+          transformation="addInitialState"
+          transformationId="de.cau.cs.kieler.ksbase.empty">
 				</transformation>
     <transformation
+          tooltip="Set the transition target to the selected state"
           icon="icons/reconnect_target.gif"
           keyboardShortcut="M1+R T"
           name="Set Transition Target"
@@ -62,6 +79,7 @@
           validation="isNoRootState">
        </transformation>
        <transformation
+             tooltip="Set the transition source to the selected state"
              icon="icons/reconnect_source.gif"
              keyboardShortcut="M1+R J"
              name="Set Transition Source"
@@ -70,6 +88,7 @@
              validation="isNoRootState">
     	</transformation>
        <transformation
+             tooltip="Add a region with an initial state "
              icon="icons/upgrade.gif"
              keyboardShortcut="M1+R R"
              name="Add Region"
@@ -77,6 +96,7 @@
              transformationId="de.cau.cs.kieler.ksbase.upgradeState">
        </transformation>
        <transformation
+             tooltip="Removing all regions of the selected state"
              icon="icons/downgrade.gif"
              keyboardShortcut="M1+R D"
              name="Remove All Regions"
@@ -85,6 +105,7 @@
              validation="isRegionState">
        </transformation>
        <transformation
+             tooltip="Create a self loop for the selected state"
              icon="icons/self_loop.gif"
              keyboardShortcut="M1+R O"
              name="Add Self Loop"
@@ -93,6 +114,7 @@
              validation="isNoRootState">
        </transformation>
        <transformation
+             tooltip="Create a new region and move all existing regions to the new one"
              icon="icons/encapsulate.gif"
              keyboardShortcut="M1+R E"
              name="Encapsulate Regions"
@@ -100,6 +122,7 @@
              transformationId="de.cau.cs.kieler.ksbase.encapsulate">
        </transformation>
        <transformation
+             tooltip="Moving all regions to the parent state and removing the selected state"
              icon="icons/flatten.gif"
              keyboardShortcut="M1+R A"
              name="Extract State"
@@ -107,13 +130,7 @@
              transformationId="de.cau.cs.kieler.ksbase.flattenState">
        </transformation>
        <transformation
-             icon="icons/connect.gif"
-             name="Add Successor States"
-             transformation="addSuccessorStates"
-             transformationId="de.cau.cs.kieler.ksbase.addSucs"
-             validation="isNoRootState">
-       </transformation>
-       <transformation
+             tooltip="Cut the selected elements"
              icon="icons/cut.png"
              keyboardShortcut="M1+X"
              name="Cut"
@@ -121,6 +138,7 @@
              transformationId="de.cau.cs.kieler.synccharts.ksbase.cut">
        </transformation>
        <transformation
+             tooltip="Copy the selected elements"
              icon="icons/copy.gif"
              keyboardShortcut="M1+C"
              name="Copy"
@@ -128,6 +146,7 @@
              transformationId="de.cau.cs.kieler.synccharts.ksbase.copy">
        </transformation>
        <transformation
+             tooltip="Paste the buffer contents"
              icon="icons/paste.gif"
              keyboardShortcut="M1+V"
              name="Paste"
@@ -135,6 +154,7 @@
              transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
        </transformation>
        <transformation
+             tooltip="Inserts a sstate between source and target of the transition"
              icon="icons/successor_state.gif"
              name="Insert State"
              transformation="insertState"
@@ -174,9 +194,6 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.addSucs">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
