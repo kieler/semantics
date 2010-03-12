@@ -15,26 +15,14 @@ package de.cau.cs.kieler.esterel.cec.sim;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter; //import java.net.URI;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
+import java.io.PrintWriter;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -42,30 +30,18 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.osgi.framework.Bundle;
-import org.eclipse.xtext.concurrent.IUnitOfWork;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
-import org.eclipse.xtext.ui.core.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.core.editor.model.XtextDocument;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.esterel.Input;
 import de.cau.cs.kieler.esterel.esterel.Module;
@@ -73,9 +49,13 @@ import de.cau.cs.kieler.esterel.esterel.Output;
 import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.esterel.Signal;
 import de.cau.cs.kieler.esterel.esterel.SignalDecl;
-import de.cau.cs.kieler.krep.evalbench.program.kep.Data;
-import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
+import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
 /**
  * @author ctr
@@ -98,41 +78,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        // // building path to bundle
-        // Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
-        //
-        // URL url = null;
-        // try {
-        // url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
-        // } catch (IOException e2) {
-        // // TODO Auto-generated catch block
-        // e2.printStackTrace();
-        // }
-        //
-        // String bundleLocation = url.getFile();
-        // // because of windows vs. linux
-        // bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        // if (bundleLocation.startsWith("\\")) {
-        // bundleLocation = bundleLocation.substring(1);
-        // }
-        //
-        // try {
-        // // compile
-        // String compiler = (getProperties()[0]).getValue();
-        // String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
-        // + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I " + bundleLocation
-        // + " " + "-o " + outPath + "simulation -lm -Dexternflags";
-        //           
-        //
-        //            
-        // } catch (IOException e) {
-        // System.err.println(e.getMessage());
-        // process.destroy();
-        // } catch (InterruptedException e) {
-        // System.err.println(e.getMessage());
-        // process.destroy();
-        // }
-        //
+
     }
 
     /**
@@ -163,7 +109,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         } catch (JSONException e) {
             e.printStackTrace();
             process.destroy();
-        }             
+        }
         return out;
     }
 
@@ -226,7 +172,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             if (editor instanceof XtextEditor) {
                 XtextEditor xtextEditor = (XtextEditor) editor;
 
-                if (xtextEditor.getDocument() instanceof XtextDocument) {
+                if (xtextEditor.getDocument() instanceof XtextDocument
+                        && xtextEditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
                     IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
 
                         public IParseResult exec(XtextResource state) throws Exception {
@@ -292,10 +239,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             throw new KiemInitializationException("Error compiling Esterel file", true, e);
         } catch (KielerException e) {
             throw new KiemInitializationException("Error compiling Esterel file", true, e);
-
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new KiemInitializationException("Error running Esterel file", true, e);
         }
         JSONObject res = new JSONObject();
         try {
@@ -311,37 +256,9 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
                 }
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // ignore
         }
         return res;
-    }
-
-    public void readModel() throws KiemInitializationException {
-        try {
-            IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage().getActiveEditor();
-            XtextEditor xeditor = ((XtextEditor) editor);
-            if (!xeditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
-                throw new IllegalArgumentException(
-                        "The currently open Xtext Editor is no Esterel Editor. Editor language is "
-                                + xeditor.getLanguageName() + " but should be " + ESTEREL_LANGUAGE);
-            }
-
-            IFile file = ((FileEditorInput) xeditor.getEditorInput()).getFile();
-
-            final URI strlURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-
-            ResourceSet resourceSet = new ResourceSetImpl();
-            Resource xtextResource = resourceSet.getResource(strlURI, true);
-            EObject esterelModule = xtextResource.getContents().get(0);
-
-        } catch (Exception e) {
-            throw new KiemInitializationException(
-                    "Failed to initialize Esterel Transformation. No valid Esterel Editor found.",
-                    true, e);
-        }
-
     }
 
     /**

@@ -13,15 +13,12 @@
  */
 package de.cau.cs.kieler.esterel.cec;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -40,7 +37,6 @@ public class CEC {
 
     /** all modules that are part of the CEC. The names match the names of the executables, but the */
     public enum MODULE {
-        // TODO check names
         /** */
         ASTGRC("astgrc"),
         /** */
@@ -92,12 +88,14 @@ public class CEC {
             this.cmd = c;
         }
 
+        @Override
         public String toString() {
             return cmd;
         }
     }
 
-    public static InputStream exec(MODULE module, InputStream input) throws KielerException {
+    public static InputStream exec(final MODULE module, final InputStream input)
+            throws KielerException {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
@@ -123,7 +121,7 @@ public class CEC {
      * 
      * @param strlFile
      *            name of the input File.
-     * @return
+     * @return URI of the generated C file
      * @throws IOException
      * @throws KielerException
      */
