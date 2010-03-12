@@ -45,7 +45,7 @@
           name="Connect States"
           transformation="connectStates"
           transformationId="de.cau.cs.kieler.ksbase.connect"
-          validation="isNoRootState">
+          validation="isNoRootState,statesOnSameHierarchy">
 				</transformation>
 				<transformation icon="icons/abro.gif" name="Add ABRO"
 					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">

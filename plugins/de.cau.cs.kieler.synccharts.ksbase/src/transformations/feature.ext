@@ -123,6 +123,10 @@ Boolean isNoRootState(State s1, State s2):
 	s1.isNoRootState() && s2.isNoRootState()
 ;
 
+Boolean statesOnSameHierarchy(State s1, State s2):
+	s1.parentRegion == s2.parentRegion
+;
+
 Boolean isNoRootState(List[State] states):
     states.notExists(e|e.parentRegion.parentState == null)
 ;
