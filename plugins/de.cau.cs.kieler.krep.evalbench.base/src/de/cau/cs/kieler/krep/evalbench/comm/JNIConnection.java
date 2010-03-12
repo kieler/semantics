@@ -28,8 +28,6 @@ public class JNIConnection implements IConnection {
 
     private IKrepWrapper krep = null;
 
-   // private EsiLogger esi;
-
     /**
      * {@inheritDoc}
      */
