@@ -12,7 +12,7 @@
 		«EXPAND stateWithoutTransition FOR this-»
 	«ELSEIF this.outgoingTransitions.size == 1-»
 		«EXPAND stateWithMoreTransitions FOR this»
-		«REM»
+		«REM» AWAIT:
 			«EXPAND stateWithOneTransition FOR this-»
 		«ENDREM»
 	«ELSE-»
@@ -22,7 +22,11 @@
 
 «DEFINE stateWithRegions FOR State-»
 	«IF this.regions.size == 1-»
-		«IF ((boolean)(GLOBALVAR sim)) || !this.outgoingTransitions.isEmpty-»
+		«IF this.parentRegion.parentState == null-»
+			«IF !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty-»
+				«EXPAND generateForkOneRegion FOR this-»
+			«ENDIF-»
+		«ELSE-»
 			«EXPAND generateForkOneRegion FOR this-»
 		«ENDIF-»
 	«ELSE-»
@@ -90,6 +94,7 @@
 	«ELSE-»
 		L_«getStateNameByFlag(this, 3)»_intern:
 	«ENDIF-»
+	/* set real back */
 	«EXPAND CodegenPriority::realPrio FOR this»
 	«EXPAND CodegenMisc::callJSONState-»
 	«EXPAND normal FOR this-»

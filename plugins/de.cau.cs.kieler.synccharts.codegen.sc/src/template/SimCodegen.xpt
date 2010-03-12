@@ -33,7 +33,7 @@
 	«ENDFOREACH-»
 	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
 	int tick(int isInit){
-	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
+	TICKSTART(isInit, «EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»

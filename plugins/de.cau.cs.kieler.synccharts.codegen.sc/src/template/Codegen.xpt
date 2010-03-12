@@ -37,7 +37,7 @@
 #ifndef EXTERNTICK
 	
 	int tick(int isInit){
-	TICKSTART(isInit, «getMainTreadPriority(this.innerStates.first())-»);
+	TICKSTART(isInit, «EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
 	/* should move to sc.h ?? */
 	reset();
 «ENDDEFINE»

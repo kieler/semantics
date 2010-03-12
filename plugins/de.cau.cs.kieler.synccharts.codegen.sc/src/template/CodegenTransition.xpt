@@ -33,14 +33,9 @@
 «DEFINE stateAbortion FOR Transition-»
 	«IF this.type != TransitionType::NORMALTERMINATION-»
 		«IF !(this.sourceState.regions.isEmpty)-»
-			«REM»if strong prio after abort otherwise prio bevore abort«ENDREM»
-			«IF this.type != TransitionType::STRONGABORT-»
-				PRIO(«getRealThreadPriority(this.targetState)»);
-			«ENDIF-»
-				ABORT;
-			«IF this.type == TransitionType::STRONGABORT-»
-				PRIO(«getRealThreadPriority(this.targetState)»);
-			«ENDIF-»
+			«REM»if strong prio after abort otherwise prio bevore abort ?«ENDREM»
+			ABORT;
+			PRIO(«getRealThreadPriority(this.targetState)»);
 		«ENDIF-»
 		«EXPAND CodegenPriority::priorityReduction FOR this-»
 	«ENDIF-»

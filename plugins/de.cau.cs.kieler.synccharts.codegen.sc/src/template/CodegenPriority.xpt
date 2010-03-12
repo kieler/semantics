@@ -9,11 +9,22 @@
 «ENDDEFINE»
 
 «DEFINE realPrio FOR State-»
-	PRIO(«getRealThreadPriority(this)»);
+	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		PRIO(«getRealThreadPriority(this)»);
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
 		PRIO(«getWeakThreadPriority(this)»);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE mainThreadPrio FOR State-»
+	«REM»if root state has transitions or actions «ENDREM»
+	«IF !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
+		«getMainTreadPriority(this)-»
+	«ELSE-»
+		«getMainTreadPriority(this.getInitialState())»
 	«ENDIF-»
 «ENDDEFINE»
