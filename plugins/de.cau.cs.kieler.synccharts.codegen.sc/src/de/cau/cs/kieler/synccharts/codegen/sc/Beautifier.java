@@ -44,6 +44,7 @@ public class Beautifier {
             newLineBegin(line, "int");
             newLineBegin(line, "const char");
             newLineBegin(line, "#define");
+            newLineBegin(line, "#ifndef");
             
             if (!line.endsWith(":")) {
                 bw.write(tabs(tabNumber));
@@ -64,7 +65,7 @@ public class Beautifier {
 
     private static String setNewLines() throws Exception {
         String line = getCleanString(inFile);
-        line = line.replaceAll(seperator + "int val", "\nint val");
+        line = line.replaceAll(seperator + "int", "\nint");
         line = line.replaceAll(";" + seperator, ";\n");
         line = line.replaceAll(":" + seperator, ":\n");
         line = line.replaceAll("\\)\\{", ") {");
