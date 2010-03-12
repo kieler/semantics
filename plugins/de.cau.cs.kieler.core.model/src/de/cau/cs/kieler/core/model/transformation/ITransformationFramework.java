@@ -17,13 +17,14 @@ package de.cau.cs.kieler.core.model.transformation;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
- * Interface for creating a bridge between a transformation framework and KIELER. 
+ * Interface for creating a bridge between a transformation framework and KIELER.
  * 
  * Every transformation framework that is used by the KSBasE Plug-in has to implement this
- * interface. 
- * The {@link XtendTransformationFramework} class contains an implementation for the Xtend
- * framework.
+ * interface. The {@link XtendTransformationFramework} class contains an implementation for the
+ * Xtend framework.
  * 
  * @author mim
  * 
@@ -48,35 +49,43 @@ public interface ITransformationFramework {
      * Sets the transformation parameters by matching the current selection with the given list of
      * types. The framework may return 'false' if the parameters could not be matched.
      * 
+     * @param parametersToMap
+     *            The list of parameters that should be mapped. If this is null, the parameters are
+     *            retrieved from the current selection
      * @param parameter
      *            The list of parameter types.
      * @return True if all parameters could be set.
      * 
      */
-    boolean setParameters(String... parameter);
-    
+    boolean setParameters(List<EObject> parametersToMap, String... parameter);
+
     /**
      * Creates the actual mapping between the selected diagram elements and the given list of formal
      * parameters.
      * 
+     * @param parametersToMap
+     *            The list of parameters that should be mapped. If this is null, the parameters are
+     *            retrieved from the current selection
+     *            
      * @param parameter
      *            The list of formal parameters
      * @return The parameters or null if the mapping could not achieved
      */
-    List<Object> createParameterMapping(String... parameter);
+    List<Object> createParameterMapping(List<EObject> parametersToMap, String... parameter);
+
     /**
      * Sets the transformation parameters.
      * 
      * @param parameter
      *            The actual parameters
      */
-    void setParameters(Object... parameter);
+    void setParameters(Object[] parameter);
 
     /**
      * Resets the transformation framework.
      */
     void reset();
-    
+
     /**
      * Initializes a transformation. This includes the parameter mapping, if necessary. The
      * parameter 'parameter' is only a string representation of the parameter types of the given

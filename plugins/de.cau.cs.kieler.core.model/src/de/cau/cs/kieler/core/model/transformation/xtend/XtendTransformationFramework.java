@@ -72,7 +72,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * @param parameter
      *            The parameters.
      */
-    public void setParameters(final Object... parameter) {
+    public void setParameters(final Object[] parameter) {
         this.parameters = parameter.clone();
     }
 
@@ -80,16 +80,32 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * Creates a mapping between the selected diagram elements and the given list of formal
      * parameters.
      * 
+     * @param parametersToMap
+     *            The list of parameters that should be mapped. If this is null, the parameters are
+     *            retrieved from the current selection
      * @param parameter
      *            The list of formal parameters
      * @return The parameters or null if the mapping could not achieved
      */
-    public List<Object> createParameterMapping(final String... parameter) {
-        List<EObject> slist = ModelingUtil.getModelElementsFromSelection();
-        LinkedList<Object> params = new LinkedList<Object>();
+    public List<Object> createParameterMapping(final List<EObject> parametersToMap,
+            final String... parameter) {
+        List<EObject> slist = null;
+        if (parametersToMap == null) {
+            slist = ModelingUtil.getModelElementsFromSelection();
+        } else {
+            slist = new LinkedList<EObject>();
+            slist.addAll(parametersToMap);
+        }
 
+        LinkedList<Object> params = new LinkedList<Object>();
+        if (parameter == null) {
+            return null;
+        }
         for (String param : parameter) {
             // Is the parameter a list?
+            if (param == null) {
+                continue;
+            }
             if (param.contains("List")) {
                 // A List-Type is : List[T] so we need the list param type.
                 String listType = param.substring(XTEND_LIST_TYPE_PLENGTH, param.length() - 1);
@@ -136,14 +152,16 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * Sets the transformation parameters by matching the current selection with the given list of
      * types.
      * 
+     *@param parametersToMap
+     *            The list of parameters that should be mapped. If this is null, the parameters are
+     *            retrieved from the current selection
      * @param parameter
      *            The list of parameter types.
      * 
      * @return True if all parameters could be matched
      */
-    public boolean setParameters(final String... parameter) {
-
-        List<Object> mapping = createParameterMapping(parameter);
+    public boolean setParameters(final List<EObject> parametersToMap, final String... parameter) {
+        List<Object> mapping = createParameterMapping(parametersToMap, parameter);
         if (mapping != null) {
             this.parameters = mapping.toArray(new Object[mapping.size()]);
             return true;
