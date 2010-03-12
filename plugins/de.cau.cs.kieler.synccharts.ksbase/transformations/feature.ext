@@ -58,7 +58,16 @@ Void flipTransition(Transition t):
  t.setTargetState(source) ->
  setSelection(t) 
 ;
-
+//Inserts a state in a transition
+Void insertState(Transition t):
+ let source = t.sourceState:
+ let target = t.targetState:
+ let newState = new State:
+ t.setTargetState(newState) ->
+ connectStates(newState, target) ->
+ source.parentRegion.innerStates.add(newState) ->
+ setSelection(newState)
+;
 //Connects two states
 Void connectStates(State source, State target):
 let transition = new Transition:

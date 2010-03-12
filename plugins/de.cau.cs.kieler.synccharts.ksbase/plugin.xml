@@ -134,6 +134,12 @@
              transformation="paste"
              transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
        </transformation>
+       <transformation
+             icon="icons/successor_state.gif"
+             name="Insert State"
+             transformation="insertState"
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+       </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -171,6 +177,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.addSucs">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
           </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
@@ -231,6 +240,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
@@ -262,6 +274,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.empty">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
           </transformationCommand>
     </menuContribution>
 
