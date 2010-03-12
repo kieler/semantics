@@ -22,7 +22,7 @@
 
 «DEFINE stateWithRegions FOR State-»
 	«IF this.regions.size == 1-»
-		«IF !this.outgoingTransitions.isEmpty-»
+		«IF ((boolean)(GLOBALVAR sim)) || !this.outgoingTransitions.isEmpty-»
 			«EXPAND generateForkOneRegion FOR this-»
 		«ENDIF-»
 	«ELSE-»
@@ -83,14 +83,14 @@
 	«EXPAND immediateStrong FOR this-»
 	«EXPAND CodegenMisc::callJSONState-»
 	«EXPAND onEntry FOR this-»
-	«EXPAND weakPrio FOR this-»
+	«EXPAND CodegenPriority::weakPrio FOR this-»
 	«EXPAND immediateWeak FOR this-»
 	«IF !(this.regions.isEmpty)-»
 		L_«getStateNameByFlag(this, 3)»_main_intern:
 	«ELSE-»
 		L_«getStateNameByFlag(this, 3)»_intern:
 	«ENDIF-»
-	PRIO(«getRealThreadPriority(this)»);
+	«EXPAND CodegenPriority::realPrio FOR this»
 	«EXPAND CodegenMisc::callJSONState-»
 	«EXPAND normal FOR this-»
 	«IF this.type != StateType::CONDITIONAL && !this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)-»
@@ -98,7 +98,7 @@
 	«ENDIF-»
 	«EXPAND allStrong FOR this-»
 	«EXPAND onInside FOR this-»
-	«EXPAND weakPrio FOR this-»
+	«EXPAND CodegenPriority::weakPrio FOR this-»
 	«EXPAND allWeak FOR this-»
 	«EXPAND returnToIntern FOR this-»
 «ENDDEFINE»
@@ -120,12 +120,6 @@
 			«EXPAND CodegenTransition::transition FOR (Transition)outTrans-»
 		«ENDIF-»
 	«ENDFOREACH-»
-«ENDDEFINE»
-
-«DEFINE weakPrio FOR State-»
-	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-		PRIO(«getWeakThreadPriority(this)»);
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE immediateWeak FOR State-»

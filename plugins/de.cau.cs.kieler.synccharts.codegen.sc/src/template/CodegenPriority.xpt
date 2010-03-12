@@ -7,3 +7,13 @@
 		PRIO(«getRealThreadPriority(this.targetState)»);
 	«ENDIF-»
 «ENDDEFINE»
+
+«DEFINE realPrio FOR State-»
+	PRIO(«getRealThreadPriority(this)»);
+«ENDDEFINE»
+
+«DEFINE weakPrio FOR State-»
+	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		PRIO(«getWeakThreadPriority(this)»);
+	«ENDIF-»
+«ENDDEFINE»
