@@ -116,7 +116,7 @@
        <transformation
              icon="icons/cut.png"
              keyboardShortcut="M1+X"
-             name="Cut  "
+             name="Cut"
              transformation="cut"
              transformationId="de.cau.cs.kieler.synccharts.ksbase.cut">
        </transformation>
@@ -130,7 +130,7 @@
        <transformation
              icon="icons/paste.gif"
              keyboardShortcut="M1+V"
-             name="Paste "
+             name="Paste"
              transformation="paste"
              transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
        </transformation>

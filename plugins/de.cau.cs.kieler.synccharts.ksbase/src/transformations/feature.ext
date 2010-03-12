@@ -159,32 +159,32 @@ null
 // Java escapes
 // copy methods
 Void copyStateToClipboard(State state):
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
 ;
 
 Void copyRegionToClipboard(Region region):
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionToClipboard(de.cau.cs.kieler.synccharts.Region)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionToClipboard(de.cau.cs.kieler.synccharts.Region)
 ;
 
 Void copyTransitionToClipboard(Transition trans):
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.transitionToClipboard(de.cau.cs.kieler.synccharts.Transition)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.transitionToClipboard(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 Void copyStatesToClipboard(List[State] states):
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.statesToClipboard(java.util.List)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.statesToClipboard(java.util.List)
 ;
  
 Void copyRegionsToClipboard(List[Region] regions):
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionsToClipboard(java.util.List)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionsToClipboard(java.util.List)
 ;
 
 // paste methods
 State getStateFromClipboard():
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
 ;
 
 Region getRegionFromClipboard():
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionFromClipboard()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionFromClipboard()
 ;
 
 Transition getTransitionFromClipboard():
@@ -192,18 +192,18 @@ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getTransitionFromClipboard()
 ;
 
 List[State] getStatesFromClipboard():
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStatesFromClipboard()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStatesFromClipboard()
 ;
 
 List[Region] getRegionsFromClipboard():
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionsFromClipboard()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionsFromClipboard()
 ;
 
 // Cut
 Void cut(Transition trans):
  copyTransitionToClipboard(trans) ->
  trans.sourceState.outgoingTransitions.remove(trans)
- ;
+;
 
 Void cut(State state):
  copyStateToClipboard(state) ->
@@ -257,16 +257,41 @@ Void copy(List[State] states):
 
 
 // Paste
+// Paste into region
 Void paste(Region target):
- let region = getRegionFromClipboard():
  let state = getStateFromClipboard():
- let regions = getRegionsFromClipboard():
+ let region = getRegionFromClipboard():
  let states = getStatesFromClipboard():
- ((state != null) ? target.innerStates.add(state) : null) ->
- ((region != null) ? addStatesToRegion(target, region.innerStates) : null) ->
- ((states != null) ? addStatesToRegion(target, states) : null) ->
- ((regions != null) ? pasteInternal(target, regions) : null)
+ let regions = getRegionsFromClipboard():
+ (state != null ? pasteStateIntoRegion(state, target) : 
+  (region != null ? pasteRegionIntoRegion(region, target) : 
+   (states != null ? pasteStatesIntoRegion(states, target) : 
+    (regions != null ? pasteRegionsIntoRegion(regions, target) : null)
+   )
+  )
+ )
 ;
+
+Void pasteStateIntoRegion(State state, Region target):
+ target.innerStates.add(state) ->
+ setSelection(state)
+;
+
+Void pasteRegionIntoRegion(Region region, Region target):
+ addStatesToRegion(target, region.innerStates) ->
+ setSelection(target)
+;
+
+Void pasteStatesIntoRegion(List[State] states, Region target):
+ addStatesToRegion(target, states) ->
+ setSelection(target)
+;
+
+Void pasteRegionsIntoRegion(List[Region] regions, Region target):
+ pasteInternal(target, regions) ->
+ setSelection(target)
+;
+
 
 Void pasteInternal(Region target, List[Region] regions): 
  let dummy = new State :
@@ -288,28 +313,46 @@ Void addStatesToRegion(Region target, List[State] states):
  dummy2.innerStates.addAll(states))
 ;
 
+// paste into state
 Void paste(State target):
- let region = getRegionFromClipboard():
  let state = getStateFromClipboard():
- let regions = getRegionsFromClipboard():
+ let region = getRegionFromClipboard():
  let states = getStatesFromClipboard():
- let dummy = new Region:
- ((state != null) ? 
-   (dummy.innerStates.add(state) ->
-    target.regions.add(dummy)) : 
-  null) ->
- ((region != null) ? 
-   (target.regions.add(region)) : 
-  null) ->
- ((states != null) ?
-   (dummy.innerStates.addAll(states) ->
-    target.regions.add(dummy)) :
-  null) ->
-  ((regions != null) ?
-   (target.regions.addAll(regions)) :
-  null)
+ let regions = getRegionsFromClipboard():
+ (state != null ? pasteStateIntoState(state, target) : 
+  (region != null ? pasteRegionIntoState(region, target) : 
+   (states != null ? pasteStatesIntoState(states, target) : 
+    (regions != null ? pasteRegionsIntoState(regions, target) : null)
+   )
+  )
+ )
 ;
 
+Void pasteStateIntoState(State state, State target):
+ let dummy = new Region:
+ dummy.innerStates.add(state) ->
+ target.regions.add(dummy) ->
+ setSelection(state)
+;
+
+Void pasteRegionIntoState(Region region, State target):
+ target.regions.add(region) ->
+ setSelection(region)
+;
+
+Void pasteStatesIntoState(List[State] states, State target):
+ let dummy = new Region:
+ dummy.innerStates.addAll(states) ->
+ target.regions.add(dummy) ->
+ setSelection(target)
+;
+
+Void pasteRegionsIntoState(List[Region] regions, State target):
+ target.regions.addAll(regions) ->
+ setSelection(target)
+;
+
+// Paste transition
 Void paste(State source, State target):
  let trans = getTransitionFromClipboard():
  (trans != null) ?
