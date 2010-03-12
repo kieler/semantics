@@ -50,9 +50,11 @@
 				«IF (boolean)(GLOBALVAR sim)-»
 					«((Signal)signal).parentState.id»_O_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
 				«ELSE-»
+				  «IF ((Signal)signal).isOutput-»				  
 					if(signals & (1 << sig_«((Signal)signal).name-»)) {
 						«((Signal)signal).parentState.id»_O_«((Signal)signal).name-»();
-					}
+					}	
+					«ENDIF-»				
 				«ENDIF-»
 			«ENDIF-»
 		«ENDFOREACH-»
