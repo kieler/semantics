@@ -101,11 +101,18 @@
 	«IF this.type != StateType::CONDITIONAL && !this.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)-»
 		PAUSE;
 	«ENDIF-»
+	«EXPAND hostCode FOR this-»
 	«EXPAND allStrong FOR this-»
 	«EXPAND onInside FOR this-»
 	«EXPAND CodegenPriority::weakPrio FOR this-»
 	«EXPAND allWeak FOR this-»
 	«EXPAND returnToIntern FOR this-»
+«ENDDEFINE»
+
+«DEFINE hostCode FOR State-»
+	«IF this.type == StateType::TEXTUAL-»
+		«this.bodyText»
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE HALTAssignment FOR State-»

@@ -21,8 +21,8 @@
 «ENDDEFINE»
 
 «DEFINE mainThreadPrio FOR State-»
-	«REM»if root state has transitions or actions «ENDREM»
-	«IF !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
+	«REM»if root state has transitions or actions or more then one region«ENDREM»
+	«IF this.regions.size >= 1 || !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
 		«getMainTreadPriority(this)-»
 	«ELSE-»
 		«getMainTreadPriority(this.getInitialState())»
