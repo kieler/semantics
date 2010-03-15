@@ -31,9 +31,6 @@ public class IterationResult extends AbstractResult {
     /** The status that the execution is currently at. */
     private IterationStatus status;
 
-    /** The error message. */
-    private String errorMessage;
-
     // --------------------------------------------------------------------------
 
     /**
@@ -73,11 +70,26 @@ public class IterationResult extends AbstractResult {
      *            the status to set
      */
     public void setStatus(final IterationStatus statusParam) {
+        setStatus(statusParam, null);
+    }
 
+    /**
+     * Setter for the status.
+     * 
+     * @param statusParam
+     *            the status to set
+     * @param message
+     *            a message
+     */
+    public void setStatus(final IterationStatus statusParam,
+            final String message) {
+        String value = IterationStatus.labelOf(statusParam);
+        if (message != null) {
+            value += " : " + message;
+        }
         for (KiemProperty prop : super.getResults()) {
             if (prop.getKey().equals(IAutomatedComponent.STATUS)) {
-                prop.setValue(IterationStatus.labelOf(statusParam));
-                break;
+                prop.setValue(value);
             }
         }
         this.status = statusParam;
@@ -172,19 +184,6 @@ public class IterationResult extends AbstractResult {
             }
             return "Error";
         }
-    }
-
-    /**
-     * 
-     * 
-     * @param errorMessageParam
-     */
-    public void setErrorMessage(String errorMessageParam) {
-        this.errorMessage = errorMessageParam;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
     }
 
     // --------------------------------------------------------------------------

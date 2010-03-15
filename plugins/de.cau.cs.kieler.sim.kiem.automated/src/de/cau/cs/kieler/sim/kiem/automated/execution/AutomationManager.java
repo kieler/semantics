@@ -400,8 +400,8 @@ public final class AutomationManager implements StatusListener {
                     currentResult.setStatus(IterationStatus.ABORTED);
                     break;
                 case ERROR_CANCELED:
-                    currentResult.setStatus(IterationStatus.ERROR);
-                    currentResult.setErrorMessage(errorMessage);
+                    currentResult
+                            .setStatus(IterationStatus.ERROR, errorMessage);
                     break;
                 }
                 manager.resetIterationCancel();
