@@ -855,7 +855,7 @@ public final class AutomationManager implements StatusListener {
     public int reroute(final StatusAdapter statusAdapter, final int style) {
         // String pluginId = statusAdapter.getStatus().getPlugin();
 
-        if (style == StatusManager.BLOCK || style == StatusManager.SHOW) {
+        if ((style & StatusManager.BLOCK) != 0) {
             CancelManager.getInstance().cancelIteration(
                     CancelStatus.ERROR_CANCELED);
 
