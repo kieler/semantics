@@ -206,6 +206,6 @@ context Action if (triggersAndEffects != null && triggersAndEffects.trim().compa
     (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
     
 // Only Transitions have a trigger
-context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
-	ERROR "Triggers only allowed for transitions." :
-	trigger == null;
+//context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
+//	ERROR "Triggers only allowed for transitions." :
+//	trigger == null;
