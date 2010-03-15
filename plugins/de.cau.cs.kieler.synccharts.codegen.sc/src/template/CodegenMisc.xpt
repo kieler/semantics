@@ -75,6 +75,7 @@
 
 «DEFINE generateInitialize FOR Region-»
 	int «((String)(GLOBALVAR name))»_reset() {
+		RESET();
 		/* initialize all valued integer signals */
 		«FOREACH allSignals(this.innerStates.first()) AS signal-»
 			«IF ((Signal)signal).type == ValueType::INTEGER-»
