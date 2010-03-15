@@ -31,6 +31,9 @@ public class IterationResult extends AbstractResult {
     /** The status that the execution is currently at. */
     private IterationStatus status;
 
+    /** Identifier for the message field. */
+    public static final String MESSAGE = "Message";
+
     // --------------------------------------------------------------------------
 
     /**
@@ -49,6 +52,7 @@ public class IterationResult extends AbstractResult {
                 iteration + ""));
         super.addResult(new KiemProperty(IAutomatedComponent.STATUS,
                 IterationStatus.labelOf(IterationStatus.CREATED)));
+        super.addResult(new KiemProperty(IterationResult.MESSAGE, ""));
         this.status = IterationStatus.CREATED;
     }
 
@@ -70,29 +74,28 @@ public class IterationResult extends AbstractResult {
      *            the status to set
      */
     public void setStatus(final IterationStatus statusParam) {
-        setStatus(statusParam, null);
-    }
-
-    /**
-     * Setter for the status.
-     * 
-     * @param statusParam
-     *            the status to set
-     * @param message
-     *            a message
-     */
-    public void setStatus(final IterationStatus statusParam,
-            final String message) {
         String value = IterationStatus.labelOf(statusParam);
-        if (message != null) {
-            value += " : " + message;
-        }
+
         for (KiemProperty prop : super.getResults()) {
             if (prop.getKey().equals(IAutomatedComponent.STATUS)) {
                 prop.setValue(value);
             }
         }
         this.status = statusParam;
+    }
+
+    /**
+     * Set the message on the result.
+     * 
+     * @param message
+     *            the message
+     */
+    public void setMessage(final String message) {
+        for (KiemProperty prop : super.getResults()) {
+            if (prop.getKey().equals(IterationResult.MESSAGE)) {
+                prop.setValue(message);
+            }
+        }
     }
 
     // --------------------------------------------------------------------------

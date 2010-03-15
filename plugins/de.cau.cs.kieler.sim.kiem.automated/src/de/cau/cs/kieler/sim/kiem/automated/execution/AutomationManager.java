@@ -97,8 +97,7 @@ public final class AutomationManager implements StatusListener {
     /** True if the manager is about to stop the execution. */
     private boolean stoppedByManager;
 
-    /** The error message. */
-    private String errorMessage = "";
+    private String message;
 
     // --------------------------------------------------------------------------
 
@@ -401,9 +400,7 @@ public final class AutomationManager implements StatusListener {
                     currentResult.setStatus(IterationStatus.ABORTED);
                     break;
                 case ERROR_CANCELED:
-                    currentResult
-                            .setStatus(IterationStatus.ERROR, errorMessage);
-                    errorMessage = "";
+                    currentResult.setStatus(IterationStatus.ERROR);
                     break;
                 }
                 manager.resetIterationCancel();
@@ -418,6 +415,9 @@ public final class AutomationManager implements StatusListener {
                     cachedResults.add(currentResult);
                 }
             }
+
+            setMessageOnResult(message);
+            message = "";
 
             // update the view through the display thread
             refreshView();
@@ -482,6 +482,7 @@ public final class AutomationManager implements StatusListener {
             }
         } catch (RuntimeException e0) {
             // something bad happened, try to continue
+            message = e0.toString();
             currentResult.setStatus(IterationStatus.ERROR);
         } finally {
             // setup results
@@ -497,6 +498,7 @@ public final class AutomationManager implements StatusListener {
                 stoppedByManager = false;
             } else {
                 // the execution somehow was terminated
+                message = "Abnormal termination of Execution";
                 currentResult.setStatus(IterationStatus.ERROR);
             }
             monitorChecker.cancel();
@@ -779,6 +781,7 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnErrorPause() {
         // abort iteration
+        message = "Error Pause";
         CancelManager.getInstance()
                 .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
@@ -789,6 +792,7 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnErrorStop() {
         // abort iteration
+        message = "Error Stop.";
         CancelManager.getInstance()
                 .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
@@ -826,6 +830,7 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnUserStop() {
         if (!stoppedByManager) {
+            message = "User Canceled.";
             CancelManager.getInstance().cancelIteration(
                     CancelStatus.USER_CANCELED);
         }
@@ -859,7 +864,7 @@ public final class AutomationManager implements StatusListener {
         if ((style & StatusManager.BLOCK) != 0) {
             IStatus status = statusAdapter.getStatus();
             if (status != null) {
-                errorMessage = status.getMessage();
+                message = status.getMessage();
             }
 
             CancelManager.getInstance().cancelIteration(
@@ -867,6 +872,20 @@ public final class AutomationManager implements StatusListener {
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Set the message on the current result.
+     * 
+     * @param message
+     *            the message
+     */
+    private void setMessageOnResult(final String message) {
+        if (currentResult != null) {
+            currentResult.setMessage(message);
+        }
     }
 
     // --------------------------------------------------------------------------
