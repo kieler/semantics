@@ -12,18 +12,6 @@
  */
 #include <stdio.h>
 
-
-/*! Check whether externflags has been defined (eg from gcc command line).
- * If so, suppress tracing and instruction counting.
- * This then results in compact macro-expanded source code and executable.
- */
-#ifndef externflags
-// Comment the following line out to surpress detailed tracing.
-#define mytrace
-#define instrCnt
-#endif
-
-
 /* Definition of the macros for a minimum and a maximum function.
  * MAX(a, b) returns a if it is greater than b, otherwise b.
  * MIN(a, b) returns a if it is less than b, otherwise b.
@@ -34,6 +22,10 @@
 
 // ===================================================================
 // Type definitions
+
+#ifndef __GNUC__
+#define _SC_SWITCHLOGIC
+#endif
 
 #ifdef _SC_SWITCHLOGIC
 typedef int            labeltype;     //!< switch/case
@@ -58,20 +50,32 @@ threadvector active;                 //!< Bit mask for active threads
 int          runCnt;                 //!< Counts program runs
 int          tickCnt;                //!< Counts program ticks
 int          tickInstrCnt;           //!< Instructions in one tick
+int          _notInitial;            //!< Flag that indicates not-initial tick
 threadtype   _cid;                   //!< Id of current thread
 labeltype    _pc[_idMax];            //!< Pseudo program counters
 threadvector _descs[_idMax];         //!< Descendants of thread
 threadtype   _parent[_idMax];        //!< Parent of thread
 labeltype    _returnAddress;         //!< For function calls (eg Exit Actions)
 
+#ifndef _SC_SUPPRESS_ERROR_DETECT
+signalvector _presence_tested;       //!< Signals that have been checked for presence in current tick
+#endif
 
 // ===================================================================
 // Manipulating the coarse program counters
 
-#ifdef mytrace
+/*! Check whether _SC_NOTRACE has been defined (eg from gcc command line).
+ * If so, suppress tracing and instruction counting.
+ * This then results in compact macro-expanded source code and executable.
+ */
+#ifdef _SC_NOTRACE                   // Tracing off
+#define clearPC(id)
+#define initPC(id, label) _pc[id] = _ref(label)
+#define setPC(id, label)  _pc[id] = _ref(label)
+
+#else                               // Tracing on
 char    *statePrev[_idMax];           //!< State where thread resumed previous tick
 char    *state[_idMax];               //!< State where thread resumed current tick
-
 
 #define clearPC(id) 							\
   statePrev[id] = "_L_INIT";						\
@@ -86,12 +90,7 @@ char    *state[_idMax];               //!< State where thread resumed current ti
   _pc[id] = _ref(label);						\
   statePrev[id] = state[id];						\
   state[id] = #label
-
-#else                               // No tracing
-#define clearPC(id)
-#define initPC(id, label) _pc[id] = _ref(label)
-#define setPC(id, label)  _pc[id] = _ref(label)
-#endif 	// mytrace					
+#endif 	// _SC_NOTRACE					
 
 
 // ===================================================================
@@ -119,7 +118,7 @@ void printVal(int id);
 //! Compute one tick.
 /*! Returns 1 if some thread is still active in current tick.
  */
-int tick(int isInit);
+int tick();
 
 //! Functions defined in sc.c
 void selectCid();
@@ -139,7 +138,7 @@ void selectCid();
 #define _END_SWITCH2     }
 #define _case            case
 #define _break           break
-#define _goto(label)     _state = label; goto _L_SWITCH
+#define _goto(label)     do { _state = label; goto _L_SWITCH; } while (0)
 #define _deref(label)    label
 #define _ref(label)      label
 #define _setStateInit    _state = _L_INIT;
@@ -220,8 +219,16 @@ void selectCid();
 
 #define _TickEnd 0                    // Priority of TickEnd thread
 
+//! Reset automaton. Should be called before first call of tick function.
+
+#define RESET()	do {					\
+    trace0t("RESET:", "reset automaton\n")		\
+    _notInitial = 0;					\
+    tickCnt = 0;					\
+  } while (0)
+
 //! Start a tick (an instant). 'p' denotes the main thread.
-/*! IF this is the initial tick ('isIni' is set),
+/*! IF this is the initial tick ('_notInitial' is not set),
  *   THEN initialize things and continue with following instruction,
  *   ELSE call dispatcher to resume where we left off.
  *
@@ -229,36 +236,53 @@ void selectCid();
  * _parent[_TickEnd] is undefined. Note also that _descs[_TickEnd]
  * does not matter, as that thread should never perform an ABORT
  * (TRANS) or JOIN.
+ *
+ * The flag _notInitial is set to some exotic value ("12345678") to
+ * catch (most) cases where an automaton reset has been forgotten.
  */
-#define TICKSTART(isIni, p)				\
-  static threadtype _pid, _ppid;			\
-  static threadvector _forkdescs = 0;			\
-  _declindex						\
-  _declState						\
-  freezePreClear					\
-  if (isIni) {						\
-    tickCnt = 0;					\
-    initPC(_TickEnd, _L_TICKEND);			\
-    enableInit(_TickEnd);				\
-    _cid = p;						\
-    _parent[_cid] = _TickEnd;				\
-    clearPC(_cid);					\
-    enable(_cid);					\
-    _setStateInit					\
-    _setPreInit						\
-    _setValInit					        \
-      } else {						\
-    active = enabled;					\
-    dispatch_;						\
-  }							\
+#ifdef _SC_SUPPRESS_ERROR_DETECT
+#define _SC_ERROR_DETECT_NORESET
+#else
+#define _SC_ERROR_DETECT_NORESET					\
+  if (_notInitial != 12345678) {					\
+  _SC_ERROR0(_SC_ERROR_NORESET,						\
+ "SC ERROR (Missing Reset): RESET() must be called before initial tick!\n");\
+  }
+#endif
+
+#define TICKSTART(p)							\
+  static threadtype _pid, _ppid;					\
+  static threadvector _forkdescs = 0;					\
+  _declindex								\
+  _declState								\
+  freezePreClear							\
+  _checkTickInit							\
+  if (_notInitial) {							\
+    _SC_ERROR_DETECT_NORESET						\
+    active = enabled;							\
+    dispatch_;								\
+  } else {								\
+    initPC(_TickEnd, _L_TICKEND);					\
+    enableInit(_TickEnd);						\
+    _cid = p;								\
+    _parent[_cid] = _TickEnd;						\
+    clearPC(_cid);							\
+    enable(_cid);							\
+    _setStateInit							\
+    _setPreInit						 	        \
+    _setValInit							        \
+    _notInitial = 12345678;						\
+  }									\
   _BEGIN_SWITCH
 
 //    dispatch_init_;					
 
 //! Complete a tick.
-/*! Return 0 iff computation has terminated
+/*! Return 0 iff computation has terminated.
+ * This starts with TERM_, to properly terminate a thread that runs into TICKEND.
  */
 #define TICKEND						\
+  TERM_;						\
   _case _L_TICKEND: setPre				\
   return isEnabledNotOnly(_TickEnd);                	\
   _END_SWITCH1			                        \
@@ -266,11 +290,11 @@ void selectCid();
   _END_SWITCH2
  
 
-//! If inlineDispatch is defined, call dispatcher at each operator that needs it.
+//! If _SC_INLINE_DISPATCH is defined, call dispatcher at each operator that needs it.
 //! Otherwise, create shared code block for TERM/PAUSE/dispatch.
 /*! This can be included by TICKEND
  */
-#ifdef inlineDispatch
+#ifdef _SC_INLINE_DISPATCH
 #define dispatch_ dispatch()
 #define mergedDispatch
 
@@ -335,7 +359,7 @@ _L_DISPATCH: dispatch();
   } while (0)
 
 //! Helper function (if/else-unsafe)
-#ifdef inlineDispatch
+#ifdef _SC_INLINE_DISPATCH
 #define PAUSEG_(label)							\
   setPC(_cid, label);							\
   deactivate(_cid);							\
@@ -415,18 +439,26 @@ _L_DISPATCH: dispatch();
 //! Terminate a thread.
 /* Compare to definition of HALT, which lets a thread idle at current position.
  */
-#define TERM do {						\
-    trace1t("TERM:", "terminates, enabled = 0%o\n", enabled)	\
-    TERM_;							\
+#define TERM do {							\
+    trace1t("TERM:", "terminates, enabled = 0%o\n", enabled & ~u2b(_cid))	\
+    TERM_;								\
   } while (0)
 
 
 //! Helper function (if/else-unsafe)
-#ifdef inlineDispatch
+#ifdef _SC_INLINE_DISPATCH
 #define TERM_							\
     disable(_cid);						\
     deactivate(_cid);						\
     dispatch_
+#else
+#define TERM_ goto _L_TERM
+#endif
+
+
+//! Helper function (if/else-unsafe)
+#ifdef _SC_INLINE_DISPATCH
+#define TERM_							\
 #else
 #define TERM_ goto _L_TERM
 #endif
@@ -529,7 +561,7 @@ _case __LABEL__: (void) 0;						\
   } while (0)
 
 
-//! Set priority of a thread.
+//! Change priority of a thread, from '_cid' to 'p'
 /*! Semantically, this is the primitive operator.
  * In terms of implementation, PRIOG is the basic operator.
  */
@@ -547,27 +579,62 @@ _case __LABEL__: (void) 0;						\
   } while (0)
 
 
-//! Helper function (if/else-unsafe)
-#define PRIO_(p)							\
-  _parent[p] = _parent[_cid];						\
-  _pid = 0;								\
-  for (_ppid = _descs[_cid]; _ppid > 0; _ppid >>= 1) {			\
-    if (_parent[_pid] == _cid)						\
-      _parent[_pid] = p;						\
-    _pid++;								\
-  }									\
-  _descs[p] = _descs[_cid];						\
-  _pid = _cid;								\
-  while ((_ppid = _parent[_pid]) != _TickEnd) {				\
-    _descs[_ppid] &= ~u2b(_cid);					\
-    _descs[_ppid] |= u2b(p);						\
-    _pid = _ppid;							\
-  }									\
-  deactivate(_cid);							\
-  disable(_cid);							\
-  _cid = p;								\
-  enable(_cid);
+//! Check whether PRIO tries to acquire priority that is already in use
+#ifdef _SC_SUPPRESS_ERROR_DETECT
+#define _SC_ERROR_DETECT_PRIO(p)
+#else
+#define _SC_ERROR_DETECT_PRIO(p)					\
+  if (isEnabled(p)) {							\
+    _SC_ERROR1(_SC_ERROR_PRIORITY,					\
+	       "SC ERROR (Priority Uniqueness): Priority %d already in use!\n", \
+	       p)							\
+  }
+#endif
 
+
+//! Helper function (if/else-unsafe) to change priority of a thread, from '_cid' to 'p'
+/*! IF p == _cid,
+ *    THEN we do not have to do anything. ELSE:
+ *
+ * IF p is already in use by another thread,
+ *   THEN report an error. ELSE:
+ *
+ * // Update parent pointers
+ * FOR ALL descendants _pid of current thread with _parent[_pid] == _cid:
+ *   Change _parent[_pid] to p
+ *
+ * // Update descendant lists
+ * FOR parent _ppid of current thread:
+ *   Delete _cid from _descs[_ppid]
+ *   Add p to _descs[_ppid]
+ *   REPEAT recursively for parent of _ppid, until _TickEnd (root parent) is reached
+ *
+ * Deactivate and disable _cid
+ * Set _cid = p
+ * Enable (and hence implicitly activate) _cid
+ */
+#define PRIO_(p)							\
+  if (p != _cid) {							\
+    _SC_ERROR_DETECT_PRIO(p);						\
+    _parent[p] = _parent[_cid];						\
+    _pid = 0;								\
+    for (_ppid = _descs[_cid]; _ppid > 0; _ppid >>= 1) {		\
+      if (_parent[_pid] == _cid)					\
+	_parent[_pid] = p;						\
+      _pid++;								\
+    }									\
+    _descs[p] = _descs[_cid];						\
+    _pid = _cid;							\
+    while ((_ppid = _parent[_pid]) != _TickEnd) {			\
+      _descs[_ppid] &= ~u2b(_cid);					\
+      _descs[_ppid] |= u2b(p);						\
+      _pid = _ppid;							\
+    }									\
+    deactivate(_cid);							\
+    disable(_cid);							\
+    _cid = p;								\
+    enable(_cid);							\
+  }
 
 //! Helper function (if/else-unsafe)
 #define PRIOG_(p, label) 						\
@@ -626,8 +693,8 @@ _case __LABEL__: (void) 0;						\
 
 //! Helper function (if/else-unsafe)
 #define JPPAUSEG_(p, thenlabel, elselabel) 				\
-  if (isEnabledNoneOf(_descs[_cid])) 				        \
-    _goto(thenlabel);							\
+  if (isEnabledNoneOf(_descs[_cid])) {					\
+    _goto(thenlabel); }							\
   instrCntDecr  							\
   PPAUSEG_(p, elselabel)
 
@@ -635,7 +702,7 @@ _case __LABEL__: (void) 0;						\
 //! Shorthand for 'JOINELSE(label); GOTO thenlabel; label: PRIO(p); PAUSE; GOTO(elselabel); thenlabel:'.
 /*! IF all descendants have terminated,
  *   THEN proceed,
- *   ELSE set priority, pause, and continue at 'elselabel'.
+ *   ELSE set priority to 'p', pause, and continue at 'elselabel'.
  *
  * This shorthand avoids the context switch immediately before the PAUSE.
  */
@@ -657,9 +724,28 @@ _case __LABEL__: (void) 0;						\
   } while (0)
 
 
+//! Check whether an emitted signal has already been checked for presence
+#ifdef _SC_SUPPRESS_ERROR_DETECT
+#define _checkTickInit
+#define _checkPRESENT(s)
+#define _checkPRESENTc(s)
+#define _checkEMIT(s)
+#else
+#define _checkTickInit      _presence_tested = 0;
+#define _checkPRESENT(s)    _presence_tested |= u2b(s);
+#define _checkPRESENTc(s)   _presence_tested |= u2b(s),
+#define _checkEMIT(s)							\
+  if (_presence_tested & u2b(s)) {					\
+  _SC_ERROR2(_SC_ERROR_CAUSALITY,					\
+	     "SC ERROR (Causality): Signal %s/%d emitted after test for presence!\n",\
+	     s2signame[s], s)						\
+  }
+#endif
+
 //! Emission of a pure signal 's'
 #define EMIT(s) do {					        	\
     trace2t("EMIT:", "emits %s/%d\n", s2signame[s], s)			\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -671,7 +757,7 @@ _case __LABEL__: (void) 0;						\
   } while (0)
 
 
-//! Test for presence of signal 's'.
+//! Test for presence of signal 's' (predicate).
 /*! IF 's' is present,
  *   THEN return 1,
  *   ELSE return 0.
@@ -679,15 +765,17 @@ _case __LABEL__: (void) 0;						\
 #define PRESENT(s)							\
   (trace3tc("PRESENT:", "determines %s/%d %s\n",			\
 	   s2signame[s], s, (signals & u2b(s)) ? "present" : "absent")	\
-   (signals & u2b(s)))
+   (_checkPRESENTc(s) signals & u2b(s)))
 
 
-//! Test for presence of signal 's'.
+
+//! Test for presence of signal 's' (control flow op).
 /*! IF 's' is present,
  *   THEN proceed to next instruction,
  *   ELSE jump to 'label'
  */
 #define PRESENTELSE(s, label) do {					\
+    _checkPRESENT(s)							\
     if (!(signals & u2b(s))) {						\
       trace3t("PRESENTELSE:", "determines %s/%d absent, transfers to %s\n", \
 	      s2signame[s], s, #label)					\
@@ -701,9 +789,11 @@ _case __LABEL__: (void) 0;						\
 /*! Shorthand for 'PRESENTELSE(s, label); EMIT(t); label:'
  */
 #define PRESENTEMIT(s, t) do {						\
+    _checkPRESENT(s)							\
     if (signals & u2b(s)) {						\
       trace4t("PRESENTEMIT:", "determines %s/%d present, emits %s/%d\n", \
 	      s2signame[s], s, s2signame[t], t)				\
+      _checkEMIT(t)						\
       signals |= u2b(t);						\
     }									\
     elsetrace								\
@@ -720,7 +810,8 @@ _case __LABEL__: (void) 0;						\
  * Shorthand for 'GOTO(label); elselabel: PAUSE;  label: PRESENT(s, elselabel)'.
  */
 #define AWAITI(s) do {							\
-    _case __LABEL__: if (!(signals & u2b(s))) {				\
+    _case __LABEL__:    _checkPRESENT(s)				\
+    if (!(signals & u2b(s))) {					        \
       trace2t("AWAITI:", "determines %s/%d absent, waits\n",		\
 	    s2signame[s], s)						\
       PAUSEG_(__LABEL__);						\
@@ -740,10 +831,11 @@ _case __LABEL__: (void) 0;						\
 #define AWAIT(s) do {							\
     trace0t("AWAIT:", "initial pause\n")				\
     goto __LABELL__;							\
-_case __LABEL__: if (!(signals & u2b(s))) {			\
+    _case __LABEL__:    _checkPRESENT(s)				\
+    if (!(signals & u2b(s))) {					        \
       trace2t("AWAIT:", "determines %s/%d absent, waits\n",		\
 	    s2signame[s], s)						\
-	__LABELL__: PAUSEG_(__LABEL__);			\
+	__LABELL__: PAUSEG_(__LABEL__);					\
     }									\
     trace2t("AWAIT:", "determines %s/%d present, proceeds\n", s2signame[s], s) \
   } while (0)
@@ -751,19 +843,19 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
 
 // ===================================================================
 // Handling valued signals.
-// The following is compiled conditionally depending on valSigIntCnt.
-// <application>.c must define valSigIntCnt if valued signals are used.
+// The following is compiled conditionally depending on _SC_valSigInt_SIZE.
+// <application>.c must define _SC_valSigInt_SIZE if valued signals are used.
 
-#ifdef valSigIntCnt
+#ifdef _SC_valSigInt_SIZE
 //! At beginning of initial tick:
 //! Initialize valued signals (-1 is for "undefined").
 #define _declindex static int _i;
 
 #define _setValInit						        \
-  for (_i = 0; _i < valSigIntCnt; _i++) 		                \
+  for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		                \
     valSigInt[_i] = -1;
 
-#else     // #ifdef valSigIntCnt
+#else     // #ifdef _SC_valSigInt_SIZE
 #define _declindex
 #define _setValInit
 #endif
@@ -773,6 +865,7 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
     valSigInt[s] = val;							\
     trace3t("EMITINT:", "emits %s/%d, value %d\n",			\
 	    s2signame[s], s, val)					\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -782,6 +875,7 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
     valSigInt[s] *= val;						\
     trace4t("EMITINTMUL:", "emits %s/%d, value %d, result %d\n",		\
 	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -791,6 +885,7 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
     valSigInt[s] += val;						\
     trace4t("EMITINTADD:", "emits %s/%d, value %d, result %d\n",		\
 	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -800,6 +895,7 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
     valSigInt[s] = MAX(val, valSigInt[s]);						\
     trace4t("EMITINTMAX:", "emits %s/%d, value %d, result %d\n",		\
 	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -809,6 +905,7 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
     valSigInt[s] = MIN(val, valSigInt[s]);						\
     trace4t("EMITINTMIN:", "emits %s/%d, value %d, result %d\n",		\
 	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
     signals |= u2b(s);						        \
   } while (0)
 
@@ -830,10 +927,10 @@ _case __LABEL__: if (!(signals & u2b(s))) {			\
 
 // ===================================================================
 // Handling PRE.
-// The following is compiled conditionally depending on usePRE
-// <application>.c must define usePRE if PRE is used
+// The following is compiled conditionally depending on _SC_USE_PRE
+// <application>.c must define _SC_USE_PRE if PRE is used
 
-#ifdef usePRE
+#ifdef _SC_USE_PRE
 signalvector sigsPre;     //!< Signals from previous tick
 signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 
@@ -858,12 +955,12 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 //! Clear list of signals to freeze.
 #define freezePreClear  sigsFreeze = 0;
 
-#else     // #ifdef usePRE
+#else     // #ifdef _SC_USE_PRE
 #define _setPreInit
 #define setPre
 #define freezePre
 #define freezePreClear
-#endif     // #ifdef usePRE
+#endif     // #ifdef _SC_USE_PRE
 
 
 //! Test for presence of signal in previous tick.
@@ -896,26 +993,26 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 // ===================================================================
 // Handling valued signals in conjunction with PRE
 
-#ifdef usePRE
-#ifdef valSigIntCnt
+#ifdef _SC_USE_PRE
+#ifdef _SC_valSigInt_SIZE
 //! At beginning of initial tick:
 //! Initialize previous signal values.
 #define setPreValInit					\
-  for (_i = 0; _i < valSigIntCnt; _i++) 		\
+  for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		\
     valSigIntPre[_i] = -1;
 
 //! At end of tick:
 //! Copy values of current signals (unless frozen) to previous signals.
 #define setPreVal					\
-  for (_i = 0; _i < valSigIntCnt; _i++) 		\
+  for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		\
     if (!(sigsFreeze & u2b(_i)))			\
       valSigIntPre[_i] = valSigInt[_i];
 
-#else     // #ifdef valSigIntCnt
+#else     // #ifdef _SC_valSigInt_SIZE
 #define setPreValInit
 #define setPreVal
-#endif    // #ifdef valSigIntCnt
-#endif    // #ifdef usePRE
+#endif    // #ifdef _SC_valSigInt_SIZE
+#endif    // #ifdef _SC_USE_PRE
 
 
 //! Retrieve previous value of signal 's'.
@@ -938,27 +1035,39 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 
 //! Just a goto that also gets counted as instruction.
 #define GOTO(label) do {					\
-    trace1t("GOTO:", "transfer to %s\n",	#label)		\
+    trace1t("GOTO:", "transfer to %s\n", #label)		\
     instrCntIncr						\
-       _goto(label);						\
+    _goto(label);						\
   } while (0)
 
 
 // ===================================================================
 // Support for Exit Actions
 
-//! Test whether an Exit Action has to be performed.
+//! Test whether an Exit Action has to be performed (predicate).
+/*! IF thread 'id' is active and at state 'statelabel',
+ *   THEN return 1,
+ *   ELSE return 0.
+ */
+#define ISAT(id, statelabel)						\
+  (trace2tc("ISAT:", "%s at %s\n",					\
+	    (isEnabled(id) && (_pc[id] == _ref(statelabel))) ? "_is_" : "is _not_", #statelabel) \
+   (isEnabled(id) && (_pc[id] == _ref(statelabel))))
+
+
+//! Test whether an Exit Action has to be performed (control flow operation).
 /*! IF thread 'id' is active and at state 'statelabel',
  *   THEN proceed to next instruction,
- *   ELSE jump to 'label'
+ *   ELSE jump to 'label'.
+ *  Shorthand for 'if (!ISAT(id, statelabel)) goto label'.
  */
-#define ISAT(id, statelabel, label) {					\
+#define ISATELSE(id, statelabel, label) {				\
   if (isEnabled(id) && (_pc[id] == _ref(statelabel))) {			\
-    trace1t("ISAT:", "_is_ at %s\n", #statelabel)			\
+    trace1t("ISATELSE:", "_is_ at %s\n", #statelabel)			\
   } else {								\
-    trace2t("ISAT:", "is _not_ at %s, transfer to %s\n",		\
+    trace2t("ISATELSE:", "is _not_ at %s, transfer to %s\n",		\
 	    #statelabel, #label)					\
-      _goto(label);							\
+    _goto(label);							\
   }}
 
 
@@ -976,25 +1085,24 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 //! Return from a function call
 #define RET do {							\
     trace0t("RET:", "returns\n")		                        \
-      _goto(_deref(_returnAddress));					\
+    _goto(_deref(_returnAddress));					\
   } while (0)
 
 
 //! Conditionally call a function.
 /*! IF thread 'id' is active and at state 'statelabel',
  *   THEN call function at 'label';
- * Return to 'retlabel'
  * Use this if an Exit Action _may_ have to be performed
- * Shorthand for ISAT(id, statelabel, retlabel); CALL(label, retlabel);
+ * Shorthand for 'ISATELSE(id, l_state, l); CALL(l_call); l:'
  */
-#define ISATCALL(id, statelabel, label) do {				\
-    if (isEnabled(id) && (_pc[id] == _ref(statelabel))) {		\
-      trace1t("ISATCALL:", "calls %s\n", #label)			\
-      _returnAddress = _ref(__LABEL__);					\
-      _goto(label);							\
+#define ISATCALL(id, l_state, l_call) do {				\
+    if (isEnabled(id) && (_pc[id] == _ref(l_state))) {			\
+      trace1t("ISATCALL:", "calls %s\n", #l_call)			\
+      _returnAddress = _ref(__LABEL__);				        \
+      _goto(l_call);							\
     }									\
-    trace1t("ISATCALL:", "does _not_ call %s\n", #label)		\
-    _case __LABEL__: (void) 0;					\
+    trace1t("ISATCALL:", "does _not_ call %s\n", #l_call)		\
+    _case __LABEL__: (void) 0;					        \
   } while (0)
 
 
@@ -1005,7 +1113,7 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 
 /*! Decrement is needed in some places to avoid duplicate counting.
  */
-#ifdef instrCnt
+#ifdef _SC_NOTRACE
   #define instrCntIncr tickInstrCnt++;
   #define instrCntIncrc tickInstrCnt++,
   #define instrCntDecr tickInstrCnt--;
@@ -1017,23 +1125,7 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 
 
 //! If tracing is turned on, print trace string.
-#ifdef mytrace
-  #define trace0(f)                printf(f);
-  #define trace1(f, a)             printf(f, a);
-  #define trace2(f, a, b)          printf(f, a, b);
-  #define trace3(f, a, b, c)       printf(f, a, b, c);
-  #define trace4(f, a, b, c, d)    printf(f, a, b, c, d);
-  #define trace5(f, a, b, c, d, e) printf(f, a, b, c, d, e);
-  #define trace6(f, a, b, c, d, e, g) printf(f, a, b, c, d, e, g);
-  #define trace7(f, a, b, c, d, e, g, h) printf(f, a, b, c, d, e, g, h);
-  #define trace8(f, a, b, c, d, e, g, h, i) printf(f, a, b, c, d, e, g, h, i);
-  #define trace0c(f)                printf(f),
-  #define trace1c(f, a)             printf(f, a),
-  #define trace2c(f, a, b)          printf(f, a, b),
-  #define trace3c(f, a, b, c)       printf(f, a, b, c),
-  #define elsetrace else {
-  #define elsetraceend }
-#else
+#ifdef _SC_NOTRACE
   #define trace0(f)
   #define trace1(f, a)
   #define trace2(f, a, b)
@@ -1049,6 +1141,22 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
   #define trace3c(f, a, b, c)
   #define elsetrace
   #define elsetraceend
+#else
+  #define trace0(f)                printf(f);
+  #define trace1(f, a)             printf(f, a);
+  #define trace2(f, a, b)          printf(f, a, b);
+  #define trace3(f, a, b, c)       printf(f, a, b, c);
+  #define trace4(f, a, b, c, d)    printf(f, a, b, c, d);
+  #define trace5(f, a, b, c, d, e) printf(f, a, b, c, d, e);
+  #define trace6(f, a, b, c, d, e, g) printf(f, a, b, c, d, e, g);
+  #define trace7(f, a, b, c, d, e, g, h) printf(f, a, b, c, d, e, g, h);
+  #define trace8(f, a, b, c, d, e, g, h, i) printf(f, a, b, c, d, e, g, h, i);
+  #define trace0c(f)                printf(f),
+  #define trace1c(f, a)             printf(f, a),
+  #define trace2c(f, a, b)          printf(f, a, b),
+  #define trace3c(f, a, b, c)       printf(f, a, b, c),
+  #define elsetrace else {
+  #define elsetraceend }
 #endif
 
 
@@ -1090,3 +1198,25 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 #define trace1tc(s, f, a)          traceThreadc(s) trace1c(f, a)
 #define trace2tc(s, f, a, b)       traceThreadc(s) trace2c(f, a, b)
 #define trace3tc(s, f, a, b, c)    traceThreadc(s) trace3c(f, a, b, c)
+
+
+// ===================================================================
+// Error handling
+
+#define _SC_ERROR_NONE         0
+#define _SC_ERROR_NORESET      1
+#define _SC_ERROR_PRIORITY     2
+#define _SC_ERROR_CAUSALITY    3
+
+//! Exit on errors
+/*! code: error code
+ * f: format string for error message
+ * a, b, ...: arguments for f
+ */
+#ifndef _SC_SUPPRESS_ERROR_DETECT
+#include <stdlib.h>
+#define _SC_ERROR0(code, f)          fprintf(stderr, f); exit(code);
+#define _SC_ERROR1(code, f, a)       fprintf(stderr, f, a); exit(code);
+#define _SC_ERROR2(code, f, a, b)    fprintf(stderr, f, a, b); exit(code);
+#define _SC_ERROR3(code, f, a, b, c) fprintf(stderr, f, a, b, c); exit(code);
+#endif

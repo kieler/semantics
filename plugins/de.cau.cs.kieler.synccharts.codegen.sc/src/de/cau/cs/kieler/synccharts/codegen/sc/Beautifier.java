@@ -66,6 +66,8 @@ public class Beautifier {
     private static String setNewLines() throws Exception {
         String line = getCleanString(inFile);
         line = line.replaceAll(seperator + "int", "\nint");
+        line = line.replaceAll(seperator + "void", "\nvoid");
+        line = line.replaceAll(seperator + "unsigned", "\nunsigned");
         line = line.replaceAll(";" + seperator, ";\n");
         line = line.replaceAll(":" + seperator, ":\n");
         line = line.replaceAll("\\)\\{", ") {");

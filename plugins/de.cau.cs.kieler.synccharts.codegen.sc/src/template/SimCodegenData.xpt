@@ -99,8 +99,9 @@ int main(int argc, const char* argv[]){
 	«((String)(GLOBALVAR name))»_reset();
 	stateArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
+	RESET();
 	setInputs();
-	tick(1);
+	tick();
 	while(1){
 		callOutputs(); 
 		char* outString = cJSON_Print(output);
@@ -111,7 +112,7 @@ int main(int argc, const char* argv[]){
 		output = cJSON_CreateObject();
 		stateArray = cJSON_CreateArray();
 		setInputs();
-		tick(0);
+		tick();
 	}
 }
 «ENDDEFINE»

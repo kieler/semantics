@@ -36,8 +36,8 @@
 	«EXPAND CodegenMisc::generateReset-»
 #ifndef EXTERNTICK
 	
-	int tick(int isInit){
-	TICKSTART(isInit, «EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
+	int tick(){
+	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
 	/* should move to sc.h ?? */
 	reset();
 «ENDDEFINE»
