@@ -94,7 +94,6 @@
 	«ELSE-»
 		L_«getStateNameByFlag(this, 3)»_intern:
 	«ENDIF-»
-	/* set real back */
 	«EXPAND CodegenPriority::realPrio FOR this»
 	«EXPAND CodegenMisc::callJSONState-»
 	«EXPAND normal FOR this-»
