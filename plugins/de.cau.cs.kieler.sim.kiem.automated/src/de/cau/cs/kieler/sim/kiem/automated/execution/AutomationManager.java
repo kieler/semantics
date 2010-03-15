@@ -96,6 +96,9 @@ public final class AutomationManager implements StatusListener {
     /** True if the manager is about to stop the execution. */
     private boolean stoppedByManager;
 
+    /** The error message. */
+    private String errorMessage = "";
+
     // --------------------------------------------------------------------------
 
     /** Singleton pattern. */
@@ -398,6 +401,7 @@ public final class AutomationManager implements StatusListener {
                     break;
                 case ERROR_CANCELED:
                     currentResult.setStatus(IterationStatus.ERROR);
+                    currentResult.setErrorMessage(errorMessage);
                     break;
                 }
                 manager.resetIterationCancel();
@@ -852,9 +856,10 @@ public final class AutomationManager implements StatusListener {
 
         // those are probably really bad... don't want to filter
         // furthermore those hopefully were not triggered due to the execution
-        if (!pluginId.contains("org.eclipse")) {
+        if (!pluginId.contains("org.eclipse") && style == StatusManager.BLOCK) {
             CancelManager.getInstance().cancelIteration(
                     CancelStatus.ERROR_CANCELED);
+            errorMessage = statusAdapter.getStatus().getMessage();
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;

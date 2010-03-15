@@ -31,6 +31,9 @@ public class IterationResult extends AbstractResult {
     /** The status that the execution is currently at. */
     private IterationStatus status;
 
+    /** The error message. */
+    private String errorMessage;
+
     // --------------------------------------------------------------------------
 
     /**
@@ -169,6 +172,19 @@ public class IterationResult extends AbstractResult {
             }
             return "Error";
         }
+    }
+
+    /**
+     * 
+     * 
+     * @param errorMessageParam
+     */
+    public void setErrorMessage(String errorMessageParam) {
+        this.errorMessage = errorMessageParam;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     // --------------------------------------------------------------------------
