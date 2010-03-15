@@ -44,12 +44,18 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 @SuppressWarnings("restriction")
 public class KiemAutomatedPlugin extends AbstractUIPlugin {
 
-    /** path to the icon for active schedules and default editor. */
+    /** path to the icon for kiem automated. */
     private static final String AUTO_IMAGE_PATH = "icons/kiemAutomated.png";
-    /** path to the icon for active schedules and default editor. */
+    /** path to the icon showing a green dot. */
     private static final String TRUE_IMAGE_PATH = "icons/true.gif";
-    /** path to the icon for locked schedules and editors. */
+    /** path to the icon showing a red dot. */
     private static final String FALSE_IMAGE_PATH = "icons/false.gif";
+    /** path to the icon for created iterations. */
+    private static final String CREATED_IMAGE_PATH = "icons/created.gif";
+    /** path to the icon for running iterations. */
+    private static final String RUNNING_IMAGE_PATH = "icons/running.gif";
+    /** path to the icon for warnings. */
+    private static final String WARNING_IMAGE_PATH = "icons/warning.gif";
     /** The plug-in id. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.automated";
 
@@ -182,6 +188,36 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
      */
     public static Image getFalseImage() {
         return imageDescriptorFromPlugin(PLUGIN_ID, FALSE_IMAGE_PATH)
+                .createImage();
+    }
+
+    /**
+     * Getter for the image for created iterations.
+     * 
+     * @return the image
+     */
+    public static Image getCreatedImage() {
+        return imageDescriptorFromPlugin(PLUGIN_ID, CREATED_IMAGE_PATH)
+                .createImage();
+    }
+
+    /**
+     * Getter for the image for running iterations.
+     * 
+     * @return the image
+     */
+    public static Image getRunningImage() {
+        return imageDescriptorFromPlugin(PLUGIN_ID, RUNNING_IMAGE_PATH)
+                .createImage();
+    }
+
+    /**
+     * Getter for the image for warnings.
+     * 
+     * @return the image
+     */
+    public static Image getWarningImage() {
+        return imageDescriptorFromPlugin(PLUGIN_ID, WARNING_IMAGE_PATH)
                 .createImage();
     }
 

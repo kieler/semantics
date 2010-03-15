@@ -33,10 +33,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.ComponentResult;
+import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
@@ -437,10 +439,27 @@ public class ExecutionFilePanel {
                 IterationResult iterationResult = (IterationResult) element;
 
                 KiemProperty result = findProperty(columnIndex, iterationResult);
-
                 if (result != null) {
-                    KiemPropertyType type = result.getType();
+                    if (result.getKey().equals(IAutomatedComponent.STATUS)) {
+                        String value = result.getValue();
+                        if (value.equals(IterationStatus
+                                .labelOf(IterationStatus.CREATED))) {
+                            return KiemAutomatedPlugin.getCreatedImage();
+                        } else if (value.equals(IterationStatus
+                                .labelOf(IterationStatus.RUNNING))) {
+                            return KiemAutomatedPlugin.getRunningImage();
+                        } else if (value.equals(IterationStatus
+                                .labelOf(IterationStatus.ABORTED))) {
+                            return KiemAutomatedPlugin.getWarningImage();
+                        } else if (value.equals(IterationStatus
+                                .labelOf(IterationStatus.ERROR))) {
+                            return KiemAutomatedPlugin.getFalseImage();
+                        } else {
+                            return KiemAutomatedPlugin.getTrueImage();
+                        }
+                    }
 
+                    KiemPropertyType type = result.getType();
                     if (type instanceof KiemPropertyTypeBool) {
                         boolean value = result.getValueAsBoolean();
                         if (value) {
@@ -449,7 +468,6 @@ public class ExecutionFilePanel {
                         return KiemAutomatedPlugin.getFalseImage();
                     }
                 }
-
             }
             return null;
         }
@@ -466,6 +484,9 @@ public class ExecutionFilePanel {
                 KiemProperty result = findProperty(columnIndex, iterationResult);
 
                 if (result != null) {
+                    if (result.getKey().equals(IAutomatedComponent.STATUS)) {
+                        return "";
+                    }
                     KiemPropertyType type = result.getType();
                     if (type instanceof KiemPropertyTypeBool) {
                         return "";
