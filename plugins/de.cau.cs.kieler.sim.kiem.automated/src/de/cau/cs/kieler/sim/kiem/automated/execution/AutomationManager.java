@@ -403,6 +403,7 @@ public final class AutomationManager implements StatusListener {
                 case ERROR_CANCELED:
                     currentResult
                             .setStatus(IterationStatus.ERROR, errorMessage);
+                    errorMessage = "";
                     break;
                 }
                 manager.resetIterationCancel();
@@ -856,13 +857,13 @@ public final class AutomationManager implements StatusListener {
         // String pluginId = statusAdapter.getStatus().getPlugin();
 
         if ((style & StatusManager.BLOCK) != 0) {
-            CancelManager.getInstance().cancelIteration(
-                    CancelStatus.ERROR_CANCELED);
-
             IStatus status = statusAdapter.getStatus();
             if (status != null) {
                 errorMessage = status.getMessage();
             }
+
+            CancelManager.getInstance().cancelIteration(
+                    CancelStatus.ERROR_CANCELED);
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;
