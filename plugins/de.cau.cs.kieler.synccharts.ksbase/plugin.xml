@@ -163,6 +163,14 @@
              transformation="insertState"
              transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
        </transformation>
+       <transformation
+             icon="icons/successor_state.gif"
+             name="Add Single Successor State"
+             tooltip="Create a successor for the selected state"
+             transformation="addSuccessorState"
+             transformationId="de.cau.cs.kieler.ksbase.addSingleSuc"
+             validation="isNoRootState">
+       </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -267,7 +275,7 @@
     <menuContribution
           locationURI="popupBar:any">
           <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.addSuc">
+             transformationId="de.cau.cs.kieler.ksbase.addSingleSuc">
        </transformationCommand>
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addPred">

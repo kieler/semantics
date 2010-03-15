@@ -102,19 +102,15 @@ public interface ITransformationFramework {
     boolean initializeTransformation(String fileName, String operation, String... basePackages);
 
     /**
-     * Parses a transformation file and returns the existing in-place transformations.
+     * Parses a transformation file and returns the existing transformations.
      * 
      * @param fileName
      *            a URL to the transformation file
+     * @param inplaceOnly
+     *            indicates if only in-place transformations should be parsed. If this flag is set
+     *            to 'false' in-place transformations will be ignored!
      * @return a list of abstract transformations.
      */
-    List<AbstractTransformation> parseInPlaceTransformations(final URL fileName);
+    List<AbstractTransformation> parseTransformations(final URL fileName, boolean inplaceOnly);
 
-    /**
-     * Parses a transformation file and returns the existing out-place transformations.
-     * 
-     * @param fileName Name of the transformation file 
-     * @return A list of abstract transformations
-     */
-    List<AbstractTransformation> parseOutPlaceTransformations(final URL fileName);
 }
