@@ -205,7 +205,7 @@ context Action if (triggersAndEffects != null && triggersAndEffects.trim().compa
            but triggers and effects string contains text." :
     (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
     
-// Only Transitions have a trigger
-//context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
-//	ERROR "Triggers only allowed for transitions." :
-//	trigger == null;
+// Only Transitions can have a triggers without effects
+context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
+	ERROR "Trigger must have an effect." :
+	effects.size > 0;
