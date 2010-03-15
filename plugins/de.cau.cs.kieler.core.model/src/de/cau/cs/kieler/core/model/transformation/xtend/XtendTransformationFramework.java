@@ -251,7 +251,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
             initalized = false;
         } else {
             CoreModelPlugin.getDefault().logError(
-                    "Could not execute transformation: Transformation not initalized poroperly");
+                    "Could not execute transformation: Transformation not initalized properly");
         }
         return result;
     }
@@ -309,6 +309,51 @@ public class XtendTransformationFramework implements ITransformationFramework {
      */
     public String getFileExtension() {
         return XtendFile.FILE_EXTENSION;
+    }
+
+    /**
+     * Parses a transformation file and returns the existing out-place transformations.
+     * 
+     * @param fileName Name of the transformation file 
+     * @return A list of abstract transformations
+     */
+    public List<AbstractTransformation> parseOutPlaceTransformations(final URL fileName) {
+        if (fileName != null) {
+            try {
+                // Using the XtendResourceParser to read transformations
+                XtendResourceParser parser = new XtendResourceParser();
+                Reader reader = new InputStreamReader(fileName.openStream());
+                Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
+                if (o != null) {
+                    LinkedList<AbstractTransformation> transformations = 
+                        new LinkedList<AbstractTransformation>();
+                    XtendFile xtFile = (XtendFile) o;
+                    for (Extension ext : xtFile.getExtensions()) {
+                        // Only read in-place methods
+                        if (ext.getReturnTypeIdentifier().getValue().equals("Void")) { //$NON-NLS-1$
+                            continue;
+                        }
+                        // Read parameters:
+                        LinkedList<String> params = new LinkedList<String>();
+                        for (DeclaredParameter param : ext.getFormalParameters()) {
+                            params.add(param.getType().getValue());
+                        }
+                        XtendTransformation xt = new XtendTransformation();
+                        xt.setTransformation(ext.getName());
+                        xt.addParameters(params);
+                        transformations.add(xt);
+                    }
+                    return transformations;
+                }
+            } catch (SecurityException sec) {
+                CoreModelPlugin.getDefault().logError(
+                        "Unable to parse Xtend file: Not allowed to open file."); //$NON-NLS-1$
+            } catch (IOException e) {
+                CoreModelPlugin.getDefault().logError(
+                        "Unable to parse Xtend file: Error while reading file."); //$NON-NLS-1$
+            }
+        }
+        return null;
     }
 
 }

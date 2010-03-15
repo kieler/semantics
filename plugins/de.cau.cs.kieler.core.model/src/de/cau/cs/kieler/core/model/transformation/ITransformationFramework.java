@@ -66,7 +66,7 @@ public interface ITransformationFramework {
      * @param parametersToMap
      *            The list of parameters that should be mapped. If this is null, the parameters are
      *            retrieved from the current selection
-     *            
+     * 
      * @param parameter
      *            The list of formal parameters
      * @return The parameters or null if the mapping could not achieved
@@ -109,4 +109,12 @@ public interface ITransformationFramework {
      * @return a list of abstract transformations.
      */
     List<AbstractTransformation> parseInPlaceTransformations(final URL fileName);
+
+    /**
+     * Parses a transformation file and returns the existing out-place transformations.
+     * 
+     * @param fileName Name of the transformation file 
+     * @return A list of abstract transformations
+     */
+    List<AbstractTransformation> parseOutPlaceTransformations(final URL fileName);
 }
