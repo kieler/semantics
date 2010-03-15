@@ -20,6 +20,7 @@ import java.util.concurrent.Semaphore;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -852,14 +853,16 @@ public final class AutomationManager implements StatusListener {
      * {@inheritDoc}
      */
     public int reroute(final StatusAdapter statusAdapter, final int style) {
-        String pluginId = statusAdapter.getStatus().getPlugin();
+        // String pluginId = statusAdapter.getStatus().getPlugin();
 
-        // those are probably really bad... don't want to filter
-        // furthermore those hopefully were not triggered due to the execution
-        if (!pluginId.contains("org.eclipse") && style == StatusManager.BLOCK) {
+        if (style == StatusManager.BLOCK || style == StatusManager.SHOW) {
             CancelManager.getInstance().cancelIteration(
                     CancelStatus.ERROR_CANCELED);
-            errorMessage = statusAdapter.getStatus().getMessage();
+
+            IStatus status = statusAdapter.getStatus();
+            if (status != null) {
+                errorMessage = status.getMessage();
+            }
             return StatusManager.LOG;
         }
         return StatusListener.DONT_CARE;
