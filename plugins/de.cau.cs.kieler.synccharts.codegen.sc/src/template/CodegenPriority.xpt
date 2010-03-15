@@ -4,25 +4,28 @@
 
 «DEFINE priorityReduction FOR Transition-»
 	«IF hasDependentState(this)-»
+		/* prio reduction */
 		PRIO(«getRealThreadPriority(this.targetState)»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE realPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		/* real reduction */
 		PRIO(«getRealThreadPriority(this)»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+		/* weak reduction */
 		PRIO(«getWeakThreadPriority(this)»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE mainThreadPrio FOR State-»
 	«REM»if root state has transitions or actions or more then one region«ENDREM»
-	«IF this.regions.size >= 1 || !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
+	«IF this.regions.size > 1 || !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
 		«getMainTreadPriority(this)-»
 	«ELSE-»
 		«getMainTreadPriority(this.getInitialState())»
