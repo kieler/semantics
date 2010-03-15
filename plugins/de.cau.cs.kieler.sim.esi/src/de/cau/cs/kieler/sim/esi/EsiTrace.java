@@ -101,6 +101,20 @@ public class EsiTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
+    public Set<String> getOutputs() {
+        Set<String> res = new HashSet<String>();
+        for (tick t : this.trace.getTicks()) {
+          
+            for (signal s : t.getOutput()) {
+                res.add(s.getName());
+            }
+        }
+        return res;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     public void remove() {
         if (pos > trace.getTicks().size()) {
             trace.getTicks().remove(pos);

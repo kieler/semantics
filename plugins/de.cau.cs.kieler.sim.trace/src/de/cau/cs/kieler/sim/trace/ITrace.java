@@ -60,4 +60,6 @@ public interface ITrace extends Iterator<ITick>{
      * @return all signals that all defined by the trace
      */
     Set<String> getSignals();
+    
+    Set<String> getOutputs();
 }

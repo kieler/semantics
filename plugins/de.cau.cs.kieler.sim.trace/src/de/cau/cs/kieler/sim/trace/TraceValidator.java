@@ -44,7 +44,6 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
 
     private TraceReader traceReader;
 
-
     /**
      * {@inheritDoc}
      */
@@ -82,7 +81,23 @@ public class TraceValidator extends JSONObjectDataComponent implements IAutomate
                         }
                     }
 
-                    /** TODO:Everything emitted is in the trace */
+                    /** Everything emitted is in the trace */
+                    for (String emit : traceReader.current.getOutputs()) {
+                        if (input.has(emit) && JSONSignalValues.isPresent(input.get(emit))) {
+                            boolean found = false;
+                            for (Signal t : tick.getOutputs()) {
+                                if (t.getName().equals(emit)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) {
+                                valid = false;
+                                break;
+                            }
+                        }
+                    }
+
                     // Iterator<String> key = input.keys();
                     // while (key.hasNext()) {
                     //                     

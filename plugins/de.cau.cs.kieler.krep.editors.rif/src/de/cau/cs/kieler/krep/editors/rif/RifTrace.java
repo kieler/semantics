@@ -95,6 +95,17 @@ public class RifTrace implements ITrace {
         }
         return res;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Set<String> getOutputs() {
+        Set<String> res = new HashSet<String>();
+        for (decl d : trace.getOutputs()) {
+            res.add(d.getName());
+        }
+        return res;
+    }
 
     /**
      * {@inheritDoc}
