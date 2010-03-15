@@ -20,23 +20,31 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gef.EditPart;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 
 /**
  * Utility class for synccharts ksbase.
  * 
  * @author soh
- * 
+ * @kieler.rating 2010-03-12 proposed yellow
  */
 public final class Utils {
 
     /**
      * 
-     * 
-     *
      */
     private Utils() {
         // does nothing
@@ -52,6 +60,38 @@ public final class Utils {
     private static volatile List<Region> regionsClipBoard = null;
     /** Clipboard for copy and paste. */
     private static volatile Transition transitionClipBoard = null;
+
+    /**
+     * Determine whether or not the edit part is valid for copy and paste.
+     * 
+     * @return true if the part can be copied/pasted
+     */
+    public static boolean isValidPartSelected() {
+        ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getSelectionService().getSelection();
+        if (sel instanceof StructuredSelection) {
+            Iterator<?> it = ((StructuredSelection) sel).iterator();
+            while (it.hasNext()) {
+                Object next = it.next();
+                if (next instanceof EditPart) {
+                    if (next instanceof State2EditPart) {
+                        return true;
+                    } else if (next instanceof TransitionEditPart) {
+                        return true;
+                    } else if (next instanceof StateEditPart) {
+                        return true;
+                    } else if (next instanceof RegionEditPart) {
+                        return true;
+                    } else if (next instanceof Region2EditPart) {
+                        return true;
+                    } else if (next instanceof RegionStateCompartmentEditPart) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Copy a state to the clipboard.
@@ -125,19 +165,21 @@ public final class Utils {
      * @return the state
      */
     public static State getStateFromClipboard() {
-        State newState = (State) EcoreUtil.copy(stateClipBoard);
+        if (stateClipBoard != null) {
+            State newState = (State) EcoreUtil.copy(stateClipBoard);
 
-        // remove all non self loop transitions
-        Iterator<Transition> iter = newState.getOutgoingTransitions()
-                .iterator();
-        while (iter.hasNext()) {
-            Transition next = iter.next();
-            if (next.getTargetState() != newState) {
-                iter.remove();
+            // remove all non self loop transitions
+            Iterator<Transition> iter = newState.getOutgoingTransitions()
+                    .iterator();
+            while (iter.hasNext()) {
+                Transition next = iter.next();
+                if (next.getTargetState() != newState) {
+                    iter.remove();
+                }
             }
+            return newState;
         }
-
-        return newState;
+        return null;
     }
 
     /**
@@ -146,7 +188,7 @@ public final class Utils {
      * @return the states
      */
     public static List<State> getStatesFromClipboard() {
-        if (statesClipBoard != null) {
+        if (statesClipBoard != null && !statesClipBoard.isEmpty()) {
             Collection<State> states = EcoreUtil.copyAll(statesClipBoard);
             List<State> dummy = new LinkedList<State>();
             for (State state : states) {
@@ -162,7 +204,6 @@ public final class Utils {
                     }
                 }
             }
-
             return dummy;
         }
         return null;
@@ -174,8 +215,11 @@ public final class Utils {
      * @return the region
      */
     public static Region getRegionFromClipboard() {
-        Region newRegion = (Region) EcoreUtil.copy(regionClipBoard);
-        return newRegion;
+        if (regionClipBoard != null) {
+            Region newRegion = (Region) EcoreUtil.copy(regionClipBoard);
+            return newRegion;
+        }
+        return null;
     }
 
     /**
@@ -184,13 +228,12 @@ public final class Utils {
      * @return the regions
      */
     public static List<Region> getRegionsFromClipboard() {
-        if (regionsClipBoard != null) {
+        if (regionsClipBoard != null && !regionsClipBoard.isEmpty()) {
             Collection<Region> regions = EcoreUtil.copyAll(regionsClipBoard);
             List<Region> dummy = new LinkedList<Region>();
             for (Region region : regions) {
                 dummy.add(region);
             }
-
             return dummy;
         }
         return null;
@@ -202,7 +245,11 @@ public final class Utils {
      * @return the transition
      */
     public static Transition getTransitionFromClipboard() {
-        Transition newTrans = (Transition) EcoreUtil.copy(transitionClipBoard);
-        return newTrans;
+        if (transitionClipBoard != null) {
+            Transition newTrans = (Transition) EcoreUtil
+                    .copy(transitionClipBoard);
+            return newTrans;
+        }
+        return null;
     }
 }

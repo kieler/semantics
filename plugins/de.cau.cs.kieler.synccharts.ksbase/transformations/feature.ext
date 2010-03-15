@@ -170,6 +170,35 @@ null
 /////////////////////////
 
 // Java escapes
+Boolean isValidPartSelected(State o):
+ isValid()
+;
+
+Boolean isValidPartSelected(Region o):
+ isValid()
+;
+
+Boolean isValidPartSelected(Transition o):
+ isValid()
+;
+
+Boolean isValidPartSelected(List[Region] o):
+ isValid()
+;
+
+Boolean isValidPartSelected(List[State] o):
+ isValid()
+;
+
+Boolean isValidPartSelected(State o0, State o1):
+ isValid()
+;
+
+Boolean isValid():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.isValidPartSelected()
+;
+
+
 // copy methods
 Void copyStateToClipboard(State state):
  JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
@@ -189,27 +218,6 @@ Void copyStatesToClipboard(List[State] states):
  
 Void copyRegionsToClipboard(List[Region] regions):
  JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.regionsToClipboard(java.util.List)
-;
-
-// paste methods
-State getStateFromClipboard():
- JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
-;
-
-Region getRegionFromClipboard():
- JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionFromClipboard()
-;
-
-Transition getTransitionFromClipboard():
-JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getTransitionFromClipboard()
-;
-
-List[State] getStatesFromClipboard():
- JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStatesFromClipboard()
-;
-
-List[Region] getRegionsFromClipboard():
- JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionsFromClipboard()
 ;
 
 // Cut
@@ -270,6 +278,28 @@ Void copy(List[State] states):
 
 
 // Paste
+
+// paste methods
+State getStateFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStateFromClipboard()
+;
+
+Region getRegionFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionFromClipboard()
+;
+
+Transition getTransitionFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getTransitionFromClipboard()
+;
+
+List[State] getStatesFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getStatesFromClipboard()
+;
+
+List[Region] getRegionsFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.getRegionsFromClipboard()
+;
+
 // Paste into region
 Void paste(Region target):
  let state = getStateFromClipboard():
@@ -368,10 +398,11 @@ Void pasteRegionsIntoState(List[Region] regions, State target):
 // Paste transition
 Void paste(State source, State target):
  let trans = getTransitionFromClipboard():
- (trans != null) ?
+ ((trans != null && (source.parentRegion == target.parentRegion)) ?
  (source.outgoingTransitions.add(trans) ->
  trans.setTargetState(target)) :
- null
+ null) ->
+ setSelection(trans)
 ;
 
 /////////////////////////

@@ -131,11 +131,12 @@
        </transformation>
        <transformation
              tooltip="Cut the selected elements"
-             icon="icons/cut.png"
+             icon="icons/cut.gif"
              keyboardShortcut="M1+X"
              name="Cut"
              transformation="cut"
-             transformationId="de.cau.cs.kieler.synccharts.ksbase.cut">
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.cut"
+             validation="isValidPartSelected">
        </transformation>
        <transformation
              tooltip="Copy the selected elements"
@@ -143,7 +144,8 @@
              keyboardShortcut="M1+C"
              name="Copy"
              transformation="copy"
-             transformationId="de.cau.cs.kieler.synccharts.ksbase.copy">
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.copy"
+             validation="isValidPartSelected">
        </transformation>
        <transformation
              tooltip="Paste the buffer contents"
@@ -151,7 +153,8 @@
              keyboardShortcut="M1+V"
              name="Paste"
              transformation="paste"
-             transformationId="de.cau.cs.kieler.synccharts.ksbase.paste">
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.paste"
+             validation="isValidPartSelected">
        </transformation>
        <transformation
              tooltip="Inserts a sstate between source and target of the transition"
