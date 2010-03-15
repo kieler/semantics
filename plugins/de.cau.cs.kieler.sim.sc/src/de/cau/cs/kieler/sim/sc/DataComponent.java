@@ -49,7 +49,7 @@ import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
-public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer{
+public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
 
     private WorkflowGenerator wf = null;
     private Process process = null;
@@ -87,7 +87,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             String compiler = (getProperties()[0]).getValue();
             String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
                     + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I " + bundleLocation
-                    + " " + "-o " + outPath + "simulation -lm -Dexternflags";
+                    + " " + "-o " + outPath
+                    + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
             process = Runtime.getRuntime().exec(compile);
 
             InputStream stderr = process.getErrorStream();
@@ -172,8 +173,8 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
             process.destroy();
         }
 
-		// System.out.println("incoming " + out.toString());
-		// System.out.println("outgoing " + jSONObject.toString());
+        // System.out.println("incoming " + out.toString());
+        // System.out.println("outgoing " + jSONObject.toString());
         return out;
     }
 
@@ -293,32 +294,32 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         out = tmp.toArray(new String[tmp.size()]);
         return out;
     }
-    
+
     private JSONObject boolToInt(JSONObject signals) {
-    	JSONObject out = signals;
+        JSONObject out = signals;
         Region myModel = (Region) (wf.getModel());
         List<Signal> signalList = myModel.getInnerStates().get(0).getSignals();
         for (Signal signal : signalList) {
-        	if (signal.getType().equals(ValueType.BOOL)) {
-        		String sig = signal.getName();
-        		try {
-        			JSONObject jSONSig = signals.getJSONObject(sig);
-        			if (!jSONSig.isNull("value")) {
-        				Object obj = jSONSig.get("value");
-        				int bool = 0;
-        				if (obj.equals(true) || obj.equals("t")) {
-        					bool = 1;
-        				}
-        				jSONSig.remove("value");
-        				jSONSig.put("value", bool);
-        				out.remove(sig);
-        				out.put(sig, jSONSig);
-        			}
-        		} catch (JSONException e) {
-        			e.printStackTrace();
-        		}
-			}
-		}
+            if (signal.getType().equals(ValueType.BOOL)) {
+                String sig = signal.getName();
+                try {
+                    JSONObject jSONSig = signals.getJSONObject(sig);
+                    if (!jSONSig.isNull("value")) {
+                        Object obj = jSONSig.get("value");
+                        int bool = 0;
+                        if (obj.equals(true) || obj.equals("t")) {
+                            bool = 1;
+                        }
+                        jSONSig.remove("value");
+                        jSONSig.put("value", bool);
+                        out.remove(sig);
+                        out.put(sig, jSONSig);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return out;
     }
 
@@ -337,9 +338,9 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
         String out = "";
         String[] debugInfos = s.split("DEBUGEND");
         for (String string : debugInfos[0].split("INFO")) {
-        	if (!string.equals("")) {
-        		System.out.println("SC Debug Info: " + string);
-			}
+            if (!string.equals("")) {
+                System.out.println("SC Debug Info: " + string);
+            }
         }
         String[] noDebugInfos = s.split("DEBUGEND");
         out = noDebugInfos[noDebugInfos.length - 1];
@@ -351,7 +352,7 @@ public class DataComponent extends JSONObjectDataComponent implements IAutomated
     }
 
     public String[] getSupportedExtensions() {
-        String[] test = {"kixs"};
+        String[] test = { "kixs" };
         return test;
     }
 
