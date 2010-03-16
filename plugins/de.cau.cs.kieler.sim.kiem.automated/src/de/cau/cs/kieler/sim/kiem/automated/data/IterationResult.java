@@ -50,8 +50,8 @@ public class IterationResult extends AbstractResult {
                 modelFile));
         super.addResult(new KiemProperty(IAutomatedComponent.ITERATION,
                 iteration + ""));
-        super.addResult(new KiemProperty(IAutomatedComponent.STATUS,
-                ResultStatus.labelOf(ResultStatus.CREATED)));
+        super.addResult(new KiemProperty(AbstractResult.STATUS, ResultStatus
+                .labelOf(ResultStatus.CREATED)));
         super.addResult(new KiemProperty(IterationResult.MESSAGE, ""));
         this.status = ResultStatus.CREATED;
     }
@@ -77,7 +77,7 @@ public class IterationResult extends AbstractResult {
         String value = ResultStatus.labelOf(statusParam);
 
         for (KiemProperty prop : super.getResults()) {
-            if (prop.getKey().equals(IAutomatedComponent.STATUS)) {
+            if (prop.getKey().equals(AbstractResult.STATUS)) {
                 prop.setValue(value);
             }
         }

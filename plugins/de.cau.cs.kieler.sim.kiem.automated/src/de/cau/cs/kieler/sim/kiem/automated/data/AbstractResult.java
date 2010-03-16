@@ -45,6 +45,9 @@ public abstract class AbstractResult {
     /** End tag for the list of children results. */
     private static final String CHILDREN_END_TAG = "</CHILDREN>";
 
+    /** Identifier for the status of the execution. */
+    public static final String STATUS = "Status";
+
     // --------------------------------------------------------------------------
 
     /** A list of children result, may be null. */

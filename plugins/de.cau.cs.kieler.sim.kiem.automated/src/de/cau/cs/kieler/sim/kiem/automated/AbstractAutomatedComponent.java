@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * Default implementation of an automated component.
  * 
  * @author soh
- * @kieler.rating 2010-03-16 proposed yellow
+ * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public abstract class AbstractAutomatedComponent extends
         JSONObjectDataComponent implements IAutomatedComponent {
@@ -39,7 +39,7 @@ public abstract class AbstractAutomatedComponent extends
     /**
      * The index of the current iteration.
      */
-    private int iteration;
+    private int iteration = -1;
 
     /**
      * This component doesn't support any files.
@@ -103,6 +103,26 @@ public abstract class AbstractAutomatedComponent extends
      */
     public int wantsMoreSteps() {
         return 0;
+    }
+
+    /**
+     * Getter for the model file retrieved from the parameter list. May be null
+     * if setParameters was not called.
+     * 
+     * @return the model file
+     */
+    protected IPath getModelFile() {
+        return modelFile;
+    }
+
+    /**
+     * Getter for the iteration index retrieved from the parameter list. May be
+     * -1 if setParameters was not called.
+     * 
+     * @return the iteration index
+     */
+    protected int getIteration() {
+        return iteration;
     }
 
 }

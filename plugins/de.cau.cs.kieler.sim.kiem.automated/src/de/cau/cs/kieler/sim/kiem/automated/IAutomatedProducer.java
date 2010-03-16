@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * requests for information about the execution run.
  * 
  * @author soh
- * @kieler.rating 2010-02-03 proposed yellow
+ * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public interface IAutomatedProducer extends IAutomatedComponent {
 

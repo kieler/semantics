@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
@@ -439,7 +438,7 @@ public class ExecutionFilePanel {
 
                 KiemProperty result = findProperty(columnIndex, iterationResult);
                 if (result != null) {
-                    if (result.getKey().equals(IAutomatedComponent.STATUS)) {
+                    if (result.getKey().equals(AbstractResult.STATUS)) {
                         String value = result.getValue();
                         if (value.equals(ResultStatus
                                 .labelOf(ResultStatus.CREATED))) {
@@ -483,7 +482,7 @@ public class ExecutionFilePanel {
                 KiemProperty result = findProperty(columnIndex, iterationResult);
 
                 if (result != null) {
-                    if (result.getKey().equals(IAutomatedComponent.STATUS)) {
+                    if (result.getKey().equals(AbstractResult.STATUS)) {
                         return "";
                     }
                     KiemPropertyType type = result.getType();

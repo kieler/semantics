@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * plugin.
  * 
  * @author soh
- * @kieler.rating 2010-02-03 proposed yellow
+ * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public interface IAutomatedComponent {
 
@@ -31,8 +31,6 @@ public interface IAutomatedComponent {
     String MODEL_FILE = "Model file";
     /** Identifier for the iteration. */
     String ITERATION = "Iteration";
-    /** Identifier for the status of the execution. */
-    String STATUS = "Status";
 
     /**
      * Give the component information. This at least contains the following
@@ -52,6 +50,12 @@ public interface IAutomatedComponent {
      * Getter for the list of model file extensions that are supported by the
      * component. Combinations of model files with execution files that don't
      * have at least one supporting component will not be executed.
+     * 
+     * If the component returns null or an empty list it will not be taken into
+     * consideration for determining which model file should be executed.
+     * However it will still be part of the execution. Thus it isn't necessary
+     * for components to return something here if another component in the
+     * schedule returns a list of extensions.
      * 
      * @return the list of supported model file extensions
      */

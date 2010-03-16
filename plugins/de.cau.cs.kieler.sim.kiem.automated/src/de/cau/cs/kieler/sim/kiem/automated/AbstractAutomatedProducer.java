@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * This is the default implementation of an automated producer.
  * 
  * @author soh
- * @kieler.rating 2010-03-16 proposed yellow
+ * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public abstract class AbstractAutomatedProducer extends
         AbstractAutomatedComponent implements IAutomatedProducer {
