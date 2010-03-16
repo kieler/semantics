@@ -30,42 +30,53 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
-
+/**
+ * DataComponent that observs the activity of states for highlighting.
+ * 
+ * @author soh
+ */
 public class StateActivityObserver extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
-    
-    /** FIXME: haf workaround: Singleton pattern to get simple access to the rootEditPart */
+
+    /**
+     * FIXME: haf workaround: Singleton pattern to get simple access to the
+     * rootEditPart
+     */
     public static StateActivityObserver INSTANCE = null;
 
+    /** ID for the view management. */
     private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
-    
+
+    /** If the edit part has been brought to front. */
     private boolean broughtToTheFront = false;
-//    private KiemProperty stateVariableProperty;
-//    private KiemProperty editorProperty;
+    // private KiemProperty stateVariableProperty;
+    // private KiemProperty editorProperty;
 
     /** The cached edit parts t be matched with FragmentURLs. */
     private HashMap<String, EditPart> cachedEditParts;
-
-    private HashMap<EditPart,String> cachedElementURIs;
+    /** The cached element URIs. */
+    private HashMap<EditPart, String> cachedElementURIs;
 
     /** The last highlighted states. */
     private List<String> lastHighlightedStates;
+
+    /** The root edit part. */
     EditPart rootEditPart;
-    
+
+    /** The trigger for tracking state activity. */
     private StateActivityTrigger trigger;
 
     // -------------------------------------------------------------------------
@@ -77,14 +88,16 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         super();
         INSTANCE = this;
     }
-    
+
     /**
      * This method brings the VM view to the front.
      */
     public void bringToFront() {
-        //just do this once in the lifetime of this plugin
-        if (broughtToTheFront) return;
-        else broughtToTheFront = true;
+        // just do this once in the lifetime of this plugin
+        if (broughtToTheFront) {
+            return;
+        }
+        broughtToTheFront = true;
         // bring VM view to the front (lazy loading)
         try {
             IWorkbenchWindow window = Activator.getDefault().getWorkbench()
@@ -95,175 +108,196 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
             e.printStackTrace();
         }
     }
-    
+
     /* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
-	 */
-	@Override
-	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
-		String kiemEditorProperty = this.getProperties()[0].getValue();
-		
-		//only check non-empty property (this is optional)
-		if (!kiemEditorProperty.equals("")) {
-			if (getEditor(kiemEditorProperty) == null) {
-				//this is an error, probably the selected editor isnt open any more
-				//or the file(name) opened has changed
-				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
-						" does not exist. Please ensure that an opened editor is selected and" +
-						"the file name matches.\n\nIf you want the currently active editor to be" +
-						"simulated make sure the (optional) editor property is empty!");
-			}
-		}
-                if (this.getInputEditor() == null) {
-                    throw new KiemPropertyException("There exists no active editor.\n"+
-                            "Please ensure that an opened editor is selected and" +
-                            "the file name matches.\n\nIf you want the currently active editor to be" +
-                            "simulated make sure the (optional) editor property is empty!");
-                }
-		
-    	
-	}
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
+     */
+    @Override
+    public void checkProperties(KiemProperty[] properties)
+            throws KiemPropertyException {
+        String kiemEditorProperty = this.getProperties()[0].getValue();
+
+        // only check non-empty property (this is optional)
+        if (!kiemEditorProperty.equals("")) {
+            if (getEditor(kiemEditorProperty) == null) {
+                // this is an error, probably the selected editor isnt open any
+                // more
+                // or the file(name) opened has changed
+                throw new KiemPropertyException(
+                        "The selected editor '"
+                                + kiemEditorProperty
+                                + "'"
+                                + " does not exist. Please ensure that an opened editor is selected and"
+                                + "the file name matches.\n\nIf you want the currently active editor to be"
+                                + "simulated make sure the (optional) editor property is empty!");
+            }
+        }
+        if (this.getInputEditor() == null) {
+            throw new KiemPropertyException(
+                    "There exists no active editor.\n"
+                            + "Please ensure that an opened editor is selected and"
+                            + "the file name matches.\n\nIf you want the currently active editor to be"
+                            + "simulated make sure the (optional) editor property is empty!");
+        }
+
+    }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Getter for the editor.
+     * 
+     * @param kiemEditorProperty
+     *            the id of the editor
+     * @return the editor
+     */
     DiagramEditor getEditor(String kiemEditorProperty) {
-		if ((kiemEditorProperty == null)||(kiemEditorProperty.length() == 0))
-		 	return null;
-		
-        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
+        if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
+            return null;
+        }
+
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty,
+                " ()");
         if (tokenizer.hasMoreTokens()) {
-        	String fileString = tokenizer.nextToken(); 
-        	String editorString = tokenizer.nextToken();
+            String fileString = tokenizer.nextToken();
+            String editorString = tokenizer.nextToken();
 
-             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                     .getActiveWorkbenchWindow().getActivePage()
-                     .getEditorReferences();
-             for (int i = 0; i < editorRefs.length; i++) {
-                 if (editorRefs[i].getId().equals(editorString)) {
-                     IEditorPart editor = editorRefs[i].getEditor(true);
-                     if (editor instanceof DiagramEditor) {
-                    	 //test if correct file
-                    	 if (fileString.equals(editor.getTitle())) {
-                    		 return (DiagramEditor) editor;
-//                             rootEditPart = ((DiagramEditor) editor)
-//                                     .getDiagramEditPart();
-//                             break;
-                    	 }
-                     }
-                 }
-             }
-         }
-		return null;
-	}
+            IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getActivePage()
+                    .getEditorReferences();
+            for (int i = 0; i < editorRefs.length; i++) {
+                if (editorRefs[i].getId().equals(editorString)) {
+                    IEditorPart editor = editorRefs[i].getEditor(true);
+                    if (editor instanceof DiagramEditor) {
+                        // test if correct file
+                        if (fileString.equals(editor.getTitle())) {
+                            return (DiagramEditor) editor;
+                            // rootEditPart = ((DiagramEditor) editor)
+                            // .getDiagramEditPart();
+                            // break;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-    @SuppressWarnings("unchecked")
-	public EditPart getEditPart(String elementURIFragment, 
-    								   EditPart parent) {
-//cache turned off, EditParts seem to be volatile
-//    	if (cachedEditParts == null) {
-//        	// if hashmap is not initialized, create it
-//    		cachedEditParts = new HashMap<String,EditPart>();
-//    		cachedElementURIs = new HashMap<EditPart,String>();
-//    	}
-//    	else {
-//        	//try to get from hashmap first
-//    		if (cachedEditParts.containsKey(elementURIFragment))
-//    			return cachedEditParts.get(elementURIFragment);
-//    	}
-      cachedEditParts = new HashMap<String,EditPart>();
-      cachedElementURIs = new HashMap<EditPart,String>();
-    	
-      try {
-          List<EditPart> children = parent.getChildren();
-          for (Object child : children) {
-              if (child instanceof ShapeEditPart) {
-                  View view = (View) ((ShapeEditPart) child).getModel();
-                  EObject modelElement = view.getElement();
-                          if (modelElement.equals(
-                                          modelElement.eResource()
-                                          .getEObject(elementURIFragment))) {
-                          //first cache for later calls
-                          cachedEditParts.put(
-                                          elementURIFragment, 
-                                          (ShapeEditPart) child);
-                          cachedElementURIs.put(
-                                          (ShapeEditPart) child, 
-                                          elementURIFragment);
-                          //then return
-                          return (ShapeEditPart) child;
-                          }
-                          
-              }
-              // if node was not found yet, search recursively
-              if (child instanceof EditPart) {
-                  EditPart result = getEditPart(elementURIFragment,
-                                                                            (EditPart) child);
-                  if (result != null) {
-                      return result;
-                  }
-              }
-          }
-      }catch(Exception e) {
-          return null;
-      }
+    /**
+     * This method searches recursively for an EditPart using the modelElement
+     * URIFragment provided. The latter can be obtained by calling:
+     * 
+     * myEObject.eResource().getURIFragment(myEObject).toString();
+     * 
+     * This returns the URI fragment that, when passed to getEObject will return
+     * the given object.
+     * 
+     * @param elementURIFragment
+     *            the URIFragment of the EObject to search for
+     * @param parent
+     *            the parent EditPart
+     * 
+     * @return the EditPart of the EObject
+     */
+    public EditPart getEditPart(final String elementURIFragment,
+            final EditPart parent) {
+        // cache turned off, EditParts seem to be volatile
+        // if (cachedEditParts == null) {
+        // // if hashmap is not initialized, create it
+        // cachedEditParts = new HashMap<String,EditPart>();
+        // cachedElementURIs = new HashMap<EditPart,String>();
+        // }
+        // else {
+        // //try to get from hashmap first
+        // if (cachedEditParts.containsKey(elementURIFragment))
+        // return cachedEditParts.get(elementURIFragment);
+        // }
+        cachedEditParts = new HashMap<String, EditPart>();
+        cachedElementURIs = new HashMap<EditPart, String>();
+
+        try {
+            List<EditPart> children = parent.getChildren();
+            for (Object child : children) {
+                if (child instanceof ShapeEditPart) {
+                    View view = (View) ((ShapeEditPart) child).getModel();
+                    EObject modelElement = view.getElement();
+                    if (modelElement.equals(modelElement.eResource()
+                            .getEObject(elementURIFragment))) {
+                        // first cache for later calls
+                        cachedEditParts.put(elementURIFragment,
+                                (ShapeEditPart) child);
+                        cachedElementURIs.put((ShapeEditPart) child,
+                                elementURIFragment);
+                        // then return
+                        return (ShapeEditPart) child;
+                    }
+
+                }
+                // if node was not found yet, search recursively
+                if (child instanceof EditPart) {
+                    EditPart result = getEditPart(elementURIFragment,
+                            (EditPart) child);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return null;
+        }
         // we did not find anything in this trunk
         return null;
     }
 
     /**
-     * This method searches recursively for an EditPart using the 
-     * modelElement URIFragment provided. The latter can be 
-     * obtained by calling:
+     * Getter for the element URI
      * 
-     * myEObject.eResource().getURIFragment(myEObject).toString();
-     * 
-     * This returns the URI fragment that, when passed to getEObject
-     * will return the given object.
-     * 
-     * @param elementURIFragment the URIFragment of the EObject to 
-     * 		  search for
-     * @param parent the parent EditPart
-     * 
-     * @return the EditPart of the EObject
+     * @param editPart
+     *            the edit part
+     * @return the URI
      */
-    @SuppressWarnings("unchecked")
-	public String getElementURIFragment(EditPart editPart) {
-    	if (cachedElementURIs != null) {
-    		if (cachedElementURIs.containsKey(editPart))
-    			return cachedElementURIs.get(editPart);
-    	}
-    	return "";   	
+    public String getElementURIFragment(final EditPart editPart) {
+        if (cachedElementURIs != null) {
+            if (cachedElementURIs.containsKey(editPart)) {
+                return cachedElementURIs.get(editPart);
+            }
+        }
+        return "";
     }
-    
-    
+
+    /**
+     * Getter for the editor.
+     * 
+     * @return the editor.
+     */
     DiagramEditor getInputEditor() {
-		String kiemEditorProperty = this.getProperties()[0].getValue();
-		DiagramEditor diagramEditor = null;
-		
-		//get the active editor as a default case (if property is empty)
-		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		IEditorPart editor = activePage.getActiveEditor();
-	    if (editor instanceof DiagramEditor) {
-	                diagramEditor = (DiagramEditor) editor;
-	    }
-		
-		//only check non-empty and valid property (this is optional)
-		if (!kiemEditorProperty.equals("")) {
-			if (getEditor(kiemEditorProperty) != null) {
-					diagramEditor = getEditor(kiemEditorProperty);
-			}
-		}
-		return diagramEditor;
-	}
-    
-    
+        String kiemEditorProperty = this.getProperties()[0].getValue();
+        DiagramEditor diagramEditor = null;
+
+        // get the active editor as a default case (if property is empty)
+        IWorkbenchPage activePage = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
+        IEditorPart editor = activePage.getActiveEditor();
+        if (editor instanceof DiagramEditor) {
+            diagramEditor = (DiagramEditor) editor;
+        }
+
+        // only check non-empty and valid property (this is optional)
+        if (!kiemEditorProperty.equals("")) {
+            if (getEditor(kiemEditorProperty) != null) {
+                diagramEditor = getEditor(kiemEditorProperty);
+            }
+        }
+        return diagramEditor;
+    }
+
     /**
      * @return the rootEditPart
      */
     public EditPart getRootEditPart() {
         return rootEditPart;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -271,38 +305,42 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      */
     public void initialize() throws KiemInitializationException {
         try {
-            //bring to front VM
+            // bring to front VM
             bringToFront();
             rootEditPart = getInputEditor().getDiagramEditPart();
-            if (RunLogic.getInstance() == null) 
-                throw new KiemInitializationException("Cannot initialize view management!", true, null);
+            if (RunLogic.getInstance() == null) {
+                throw new KiemInitializationException(
+                        "Cannot initialize view management!", true, null);
+            }
             RunLogic.getInstance().registerListeners();
-        }
-        catch(Exception e) {
-            throw new KiemInitializationException("Cannot initialize view management!", true, e);
+        } catch (Exception e) {
+            throw new KiemInitializationException(
+                    "Cannot initialize view management!", true, e);
         }
     }
-      
+
+    @Override
     public boolean isDeltaObserver() {
-    	return false;
+        return false;
     }
 
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
      */
+    @Override
     public boolean isHistoryObserver() {
         return true;
     }
-	
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-//    String translateToURI(EditPart editPart) {
-//    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
-//    }
-    
-    //-------------------------------------------------------------------------
-    
+    // String translateToURI(EditPart editPart) {
+    // return
+    // ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
+    // }
+
+    // -------------------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -311,8 +349,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     public boolean isObserver() {
         return true;
     }
-    
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -322,25 +359,27 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         return false;
     }
 
-    //-------------------------------------------------------------------------
-    
-	/*
+    // -------------------------------------------------------------------------
+
+    /*
      * (non-Javadoc)
      * 
      * @see
      * de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
      */
+    @Override
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
+        KiemProperty[] properties = new KiemProperty[3];
         properties[0] = new KiemProperty("SyncChart Editor",
-        		new KiemPropertyTypeEditor(), "");
+                new KiemPropertyTypeEditor(), "");
         properties[1] = new KiemProperty("state variable", "state");
+        properties[2] = new KiemProperty("transition variable", "transition");
         return properties;
     }
-	
-    //-------------------------------------------------------------------------	 
 
-	/*
+    // -------------------------------------------------------------------------
+
+    /*
      * (non-Javadoc)
      * 
      * @see
@@ -350,163 +389,198 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     public JSONObject step(JSONObject data) throws KiemExecutionException {
         trigger = StateActivityTrigger.instance;
         String stateVariableKey = this.getProperties()[1].getValue();
-        
-//        //debug!!!//
-//        try {
-//			data.accumulate("state", ", , , //@innerStates.0/@regions.0/@innerStates.0, , , //@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0, , //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0");
-//		} catch (JSONException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-        
+        String transitionVariableKey = this.getProperties()[2].getValue();
+
+        // //debug!!!//
+        // try {
+        // data.accumulate("state",
+        // ", , , //@innerStates.0/@regions.0/@innerStates.0, , , //@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0, , //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0");
+        // } catch (JSONException e1) {
+        // 
+        // e1.printStackTrace();
+        // }
+
         try {
             // some sanity checks
-            if (trigger != null && rootEditPart != null
-                    && data.has(stateVariableKey)) {
-            	//set the rootEditPart
-            	ActiveStateHighlightCombination.getInstance().setRootEditPart(rootEditPart);
-            	
-                // find all states that are active
-                Object stateData = data.get(stateVariableKey);
-                StringTokenizer tokenizer = new StringTokenizer(stateData
-                        .toString(), " ,");
-                List<EditPart> highlightedStates = new ArrayList<EditPart>();
-                List<String> highlightedStatesURI = new ArrayList<String>();
-                
-                //remember what states already were considered 
-                LinkedList<String> consideredStates = new LinkedList<String>(); 
+            if (trigger != null
+                    && rootEditPart != null
+                    && (data.has(stateVariableKey) || data
+                            .has(transitionVariableKey))) {
+                // set the rootEditPart
+                ActiveStateHighlightCombination.getInstance().setRootEditPart(
+                        rootEditPart);
 
-                while (tokenizer.hasMoreElements()) {
-                    String stateName = tokenizer.nextToken();
-                    
-                    //check if this is a new state (no duplicate)
-                    boolean newState = true;
-                    for (String consideredState: consideredStates) {
-                        if (consideredState.equals(stateName)) {
-                            newState = false;
-                            break;
-                        }
-                    }
-                    if (!newState) {
-                        //do not consider already considered states
-                        continue;
-                    }
-                    //add to considered states
-                    consideredStates.add(stateName);
-                    
-                    // notify the viewmanagement about this active state
-                    TriggerEventObject triggerEvent = new TriggerEventObject();
-                    EditPart affectedState = getEditPart(stateName, rootEditPart);
-                    
-                    if (affectedState == null) {
-                        //this might be a harmless error trying to view something that
-                        //is permanently not there
-                        //the conclusion is wrong that the editor is closed!
-                        //this is more likely if something that was there, isnt any more
-                        //(see below)
-                        continue;
-                        //throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
-                        // 		"You should stop (and restart) the currently running simulation!\n\n", false,
-                        //   null);                                
-                    }
-                    
-                    highlightedStates.add(affectedState);
-                    // a state is already highlighted
-                    System.out.println("VIEW MANAGEMENT:"+stateName);
-                    
-                    highlightedStatesURI.add(stateName);
-                    // a state is already highlighted
-                    if(lastHighlightedStates != null && 
-                    		lastHighlightedStates.contains(stateName))
-                        continue;
-                    
-
-                    //triggerEvent.setAffectedObject(stateName); 
-                    //trigger.translateToURI((Object)affectedState));
-                    try {
-                        triggerEvent.setAffectedObject(((View)affectedState.getModel()).getElement());
-                    }
-                    catch(Exception e){
-                        //if this fails, most likely the EditPart does not exist anymore
-                        e.printStackTrace();
-                    }
-
-                    //triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
-
-                    triggerEvent.setTriggerActive(true);
-                    trigger.notifyTrigger2(triggerEvent);
+                if (data.has(stateVariableKey)) {
+                    // find all states that are active
+                    highlightStates(data, stateVariableKey);
                 }
-                
-                // find all states that are not highlighted anymore
-                if (lastHighlightedStates != null) {
-                	//the following states are currently highlighted
-                    for (String editPartURI : highlightedStatesURI){
-                    	lastHighlightedStates.remove(editPartURI);
-                    	System.out.println("LEAVE:"+editPartURI);
-                    }
-                    for (String editPartURI : lastHighlightedStates) {
-                        TriggerEventObject triggerEvent = new TriggerEventObject();
-
-                    	EditPart ep = getEditPart(editPartURI, rootEditPart);
-                        if (ep == null) {
-                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
-                                    "You should stop (and restart) the currently running simulation!\n\n", false,
-                       null);                                
-                        }
-                    	
-                        EObject eObject =  trigger.translateToEObject(ep);
-                        triggerEvent.setAffectedObject(eObject);
-//                        
-//                        
-//                        	((View)ActiveStateHighlightCombination.getInstance()
-//                        		.translateToEditPart(editPartURI, rootEditPart).getModel()).getElement();
-
-//                        triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
-
-                        System.out.println("REMOVE:"+editPartURI);
-                        triggerEvent.setTriggerActive(false);
-                        trigger.notifyTrigger2(triggerEvent);
-                    }
-                }//end if
-                lastHighlightedStates = highlightedStatesURI;
+                if (data.has(transitionVariableKey)) {
+                    highlightStates(data, transitionVariableKey);
+                }
 
             }
         } catch (JSONException e) {
             /* nothing */
-            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,  new Exception());
+            throw new KiemExecutionException(
+                    "SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.",
+                    false, new Exception());
         } finally {
-            ;        
+            ;
         }
         return null;
     }
-	
-    //-------------------------------------------------------------------------	 
-	
-	/*
+
+    /**
+     * @param data
+     * @param stateVariableKey
+     * @throws JSONException
+     * @throws KiemExecutionException
+     */
+    private void highlightStates(final JSONObject data,
+            final String stateVariableKey) throws JSONException,
+            KiemExecutionException {
+        Object stateData = data.get(stateVariableKey);
+        StringTokenizer tokenizer = new StringTokenizer(stateData.toString(),
+                " ,");
+        List<EditPart> highlightedStates = new ArrayList<EditPart>();
+        List<String> highlightedStatesURI = new ArrayList<String>();
+
+        // remember what states already were considered
+        LinkedList<String> consideredStates = new LinkedList<String>();
+
+        while (tokenizer.hasMoreElements()) {
+            String stateName = tokenizer.nextToken();
+
+            // check if this is a new state (no duplicate)
+            boolean newState = true;
+            for (String consideredState : consideredStates) {
+                if (consideredState.equals(stateName)) {
+                    newState = false;
+                    break;
+                }
+            }
+            if (!newState) {
+                // do not consider already considered states
+                continue;
+            }
+            // add to considered states
+            consideredStates.add(stateName);
+
+            // notify the viewmanagement about this active state
+            TriggerEventObject triggerEvent = new TriggerEventObject();
+            EditPart affectedState = getEditPart(stateName, rootEditPart);
+
+            if (affectedState == null) {
+                // this might be a harmless error trying to view
+                // something that
+                // is permanently not there
+                // the conclusion is wrong that the editor is closed!
+                // this is more likely if something that was there, isnt
+                // any more
+                // (see below)
+                continue;
+                // throw new
+                // KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
+                // +
+                // "You should stop (and restart) the currently running simulation!\n\n",
+                // false,
+                // null);
+            }
+
+            highlightedStates.add(affectedState);
+            // a state is already highlighted
+            System.out.println("VIEW MANAGEMENT:" + stateName);
+
+            highlightedStatesURI.add(stateName);
+            // a state is already highlighted
+            if (lastHighlightedStates != null
+                    && lastHighlightedStates.contains(stateName)) {
+                continue;
+            }
+
+            // triggerEvent.setAffectedObject(stateName);
+            // trigger.translateToURI((Object)affectedState));
+            try {
+                triggerEvent
+                        .setAffectedObject(((View) affectedState.getModel())
+                                .getElement());
+            } catch (Exception e) {
+                // if this fails, most likely the EditPart does not
+                // exist anymore
+                e.printStackTrace();
+            }
+
+            // triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState));
+            // //???//
+
+            triggerEvent.setTriggerActive(true);
+            trigger.notifyTrigger2(triggerEvent);
+        }
+
+        // find all states that are not highlighted anymore
+        if (lastHighlightedStates != null) {
+            // the following states are currently highlighted
+            for (String editPartURI : highlightedStatesURI) {
+                lastHighlightedStates.remove(editPartURI);
+                System.out.println("LEAVE:" + editPartURI);
+            }
+            for (String editPartURI : lastHighlightedStates) {
+                TriggerEventObject triggerEvent = new TriggerEventObject();
+
+                EditPart ep = getEditPart(editPartURI, rootEditPart);
+                if (ep == null) {
+                    throw new KiemExecutionException(
+                            "SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
+                                    + "You should stop (and restart) the currently running simulation!\n\n",
+                            false, null);
+                }
+
+                EObject eObject = trigger.translateToEObject(ep);
+                triggerEvent.setAffectedObject(eObject);
+                //                        
+                //                        
+                // ((View)ActiveStateHighlightCombination.getInstance()
+                // .translateToEditPart(editPartURI,
+                // rootEditPart).getModel()).getElement();
+
+                // triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
+
+                System.out.println("REMOVE:" + editPartURI);
+                triggerEvent.setTriggerActive(false);
+                trigger.notifyTrigger2(triggerEvent);
+            }
+        }// end if
+        lastHighlightedStates = highlightedStatesURI;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
      * (non-Javadoc)
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
      */
     public void wrapup() {
-    	//clean up all visual effects
-//        StateActivityTrigger trigger = StateActivityTrigger.instance;
-//        for (String editPartURI : lastHighlightedStates) {
-//            TriggerEventObject triggerEvent = new TriggerEventObject();
-//            triggerEvent.setAffectedObject(editPartURI);
-//            System.out.println("REMOVE:"+editPartURI);
-//            triggerEvent.setTriggerActive(false);
-//            trigger.notifyTrigger(triggerEvent);
-//        }
-    	try {
+        // clean up all visual effects
+        // StateActivityTrigger trigger = StateActivityTrigger.instance;
+        // for (String editPartURI : lastHighlightedStates) {
+        // TriggerEventObject triggerEvent = new TriggerEventObject();
+        // triggerEvent.setAffectedObject(editPartURI);
+        // System.out.println("REMOVE:"+editPartURI);
+        // triggerEvent.setTriggerActive(false);
+        // trigger.notifyTrigger(triggerEvent);
+        // }
+        try {
             ActiveStateHighlightCombination.getInstance().undoEffects();
-    	}catch(Exception e){}
-    	try {
+        } catch (Exception e) {
+        }
+        try {
             cachedEditParts.clear();
             cachedElementURIs.clear();
             lastHighlightedStates.clear();
-    	}catch(Exception e){}
+        } catch (Exception e) {
+        }
         rootEditPart = null;
     }
-		
 
 }
