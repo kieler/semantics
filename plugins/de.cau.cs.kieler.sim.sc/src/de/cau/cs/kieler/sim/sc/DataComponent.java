@@ -36,11 +36,11 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -49,7 +49,7 @@ import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
-public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public class DataComponent extends AbstractAutomatedProducer {
 
     private WorkflowGenerator wf = null;
     private Process process = null;
