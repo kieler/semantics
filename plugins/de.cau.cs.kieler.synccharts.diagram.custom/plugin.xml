@@ -438,5 +438,30 @@
          </Priority>
       </editpolicyProvider>
    </extension>
+      <extension
+            point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">
+         <GlobalActionHandlerProvider
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.CutCopyPasteHandler"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.CutCopyPasteHandler">
+            <Priority
+                  name="Lowest">
+            </Priority>
+            <ViewId
+                  id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+               <ElementType
+                     class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+                  <GlobalActionId
+                        actionId="cut">
+                  </GlobalActionId>
+                  <GlobalActionId
+                        actionId="copy">
+                  </GlobalActionId>
+                  <GlobalActionId
+                        actionId="paste">
+                  </GlobalActionId>
+               </ElementType>
+            </ViewId>
+         </GlobalActionHandlerProvider>
+      </extension>
 
 </plugin>

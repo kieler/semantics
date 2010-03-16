@@ -27,36 +27,28 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
  * synccharts diagram.
  * 
  * @author soh
+ * @kieler.rating 2010-03-12 proposed yellow
  */
 public class DeletionPolicy extends DeletionPolicyProvider {
 
     @Override
     public boolean isUnremovableEditPart(final EditPart editPart) {
-        boolean result = true;
         if (editPart instanceof Region2EditPart) {
-            result = false;
+            return false;
+        } else if (editPart instanceof RegionEditPart) {
+            return false;
+        } else if (editPart instanceof State2EditPart) {
+            return false;
+        } else if (editPart instanceof StateEditPart) {
+            return false;
+        } else /*if (editPart instanceof StateSignal2EditPart) {
+               return false;
+               } else if (editPart instanceof StateSignalEditPart) {
+               return false;
+               } else */if (editPart instanceof TransitionEditPart) {
+            return false;
         }
-        if (editPart instanceof RegionEditPart) {
-            result = false;
-        }
-        if (editPart instanceof State2EditPart) {
-            result = false;
-        }
-        if (editPart instanceof StateEditPart) {
-            result = false;
-        }
-        /*
-        if (editPart instanceof StateSignal2EditPart) {
-            result = false;
-        }
-        if (editPart instanceof StateSignalEditPart) {
-            result = false;
-        }
-        */
-        if (editPart instanceof TransitionEditPart) {
-            result = false;
-        }
-        return result;
+        return true;
     }
 
 }
