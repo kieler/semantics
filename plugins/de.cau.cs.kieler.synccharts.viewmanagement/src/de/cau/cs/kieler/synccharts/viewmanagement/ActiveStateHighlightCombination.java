@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.viewmanagement.ACombination;
 import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
@@ -61,36 +62,33 @@ public class ActiveStateHighlightCombination extends ACombination {
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
         if (rootEditPart != null) {
-            EditPart editPart = this.translateToEditPart(triggerEvent
-                    .getAffectedObject().eResource().getURIFragment(
-                            triggerEvent.getAffectedObject()), // ???//
-                    rootEditPart);
-            if (editPart instanceof ShapeEditPart) {
-                triggerEvent.getAffectedObject();
-                if (triggerEvent.getTriggerState()
-                        && !effects.containsKey(editPart)) {
+            EObject eObject = triggerEvent.getAffectedObject();
+            EditPart editPart = ModelingUtil.getEditPart(eObject, rootEditPart);
+            // triggerEvent.getAffectedObject();
+            if (triggerEvent.getTriggerState()
+                    && !effects.containsKey(editPart)) {
 
-                    // if (layoutEffect == null) {
-                    // layoutEffect = new LayoutEffect();
-                    // layoutEffect.setTarget(this.rootEditPart);
-                    // }
-                    ShapeHighlightEffect effect = new ShapeHighlightEffect();
-                    // HighlightEffect effect = new HighlightEffect();
-                    effect.setTarget(editPart);
-                    // effect.setHighlightFigure(3, ColorConstants.red );
-                    effect.setColors(ColorConstants.red, null);
+                // if (layoutEffect == null) {
+                // layoutEffect = new LayoutEffect();
+                // layoutEffect.setTarget(this.rootEditPart);
+                // }
+                ShapeHighlightEffect effect = new ShapeHighlightEffect();
+                // HighlightEffect effect = new HighlightEffect();
+                effect.setTarget(editPart);
+                // effect.setHighlightFigure(3, ColorConstants.red );
+                effect.setColors(ColorConstants.red, null);
 
-                    effects.put(editPart, effect);
-                    return true;
-                } else if (!triggerEvent.getTriggerState()) {
-                    // HighlightEffect effect = effects.get(editPart);
-                    ShapeHighlightEffect effect = effects.get(editPart);
-                    if (effect != null) {
-                        effect.undo();
-                    }
-                    effects.remove(editPart);
+                effects.put(editPart, effect);
+                return true;
+            } else if (!triggerEvent.getTriggerState()) {
+                // HighlightEffect effect = effects.get(editPart);
+                ShapeHighlightEffect effect = effects.get(editPart);
+                if (effect != null) {
+                    effect.undo();
                 }
+                effects.remove(editPart);
             }
+
         }
         // if ((translateToEditPart(triggerEvent.getAffectedObject(),
         // rootEditPart)) instanceof EditPart) {

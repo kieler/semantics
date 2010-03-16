@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -40,6 +41,8 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
@@ -185,6 +188,20 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
         try {
             List<EditPart> children = parent.getChildren();
+            EObject modelElem = ((View) parent.getModel()).getElement();
+            if (modelElem instanceof State) {
+                State state = (State) modelElem;
+                for (Transition t : state.getOutgoingTransitions()) {
+                    if (t.equals(t.eResource().getEObject(elementURIFragment))) {
+                        EditPart part = ModelingUtil.getEditPart(t, parent);
+                        // first cache for later calls
+                        cachedEditParts.put(elementURIFragment, part);
+                        cachedElementURIs.put(part, elementURIFragment);
+                        // then return
+                        return part;
+                    }
+                }
+            }
             for (Object child : children) {
                 if (child instanceof ShapeEditPart) {
                     View view = (View) ((ShapeEditPart) child).getModel();
