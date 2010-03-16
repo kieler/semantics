@@ -31,8 +31,9 @@ import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
+import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
-import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.ComponentResult;
+import de.cau.cs.kieler.sim.kiem.automated.data.ModelResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.CancelStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecker;
@@ -68,7 +69,7 @@ public final class AutomationManager implements StatusListener {
     /** The results of the currently running execution. */
     private IterationResult currentResult;
     /** Holds the list of faulty results at the beginning of the execution file. */
-    private List<IterationResult> cachedResults;
+    private List<AbstractResult> cachedResults;
 
     /**
      * The list of all components that want to be notified when something
@@ -290,14 +291,14 @@ public final class AutomationManager implements StatusListener {
      *            the list of properties
      * @param results
      *            the list of results
-     * @param execution
+     * @param executionFile
      *            the path to the execution file
      */
     private void executeExecutionFile(final List<IPath> modelFiles,
             final List<KiemProperty> properties,
-            final List<IterationResult> results, final IPath execution) {
+            final List<IterationResult> results, final IPath executionFile) {
         try {
-            KiemPlugin.getDefault().openFile(execution, true);
+            KiemPlugin.getDefault().openFile(executionFile, true);
         } catch (IOException e0) {
             // execution file not found, write to error log
             KiemPlugin.getDefault().showError("Execution file missing.",
@@ -308,10 +309,11 @@ public final class AutomationManager implements StatusListener {
         // load timeout here as execution file might carry his own timeout
         CancelManager.loadTimeout();
         // create a new table on the panel
-        addExecutionFileToPanel(execution);
+        addExecutionFileToPanel(executionFile);
 
         // set up adding of results to the table
-        cachedResults = new LinkedList<IterationResult>();
+        cachedResults = new LinkedList<AbstractResult>();
+        List<AbstractResult> cachedModelResults = new LinkedList<AbstractResult>();
         boolean firstModelFirstRun = true;
 
         List<String> supportedFiles = askForSupportedFiles();
@@ -320,7 +322,11 @@ public final class AutomationManager implements StatusListener {
 
             if (supportedFiles.contains(model.getFileExtension().trim())) {
                 firstModelFirstRun = executeModelFile(properties, results,
-                        execution, firstModelFirstRun, model);
+                        executionFile, firstModelFirstRun, model);
+
+                ModelResult modelResult = new ModelResult(model.toOSString());
+                getModelFileResultsFromProducers(modelResult);
+                cachedModelResults.add(modelResult);
             }
             CancelManager.getInstance().resetModelFileCancel();
 
@@ -333,6 +339,7 @@ public final class AutomationManager implements StatusListener {
         }
 
         flushCachedResults();
+        addModelFileResultsToPanel(cachedModelResults, executionFile);
     }
 
     // --------------------------------------------------------------------------
@@ -388,7 +395,8 @@ public final class AutomationManager implements StatusListener {
                 addResultToPanel();
             }
 
-            notifyObservers(model, iteration, properties);
+            // notifyObservers(model, iteration, properties);
+
             // execute
             executeIteration();
 
@@ -423,13 +431,22 @@ public final class AutomationManager implements StatusListener {
             // update the view through the display thread
             refreshView();
 
+            // canceled = manager.isModelFileCanceled() !=
+            // CancelStatus.NOT_CANCELED;
+            // if (remainingRuns == 0 && !canceled) {
+            // // estimated number of runs finished, ask again
+            // remainingRuns = askForMoreRuns();
+            // }
+            //
+            // iteration++;
             canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
-            if (remainingRuns == 0 && !canceled) {
-                // estimated number of runs finished, ask again
-                remainingRuns = askForMoreRuns();
+            if (!canceled) {
+                iteration++;
+                notifyObservers(model, iteration, properties);
+                if (remainingRuns == 0) {
+                    remainingRuns = askForMoreRuns();
+                }
             }
-
-            iteration++;
         }
 
         return result;
@@ -518,7 +535,6 @@ public final class AutomationManager implements StatusListener {
      */
     private void addExecutionFileToPanel(final IPath executionFile) {
         KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-
             /**
              * {@inheritDoc}
              */
@@ -526,6 +542,30 @@ public final class AutomationManager implements StatusListener {
                 AutomatedEvalView automatedView = KiemAutomatedPlugin
                         .getAutomatedEvalView();
                 currentPanel = automatedView.addExecutionFile(executionFile);
+            }
+        });
+    }
+
+    /**
+     * Adds the results of all model files under the given execution file.
+     * 
+     * @param modelResults
+     *            the list of model file results.
+     * @param executionFile
+     *            the execution file
+     */
+    private void addModelFileResultsToPanel(
+            final List<AbstractResult> modelResults, final IPath executionFile) {
+        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
+            /**
+             * {@inheritDoc}
+             */
+            public void run() {
+                AutomatedEvalView automatedView = KiemAutomatedPlugin
+                        .getAutomatedEvalView();
+                ExecutionFilePanel panel = automatedView
+                        .addExecutionFile(executionFile);
+                panel.addResult(modelResults);
             }
         });
     }
@@ -559,7 +599,7 @@ public final class AutomationManager implements StatusListener {
                         cachedResults.add(currentResult);
                     }
                     currentPanel.addResult(cachedResults);
-                    cachedResults = new LinkedList<IterationResult>();
+                    cachedResults = new LinkedList<AbstractResult>();
                 }
             }
         });
@@ -750,12 +790,12 @@ public final class AutomationManager implements StatusListener {
     }
 
     /**
-     * Get the execution results from the list of IAutomatedProducers.
+     * Get the iteration results from the list of IAutomatedProducers.
      * 
-     * @param execResult
-     *            the results of the execution run.
+     * @param iterationResult
+     *            the results of the iteration.
      */
-    private void getResultsFromProducers(final AbstractResult execResult) {
+    private void getResultsFromProducers(final AbstractResult iterationResult) {
 
         for (IAutomatedComponent comp : getRelevantComponents()) {
 
@@ -766,9 +806,34 @@ public final class AutomationManager implements StatusListener {
                 String name = ((AbstractDataComponent) comp).getName();
 
                 ComponentResult result = new ComponentResult(name);
-                execResult.addChild(result);
+                iterationResult.addChild(result);
 
                 result.setResults(producer.produceInformation());
+            }
+        }
+    }
+
+    /**
+     * Get the model file results from the list of IAutomatedProducers.
+     * 
+     * @param modelFileResult
+     *            the results of the model file.
+     */
+    private void getModelFileResultsFromProducers(
+            final AbstractResult modelFileResult) {
+
+        for (IAutomatedComponent comp : getRelevantComponents()) {
+
+            if (comp instanceof IAutomatedProducer) {
+                // filter out all producers
+                IAutomatedProducer producer = (IAutomatedProducer) comp;
+                // producers should be data components, get the name
+                String name = ((AbstractDataComponent) comp).getName();
+
+                ComponentResult result = new ComponentResult(name);
+                modelFileResult.addChild(result);
+
+                result.setResults(producer.produceModelFileInformation());
             }
         }
     }

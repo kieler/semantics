@@ -102,47 +102,6 @@ public class IterationResult extends AbstractResult {
     // --------------------------------------------------------------------------
 
     /**
-     * The result for a single DataComponent (that implements the
-     * IAutomatedProducer interface). It contains at least the components name
-     * and a list of values that the component wants to publish.
-     * 
-     * @author soh
-     * @kieler.rating 2010-01-29 proposed yellow
-     */
-    public static class ComponentResult extends AbstractResult {
-
-        /** The name of the component. */
-        private String name;
-
-        // --------------------------------------------------------------------------
-
-        /**
-         * Create a new Component result.
-         * 
-         * @param componentName
-         *            the name of the component
-         */
-        public ComponentResult(final String componentName) {
-            super();
-            this.name = componentName;
-        }
-
-        // --------------------------------------------------------------------------
-
-        /**
-         * Getter for the name of this component.
-         * 
-         * @return the name of the component
-         */
-        public String getName() {
-            return name;
-        }
-    }
-
-    // --------------------------------------------------------------------------
-    // --------------------------------------------------------------------------
-
-    /**
      * This enumeration contains the different states that an execution can be
      * in from the point of view of the iteration result.
      * 

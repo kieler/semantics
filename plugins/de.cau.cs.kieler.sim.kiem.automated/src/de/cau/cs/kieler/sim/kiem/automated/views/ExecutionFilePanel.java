@@ -36,8 +36,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
-import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
-import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.ComponentResult;
+import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType;
@@ -64,7 +63,7 @@ public class ExecutionFilePanel {
     private Group execPanel;
 
     /** The inputs. */
-    private List<IterationResult> results = null;
+    private List<AbstractResult> results = null;
 
     /** The names of the columns. */
     private String[] columnNames;
@@ -105,10 +104,10 @@ public class ExecutionFilePanel {
      * @param iterationResult
      *            the result that should be added
      */
-    public void addResult(final IterationResult iterationResult) {
+    public void addResult(final AbstractResult iterationResult) {
         if (iterationResult.getResults() != null) {
             if (results == null) {
-                results = new LinkedList<IterationResult>();
+                results = new LinkedList<AbstractResult>();
                 doInitialLayout(iterationResult);
             }
             if (!results.contains(iterationResult)) {
@@ -126,13 +125,13 @@ public class ExecutionFilePanel {
      * @param resultsParam
      *            the list of results
      */
-    public void addResult(final List<IterationResult> resultsParam) {
+    public void addResult(final List<AbstractResult> resultsParam) {
         if (results == null) {
-            results = new LinkedList<IterationResult>();
+            results = new LinkedList<AbstractResult>();
             doInitialLayout(resultsParam.get(resultsParam.size() - 1));
         }
 
-        for (IterationResult result : resultsParam) {
+        for (AbstractResult result : resultsParam) {
             if (!results.contains(result)) {
                 results.add(result);
             }
@@ -160,7 +159,7 @@ public class ExecutionFilePanel {
      * @param iterationResult
      *            the first result that is to be added.
      */
-    private void doInitialLayout(final IterationResult iterationResult) {
+    private void doInitialLayout(final AbstractResult iterationResult) {
         if (iterationResult != null && iterationResult.getResults() != null) {
             // get column names from keys in the parent results
             List<String> columnNamesList = new LinkedList<String>();
@@ -291,7 +290,7 @@ public class ExecutionFilePanel {
         }
 
         for (int i = 0; i < results.size(); i++) {
-            IterationResult iterationResult = results.get(i);
+            AbstractResult iterationResult = results.get(i);
             List<KiemProperty> iterationResults = iterationResult.getResults();
             int j = 0;
             // add results
@@ -404,12 +403,12 @@ public class ExecutionFilePanel {
          */
         @SuppressWarnings("unchecked")
         public Object[] getElements(final Object inputElement) {
-            IterationResult[] resultArray = null;
+            AbstractResult[] resultArray = null;
 
             // convert the input list to an array of iteration results
             if (inputElement instanceof List<?>) {
-                List<IterationResult> resultList = (List<IterationResult>) inputElement;
-                resultArray = resultList.toArray(new IterationResult[resultList
+                List<AbstractResult> resultList = (List<AbstractResult>) inputElement;
+                resultArray = resultList.toArray(new AbstractResult[resultList
                         .size()]);
             }
 
@@ -435,8 +434,8 @@ public class ExecutionFilePanel {
          * {@inheritDoc}
          */
         public Image getColumnImage(final Object element, final int columnIndex) {
-            if (element instanceof IterationResult) {
-                IterationResult iterationResult = (IterationResult) element;
+            if (element instanceof AbstractResult) {
+                AbstractResult iterationResult = (AbstractResult) element;
 
                 KiemProperty result = findProperty(columnIndex, iterationResult);
                 if (result != null) {
@@ -478,8 +477,8 @@ public class ExecutionFilePanel {
          * {@inheritDoc}
          */
         public String getColumnText(final Object element, final int columnIndex) {
-            if (element instanceof IterationResult) {
-                IterationResult iterationResult = (IterationResult) element;
+            if (element instanceof AbstractResult) {
+                AbstractResult iterationResult = (AbstractResult) element;
 
                 KiemProperty result = findProperty(columnIndex, iterationResult);
 
@@ -541,7 +540,7 @@ public class ExecutionFilePanel {
          * @return the property that was found or null
          */
         private KiemProperty findProperty(final int columnIndex,
-                final IterationResult iterationResult) {
+                final AbstractResult iterationResult) {
             int counter = 0;
             for (KiemProperty prop : iterationResult.getResults()) {
                 if (counter == columnIndex) {
