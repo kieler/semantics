@@ -18,12 +18,12 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
@@ -33,7 +33,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
  * 
  * @author ctr
  */
-public class TraceValidator extends JSONObjectDataComponent implements IAutomatedProducer {
+public class TraceValidator extends AbstractAutomatedProducer   {
 
     private static final String[] SUPPORTED_FILES = {};
 
