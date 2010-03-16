@@ -49,11 +49,11 @@ import de.cau.cs.kieler.esterel.esterel.Output;
 import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.esterel.Signal;
 import de.cau.cs.kieler.esterel.esterel.SignalDecl;
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
@@ -61,7 +61,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * @author ctr
  * 
  */
-public class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public class DataComponent extends AbstractAutomatedProducer {
 
     private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
