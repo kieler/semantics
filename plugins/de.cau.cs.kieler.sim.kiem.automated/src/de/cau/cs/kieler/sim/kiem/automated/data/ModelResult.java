@@ -34,5 +34,23 @@ public class ModelResult extends AbstractResult {
         super();
         super.addResult(new KiemProperty(IAutomatedComponent.MODEL_FILE,
                 modelFile));
+        super.addResult(new KiemProperty(IAutomatedComponent.STATUS,
+                ResultStatus.labelOf(ResultStatus.CREATED)));
+    }
+
+    /**
+     * Setter for the status.
+     * 
+     * @param statusParam
+     *            the status to set
+     */
+    public void setStatus(final ResultStatus statusParam) {
+        String value = ResultStatus.labelOf(statusParam);
+
+        for (KiemProperty prop : super.getResults()) {
+            if (prop.getKey().equals(IAutomatedComponent.STATUS)) {
+                prop.setValue(value);
+            }
+        }
     }
 }

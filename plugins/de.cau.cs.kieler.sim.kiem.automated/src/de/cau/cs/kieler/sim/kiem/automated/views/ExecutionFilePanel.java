@@ -37,7 +37,7 @@ import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
-import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
+import de.cau.cs.kieler.sim.kiem.automated.data.ResultStatus;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
@@ -441,17 +441,17 @@ public class ExecutionFilePanel {
                 if (result != null) {
                     if (result.getKey().equals(IAutomatedComponent.STATUS)) {
                         String value = result.getValue();
-                        if (value.equals(IterationStatus
-                                .labelOf(IterationStatus.CREATED))) {
+                        if (value.equals(ResultStatus
+                                .labelOf(ResultStatus.CREATED))) {
                             return KiemAutomatedPlugin.getCreatedImage();
-                        } else if (value.equals(IterationStatus
-                                .labelOf(IterationStatus.RUNNING))) {
+                        } else if (value.equals(ResultStatus
+                                .labelOf(ResultStatus.RUNNING))) {
                             return KiemAutomatedPlugin.getRunningImage();
-                        } else if (value.equals(IterationStatus
-                                .labelOf(IterationStatus.ABORTED))) {
+                        } else if (value.equals(ResultStatus
+                                .labelOf(ResultStatus.ABORTED))) {
                             return KiemAutomatedPlugin.getWarningImage();
-                        } else if (value.equals(IterationStatus
-                                .labelOf(IterationStatus.ERROR))) {
+                        } else if (value.equals(ResultStatus
+                                .labelOf(ResultStatus.ERROR))) {
                             return KiemAutomatedPlugin.getFalseImage();
                         } else {
                             return KiemAutomatedPlugin.getTrueImage();

@@ -34,7 +34,7 @@ import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ModelResult;
-import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult.IterationStatus;
+import de.cau.cs.kieler.sim.kiem.automated.data.ResultStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.CancelStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecker;
 import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
@@ -100,6 +100,9 @@ public final class AutomationManager implements StatusListener {
 
     /** An information message for the current result. */
     private String message;
+
+    /** The worst result for the current model file. */
+    private ResultStatus worstResult;
 
     // --------------------------------------------------------------------------
 
@@ -321,10 +324,12 @@ public final class AutomationManager implements StatusListener {
         for (IPath model : modelFiles) {
 
             if (supportedFiles.contains(model.getFileExtension().trim())) {
+                worstResult = ResultStatus.DONE;
                 firstModelFirstRun = executeModelFile(properties, results,
                         executionFile, firstModelFirstRun, model);
 
                 ModelResult modelResult = new ModelResult(model.toOSString());
+                modelResult.setStatus(worstResult);
                 getModelFileResultsFromProducers(modelResult);
                 cachedModelResults.add(modelResult);
             }
@@ -375,7 +380,7 @@ public final class AutomationManager implements StatusListener {
             // model didn't want any runs at all, cache the result
             IterationResult noRunsResult = new IterationResult(model
                     .toOSString(), 0);
-            noRunsResult.setStatus(IterationStatus.DONE);
+            noRunsResult.setStatus(ResultStatus.DONE);
             cachedResults.add(noRunsResult);
         }
 
@@ -400,16 +405,18 @@ public final class AutomationManager implements StatusListener {
             // execute
             executeIteration();
 
-            if (currentResult.getStatus() != IterationStatus.ERROR) {
+            if (currentResult.getStatus() != ResultStatus.ERROR) {
                 switch (manager.isIterationCanceled()) {
                 case NOT_CANCELED:
-                    currentResult.setStatus(IterationStatus.DONE);
+                    currentResult.setStatus(ResultStatus.DONE);
                     break;
                 case USER_CANCELED:
-                    currentResult.setStatus(IterationStatus.ABORTED);
+                    message += "(User Canceled Iteration)";
+                    currentResult.setStatus(ResultStatus.ABORTED);
                     break;
                 case ERROR_CANCELED:
-                    currentResult.setStatus(IterationStatus.ERROR);
+                    message += "(Error Canceled Iteration)";
+                    currentResult.setStatus(ResultStatus.ERROR);
                     break;
                 }
                 manager.resetIterationCancel();
@@ -425,7 +432,8 @@ public final class AutomationManager implements StatusListener {
                 }
             }
 
-            setMessageOnResult(message);
+            setWorstStatus();
+            setMessageOnResult();
             message = "";
 
             // update the view through the display thread
@@ -469,7 +477,7 @@ public final class AutomationManager implements StatusListener {
 
             // call to KIEM to initialize
             if (kIEMInstance.initExecution()) {
-                currentResult.setStatus(IterationStatus.RUNNING);
+                currentResult.setStatus(ResultStatus.RUNNING);
                 refreshView();
                 exec = kIEMInstance.getExecution();
 
@@ -500,8 +508,8 @@ public final class AutomationManager implements StatusListener {
             }
         } catch (RuntimeException e0) {
             // something bad happened, try to continue
-            message = e0.toString();
-            currentResult.setStatus(IterationStatus.ERROR);
+            message += e0.toString() + " ";
+            currentResult.setStatus(ResultStatus.ERROR);
         } finally {
             // setup results
             Execution execution = KiemAutomatedPlugin.getKiemExecution();
@@ -516,8 +524,8 @@ public final class AutomationManager implements StatusListener {
                 stoppedByManager = false;
             } else {
                 // the execution somehow was terminated
-                message = "Abnormal termination of Execution";
-                currentResult.setStatus(IterationStatus.ERROR);
+                message += "Abnormal termination of Execution ";
+                currentResult.setStatus(ResultStatus.ERROR);
             }
             monitorChecker.cancel();
         }
@@ -847,7 +855,6 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnErrorPause() {
         // abort iteration
-        message = "Error Pause";
         CancelManager.getInstance()
                 .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
@@ -858,7 +865,6 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnErrorStop() {
         // abort iteration
-        message = "Error Stop.";
         CancelManager.getInstance()
                 .cancelIteration(CancelStatus.ERROR_CANCELED);
     }
@@ -896,7 +902,6 @@ public final class AutomationManager implements StatusListener {
      */
     public void notifyOnUserStop() {
         if (!stoppedByManager) {
-            message = "User Canceled.";
             CancelManager.getInstance().cancelIteration(
                     CancelStatus.USER_CANCELED);
         }
@@ -930,7 +935,7 @@ public final class AutomationManager implements StatusListener {
         if ((style & StatusManager.BLOCK) != 0) {
             IStatus status = statusAdapter.getStatus();
             if (status != null) {
-                message = status.getMessage();
+                message += status.getMessage() + " ";
             }
 
             CancelManager.getInstance().cancelIteration(
@@ -944,13 +949,39 @@ public final class AutomationManager implements StatusListener {
 
     /**
      * Set the message on the current result.
-     * 
-     * @param messageParam
-     *            the message
-     */
-    private void setMessageOnResult(final String messageParam) {
+     * */
+    private void setMessageOnResult() {
         if (currentResult != null) {
-            currentResult.setMessage(messageParam);
+            currentResult.setMessage(message);
+        }
+    }
+
+    /**
+     * Set the worst status for the current model file.
+     */
+    private void setWorstStatus() {
+        ResultStatus status = currentResult.getStatus();
+        if (status != worstResult) {
+            switch (worstResult) {
+            case RUNNING:
+            case DONE:
+            case CREATED:
+                if (status == ResultStatus.ERROR
+                        || status == ResultStatus.ABORTED) {
+                    worstResult = status;
+                }
+                break;
+
+            case ABORTED:
+                if (status == ResultStatus.ERROR) {
+                    worstResult = ResultStatus.ERROR;
+                }
+                break;
+
+            case ERROR:
+            default:
+                break;
+            }
         }
     }
 

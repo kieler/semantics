@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public class IterationResult extends AbstractResult {
 
     /** The status that the execution is currently at. */
-    private IterationStatus status;
+    private ResultStatus status;
 
     /** Identifier for the message field. */
     public static final String MESSAGE = "Message";
@@ -51,9 +51,9 @@ public class IterationResult extends AbstractResult {
         super.addResult(new KiemProperty(IAutomatedComponent.ITERATION,
                 iteration + ""));
         super.addResult(new KiemProperty(IAutomatedComponent.STATUS,
-                IterationStatus.labelOf(IterationStatus.CREATED)));
+                ResultStatus.labelOf(ResultStatus.CREATED)));
         super.addResult(new KiemProperty(IterationResult.MESSAGE, ""));
-        this.status = IterationStatus.CREATED;
+        this.status = ResultStatus.CREATED;
     }
 
     // --------------------------------------------------------------------------
@@ -63,7 +63,7 @@ public class IterationResult extends AbstractResult {
      * 
      * @return the status
      */
-    public IterationStatus getStatus() {
+    public ResultStatus getStatus() {
         return this.status;
     }
 
@@ -73,8 +73,8 @@ public class IterationResult extends AbstractResult {
      * @param statusParam
      *            the status to set
      */
-    public void setStatus(final IterationStatus statusParam) {
-        String value = IterationStatus.labelOf(statusParam);
+    public void setStatus(final ResultStatus statusParam) {
+        String value = ResultStatus.labelOf(statusParam);
 
         for (KiemProperty prop : super.getResults()) {
             if (prop.getKey().equals(IAutomatedComponent.STATUS)) {
@@ -95,56 +95,6 @@ public class IterationResult extends AbstractResult {
             if (prop.getKey().equals(IterationResult.MESSAGE)) {
                 prop.setValue(message);
             }
-        }
-    }
-
-    // --------------------------------------------------------------------------
-    // --------------------------------------------------------------------------
-
-    /**
-     * This enumeration contains the different states that an execution can be
-     * in from the point of view of the iteration result.
-     * 
-     * 
-     * @author soh
-     * @kieler.rating 2010-01-29 proposed yellow
-     */
-    public enum IterationStatus {
-
-        /** The execution was just created. */
-        CREATED,
-        /** The execution is running. */
-        RUNNING,
-        /** The execution is finished. */
-        DONE,
-        /** The execution was aborted due to an error. */
-        ERROR,
-        /** The execution was canceled by the user. */
-        ABORTED;
-
-        // --------------------------------------------------------------------------
-
-        /**
-         * Get a readable String for the given status.
-         * 
-         * @param status
-         *            the status
-         * @return the name
-         */
-        public static String labelOf(final IterationStatus status) {
-            switch (status) {
-            case CREATED:
-                return "Created";
-            case RUNNING:
-                return "Running";
-            case DONE:
-                return "Done";
-            case ERROR:
-                return "Failed";
-            case ABORTED:
-                return "Aborted";
-            }
-            return "Error";
         }
     }
 
