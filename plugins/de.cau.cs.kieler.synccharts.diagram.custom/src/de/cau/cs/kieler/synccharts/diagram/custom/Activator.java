@@ -18,7 +18,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IPageListener;
@@ -73,10 +75,12 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
                 Object o = iter.next();
                 if (o instanceof EditPart) {
                     EditPart editPart = (EditPart) o;
+                    EObject obj = ((View) editPart.getModel()).getElement();
+                    System.out.println(obj.eResource().getURIFragment(obj));
                     if (editPart instanceof TransitionEditPart) {
                         ShapeHighlightEffect effect = new ShapeHighlightEffect();
                         effect.setTarget(editPart);
-                        effect.setColors(ColorConstants.yellow, null);
+                        effect.setColors(ColorConstants.blue, null);
                         effect.execute();
                         highlightedParts.add(editPart);
                     }
