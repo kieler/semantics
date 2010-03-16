@@ -52,6 +52,7 @@ public final class Helper {
 
     private static ArrayList<Dependency> stateDependencies = new ArrayList<Dependency>();
     private static ArrayList<StatePlusTransition> sortedStates = new ArrayList<StatePlusTransition>();
+    private static ArrayList<ArrayList<StatePlusTransition>> optimzedSortedStates = new ArrayList<ArrayList<StatePlusTransition>>();
     private static ArrayList<StateAndSignals> stateSignalDependencies = new ArrayList<StateAndSignals>();
     private static ArrayList<StatePlusTransition> neighborStates = new ArrayList<StatePlusTransition>();
     private static ArrayList<Region> neighborRegions = new ArrayList<Region>();
@@ -69,6 +70,7 @@ public final class Helper {
     private static final int LABEL_ANY_ID = 1;
     private static final int LABEL_SHORTEST_HIERARCHIE = 2;
     private static final int LABEL_COMPLETE_HIERARCHIE = 3;
+    private static final int MAX_PRIO = 2048;
 
     /**
      * Computes a list with all states in the right order of their priority.
@@ -84,6 +86,15 @@ public final class Helper {
         fillStateSignalList(state);
         fillDependencyList(state);
         fillSortedThreadList();
+        optimizeSortedStates();
+        printDependencyList();
+        printStatePlusTransitionList(sortedStates);
+        for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
+            printStatePlusTransitionList(list);
+        }
+        for (StatePlusTransition spt : sortedStates) {
+            System.out.println(spt.getState().getId() + ": " + getOptimizedPriority(spt.getState(), true));
+        }
         return sortedStates;
     }
 
@@ -430,8 +441,7 @@ public final class Helper {
     /*
      * useful for debugging
      */
-    @SuppressWarnings("unused")
-	private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
+    private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
         System.out.print("[");
         for (StatePlusTransition spt : list) {
             String weakStrong = "";
@@ -448,49 +458,55 @@ public final class Helper {
     /*
      * useful for debugging
      */
-    @SuppressWarnings("unused")
-	private static void printDependencyList() {
+    private static void printDependencyList() {
         System.out.print("dependencyList: [ ");
         for (Dependency dependency : stateDependencies) {
-            String firstWS = "";
-            String secondWS = "";
-            String firstState = "";
-            String secondState = "";
-            String firstTrans = "empty";
-            String secondTrans = "empty";
-            String rel = "";
-            firstWS = stateType2String(dependency.getFirstState().getType());
-            secondWS = stateType2String(dependency.getSecondState().getType());
-            switch (dependency.getDependencyType()) {
-            case CONTROL_FLOW_EDGE:
-                rel = " <c< ";
-                break;
-
-            case HIERARCHY_EDGE:
-                rel = " <h< ";
-                break;
-
-            case TRANSITION_PRIO_EDGE:
-                rel = " <p< ";
-                break;
-
-            default:
-                rel = " <s< ";
-                break;
-            }
-            if (dependency.getFirstState().getTransition() != null) {
-                firstTrans = "("
-                        + dependency.getFirstState().getTransition().getTriggersAndEffects() + ")";
-            }
-            if (dependency.getSecondState().getTransition() != null) {
-                secondTrans = "("
-                        + dependency.getSecondState().getTransition().getTriggersAndEffects() + ")";
-            }
-            firstState = dependency.getFirstState().getState().getId() + "+" + firstTrans;
-            secondState = dependency.getSecondState().getState().getId() + "+" + secondTrans;
-            System.out.print(firstState + firstWS + rel + secondState + secondWS + " , ");
+            printDependency(dependency);
         }
         System.out.println("] ");
+    }
+
+    /*
+     * useful for debugging
+     */
+    private static void printDependency(final Dependency dependency) {
+        String firstWS = "";
+        String secondWS = "";
+        String firstState = "";
+        String secondState = "";
+        String firstTrans = "empty";
+        String secondTrans = "empty";
+        String rel = "";
+        firstWS = stateType2String(dependency.getFirstState().getType());
+        secondWS = stateType2String(dependency.getSecondState().getType());
+        switch (dependency.getDependencyType()) {
+        case CONTROL_FLOW_EDGE:
+            rel = " <c< ";
+            break;
+
+        case HIERARCHY_EDGE:
+            rel = " <h< ";
+            break;
+
+        case TRANSITION_PRIO_EDGE:
+            rel = " <p< ";
+            break;
+
+        default:
+            rel = " <s< ";
+            break;
+        }
+        if (dependency.getFirstState().getTransition() != null) {
+            firstTrans = "(" + dependency.getFirstState().getTransition().getTriggersAndEffects()
+                    + ")";
+        }
+        if (dependency.getSecondState().getTransition() != null) {
+            secondTrans = "(" + dependency.getSecondState().getTransition().getTriggersAndEffects()
+                    + ")";
+        }
+        firstState = dependency.getFirstState().getState().getId() + "+" + firstTrans;
+        secondState = dependency.getSecondState().getState().getId() + "+" + secondTrans;
+        System.out.print(firstState + firstWS + rel + secondState + secondWS + " , ");
     }
 
     private static Dependency builtDependency(final StatePlusTransition firstSpt,
@@ -793,4 +809,84 @@ public final class Helper {
         }
     }
 
+    private static void optimizeSortedStates() {
+        optimzedSortedStates.clear();
+        for (StatePlusTransition spt : sortedStates) {
+            System.out.println(spt.getState().getId());
+            boolean added = addSptToOptimizedList(spt);
+            if (!added) {
+                ArrayList<StatePlusTransition> addList = new ArrayList<StatePlusTransition>();
+                addList.add(spt);
+                optimzedSortedStates.add(addList);
+            }
+        }
+    }
+
+    private static int getOptimizedPriority(final State state, final boolean weak) {
+        int out = 0;
+        StatePlusTransition spt;
+        if (weak) {
+            spt = new StatePlusTransition(state, WEAK_STATE, null);
+        } else {
+            spt = getStateProperties(state);
+        }
+        
+
+        return out;
+    }
+
+    private static ArrayList<StatePlusTransition> getListWithState(StatePlusTransition spt) {
+        for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
+            if (list.contains(spt)) {
+                return list;
+            }
+        }
+        return null;
+    }
+    
+    private static int getSmallestPrio(ArrayList<StatePlusTransition> list){
+        int out = MAX_PRIO;
+        for (StatePlusTransition spt : list) {
+            int prio = getSmallestThreadPriority(spt.getState());
+            if (prio < out) {
+                out = prio;
+            }
+        }
+        return out;
+    }
+
+    private static boolean addSptToOptimizedList(final StatePlusTransition spt) {
+        boolean added = false;
+        ArrayList<ArrayList<StatePlusTransition>> tmp = new ArrayList<ArrayList<StatePlusTransition>>();
+        System.out.println();
+        System.out.println("size: " + optimzedSortedStates.size());
+        for (ArrayList<StatePlusTransition> sptList : optimzedSortedStates) {
+            ArrayList<StatePlusTransition> sptListTmp = new ArrayList<StatePlusTransition>();
+            for (StatePlusTransition optimizedSpt : sptList) {
+                sptListTmp.add(optimizedSpt);
+
+                // exists controll flow edge between two states?
+                Dependency depOne = new Dependency(spt, optimizedSpt, CONTROL_FLOW_EDGE);
+                Dependency depTwo = new Dependency(optimizedSpt, spt, CONTROL_FLOW_EDGE);
+                System.out.print("depOne: ");
+                printDependency(depOne);
+                System.out.println();
+
+                System.out.print("depTwo: ");
+                printDependency(depTwo);
+                System.out.println();
+
+                if (stateDependencies.contains(depOne) || stateDependencies.contains(depTwo)) {
+                    if (!isSignalDependent(spt.getTransition())
+                            && !hasDependentState(spt.getTransition())) {
+                        sptListTmp.add(spt);
+                        added = true;
+                    }
+                }
+            }
+            tmp.add(sptListTmp);
+        }
+        optimzedSortedStates = tmp;
+        return added;
+    }
 }

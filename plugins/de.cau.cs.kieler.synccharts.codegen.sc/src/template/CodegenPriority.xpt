@@ -23,6 +23,13 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«DEFINE transitionPrio FOR Transition-»
+	«IF getRealThreadPriority(this.targetState) != getRealThreadPriority(this.sourceState)-»
+		/* prio after transition */
+		PRIO(«getRealThreadPriority(this.targetState)»);
+	«ENDIF-»
+«ENDDEFINE»
+
 «DEFINE mainThreadPrio FOR State-»
 	«REM»if root state has transitions or actions or more then one region«ENDREM»
 	«IF this.regions.size > 1 || !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»

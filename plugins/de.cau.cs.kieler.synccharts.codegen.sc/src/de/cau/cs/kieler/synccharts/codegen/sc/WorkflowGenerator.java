@@ -99,10 +99,8 @@ public class WorkflowGenerator {
 
         if (sim) {
             outPath = path;
-        } else {
-            //outPath
         }
-
+        
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);

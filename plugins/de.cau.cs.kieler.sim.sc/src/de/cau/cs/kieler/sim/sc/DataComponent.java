@@ -58,6 +58,7 @@ public class DataComponent extends AbstractAutomatedProducer {
     private BufferedReader error;
     private String outPath;
     private boolean validation;
+    private boolean newValidation;
     private String fileLocation;
 
     /**
@@ -83,29 +84,33 @@ public class DataComponent extends AbstractAutomatedProducer {
         }
 
         try {
-            // compile
-            String compiler = (getProperties()[0]).getValue();
-            String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
-                    + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I " + bundleLocation
-                    + " " + "-o " + outPath
-                    + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
-            process = Runtime.getRuntime().exec(compile);
 
-            InputStream stderr = process.getErrorStream();
-            InputStreamReader isr = new InputStreamReader(stderr);
-            BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            String errorString = "";
-            while ((line = br.readLine()) != null) {
-                errorString += "\n" + line;
+            if (!validation || (validation && newValidation)) {
+                // compile
+                String compiler = (getProperties()[0]).getValue();
+                String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
+                        + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
+                        + bundleLocation + " " + "-o " + outPath
+                        + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
+                process = Runtime.getRuntime().exec(compile);
 
-            }
+                InputStream stderr = process.getErrorStream();
+                InputStreamReader isr = new InputStreamReader(stderr);
+                BufferedReader br = new BufferedReader(isr);
+                String line = null;
+                String errorString = "";
+                while ((line = br.readLine()) != null) {
+                    errorString += "\n" + line;
 
-            int exitValue = process.waitFor();
+                }
 
-            if (exitValue != 0) {
-                throw new KiemInitializationException("could not compile", true, new Exception(
-                        errorString));
+                int exitValue = process.waitFor();
+
+                if (exitValue != 0) {
+                    throw new KiemInitializationException("could not compile", true, new Exception(
+                            errorString));
+                }
+
             }
 
             // start compiled sc code
@@ -219,14 +224,16 @@ public class DataComponent extends AbstractAutomatedProducer {
      */
     public void wrapup() throws KiemInitializationException {
         process.destroy();
-        // delete temp folder
-        File folder = new File(outPath);
-        if (folder.getAbsolutePath().contains("tmp")) {
-            boolean folderDeleted = deleteFolder(folder);
-            if (folderDeleted) {
-                System.out.println("temp folder " + folder + " successfully deleted");
-            } else {
-                System.err.println("error while deleting temp folder: " + folder);
+        // delete temp folder if no validation
+        if (!validation) {
+            File folder = new File(outPath);
+            if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
+                boolean folderDeleted = deleteFolder(folder);
+                if (folderDeleted) {
+                    System.out.println("temp folder " + folder + " successfully deleted");
+                } else {
+                    System.err.println("error while deleting temp folder: " + folder);
+                }
             }
         }
     }
@@ -249,14 +256,22 @@ public class DataComponent extends AbstractAutomatedProducer {
                 outPath += File.separator;
             }
         }
+
         if (validation) {
-            wf = new WorkflowGenerator(fileLocation);
-        } else {
-            wf = new WorkflowGenerator();
+            outPath = System.getProperty("java.io.tmpdir") + File.separator + "SC_Validation"
+                    + File.separator;
         }
-        // generate Code from SyncChart
-        // true sets the flag for simulation
-        wf.invokeWorkflow(true, outPath);
+
+        if (!validation || (validation && newValidation)) {
+            if (validation) {
+                wf = new WorkflowGenerator(fileLocation);
+            } else {
+                wf = new WorkflowGenerator();
+            }
+            // generate Code from SyncChart
+            // true sets the flag for simulation
+            wf.invokeWorkflow(true, outPath);
+        }
         EObject myModel = wf.getModel();
         List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
         for (int i = 0; i < signalList.size(); i++) {
@@ -358,9 +373,16 @@ public class DataComponent extends AbstractAutomatedProducer {
 
     public void setParameters(List<KiemProperty> properties) throws KiemInitializationException {
         validation = true;
+        newValidation = true;
         for (KiemProperty p : properties) {
             if (p.getKey().equals(MODEL_FILE)) {
                 fileLocation = p.getValue();
+            }
+            if (p.getKey().equals(ITERATION)) {
+                if (Integer.parseInt(p.getValue()) > 0) {
+                    newValidation = false;
+                }
+                System.out.println("KEY - ITERATION: " + p.getValue());
             }
         }
     }
