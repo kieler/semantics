@@ -15,11 +15,6 @@ import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 
-/**
- * State highlighting combination.
- * 
- * @author soh
- */
 public class ActiveStateHighlightCombination extends ACombination {
     /** The root EditPart of the editor. */
     private EditPart rootEditPart;
@@ -57,24 +52,19 @@ public class ActiveStateHighlightCombination extends ACombination {
 
     // -------------------------------------------------------------------------
 
-    /** Trigger for tracking the activity of a state. */
     StateActivityTrigger trigger;
 
     // Map<EditPart, HighlightEffect> effects = new HashMap<EditPart,
     // HighlightEffect>();
-    /** Buffers the last used effects. */
     Map<EditPart, ShapeHighlightEffect> effects = new HashMap<EditPart, ShapeHighlightEffect>();
 
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
         if (rootEditPart != null) {
-
-            EditPart editPart = this.getEditPart(triggerEvent
-                    .getAffectedObject());
-            // EditPart editPart = this.translateToEditPart(triggerEvent
-            // .getAffectedObject().eResource().getURIFragment(
-            // triggerEvent.getAffectedObject()), // ???//
-            // rootEditPart);
+            EditPart editPart = this.translateToEditPart(triggerEvent
+                    .getAffectedObject().eResource().getURIFragment(
+                            triggerEvent.getAffectedObject()), // ???//
+                    rootEditPart);
             if (editPart instanceof ShapeEditPart) {
                 triggerEvent.getAffectedObject();
                 if (triggerEvent.getTriggerState()
