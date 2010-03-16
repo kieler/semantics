@@ -18,10 +18,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
@@ -31,8 +30,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @author soh
  * @kieler.rating 2010-01-29 red
  */
-public class AutoTestComponent extends JSONObjectDataComponent implements
-        IAutomatedProducer {
+public class AutoTestComponent extends AbstractAutomatedProducer {
 
     private static final double RND_VALID = 0.2;
 
@@ -53,6 +51,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<KiemProperty> produceInformation() {
         List<KiemProperty> result = new LinkedList<KiemProperty>();
         boolean valid = Math.random() > RND_VALID
@@ -64,6 +63,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setParameters(final List<KiemProperty> properties) {
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(ITERATION)) {
@@ -120,6 +120,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public int wantsMoreRuns() {
         return maxIteration - iteration;
     }
@@ -127,6 +128,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public int wantsMoreSteps() {
         return maxStep - stepCounter;
     }
@@ -134,6 +136,7 @@ public class AutoTestComponent extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getSupportedExtensions() {
         String[] result = { "strl", "kids", "kasm" };
         return result;

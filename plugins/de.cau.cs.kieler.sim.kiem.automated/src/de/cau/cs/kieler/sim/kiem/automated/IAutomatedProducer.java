@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kiem;
+package de.cau.cs.kieler.sim.kiem.automated;
 
 import java.util.List;
 
@@ -38,4 +38,16 @@ public interface IAutomatedProducer extends IAutomatedComponent {
      * @return information
      */
     List<KiemProperty> produceInformation();
+
+    /**
+     * Notifies the DataComponent that the model file has finished and asks it
+     * to provide some information for evaluation.
+     * 
+     * The number and order of properties has to be the same for all model files
+     * in a particular execution file. This is necessary in order to construct a
+     * valid results table.
+     * 
+     * @return information
+     */
+    List<KiemProperty> produceModelFileInformation();
 }

@@ -25,10 +25,10 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
-import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
@@ -97,6 +97,7 @@ public final class AutomationManager implements StatusListener {
     /** True if the manager is about to stop the execution. */
     private boolean stoppedByManager;
 
+    /** An information message for the current result. */
     private String message;
 
     // --------------------------------------------------------------------------
@@ -879,12 +880,12 @@ public final class AutomationManager implements StatusListener {
     /**
      * Set the message on the current result.
      * 
-     * @param message
+     * @param messageParam
      *            the message
      */
-    private void setMessageOnResult(final String message) {
+    private void setMessageOnResult(final String messageParam) {
         if (currentResult != null) {
-            currentResult.setMessage(message);
+            currentResult.setMessage(messageParam);
         }
     }
 

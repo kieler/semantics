@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;

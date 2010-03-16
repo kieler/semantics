@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kiem.automated.data;
 
-import de.cau.cs.kieler.sim.kiem.IAutomatedComponent;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
