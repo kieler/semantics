@@ -43,11 +43,6 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
-/**
- * DataComponent that observs the activity of states for highlighting.
- * 
- * @author soh
- */
 public class StateActivityObserver extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
@@ -57,26 +52,21 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      */
     public static StateActivityObserver INSTANCE = null;
 
-    /** ID for the view management. */
     private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
 
-    /** If the edit part has been brought to front. */
     private boolean broughtToTheFront = false;
     // private KiemProperty stateVariableProperty;
     // private KiemProperty editorProperty;
 
     /** The cached edit parts t be matched with FragmentURLs. */
     private HashMap<String, EditPart> cachedEditParts;
-    /** The cached element URIs. */
+
     private HashMap<EditPart, String> cachedElementURIs;
 
     /** The last highlighted states. */
     private List<String> lastHighlightedStates;
-
-    /** The root edit part. */
     EditPart rootEditPart;
 
-    /** The trigger for tracking state activity. */
     private StateActivityTrigger trigger;
 
     // -------------------------------------------------------------------------
@@ -96,8 +86,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         // just do this once in the lifetime of this plugin
         if (broughtToTheFront) {
             return;
+        } else {
+            broughtToTheFront = true;
         }
-        broughtToTheFront = true;
         // bring VM view to the front (lazy loading)
         try {
             IWorkbenchWindow window = Activator.getDefault().getWorkbench()
@@ -144,13 +135,6 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Getter for the editor.
-     * 
-     * @param kiemEditorProperty
-     *            the id of the editor
-     * @return the editor
-     */
     DiagramEditor getEditor(String kiemEditorProperty) {
         if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
             return null;
@@ -183,24 +167,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         return null;
     }
 
-    /**
-     * This method searches recursively for an EditPart using the modelElement
-     * URIFragment provided. The latter can be obtained by calling:
-     * 
-     * myEObject.eResource().getURIFragment(myEObject).toString();
-     * 
-     * This returns the URI fragment that, when passed to getEObject will return
-     * the given object.
-     * 
-     * @param elementURIFragment
-     *            the URIFragment of the EObject to search for
-     * @param parent
-     *            the parent EditPart
-     * 
-     * @return the EditPart of the EObject
-     */
-    public EditPart getEditPart(final String elementURIFragment,
-            final EditPart parent) {
+    @SuppressWarnings("unchecked")
+    public EditPart getEditPart(String elementURIFragment, EditPart parent) {
         // cache turned off, EditParts seem to be volatile
         // if (cachedEditParts == null) {
         // // if hashmap is not initialized, create it
@@ -250,13 +218,23 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     }
 
     /**
-     * Getter for the element URI
+     * This method searches recursively for an EditPart using the modelElement
+     * URIFragment provided. The latter can be obtained by calling:
      * 
-     * @param editPart
-     *            the edit part
-     * @return the URI
+     * myEObject.eResource().getURIFragment(myEObject).toString();
+     * 
+     * This returns the URI fragment that, when passed to getEObject will return
+     * the given object.
+     * 
+     * @param elementURIFragment
+     *            the URIFragment of the EObject to search for
+     * @param parent
+     *            the parent EditPart
+     * 
+     * @return the EditPart of the EObject
      */
-    public String getElementURIFragment(final EditPart editPart) {
+    @SuppressWarnings("unchecked")
+    public String getElementURIFragment(EditPart editPart) {
         if (cachedElementURIs != null) {
             if (cachedElementURIs.containsKey(editPart)) {
                 return cachedElementURIs.get(editPart);
@@ -265,11 +243,6 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         return "";
     }
 
-    /**
-     * Getter for the editor.
-     * 
-     * @return the editor.
-     */
     DiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
         DiagramEditor diagramEditor = null;
@@ -369,11 +342,10 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      */
     @Override
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[3];
+        KiemProperty[] properties = new KiemProperty[2];
         properties[0] = new KiemProperty("SyncChart Editor",
                 new KiemPropertyTypeEditor(), "");
         properties[1] = new KiemProperty("state variable", "state");
-        properties[2] = new KiemProperty("transition variable", "transition");
         return properties;
     }
 
@@ -389,34 +361,137 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     public JSONObject step(JSONObject data) throws KiemExecutionException {
         trigger = StateActivityTrigger.instance;
         String stateVariableKey = this.getProperties()[1].getValue();
-        String transitionVariableKey = this.getProperties()[2].getValue();
 
         // //debug!!!//
         // try {
         // data.accumulate("state",
         // ", , , //@innerStates.0/@regions.0/@innerStates.0, , , //@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0, , //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0");
         // } catch (JSONException e1) {
-        // 
+        // // TODO Auto-generated catch block
         // e1.printStackTrace();
         // }
 
         try {
             // some sanity checks
-            if (trigger != null
-                    && rootEditPart != null
-                    && (data.has(stateVariableKey) || data
-                            .has(transitionVariableKey))) {
+            if (trigger != null && rootEditPart != null
+                    && data.has(stateVariableKey)) {
                 // set the rootEditPart
                 ActiveStateHighlightCombination.getInstance().setRootEditPart(
                         rootEditPart);
 
-                if (data.has(stateVariableKey)) {
-                    // find all states that are active
-                    highlightStates(data, stateVariableKey);
+                // find all states that are active
+                Object stateData = data.get(stateVariableKey);
+                StringTokenizer tokenizer = new StringTokenizer(stateData
+                        .toString(), " ,");
+                List<EditPart> highlightedStates = new ArrayList<EditPart>();
+                List<String> highlightedStatesURI = new ArrayList<String>();
+
+                // remember what states already were considered
+                LinkedList<String> consideredStates = new LinkedList<String>();
+
+                while (tokenizer.hasMoreElements()) {
+                    String stateName = tokenizer.nextToken();
+
+                    // check if this is a new state (no duplicate)
+                    boolean newState = true;
+                    for (String consideredState : consideredStates) {
+                        if (consideredState.equals(stateName)) {
+                            newState = false;
+                            break;
+                        }
+                    }
+                    if (!newState) {
+                        // do not consider already considered states
+                        continue;
+                    }
+                    // add to considered states
+                    consideredStates.add(stateName);
+
+                    // notify the viewmanagement about this active state
+                    TriggerEventObject triggerEvent = new TriggerEventObject();
+                    EditPart affectedState = getEditPart(stateName,
+                            rootEditPart);
+
+                    if (affectedState == null) {
+                        // this might be a harmless error trying to view
+                        // something that
+                        // is permanently not there
+                        // the conclusion is wrong that the editor is closed!
+                        // this is more likely if something that was there, isnt
+                        // any more
+                        // (see below)
+                        continue;
+                        // throw new
+                        // KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
+                        // +
+                        // "You should stop (and restart) the currently running simulation!\n\n",
+                        // false,
+                        // null);
+                    }
+
+                    highlightedStates.add(affectedState);
+                    // a state is already highlighted
+                    System.out.println("VIEW MANAGEMENT:" + stateName);
+
+                    highlightedStatesURI.add(stateName);
+                    // a state is already highlighted
+                    if (lastHighlightedStates != null
+                            && lastHighlightedStates.contains(stateName)) {
+                        continue;
+                    }
+
+                    // triggerEvent.setAffectedObject(stateName);
+                    // trigger.translateToURI((Object)affectedState));
+                    try {
+                        triggerEvent.setAffectedObject(((View) affectedState
+                                .getModel()).getElement());
+                    } catch (Exception e) {
+                        // if this fails, most likely the EditPart does not
+                        // exist anymore
+                        e.printStackTrace();
+                    }
+
+                    // triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState));
+                    // //???//
+
+                    triggerEvent.setTriggerActive(true);
+                    trigger.notifyTrigger2(triggerEvent);
                 }
-                if (data.has(transitionVariableKey)) {
-                    highlightStates(data, transitionVariableKey);
-                }
+
+                // find all states that are not highlighted anymore
+                if (lastHighlightedStates != null) {
+                    // the following states are currently highlighted
+                    for (String editPartURI : highlightedStatesURI) {
+                        lastHighlightedStates.remove(editPartURI);
+                        System.out.println("LEAVE:" + editPartURI);
+                    }
+                    for (String editPartURI : lastHighlightedStates) {
+                        TriggerEventObject triggerEvent = new TriggerEventObject();
+
+                        EditPart ep = getEditPart(editPartURI, rootEditPart);
+                        if (ep == null) {
+                            throw new KiemExecutionException(
+                                    "SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
+                                            + "You should stop (and restart) the currently running simulation!\n\n",
+                                    false, null);
+                        }
+
+                        EObject eObject = trigger.translateToEObject(ep);
+                        triggerEvent.setAffectedObject(eObject);
+                        //                        
+                        //                        
+                        // ((View)ActiveStateHighlightCombination.getInstance()
+                        // .translateToEditPart(editPartURI,
+                        // rootEditPart).getModel()).getElement();
+
+                        // triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
+
+                        System.out.println("REMOVE:" + editPartURI);
+                        triggerEvent.setTriggerActive(false);
+                        trigger.notifyTrigger2(triggerEvent);
+                    }
+                }// end if
+                lastHighlightedStates = highlightedStatesURI;
 
             }
         } catch (JSONException e) {
@@ -428,129 +503,6 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
             ;
         }
         return null;
-    }
-
-    /**
-     * @param data
-     * @param stateVariableKey
-     * @throws JSONException
-     * @throws KiemExecutionException
-     */
-    private void highlightStates(final JSONObject data,
-            final String stateVariableKey) throws JSONException,
-            KiemExecutionException {
-        Object stateData = data.get(stateVariableKey);
-        StringTokenizer tokenizer = new StringTokenizer(stateData.toString(),
-                " ,");
-        List<EditPart> highlightedStates = new ArrayList<EditPart>();
-        List<String> highlightedStatesURI = new ArrayList<String>();
-
-        // remember what states already were considered
-        LinkedList<String> consideredStates = new LinkedList<String>();
-
-        while (tokenizer.hasMoreElements()) {
-            String stateName = tokenizer.nextToken();
-
-            // check if this is a new state (no duplicate)
-            boolean newState = true;
-            for (String consideredState : consideredStates) {
-                if (consideredState.equals(stateName)) {
-                    newState = false;
-                    break;
-                }
-            }
-            if (!newState) {
-                // do not consider already considered states
-                continue;
-            }
-            // add to considered states
-            consideredStates.add(stateName);
-
-            // notify the viewmanagement about this active state
-            TriggerEventObject triggerEvent = new TriggerEventObject();
-            EditPart affectedState = getEditPart(stateName, rootEditPart);
-
-            if (affectedState == null) {
-                // this might be a harmless error trying to view
-                // something that
-                // is permanently not there
-                // the conclusion is wrong that the editor is closed!
-                // this is more likely if something that was there, isnt
-                // any more
-                // (see below)
-                continue;
-                // throw new
-                // KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
-                // +
-                // "You should stop (and restart) the currently running simulation!\n\n",
-                // false,
-                // null);
-            }
-
-            highlightedStates.add(affectedState);
-            // a state is already highlighted
-            System.out.println("VIEW MANAGEMENT:" + stateName);
-
-            highlightedStatesURI.add(stateName);
-            // a state is already highlighted
-            if (lastHighlightedStates != null
-                    && lastHighlightedStates.contains(stateName)) {
-                continue;
-            }
-
-            // triggerEvent.setAffectedObject(stateName);
-            // trigger.translateToURI((Object)affectedState));
-            try {
-                triggerEvent
-                        .setAffectedObject(((View) affectedState.getModel())
-                                .getElement());
-            } catch (Exception e) {
-                // if this fails, most likely the EditPart does not
-                // exist anymore
-                e.printStackTrace();
-            }
-
-            // triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState));
-            // //???//
-
-            triggerEvent.setTriggerActive(true);
-            trigger.notifyTrigger2(triggerEvent);
-        }
-
-        // find all states that are not highlighted anymore
-        if (lastHighlightedStates != null) {
-            // the following states are currently highlighted
-            for (String editPartURI : highlightedStatesURI) {
-                lastHighlightedStates.remove(editPartURI);
-                System.out.println("LEAVE:" + editPartURI);
-            }
-            for (String editPartURI : lastHighlightedStates) {
-                TriggerEventObject triggerEvent = new TriggerEventObject();
-
-                EditPart ep = getEditPart(editPartURI, rootEditPart);
-                if (ep == null) {
-                    throw new KiemExecutionException(
-                            "SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n"
-                                    + "You should stop (and restart) the currently running simulation!\n\n",
-                            false, null);
-                }
-
-                EObject eObject = trigger.translateToEObject(ep);
-                triggerEvent.setAffectedObject(eObject);
-                //                        
-                //                        
-                // ((View)ActiveStateHighlightCombination.getInstance()
-                // .translateToEditPart(editPartURI,
-                // rootEditPart).getModel()).getElement();
-
-                // triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
-
-                System.out.println("REMOVE:" + editPartURI);
-                triggerEvent.setTriggerActive(false);
-                trigger.notifyTrigger2(triggerEvent);
-            }
-        }// end if
-        lastHighlightedStates = highlightedStatesURI;
     }
 
     // -------------------------------------------------------------------------
