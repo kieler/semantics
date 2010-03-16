@@ -70,7 +70,8 @@ import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.sim.kiem.IAutomatedProducer;
+import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -86,7 +87,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent implements IAutomatedProducer {
+public final class DataComponent  extends AbstractAutomatedProducer {
 
     private static final String[] SUPPORTED_FILES = { "kasm", "klp", "strl" };
 
