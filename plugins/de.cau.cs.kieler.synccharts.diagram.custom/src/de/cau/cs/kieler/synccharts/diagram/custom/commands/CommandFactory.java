@@ -16,7 +16,14 @@ package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
@@ -95,7 +102,6 @@ public class CommandFactory {
      */
     public static ICommand buildPasteCommand(final IDiagramWorkbenchPart part,
             final List<Object> selection) {
-        doAutoLayoutInternal();
         return buildCommand(part, selection, "Paste");
     }
 
@@ -114,10 +120,29 @@ public class CommandFactory {
             final List<Object> selection, final String label) {
         TransformationCommand result = null;
         if (part instanceof DiagramEditor) {
+            if (WorkerJob.instance != null) {
+                WorkerJob.instance.cancel();
+            }
             DiagramEditor editor = (DiagramEditor) part;
             TransactionalEditingDomain transDomain = editor.getEditingDomain();
 
-            result = new TransformationCommand(transDomain, label, null);
+            result = new TransformationCommand(transDomain, label, null) {
+
+                private static final int DELAY = 500;
+
+                @Override
+                protected CommandResult doExecuteWithResult(
+                        final IProgressMonitor monitor, final IAdaptable info)
+                        throws ExecutionException {
+                    CommandResult res = super
+                            .doExecuteWithResult(monitor, info);
+                    if (label.equalsIgnoreCase("paste")) {
+                        WorkerJob job = new WorkerJob();
+                        job.schedule(DELAY);
+                    }
+                    return res;
+                }
+            };
             result.initalize(editor, selection, label.toLowerCase(), FILE_PATH,
                     MODEL, framework);
         }
@@ -126,53 +151,30 @@ public class CommandFactory {
     }
 
     /**
-     * Do an autolayout of the selected object.
-     * 
-     * @param object
-     *            the object
-     */
-    private static void doAutoLayoutInternal() {
-        if (WorkerThread.isRunning) {
-            WorkerThread.reset();
-        } else {
-            WorkerThread thread = new WorkerThread();
-            thread.start();
-        }
-    }
-
-    /**
      * Thread for triggering an autolayout after some time.
      * 
      * @author soh
      */
-    private static class WorkerThread extends Thread {
+    private static class WorkerJob extends Job {
 
-        /** Delay before auto layout. */
-        private static final long WAIT_TIME = 1000;
+        /** The instance of the job. */
+        static WorkerJob instance = null;
 
-        /** Check interval. */
-        private static final long INTERVAL = 100;
+        /**
+         * Creates a new CommandFactory.java.
+         * 
+         * @param name
+         */
+        public WorkerJob() {
+            super("Autolayout");
+            instance = this;
+        }
 
-        /** If the thread is running. */
-        static boolean isRunning = false;
-
-        /** The start time. WAIT_TIME after this the layout will be triggered. */
-        private static long start;
-
+        /**
+         * {@inheritDoc}
+         */
         @Override
-        public void run() {
-            isRunning = true;
-            start = System.currentTimeMillis();
-
-            while (System.currentTimeMillis() - start < WAIT_TIME) {
-                try {
-                    Thread.sleep(INTERVAL);
-                } catch (InterruptedException e0) {
-                    e0.printStackTrace();
-                }
-            }
-
-            isRunning = false;
+        protected IStatus run(final IProgressMonitor monitor) {
             SyncchartsDiagramCustomPlugin.instance.getDisplay().asyncExec(
                     new Runnable() {
 
@@ -184,16 +186,13 @@ public class CommandFactory {
                                 DiagramLayoutManager.layout(editorPart, null,
                                         true, false);
                             }
+                            done(new Status(
+                                    IStatus.OK,
+                                    "de.cau.cs.kieler.synccharts.diagram.custom",
+                                    "Layout done"));
                         }
                     });
-
-        }
-
-        /**
-         * reset the timer.
-         */
-        static void reset() {
-            start = System.currentTimeMillis();
+            return Job.ASYNC_FINISH;
         }
     }
 }
