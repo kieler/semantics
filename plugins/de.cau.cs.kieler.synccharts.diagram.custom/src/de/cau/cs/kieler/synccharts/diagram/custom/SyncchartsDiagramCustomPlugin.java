@@ -41,8 +41,10 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 /**
  * @author soh
  */
-public class Activator extends AbstractUIPlugin implements ISelectionListener,
-        IPageListener {
+public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
+        ISelectionListener, IPageListener {
+
+    public static SyncchartsDiagramCustomPlugin instance = null;
 
     /**
      * Register the listener.
@@ -60,6 +62,7 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
     @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
+        instance = this;
         register();
     }
 

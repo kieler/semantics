@@ -35,9 +35,11 @@ import org.eclipse.gmf.runtime.diagram.ui.render.clipboard.AWTClipboardHelper;
 import org.eclipse.gmf.runtime.diagram.ui.render.internal.commands.CopyImageCommand;
 import org.eclipse.gmf.runtime.diagram.ui.requests.PasteViewRequest;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.cau.cs.kieler.synccharts.diagram.custom.commands.CommandFactory;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
@@ -140,24 +142,29 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
     }
 
     /**
-     * @param cntxt
+     * Determine whether the current selection can be copied or cut by Ksbase.
+     * 
      * @param sel
-     * @return
+     *            the selection
+     * @return true if the selection can be cut/copied
      */
     private boolean canKsbaseCopy(IStructuredSelection sel) {
-        boolean result = false;
+        boolean result = true;
 
         canKsbaseCopy = result;
         return result;
     }
 
     /**
-     * @param cntxt
+     * Determine whether the current selection can be used as a target for
+     * pasting by Ksbase.
+     * 
      * @param sel
-     * @return
+     *            the selection
+     * @return true if the selection can be used
      */
     private boolean canKsbasePaste(IStructuredSelection sel) {
-        boolean result = false;
+        boolean result = true;
 
         canKsbasePaste = result;
         return result;
@@ -185,7 +192,6 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *      org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart,
      *      boolean)
      */
-    @SuppressWarnings("restriction")
     @Override
     protected ICommand getCopyCommand(final IGlobalActionContext cntxt,
             final IDiagramWorkbenchPart diagramPart, final boolean isUndoable) {
@@ -193,7 +199,7 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
             IStructuredSelection sel = (IStructuredSelection) cntxt
                     .getSelection();
             if (canKsbaseCopy) {
-                return getKsBaseCopyCommand(sel);
+                return getKsBaseCopyCommand(sel, diagramPart);
             }
         }
 
@@ -254,7 +260,6 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      * 
      * @param cntxt
      * @param diagramPart
-     * @param isUndoable
      * @return
      */
     @Override
@@ -264,42 +269,69 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
             IStructuredSelection sel = (IStructuredSelection) cntxt
                     .getSelection();
             if (isValidSelection(sel)) {
-                return getKsBaseCutCommand(sel);
+                return getKsBaseCutCommand(sel, diagramPart);
             }
         }
         return super.getCutCommand(cntxt, diagramPart);
     }
 
     /**
+     * Getter for the Ksbase cut command.
+     * 
      * @param sel
-     * @return
+     *            the selection
+     * @param part
+     *            the editor
+     * @return the cut command
      */
-    private ICommand getKsBaseCutCommand(IStructuredSelection sel) {
-        return null;
+    private ICommand getKsBaseCutCommand(final IStructuredSelection sel,
+            final IDiagramWorkbenchPart part) {
+        return CommandFactory.buildCutCommand(part, getListFromSelection(sel));
     }
 
     /**
+     * Getter for the Ksbase copy command.
+     * 
      * @param sel
-     * @return
+     *            the selection
+     * @param part
+     *            the editor
+     * @return the copy command
      */
-    private ICommand getKsBaseCopyCommand(IStructuredSelection sel) {
-        return null;
+    private ICommand getKsBaseCopyCommand(final IStructuredSelection sel,
+            final IDiagramWorkbenchPart part) {
+        return CommandFactory.buildCopyCommand(part, getListFromSelection(sel));
     }
 
     /**
-     * @param selection
-     * @return
+     * Getter for the Ksbase paste command.
+     * 
+     * @param sel
+     *            the selection
+     * @param part
+     *            the editor
+     * @return the paste command
      */
-    private ICommand getKsbasePasteCommand(IStructuredSelection selection) {
-        return null;
+    private ICommand getKsbasePasteCommand(final IStructuredSelection sel,
+            final IDiagramWorkbenchPart part) {
+        return CommandFactory
+                .buildPasteCommand(part, getListFromSelection(sel));
     }
 
     @Override
     public ICommand getCommand(IGlobalActionContext cntxt) {
         if (cntxt.getActionId().equals(GlobalActionId.PASTE)) {
             if (canKsbasePaste) {
-                return getKsbasePasteCommand((IStructuredSelection) cntxt
-                        .getSelection());
+                ISelection sel = cntxt.getSelection();
+                IWorkbenchPart part = cntxt.getActivePart();
+                if (sel instanceof IStructuredSelection
+                        && part instanceof IDiagramWorkbenchPart) {
+                    IStructuredSelection selection = (IStructuredSelection) sel;
+                    IDiagramWorkbenchPart diagPart = (IDiagramWorkbenchPart) part;
+
+                    return getKsbasePasteCommand(selection, diagPart);
+                }
+
             }
         }
         return super.getCommand(cntxt);
@@ -328,9 +360,9 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return the list
      */
-    private List<EObject> getListFromSelection(
+    private List<Object> getListFromSelection(
             final IStructuredSelection selection) {
-        List<EObject> result = new LinkedList<EObject>();
+        List<Object> result = new LinkedList<Object>();
         Iterator<?> iter = selection.iterator();
 
         while (iter.hasNext()) {
