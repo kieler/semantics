@@ -63,7 +63,6 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
     /**
      * {@inheritDoc}
      */
-    @Override
     public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
         if (sel instanceof IStructuredSelection) {
             resetHighlightedParts();
@@ -110,14 +109,12 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
     /**
      * {@inheritDoc}
      */
-    @Override
     public void pageActivated(final IWorkbenchPage page) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void pageClosed(final IWorkbenchPage page) {
         if (page != null) {
             page.removeSelectionListener(this);
@@ -127,7 +124,6 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
     /**
      * {@inheritDoc}
      */
-    @Override
     public void pageOpened(final IWorkbenchPage page) {
         if (page != null) {
             page.addSelectionListener(this);
