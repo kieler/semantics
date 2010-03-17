@@ -20,20 +20,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.gef.EditPart;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 
 /**
  * Utility class for synccharts ksbase.
@@ -60,39 +50,6 @@ public final class Utils {
     private static volatile List<Region> regionsClipBoard = null;
     /** Clipboard for copy and paste. */
     private static volatile Transition transitionClipBoard = null;
-
-    /**
-     * Determine whether or not the edit part is valid for copy and paste.
-     * 
-     * @return true if the part can be copied/pasted
-     */
-    public static boolean isValidPartSelected() {
-        ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getSelectionService().getSelection();
-        if (sel instanceof StructuredSelection) {
-            Iterator<?> it = ((StructuredSelection) sel).iterator();
-            while (it.hasNext()) {
-                Object next = it.next();
-                if (next instanceof EditPart) {
-                    if (next instanceof State2EditPart) {
-                        return true;
-                    } else if (next instanceof TransitionEditPart) {
-                        return true;
-                    } else if (next instanceof StateEditPart) {
-                        return true;
-                    } else if (next instanceof RegionEditPart) {
-                        return true;
-                    } else if (next instanceof Region2EditPart) {
-                        return true;
-                    } else if (next instanceof RegionStateCompartmentEditPart) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
-        return false;
-    }
 
     /**
      * Copy a state to the clipboard.

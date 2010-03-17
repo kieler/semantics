@@ -170,34 +170,6 @@ null
 /////////////////////////
 
 // Java escapes
-Boolean isValidPartSelected(State o):
- isValid()
-;
-
-Boolean isValidPartSelected(Region o):
- isValid()
-;
-
-Boolean isValidPartSelected(Transition o):
- isValid()
-;
-
-Boolean isValidPartSelected(List[Region] o):
- isValid()
-;
-
-Boolean isValidPartSelected(List[State] o):
- isValid()
-;
-
-Boolean isValidPartSelected(State o0, State o1):
- isValid()
-;
-
-Boolean isValid():
- JAVA de.cau.cs.kieler.synccharts.ksbase.Utils.isValidPartSelected()
-;
-
 
 // copy methods
 Void copyStateToClipboard(State state):
