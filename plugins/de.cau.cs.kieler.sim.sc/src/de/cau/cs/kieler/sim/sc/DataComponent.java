@@ -163,15 +163,19 @@ public class DataComponent extends AbstractAutomatedProducer {
         }
 
         try {
-            JSONArray stateArray = out.getJSONArray("state");
-            String allStates = "";
+            if (out.has("state")) {
+                JSONArray stateArray = out.getJSONArray("state");
+                String allStates = "";
 
-            for (int i = 0; i < stateArray.length(); i++) {
-                allStates += stateArray.opt(i) + ",";
+                for (int i = 0; i < stateArray.length(); i++) {
+                    allStates += stateArray.opt(i) + ",";
+                }
+                allStates = allStates.substring(0, allStates.length() - 1);
+                out.remove("state");
+                out.put("state", allStates);
+            }else{
+                out.put("state", "");
             }
-            allStates = allStates.substring(0, allStates.length() - 1);
-            out.remove("state");
-            out.put("state", allStates);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
