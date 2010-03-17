@@ -20,10 +20,12 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
+import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.ksbase.ui.handler.TransformationCommand;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
 
@@ -43,6 +45,7 @@ public class CommandFactory {
     /** The transformation framework. */
     private static final ITransformationFramework framework = new XtendTransformationFramework();
 
+    /** The path of the transformation file. */
     private static String FILE_PATH = FILE;
 
     {
@@ -92,6 +95,7 @@ public class CommandFactory {
      */
     public static ICommand buildPasteCommand(final IDiagramWorkbenchPart part,
             final List<Object> selection) {
+        doAutoLayoutInternal();
         return buildCommand(part, selection, "Paste");
     }
 
@@ -106,19 +110,90 @@ public class CommandFactory {
      *            the label and name of the transformation
      * @return the command
      */
-    private static TransformationCommand buildCommand(
-            final IDiagramWorkbenchPart part, final List<Object> selection,
-            final String label) {
+    private static ICommand buildCommand(final IDiagramWorkbenchPart part,
+            final List<Object> selection, final String label) {
         TransformationCommand result = null;
-            if (part instanceof DiagramEditor) {
-                DiagramEditor editor = (DiagramEditor) part;
-                TransactionalEditingDomain transDomain = editor
-                        .getEditingDomain();
+        if (part instanceof DiagramEditor) {
+            DiagramEditor editor = (DiagramEditor) part;
+            TransactionalEditingDomain transDomain = editor.getEditingDomain();
 
-                result = new TransformationCommand(transDomain, label, null);
-                result.initalize(editor, selection, label.toLowerCase(),
-                        FILE_PATH, MODEL, framework);
-            }
+            result = new TransformationCommand(transDomain, label, null);
+            result.initalize(editor, selection, label.toLowerCase(), FILE_PATH,
+                    MODEL, framework);
+        }
+
         return result;
+    }
+
+    /**
+     * Do an autolayout of the selected object.
+     * 
+     * @param object
+     *            the object
+     */
+    private static void doAutoLayoutInternal() {
+        if (WorkerThread.isRunning) {
+            WorkerThread.reset();
+        } else {
+            WorkerThread thread = new WorkerThread();
+            thread.start();
+        }
+    }
+
+    /**
+     * Thread for triggering an autolayout after some time.
+     * 
+     * @author soh
+     */
+    private static class WorkerThread extends Thread {
+
+        /** Delay before auto layout. */
+        private static final long WAIT_TIME = 1000;
+
+        /** Check interval. */
+        private static final long INTERVAL = 100;
+
+        /** If the thread is running. */
+        static boolean isRunning = false;
+
+        /** The start time. WAIT_TIME after this the layout will be triggered. */
+        private static long start;
+
+        @Override
+        public void run() {
+            isRunning = true;
+            start = System.currentTimeMillis();
+
+            while (System.currentTimeMillis() - start < WAIT_TIME) {
+                try {
+                    Thread.sleep(INTERVAL);
+                } catch (InterruptedException e0) {
+                    e0.printStackTrace();
+                }
+            }
+
+            isRunning = false;
+            SyncchartsDiagramCustomPlugin.instance.getDisplay().asyncExec(
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            IEditorPart editorPart = SyncchartsDiagramCustomPlugin.instance
+                                    .getActiveEditorPart();
+                            if (editorPart != null) {
+                                DiagramLayoutManager.layout(editorPart, null,
+                                        true, false);
+                            }
+                        }
+                    });
+
+        }
+
+        /**
+         * reset the timer.
+         */
+        static void reset() {
+            start = System.currentTimeMillis();
+        }
     }
 }

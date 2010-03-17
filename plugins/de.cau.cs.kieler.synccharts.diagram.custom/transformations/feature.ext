@@ -7,7 +7,7 @@ Void setSelection(Object object):
 ;
 
 String getFileNameOfActiveEditor():
-JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
 ;
 
 /////////////////////////

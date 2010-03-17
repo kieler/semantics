@@ -23,6 +23,8 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
@@ -44,6 +46,7 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         ISelectionListener, IPageListener {
 
+    /** The current instance of the plugin. */
     public static SyncchartsDiagramCustomPlugin instance = null;
 
     /**
@@ -138,4 +141,34 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
             page.addSelectionListener(this);
         }
     }
+
+    /**
+     * Getter for the active editor part.
+     * 
+     * @return the editor part or null
+     */
+    public IEditorPart getActiveEditorPart() {
+        IEditorPart result = null;
+        IWorkbench workbench = getWorkbench();
+        if (workbench != null) {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    result = page.getActiveEditor();
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Getter for the display of the active workbench.
+     * 
+     * @return the display
+     */
+    public Display getDisplay() {
+        return getWorkbench().getDisplay();
+    }
+
 }
