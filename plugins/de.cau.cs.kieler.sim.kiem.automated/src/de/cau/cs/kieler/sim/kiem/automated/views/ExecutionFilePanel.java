@@ -30,6 +30,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -76,7 +77,7 @@ public class ExecutionFilePanel {
     // --------------------------------------------------------------------------
 
     /**
-     * Creates a new ExecutionFilePanel.java.
+     * Creates a new ExecutionFilePanel.
      * 
      * @param name
      *            the execution file
@@ -90,6 +91,25 @@ public class ExecutionFilePanel {
         execPanel.setLayout(new GridLayout(1, false));
         execPanel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING,
                 false, false));
+    }
+
+    /**
+     * Creates a new ExecutionFilePanel.
+     * 
+     * @param name
+     *            the execution file
+     * @param panel
+     *            the parent panel
+     * @param e0
+     *            the exception that caused the error
+     */
+    public ExecutionFilePanel(final IPath name, final Composite panel,
+            final Exception e0) {
+        this(name, panel);
+        Label failureLabel = new Label(execPanel, SWT.BORDER);
+        String text = "Execution file not loaded: ";
+        text += e0;
+        failureLabel.setText(text);
     }
 
     // --------------------------------------------------------------------------

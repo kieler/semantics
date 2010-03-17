@@ -234,11 +234,10 @@ public final class AutomationManager implements StatusListener {
         // set up monitor
         String taskName = "Performing automated execution.";
         int executionlength = executionFiles.length * modelFiles.size();
-        if (executionlength == 1) {
-            // can't show meaningful progress: show unknown
-            monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
-        } else {
+        if (executionlength > 1) {
             monitor.beginTask(taskName, executionlength);
+        } else {
+            monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
         }
 
         // store the currently opened file.
@@ -304,8 +303,7 @@ public final class AutomationManager implements StatusListener {
             KiemPlugin.getDefault().openFile(executionFile, true);
         } catch (IOException e0) {
             // execution file not found, write to error log
-            KiemPlugin.getDefault().showError("Execution file missing.",
-                    KiemAutomatedPlugin.PLUGIN_ID, e0, true);
+            addExecutionFileFailedToPanel(executionFile, e0);
             return; // continue with next file
         }
 
@@ -372,16 +370,32 @@ public final class AutomationManager implements StatusListener {
         // the index of the current iteration
         int iteration = 0;
 
+        String localMessage = null;
+        int remainingRuns = 0;
         // call to data components, notify once before first iteration
-        notifyObservers(model, iteration, properties);
-        int remainingRuns = askForMoreRuns();
+        try {
+            notifyObservers(model, iteration, properties);
 
-        if (remainingRuns == 0) {
+            remainingRuns = askForMoreRuns();
+            if (remainingRuns == 0) {
+                localMessage = "No runs requested";
+            }
+        } catch (KiemInitializationException e0) {
+            localMessage = e0.toString();
+        }
+
+        if (localMessage != null) {
             // model didn't want any runs at all, cache the result
             IterationResult noRunsResult = new IterationResult(model
-                    .toOSString(), 0);
-            noRunsResult.setStatus(ResultStatus.DONE);
+                    .toOSString(), -1);
+            if (remainingRuns == 0) {
+                noRunsResult.setStatus(ResultStatus.DONE);
+            } else {
+                noRunsResult.setStatus(ResultStatus.ERROR);
+            }
+            noRunsResult.setMessage(localMessage);
             cachedResults.add(noRunsResult);
+            return result;
         }
 
         boolean canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
@@ -399,8 +413,6 @@ public final class AutomationManager implements StatusListener {
                 // to be initialized
                 addResultToPanel();
             }
-
-            // notifyObservers(model, iteration, properties);
 
             // execute
             executeIteration();
@@ -439,24 +451,21 @@ public final class AutomationManager implements StatusListener {
             // update the view through the display thread
             refreshView();
 
-            // canceled = manager.isModelFileCanceled() !=
-            // CancelStatus.NOT_CANCELED;
-            // if (remainingRuns == 0 && !canceled) {
-            // // estimated number of runs finished, ask again
-            // remainingRuns = askForMoreRuns();
-            // }
-            //
-            // iteration++;
             canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
             if (!canceled) {
                 iteration++;
-                notifyObservers(model, iteration, properties);
-                if (remainingRuns == 0) {
-                    remainingRuns = askForMoreRuns();
+                try {
+                    notifyObservers(model, iteration, properties);
+                    if (remainingRuns == 0) {
+                        remainingRuns = askForMoreRuns();
+                    }
+                } catch (KiemInitializationException e0) {
+                    message += e0.toString();
+                    manager.cancelModelFile(CancelStatus.ERROR_CANCELED);
+                    canceled = true;
                 }
             }
         }
-
         return result;
     }
 
@@ -464,6 +473,9 @@ public final class AutomationManager implements StatusListener {
 
     /**
      * Handles the execution of a single iteration.
+     * 
+     * @param unitsForThisIteration
+     *            how many work units are available for this iteration
      */
     private void executeIteration() {
         Execution exec = null;
@@ -485,6 +497,7 @@ public final class AutomationManager implements StatusListener {
                 int remainingSteps = askForMoreSteps();
                 boolean keepStepping = CancelManager.getInstance()
                         .isIterationCanceled() == CancelStatus.NOT_CANCELED;
+
                 while (remainingSteps-- > 0 && keepStepping) {
                     try {
                         // reset the timeout
@@ -497,7 +510,6 @@ public final class AutomationManager implements StatusListener {
                     } catch (InterruptedException e0) {
                         e0.printStackTrace();
                     }
-
                     keepStepping = CancelManager.getInstance()
                             .isIterationCanceled() == CancelStatus.NOT_CANCELED;
                     if (remainingSteps == 0 && keepStepping) {
@@ -550,6 +562,28 @@ public final class AutomationManager implements StatusListener {
                 AutomatedEvalView automatedView = KiemAutomatedPlugin
                         .getAutomatedEvalView();
                 currentPanel = automatedView.addExecutionFile(executionFile);
+            }
+        });
+    }
+
+    /**
+     * Add a message to the view that loading the execution file failed.
+     * 
+     * @param executionFile
+     *            the execution file
+     * @param e0
+     *            the exception that caused the error
+     */
+    private void addExecutionFileFailedToPanel(final IPath executionFile,
+            final IOException e0) {
+        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
+            /**
+             * {@inheritDoc}
+             */
+            public void run() {
+                AutomatedEvalView automatedView = KiemAutomatedPlugin
+                        .getAutomatedEvalView();
+                automatedView.addExecutionFileFailed(executionFile, e0);
             }
         });
     }
@@ -752,9 +786,12 @@ public final class AutomationManager implements StatusListener {
      *            the index of the current iteration
      * @param properties
      *            the list of custom properties
+     * @throws KiemInitializationException
+     *             if one the components could not be initialized
      */
     private void notifyObservers(final IPath modelFile, final int iteration,
-            final List<KiemProperty> properties) {
+            final List<KiemProperty> properties)
+            throws KiemInitializationException {
 
         List<KiemProperty> list = new LinkedList<KiemProperty>();
 
@@ -769,32 +806,10 @@ public final class AutomationManager implements StatusListener {
             list.add(prop);
         }
 
-        int size = list.size();
-
         // notify observers
         for (IAutomatedComponent comp : getRelevantComponents()) {
-            try {
-                comp.setParameters(list);
-            } catch (KiemInitializationException e0) {
-                // ignore and try to continue anyway with the rest of the
-                // components
-            }
-
+            comp.setParameters(list);
         }
-
-        if (list.size() > size) {
-            // notify again in case one of the observers wrote something
-            // into the list
-            for (IAutomatedComponent comp : getRelevantComponents()) {
-                try {
-                    comp.setParameters(list);
-                } catch (KiemInitializationException e0) {
-                    // ignore and try to continue anyway with the rest of the
-                    // components
-                }
-            }
-        }
-
     }
 
     /**
@@ -931,8 +946,8 @@ public final class AutomationManager implements StatusListener {
      */
     public int reroute(final StatusAdapter statusAdapter, final int style) {
         // String pluginId = statusAdapter.getStatus().getPlugin();
-
-        if ((style & StatusManager.BLOCK) != 0) {
+        if ((style & StatusManager.BLOCK) != 0
+                || (style & StatusManager.SHOW) != 0) {
             IStatus status = statusAdapter.getStatus();
             if (status != null) {
                 message += status.getMessage() + " ";

@@ -84,7 +84,7 @@ public class AutoTestComponent extends AbstractAutomatedProducer {
             throws KiemExecutionException {
         stepCounter++;
         if (stepCounter == (2 * 2) && iteration == 2) {
-            throw new KiemExecutionException("", false, null);
+            // throw new KiemExecutionException("", false, null);
         }
         return null;
     }

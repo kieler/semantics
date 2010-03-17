@@ -98,6 +98,21 @@ public class AutomatedEvalView extends ViewPart implements ControlListener {
         return filePanel;
     }
 
+    /**
+     * Add a failed execution file to the view.
+     * 
+     * @param name
+     *            the name of the file
+     * @param e0
+     *            the exception that caused the failure
+     */
+    public void addExecutionFileFailed(final IPath name, final Exception e0) {
+        ExecutionFilePanel filePanel = new ExecutionFilePanel(name, panel, e0);
+        panels.add(filePanel);
+        redraw();
+
+    }
+
     // --------------------------------------------------------------------------
 
     /**
