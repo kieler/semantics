@@ -32,7 +32,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 
 /**
@@ -74,8 +77,11 @@ public class Activator extends AbstractUIPlugin implements ISelectionListener,
                 Object o = iter.next();
                 if (o instanceof EditPart) {
                     EditPart editPart = (EditPart) o;
-                    EObject obj = ((View) editPart.getModel()).getElement();
-                    System.out.println(obj.eResource().getURIFragment(obj));
+                    if (editPart instanceof TransitionTriggersAndEffectsEditPart
+                            || editPart instanceof TransitionPriorityEditPart) {
+                        EObject obj = ((View) editPart.getModel()).getElement();
+                        editPart = ModelingUtil.getEditPart(obj);
+                    }
                     if (editPart instanceof TransitionEditPart) {
                         ShapeHighlightEffect effect = new ShapeHighlightEffect();
                         effect.setTarget(editPart);
