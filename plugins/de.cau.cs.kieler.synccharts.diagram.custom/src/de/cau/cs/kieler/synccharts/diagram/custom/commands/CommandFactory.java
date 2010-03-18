@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
@@ -34,6 +36,8 @@ import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.ksbase.ui.handler.TransformationCommand;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
 
 /**
@@ -73,7 +77,7 @@ public class CommandFactory {
      * @return the command
      */
     public static ICommand buildCopyCommand(final IDiagramWorkbenchPart part,
-            final List<Object> selection) {
+            final List<EObject> selection) {
         return buildCommand(part, selection, "Copy");
     }
 
@@ -87,7 +91,7 @@ public class CommandFactory {
      * @return the command
      */
     public static ICommand buildCutCommand(final IDiagramWorkbenchPart part,
-            final List<Object> selection) {
+            final List<EObject> selection) {
         return buildCommand(part, selection, "Cut");
     }
 
@@ -101,7 +105,7 @@ public class CommandFactory {
      * @return the command
      */
     public static ICommand buildPasteCommand(final IDiagramWorkbenchPart part,
-            final List<Object> selection) {
+            final List<EObject> selection) {
         return buildCommand(part, selection, "Paste");
     }
 
@@ -117,7 +121,7 @@ public class CommandFactory {
      * @return the command
      */
     private static ICommand buildCommand(final IDiagramWorkbenchPart part,
-            final List<Object> selection, final String label) {
+            final List<EObject> selection, final String label) {
         TransformationCommand result = null;
         if (part instanceof DiagramEditor) {
             if (WorkerJob.instance != null) {
@@ -126,28 +130,73 @@ public class CommandFactory {
             DiagramEditor editor = (DiagramEditor) part;
             TransactionalEditingDomain transDomain = editor.getEditingDomain();
 
-            result = new TransformationCommand(transDomain, label, null) {
+            result = new TransformationCommandWithAutoLayout(transDomain,
+                    label, null);
 
-                private static final int DELAY = 500;
-
-                @Override
-                protected CommandResult doExecuteWithResult(
-                        final IProgressMonitor monitor, final IAdaptable info)
-                        throws ExecutionException {
-                    CommandResult res = super
-                            .doExecuteWithResult(monitor, info);
-                    if (label.equalsIgnoreCase("paste")) {
-                        WorkerJob job = new WorkerJob();
-                        job.schedule(DELAY);
-                    }
-                    return res;
+            if (selection.size() > 1) {
+                List<Object> mappedSelection = null;
+                if (selection.get(0) instanceof State) {
+                    mappedSelection = framework.createParameterMapping(
+                            selection, new String("List[State]"));
+                } else if (selection.get(0) instanceof Region) {
+                    mappedSelection = framework.createParameterMapping(
+                            selection, new String("List[Region]"));
                 }
-            };
-            result.initalize(editor, selection, label.toLowerCase(), FILE_PATH,
-                    MODEL, framework);
+                result.initalize(editor, mappedSelection, label.toLowerCase(),
+                        FILE_PATH, MODEL, framework);
+            } else {
+                List<Object> list = new LinkedList<Object>();
+                list.add(selection.get(0));
+                result.initalize(editor, list, label.toLowerCase(), FILE_PATH,
+                        MODEL, framework);
+            }
         }
 
         return result;
+    }
+
+    /**
+     * This transformation command performs an auto layout some time after the
+     * last transformation.
+     * 
+     * @author soh
+     */
+    private static class TransformationCommandWithAutoLayout extends
+            TransformationCommand {
+
+        /** The label. */
+        private String label;
+
+        /** The delay. */
+        private static final int DELAY = 500;
+
+        /**
+         * Creates a new Transformation command.
+         * 
+         * @param domain
+         * @param labelParam
+         * @param adapter
+         */
+        public TransformationCommandWithAutoLayout(
+                TransactionalEditingDomain domain, String labelParam,
+                IAdaptable adapter) {
+            super(domain, labelParam, adapter);
+            this.label = labelParam;
+        }
+
+        @Override
+        protected CommandResult doExecuteWithResult(
+                final IProgressMonitor monitor, final IAdaptable info)
+                throws ExecutionException {
+            CommandResult res = super.doExecuteWithResult(monitor, info);
+            if (label.equalsIgnoreCase("paste")) {
+                WorkerJob job = new WorkerJob();
+                job.schedule(DELAY);
+            }
+
+            return res;
+        }
+
     }
 
     /**

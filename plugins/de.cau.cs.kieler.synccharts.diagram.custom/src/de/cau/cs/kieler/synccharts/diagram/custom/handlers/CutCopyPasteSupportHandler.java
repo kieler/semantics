@@ -360,9 +360,9 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return the list
      */
-    private List<Object> getListFromSelection(
+    private List<EObject> getListFromSelection(
             final IStructuredSelection selection) {
-        List<Object> result = new LinkedList<Object>();
+        List<EObject> result = new LinkedList<EObject>();
         Iterator<?> iter = selection.iterator();
 
         while (iter.hasNext()) {
