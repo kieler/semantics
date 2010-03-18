@@ -67,7 +67,6 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
         // if the cursor is inside the popup bar
         // or the keyboar triggred activation
         // then we do not want to deactivate
-        System.out.println(editPart);
         if (!isDiagramAssistant(me.getSource())) {
             setAvoidHidingDiagramAssistant(false);
         }
