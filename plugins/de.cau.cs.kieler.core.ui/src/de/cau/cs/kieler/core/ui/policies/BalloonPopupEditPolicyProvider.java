@@ -24,7 +24,10 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DescriptionCompartmentEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.NoteEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.diagram.ui.internal.editparts.NoteAttachmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
 /**
@@ -46,18 +49,41 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      *            The editPart to register this policy with.
      */
     public void createEditPolicies(final EditPart editPart) {
-        try {
-            if (getContributions() != null) {
-                BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
-                        getContributions(), editPart);
-                policy.setHost(editPart);
-                editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
-                        policy);
-                policy.activate();
+        if (!isNote(editPart)) {
+            try {
+                if (getContributions() != null) {
+                    BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
+                            getContributions(), editPart);
+                    policy.setHost(editPart);
+                    editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
+                            policy);
+                    policy.activate();
+                }
+            } catch (RuntimeException e0) {
+                e0.printStackTrace();
             }
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
         }
+    }
+
+    /**
+     * Determines whether the edit part is a note.
+     * 
+     * @param editPart
+     *            the edit part
+     * @return true if it is a note
+     */
+    @SuppressWarnings("restriction")
+    private boolean isNote(final EditPart editPart) {
+        if (editPart instanceof DescriptionCompartmentEditPart) {
+            return true;
+        }
+        if (editPart instanceof NoteEditPart) {
+            return true;
+        }
+        if (editPart instanceof NoteAttachmentEditPart) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -67,6 +67,7 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
         // if the cursor is inside the popup bar
         // or the keyboar triggred activation
         // then we do not want to deactivate
+        System.out.println(editPart);
         if (!isDiagramAssistant(me.getSource())) {
             setAvoidHidingDiagramAssistant(false);
         }
@@ -89,7 +90,6 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
                     DragTracker tracker = new BalloonMouseListener(item);
                     IElementType type = generateType();
                     super.addPopupBarDescriptor(type, image, tracker, tip);
-
                 }
             }
         }
