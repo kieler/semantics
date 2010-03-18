@@ -56,16 +56,14 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     public void register() {
         IWorkbench bench = getWorkbench();
         if (bench != null) {
+            bench.addWindowListener(this);
             IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
             if (window != null) {
+                window.addPageListener(this);
                 IWorkbenchPage page = window.getActivePage();
                 if (page != null) {
                     page.addSelectionListener(this);
-                } else {
-                    window.addPageListener(this);
                 }
-            } else {
-                bench.addWindowListener(this);
             }
         }
     }
@@ -184,7 +182,6 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void windowActivated(final IWorkbenchWindow window) {
         if (window != null) {
-            window.removePageListener(this);
             window.addPageListener(this);
         }
     }
@@ -202,9 +199,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * {@inheritDoc}
      */
     public void windowDeactivated(final IWorkbenchWindow window) {
-        if (window != null) {
-            window.removePageListener(this);
-        }
+
     }
 
     /**
@@ -212,11 +207,10 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void windowOpened(final IWorkbenchWindow window) {
         if (window != null) {
+            window.addPageListener(this);
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
                 page.addSelectionListener(this);
-            } else {
-                window.addPageListener(this);
             }
         }
     }
