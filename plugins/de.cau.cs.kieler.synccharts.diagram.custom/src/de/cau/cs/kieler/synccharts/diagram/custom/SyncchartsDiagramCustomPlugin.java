@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -44,7 +45,7 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
  * @author soh
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
-        ISelectionListener, IPageListener {
+        ISelectionListener, IPageListener, IWindowListener {
 
     /** The current instance of the plugin. */
     public static SyncchartsDiagramCustomPlugin instance = null;
@@ -57,7 +58,14 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         if (bench != null) {
             IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
             if (window != null) {
-                window.addPageListener(this);
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    page.addSelectionListener(this);
+                } else {
+                    window.addPageListener(this);
+                }
+            } else {
+                bench.addWindowListener(this);
             }
         }
     }
@@ -171,4 +179,49 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         return getWorkbench().getDisplay();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void windowActivated(IWorkbenchWindow window) {
+        if (window != null) {
+            window.removePageListener(this);
+            window.addPageListener(this);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void windowClosed(IWorkbenchWindow window) {
+        if (window != null) {
+            window.removePageListener(this);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void windowDeactivated(IWorkbenchWindow window) {
+        if (window != null) {
+            window.removePageListener(this);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void windowOpened(IWorkbenchWindow window) {
+        if (window != null) {
+            IWorkbenchPage page = window.getActivePage();
+            if (page != null) {
+                page.addSelectionListener(this);
+            } else {
+                window.addPageListener(this);
+            }
+        }
+    }
 }

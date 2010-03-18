@@ -111,9 +111,9 @@
          <command
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ReInitDiagramCommand"
-            description="Reinitialize the diagram for the selected kixs file."
+            description="Reinitialize the diagram for the selected kixs file overwriting the olds kids file."
             id="de.cau.cs.kieler.core.ui.reinitDiagram"
-            name="Reinitialize synccharts diagram">
+            name="Reinitialize and save synccharts diagram">
       </command>
    </extension>
    
@@ -283,9 +283,9 @@
                mnemonic="K">
             <command
                   commandId="de.cau.cs.kieler.core.ui.reinitDiagram"
-                  label="Reinitialize synccharts diagram"
+                  label="Reinitialize and save synccharts diagram"
                   style="push"
-                  tooltip="Reinitialize the diagram of the currently selected file.">
+                  tooltip="Reinitialize the diagram for the selected kixs file overwriting the olds kids file.">
             </command>
          </menu>
       </menuContribution>
