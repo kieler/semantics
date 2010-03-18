@@ -2,10 +2,12 @@
 
 «EXTENSION template::Helper»
 
-«DEFINE priorityReduction FOR Transition-»
-	«IF hasDependentState(this)-»
-		/* prio reduction */
-		PRIO(«getRealThreadPriority(this.targetState)»);
+«DEFINE priorityReduction FOR Action-»
+	«IF this.eRootContainer.metaType == Transition-»
+		«IF hasDependentState((Transition)this.eRootContainer)-»
+			/* prio reduction */
+			PRIO(«getRealThreadPriority(((Transition)this.eRootContainer).targetState)»);
+		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -24,7 +26,7 @@
 «ENDDEFINE»
 
 «DEFINE transitionPrio FOR Transition-»
-	«IF getRealThreadPriority(this.targetState) != getRealThreadPriority(this.sourceState)-»
+	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
 		/* prio after transition */
 		PRIO(«getRealThreadPriority(this.targetState)»);
 	«ENDIF-»

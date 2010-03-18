@@ -92,9 +92,10 @@ public final class Helper {
         for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
             printStatePlusTransitionList(list);
         }
-        for (StatePlusTransition spt : sortedStates) {
-            System.out.println(spt.getState().getId() + ": " + getOptimizedPriority(spt.getState(), true));
-        }
+//        for (StatePlusTransition spt : sortedStates) {
+//            System.out.println(spt.getState().getId() + ": "
+//                    + getOptimizedPriority(spt.getState(), false));
+//        }
         return sortedStates;
     }
 
@@ -107,6 +108,17 @@ public final class Helper {
      */
     public static int getRealThreadPriority(final State state) {
         return getThreadPriority(state, false, false);
+    }
+    
+    /**
+     * Computes the real priority of the given state.
+     * 
+     * @param state
+     *            the state you want to get the priority
+     * @return priority of the state
+     */
+    public static int getRealOptimizedThreadPriority(final State state) {
+        return getOptimizedPriority(state, false);
     }
 
     /**
@@ -366,13 +378,14 @@ public final class Helper {
         return out;
     }
 
-    private static int getIndexWithoutTransition(final StatePlusTransition spt, final boolean first) {
+    private static int getIndexWithoutTransition(final StatePlusTransition spt,
+            final boolean smalest) {
         int out = 0;
         for (int i = 0; i < sortedStates.size(); i++) {
             StatePlusTransition listSpt = sortedStates.get(i);
             if (listSpt.getState().equals(spt.getState()) && listSpt.getType() == spt.getType()) {
                 out = i;
-                if (first) {
+                if (smalest) {
                     break;
                 }
             }
@@ -753,9 +766,9 @@ public final class Helper {
                             stateSignalDependencies.add(stateAndSignals);
                         }
                     }
-                    if (!innerState.getRegions().isEmpty()) {
-                        fillStateSignalList(innerState);
-                    }
+                }
+                if (!innerState.getRegions().isEmpty()) {
+                    fillStateSignalList(innerState);
                 }
             }
         }
@@ -830,21 +843,28 @@ public final class Helper {
         } else {
             spt = getStateProperties(state);
         }
-        
+
+        ArrayList<StatePlusTransition> listWithState = getListWithState(spt);
+        if (listWithState != null) {
+            out = getSmallestPrio(listWithState);
+        }
 
         return out;
     }
 
-    private static ArrayList<StatePlusTransition> getListWithState(StatePlusTransition spt) {
+    private static ArrayList<StatePlusTransition> getListWithState(final StatePlusTransition spt) {
         for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
-            if (list.contains(spt)) {
-                return list;
+            for (int i = 0; i < list.size(); i++) {
+                StatePlusTransition listSpt = list.get(i);
+                if (listSpt.getState().equals(spt.getState()) && listSpt.getType() == spt.getType()) {
+                    return list;
+                }
             }
         }
         return null;
     }
-    
-    private static int getSmallestPrio(ArrayList<StatePlusTransition> list){
+
+    private static int getSmallestPrio(final ArrayList<StatePlusTransition> list) {
         int out = MAX_PRIO;
         for (StatePlusTransition spt : list) {
             int prio = getSmallestThreadPriority(spt.getState());

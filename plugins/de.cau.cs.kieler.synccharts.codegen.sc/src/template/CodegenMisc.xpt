@@ -26,6 +26,12 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«DEFINE callJSONTransition FOR Transition-»
+	«IF (boolean)(GLOBALVAR sim)-»
+		JSONstate("«getURI()»");
+	«ENDIF-»
+«ENDDEFINE»
+
 «DEFINE generateInputSignal FOR Signal-»
 	void «this.parentState.id»_I_«this.name»() {
 		signals = signals | (1 << sig_«this.name»);

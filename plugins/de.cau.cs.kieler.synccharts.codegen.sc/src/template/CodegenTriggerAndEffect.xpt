@@ -7,8 +7,10 @@
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
-			«ELSE-»
+			«ELSEIF (this.trigger.metaType == ComplexExpression)-»
 				«EXPAND complexTrigger FOR this-»
+			«ELSE-»
+				/* error while generating code */
 			«ENDIF-»
 		«ELSE-»
 			«EXPAND effects FOR this-»
@@ -18,17 +20,29 @@
 
 «DEFINE simpleTrigger FOR Action-»
 	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
-	if (PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)){
+	if («EXPAND ifRequest FOR this-») {
 		«EXPAND effects FOR this-»
-		«EXPAND CodegenPriority::priorityReduction FOR (Transition)this.eRootContainer-»
+		«EXPAND CodegenPriority::priorityReduction FOR this-»
 	}
 «ENDDEFINE»
 
 «DEFINE complexTrigger FOR Action-»
-	if («EXPAND complexExpression FOR ((ComplexExpression)this.trigger)») {
+	if («EXPAND ifRequest FOR this-») {
 		«EXPAND effects FOR this-»
 		«EXPAND stateAbortion FOR (Transition)this-»
 	}
+«ENDDEFINE»
+
+«DEFINE ifRequest FOR Action-»
+	«IF (this.trigger.metaType == BooleanValue)-»
+		«EXPAND getValue FOR this.trigger-»
+	«ELSEIF this.trigger.metaType == ComplexExpression-»
+		«EXPAND complexExpression FOR ((ComplexExpression)this.trigger)-»
+	«ELSEIF this.trigger.metaType == SignalReference-»
+		PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)
+	«ELSE-»
+		/* unknown if request /*
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE effects FOR Action-»
@@ -127,6 +141,8 @@
 
 «DEFINE preOperator FOR Expression-»
 	«IF this.metaType == ComplexExpression-»
+	/* «this» */
+		VALPRE(sig_O)
 	«ELSEIF this.metaType == SignalReference-»
 		PRESENTPRE(sig_«((SignalReference)this).signal.name-»)
 	«ELSE»
@@ -150,7 +166,11 @@
 	«ELSEIF ((Value)this).metaType == synccharts::FloatValue-»
 		«((FloatValue)this).value-»
 	«ELSE-»
-		«((BooleanValue)this).value-»
+		«IF ((BooleanValue)this).value-»
+			1
+		«ELSE-»
+			0
+		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 

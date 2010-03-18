@@ -24,6 +24,7 @@
 	extern void JSONstate(char*);
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
 	int valSigInt[valSigIntCnt];
+	int valSigIntPre[valSigIntPreCnt];
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»
