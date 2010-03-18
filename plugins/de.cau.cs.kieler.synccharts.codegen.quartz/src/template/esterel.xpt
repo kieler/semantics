@@ -97,7 +97,7 @@ end module
 «DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
 «DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
 «DEFINE Trigger FOR ComplexExpression»
-  («FOREACH subExpressions AS sub SEPARATOR operator.toString()»«EXPAND Trigger FOR sub»«ENDFOREACH»)
+  («FOREACH subExpressions AS sub SEPARATOR " " + operator.toString() + " "» «EXPAND Trigger FOR sub» «ENDFOREACH»)
 «ENDDEFINE»
 «DEFINE Trigger FOR HostCode»«code»«ENDDEFINE»
 «DEFINE Trigger FOR Expression»//ERROR: unknown expression«ENDDEFINE»
