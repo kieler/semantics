@@ -178,7 +178,6 @@ public class CommandFactory {
             SyncchartsDiagramCustomPlugin.instance.getDisplay().asyncExec(
                     new Runnable() {
 
-                        @Override
                         public void run() {
                             IEditorPart editorPart = SyncchartsDiagramCustomPlugin.instance
                                     .getActiveEditorPart();
