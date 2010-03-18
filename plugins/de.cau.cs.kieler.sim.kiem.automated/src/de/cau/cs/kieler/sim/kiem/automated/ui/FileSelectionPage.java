@@ -58,7 +58,7 @@ public class FileSelectionPage extends WizardExportResourcesPage implements
     private Button importButton;
 
     /** The parent component for this page. */
-    private Composite parentComponent;
+    private Composite parentComponent = null;
 
     // --------------------------------------------------------------------------
 

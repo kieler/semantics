@@ -413,16 +413,18 @@ public final class ScheduleManager extends AbstractManager implements
         }
 
         switch (resource.getType()) {
-        case IResource.FILE:
-            return;
+
         case IResource.FOLDER:
         case IResource.PROJECT:
         case IResource.ROOT:
             IContainer container = (IContainer) resource;
-
             for (IResource res : container.members()) {
                 recImport(res);
             }
+            break;
+        case IResource.FILE:
+        default:
+            return;
         }
     }
 

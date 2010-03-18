@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  */
 public class AutoTestComponent extends AbstractAutomatedProducer {
 
+    /** determines when traces are valid. */
     private static final double RND_VALID = 0.2;
 
     /** The number of iterations this component wants to execute. */
@@ -84,6 +85,7 @@ public class AutoTestComponent extends AbstractAutomatedProducer {
             throws KiemExecutionException {
         stepCounter++;
         if (stepCounter == (2 * 2) && iteration == 2) {
+            System.out.println("Invalid");
             // throw new KiemExecutionException("", false, null);
         }
         return null;

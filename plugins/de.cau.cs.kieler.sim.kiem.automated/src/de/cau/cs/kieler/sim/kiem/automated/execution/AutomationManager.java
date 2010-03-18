@@ -431,6 +431,9 @@ public final class AutomationManager implements StatusListener {
                     message += "(Error Canceled Iteration)";
                     currentResult.setStatus(ResultStatus.ERROR);
                     break;
+                default:
+                    currentResult.setStatus(ResultStatus.ERROR);
+                    message += "(Status not found)";
                 }
                 manager.resetIterationCancel();
                 if (result) {

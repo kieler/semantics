@@ -44,10 +44,10 @@ public class AutomatedEvalView extends ViewPart implements ControlListener {
     private Composite panel = null;
 
     /** The list of panels in this component. */
-    private List<ExecutionFilePanel> panels;
+    private List<ExecutionFilePanel> panels = null;
 
     /** The composite responsible for scrolling the view. */
-    private ScrolledComposite scroller;
+    private ScrolledComposite scroller = null;
 
     // --------------------------------------------------------------------------
 

@@ -121,15 +121,6 @@ public class KiemAutoPreferencePage extends PreferencePage implements
     // --------------------------------------------------------------------------
 
     /**
-     * Do the layout of this preference page.
-     */
-    private void doLayout() {
-        propertiesGroup.pack();
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
      * {@inheritDoc}
      */
     public void init(final IWorkbench workbench) {

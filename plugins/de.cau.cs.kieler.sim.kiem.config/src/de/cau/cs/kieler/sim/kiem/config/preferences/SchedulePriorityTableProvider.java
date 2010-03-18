@@ -60,9 +60,9 @@ public class SchedulePriorityTableProvider extends LabelProvider implements
     public static class DataEntry {
 
         /** the associated schedule. */
-        private ScheduleData schedule;
+        private ScheduleData schedule = null;
         /** array of priorities for the entries. */
-        private int[] priorities;
+        private int[] priorities = null;
 
         // --------------------------------------------------------------------------
 
