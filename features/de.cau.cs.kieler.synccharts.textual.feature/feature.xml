@@ -8,14 +8,12 @@
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiTE">
       KIELER Textual Editing - KITE
 ---------------------------------------------------------------------
-This framework provides a textual editor, developed with TMF
-Xtext for an underlying metamodel that is shared with a graphical
-GMF editor to allow users modeling diagrams also textually. 
-As an example, an editor which supports a textual language (KITS),
-developed in the scope of the KIELER project for Synccharts,
-is provided. 
-Using analogous methods should allow developers to connect any
-GMF editor with a corresponding Xtext editor.
+This framework provides a textual editor for SyncCharts. This editor has 
+been developed with TMF Xtext. It supports the KIELER textual language 
+for Synccharts (KITS). Users can generate graphical syncCharts from textual
+syncCharts. Once done so, both textual and graphical editors listen to the changes in each other 
+and update their content according to changes. This is not a full synchronization yet still allows 
+working with both representations of a model.
    </description>
 
    <copyright url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiTE">
@@ -39,7 +37,7 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtend.typesystem.emf" version="0.7.2" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.synccharts.model" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.transaction" version="1.3.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf" version="2.5.0" match="greaterOrEqual"/>
@@ -48,7 +46,6 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.gmf.runtime.notation" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.draw2d.ui" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.core"/>
       <import plugin="org.eclipse.gef"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.expressions"/>
@@ -90,17 +87,31 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="de.cau.cs.kieler.synccharts.custom" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.2.1" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.synccharts" version="0.1.0" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.synccharts.labelparser"/>
-      <import plugin="org.apache.log4j"/>
       <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ui.core" version="0.8.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.transaction" version="1.3.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.synccharts.diagram" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor" version="1.2.0" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.kiml.ui"/>
       <import plugin="org.eclipse.xtext.ui.common" version="0.8.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.model" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.ui" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.model" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.kiml.ui" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers" version="1.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.render" version="1.3.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.viewmanagement.effects" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.viewmanagement" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.ksbase.ui" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.labelparser" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.log4j" version="1.2.15" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.interfacedeclparser" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.ksbase" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.ksbase.viewmanagement" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.textual.ksbase" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.ksbase" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xpand"/>
    </requires>
 
    <plugin
@@ -139,21 +150,21 @@ under the terms of the Eclipse Public License (EPL).
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.dsl.kits"
+         id="de.cau.cs.kieler.synccharts.textual"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.dsl.kits.glue"
+         id="de.cau.cs.kieler.synccharts.textual.glue"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.dsl.kits.ui"
+         id="de.cau.cs.kieler.synccharts.textual.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
