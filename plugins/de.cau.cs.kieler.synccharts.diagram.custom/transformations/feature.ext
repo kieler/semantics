@@ -37,6 +37,10 @@ Void copyRegionsToClipboard(List[Region] regions):
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.regionsToClipboard(java.util.List)
 ;
 
+Void copyObjectToClipboard(Object object):
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.objectToClipboard(java.lang.Object)
+;
+
 // Cut
 Void cut(Transition trans):
  copyTransitionToClipboard(trans) ->
@@ -73,26 +77,9 @@ Void cut(List[Region] regions):
 ;
 
 // Copy
-Void copy(Transition trans):
- copyTransitionToClipboard(trans)
+Void copy(Object obj):
+ copyObjectToClipboard(obj)
 ;
-
-Void copy(State state):
- copyStateToClipboard(state)
-;
-
-Void copy(Region region):
- copyRegionToClipboard(region)
-;
-
-Void copy(List[Region] regions):
- copyRegionsToClipboard(regions)
-;
-
-Void copy(List[State] states):
- copyStatesToClipboard(states)
-;
-
 
 // Paste
 
