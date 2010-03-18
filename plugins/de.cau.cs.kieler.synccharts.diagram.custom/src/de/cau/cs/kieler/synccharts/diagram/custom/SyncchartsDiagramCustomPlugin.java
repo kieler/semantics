@@ -115,7 +115,11 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 ShapeHighlightEffect effect = new ShapeHighlightEffect();
                 effect.setTarget(part);
                 effect.setColors(ColorConstants.black, null);
-                effect.execute();
+                try {
+                    effect.execute();
+                } catch (NullPointerException e0) {
+                    // in case the edit part is no longer there
+                }
             }
         }
         highlightedParts = new LinkedList<EditPart>();
