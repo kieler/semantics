@@ -1,9 +1,0 @@
-state Statechart {
-	init state fullstate{
-		INTEGER localvariable
-		onentry "blabla"
-		oninner "blup"
-		onexit "bla"
-		}
-}
-		
