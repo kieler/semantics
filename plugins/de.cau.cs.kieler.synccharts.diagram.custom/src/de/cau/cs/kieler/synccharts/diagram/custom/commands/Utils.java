@@ -52,59 +52,35 @@ public final class Utils {
     /** Clipboard for copy and paste. */
     private static volatile EObject transitionClipBoard = null;
 
-    /**
-     * Copy a state to the clipboard.
-     * 
-     * @param state
-     *            the state
-     */
-    public static void stateToClipboard(final State state) {
+    public static void objectToClipboard(final Object object) {
         resetClipboard();
-        stateClipBoard = EcoreUtil.copy(state);
-    }
+        if (object instanceof EObject) {
+            EObject o = EcoreUtil.copy((EObject) object);
+            if (o instanceof State) {
+                stateClipBoard = o;
+            } else if (o instanceof Region) {
+                regionClipBoard = o;
+            } else if (o instanceof Transition) {
+                transitionClipBoard = o;
+            }
+        } else if (object instanceof List<?>) {
+            List<?> list = (List<?>) object;
 
-    /**
-     * Copy a list of states to the clipboard.
-     * 
-     * @param states
-     *            the list of states
-     */
-    public static void statesToClipboard(final List<State> states) {
-        resetClipboard();
-        statesClipBoard = EcoreUtil.copyAll(states);
-    }
-
-    /**
-     * Copy a region to the clipboard.
-     * 
-     * @param region
-     *            the region
-     */
-    public static void regionToClipboard(final Region region) {
-        resetClipboard();
-        regionClipBoard = EcoreUtil.copy(region);
-    }
-
-    /**
-     * Copy a list of regions to the clipboard.
-     * 
-     * @param regions
-     *            the list of regions
-     */
-    public static void regionsToClipboard(final List<Region> regions) {
-        resetClipboard();
-        regionsClipBoard = EcoreUtil.copyAll(regions);
-    }
-
-    /**
-     * Copy a transition to the clipboard.
-     * 
-     * @param trans
-     *            the transition
-     */
-    public static void transitionToClipboard(final Transition trans) {
-        resetClipboard();
-        transitionClipBoard = EcoreUtil.copy(trans);
+            if (list.get(0) instanceof State) {
+                Collection<State> coll = new LinkedList<State>();
+                for (Object o : list) {
+                    coll.add((State) o);
+                }
+                statesClipBoard = EcoreUtil.copyAll(coll);
+            }
+            if (list.get(0) instanceof Region) {
+                Collection<Region> coll = new LinkedList<Region>();
+                for (Object o : list) {
+                    coll.add((Region) o);
+                }
+                regionsClipBoard = EcoreUtil.copyAll(coll);
+            }
+        }
     }
 
     /**

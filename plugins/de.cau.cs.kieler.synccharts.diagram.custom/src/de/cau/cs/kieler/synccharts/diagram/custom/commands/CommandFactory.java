@@ -174,8 +174,6 @@ public class CommandFactory {
         } catch (IOException e0) {
             e0.printStackTrace();
         }
-        System.out.println(FILE_PATH);
-
         TransformationCommand result = null;
         if (part instanceof DiagramEditor) {
             if (WorkerJob.instance != null) {
