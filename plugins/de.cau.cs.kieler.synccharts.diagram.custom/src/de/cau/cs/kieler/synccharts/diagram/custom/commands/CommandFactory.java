@@ -13,12 +13,19 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -57,15 +64,7 @@ public class CommandFactory {
     private static final ITransformationFramework framework = new XtendTransformationFramework();
 
     /** The path of the transformation file. */
-    private static String FILE_PATH = FILE;
-
-    {
-        Bundle bundle = SyncchartsDiagramCustomPlugin.instance.getBundle();
-        if (bundle != null) {
-            URL urlPath = bundle.getEntry("/" + FILE);
-            FILE_PATH = urlPath.toString();
-        }
-    }
+    private static String FILE_PATH = null;
 
     /**
      * Build a new copy command.
@@ -122,6 +121,61 @@ public class CommandFactory {
      */
     private static ICommand buildCommand(final IDiagramWorkbenchPart part,
             final List<EObject> selection, final String label) {
+        Bundle bundle = SyncchartsDiagramCustomPlugin.instance.getBundle();
+        InputStream inStream = null;
+        StringBuffer contentBuffer = new StringBuffer();
+        try {
+            if (bundle != null) {
+                URL urlPath = bundle.getEntry(FILE);
+                // Parse transformation file to read transformations and
+                // parameters now:
+                if (urlPath != null) {
+                    inStream = urlPath.openStream();
+                    while (inStream.available() > 0) {
+                        contentBuffer.append((char) inStream.read());
+
+                    }
+                }
+            }
+            // Write transformation file to .metadata
+            IPath path = ResourcesPlugin.getPlugin().getStateLocation();
+            // Transformation file name:
+            path = path.append("feature").addFileExtension("ext");
+
+            File file = new File(path.toOSString());
+            if (file != null) {
+                FileOutputStream out = null;
+                try {
+                    out = new FileOutputStream(file);
+                    if (out != null) {
+                        if (!file.exists()) {
+                            if (!file.createNewFile()) {
+                                System.out.println("Can't create file.");
+                            }
+                        }
+
+                        out.write(contentBuffer.toString().getBytes());
+                        out.flush();
+                        out.close();
+                    }
+                } catch (FileNotFoundException fne) {
+                } catch (SecurityException sece) {
+                } finally {
+                    if (out != null) {
+                        out.close();
+                    }
+                }
+                // Set delete on exit flag, so the files will be cleaned when
+                // exiting
+                // eclipse
+                FILE_PATH = file.getAbsolutePath();
+                file.deleteOnExit();
+            }
+        } catch (IOException e0) {
+            e0.printStackTrace();
+        }
+        System.out.println(FILE_PATH);
+
         TransformationCommand result = null;
         if (part instanceof DiagramEditor) {
             if (WorkerJob.instance != null) {

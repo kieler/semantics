@@ -175,17 +175,30 @@ Void addStatesToRegion(Region target, List[State] states):
 
 // paste into state
 Void paste(State target):
+ tryPastingStateIntoState(target)
+;
+
+Void tryPastingStateIntoState(State target):
  let state = getStateFromClipboard():
- let region = getRegionFromClipboard():
- let states = getStatesFromClipboard():
- let regions = getRegionsFromClipboard():
  (state != null ? pasteStateIntoState(state, target) : 
-  (region != null ? pasteRegionIntoState(region, target) : 
-   (states != null ? pasteStatesIntoState(states, target) : 
-    (regions != null ? pasteRegionsIntoState(regions, target) : null)
-   )
-  )
- )
+ tryPastingRegionIntoState(target))
+;
+
+Void tryPastingRegionIntoState(State target):
+ let region = getRegionFromClipboard():
+ (region != null ? pasteRegionIntoState(region, target) : 
+ tryPastingStatesIntoState(target))
+;
+
+Void tryPastingStatesIntoState(State target):
+ let states = getStatesFromClipboard():
+ (states != null ? pasteStatesIntoState(states, target) : 
+ tryPastingRegionsIntoState(target))
+;
+
+Void tryPastingRegionsIntoState(target):
+ let regions = getRegionsFromClipboard():
+ (regions != null ? pasteRegionsIntoState(regions, target) : null)
 ;
 
 Void pasteStateIntoState(State state, State target):
