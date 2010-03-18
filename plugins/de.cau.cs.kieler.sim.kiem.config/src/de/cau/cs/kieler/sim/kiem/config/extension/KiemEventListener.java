@@ -16,13 +16,16 @@ package de.cau.cs.kieler.sim.kiem.config.extension;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
+import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
+import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 
@@ -95,6 +98,29 @@ public final class KiemEventListener implements IKiemEventListener {
         if (event.isEvent(KiemEvent.VIEW_DONE)) {
             List<ScheduleData> schedules = ScheduleManager.getInstance()
                     .getRecentSchedules();
+            if (schedules == null || schedules.isEmpty()) {
+                IEditorSite editor = KiemConfigurationPlugin.getDefault()
+                        .getActiveEditor();
+
+                EditorIdWrapper editorId = null;
+                String editorName = null;
+
+                if (editor != null) {
+                    // get the attributes from the editor
+                    editorId = new EditorIdWrapper(editor.getId());
+                    editorName = editor.getRegisteredName();
+                }
+                if (editorId == null) {
+                    editorId = EditorManager.getInstance().getDefaultEditorId();
+                    editorName = EditorManager.getInstance()
+                            .getDefaultEditorName();
+                }
+                if (editorId != null) {
+                    schedules = ScheduleManager.getInstance()
+                            .getMatchingSchedules(editorId, editorName);
+                }
+            }
+
             if (schedules != null && !schedules.isEmpty()) {
                 try {
                     ScheduleManager.getInstance()
