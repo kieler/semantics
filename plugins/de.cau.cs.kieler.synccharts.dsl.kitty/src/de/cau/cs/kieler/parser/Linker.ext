@@ -1,8 +1,0 @@
-
-extension de::cau::cs::kieler::Extensions;
-extension de::cau::cs::kieler::parser::GenLinker reexport;
-
-/*
- * If you need more sophisticated linker semantic just overwrite the linker extensions here and add your own logic.
- * Have a look at the generated de::cau::cs::kieler::parser::GenLinker (typically located in src-gen)
- */
