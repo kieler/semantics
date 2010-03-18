@@ -62,6 +62,6 @@
 
 «DEFINE transitionGoto FOR Transition-»
 	«EXPAND CodegenPriority::transitionPrio FOR this-»
-	«EXPAND callJSONTransition FOR this-»
+	«EXPAND CodegenMisc::callJSONTransition FOR this-»
 	GOTO(L_«getStateNameByFlag(this.targetState, 3)»);
 «ENDDEFINE»
