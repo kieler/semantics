@@ -63,6 +63,11 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     public static final String VIEW_ID = "de.cau.cs.kieler.sim.kiem"
             + ".automated.aebView";
 
+    /** the timeout for the automation. */
+    public static final String AUTO_TIMEOUT_ID = "AUTO_TIMEOUT";
+    /** the default value for the automation timeout. */
+    public static final int AUTO_TIMEOUT_DEFAULT = 600000;
+
     /** The shared instance. */
     private static KiemAutomatedPlugin plugin;
 

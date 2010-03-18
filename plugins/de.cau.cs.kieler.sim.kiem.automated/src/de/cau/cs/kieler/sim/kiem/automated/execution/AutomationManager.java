@@ -343,6 +343,7 @@ public final class AutomationManager implements StatusListener {
 
         flushCachedResults();
         addModelFileResultsToPanel(cachedModelResults, executionFile);
+        CancelManager.restoreTimeout();
     }
 
     // --------------------------------------------------------------------------

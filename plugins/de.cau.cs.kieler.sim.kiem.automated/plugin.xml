@@ -131,5 +131,14 @@
          </action>
       </viewContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
+            class="de.cau.cs.kieler.sim.kiem.automated.preferences.KiemAutoPreferencePage"
+            id="de.cau.cs.kieler.sim.kiem.automated.mainPage"
+            name="Automated Execution">
+      </page>
+   </extension>
 
 </plugin>

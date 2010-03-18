@@ -16,6 +16,10 @@ package de.cau.cs.kieler.sim.kiem.automated.execution;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
+import de.cau.cs.kieler.sim.kiem.config.data.KiemPropertyKeyWrapper;
+import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**
  * Manager for everything related to the premature termination of the current
@@ -46,9 +50,6 @@ public final class CancelManager {
 
     /** Singleton instance. */
     private static CancelManager instance = null;
-
-    /** The default timeout after which to cancel processing of a step. */
-    private static final int DEFAULT_TIMEOUT = 4800;
 
     /**
      * The displacement from the KIEMs timeout, in order to cancel before KIEM
@@ -243,6 +244,9 @@ public final class CancelManager {
 
     // --------------------------------------------------------------------------
 
+    /** The saved timeout. */
+    private static int oldTimeout = -1;
+
     /**
      * Load the timeout from the KiemPlugin or use default value.
      * 
@@ -250,11 +254,33 @@ public final class CancelManager {
     protected static void loadTimeout() {
         Integer providedTimeout = KiemPlugin.getDefault()
                 .getIntegerValueFromProviders(KiemPlugin.TIMEOUT_ID);
-        if (providedTimeout != null) {
-            timeout = Math.max(providedTimeout - DISPLACEMENT, DISPLACEMENT);
-        } else {
-            timeout = DEFAULT_TIMEOUT;
+        try {
+            String ourTimeout = ConfigurationManager.getInstance()
+                    .findPropertyValue(
+                            new KiemPropertyKeyWrapper(
+                                    KiemAutomatedPlugin.AUTO_TIMEOUT_ID),
+                            KiemAutomatedPlugin.AUTO_TIMEOUT_DEFAULT + "");
+            timeout = Integer.parseInt(ourTimeout);
+        } catch (KiemPropertyException e0) {
+            // can't happen as default value is supplied
         }
+        if (providedTimeout != null) {
+            oldTimeout = providedTimeout;
+        }
+        KiemPlugin.getDefault().notifyConfigurationProviders(
+                KiemPlugin.TIMEOUT_ID, timeout + "");
+        timeout -= DISPLACEMENT;
+    }
+
+    /**
+     * Restore the saved timeout in KIEM.
+     */
+    protected static void restoreTimeout() {
+        if (oldTimeout != -1) {
+            KiemPlugin.getDefault().notifyConfigurationProviders(
+                    KiemPlugin.TIMEOUT_ID, oldTimeout + "");
+        }
+        KiemPlugin.getDefault().getKIEMViewInstance().setDirty(false);
     }
 
     // --------------------------------------------------------------------------
