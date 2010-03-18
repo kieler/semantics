@@ -83,6 +83,8 @@ public class DataComponent extends AbstractAutomatedProducer {
             bundleLocation = bundleLocation.substring(1);
         }
 
+        boolean compiled = false;
+
         try {
 
             if (!validation || (validation && newValidation)) {
@@ -93,6 +95,8 @@ public class DataComponent extends AbstractAutomatedProducer {
                         + bundleLocation + " " + "-o " + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
                 process = Runtime.getRuntime().exec(compile);
+
+                compiled = true;
 
                 InputStream stderr = process.getErrorStream();
                 InputStreamReader isr = new InputStreamReader(stderr);
@@ -123,12 +127,24 @@ public class DataComponent extends AbstractAutomatedProducer {
             error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            process.destroy();
+            if (process != null) {
+                process.destroy();
+            }
+            String error = "";
+            if (!compiled) {
+                error = "No compiler found! Please select one in the \"SC simulation\" component in the Execution Manager";
+                throw new KiemInitializationException(error, true, null);
+            } else {
+                throw new KiemInitializationException("could not simulate", true, e);
+            }
+
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
-            process.destroy();
+            if (process != null) {
+                process.destroy();
+            }
+            throw new KiemInitializationException("could not simulate", true, e);
         }
-
     }
 
     /**
