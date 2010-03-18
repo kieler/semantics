@@ -196,7 +196,7 @@ Void tryPastingStatesIntoState(State target):
  tryPastingRegionsIntoState(target))
 ;
 
-Void tryPastingRegionsIntoState(target):
+Void tryPastingRegionsIntoState(State target):
  let regions = getRegionsFromClipboard():
  (regions != null ? pasteRegionsIntoState(regions, target) : null)
 ;
