@@ -1,0 +1,11 @@
+<template name="transition" description="Template for a transition" id="TransitionTemplate"
+    context="de.cau.cs.kieler.synccharts.dsl.Kits.Transition" enabled="true">
+        ${transitionType:Enum('TransitionType')} 
+            ${targetState:CrossReference('Transition.targetState')} 
+</template>
+
+<template name="simpleInitState" description="Simple Init State Template" id="simpleInitState"
+    context="de.cau.cs.kieler.synccharts.dsl.Kits.StateType" enabled="true">
+    'init' ${stateType:Enum('StateType')}
+       
+</template>

@@ -1,0 +1,41 @@
+import xtext;
+import ecore;
+import synccharts;
+
+process(ReferencedMetamodel this) :
+    ePackage.process()
+;
+
+process(EPackage this) :
+    eClassifiers.process()
+;
+
+process(EClassifier this) :
+    null
+;
+
+process(EClass this) :
+    if (this.name == "State" && eIsSet(this.getEStructuralFeature("id")) && !(eIsSet(this.getEStructuralFeature("label")))) 
+    	then eSet(this.getEStructuralFeature("label"), this.getEStructuralFeature("id").toString())
+    	//this.getEStructuralFeature("Transition").setName("trans")
+;
+process(EEnum this) :
+    //if name == 'VisibilityModifier' then eLiterals.add(newLiteral('null', 'NULL', eLiterals.size))
+    null
+;
+//create EAttribute
+
+//create EEnumLiteral newLiteral(String literal, String name, int value) :
+   // setLiteral(literal) -> setName(name) -> setValue(value)
+//;
+
+process(EStructuralFeature this) :
+    //let id = this :
+    	//let label = this :
+    		null
+;
+
+process(EAttribute this) :
+    //if eAttributeType.name == 'VisibilityModifier' then setDefaultValueLiteral('NULL')
+    null
+; 

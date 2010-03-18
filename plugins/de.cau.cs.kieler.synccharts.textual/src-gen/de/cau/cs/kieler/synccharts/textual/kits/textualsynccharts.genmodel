@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.dsl.kits/src-gen"
+    modelPluginID="de.cau.cs.kieler.synccharts.dsl.kits" modelName="Textualsynccharts"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    usedGenPackages="../../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts">
+  <foreignModel>textualsynccharts.ecore</foreignModel>
+  <genPackages prefix="Textualsynccharts" basePackage="de.cau.cs.kieler.synccharts"
+      disposableProviderFactory="true" contentTypeIdentifier="" ecorePackage="textualsynccharts.ecore#/">
+    <genClasses ecoreClass="textualsynccharts.ecore#//TextualTransition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute textualsynccharts.ecore#//TextualTransition/makeFinal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute textualsynccharts.ecore#//TextualTransition/makeInitial"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute textualsynccharts.ecore#//TextualTransition/makeConditional"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

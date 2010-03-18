@@ -1,0 +1,295 @@
+grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
+import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
+import "platform:/resource/de.cau.cs.kieler.synccharts.textual/model/textualsynccharts.ecore" as textualsync
+import "platform:/resource/de.cau.cs.kieler.synccharts.interfacedeclparser/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl.ecore" as interface
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore 
+
+Region returns sync::Region:
+  {sync::Region} 
+  ( ('region' id=ID | 'region')? // region ID's are introduced by the keyword "region".       
+    (variables+=Variable|signals+=Signal)* 
+    (innerStates+=State)+ 
+  ) 
+|
+  // even if a region without any contents is not valid
+  // it should be serializable
+  'region' (id=ID)?
+  ;
+  
+State returns sync::State:
+  {sync::State} 
+  (
+    ((isInitial?='init') (isFinal?='final')? ((id=FULLSTATEID)|(label=STRING)|(id=FULLSTATEID)(label=STRING))?)
+    |
+    ((isFinal?='final') (isInitial?='init')? ((id=FULLSTATEID)|(label=STRING)|(id=FULLSTATEID)(label=STRING))?)
+    | 
+    (type=StateType)?  (id=FULLSTATEID)
+    |
+    (type=StateType)? (label=STRING)
+    |
+    // cond S5 "conditional_5", "myId "myLabel""    
+    (type=StateType)? (id=FULLSTATEID)(label=STRING)
+    |
+    // "init cond", "final textual", "ref",...
+    (isInitial?='init')? (isFinal?='final')? (type=StateType) 
+   )  
+   //''state'
+    
+  (signals+=Signal)*// (',' (signals+=Signal))* ';')?  
+  // differ from label by making sure the i/o decl starts with a keyword 
+  (('interface: ')interfaceDeclaration=STRING)?
+  ('onentry' entryActions+=Action)* 
+  ('oninner' innerActions+=Action)* 
+  ('onexit' exitActions+=Action)* 
+  ('suspension' suspensionTrigger=Action)? 
+  // if a state does not contain any regions, body text or transitions
+  // we close it with a semicolon
+  (';'  |
+   (('{' regions+=Region ('||' regions+=Region)* '}')? 
+    ('{'bodyText=STRING'}')? 
+    (outgoingTransitions+=(Transition|TextualTransition)*)
+   )
+  )
+  ;
+
+//========================================================================================
+//===  									    TRANSITION 					               ===
+//========================================================================================
+Transition returns sync::Transition:
+	type=TransitionType 
+	targetState=[sync::State|FULLSTATEID] 
+	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
+	 (
+	  ( trigger=BooleanExpression)?('/' (effects+=Effect (','effects+=Effect)*)? )
+	 )
+	)? 
+	(isHistory?=' history')? ';'
+;   
+
+TextualTransition returns textualsync::TextualTransition :
+	type=TransitionType 
+	( 	"state" | 
+		(makeConditional ?= ("cond" | "conditional")) | 
+		(makeFinal ?= "final")
+	)
+	targetStateProxy=FULLSTATEID
+	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
+	( ((trigger=BooleanExpression)?('/' (effects+=Effect (',')?)*)?)))? (isHistory?=' history'
+	 )? ';'
+;
+//========================================================================================
+//===  									    VAR,SIG  					               ===
+//========================================================================================
+ValuedObject returns sync::ValuedObject:
+  Signal|Variable;
+
+Variable returns sync::Variable:
+  'var' name=ID ((':=' initialValue=VARSIGVALUE)? ': ' type=ValueType) ";";
+
+Signal returns sync::Signal:
+((isInput?='input') | (isOutput?='output') | ('signal')) name=QUALIFIEDNAME
+((':=' initialValue=VARSIGVALUE)? 
+  ((': ' type=ValueType) | 
+  (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
+  )
+)? ";";
+//========================================================================================
+//===  							            MISC    					               ===
+//========================================================================================
+FULLSTATEID returns ecore::EString:
+  ((ID '@')? ID); 
+  
+VARSIGVALUE returns ecore::EString:
+  (INT|ID|BOOLEAN|STRING|FLOAT)+;
+
+QUALIFIEDNAME returns ecore::EString:
+  (ID ".")* ID;
+
+enum StateType returns sync::StateType:
+  NORMAL | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual';
+
+enum CombineOperator returns sync::CombineOperator:
+  NONE | ADD='+' | MULT='*' | AND='AND' | OR='OR' | HOST='hostCombineOperator';
+
+enum ValueType returns sync::ValueType:
+  PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';
+
+enum TransitionType returns sync::TransitionType:
+  WEAKABORT='-->' | STRONGABORT='o->' | NORMALTERMINATION='>->'; 
+  
+  
+//==============================================================================
+// Actions
+//==============================================================================
+
+Action returns sync::Action:
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' (effects+=Effect (','effects+=Effect)*)? ); 		
+
+Effect returns sync::Effect: 
+	Emission | Assignment | HostCode;
+		
+Emission returns sync::Emission:
+	signal=[sync::Signal]	
+(
+	("(" newValue=ValueExpression   ")")
+   |("(" newValue=BooleanExpression ")") 
+);
+
+Assignment returns sync::Assignment:
+	variable=[sync::Variable] ":=" 
+	 ( expression=ValueExpression
+	 | expression=BooleanExpression);
+
+SignalReference returns sync::SignalReference:
+	'(' signal = [sync::Signal] ')';
+
+VariableReference returns sync::VariableReference:
+	variable = [sync::Variable];
+
+//==============================================================================
+// Values
+//==============================================================================
+// redefine INT terminal to allow negative numbers
+terminal INT returns ecore::EInt:
+ '-'?('0'..'9')+;
+IntValue returns sync::IntValue: 
+	value=INT;
+FloatValue returns sync::FloatValue:
+    value=FLOAT ; 
+BooleanValue returns sync::BooleanValue :
+    value=BOOLEAN;
+Value returns sync::Value:
+	IntValue | FloatValue | BooleanValue;
+// no minus in floats meeting#05022010
+terminal FLOAT returns ecore::EFloatObject : (( INT"."(('0'..'9')+) | 
+                                                INT("."(('0'..'9')+))?("e"|"E")("+")? INT
+                                               )
+                                              )"f"? 
+                                              
+                                              |  INT"f";
+terminal BOOLEAN returns ecore::EBooleanObject : "true" | "false";
+
+//==============================================================================
+// Arithmetic Expressions
+//==============================================================================
+
+// Example: ?A	
+ValOperation returns sync::ComplexExpression:
+	operator=ValOperator subExpressions+=SignalReference;
+
+// everything that evaluates to a primitive number value
+ValueExpression returns sync::Expression:
+	PlusOperation;
+
+// Example: 42, 42.2, ?A, var1, (1+2*3)
+ParanthesedValueExpression returns sync::Expression:
+    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
+
+// Example: 1 + 2, varA - ?B
+PlusOperation returns sync::Expression:
+	MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
+
+MultOrDivOperation returns sync::Expression:
+	MultOperation | '('DivOperation')';
+
+// Example: 2 * 4, varA mod ?B
+MultOperation returns sync::Expression:
+	PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
+
+// Example: (2 / 4)
+// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+DivOperation returns sync::Expression:
+	PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
+
+// Example: pre (? A)
+PreArithmOperation returns sync::ComplexExpression:
+	operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
+	
+PreOrNormalValueExpression returns sync::Expression:
+	PreArithmOperation | ParanthesedValueExpression;
+
+//==============================================================================
+// Boolean Expressions
+//==============================================================================
+
+// Example: 42 <= ?A
+CompareOperation returns sync::Expression:
+	ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
+UnaryOperation returns sync::ComplexExpression:
+	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
+
+UnaryParanthesedOperation returns sync::ComplexExpression:
+    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
+
+// Example: either negated or normal expression (with parantheses) 
+UnaryOrNormalExpression returns sync::Expression:
+	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
+
+// Example: A and B, not C and 42 <= ?D
+AndOperation returns sync::Expression:
+	UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
+
+// Example: A or B, C and B or D and not E 
+OrOperation returns sync::Expression:
+	AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+
+// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+ParanthesedBooleanExpression returns sync::Expression:
+    BooleanValue | CompareOperation | SignalReference | ValOperation | HostCode | '('OrOperation')' ;
+
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns sync::Expression:
+	OrOperation;
+
+//==============================================================================
+// Operators
+//==============================================================================
+	
+enum OperatorType returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
+
+enum ValOperator returns sync::OperatorType:
+	VAL="?";
+
+enum CompareOperator returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+
+// not A	
+enum UnaryOperator returns sync::OperatorType:
+	NOT="not";
+
+// pre(A)
+enum UnaryParanthesedOperator returns sync::OperatorType:
+	PRE="pre";
+
+enum OperatorOr returns sync::OperatorType:
+	OR="or";
+
+enum OperatorAnd returns sync::OperatorType:
+	AND="and";
+
+enum OperatorPre returns sync::OperatorType:
+    PRE="pre";
+
+enum PlusOperator returns sync::OperatorType:
+	ADD="+" | SUB="-";
+	
+enum MultOperator returns sync::OperatorType:	
+	MULT="*" | MOD="mod";
+
+enum DivOperator returns sync::OperatorType:	
+	DIV="/";
+
+
+//==============================================================================
+// Misc
+//==============================================================================
+	
+HostCode returns sync::HostCode:
+	//"'"code=STRING"'";
+	code=STRING ("(" type=ID ")")?; 	
+	

@@ -1,0 +1,271 @@
+import synccharts;
+import utilities;
+
+//Adds a successor to the given state 
+Void addSuccessorState(State source):
+ let target = new State:
+ connectStates(source, target) ->
+ source.parentRegion.innerStates.add(target) ->
+ setSelection(target)
+;
+
+Void addSuccessorStates(List[State] states):
+ states.addSuccessorState()
+;
+
+//Adds a predecessor to the given state
+Void addPredecessorState(State target):
+let source = new State:
+connectStates(source,target) ->
+target.parentRegion.innerStates.add(source) ->
+(target.isInitial == true) ?
+	(target.setIsInitial(false) ->
+	source.setIsInitial(true)) : 
+setSelection(source)
+;
+
+//Adds a choice to the given state
+//by adding a conditional with two
+//targets.
+Void addChoice(State source):
+let choice = new State:
+let opt1 = new State:
+let opt2 = new State:
+let t1 = new Transition:
+let t2 = new Transition:
+choice.setLabel("C1") ->
+choice.setType(StateType::CONDITIONAL) ->
+opt1.setLabel("S0") ->
+opt2.setLabel("S1") ->
+connectStates(source,choice) ->
+t1.setSourceState(choice) ->
+t1.setTargetState(opt1) ->
+t1.setPriority(1) ->
+t2.setSourceState(choice) ->
+t2.setTargetState(opt2) ->
+t2.setPriority(2) ->
+source.parentRegion.innerStates.add(choice) ->
+source.parentRegion.innerStates.add(opt1) ->
+source.parentRegion.innerStates.add(opt2)
+;
+
+//Flips source and target of the 
+//given transition.
+Void flipTransition(Transition t):
+ let source = t.sourceState:
+ let target = t.targetState: 
+ t.setSourceState(target) ->
+ t.setTargetState(source) ->
+ setSelection(t) 
+;
+
+//Connects two states
+Void connectStates(State source, State target):
+let transition = new Transition:
+transition.setSourceState(source) ->
+transition.setTargetState(target) ->
+setSelection(transition)
+;
+
+// create a self loop of one state
+Void addSelfLoop(State state):
+  connectStates(state, state)
+;
+
+//Reroutes the target of the given transition
+//to the given state
+Void rerouteTransitionTarget(Transition t, State target):
+t.setTargetState(target)
+;
+
+//Reroutes the source of the given transition
+//to the given state
+Void rerouteTransitionSource(Transition t, State source):
+t.sourceState.outgoingTransitions.remove(t) ->
+t.setSourceState(source) ->
+source.outgoingTransitions.add(t)
+;
+
+//Adds a parallel region to the given state
+Void upgradeState(State parentState):
+let region = new Region:
+let state = new State:
+state.setIsInitial(true) ->
+state.setLabel("KSBase is so cool!") ->
+state.setId("ids0x") ->
+region.innerStates.add(state) ->
+region.setId("R000") ->
+parentState.regions.add(region)
+;
+
+Void downgradeState(State parentState):
+if parentState.regions.size > 0 then
+ parentState.regions.removeAll(parentState.regions) ->
+ parentState.signals.removeAll(parentState.signals)
+;
+
+//Returns true if the state is a complex state, 
+//i.e. it has at least one inner region
+Boolean isRegionState(State state):
+	state.regions.size > 0
+;
+
+//Sets the object that should be selected after the transformation is executed
+Void setSelection(Object object):
+ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.setPostTransformationSelection(java.lang.Object)
+;
+
+//Checks if the state is the root state.
+Boolean isNoRootState(State state): 
+	state.parentRegion.parentState != null
+;
+
+Boolean isNoRootState(List[State] states):
+	states.notExists(e|e.parentRegion.parentState == null)
+;
+// Add a state to the parent state and add all Regions
+// to that new State
+Void encapsulateRegions(State parentState):
+  let regions = parentState.regions:
+  let newRegion = new Region:
+  let newState = new State:
+  (parentState.regions.size > 0) ? 
+    (newState.regions.addAll(regions) ->
+    parentState.regions.add(newRegion) ->
+    newRegion.innerStates.add(newState)) : 
+   null
+;
+
+// Delete the state and move all its regions to the
+// parent state 
+Void flattenState(State state):
+let parentRegion = state.parentRegion:
+let parentState = parentRegion.parentState:
+let stateSize = parentRegion.innerStates.size:
+parentState.regions.addAll(state.regions) ->
+state.setParentRegion(null) ->
+(stateSize <= 1) ?
+   parentState.regions.remove(parentRegion) : 
+null
+;
+
+//Adds an initial state to a region
+Void addInitialState(Region target):
+ let parent = target.parentState :
+ let state = new State:
+ (parent != null) ?
+ (state.setLabel("Initial") ->
+ state.setIsInitial(true) ->
+ target.innerStates.add(state) ->
+ setSelection(state)) :
+ createDefault(target)
+;
+
+
+
+
+/////////////////////////
+//     Templates      ///
+/////////////////////////
+
+//Creates a default StateChart
+Void createDefault(Region rootRegion):
+let state = new State:
+let innerState = new State:
+let region = new Region:
+state.setLabel(getFileNameOfActiveEditor()) ->
+state.regions.add(region) ->
+innerState.setLabel("Initial") ->
+innerState.setIsInitial(true) -> 
+region.innerStates.add(innerState) ->
+rootRegion.innerStates.add(state) ->
+setSelection(innerState)
+;
+
+Void makeFinal (State state):
+state.setIsFinal(true)
+;
+
+String getFileNameOfActiveEditor():
+JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+;
+
+//Good ol' ABRO
+Void addABRO(Region rootRegion):
+let waitABToFinal = new Transition:
+let reset = new Transition:
+let ABOFinal = new State:
+let wATrans = new Transition:
+let wBTrans = new Transition:
+let wAInitial = new State:
+let wAFinal = new State:
+let wBInitial = new State:
+let wBFinal = new State:
+let wA = new Region:
+let wB = new Region:
+let waitAB = new State:
+let ABORegion = new Region:
+let ABO = new State:
+let innerRootRegion = new Region:
+let sigA = new Signal:
+let sigB = new Signal:
+let sigR = new Signal:
+let sigO = new Signal:
+let root = new State:
+//ABRO Root State
+root.setLabel("ABRO") ->
+root.setId("ABRO") ->
+//ABRO Signal definition:
+
+//Inner State ABO
+ABO.setLabel("ABO") ->
+ABO.setId("ABO") ->
+ABO.setIsInitial(true) ->
+//Inner state Wait A and B
+waitAB.setLabel("WaitAB") ->
+waitAB.setId("WaitAB") ->
+waitAB.setIsInitial(true) ->
+//Region for 'wait for a' 
+wAInitial.setLabel("wA") ->
+wAInitial.setId("wA") ->
+wAInitial.setIsInitial(true) ->
+wA.innerStates.add(wAInitial) ->
+wAFinal.setLabel("dA") ->
+wAFinal.setId("dA") ->
+wAFinal.setIsFinal(true) ->
+wA.innerStates.add(wAFinal) ->
+wATrans.setSourceState(wAInitial) ->
+wATrans.setTargetState(wAFinal) ->
+wATrans.setTriggersAndEffects("A") ->
+waitAB.regions.add(wA) ->
+//Region for 'wait for b'
+wBInitial.setLabel("wB") ->
+wBInitial.setId("wB") ->
+wBInitial.setIsInitial(true) ->
+wB.innerStates.add(wBInitial) ->
+wBFinal.setLabel("dB") ->
+wBFinal.setId("dB") ->
+wBFinal.setIsFinal(true) ->
+wB.innerStates.add(wBFinal) ->
+wBTrans.setSourceState(wBInitial) ->
+wBTrans.setTargetState(wBFinal) ->
+wBTrans.setTriggersAndEffects("B") ->
+waitAB.regions.add(wB) ->
+//ABO final state
+ABOFinal.setLabel("done") ->
+ABOFinal.setId("done") ->
+waitABToFinal.setSourceState(waitAB) ->
+waitABToFinal.setTargetState(ABOFinal) ->
+waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
+waitABToFinal.setTriggersAndEffects("/O") ->
+ABORegion.innerStates.add(waitAB) ->
+ABORegion.innerStates.add(ABOFinal) ->
+ABO.regions.add(ABORegion)->
+reset.setSourceState(ABO) ->
+reset.setTargetState(ABO) ->
+reset.setType(TransitionType::STRONGABORT) ->
+reset.setTriggersAndEffects("R") ->
+innerRootRegion.innerStates.add(ABO) ->
+root.regions.add(innerRootRegion) ->
+rootRegion.innerStates.add(root)
+;

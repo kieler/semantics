@@ -1,0 +1,11 @@
+/**
+* here is a list of modified classes
+* please take a look into the corresponding files for further details
+**/
+
+PACKAGE NAME                            	|  CLASS NAME                     		| WHY?
+============================================================================================================
+de.cau.cs.kieler.synccharts.dsl.outline  	| RetypingSyncchartsTransformer  		| customized the outline view
+ui/src-gen/de.cau.cs.kieler.synccharts.dsl 	| AbstractRetypingSyncchartsUiModule   	| bound my own content assist proposal provider
+de.cau.cs.kieler.synccharts.dsl.outline 	| RetypingSyncchartsTransformer  		| customizing the outline view
+de.cau.cs.kieler.synccharts.dsl.outline  	| RetypingSyncchartsTransformer 		| customizing the outline view
