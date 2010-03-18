@@ -182,8 +182,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void windowActivated(IWorkbenchWindow window) {
+    public void windowActivated(final IWorkbenchWindow window) {
         if (window != null) {
             window.removePageListener(this);
             window.addPageListener(this);
@@ -193,8 +192,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void windowClosed(IWorkbenchWindow window) {
+    public void windowClosed(final IWorkbenchWindow window) {
         if (window != null) {
             window.removePageListener(this);
         }
@@ -203,8 +201,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void windowDeactivated(IWorkbenchWindow window) {
+    public void windowDeactivated(final IWorkbenchWindow window) {
         if (window != null) {
             window.removePageListener(this);
         }
@@ -213,8 +210,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void windowOpened(IWorkbenchWindow window) {
+    public void windowOpened(final IWorkbenchWindow window) {
         if (window != null) {
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
