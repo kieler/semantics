@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
@@ -39,7 +37,6 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
-import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 
 /**
  * @author soh
@@ -80,7 +77,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
         if (sel instanceof IStructuredSelection) {
-            resetHighlightedParts();
+            HighlightingManager.reset(part);
 
             IStructuredSelection selection = (IStructuredSelection) sel;
             Iterator<?> iter = selection.iterator();
@@ -95,38 +92,13 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                         editPart = ModelingUtil.getEditPart(obj);
                     }
                     if (editPart instanceof TransitionEditPart) {
-                        ShapeHighlightEffect effect = new ShapeHighlightEffect();
-                        effect.setTarget(editPart);
-                        effect.setColors(ColorConstants.blue, null);
-                        effect.execute();
-                        highlightedParts.add(editPart);
+                        HighlightingManager.highlight(part, editPart,
+                                ColorConstants.blue, null);
                     }
                 }
             }
         }
     }
-
-    /**
-     * 
-     */
-    private void resetHighlightedParts() {
-        if (highlightedParts != null) {
-            for (EditPart part : highlightedParts) {
-                ShapeHighlightEffect effect = new ShapeHighlightEffect();
-                effect.setTarget(part);
-                effect.setColors(ColorConstants.black, null);
-                try {
-                    effect.execute();
-                } catch (NullPointerException e0) {
-                    // in case the edit part is no longer there
-                }
-            }
-        }
-        highlightedParts = new LinkedList<EditPart>();
-    }
-
-    /** List of currently highlighted parts. */
-    private List<EditPart> highlightedParts;
 
     /**
      * {@inheritDoc}
