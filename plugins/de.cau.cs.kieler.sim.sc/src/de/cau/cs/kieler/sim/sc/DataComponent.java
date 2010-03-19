@@ -90,9 +90,21 @@ public class DataComponent extends AbstractAutomatedProducer {
             if (!validation || (validation && newValidation)) {
                 // compile
                 String compiler = (getProperties()[0]).getValue();
-                String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
-                        + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
-                        + bundleLocation + " " + "-o " + outPath
+                String compile = compiler
+                        + " "
+                        + outPath
+                        + "sim.c "
+                        + outPath
+                        + "sim_data.c "
+                        + outPath
+                        + "misc.c "
+                        + bundleLocation
+                        + "cJSON.c "
+                        + "-I "
+                        + bundleLocation
+                        + " "
+                        + "-o "
+                        + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
                 process = Runtime.getRuntime().exec(compile);
 
@@ -189,7 +201,7 @@ public class DataComponent extends AbstractAutomatedProducer {
                 allStates = allStates.substring(0, allStates.length() - 1);
                 out.remove("state");
                 out.put("state", allStates);
-            }else{
+            } else {
                 out.put("state", "");
             }
         } catch (JSONException e) {

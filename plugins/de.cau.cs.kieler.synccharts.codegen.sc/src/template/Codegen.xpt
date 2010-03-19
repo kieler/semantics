@@ -22,9 +22,10 @@
 	#include "sc.h"
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
-	#define valSigIntCnt «allSignals(this.innerStates.first()).size»
+	#define _SC_valSigInt_SIZE «allSignals(this.innerStates.first()).size»
 	
-	int valSigInt[valSigIntCnt];
+	int valSigInt[_SC_valSigInt_SIZE];
+	int valSigIntPre[_SC_valSigInt_SIZE];
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»

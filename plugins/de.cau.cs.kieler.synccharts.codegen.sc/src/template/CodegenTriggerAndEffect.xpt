@@ -131,7 +131,12 @@
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
 	«ENDIF»
 	«IF this.operator == OperatorType::VAL-»
-		VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
+		«IF this.parentExpression.operator == OperatorType::PRE-»
+			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
+		«ELSE-»
+			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
+		«ENDIF-»
+		«REM»VAL(unten)«ENDREM»
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -141,8 +146,7 @@
 
 «DEFINE preOperator FOR Expression-»
 	«IF this.metaType == ComplexExpression-»
-	/* «this» */
-		VALPRE(sig_O)
+		«EXPAND complexExpression FOR this-»
 	«ELSEIF this.metaType == SignalReference-»
 		PRESENTPRE(sig_«((SignalReference)this).signal.name-»)
 	«ELSE»

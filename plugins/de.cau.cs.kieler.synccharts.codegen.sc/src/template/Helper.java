@@ -89,13 +89,6 @@ public final class Helper {
         optimizeSortedStates();
         printDependencyList();
         printStatePlusTransitionList(sortedStates);
-        for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
-            printStatePlusTransitionList(list);
-        }
-//        for (StatePlusTransition spt : sortedStates) {
-//            System.out.println(spt.getState().getId() + ": "
-//                    + getOptimizedPriority(spt.getState(), false));
-//        }
         return sortedStates;
     }
 
@@ -109,7 +102,7 @@ public final class Helper {
     public static int getRealThreadPriority(final State state) {
         return getThreadPriority(state, false, false);
     }
-    
+
     /**
      * Computes the real priority of the given state.
      * 
@@ -825,7 +818,7 @@ public final class Helper {
     private static void optimizeSortedStates() {
         optimzedSortedStates.clear();
         for (StatePlusTransition spt : sortedStates) {
-            System.out.println(spt.getState().getId());
+            // System.out.println(spt.getState().getId());
             boolean added = addSptToOptimizedList(spt);
             if (!added) {
                 ArrayList<StatePlusTransition> addList = new ArrayList<StatePlusTransition>();
@@ -878,8 +871,6 @@ public final class Helper {
     private static boolean addSptToOptimizedList(final StatePlusTransition spt) {
         boolean added = false;
         ArrayList<ArrayList<StatePlusTransition>> tmp = new ArrayList<ArrayList<StatePlusTransition>>();
-        System.out.println();
-        System.out.println("size: " + optimzedSortedStates.size());
         for (ArrayList<StatePlusTransition> sptList : optimzedSortedStates) {
             ArrayList<StatePlusTransition> sptListTmp = new ArrayList<StatePlusTransition>();
             for (StatePlusTransition optimizedSpt : sptList) {
@@ -888,13 +879,6 @@ public final class Helper {
                 // exists controll flow edge between two states?
                 Dependency depOne = new Dependency(spt, optimizedSpt, CONTROL_FLOW_EDGE);
                 Dependency depTwo = new Dependency(optimizedSpt, spt, CONTROL_FLOW_EDGE);
-                System.out.print("depOne: ");
-                printDependency(depOne);
-                System.out.println();
-
-                System.out.print("depTwo: ");
-                printDependency(depTwo);
-                System.out.println();
 
                 if (stateDependencies.contains(depOne) || stateDependencies.contains(depTwo)) {
                     if (!isSignalDependent(spt.getTransition())

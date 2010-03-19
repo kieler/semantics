@@ -19,12 +19,9 @@
 extern const char *s2signame[];
 	
 /* Define valued int signals */
-#define valSigIntCnt «allSignals(this.innerStates.first()).size»
-extern int valSigInt[valSigIntCnt];
-
-/* Define valued int signals */
-#define valSigIntPreCnt «allSignals(this.innerStates.first()).size»
-extern int valSigIntPre[valSigIntPreCnt];
+#define _SC_valSigInt_SIZE «allSignals(this.innerStates.first()).size»
+extern int valSigInt[_SC_valSigInt_SIZE];
+extern int valSigIntPre[_SC_valSigInt_SIZE];
 
 void printDebugInfo(char* str);
 
