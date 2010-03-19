@@ -52,11 +52,95 @@ public final class Utils {
     /** Clipboard for copy and paste. */
     private static volatile EObject transitionClipBoard = null;
 
+    /**
+     * Remove a region from its parent state if its not the root region.
+     * 
+     * @param region
+     *            the region to remove
+     */
+    private static void removeRegionFromParent(final Region region) {
+        State parent = region.getParentState();
+        if (parent != null) {
+            parent.getRegions().remove(region);
+        }
+    }
+
+    /**
+     * Remove a state from the parent region.
+     * 
+     * @param state
+     *            the state to remove
+     */
+    private static void removeStateFromParent(final State state) {
+        state.getParentRegion().getInnerStates().remove(state);
+    }
+
+    /**
+     * Copy an object to clipboard and remove it from the model.
+     * 
+     * @param object
+     *            the object to cut
+     */
+    public static void cutObject(final Object object) {
+        objectToClipboard(object);
+        if (object instanceof EObject) {
+            EObject o = EcoreUtil.copy((EObject) object);
+            if (o instanceof State) {
+                State s = (State) o;
+                removeStateFromParent(s);
+            } else if (o instanceof Region) {
+                Region r = (Region) o;
+                removeRegionFromParent(r);
+            } else if (o instanceof Transition) {
+                Transition t = (Transition) o;
+                t.getSourceState().getOutgoingTransitions().remove(t);
+            }
+        } else if (object instanceof List<?>) {
+            List<?> list = (List<?>) object;
+            for (Object o : list) {
+                if (o instanceof State) {
+                    removeStateFromParent((State) o);
+                } else if (o instanceof Region) {
+                    removeRegionFromParent((Region) o);
+                }
+            }
+        }
+    }
+
+    /**
+     * Clone all transitions on a state.
+     * 
+     * @param source
+     *            the source
+     * @param target
+     *            the clone
+     */
+    private static void cloneTransitions(final State source, final State target) {
+        List<Transition> transSource = source.getOutgoingTransitions();
+        List<Transition> transTarget = target.getOutgoingTransitions();
+        transTarget.removeAll(transTarget);
+
+        for (Transition t : transSource) {
+            if (t.getTargetState() == source) {
+                Transition clone = (Transition) EcoreUtil.copy(t);
+                transTarget.add(clone);
+                clone.setTargetState(target);
+            }
+        }
+    }
+
+    /**
+     * Copy an object to clipboard.
+     * 
+     * @param object
+     *            the object
+     */
     public static void objectToClipboard(final Object object) {
         resetClipboard();
         if (object instanceof EObject) {
             EObject o = EcoreUtil.copy((EObject) object);
             if (o instanceof State) {
+                cloneTransitions((State) object, (State) o);
                 stateClipBoard = o;
             } else if (o instanceof Region) {
                 regionClipBoard = o;
@@ -69,14 +153,18 @@ public final class Utils {
             if (list.get(0) instanceof State) {
                 Collection<State> coll = new LinkedList<State>();
                 for (Object o : list) {
-                    coll.add((State) o);
+                    if (o instanceof State) {
+                        State state = (State) o;
+                        coll.add(state);
+                    }
                 }
                 statesClipBoard = EcoreUtil.copyAll(coll);
-            }
-            if (list.get(0) instanceof Region) {
+            } else if (list.get(0) instanceof Region) {
                 Collection<Region> coll = new LinkedList<Region>();
                 for (Object o : list) {
-                    coll.add((Region) o);
+                    if (o instanceof Region) {
+                        coll.add((Region) o);
+                    }
                 }
                 regionsClipBoard = EcoreUtil.copyAll(coll);
             }
@@ -102,16 +190,7 @@ public final class Utils {
     public static State getStateFromClipboard() {
         if (stateClipBoard != null) {
             State newState = (State) EcoreUtil.copy(stateClipBoard);
-
-            // remove all non self loop transitions
-            Iterator<Transition> iter = newState.getOutgoingTransitions()
-                    .iterator();
-            while (iter.hasNext()) {
-                Transition next = iter.next();
-                if (next.getTargetState() != newState) {
-                    iter.remove();
-                }
-            }
+            cloneTransitions((State) stateClipBoard, newState);
             return newState;
         }
         return null;

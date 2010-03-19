@@ -45,6 +45,7 @@ import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.ksbase.ui.handler.TransformationCommand;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
 
 /**
@@ -186,16 +187,47 @@ public class CommandFactory {
                     label, null);
 
             if (selection.size() > 1) {
-                List<Object> mappedSelection = null;
-                if (selection.get(0) instanceof State) {
-                    mappedSelection = framework.createParameterMapping(
-                            selection, new String("List[State]"));
-                } else if (selection.get(0) instanceof Region) {
-                    mappedSelection = framework.createParameterMapping(
-                            selection, new String("List[Region]"));
+                List<String> possibleMappings = new LinkedList<String>();
+                boolean hasStateList = false;
+                boolean hasRegionList = false;
+                boolean hasTransitionList = false;
+                StringBuilder pureMapping = new StringBuilder();
+
+                for (int i = 0; i < selection.size(); i++) {
+                    EObject obj = selection.get(i);
+                    if (i > 0) {
+                        pureMapping.append(",");
+                    }
+                    if (obj instanceof State) {
+                        pureMapping.append("State");
+                        hasStateList = true;
+                    } else if (obj instanceof Region) {
+                        pureMapping.append("Region");
+                        hasRegionList = true;
+                    } else if (obj instanceof Transition) {
+                        pureMapping.append("Transition");
+                        hasTransitionList = true;
+                    }
                 }
-                result.initalize(editor, mappedSelection, label.toLowerCase(),
-                        FILE_PATH, MODEL, framework);
+
+                if (hasStateList) {
+                    possibleMappings.add("List[State]");
+                } else if (hasRegionList) {
+                    possibleMappings.add("List[Region]");
+                } else if (hasTransitionList) {
+                    possibleMappings.add("List[Transition]");
+                }
+                possibleMappings.add(pureMapping.toString());
+
+                for (String s : possibleMappings) {
+                    List<Object> mappedSelection = framework
+                            .createParameterMapping(selection, s);
+
+                    if (result.initalize(editor, mappedSelection, label
+                            .toLowerCase(), FILE_PATH, MODEL, framework)) {
+                        break;
+                    }
+                }
             } else {
                 List<Object> list = new LinkedList<Object>();
                 list.add(selection.get(0));
@@ -276,7 +308,7 @@ public class CommandFactory {
          */
         @Override
         protected IStatus run(final IProgressMonitor monitor) {
-            SyncchartsDiagramCustomPlugin.instance.getDisplay().asyncExec(
+            SyncchartsDiagramCustomPlugin.instance.getDisplay().syncExec(
                     new Runnable() {
 
                         public void run() {
@@ -286,13 +318,10 @@ public class CommandFactory {
                                 DiagramLayoutManager.layout(editorPart, null,
                                         true, false);
                             }
-                            done(new Status(
-                                    IStatus.OK,
-                                    "de.cau.cs.kieler.synccharts.diagram.custom",
-                                    "Layout done"));
                         }
                     });
-            return Job.ASYNC_FINISH;
+            return new Status(IStatus.OK,
+                    "de.cau.cs.kieler.synccharts.diagram.custom", "Layout done");
         }
     }
 }

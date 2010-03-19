@@ -17,63 +17,17 @@ String getFileNameOfActiveEditor():
 // Java escapes
 
 // copy methods
-Void copyStateToClipboard(State state):
- JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.stateToClipboard(de.cau.cs.kieler.synccharts.State)
-;
-
-Void copyRegionToClipboard(Region region):
- JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.regionToClipboard(de.cau.cs.kieler.synccharts.Region)
-;
-
-Void copyTransitionToClipboard(Transition trans):
- JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.transitionToClipboard(de.cau.cs.kieler.synccharts.Transition)
-;
-
-Void copyStatesToClipboard(List[State] states):
- JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.statesToClipboard(java.util.List)
-;
- 
-Void copyRegionsToClipboard(List[Region] regions):
- JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.regionsToClipboard(java.util.List)
-;
-
 Void copyObjectToClipboard(Object object):
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.objectToClipboard(java.lang.Object)
 ;
 
+Void cutObject(Object object):
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.cutObject(java.lang.Object)
+;
+
 // Cut
-Void cut(Transition trans):
- copyTransitionToClipboard(trans) ->
- trans.sourceState.outgoingTransitions.remove(trans)
-;
-
-Void cut(State state):
- copyStateToClipboard(state) ->
- state.removeFromParent()
-;
-
-Void cut(Region region):
- copyRegionToClipboard(region) ->
- region.removeFromParent()
-;
-
-Void cut(List[State] states):
- copyStatesToClipboard(states) ->
- states.removeFromParent()
-;
-
-Void removeFromParent(State state):
- state.parentRegion.innerStates.remove(state)
-;
-
-Void removeFromParent(Region region):
- (region.parentState != null) ?
- region.parentState.regions.remove(region) : null
-;
-
-Void cut(List[Region] regions):
- copyRegionsToClipboard(regions) ->
- regions.removeFromParent()
+Void cut(Object obj):
+ cutObject(obj)
 ;
 
 // Copy
@@ -106,17 +60,30 @@ List[Region] getRegionsFromClipboard():
 
 // Paste into region
 Void paste(Region target):
+ tryPastingStateIntoRegion(target)
+;
+
+Void tryPastingStateIntoRegion(Region target):
  let state = getStateFromClipboard():
- let region = getRegionFromClipboard():
- let states = getStatesFromClipboard():
- let regions = getRegionsFromClipboard():
  (state != null ? pasteStateIntoRegion(state, target) : 
-  (region != null ? pasteRegionIntoRegion(region, target) : 
-   (states != null ? pasteStatesIntoRegion(states, target) : 
-    (regions != null ? pasteRegionsIntoRegion(regions, target) : null)
-   )
-  )
- )
+ tryPastingRegionIntoRegion(target))
+;
+
+Void tryPastingRegionIntoRegion(Region target):
+ let region = getRegionFromClipboard():
+ (region != null ? pasteRegionIntoRegion(region, target) : 
+ tryPastingStatesIntoRegion(target))
+;
+
+Void tryPastingStatesIntoRegion(Region target):
+ let states = getStatesFromClipboard():
+ (states != null ? pasteStatesIntoRegion(states, target) : 
+ tryPastingRegionsIntoRegion(target))
+;
+
+Void tryPastingRegionsIntoRegion(Region target):
+ let regions = getRegionsFromClipboard():
+ (regions != null ? pasteRegionsIntoRegion(regions, target) : null)
 ;
 
 Void pasteStateIntoRegion(State state, Region target):
