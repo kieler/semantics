@@ -175,7 +175,7 @@ public class CommandFactory {
         } catch (IOException e0) {
             e0.printStackTrace();
         }
-        TransformationCommand result = null;
+        TransformationCommandWithAutoLayout result = null;
         if (part instanceof DiagramEditor) {
             if (WorkerJob.instance != null) {
                 WorkerJob.instance.cancel();
@@ -183,48 +183,52 @@ public class CommandFactory {
             DiagramEditor editor = (DiagramEditor) part;
             TransactionalEditingDomain transDomain = editor.getEditingDomain();
 
-            result = new TransformationCommandWithAutoLayout(transDomain,
-                    label, null);
+            result = new TransformationCommandWithAutoLayout(transDomain, label);
 
             if (selection.size() > 1) {
-                List<String> possibleMappings = new LinkedList<String>();
+
                 boolean hasStateList = false;
                 boolean hasRegionList = false;
                 boolean hasTransitionList = false;
-                StringBuilder pureMapping = new StringBuilder();
+                List<String> pureMapping = new LinkedList<String>();
 
                 for (int i = 0; i < selection.size(); i++) {
                     EObject obj = selection.get(i);
-                    if (i > 0) {
-                        pureMapping.append(",");
-                    }
                     if (obj instanceof State) {
-                        pureMapping.append("State");
+                        pureMapping.add("State");
                         hasStateList = true;
                     } else if (obj instanceof Region) {
-                        pureMapping.append("Region");
+                        pureMapping.add("Region");
                         hasRegionList = true;
                     } else if (obj instanceof Transition) {
-                        pureMapping.append("Transition");
+                        pureMapping.add("Transition");
                         hasTransitionList = true;
                     }
                 }
 
+                List<String[]> possibleMappings = new LinkedList<String[]>();
                 if (hasStateList) {
-                    possibleMappings.add("List[State]");
+                    String[] array = { "List[State]" };
+                    possibleMappings.add(array);
                 } else if (hasRegionList) {
-                    possibleMappings.add("List[Region]");
+                    String[] array = { "List[Region]" };
+                    possibleMappings.add(array);
                 } else if (hasTransitionList) {
-                    possibleMappings.add("List[Transition]");
+                    String[] array = { "List[Transition]" };
+                    possibleMappings.add(array);
                 }
-                possibleMappings.add(pureMapping.toString());
+                possibleMappings.add(pureMapping.toArray(new String[pureMapping
+                        .size()]));
 
-                for (String s : possibleMappings) {
+                for (String[] s : possibleMappings) {
                     List<Object> mappedSelection = framework
                             .createParameterMapping(selection, s);
 
-                    if (result.initalize(editor, mappedSelection, label
-                            .toLowerCase(), FILE_PATH, MODEL, framework)) {
+                    if (mappedSelection != null
+                            && result
+                                    .initalize(editor, mappedSelection, label
+                                            .toLowerCase(), FILE_PATH, MODEL,
+                                            framework)) {
                         break;
                     }
                 }
@@ -259,12 +263,10 @@ public class CommandFactory {
          * 
          * @param domain
          * @param labelParam
-         * @param adapter
          */
         public TransformationCommandWithAutoLayout(
-                TransactionalEditingDomain domain, String labelParam,
-                IAdaptable adapter) {
-            super(domain, labelParam, adapter);
+                TransactionalEditingDomain domain, String labelParam) {
+            super(domain, labelParam, null);
             this.label = labelParam;
         }
 
@@ -274,13 +276,39 @@ public class CommandFactory {
                 throws ExecutionException {
             CommandResult res = super.doExecuteWithResult(monitor, info);
             if (label.equalsIgnoreCase("paste")) {
+                // DiagramEditor editor = (DiagramEditor) part;
+                // TransactionalEditingDomain transDomain = editor
+                // .getEditingDomain();
+                //
+                // TransformationCommand result = new TransformationCommand(
+                // transDomain, label, null);
+                // List<Object> dummy = new LinkedList<Object>();
+                // dummy.add(new Object());
+                // result.initalize(editor, dummy, "dummy", FILE_PATH, MODEL,
+                // framework);
+                // result.execute(monitor, info);
+
+                // if (sel == null) {
+                // sel = ((View) part.getDiagramEditPart().getModel())
+                // .getElement();
+                // }
+                // List<?> editPolicies = CanonicalEditPolicy
+                // .getRegisteredEditPolicies(sel);
+                // for (Iterator<?> it = editPolicies.iterator(); it.hasNext();)
+                // {
+                // CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it
+                // .next();
+                // nextEditPolicy.refresh();
+                // }
+                // IDiagramGraphicalViewer graphViewer = part
+                // .getDiagramGraphicalViewer();
+                // graphViewer.flush();
                 WorkerJob job = new WorkerJob();
                 job.schedule(DELAY);
-            }
 
+            }
             return res;
         }
-
     }
 
     /**

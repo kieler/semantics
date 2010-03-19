@@ -63,68 +63,69 @@ Void paste(Region target):
  tryPastingStateIntoRegion(target)
 ;
 
+// try state in region, if failed try region in region
 Void tryPastingStateIntoRegion(Region target):
  let state = getStateFromClipboard():
- (state != null ? pasteStateIntoRegion(state, target) : 
- tryPastingRegionIntoRegion(target))
+ (state != null ? 
+  (target.innerStates.add(state) ->
+  setSelection(state))
+ : 
+  tryPastingRegionIntoRegion(target))
 ;
 
+
+// try region in region, if failed try states in region
 Void tryPastingRegionIntoRegion(Region target):
  let region = getRegionFromClipboard():
- (region != null ? pasteRegionIntoRegion(region, target) : 
- tryPastingStatesIntoRegion(target))
+ (region != null ?
+  (pasteRegionIntoRegion(region, target) ->
+  setSelection(region))
+ : 
+  tryPastingStatesIntoRegion(target))
 ;
 
-Void tryPastingStatesIntoRegion(Region target):
- let states = getStatesFromClipboard():
- (states != null ? pasteStatesIntoRegion(states, target) : 
- tryPastingRegionsIntoRegion(target))
-;
-
-Void tryPastingRegionsIntoRegion(Region target):
- let regions = getRegionsFromClipboard():
- (regions != null ? pasteRegionsIntoRegion(regions, target) : null)
-;
-
-Void pasteStateIntoRegion(State state, Region target):
- target.innerStates.add(state) ->
- setSelection(state)
-;
-
+// root region: add root state and put region else replace region
 Void pasteRegionIntoRegion(Region region, Region target):
- addStatesToRegion(target, region.innerStates) ->
- setSelection(target)
-;
-
-Void pasteStatesIntoRegion(List[State] states, Region target):
- addStatesToRegion(target, states) ->
- setSelection(target)
-;
-
-Void pasteRegionsIntoRegion(List[Region] regions, Region target):
- pasteInternal(target, regions) ->
- setSelection(target)
-;
-
-
-Void pasteInternal(Region target, List[Region] regions): 
  let dummy = new State :
  (target.parentState != null) ?
- (target.parentState.regions.addAll(regions)) :
+ (target.parentState.regions.add(region) ->
+ target.parentState.regions.remove(target)) 
+ :
+ (dummy.setLabel(getFileNameOfActiveEditor()) ->
+ target.innerStates.add(dummy) ->
+ dummy.regions.add(region))
+;
+
+// states into region if fails try regions into region
+Void tryPastingStatesIntoRegion(Region target):
+ let states = getStatesFromClipboard():
+ (states != null ? 
+  (target.innerStates.addAll(states) ->
+  setSelection(target)) 
+ : 
+  tryPastingRegionsIntoRegion(target))
+;
+
+// try regions into region if fails ... nothing can be done
+Void tryPastingRegionsIntoRegion(Region target):
+ let regions = getRegionsFromClipboard():
+ (regions != null ?
+  (pasteRegionsIntoRegion(regions, target) ->
+  setSelection(target))
+ : 
+  null)
+;
+
+// if root region create new state and paste into else replace
+Void pasteRegionsIntoRegion(List[Region] regions, Region target):
+ let dummy = new State :
+ (target.parentState != null) ?
+  (target.parentState.regions.addAll(regions) ->
+  target.parentState.regions.remove(target)) 
+ :
  (dummy.regions.addAll(regions) ->
   target.innerStates.add(dummy) ->
   dummy.setLabel(getFileNameOfActiveEditor()))
-;
-
-Void addStatesToRegion(Region target, List[State] states):
- let dummy = new State :
- let dummy2 = new Region :
- (target.parentState != null) ?
- target.innerStates.addAll(states) :
- (dummy.setLabel(getFileNameOfActiveEditor()) ->
- target.innerStates.add(dummy) ->
- dummy.regions.add(dummy2) ->
- dummy2.innerStates.addAll(states))
 ;
 
 // paste into state
@@ -132,59 +133,93 @@ Void paste(State target):
  tryPastingStateIntoState(target)
 ;
 
+// try state into state if fails try region into state
 Void tryPastingStateIntoState(State target):
  let state = getStateFromClipboard():
- (state != null ? pasteStateIntoState(state, target) : 
+ (state != null ? (state.outgoingTransitions.addAll(target.outgoingTransitions) ->
+ target.parentRegion.innerStates.add(state) ->
+ target.parentRegion.innerStates.remove(target)  -> 
+ setSelection(state))
+ : 
  tryPastingRegionIntoState(target))
 ;
 
+// try region into state if fails try states into state
 Void tryPastingRegionIntoState(State target):
  let region = getRegionFromClipboard():
- (region != null ? pasteRegionIntoState(region, target) : 
+ (region != null ? (target.regions.add(region) -> 
+ setSelection(region)): 
  tryPastingStatesIntoState(target))
 ;
 
+// try states into state if fails try regions into state
 Void tryPastingStatesIntoState(State target):
  let states = getStatesFromClipboard():
- (states != null ? pasteStatesIntoState(states, target) : 
+ (states != null ? (target.parentRegion.innerStates.addAll(states) ->
+ target.parentRegion.innerStates.remove(target) -> 
+ setSelection(states.get(0))) 
+ : 
  tryPastingRegionsIntoState(target))
 ;
 
+// try regions into state if fails... nothing can be done
 Void tryPastingRegionsIntoState(State target):
  let regions = getRegionsFromClipboard():
- (regions != null ? pasteRegionsIntoState(regions, target) : null)
+ (regions != null ? (target.regions.addAll(regions) -> setSelection(target)) : null)
 ;
 
-Void pasteStateIntoState(State state, State target):
- let dummy = new Region:
- dummy.innerStates.add(state) ->
- target.regions.add(dummy) ->
- setSelection(state)
+// paste into a list of states
+Void paste(List[State] states):
+ tryPastingStateIntoStates(states)
 ;
 
-Void pasteRegionIntoState(Region region, State target):
- target.regions.add(region) ->
- setSelection(region)
+Void tryPastingStateIntoStates(List[State] states):
+ let state = getStateFromClipboard():
+ (state != null ?
+  (states.get(0).parentRegion.innerStates.add(state) ->
+  states.removeStateFromRegion() ->
+  setSelection(state))
+ :
+  tryPastingStatesIntoStates(states)
+ )
 ;
 
-Void pasteStatesIntoState(List[State] states, State target):
- let dummy = new Region:
- dummy.innerStates.addAll(states) ->
- target.regions.add(dummy) ->
- setSelection(target)
+Void tryPastingStatesIntoStates(List[State] targets):
+ let states = getStatesFromClipboard():
+ (states != null ?
+  (targets.get(0).parentRegion.innerStates.addAll(states) ->
+  targets.removeStateFromRegion() ->
+  setSelection(states.get(0)))
+ :
+ tryPastingTransitionBetweenStates(targets)
+ )
 ;
 
-Void pasteRegionsIntoState(List[Region] regions, State target):
- target.regions.addAll(regions) ->
- setSelection(target)
+Void removeStateFromRegion(State state):
+ state.parentRegion.innerStates.remove(state)
 ;
 
-// Paste transition
-Void paste(State source, State target):
+Void tryPastingTransitionBetweenStates(List[State] states):
  let trans = getTransitionFromClipboard():
- ((trans != null && (source.parentRegion == target.parentRegion)) ?
+ let source = states.get(0):
+ let target = states.get(1):
+ ((trans != null && states.size == 2 && (source.parentRegion == target.parentRegion)) ?
  (source.outgoingTransitions.add(trans) ->
- trans.setTargetState(target)) :
- null) ->
- setSelection(trans)
+ trans.setTargetState(target) ->
+ setSelection(trans)) :
+ null)
 ;
+
+// replace the selected transition with the one in clipboard
+Void paste(Transition target):
+ let trans = getTransitionFromClipboard():
+ (trans != null ?
+  (trans.setSourceState(target.sourceState) ->
+  trans.setTargetState(target.targetState) ->
+  target.sourceState.outgoingTransitions.remove(target) ->
+  setSelection(trans))
+  :
+  null 
+ )
+;
+ 
