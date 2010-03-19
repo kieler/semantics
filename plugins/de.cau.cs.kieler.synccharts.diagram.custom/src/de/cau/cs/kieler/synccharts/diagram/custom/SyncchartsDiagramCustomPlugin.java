@@ -34,6 +34,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
@@ -86,14 +87,17 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 Object o = iter.next();
                 if (o instanceof EditPart) {
                     EditPart editPart = (EditPart) o;
-                    if (editPart instanceof TransitionTriggersAndEffectsEditPart
-                            || editPart instanceof TransitionPriorityEditPart) {
-                        EObject obj = ((View) editPart.getModel()).getElement();
-                        editPart = ModelingUtil.getEditPart(obj);
-                    }
-                    if (editPart instanceof TransitionEditPart) {
-                        HighlightingManager.highlight(part, editPart,
-                                ColorConstants.blue, null);
+                    EObject obj = ((View) editPart.getModel()).getElement();
+                    if (obj instanceof Transition) {
+                        if (editPart instanceof TransitionTriggersAndEffectsEditPart
+                                || editPart instanceof TransitionPriorityEditPart) {
+                            editPart = ModelingUtil.getEditPart(obj);
+                        }
+                        if (editPart instanceof TransitionEditPart) {
+                            HighlightingManager.highlight(part, editPart,
+                                    ColorConstants.blue, null);
+                            continue;
+                        }
                     }
                 }
             }

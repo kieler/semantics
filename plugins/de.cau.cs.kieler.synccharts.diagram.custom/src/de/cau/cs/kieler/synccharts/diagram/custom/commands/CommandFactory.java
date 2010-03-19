@@ -276,14 +276,18 @@ public class CommandFactory {
                 throws ExecutionException {
             CommandResult res = super.doExecuteWithResult(monitor, info);
             if (label.equalsIgnoreCase("paste")) {
-                // DiagramEditor editor = (DiagramEditor) part;
+                // DiagramEditor editor = (DiagramEditor) PlatformUI
+                // .getWorkbench().getActiveWorkbenchWindow()
+                // .getActivePage().getActiveEditor();
                 // TransactionalEditingDomain transDomain = editor
                 // .getEditingDomain();
                 //
                 // TransformationCommand result = new TransformationCommand(
                 // transDomain, label, null);
+                // EObject obj = ((View) ((IDiagramWorkbenchPart) editor)
+                // .getDiagramEditPart().getModel()).getElement();
                 // List<Object> dummy = new LinkedList<Object>();
-                // dummy.add(new Object());
+                // dummy.add(obj);
                 // result.initalize(editor, dummy, "dummy", FILE_PATH, MODEL,
                 // framework);
                 // result.execute(monitor, info);
