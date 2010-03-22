@@ -463,5 +463,11 @@
             </ViewId>
          </GlobalActionHandlerProvider>
       </extension>
+      <extension
+            point="de.cau.cs.kieler.synccharts.triggerListener">
+         <triggerListener
+               class="de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener">
+         </triggerListener>
+      </extension>
 
 </plugin>

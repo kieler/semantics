@@ -66,7 +66,8 @@ public final class ModelingUtil {
      * @return the corresponding EditPart
      * 
      */
-    public static EditPart getEditPart(final EObject eObject, final EditPart rootEditPart) {
+    public static EditPart getEditPart(final EObject eObject,
+            final EditPart rootEditPart) {
         // if (cachedEditParts2 == null) {
         // // if hashmap is not initialized, create it
         // cachedEditParts2 = new HashMap<EObject, EditPart>();
@@ -80,8 +81,9 @@ public final class ModelingUtil {
         try {
             EditPart rootEP = rootEditPart;
             if (rootEP == null) {
-                DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+                DiagramEditor editor = (DiagramEditor) PlatformUI
+                        .getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage().getActiveEditor();
                 DiagramEditPart dep = editor.getDiagramEditPart();
                 rootEP = dep;
             }
@@ -92,10 +94,12 @@ public final class ModelingUtil {
             // have to search registry manually
             if (editPart == null) {
                 @SuppressWarnings("unchecked")
-                Collection<Object> editParts = rootEP.getViewer().getEditPartRegistry().values();
+                Collection<Object> editParts = rootEP.getViewer()
+                        .getEditPartRegistry().values();
                 for (Object object : editParts) {
                     editPart = (EditPart) object;
-                    EObject model = ((View) ((EditPart) object).getModel()).getElement();
+                    EObject model = ((View) ((EditPart) object).getModel())
+                            .getElement();
                     if (model == eObject) {
                         // search the most valid parent
                         // this is necessary because inner EditParts may also
@@ -113,7 +117,8 @@ public final class ModelingUtil {
                             EditPart parentPart = editPart.getParent();
                             Object view = parentPart.getModel();
                             if (view instanceof View) {
-                                EObject parentModel = ((View) view).getElement();
+                                EObject parentModel = ((View) view)
+                                        .getElement();
                                 if (parentModel == eObject) {
                                     editPart = parentPart;
                                 }
@@ -142,7 +147,8 @@ public final class ModelingUtil {
      * 
      * @author haf
      **/
-    private static EditPart findEditPart(final EditPart epBegin, final EObject theElement) {
+    private static EditPart findEditPart(final EditPart epBegin,
+            final EObject theElement) {
         if (theElement == null || epBegin == null) {
             return null;
         }
@@ -169,6 +175,36 @@ public final class ModelingUtil {
     }
 
     /**
+     * Finds ALL edit parts connected to the given semantic element.
+     * 
+     * @param dep
+     *            the root edit part
+     * @param theElement
+     *            the element to look for
+     * @return the list of results, may be empty
+     */
+    @SuppressWarnings("unchecked")
+    public static List<EditPart> getEditParts(final DiagramEditPart dep,
+            final EObject theElement) {
+        List<EditPart> result = new LinkedList<EditPart>();
+        Collection<Object> editParts = dep.getViewer().getEditPartRegistry()
+                .values();
+        for (Object object : editParts) {
+            if (object instanceof EditPart) {
+                EditPart editPart = (EditPart) object;
+                Object objModel = editPart.getModel();
+                if (objModel instanceof View) {
+                    EObject model = ((View) objModel).getElement();
+                    if (model == theElement) {
+                        result.add(editPart);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Get all objects that are direct or indirect children of the given root
      * EObject if they are of the specified type.
      * 
@@ -179,11 +215,12 @@ public final class ModelingUtil {
      *            The root object
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
-            final EObject rootObject) {
-        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
-                eObjectClass);
+    public static Collection<EObject> getAllByType(
+            final EClassifier eObjectClass, final EObject rootObject) {
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject,
+                true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(
+                iterator2Collection(iterator), eObjectClass);
         return elements;
     }
 
@@ -198,15 +235,16 @@ public final class ModelingUtil {
      *            The root object to start the search
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllAncestorsByType(final EClassifier eObjectClass,
-            final EObject rootObject) {
+    public static Collection<EObject> getAllAncestorsByType(
+            final EClassifier eObjectClass, final EObject rootObject) {
         Collection<EObject> ancestors = new ArrayList<EObject>();
         EObject parent = rootObject.eContainer();
         while (parent != null) {
             ancestors.add(parent);
             parent = rootObject.eContainer();
         }
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors, eObjectClass);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors,
+                eObjectClass);
         return elements;
     }
 
@@ -223,12 +261,13 @@ public final class ModelingUtil {
      *            The root object
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
-            final EditPart rootEditPart) {
+    public static Collection<EObject> getAllByType(
+            final EClassifier eObjectClass, final EditPart rootEditPart) {
         EObject rootObject = ((View) rootEditPart.getModel()).getElement();
-        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
-                eObjectClass);
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject,
+                true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(
+                iterator2Collection(iterator), eObjectClass);
         return elements;
     }
 
@@ -262,9 +301,11 @@ public final class ModelingUtil {
     public static List<EObject> getModelElementsFromSelection() {
         if (PlatformUI.getWorkbench() != null
                 && PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null
-                && PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService() != null) {
-            ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getSelectionService().getSelection();
+                && PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getSelectionService() != null) {
+            ISelection sel = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getSelectionService()
+                    .getSelection();
             LinkedList<EObject> eo = new LinkedList<EObject>();
             if (sel instanceof StructuredSelection) {
                 Iterator<?> it = ((StructuredSelection) sel).iterator();
@@ -299,7 +340,8 @@ public final class ModelingUtil {
     public static EditPart getEditPart(final EObject eObject) {
         try {
             DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+                    .getActiveWorkbenchWindow().getActivePage()
+                    .getActiveEditor();
             DiagramEditPart dep = editor.getDiagramEditPart();
             EditPart editPart = dep.findEditPart(dep, eObject);
             if (editPart == null) {
@@ -308,11 +350,13 @@ public final class ModelingUtil {
             // have to search registry manually
             if (editPart == null) {
                 @SuppressWarnings("unchecked")
-                Collection<Object> editParts = dep.getViewer().getEditPartRegistry().values();
+                Collection<Object> editParts = dep.getViewer()
+                        .getEditPartRegistry().values();
                 for (Object object : editParts) {
                     try {
                         editPart = (EditPart) object;
-                        EObject model = ((View) ((EditPart) object).getModel()).getElement();
+                        EObject model = ((View) ((EditPart) object).getModel())
+                                .getElement();
                         if (model == eObject) {
                             // search the most valid parent
                             // this is necessary because inner EditParts may
@@ -332,14 +376,15 @@ public final class ModelingUtil {
                                 EditPart parentPart = editPart.getParent();
                                 Object view = parentPart.getModel();
                                 if (view instanceof View) {
-                                    EObject parentModel = ((View) view).getElement();
+                                    EObject parentModel = ((View) view)
+                                            .getElement();
                                     if (parentModel == eObject) {
                                         editPart = parentPart;
                                     }
                                 } else {
                                     break;
                                 } // a Root diagram edit part has no real view,
-                                  // so
+                                // so
                                 // we will stop searching there
                             }
                             return editPart;

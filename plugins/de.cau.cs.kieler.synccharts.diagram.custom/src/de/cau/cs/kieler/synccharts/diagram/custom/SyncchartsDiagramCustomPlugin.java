@@ -13,15 +13,12 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
@@ -39,11 +36,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
 
 /**
  * @author soh
@@ -66,6 +61,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 window.addPageListener(this);
                 IWorkbenchPage page = window.getActivePage();
                 if (page != null) {
+                    RedundantLabelTriggerListener.hideRedundantLabels();
                     page.addSelectionListener(this);
                 }
             }
@@ -83,7 +79,6 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * {@inheritDoc}
      */
     public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
-        hideRedundantLabels(part);
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) sel;
             Iterator<?> iter = selection.iterator();
@@ -97,7 +92,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                         EditPart editPart = (EditPart) o;
                         EObject obj = ((View) editPart.getModel()).getElement();
                         if (obj instanceof Transition) {
-                            List<EditPart> parts = findEditParts(dep, obj);
+                            List<EditPart> parts = ModelingUtil.getEditParts(
+                                    dep, obj);
                             for (EditPart transEditPart : parts) {
                                 HighlightingManager.highlight(part,
                                         transEditPart, ColorConstants.blue,
@@ -108,83 +104,6 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 }
             }
         }
-    }
-
-    public static void hideRedundantLabels(final IWorkbenchPart part) {
-        VisibilityManager.reset(part);
-        if (part instanceof IDiagramWorkbenchPart) {
-            HighlightingManager.reset(part);
-            DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
-                    .getDiagramEditPart();
-            Collection<?> editParts = dep.getViewer().getEditPartRegistry()
-                    .values();
-            for (Object o : editParts) {
-                if (o instanceof EditPart) {
-                    EditPart editPart = (EditPart) o;
-                    Object model = editPart.getModel();
-                    if (model instanceof View) {
-                        EObject eObject = ((View) model).getElement();
-                        if (eObject instanceof Transition) {
-                            Transition trans = (Transition) eObject;
-                            State parent = trans.getSourceState();
-                            if (parent.getOutgoingTransitions().size() == 1) {
-                                List<EditPart> parts = findEditParts(dep, trans);
-                                for (EditPart edPart : parts) {
-                                    if (edPart instanceof TransitionPriorityEditPart) {
-                                        VisibilityManager.hide(part,
-                                                (GraphicalEditPart) edPart);
-                                    }
-                                }
-                            }
-                        } else if (eObject instanceof Region) {
-                            Region region = (Region) eObject;
-                            State parent = region.getParentState();
-                            if (parent != null
-                                    && parent.getRegions().size() == 1) {
-                                List<EditPart> parts = findEditParts(dep,
-                                        region);
-                                for (EditPart edPart : parts) {
-                                    if (edPart instanceof RegionIdEditPart) {
-                                        VisibilityManager.hide(part,
-                                                (GraphicalEditPart) edPart);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Finds ALL edit parts connected to the given semantic element.
-     * 
-     * @param dep
-     *            the root edit part
-     * @param theElement
-     *            the element to look for
-     * @return the list of results, may be empty
-     */
-    @SuppressWarnings("unchecked")
-    public static List<EditPart> findEditParts(final DiagramEditPart dep,
-            final EObject theElement) {
-        List<EditPart> result = new LinkedList<EditPart>();
-        Collection<Object> editParts = dep.getViewer().getEditPartRegistry()
-                .values();
-        for (Object object : editParts) {
-            if (object instanceof EditPart) {
-                EditPart editPart = (EditPart) object;
-                Object objModel = editPart.getModel();
-                if (objModel instanceof View) {
-                    EObject model = ((View) objModel).getElement();
-                    if (model == theElement) {
-                        result.add(editPart);
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     /**
@@ -207,6 +126,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void pageOpened(final IWorkbenchPage page) {
         if (page != null) {
+            RedundantLabelTriggerListener.hideRedundantLabels();
             page.addSelectionListener(this);
         }
     }
@@ -273,6 +193,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
             window.addPageListener(this);
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
+                RedundantLabelTriggerListener.hideRedundantLabels();
                 page.addSelectionListener(this);
             }
         }
