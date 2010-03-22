@@ -21,6 +21,7 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
@@ -38,7 +39,11 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 
 /**
  * @author soh
@@ -78,12 +83,12 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * {@inheritDoc}
      */
     public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
+        hideRedundantLabels(part);
         if (sel instanceof IStructuredSelection) {
-            HighlightingManager.reset(part);
-
             IStructuredSelection selection = (IStructuredSelection) sel;
             Iterator<?> iter = selection.iterator();
             if (part instanceof IDiagramWorkbenchPart) {
+                HighlightingManager.reset(part);
                 DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
                         .getDiagramEditPart();
                 while (iter.hasNext()) {
@@ -97,6 +102,53 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                                 HighlightingManager.highlight(part,
                                         transEditPart, ColorConstants.blue,
                                         ColorConstants.white);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void hideRedundantLabels(final IWorkbenchPart part) {
+        VisibilityManager.reset(part);
+        if (part instanceof IDiagramWorkbenchPart) {
+            HighlightingManager.reset(part);
+            DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
+                    .getDiagramEditPart();
+            Collection<?> editParts = dep.getViewer().getEditPartRegistry()
+                    .values();
+            for (Object o : editParts) {
+                if (o instanceof EditPart) {
+                    EditPart editPart = (EditPart) o;
+                    Object model = editPart.getModel();
+                    if (model instanceof View) {
+                        EObject eObject = ((View) model).getElement();
+                        if (eObject instanceof Transition) {
+                            Transition trans = (Transition) eObject;
+                            State parent = trans.getSourceState();
+                            if (parent.getOutgoingTransitions().size() == 1) {
+                                List<EditPart> parts = findEditParts(dep, trans);
+                                for (EditPart edPart : parts) {
+                                    if (edPart instanceof TransitionPriorityEditPart) {
+                                        VisibilityManager.hide(part,
+                                                (GraphicalEditPart) edPart);
+                                    }
+                                }
+                            }
+                        } else if (eObject instanceof Region) {
+                            Region region = (Region) eObject;
+                            State parent = region.getParentState();
+                            if (parent != null
+                                    && parent.getRegions().size() == 1) {
+                                List<EditPart> parts = findEditParts(dep,
+                                        region);
+                                for (EditPart edPart : parts) {
+                                    if (edPart instanceof RegionIdEditPart) {
+                                        VisibilityManager.hide(part,
+                                                (GraphicalEditPart) edPart);
+                                    }
+                                }
                             }
                         }
                     }
