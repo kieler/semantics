@@ -145,18 +145,20 @@ public class ExecutionFilePanel {
      *            the list of results
      */
     public void addResult(final List<AbstractResult> resultsParam) {
-        if (results == null) {
-            results = new LinkedList<AbstractResult>();
-            doInitialLayout(resultsParam.get(resultsParam.size() - 1));
-        }
-
-        for (AbstractResult result : resultsParam) {
-            if (!results.contains(result)) {
-                results.add(result);
+        if (resultsParam != null && resultsParam.size() > 0) {
+            if (results == null) {
+                results = new LinkedList<AbstractResult>();
+                doInitialLayout(resultsParam.get(resultsParam.size() - 1));
             }
-        }
 
-        refresh();
+            for (AbstractResult result : resultsParam) {
+                if (!results.contains(result)) {
+                    results.add(result);
+                }
+            }
+
+            refresh();
+        }
     }
 
     // --------------------------------------------------------------------------

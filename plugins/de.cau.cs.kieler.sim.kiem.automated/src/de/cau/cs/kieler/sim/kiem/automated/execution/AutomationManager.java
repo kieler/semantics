@@ -21,6 +21,8 @@ import java.util.concurrent.Semaphore;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -435,7 +437,7 @@ public final class AutomationManager implements StatusListener {
                     currentResult.setStatus(ResultStatus.ERROR);
                     message += "(Status not found)";
                 }
-                manager.resetIterationCancel();
+
                 if (result) {
                     // add after run to ensure that all columns
                     // contributed by producers are filled
@@ -469,6 +471,7 @@ public final class AutomationManager implements StatusListener {
                     canceled = true;
                 }
             }
+            manager.resetIterationCancel();
         }
         return result;
     }
@@ -798,7 +801,6 @@ public final class AutomationManager implements StatusListener {
             throws KiemInitializationException {
 
         List<KiemProperty> list = new LinkedList<KiemProperty>();
-
         // add information to the property list
         list.add(new KiemProperty(IAutomatedComponent.MODEL_FILE, modelFile
                 .toOSString()));
@@ -810,9 +812,80 @@ public final class AutomationManager implements StatusListener {
             list.add(prop);
         }
 
-        // notify observers
-        for (IAutomatedComponent comp : getRelevantComponents()) {
-            comp.setParameters(list);
+        ObserverNotifyThread notifyThread = new ObserverNotifyThread(list);
+        notifyThread.run();
+        Exception excep = notifyThread.exception;
+        if (excep != null) {
+            throw (KiemInitializationException) excep;
+        }
+    }
+
+    /**
+     * The job for notifying the observers.
+     * 
+     * @author soh
+     */
+    private class ObserverNotifyThread extends Thread {
+
+        /** The list of properties to pass to the components. */
+        private List<KiemProperty> list = null;
+
+        /** The exception that was thrown. */
+        private Exception exception = null;
+
+        /** Wait in this semaphore until done. */
+        private Semaphore mutex1 = new Semaphore(0);
+
+        /**
+         * Creates a new ObserverNotifier.
+         * 
+         * @param listParam
+         *            the list of properties
+         */
+        public ObserverNotifyThread(final List<KiemProperty> listParam) {
+            super();
+            list = listParam;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void run() {
+            Job waiter = new Job("Notify timeout.") {
+
+                @Override
+                public IStatus run(final IProgressMonitor monitorParam) {
+                    exception = new KiemInitializationException(
+                            "Timeout on notify.", false, null);
+                    mutex1.release();
+                    return new Status(Status.ERROR,
+                            KiemAutomatedPlugin.PLUGIN_ID, "Error", exception);
+
+                }
+            };
+
+            Thread notifier = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        // notify observers
+                        for (IAutomatedComponent comp : getRelevantComponents()) {
+                            comp.setParameters(list);
+                        }
+                    } catch (KiemInitializationException e0) {
+                        exception = e0;
+                    }
+                    mutex1.release();
+                }
+            };
+            waiter.schedule(CancelManager.getTimeout());
+            notifier.start();
+            try {
+                mutex1.acquire();
+            } catch (InterruptedException e0) {
+                e0.printStackTrace();
+            }
         }
     }
 

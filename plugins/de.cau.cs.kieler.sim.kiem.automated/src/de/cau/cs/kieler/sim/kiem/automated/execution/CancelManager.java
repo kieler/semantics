@@ -58,7 +58,7 @@ public final class CancelManager {
     public static final int DISPLACEMENT = 200;
 
     /** The timeout after which to cancel processing a step. */
-    private static int timeout;
+    private static int timeout = -1;
 
     /** True if the iteration was canceled by the user. */
     private CancelStatus userCanceledIteration = CancelStatus.NOT_CANCELED;
@@ -270,6 +270,16 @@ public final class CancelManager {
         KiemPlugin.getDefault().notifyConfigurationProviders(
                 KiemPlugin.TIMEOUT_ID, timeout + "");
         timeout -= DISPLACEMENT;
+        KiemPlugin.getDefault().getKIEMViewInstance().setDirty(false);
+    }
+
+    /**
+     * Getter for the timeout.
+     * 
+     * @return the timeout
+     */
+    protected static int getTimeout() {
+        return timeout;
     }
 
     /**
