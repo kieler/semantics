@@ -8,8 +8,7 @@
 	«ENDIF-»
 	«EXPAND triggersAndEffects FOR this-»
 	«IF hasDependentState(this)-»
-		/* prio of source */
-		PRIO(«getSmallestThreadPriority(this.sourceState)»);
+		«EXPAND CodegenPriority::sourcePrio FOR this»
 	«ENDIF-»
 «ENDDEFINE»
 

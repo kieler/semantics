@@ -2,11 +2,27 @@
 
 «EXTENSION template::Helper»
 
+«DEFINE getRealThreadPriority FOR State-»
+	«REM»
+	«getRealThreadPriority(this)-»
+	«ENDREM»
+	«getRealOptimizedThreadPriority(this)-»
+«ENDDEFINE»
+
+«DEFINE getWeakThreadPriority FOR State-»
+	«REM»
+	«getWeakThreadPriority(this)-»
+	«ENDREM»
+	«getOptimizedWeakThreadPriority(this)-» 
+«ENDDEFINE»
+
+getOptimizedWeakThreadPriority
+
 «DEFINE priorityReduction FOR Action-»
 	«IF this.eRootContainer.metaType == Transition-»
 		«IF hasDependentState((Transition)this.eRootContainer)-»
 			/* prio reduction */
-			PRIO(«getRealThreadPriority(((Transition)this.eRootContainer).targetState)»);
+			PRIO(«EXPAND getRealThreadPriority FOR ((Transition)this.eRootContainer).targetState»);
 		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
@@ -14,29 +30,37 @@
 «DEFINE realPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
 		/* real reduction */
-		PRIO(«getRealThreadPriority(this)»);
+		PRIO(«EXPAND getRealThreadPriority FOR this»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
 		/* weak reduction */
-		PRIO(«getWeakThreadPriority(this)»);
+		PRIO(« EXPAND getWeakThreadPriority FOR this»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE transitionPrio FOR Transition-»
 	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
 		/* prio after transition */
-		PRIO(«getRealThreadPriority(this.targetState)»);
+		PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
 	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE sourcePrio FOR Transition-»
+	/* prio of source */
+	«REM»
+	PRIO(«getSmallestThreadPriority(this.sourceState)»);
+	«ENDREM»
+	PRIO(«EXPAND getRealThreadPriority FOR this.sourceState-»);
 «ENDDEFINE»
 
 «DEFINE mainThreadPrio FOR State-»
 	«REM»if root state has transitions or actions or more then one region«ENDREM»
 	«IF this.regions.size > 1 || !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty»
-		«getMainTreadPriority(this)-»
+		«EXPAND getRealThreadPriority FOR this-»
 	«ELSE-»
-		«getMainTreadPriority(this.getInitialState())»
+		«EXPAND getRealThreadPriority FOR this.getInitialState()»
 	«ENDIF-»
 «ENDDEFINE»

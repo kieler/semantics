@@ -56,12 +56,16 @@ int getRealOptimizedThreadPriority(State state):
 	JAVA template.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
-int getSmallestThreadPriority(State state):
-	JAVA template.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
-;
-
 int getWeakThreadPriority(State rootState):
 	JAVA template.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+;
+
+int getOptimizedWeakThreadPriority(State rootState):
+	JAVA template.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+;
+
+int getSmallestThreadPriority(State state):
+	JAVA template.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 

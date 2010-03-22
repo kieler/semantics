@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Effect;
@@ -87,8 +88,15 @@ public final class Helper {
         fillDependencyList(state);
         fillSortedThreadList();
         optimizeSortedStates();
+        /* BEGIN for debugging:
+         * 
         printDependencyList();
         printStatePlusTransitionList(sortedStates);
+        for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
+            printStatePlusTransitionList(spt);
+        }
+        * END for debugging
+        */
         return sortedStates;
     }
 
@@ -104,7 +112,7 @@ public final class Helper {
     }
 
     /**
-     * Computes the real priority of the given state.
+     * Computes the real optimized priority of the given state.
      * 
      * @param state
      *            the state you want to get the priority
@@ -134,6 +142,17 @@ public final class Helper {
      */
     public static int getWeakThreadPriority(final State state) {
         return getThreadPriority(state, true, true);
+    }
+    
+    /**
+     * Computes the weak optimized priority of the given state.
+     * 
+     * @param state
+     *            the state you want to get the priority
+     * @return priority of the state
+     */
+    public static int getOptimizedWeakThreadPriority(final State state) {
+        return getOptimizedPriority(state, true);
     }
 
     /**
@@ -331,13 +350,28 @@ public final class Helper {
                 }
                 // one direction
                 if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
-                    addDependency(spt, neighborSpt, SIGNAL_FLOW_EDGE);
+                    addSignalDependencies(spt, neighborSpt);
                 }
                 // other direction
                 if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
-                    addDependency(neighborSpt, spt, SIGNAL_FLOW_EDGE);
+                    addSignalDependencies(neighborSpt, spt);
                 }
             }
+        }
+    }
+
+    private static void addSignalDependencies(final StatePlusTransition sptOne,
+            final StatePlusTransition sptTwo) {
+        for (Transition transition : sptTwo.getState().getOutgoingTransitions()) {
+            StatePlusTransition spt = sptTwo;
+            spt.setTransition(transition);
+            addDependency(sptOne, sptTwo, SIGNAL_FLOW_EDGE);
+        }
+        // if depth of states are not equal
+        if (getDepth(sptOne.getState()) < getDepth(sptTwo.getState())) {
+            State parentState = sptTwo.getState().getParentRegion().getParentState();
+            StatePlusTransition parentSpt = getStateProperties(parentState);
+            addSignalDependencies(sptOne, parentSpt);
         }
     }
 
@@ -524,7 +558,6 @@ public final class Helper {
     // Build a list of all possible dependencies in the SyncChart.
     private static void fillDependencyList(final State state) {
         // fill transition priority dependencies
-
         EList<Transition> sortedTransitions = getSortedTransitions(state.getOutgoingTransitions());
         int countTransitions = sortedTransitions.size();
         if (countTransitions > 1) {
@@ -704,12 +737,21 @@ public final class Helper {
     }
 
     private static void fillTriggerSignals(final Transition transition) {
-        // simple signals
-        if (transition.getTrigger() instanceof SignalReference) {
-            // put trigger signal into the list
-            Signal triggerSignal = ((SignalReference) transition.getTrigger()).getSignal();
-            if (!triggerSignals.contains(triggerSignal)) {
-                triggerSignals.add(triggerSignal);
+        EObject eObject = transition.getTrigger();
+        // search for signals
+        boolean hasNext = true;
+        while (hasNext && eObject != null) {
+            if (eObject instanceof SignalReference) {
+                // put trigger signal into the list
+                Signal triggerSignal = ((SignalReference) eObject).getSignal();
+                if (!triggerSignals.contains(triggerSignal)) {
+                    triggerSignals.add(triggerSignal);
+                }
+            }
+            if (eObject.eAllContents().hasNext()) {
+                eObject = eObject.eAllContents().next();
+            } else {
+                hasNext = false;
             }
         }
     }
@@ -718,10 +760,20 @@ public final class Helper {
         EList<Effect> tmpEffectSignals = transition.getEffects();
         // put all effect signals into the list
         for (Effect effect : tmpEffectSignals) {
-            if (effect instanceof Emission) {
-                Signal effectSignal = ((Emission) effect).getSignal();
-                if (!effectSignals.contains(effectSignal)) {
-                    effectSignals.add(effectSignal);
+            EObject eObject = effect;
+            boolean hasNext = true;
+            while (hasNext) {
+                if (eObject instanceof Emission) {
+                    // put trigger signal into the list
+                    Signal effectSignal = ((Emission) eObject).getSignal();
+                    if (!effectSignals.contains(effectSignal)) {
+                        effectSignals.add(effectSignal);
+                    }
+                }
+                if (eObject.eAllContents().hasNext()) {
+                    eObject = eObject.eAllContents().next();
+                } else {
+                    hasNext = false;
                 }
             }
         }
@@ -764,6 +816,14 @@ public final class Helper {
                     fillStateSignalList(innerState);
                 }
             }
+        }
+    }
+
+    private static int getDepth(final State state) {
+        if (state.getParentRegion().getParentState() != null) {
+            return getDepth(state.getParentRegion().getParentState()) + 1;
+        } else {
+            return 0;
         }
     }
 
@@ -839,7 +899,8 @@ public final class Helper {
 
         ArrayList<StatePlusTransition> listWithState = getListWithState(spt);
         if (listWithState != null) {
-            out = getSmallestPrio(listWithState);
+//            out = getSmallestPrio(listWithState);
+            out = optimzedSortedStates.indexOf(listWithState) + 1;
         }
 
         return out;

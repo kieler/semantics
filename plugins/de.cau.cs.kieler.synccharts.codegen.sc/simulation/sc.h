@@ -995,6 +995,7 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 
 #ifdef _SC_USE_PRE
 #ifdef _SC_valSigInt_SIZE
+
 //! At beginning of initial tick:
 //! Initialize previous signal values.
 #define setPreValInit					\
@@ -1006,7 +1007,7 @@ signalvector sigsFreeze;  //!< Signals that are frozen, due to suspension
 #define setPreVal					\
   for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		\
     if (!(sigsFreeze & u2b(_i)))			\
-      valSigIntPre[_i] = valSigInt[_i];
+      valSigIntPre[_i] = valSigInt[_i]; 
 
 #else     // #ifdef _SC_valSigInt_SIZE
 #define setPreValInit

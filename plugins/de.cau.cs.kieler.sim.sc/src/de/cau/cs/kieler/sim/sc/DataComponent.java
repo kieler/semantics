@@ -107,6 +107,7 @@ public class DataComponent extends AbstractAutomatedProducer {
                         + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
                 process = Runtime.getRuntime().exec(compile);
+                System.out.println(compile);
 
                 compiled = true;
 
@@ -414,7 +415,7 @@ public class DataComponent extends AbstractAutomatedProducer {
                 if (Integer.parseInt(p.getValue()) > 0) {
                     newValidation = false;
                 }
-                System.out.println("KEY - ITERATION: " + p.getValue());
+//                System.out.println("KEY - ITERATION: " + p.getValue());
             }
         }
     }

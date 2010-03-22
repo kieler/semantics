@@ -38,14 +38,14 @@
 
 «DEFINE generateForkOneRegion FOR State-»
 	L_«getStateNameByFlag(this, 3)»:
-	FORK(L_«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «getRealThreadPriority(getInitialState(this.regions.first()))»);
+	FORK(L_«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «EXPAND CodegenPriority::getRealThreadPriority FOR getInitialState(this.regions.first())»);
 	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
 	L_«getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
-		FORK(L_«getStateNameByFlag(getInitialState(region), 3)-», «getRealThreadPriority(getInitialState(region))»);
+		FORK(L_«getStateNameByFlag(getInitialState(region), 3)-», «EXPAND CodegenPriority::getRealThreadPriority FOR getInitialState(region)»);
 	«ENDFOREACH»
 	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»

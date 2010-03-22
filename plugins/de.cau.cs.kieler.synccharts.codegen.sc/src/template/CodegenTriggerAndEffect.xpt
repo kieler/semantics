@@ -146,7 +146,7 @@
 
 «DEFINE preOperator FOR Expression-»
 	«IF this.metaType == ComplexExpression-»
-		«EXPAND complexExpression FOR this-»
+		«EXPAND complexExpression FOR (ComplexExpression) this-»
 	«ELSEIF this.metaType == SignalReference-»
 		PRESENTPRE(sig_«((SignalReference)this).signal.name-»)
 	«ELSE»
