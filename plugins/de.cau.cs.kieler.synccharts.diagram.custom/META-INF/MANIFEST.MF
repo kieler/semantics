@@ -16,3 +16,7 @@ Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.1.0",
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Activator: de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.synccharts.diagram.custom,
+ de.cau.cs.kieler.synccharts.diagram.custom.commands,
+ de.cau.cs.kieler.synccharts.diagram.custom.handlers,
+ de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners
