@@ -23,7 +23,6 @@
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Transition-»
-	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 	if (PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)){
 		«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 		«EXPAND stateAbortion FOR this-»

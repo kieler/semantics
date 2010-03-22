@@ -73,9 +73,13 @@
 	}
 «ENDDEFINE»
 
-«DEFINE detectLocalSignal FOR Signal-»
-	«IF !getRootState(this.parentState).signals.contains(this)-»
-		SIGNAL(sig_«this.name»);
+«DEFINE localSignals FOR State-»
+	«IF this.isInitial-»
+		«IF this.parentRegion.parentState.parentRegion.parentState != null-»
+			«FOREACH this.parentRegion.parentState.signals AS signal-»
+				SIGNAL(sig_«signal.name»);
+			«ENDFOREACH-»
+		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 

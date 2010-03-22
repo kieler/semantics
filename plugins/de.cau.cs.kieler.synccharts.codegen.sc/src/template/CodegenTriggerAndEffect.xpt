@@ -19,7 +19,6 @@
 «ENDDEFINE»
 
 «DEFINE simpleTrigger FOR Action-»
-	«EXPAND CodegenMisc::detectLocalSignal FOR ((SignalReference)this.trigger).signal-»
 	if («EXPAND ifRequest FOR this-») {
 		«EXPAND effects FOR this-»
 		«EXPAND CodegenPriority::priorityReduction FOR this-»

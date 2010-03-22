@@ -3,11 +3,9 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-	«IF (this.regions.size >= 1)-»
-		«EXPAND stateWithRegions FOR this-»
-	«ELSE-»
-		L_«getStateNameByFlag(this, 3)-»:
-	«ENDIF-»
+	L_«getStateNameByFlag(this, 3)-»:
+	«EXPAND stateWithRegions FOR this-»
+	«EXPAND CodegenMisc::localSignals FOR this-»
 	«IF this.outgoingTransitions.isEmpty-»
 		«EXPAND stateWithoutTransition FOR this-»
 	«ELSEIF this.outgoingTransitions.size == 1-»
@@ -22,11 +20,7 @@
 
 «DEFINE stateWithRegions FOR State-»
 	«IF this.regions.size == 1-»
-		«IF this.parentRegion.parentState == null-»
-			«IF !this.outgoingTransitions.isEmpty || !this.innerActions.isEmpty || !this.entryActions.isEmpty-»
-				«EXPAND generateForkOneRegion FOR this-»
-			«ENDIF-»
-		«ELSE-»
+		«IF !isSimpleHierarchical(this)-»
 			«EXPAND generateForkOneRegion FOR this-»
 		«ENDIF-»
 	«ELSE-»
@@ -37,13 +31,11 @@
 «ENDDEFINE»
 
 «DEFINE generateForkOneRegion FOR State-»
-	L_«getStateNameByFlag(this, 3)»:
 	FORK(L_«getStateNameByFlag(getInitialState(this.regions.first()), 3)-», «EXPAND CodegenPriority::getRealThreadPriority FOR getInitialState(this.regions.first())»);
 	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
 «DEFINE generateForkMoreRegions FOR State-»
-	L_«getStateNameByFlag(this, 3)»:
 	«FOREACH this.regions AS region-»
 		FORK(L_«getStateNameByFlag(getInitialState(region), 3)-», «EXPAND CodegenPriority::getRealThreadPriority FOR getInitialState(region)»);
 	«ENDFOREACH»
