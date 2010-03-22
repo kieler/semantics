@@ -13,11 +13,16 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,11 +38,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 
 /**
  * @author soh
@@ -82,26 +83,56 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
 
             IStructuredSelection selection = (IStructuredSelection) sel;
             Iterator<?> iter = selection.iterator();
-
-            while (iter.hasNext()) {
-                Object o = iter.next();
-                if (o instanceof EditPart) {
-                    EditPart editPart = (EditPart) o;
-                    EObject obj = ((View) editPart.getModel()).getElement();
-                    if (obj instanceof Transition) {
-                        if (editPart instanceof TransitionTriggersAndEffectsEditPart
-                                || editPart instanceof TransitionPriorityEditPart) {
-                            editPart = ModelingUtil.getEditPart(obj);
-                        }
-                        if (editPart instanceof TransitionEditPart) {
-                            HighlightingManager.highlight(part, editPart,
-                                    ColorConstants.blue, null);
-                            continue;
+            if (part instanceof IDiagramWorkbenchPart) {
+                DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
+                        .getDiagramEditPart();
+                while (iter.hasNext()) {
+                    Object o = iter.next();
+                    if (o instanceof EditPart) {
+                        EditPart editPart = (EditPart) o;
+                        EObject obj = ((View) editPart.getModel()).getElement();
+                        if (obj instanceof Transition) {
+                            List<EditPart> parts = findEditParts(dep, obj);
+                            for (EditPart transEditPart : parts) {
+                                HighlightingManager.highlight(part,
+                                        transEditPart, ColorConstants.blue,
+                                        ColorConstants.white);
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Finds ALL edit parts connected to the given semantic element.
+     * 
+     * @param dep
+     *            the root edit part
+     * @param theElement
+     *            the element to look for
+     * @return the list of results, may be empty
+     */
+    @SuppressWarnings("unchecked")
+    public static List<EditPart> findEditParts(final DiagramEditPart dep,
+            final EObject theElement) {
+        List<EditPart> result = new LinkedList<EditPart>();
+        Collection<Object> editParts = dep.getViewer().getEditPartRegistry()
+                .values();
+        for (Object object : editParts) {
+            if (object instanceof EditPart) {
+                EditPart editPart = (EditPart) object;
+                Object objModel = editPart.getModel();
+                if (objModel instanceof View) {
+                    EObject model = ((View) objModel).getElement();
+                    if (model == theElement) {
+                        result.add(editPart);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /**

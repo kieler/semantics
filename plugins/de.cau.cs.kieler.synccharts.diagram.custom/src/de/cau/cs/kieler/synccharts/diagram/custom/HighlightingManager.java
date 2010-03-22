@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.diagram.custom;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbenchPart;
@@ -65,15 +64,16 @@ public class HighlightingManager {
             parts = new HashMap<EditPart, ShapeHighlightEffect>();
             instance.map.put(editor, parts);
         }
-        ShapeHighlightEffect oldEffect = parts.get(editPart);
+        ShapeHighlightEffect oldEffect = parts.remove(editPart);
+        if (oldEffect != null) {
+            oldEffect.undo();
+        }
 
         ShapeHighlightEffect newEffect = new ShapeHighlightEffect();
         newEffect.setColors(foreground, background);
         newEffect.setTarget(editPart);
-        if (oldEffect == null || !oldEffect.equals(newEffect)) {
-            parts.put(editPart, newEffect);
-            newEffect.execute();
-        }
+        parts.put(editPart, newEffect);
+        newEffect.execute();
     }
 
     /**
@@ -90,7 +90,7 @@ public class HighlightingManager {
             Iterator<EditPart> iter = parts.keySet().iterator();
             while (iter.hasNext()) {
                 EditPart part = iter.next();
-                highlightPart(part, ColorConstants.black, ColorConstants.white);
+                parts.get(part).undo();
             }
             instance.map.remove(editor);
         }
@@ -110,8 +110,8 @@ public class HighlightingManager {
                 .get(editor);
 
         if (parts != null && parts.containsKey(editPart)) {
-            parts.remove(editPart);
-            highlightPart(editPart, ColorConstants.black, ColorConstants.white);
+            ShapeHighlightEffect effect = parts.remove(editPart);
+            effect.undo();
         }
     }
 
