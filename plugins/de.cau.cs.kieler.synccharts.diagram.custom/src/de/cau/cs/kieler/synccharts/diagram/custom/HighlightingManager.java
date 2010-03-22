@@ -68,12 +68,7 @@ public class HighlightingManager {
         if (oldEffect != null) {
             oldEffect.undo();
         }
-
-        ShapeHighlightEffect newEffect = new ShapeHighlightEffect();
-        newEffect.setColors(foreground, background);
-        newEffect.setTarget(editPart);
-        parts.put(editPart, newEffect);
-        newEffect.execute();
+        parts.put(editPart, highlightPart(editPart, foreground, background));
     }
 
     /**
@@ -87,10 +82,15 @@ public class HighlightingManager {
                 .get(editor);
 
         if (parts != null) {
+
             Iterator<EditPart> iter = parts.keySet().iterator();
             while (iter.hasNext()) {
                 EditPart part = iter.next();
-                parts.get(part).undo();
+                try {
+                    parts.get(part).undo();
+                } catch (NullPointerException e0) {
+                    // obscure exception when edit part is removed
+                }
             }
             instance.map.remove(editor);
         }
@@ -111,7 +111,11 @@ public class HighlightingManager {
 
         if (parts != null && parts.containsKey(editPart)) {
             ShapeHighlightEffect effect = parts.remove(editPart);
-            effect.undo();
+            try {
+                effect.undo();
+            } catch (NullPointerException e0) {
+                // obscure exception when edit part is removed
+            }
         }
     }
 
@@ -124,12 +128,14 @@ public class HighlightingManager {
      *            the foreground color
      * @param background
      *            the background color
+     * @return the effect
      */
-    private static void highlightPart(final EditPart part,
+    private static ShapeHighlightEffect highlightPart(final EditPart part,
             final Color foreground, final Color background) {
         ShapeHighlightEffect newEffect = new ShapeHighlightEffect();
         newEffect.setColors(foreground, background);
         newEffect.setTarget(part);
         newEffect.execute();
+        return newEffect;
     }
 }
