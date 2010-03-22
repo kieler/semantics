@@ -60,15 +60,15 @@ List[Region] getRegionsFromClipboard():
 
 // Paste into region
 Void paste(Region target):
- tryPastingStateIntoRegion(target)
+ tryPastingStateIntoRegion(target) ->
+ setSelection(target)
 ;
 
 // try state in region, if failed try region in region
 Void tryPastingStateIntoRegion(Region target):
  let state = getStateFromClipboard():
  (state != null ? 
-  (target.innerStates.add(state) ->
-  setSelection(state))
+  target.innerStates.add(state)
  : 
   tryPastingRegionIntoRegion(target))
 ;
@@ -78,8 +78,7 @@ Void tryPastingStateIntoRegion(Region target):
 Void tryPastingRegionIntoRegion(Region target):
  let region = getRegionFromClipboard():
  (region != null ?
-  (pasteRegionIntoRegion(region, target) ->
-  setSelection(region))
+  pasteRegionIntoRegion(region, target)
  : 
   tryPastingStatesIntoRegion(target))
 ;
@@ -100,8 +99,7 @@ Void pasteRegionIntoRegion(Region region, Region target):
 Void tryPastingStatesIntoRegion(Region target):
  let states = getStatesFromClipboard():
  (states != null ? 
-  (target.innerStates.addAll(states) ->
-  setSelection(target)) 
+  target.innerStates.addAll(states)
  : 
   tryPastingRegionsIntoRegion(target))
 ;
@@ -110,8 +108,7 @@ Void tryPastingStatesIntoRegion(Region target):
 Void tryPastingRegionsIntoRegion(Region target):
  let regions = getRegionsFromClipboard():
  (regions != null ?
-  (pasteRegionsIntoRegion(regions, target) ->
-  setSelection(target))
+  pasteRegionsIntoRegion(regions, target)
  : 
   null)
 ;
@@ -130,7 +127,8 @@ Void pasteRegionsIntoRegion(List[Region] regions, Region target):
 
 // paste into state
 Void paste(State target):
- tryPastingStateIntoState(target)
+ tryPastingStateIntoState(target) ->
+ setSelection(target.parentRegion)
 ;
 
 // try state into state if fails try region into state
@@ -138,8 +136,7 @@ Void tryPastingStateIntoState(State target):
  let state = getStateFromClipboard():
  (state != null ? (state.outgoingTransitions.addAll(target.outgoingTransitions) ->
  target.parentRegion.innerStates.add(state) ->
- target.parentRegion.innerStates.remove(target)  -> 
- setSelection(state))
+ target.parentRegion.innerStates.remove(target))
  : 
  tryPastingRegionIntoState(target))
 ;
@@ -147,8 +144,9 @@ Void tryPastingStateIntoState(State target):
 // try region into state if fails try states into state
 Void tryPastingRegionIntoState(State target):
  let region = getRegionFromClipboard():
- (region != null ? (target.regions.add(region) -> 
- setSelection(region)): 
+ (region != null ? 
+ target.regions.add(region)
+ : 
  tryPastingStatesIntoState(target))
 ;
 
@@ -156,8 +154,7 @@ Void tryPastingRegionIntoState(State target):
 Void tryPastingStatesIntoState(State target):
  let states = getStatesFromClipboard():
  (states != null ? (target.parentRegion.innerStates.addAll(states) ->
- target.parentRegion.innerStates.remove(target) -> 
- setSelection(states.get(0))) 
+ target.parentRegion.innerStates.remove(target))
  : 
  tryPastingRegionsIntoState(target))
 ;
@@ -165,20 +162,20 @@ Void tryPastingStatesIntoState(State target):
 // try regions into state if fails... nothing can be done
 Void tryPastingRegionsIntoState(State target):
  let regions = getRegionsFromClipboard():
- (regions != null ? (target.regions.addAll(regions) -> setSelection(target)) : null)
+ (regions != null ? target.regions.addAll(regions) : null)
 ;
 
 // paste into a list of states
 Void paste(List[State] states):
- tryPastingStateIntoStates(states)
+ tryPastingStateIntoStates(states) ->
+ setSelection(states.get(0).parentRegion)
 ;
 
 Void tryPastingStateIntoStates(List[State] states):
  let state = getStateFromClipboard():
  (state != null ?
   (states.get(0).parentRegion.innerStates.add(state) ->
-  states.removeStateFromRegion() ->
-  setSelection(state))
+  states.removeStateFromRegion())
  :
   tryPastingStatesIntoStates(states)
  )
@@ -188,8 +185,7 @@ Void tryPastingStatesIntoStates(List[State] targets):
  let states = getStatesFromClipboard():
  (states != null ?
   (targets.get(0).parentRegion.innerStates.addAll(states) ->
-  targets.removeStateFromRegion() ->
-  setSelection(states.get(0)))
+  targets.removeStateFromRegion())
  :
  tryPastingTransitionBetweenStates(targets)
  )
@@ -205,8 +201,7 @@ Void tryPastingTransitionBetweenStates(List[State] states):
  let target = states.get(1):
  ((trans != null && states.size == 2 && (source.parentRegion == target.parentRegion)) ?
  (source.outgoingTransitions.add(trans) ->
- trans.setTargetState(target) ->
- setSelection(trans)) :
+ trans.setTargetState(target)) :
  null)
 ;
 

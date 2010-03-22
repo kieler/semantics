@@ -19,6 +19,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,15 +34,20 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.ksbase.ui.handler.TransformationCommand;
 import de.cau.cs.kieler.synccharts.Region;
@@ -66,6 +73,8 @@ public class CommandFactory {
 
     /** The path of the transformation file. */
     private static String FILE_PATH = null;
+
+    private static List<EObject> lastSelection;
 
     /**
      * Build a new copy command.
@@ -122,6 +131,8 @@ public class CommandFactory {
      */
     private static ICommand buildCommand(final IDiagramWorkbenchPart part,
             final List<EObject> selection, final String label) {
+        lastSelection = selection;
+
         Bundle bundle = SyncchartsDiagramCustomPlugin.instance.getBundle();
         InputStream inStream = null;
         StringBuffer contentBuffer = new StringBuffer();
@@ -347,13 +358,80 @@ public class CommandFactory {
                             IEditorPart editorPart = SyncchartsDiagramCustomPlugin.instance
                                     .getActiveEditorPart();
                             if (editorPart != null) {
+                                refreshEditPolicies(editorPart);
+
                                 DiagramLayoutManager.layout(editorPart, null,
                                         true, false);
                             }
                         }
+
                     });
             return new Status(IStatus.OK,
                     "de.cau.cs.kieler.synccharts.diagram.custom", "Layout done");
+        }
+    }
+
+    /**
+     * Refresh the edit policies.
+     * 
+     * @param editorPart
+     *            the editor
+     */
+    private static void refreshEditPolicies(IEditorPart editorPart) {
+        if (editorPart instanceof IDiagramWorkbenchPart) {
+            IDiagramWorkbenchPart part = (IDiagramWorkbenchPart) editorPart;
+            if (lastSelection != null) {
+                for (EObject sel : lastSelection) {
+                    refreshPolicy(sel);
+                }
+                // commit changes to view
+                IDiagramGraphicalViewer graphViewer = part
+                        .getDiagramGraphicalViewer();
+                graphViewer.flush();
+            }
+        }
+        lastSelection = null;
+    }
+
+    /**
+     * Refresh the edit policy on the given element.
+     * 
+     * @param sel
+     *            the element
+     */
+    private static void refreshPolicy(EObject sel) {
+        EditPart editPart = ModelingUtil.getEditPart(sel);
+        // get all registered edit parts in order to get transitions as well
+        Collection<?> parts = editPart.getViewer().getEditPartRegistry()
+                .values();
+
+        // results list
+        List<CanonicalEditPolicy> policies = new LinkedList<CanonicalEditPolicy>();
+        // iterate over all parts
+        for (Iterator<?> iter = parts.iterator(); iter.hasNext();) {
+            Object obj = iter.next();
+            if (obj instanceof EditPart) {
+                Object model = ((EditPart) obj).getModel();
+                if (model instanceof View) {
+                    EObject eObject = ((View) model).getElement();
+
+                    // get policy for the semantic element
+                    List<?> editPolicies = CanonicalEditPolicy
+                            .getRegisteredEditPolicies(eObject);
+                    for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                        CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it
+                                .next();
+                        policies.add(nextEditPolicy);
+
+                    }
+                }
+            }
+        }
+
+        // refresh all policies at once to avoid concurrent modification
+        // exception
+        for (CanonicalEditPolicy policy : policies) {
+            policy.refresh();
         }
     }
 }
