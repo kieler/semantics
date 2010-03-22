@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -42,7 +43,8 @@ import de.cau.cs.kieler.synccharts.diagram.custom.HighlightingManager;
 /**
  * @author soh
  */
-public class SimpleHighlighter extends JSONObjectDataComponent {
+public class SimpleHighlighter extends JSONObjectDataComponent implements
+        IJSONObjectDataComponent {
 
     private EditPart getActiveEditorEditPart() {
         EditPart result = null;
@@ -135,6 +137,8 @@ public class SimpleHighlighter extends JSONObjectDataComponent {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        HighlightingManager.reset(getActiveEditor());
+
     }
 
     /**
@@ -155,6 +159,8 @@ public class SimpleHighlighter extends JSONObjectDataComponent {
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
+        HighlightingManager.reset(getActiveEditor());
+
     }
 
     /*
