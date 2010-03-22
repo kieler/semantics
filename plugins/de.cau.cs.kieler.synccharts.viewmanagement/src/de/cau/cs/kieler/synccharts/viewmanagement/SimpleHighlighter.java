@@ -14,17 +14,19 @@
 package de.cau.cs.kieler.synccharts.viewmanagement;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +41,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.HighlightingManager;
+import de.cau.cs.kieler.viewmanagement.RunLogic;
 
 /**
  * @author soh
@@ -46,37 +49,16 @@ import de.cau.cs.kieler.synccharts.diagram.custom.HighlightingManager;
 public class SimpleHighlighter extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    private EditPart getActiveEditorEditPart() {
-        EditPart result = null;
-        IDiagramWorkbenchPart part = getActiveEditor();
-        if (part != null) {
-            result = part.getDiagramEditPart();
-        }
-        return result;
-    }
-
-    private IDiagramWorkbenchPart getActiveEditor() {
-        IDiagramWorkbenchPart result = null;
-        try {
-            IEditorPart editor = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage()
-                    .getActiveEditor();
-            result = ((IDiagramWorkbenchPart) editor);
-        } catch (NullPointerException e0) {
-
-        } catch (ClassCastException e0) {
-
-        }
-        return result;
-    }
+    private DiagramEditPart rootEditPart;
+    private DiagramEditor editor;
 
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
+        System.out.println(data);
         String stateVariableKey = this.getProperties()[1].getValue();
-        EditPart rootEditPart = getActiveEditorEditPart();
-        HighlightingManager.reset(getActiveEditor());
+        HighlightingManager.reset(editor);
         // some sanity checks
         if (rootEditPart != null && data.has(stateVariableKey)) {
             try {
@@ -87,28 +69,9 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
                         .toString(), " ,");
                 List<EditPart> highlightedStates = new ArrayList<EditPart>();
 
-                // remember what states already were considered
-                LinkedList<String> consideredStates = new LinkedList<String>();
-
                 while (tokenizer.hasMoreElements()) {
                     String stateName = tokenizer.nextToken();
 
-                    // check if this is a new state (no duplicate)
-                    boolean newState = true;
-                    for (String consideredState : consideredStates) {
-                        if (consideredState.equals(stateName)) {
-                            newState = false;
-                            break;
-                        }
-                    }
-                    if (!newState) {
-                        // do not consider already considered states
-                        continue;
-                    }
-                    // add to considered states
-                    consideredStates.add(stateName);
-
-                    // notify the viewmanagement about this active state
                     EditPart affectedState = getEditPart(stateName,
                             rootEditPart);
 
@@ -117,13 +80,10 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
                     }
 
                     highlightedStates.add(affectedState);
-                    // a state is already highlighted
-                    System.out.println("VIEW MANAGEMENT:" + stateName);
-
                 }
 
                 for (EditPart editPart : highlightedStates) {
-                    HighlightingManager.highlight(getActiveEditor(), editPart,
+                    HighlightingManager.highlight(editor, editPart,
                             ColorConstants.red, null);
                 }
             } catch (JSONException e0) {
@@ -133,12 +93,78 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
         return null;
     }
 
-    /**
-     * {@inheritDoc}
+    DiagramEditor getInputEditor() {
+        String kiemEditorProperty = this.getProperties()[0].getValue();
+        DiagramEditor diagramEditor = null;
+
+        // get the active editor as a default case (if property is empty)
+        IWorkbenchPage activePage = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
+        IEditorPart editor = activePage.getActiveEditor();
+        if (editor instanceof DiagramEditor) {
+            diagramEditor = (DiagramEditor) editor;
+        }
+
+        // only check non-empty and valid property (this is optional)
+        if (!kiemEditorProperty.equals("")) {
+            if (getEditor(kiemEditorProperty) != null) {
+                diagramEditor = getEditor(kiemEditorProperty);
+            }
+        }
+        return diagramEditor;
+    }
+
+    DiagramEditor getEditor(String kiemEditorProperty) {
+        if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
+            return null;
+        }
+
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty,
+                " ()");
+        if (tokenizer.hasMoreTokens()) {
+            String fileString = tokenizer.nextToken();
+            String editorString = tokenizer.nextToken();
+
+            IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getActivePage()
+                    .getEditorReferences();
+            for (int i = 0; i < editorRefs.length; i++) {
+                if (editorRefs[i].getId().equals(editorString)) {
+                    IEditorPart editor = editorRefs[i].getEditor(true);
+                    if (editor instanceof DiagramEditor) {
+                        // test if correct file
+                        if (fileString.equals(editor.getTitle())) {
+                            return (DiagramEditor) editor;
+                            // rootEditPart = ((DiagramEditor) editor)
+                            // .getDiagramEditPart();
+                            // break;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
     public void initialize() throws KiemInitializationException {
-        HighlightingManager.reset(getActiveEditor());
-
+        try {
+            // bring to front VM
+            editor = getInputEditor();
+            rootEditPart = editor.getDiagramEditPart();
+            if (RunLogic.getInstance() == null) {
+                throw new KiemInitializationException(
+                        "Cannot initialize view management!", true, null);
+            }
+            RunLogic.getInstance().registerListeners();
+        } catch (Exception e) {
+            throw new KiemInitializationException(
+                    "Cannot initialize view management!", true, e);
+        }
     }
 
     /**
@@ -159,8 +185,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        HighlightingManager.reset(getActiveEditor());
-
+        HighlightingManager.reset(editor);
     }
 
     /*
@@ -178,20 +203,17 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
         return properties;
     }
 
+    /**
+     * Get the edit part from the URI.
+     * 
+     * @param elementURIFragment
+     *            the fragment
+     * @param parent
+     *            the parent
+     * @return the edit part
+     */
     @SuppressWarnings("unchecked")
     public EditPart getEditPart(String elementURIFragment, EditPart parent) {
-        // cache turned off, EditParts seem to be volatile
-        // if (cachedEditParts == null) {
-        // // if hashmap is not initialized, create it
-        // cachedEditParts = new HashMap<String,EditPart>();
-        // cachedElementURIs = new HashMap<EditPart,String>();
-        // }
-        // else {
-        // //try to get from hashmap first
-        // if (cachedEditParts.containsKey(elementURIFragment))
-        // return cachedEditParts.get(elementURIFragment);
-        // }
-
         try {
             List<EditPart> children = parent.getChildren();
             EObject modelElem = ((View) parent.getModel()).getElement();
