@@ -115,6 +115,13 @@
             id="de.cau.cs.kieler.core.ui.reinitDiagram"
             name="Reinitialize and save synccharts diagram">
       </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ExpandMacroStatesCommand"
+               description="Expand reference-macrostates"
+               id="de.cau.cs.kieler.core.ui.expandMacroStates"
+               name="Expand reference-macrostates">
+         </command>
    </extension>
    
    <extension
@@ -286,6 +293,12 @@
                   label="Reinitialize and save synccharts diagram"
                   style="push"
                   tooltip="Reinitialize the diagram for the selected kixs file overwriting the olds kids file.">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
+                  label="Expand reference-macrostates"
+                  style="push"
+                  tooltip="Expand reference-macrostates">
             </command>
          </menu>
       </menuContribution>

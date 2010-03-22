@@ -1,0 +1,74 @@
+import synccharts;
+
+transform(Region region) :
+	selectReferenceMacroStates(region).expandMacroState() -> region
+;
+
+transform(State state) :
+	selectReferenceMacroStates(state).expandMacroState() -> state
+;
+
+selectReferenceMacroStates(Region region) :
+	region.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
+	;
+	
+selectReferenceMacroStates(State state) :
+	state.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
+	;
+
+/* As for now we only want Synccharts::States to be expanded, other types 
+ * are transformed to a "legacy mode"*/
+expandMacroState(State target) :
+    let referencedState = target.bodyReference :
+    State.isInstance(referencedState) ?
+        target.expandMacroStateWithSyncchartStateReference()
+        : target;
+
+/*expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
+State expandMacroStateWithSyncchartStateReference (State referencingState):
+    let referencedState = referencingState.bodyReference.castToState():
+    //let referencedExpandedState = transform(referencedState) :
+    let regions = referencedState.regions :
+    let newName = getExpandedStateName(referencingState, referencedState) :
+    transform(referencedState) ->
+    referencingState.regions.addAll(regions) -> 
+    referencingState.setLabel(newName) ->
+    referencingState.changeTypeToNormal() ->
+    referencingState.renamings.executeRenaming() ->
+    referencingState
+;
+
+getExpandedStateName(State referencingState, State referencedState) :
+    referencingState.label + "_AT_" + referencedState.label;
+
+changeTypeToNormal(State s) :
+	s.setType(StateType::NORMAL) ->
+	s.setBodyReference(null);
+	
+State castToState(Object object) :
+    (State) object;
+
+Void executeRenaming(Renaming renaming) :
+    let referencingState = renaming.parentState :
+    let oldID = renaming.oldID :
+    let newID = renaming.newID :
+    let newSignal = getSignalForName(referencingState, newID) :
+    let signalReferences = referencingState.eAllContents.typeSelect(SignalReference).select(e|e.signal.name==oldID) :
+    let emissions = referencingState.eAllContents.typeSelect(Emission).select(e|e.signal.name==oldID) :
+    (signalReferences.size > 0 ? renameSignalReference(signalReferences, newSignal) : null) ->
+    (emissions.size > 0 ? renameEmission(emissions, newSignal) : null);
+
+    
+Void renameSignalReference(List[SignalReference] signalReferences, Signal newSignal) :
+    signalReferences.setSignal(newSignal);
+
+Void renameEmission(List[Emission] emission, Signal newSignal) :
+    emission.setSignal(newSignal);
+
+Signal getSignalForName(State state, String name) :
+    let signals = state.signals :
+    signals.exists(e|e.name==name) ?
+        signals.selectFirst(e|e.name == name) :
+            ((state.parentRegion != null || state.parentRegion.parentState != null) ?
+                getSignalForName(state.parentRegion.parentState, name) :
+                null);
