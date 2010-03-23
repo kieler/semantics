@@ -270,7 +270,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         final InputStream inputStream;
 
-        if (fileString.startsWith("bundleentry:/")) {
+        if (fileString.contains("bundleentry")) {
             String urlPath = fileString;
             if (!System.getProperty("os.name").contains("windows")) {
                 urlPath = fileString.replaceFirst("bundleentry:/",
