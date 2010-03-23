@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -267,18 +268,14 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void openFile(final IPath executionFile, final boolean readOnly)
             throws IOException {
         String fileString = executionFile.toOSString();
-
         final InputStream inputStream;
 
         if (fileString.contains("bundleentry")) {
-            String urlPath = fileString;
-            if (!System.getProperty("os.name").contains("windows")) {
-                urlPath = fileString.replaceFirst("bundleentry:/",
-                        "bundleentry://");
-            }
-
+            String urlPath = fileString.replaceFirst("bundleentry:/",
+                    "bundleentry://");
             URL pathUrl = new URL(urlPath);
-            inputStream = pathUrl.openStream();
+            URL url2 = FileLocator.resolve(pathUrl);
+            inputStream = url2.openStream();
         } else {
             URI fileURI = URI.createPlatformResourceURI(fileString, true);
             // resolve relative workspace paths
