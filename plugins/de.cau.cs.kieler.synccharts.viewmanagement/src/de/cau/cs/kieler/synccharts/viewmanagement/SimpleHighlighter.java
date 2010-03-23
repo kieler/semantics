@@ -59,7 +59,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
         String stateVariableKey = this.getProperties()[1].getValue();
-        HighlightingManager.reset(editor);
+        HighlightingManager.lockedReset(editor);
         // some sanity checks
         if (rootEditPart != null && data.has(stateVariableKey)) {
             try {
@@ -84,7 +84,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
                 }
 
                 for (EditPart editPart : highlightedStates) {
-                    HighlightingManager.highlight(editor, editPart,
+                    HighlightingManager.lockedHighlight(editor, editPart,
                             ColorConstants.red, null);
                 }
             } catch (JSONException e0) {
@@ -162,6 +162,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
                         "Cannot initialize view management!", true, null);
             }
             RunLogic.getInstance().registerListeners();
+            HighlightingManager.lock();
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot initialize view management!", true, e);
@@ -186,6 +187,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
+        HighlightingManager.unlock();
         HighlightingManager.reset(editor);
     }
 
