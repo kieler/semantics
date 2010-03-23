@@ -49,6 +49,13 @@ end module
 
 «DEFINE Star FOR synccharts::State-»
  % «id»
+ «IF !this.locals().isEmpty»
+ signal 
+ «FOREACH this.locals() AS s SEPARATOR ", "»
+    «s.name»
+ «ENDFOREACH»
+ in
+ «ENDIF»
  «IF this.hasSAborts()»abort«ENDIF»
  «IF this.hasWAborts()»weak abort«ENDIF»
  «IF this.regions.isEmpty-»
@@ -86,6 +93,10 @@ end module
     «ENDFOREACH-»
      end abort;
   «ENDIF» 
+«IF !this.locals().isEmpty»
+ end signal;
+ «ENDIF»
+ 
 «ENDDEFINE»
 
 «DEFINE Effect FOR Emission»emit «signal.name»;«ENDDEFINE»
@@ -93,7 +104,9 @@ end module
 «DEFINE Effect FOR HostCode»«code»;«ENDDEFINE»
 «DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
 «REM» Trigger «ENDREM»
-«DEFINE Trigger FOR Value»«toString()»«ENDDEFINE»
+«DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR FloatValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR BooleanValue»«IF value»true«ELSE»false«ENDIF»«ENDDEFINE»
 «DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
 «DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
 «DEFINE Trigger FOR ComplexExpression»
