@@ -27,10 +27,9 @@ expandMacroState(State target) :
 /*expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
 State expandMacroStateWithSyncchartStateReference (State referencingState):
     let referencedState = referencingState.bodyReference.castToState():
-    //let referencedExpandedState = transform(referencedState) :
+    let referencedExpandedState = transform(referencedState) :
     let regions = referencedState.regions :
     let newName = getExpandedStateName(referencingState, referencedState) :
-    transform(referencedState) ->
     referencingState.regions.addAll(regions) -> 
     referencingState.setLabel(newName) ->
     referencingState.changeTypeToNormal() ->

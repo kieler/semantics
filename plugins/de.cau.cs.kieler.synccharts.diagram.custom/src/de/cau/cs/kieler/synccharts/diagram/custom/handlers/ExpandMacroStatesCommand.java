@@ -119,22 +119,24 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         Reader xmiReader = new Reader();
-        xmiReader.setUri(path.toOSString());
+        xmiReader.setUri(path.toString());
         xmiReader.setModelSlot("model");
         workflow.addComponent(xmiReader);
 
         XtendComponent transformation = new XtendComponent();
         transformation.addMetaModel(metaModel);
-        transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
+        transformation.setInvoke("transformations::expandReferenceStates2::transform(model)");
         transformation.setOutputSlot("transformedModel");
         workflow.addComponent(transformation);
 
         Writer writer = new Writer();
-        writer.setUri(target.toOSString());
+        writer.setUri(target.toString());
         writer.setModelSlot("transformedModel");
         workflow.addComponent(writer);
 
         workflow.invoke(wfx, monitor, issues);
+        
+        System.out.println("Issues: \n" + issues);
         
         return target;
     }
