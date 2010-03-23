@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorSite;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
@@ -307,6 +308,8 @@ public class ScheduleSelector extends ControlContribution implements
             try {
                 ScheduleManager.getInstance().openSchedule(selected);
             } catch (ScheduleFileMissingException e0) {
+                KiemPlugin.getDefault().showError("Execution file not found",
+                        KiemConfigurationPlugin.PLUGIN_ID, e0, true);
                 ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
                         parentComponent.getShell(), selected);
                 String result = dialog.open();
