@@ -271,8 +271,11 @@ public class KiemPlugin extends AbstractUIPlugin {
         final InputStream inputStream;
 
         if (fileString.startsWith("bundleentry:/")) {
-            String urlPath = fileString.replaceFirst("bundleentry:/",
-                    "bundleentry://");
+            String urlPath = fileString;
+            if (!System.getProperty("os.name").contains("windows")) {
+                urlPath = fileString.replaceFirst("bundleentry:/",
+                        "bundleentry://");
+            }
 
             URL pathUrl = new URL(urlPath);
             inputStream = pathUrl.openStream();
