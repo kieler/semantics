@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.synccharts.viewmanagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -21,7 +22,6 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
@@ -31,16 +31,18 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.HighlightingManager;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 
 /**
@@ -56,7 +58,6 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
-        System.out.println(data);
         String stateVariableKey = this.getProperties()[1].getValue();
         HighlightingManager.reset(editor);
         // some sanity checks
@@ -212,46 +213,68 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      *            the parent
      * @return the edit part
      */
-    @SuppressWarnings("unchecked")
     public EditPart getEditPart(String elementURIFragment, EditPart parent) {
         try {
-            List<EditPart> children = parent.getChildren();
-            EObject modelElem = ((View) parent.getModel()).getElement();
-            if (modelElem instanceof State) {
-                State state = (State) modelElem;
-                for (Transition t : state.getOutgoingTransitions()) {
-                    if (t.equals(t.eResource().getEObject(elementURIFragment))) {
-                        EditPart part = ModelingUtil.getEditPart(t, parent);
-                        // then return
-                        return part;
+            Collection<?> parts = parent.getViewer().getEditPartRegistry()
+                    .values();
+            for (Object o : parts) {
+                if (o instanceof TransitionEditPart
+                        || o instanceof State2EditPart
+                        || o instanceof StateEditPart
+                        || o instanceof Region2EditPart
+                        || o instanceof RegionEditPart) {
+                    EObject eObject = ((View) ((EditPart) o).getModel())
+                            .getElement();
+                    if (eObject.equals(eObject.eResource().getEObject(
+                            elementURIFragment))) {
+                        return (EditPart) o;
                     }
                 }
             }
-            for (Object child : children) {
-                if (child instanceof ShapeEditPart) {
-                    View view = (View) ((ShapeEditPart) child).getModel();
-                    EObject modelElement = view.getElement();
-                    if (modelElement.equals(modelElement.eResource()
-                            .getEObject(elementURIFragment))) {
-                        // then return
-                        return (ShapeEditPart) child;
-                    }
 
-                }
-                // if node was not found yet, search recursively
-                if (child instanceof EditPart) {
-                    EditPart result = getEditPart(elementURIFragment,
-                            (EditPart) child);
-                    if (result != null) {
-                        return result;
-                    }
-                }
-            }
+            // List<EditPart> children = parent.getChildren();
+            // EObject modelElem = ((View) parent.getModel()).getElement();
+            // EObject test =
+            // modelElem.eResource().getEObject(elementURIFragment);
+            // System.out.println(test);
+            // if (modelElem instanceof State) {
+            // State state = (State) modelElem;
+            // for (Transition t : state.getOutgoingTransitions()) {
+            // if (t.equals(t.eResource().getEObject(elementURIFragment))) {
+            // EditPart part = ModelingUtil.getEditPart(t, parent);
+            // // then return
+            // System.out.println(part);
+            // return part;
+            // }
+            // }
+            // }
+            // for (Object child : children) {
+            // if (child instanceof ShapeEditPart) {
+            // View view = (View) ((ShapeEditPart) child).getModel();
+            // EObject modelElement = view.getElement();
+            // if (modelElement.equals(modelElement.eResource()
+            // .getEObject(elementURIFragment))) {
+            // // then return
+            // return (ShapeEditPart) child;
+            // }
+            //
+            // }
+            // // if node was not found yet, search recursively
+            // if (child instanceof EditPart) {
+            // EditPart result = getEditPart(elementURIFragment,
+            // (EditPart) child);
+            // if (result != null) {
+            // return result;
+            // }
+            // }
+            // }
         } catch (Exception e) {
             return null;
         }
         // we did not find anything in this trunk
         return null;
     }
+
+    // "//@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.1, //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0, //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0, //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0/@outgoingTransitions.0, //@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0"
 
 }
