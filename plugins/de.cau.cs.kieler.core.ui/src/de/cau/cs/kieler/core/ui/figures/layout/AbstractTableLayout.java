@@ -203,6 +203,12 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 if (cell.figure == layout.adjustableCanvas) {
                     if (cell.isEmpty) {
                         minimumSize = new Dimension(layout.getMinWidth(), layout.getMinHeight());
+                    } else if (child instanceof ResizableCompartmentFigure 
+                            && !((ResizableCompartmentFigure)child).isExpanded()) {
+                        /*Collapsed Compartments should just get space for their expand-trigger*/
+                        minimumSize = child.getMinimumSize();
+                        /* TODO : For regions we normaly would need here getPreferredSize.*/
+                        preferredSize = child.getMinimumSize(); 
                     } else {
                         preferredSize = child.getPreferredSize();
 
@@ -222,8 +228,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 } else if (child instanceof ResizableCompartmentFigure) {
                     ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) child;
                     if (cell.isEmpty) {
-                        setTitleVisibility(compartment, false);
+                        setTitleVisibility(compartment, false); 
+                    } else if (! compartment.isExpanded()) {
+                        /*Collapsed Compartments should just get space for their expand-trigger*/
+                        minimumSize = compartment.getMinimumSize();
+                        /* TODO : For regions we normaly would need here getPreferredSize.*/
+                        preferredSize = compartment.getMinimumSize(); 
                     } else {
+                    
                         minimumSize = compartment.getContentPane().getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
                         preferredSize = compartment.getContentPane().getMinimumSize();
