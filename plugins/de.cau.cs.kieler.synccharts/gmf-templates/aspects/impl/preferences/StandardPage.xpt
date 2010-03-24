@@ -1,0 +1,137 @@
+/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE Main FOR gmfgen::GenStandardPreferencePage-»
+«EXPAND xpt::Common::copyright FOR getDiagram().editorGen-»
+package «getDiagram().preferencesPackageName»;
+
+«EXPAND xpt::Common::generatedClassComment»
+public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «getClassName()»() {
+		setPreferenceStore(«getDiagram().editorGen.plugin.getActivatorQualifiedClassName()».getInstance().getPreferenceStore());
+	}
+	
+	«IF gmfgen::StandardPreferencePages::Connections = kind-»
+	«REM»temporary spline code until GMF feature is committed«ENDREM»
+	«EXPAND xpt::Common::generatedMemberComment»
+    private String SPLINE_LABEL = "Spline Mode:";
+
+	«EXPAND xpt::Common::generatedMemberComment»
+    private org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor splineModeFieldEditor = null;
+
+	«EXPAND xpt::Common::generatedMemberComment»
+    protected void addFieldEditors(org.eclipse.swt.widgets.Composite composite) {
+        super.addFieldEditors(composite);
+
+        // spline mode
+        splineModeFieldEditor = new org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE,
+                SPLINE_LABEL, composite, org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor.INT_TYPE, true, 0, 0, true);
+        splineModeFieldEditor.autoStorage = true;
+        addField(splineModeFieldEditor);
+        org.eclipse.swt.widgets.Combo splineModeCombo = splineModeFieldEditor.getComboControl();
+        splineModeCombo.add("Off");
+        splineModeCombo.add("On (cubic sections)");
+        splineModeCombo.add("On (cubic sections approximation)");
+    }
+
+«REM»The following part is not working as static methods will not be overloaded,
+     hence, the following method will never be called!
+     Default definition is added to PreferenceInitializer.xpt!
+    
+	«EXPAND xpt::Common::generatedMemberComment»
+    public static void initDefaults(org.eclipse.jface.preference.IPreferenceStore preferenceStore) {
+        ConnectionsPreferencePage.initDefaults(preferenceStore);
+        preferenceStore.setDefault(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.ui.figures.SplineConnection.SPLINE_CUBIC);
+    }
+    
+«ENDREM»
+    
+    «EXPAND xpt::Common::generatedMemberComment»
+    @Override
+    public boolean performOk() {
+        boolean ok = super.performOk();
+        org.eclipse.ui.IWorkbench wb = org.eclipse.ui.PlatformUI.getWorkbench();
+        if (wb != null) {
+            org.eclipse.ui.IWorkbenchWindow wbw = wb.getActiveWorkbenchWindow();
+            if (wbw != null) {
+                org.eclipse.ui.IWorkbenchPage wbp = wbw.getActivePage();
+                if (wbp != null) {
+                    org.eclipse.ui.IEditorReference[] ers = wbp.getEditorReferences();
+                    for (org.eclipse.ui.IEditorReference er : ers) {
+                        org.eclipse.ui.IEditorPart editor = er.getEditor(true);
+                        if (editor instanceof de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor) {
+                            de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor sde = (de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor) editor;
+                            applySplineMode(sde.getDiagramEditPart());
+                        }
+                    }
+                }
+            }
+        }
+        return ok;
+    }
+
+	«EXPAND xpt::Common::generatedMemberComment»
+    protected void applySplineMode(org.eclipse.gef.EditPart part) {
+        if (part instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart) {
+            org.eclipse.draw2d.Connection c = ((de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart) part).getConnectionFigure();
+            if (c instanceof de.cau.cs.kieler.core.ui.figures.SplineConnection) {
+                ((de.cau.cs.kieler.core.ui.figures.SplineConnection) c).setSplineMode(getPreferenceStore().getInt(
+                        de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE));
+            }
+        }
+        if (part instanceof org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart) {
+            org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart state = (org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart) part;
+            for (Object so : state.getSourceConnections()) {
+                if (so instanceof org.eclipse.gef.EditPart) {
+                    applySplineMode((org.eclipse.gef.EditPart) so);
+                }
+            }
+            for (Object to : state.getSourceConnections()) {
+                if (to instanceof org.eclipse.gef.EditPart) {
+                    applySplineMode((org.eclipse.gef.EditPart) to);
+                }
+            }
+        }
+        for (Object child : part.getChildren()) {
+            if (child instanceof org.eclipse.gef.EditPart) {
+                applySplineMode((org.eclipse.gef.EditPart) child);
+            }
+        }
+    }
+    «ENDIF-»
+}
+«ENDDEFINE»
+
+«DEFINE extendsList FOR gmfgen::GenStandardPreferencePage-»
+«IF gmfgen::StandardPreferencePages::General = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.DiagramsPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Appearance = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.AppearancePreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Connections = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.ConnectionsPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Printing = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.PrintingPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::RulersAndGrid = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.RulerGridPreferencePage«-»
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE implementsList FOR gmfgen::GenStandardPreferencePage»«REM»no-op«ENDREM»«ENDDEFINE»
+
+«DEFINE call_initDefaults(storeVarName : String) FOR gmfgen::GenStandardPreferencePage»
+«IF kind <> gmfgen::StandardPreferencePages::Pathmaps»«getQualifiedClassName()».initDefaults(«storeVarName»);
+«ENDIF»
+«ENDDEFINE»
