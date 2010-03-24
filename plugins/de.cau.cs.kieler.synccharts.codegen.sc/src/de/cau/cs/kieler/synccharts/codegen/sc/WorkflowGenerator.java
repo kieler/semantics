@@ -19,7 +19,11 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -53,6 +57,7 @@ public class WorkflowGenerator {
         uriString = null;
         if (editor instanceof DiagramEditor) {
             DiagramEditor diagramEditor = (DiagramEditor) editor;
+            checkForDirtyDiagram(diagramEditor);
             View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
             myModel = (EObject) notationElement.getElement();
             uri = myModel.eResource().getURI();
@@ -90,7 +95,7 @@ public class WorkflowGenerator {
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
         emfReader.setModelSlot("model");
-        
+
         // name of the file (from root state)
         String filename = ((Region) myModel).getInnerStates().get(0).getId();
 
@@ -100,7 +105,7 @@ public class WorkflowGenerator {
         if (sim) {
             outPath = path;
         }
-        
+
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
@@ -113,7 +118,7 @@ public class WorkflowGenerator {
         GlobalVar varName = new GlobalVar();
         varName.setName("name");
         varName.setValue(filename);
-        
+
         GlobalVar varSim = new GlobalVar();
         varSim.setName("sim");
         if (sim) {
@@ -138,22 +143,28 @@ public class WorkflowGenerator {
         workflow.invoke(wfx, monitor, issues);
 
         StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
+        int issueValue = IStatus.OK;
         for (MWEDiagnostic s : issues.getIssues()) {
             issue.append(s + "\n");
-        }
-        for (MWEDiagnostic s : issues.getErrors()) {
-            issue.append(s + "\n");
-        }
-        for (MWEDiagnostic s : issues.getWarnings()) {
-            issue.append(s + "\n");
+            issueValue = IStatus.INFO;
         }
         for (MWEDiagnostic s : issues.getInfos()) {
             issue.append(s + "\n");
+            issueValue = IStatus.INFO;
         }
-        StatusManager.getManager().handle(
-                new Status(IStatus.WARNING, Activator.PLUGIN_ID, issue.toString(), null),
-                StatusManager.LOG);
-       
+        for (MWEDiagnostic s : issues.getWarnings()) {
+            issue.append(s + "\n");
+            issueValue = IStatus.WARNING;
+        }
+        for (MWEDiagnostic s : issues.getErrors()) {
+            issue.append(s + "\n");
+            issueValue = IStatus.ERROR;
+        }
+        if (issueValue > IStatus.OK) {
+            Status status = new Status(issueValue, Activator.PLUGIN_ID, issue.toString(), null);
+            StatusManager.getManager().handle(status, StatusManager.LOG);
+        }
+
         if (sim) {
             File simFile = new File(outPath + "sim.c");
             beautifyFiles(simFile);
@@ -162,6 +173,19 @@ public class WorkflowGenerator {
         } else {
             File file = new File(outPath + filename + ".c");
             beautifyFiles(file);
+        }
+    }
+    
+    private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
+        if (diagramEditor.isDirty()) {
+            final Shell shell = Display.getCurrent().getShells()[0];
+            boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
+                    + diagramEditor.getEditorInput().getName() + "'"
+                    + " has been modified. Save changes before simulating? (recommended)");
+            if (b) {
+                IEditorSite part = diagramEditor.getEditorSite();
+                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
+            } 
         }
     }
 

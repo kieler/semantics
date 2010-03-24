@@ -103,6 +103,7 @@ Void error(String s):
 ;
 
 boolean isSimpleHierarchical(State state):
+	state.parentRegion.parentState == null &&
 	(state.regions.size == 1) &&
 	state.outgoingTransitions.isEmpty &&
 	state.innerActions.isEmpty &&
@@ -110,19 +111,12 @@ boolean isSimpleHierarchical(State state):
 	!state.parentRegion.innerStates.exists(s|s.outgoingTransitions.exists(t|t.targetState == state))
 ;
 
-boolean test0(State state):
-(state.regions.size == 1)
+boolean hasImmediates(State state):
+	state.outgoingTransitions.exists(t|t.isImmediate) ||
+	(state.entryActions.size > 0)
 ;
 
-boolean test1(State state):
-state.outgoingTransitions.isEmpty
-;
-boolean test2(State state):
-state.innerActions.isEmpty
-;
-boolean test3(State state):
-state.entryActions.isEmpty
-;
-boolean test4(State state):
-!state.parentRegion.innerStates.exists(s|s.outgoingTransitions.exists(t|t.targetState == state))
+boolean hasTransitionWithoutTrigger(State state):
+	state.outgoingTransitions.exists(t|t.trigger == null) &&
+	!state.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)
 ;

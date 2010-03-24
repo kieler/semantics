@@ -3,8 +3,12 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-	L_«getStateNameByFlag(this, 3)-»:
-	«EXPAND stateWithRegions FOR this-»
+	«IF !isSimpleHierarchical(this)-»
+		L_«getStateNameByFlag(this, 3)-»:
+	«ENDIF-»
+	«IF !this.regions.isEmpty-»
+		«EXPAND stateWithRegions FOR this-»
+	«ENDIF»
 	«EXPAND CodegenMisc::localSignals FOR this-»
 	«IF this.outgoingTransitions.isEmpty-»
 		«EXPAND stateWithoutTransition FOR this-»
@@ -27,7 +31,9 @@
 		«EXPAND generateForkMoreRegions FOR this-»
 	«ENDIF-»
 	«EXPAND CodegenRegion::region FOREACH this.regions-»
-	L_«getStateNameByFlag(this, 3)»_main:
+	«IF !isSimpleHierarchical(this)-»
+		L_«getStateNameByFlag(this, 3)»_main:
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE generateForkOneRegion FOR State-»
@@ -42,6 +48,16 @@
 	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
+«DEFINE returnTo FOR State-»
+	«IF !hasTransitionWithoutTrigger(this)-»
+		«IF hasImmediates(this)-»
+			«EXPAND returnToIntern FOR this-»
+		«ELSE-»
+			«EXPAND returnToState FOR this-»
+		«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE»
+
 «DEFINE returnToIntern FOR State-»
 	«IF (this.regions.isEmpty)-»
 		GOTO(L_«getStateNameByFlag(this, 3)»_intern);
@@ -50,20 +66,38 @@
 	«ENDIF-»
 «ENDDEFINE»
 
-«DEFINE stateWithoutTransition FOR State-»
-	«EXPAND CodegenMisc::callJSONState-»
-	«IF this.isFinal-»
-		TERM;
+«DEFINE returnToState FOR State-»
+	«IF (this.regions.isEmpty)-»
+		GOTO(L_«getStateNameByFlag(this, 3)»);
 	«ELSE-»
-		«EXPAND onEntry FOR this-»
+		GOTO(L_«getStateNameByFlag(this, 3)»_main);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE stateWithoutTransition FOR State-»
+	«IF !isSimpleHierarchical(this)-»
+		«IF hasImmediates(this)-»
+			«EXPAND CodegenMisc::callJSONState-»
+		«ENDIF»
+		«IF this.isFinal-»
+			TERM;
+		«ELSE-»
+			«EXPAND onEntry FOR this-»
+			«EXPAND simpleOrHierarchical FOR this-»
+			«EXPAND CodegenMisc::callJSONState-»
+			«EXPAND haltAssignment FOR this-»
+		«ENDIF-»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE simpleOrHierarchical FOR State-»
+	«IF hasImmediates(this)-»
 		«IF !(this.regions.isEmpty)-»
 			L_«getStateNameByFlag(this, 3)»_main_intern:
 		«ELSE-»
 			L_«getStateNameByFlag(this, 3)»_intern:
 		«ENDIF-»
-		«EXPAND CodegenMisc::callJSONState-»
-		«EXPAND HALTAssignment FOR this-»
-	«ENDIF-»
+	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE stateWithOneTransition FOR State-»
@@ -77,15 +111,13 @@
 
 «DEFINE stateWithMoreTransitions FOR State-»
 	«EXPAND immediateStrong FOR this-»
-	«EXPAND CodegenMisc::callJSONState-»
+	«IF hasImmediates(this)-»
+		«EXPAND CodegenMisc::callJSONState-»
+	«ENDIF-»
 	«EXPAND onEntry FOR this-»
 	«EXPAND CodegenPriority::weakPrio FOR this-»
 	«EXPAND immediateWeak FOR this-»
-	«IF !(this.regions.isEmpty)-»
-		L_«getStateNameByFlag(this, 3)»_main_intern:
-	«ELSE-»
-		L_«getStateNameByFlag(this, 3)»_intern:
-	«ENDIF-»
+	«EXPAND simpleOrHierarchical FOR this-»
 	«EXPAND CodegenPriority::realPrio FOR this»
 	«EXPAND CodegenMisc::callJSONState-»
 	«EXPAND normal FOR this-»
@@ -97,7 +129,7 @@
 	«EXPAND hostCode FOR this-»
 	«EXPAND CodegenPriority::weakPrio FOR this-»
 	«EXPAND allWeak FOR this-»
-	«EXPAND returnToIntern FOR this-»
+	«EXPAND returnTo FOR this-»
 «ENDDEFINE»
 
 «DEFINE hostCode FOR State-»
@@ -106,12 +138,12 @@
 	«ENDIF-»
 «ENDDEFINE»
 
-«DEFINE HALTAssignment FOR State-»
+«DEFINE haltAssignment FOR State-»
 	«IF ((boolean)(GLOBALVAR sim)) || !this.innerActions.isEmpty-»
 		/* this should be HALT; but for simulation PAUSE and GOTO */
 		PAUSE;
 		«EXPAND onInside FOR this-»
-		«EXPAND returnToIntern FOR this-»
+		«EXPAND returnTo FOR this-»
 	«ELSE-»
 		HALT;
 	«ENDIF-»
