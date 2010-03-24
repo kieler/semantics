@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -42,6 +43,7 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
@@ -258,6 +260,50 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param executionFile
      *            the execution file to open
+     * @param pluginID
+     *            the id of the plugin where the file is located
+     * @param readOnly
+     *            the readonly flag indicates that the file is locked for
+     *            writing
+     * 
+     * @throws IOException
+     *             if the file was not found
+     */
+    public void openFile(final IPath executionFile, final String pluginID,
+            final boolean readOnly) throws IOException {
+        Bundle bundle = Platform.getBundle(pluginID);
+        if (bundle != null) {
+            String path = executionFile.toPortableString();
+            path = path.replace("bundleentry::/", "");
+            path = path.substring(path.indexOf("/"));
+            IPath execFile = Path.fromPortableString(path);
+
+            URL url = FileLocator.find(bundle, execFile, null);
+            url = FileLocator.resolve(url);
+            System.out.println(url);
+            if (url != null) {
+                openFile(execFile, readOnly, url.openStream());
+            } else {
+                throw new IOException("File " + executionFile.toOSString()
+                        + " not found.");
+            }
+        } else {
+            throw new IOException("Bundle " + pluginID + " not found.");
+        }
+    }
+
+    /**
+     * Opens an Execution File (*.execution) and tries to update the
+     * dataComponentWrapperList according to this file. If the components or
+     * properties loaded do not exist in the environment (e.g., the according
+     * plug-ins where not loaded) then an error message will bring this to the
+     * user's attention. <BR>
+     * <BR>
+     * This method can be called from another plug-in and is part of the KIEM
+     * API.
+     * 
+     * @param executionFile
+     *            the execution file to open
      * @param readOnly
      *            the readonly flag indicates that the file is locked for
      *            writing
@@ -268,21 +314,34 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void openFile(final IPath executionFile, final boolean readOnly)
             throws IOException {
         String fileString = executionFile.toOSString();
-        final InputStream inputStream;
 
         if (fileString.contains("bundleentry")) {
             String urlPath = fileString.replaceFirst("bundleentry:/",
                     "bundleentry://");
             URL pathUrl = new URL(urlPath);
             URL url2 = FileLocator.resolve(pathUrl);
-            inputStream = url2.openStream();
+            openFile(executionFile, readOnly, url2.openStream());
         } else {
             URI fileURI = URI.createPlatformResourceURI(fileString, true);
             // resolve relative workspace paths
             URIConverter uriConverter = new ExtensibleURIConverterImpl();
-            inputStream = uriConverter.createInputStream(fileURI);
+            openFile(executionFile, readOnly, uriConverter
+                    .createInputStream(fileURI));
         }
+    }
 
+    /**
+     * Open a file from a given InputStream.
+     * 
+     * @param executionFile
+     *            the path to the file
+     * @param readOnly
+     *            true if the file is read only
+     * @param inputStream
+     *            the input stream to the file
+     */
+    private void openFile(final IPath executionFile, final boolean readOnly,
+            final InputStream inputStream) {
         Display.getDefault().syncExec(new Runnable() {
             @SuppressWarnings("unchecked")
             public void run() {

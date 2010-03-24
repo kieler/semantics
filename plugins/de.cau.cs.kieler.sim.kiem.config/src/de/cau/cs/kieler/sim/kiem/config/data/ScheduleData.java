@@ -38,6 +38,9 @@ public class ScheduleData {
     /** Location of the schedule on disc. */
     private IPath location;
 
+    /** ID of the contribution plug-in. */
+    private String pluginId;
+
     /** Holds editor ids and non-negative priority. */
     private ConfigDataComponent priorities = new ConfigDataComponent(false);
 
@@ -81,6 +84,27 @@ public class ScheduleData {
      */
     public boolean isLocked() {
         return getLocation().toOSString().contains("bundleentry:");
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Setter for the pluginId.
+     * 
+     * @param pluginIdParam
+     *            the pluginId to set
+     */
+    public void setPluginId(final String pluginIdParam) {
+        this.pluginId = pluginIdParam;
+    }
+
+    /**
+     * Getter for the pluginId.
+     * 
+     * @return the pluginId
+     */
+    public String getPluginId() {
+        return pluginId;
     }
 
     // --------------------------------------------------------------------------
@@ -254,4 +278,5 @@ public class ScheduleData {
         }
         return result;
     }
+
 }

@@ -603,11 +603,16 @@ public final class ScheduleManager extends AbstractManager implements
      */
     public void openSchedule(final ScheduleData schedule)
             throws ScheduleFileMissingException {
-
         KiemEventListener.getInstance().setLoadImminent();
         try {
-            KiemPlugin.getDefault().openFile(schedule.getLocation(),
-                    schedule.isLocked());
+            String pluginID = schedule.getPluginId();
+            if (pluginID == null) {
+                KiemPlugin.getDefault().openFile(schedule.getLocation(),
+                        schedule.isLocked());
+            } else {
+                KiemPlugin.getDefault().openFile(schedule.getLocation(),
+                        pluginID, schedule.isLocked());
+            }
         } catch (IOException e0) {
             // loading failed due to missing .execution file
             KiemEventListener.getInstance().resetLoadImminent();
@@ -616,6 +621,8 @@ public final class ScheduleManager extends AbstractManager implements
             // file not in workspace
             KiemEventListener.getInstance().resetLoadImminent();
             throw new ScheduleFileMissingException(e0, schedule);
+        } catch (RuntimeException e0) {
+            e0.printStackTrace();
         }
 
         // loading successful
@@ -773,7 +780,13 @@ public final class ScheduleManager extends AbstractManager implements
 
                                         if (editor != null) {
                                             editor.setLocked(true);
-                                            addSchedule(editor, path, priority);
+                                            ScheduleData data = addSchedule(
+                                                    editor, path, priority);
+                                            if (data != null) {
+                                                data.setPluginId(element
+                                                        .getContributor()
+                                                        .getName());
+                                            }
                                         }
                                     }
                                 } catch (NumberFormatException e0) {
@@ -783,9 +796,13 @@ public final class ScheduleManager extends AbstractManager implements
                             }
                         } else {
                             // no editors added, use default editor
-                            addSchedule(EditorManager.getInstance()
-                                    .getDefaultEditor(), path,
+                            ScheduleData data = addSchedule(EditorManager
+                                    .getInstance().getDefaultEditor(), path,
                                     ScheduleData.DEFAULT_PRIORITY);
+                            if (data != null) {
+                                data.setPluginId(element.getContributor()
+                                        .getName());
+                            }
                         }
                     }
                 } catch (ScheduleFileMissingException e0) {
