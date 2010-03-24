@@ -164,6 +164,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * {@inheritDoc}
      */
     public void windowActivated(final IWorkbenchWindow window) {
+        RedundantLabelTriggerListener.hideRedundantLabels();
         if (window != null) {
             window.addPageListener(this);
         }
