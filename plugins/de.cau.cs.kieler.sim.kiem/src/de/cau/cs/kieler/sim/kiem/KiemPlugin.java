@@ -273,14 +273,13 @@ public class KiemPlugin extends AbstractUIPlugin {
             final boolean readOnly) throws IOException {
         Bundle bundle = Platform.getBundle(pluginID);
         if (bundle != null) {
-            String path = executionFile.toPortableString();
-            path = path.replace("bundleentry::/", "");
-            path = path.substring(path.indexOf("/"));
-            IPath execFile = Path.fromPortableString(path);
+            String path = executionFile.toOSString();
+            path = path.substring(path.indexOf("."));
+            path = path.substring(path.indexOf(System.getProperty("file.separator")));
+            IPath execFile = Path.fromOSString(path);
 
             URL url = FileLocator.find(bundle, execFile, null);
             url = FileLocator.resolve(url);
-            System.out.println(url);
             if (url != null) {
                 openFile(execFile, readOnly, url.openStream());
             } else {

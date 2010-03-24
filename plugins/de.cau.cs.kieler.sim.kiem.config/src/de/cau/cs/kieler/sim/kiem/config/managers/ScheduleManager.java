@@ -621,9 +621,7 @@ public final class ScheduleManager extends AbstractManager implements
             // file not in workspace
             KiemEventListener.getInstance().resetLoadImminent();
             throw new ScheduleFileMissingException(e0, schedule);
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-        }
+        } 
 
         // loading successful
         getRecentScheduleIds().add(schedule.getId());
