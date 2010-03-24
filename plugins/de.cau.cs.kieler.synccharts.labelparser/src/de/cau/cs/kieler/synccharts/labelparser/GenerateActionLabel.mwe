@@ -46,7 +46,9 @@
             </fragment>
 			
 			<!-- scoping API -->
-			<fragment class="org.eclipse.xtext.generator.scoping.JavaScopingFragment"/>
+			<!--<fragment class="org.eclipse.xtext.generator.scoping.JavaScopingFragment"/>-->
+			<fragment class="org.eclipse.xtext.generator.scoping.ImportURIScopingFragment"/>
+			<!--<fragment class="org.eclipse.xtext.generator.scoping.ImportNamespacesScopingFragment"/>-->
 			
 			<!-- formatter API -->
 			<fragment class="org.eclipse.xtext.generator.formatting.FormatterFragment"/>

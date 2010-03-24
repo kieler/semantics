@@ -6,42 +6,42 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.XtextEditor"
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="action"
-            id="de.cau.cs.kieler.synccharts.TransitionLabel"
-            name="TransitionLabel Editor">
+            id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel"
+            name="ActionLabel Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclarationHandler"
-            commandId="org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclaration">
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.synccharts.TransitionLabel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.handler.ValidateActionHandler"
-            commandId="de.cau.cs.kieler.synccharts.TransitionLabel.validate">
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.synccharts.TransitionLabel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
             </reference>
          </activeWhen>
       </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.cau.cs.kieler.synccharts.TransitionLabel.Editor.opened">
+        <definition id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
-                    <test property="org.eclipse.xtext.ui.core.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.synccharts.TransitionLabel" 
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="de.cau.cs.kieler.synccharts.labelparser.ActionLabel" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -50,66 +50,92 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.synccharts.TransitionLabel"
-            name="TransitionLabel"
-            category="org.eclipse.xtext.languages">
-            <keywordReference id="de.cau.cs.kieler.synccharts.ui.keyword_TransitionLabel"/>
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel"
+            name="ActionLabel">
+            <keywordReference id="de.cau.cs.kieler.synccharts.labelparser.ui.keyword_ActionLabel"/>
         </page>
         <page
-            category="de.cau.cs.kieler.synccharts.TransitionLabel"
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.synccharts.TransitionLabel.coloring"
+            category="de.cau.cs.kieler.synccharts.labelparser.ActionLabel"
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.synccharts.ui.keyword_TransitionLabel"/>
+            <keywordReference id="de.cau.cs.kieler.synccharts.labelparser.ui.keyword_ActionLabel"/>
         </page>
         <page
-            category="de.cau.cs.kieler.synccharts.TransitionLabel"
-            class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.synccharts.TransitionLabel.templates"
+            category="de.cau.cs.kieler.synccharts.labelparser.ActionLabel"
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.synccharts.ui.keyword_TransitionLabel"/>
+            <keywordReference id="de.cau.cs.kieler.synccharts.labelparser.ui.keyword_ActionLabel"/>
         </page>
     </extension>
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="de.cau.cs.kieler.synccharts.ui.keyword_TransitionLabel"
-            label="TransitionLabel"/>
+            id="de.cau.cs.kieler.synccharts.labelparser.ui.keyword_ActionLabel"
+            label="ActionLabel"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.synccharts.TransitionLabel.validate"
+            id="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.validate"
             name="Validate">
       </command>
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:#TextEditorContext?after=group.open">
+            locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.synccharts.TransitionLabel.validate"
+                 commandId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.synccharts.TransitionLabel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
          </menuContribution>
     </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.synccharts.labelparser.ActionLabel.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
 
 <!-- adding resource factories -->
 
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.synccharts.TransitionLabelExecutableExtensionFactory:org.eclipse.xtext.resource.XtextResourceFactory"
+			class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="action">
 		</parser>
 	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="de.cau.cs.kieler.synccharts.labelparser.ui.ActionLabelExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="action">
+        </resourceServiceProvider>
+    </extension>
 
 
 

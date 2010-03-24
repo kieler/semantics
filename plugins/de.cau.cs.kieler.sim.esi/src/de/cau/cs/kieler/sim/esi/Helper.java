@@ -30,7 +30,7 @@ import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.ui.core.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.inject.Injector;
 

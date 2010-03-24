@@ -55,7 +55,12 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
     @Override
     protected String getFirstRuleName() {
     	return "Program";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected EsterelGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 

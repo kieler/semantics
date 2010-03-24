@@ -55,7 +55,12 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
     @Override
     protected String getFirstRuleName() {
     	return "tracelist";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected EsiGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 

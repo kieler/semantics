@@ -25,6 +25,8 @@ public class ActionLabelParser extends org.eclipse.xtext.parser.antlr.AbstractAn
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 		de.cau.cs.kieler.synccharts.labelparser.parser.antlr.internal.InternalActionLabelParser parser = createParser(tokenStream);
 		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
+		parser.setSyntaxErrorProvider(getSyntaxErrorProvider());
+		parser.setUnorderedGroupHelper(getUnorderedGroupHelper().get());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);

@@ -55,7 +55,12 @@ import de.cau.cs.kieler.quartz.editor.services.QuartzGrammarAccess;
     @Override
     protected String getFirstRuleName() {
     	return "QrzFile";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected QuartzGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 

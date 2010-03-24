@@ -25,6 +25,8 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
 		de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser parser = createParser(tokenStream);
 		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
+		parser.setSyntaxErrorProvider(getSyntaxErrorProvider());
+		parser.setUnorderedGroupHelper(getUnorderedGroupHelper().get());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);

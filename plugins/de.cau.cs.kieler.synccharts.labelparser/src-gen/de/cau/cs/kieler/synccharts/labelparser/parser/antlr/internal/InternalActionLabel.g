@@ -62,7 +62,12 @@ import de.cau.cs.kieler.synccharts.labelparser.services.ActionLabelGrammarAccess
     @Override
     protected String getFirstRuleName() {
     	return "Action";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected ActionLabelGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 

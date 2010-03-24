@@ -7,14 +7,20 @@ Bundle-SymbolicName: de.cau.cs.kieler.esterel.ui;singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.esterel;visibility:=reexport,
- org.eclipse.xtext.ui.core;bundle-version="0.8.0",
- org.eclipse.xtext.ui.common;bundle-version="0.8.0",
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.ui,
- org.antlr.runtime
+ org.antlr.runtime,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ de.cau.cs.kieler.xtext.docgenerator;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.esterel.contentassist,
- de.cau.cs.kieler.esterel.contentassist.antlr
-Bundle-Activator: de.cau.cs.kieler.esterel.internal.EsterelActivator
+Export-Package: de.cau.cs.kieler.esterel.ui,
+ de.cau.cs.kieler.esterel.ui.contentassist,
+ de.cau.cs.kieler.esterel.ui.contentassist.antlr,
+ de.cau.cs.kieler.esterel.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.esterel.ui.internal,
+ de.cau.cs.kieler.esterel.ui.labeling,
+ de.cau.cs.kieler.esterel.ui.outline
+Bundle-Activator: de.cau.cs.kieler.esterel.ui.internal.EsterelActivator
 Import-Package: org.apache.log4j

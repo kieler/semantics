@@ -56,7 +56,12 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.services.InterfaceDeclGra
     @Override
     protected String getFirstRuleName() {
     	return "StateExtend";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected InterfaceDeclGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 

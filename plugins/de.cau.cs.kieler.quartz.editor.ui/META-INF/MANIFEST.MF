@@ -6,14 +6,19 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.quartz.editor.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.quartz.editor;visibility:=reexport,
- org.eclipse.xtext.ui.core,
- org.eclipse.xtext.ui.common,
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.ui,
- org.antlr.runtime
+ org.antlr.runtime,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.quartz.editor.contentassist,
- de.cau.cs.kieler.quartz.editor.contentassist.antlr
-Bundle-Activator: de.cau.cs.kieler.quartz.editor.internal.QuartzActivator
+Export-Package: de.cau.cs.kieler.quartz.editor.ui,
+ de.cau.cs.kieler.quartz.editor.ui.contentassist,
+ de.cau.cs.kieler.quartz.editor.ui.contentassist.antlr,
+ de.cau.cs.kieler.quartz.editor.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.quartz.editor.ui.internal,
+ de.cau.cs.kieler.quartz.editor.ui.labeling,
+ de.cau.cs.kieler.quartz.editor.ui.outline
+Bundle-Activator: de.cau.cs.kieler.quartz.editor.ui.internal.QuartzActivator

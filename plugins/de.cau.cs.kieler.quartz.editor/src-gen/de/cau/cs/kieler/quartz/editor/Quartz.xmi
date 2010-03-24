@@ -11,16 +11,16 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//QrzFile"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.1"/>
-      <tokens xsi:type="xtext:Assignment" cardinality="?" feature="imports" operator="=">
+      <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.1"/>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="imports" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.2"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" cardinality="*" feature="macros" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="macros" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="module" operator="=">
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="module" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.5"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="PackagePath">
@@ -28,9 +28,9 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//PackagePath"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="package"/>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.3"/>
-      <tokens xsi:type="xtext:Keyword" value=";"/>
+      <elements xsi:type="xtext:Keyword" value="package"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.3"/>
+      <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="ImportList">
@@ -38,11 +38,11 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//ImportList"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="+">
-      <tokens xsi:type="xtext:Keyword" value="import"/>
-      <tokens xsi:type="xtext:Assignment" feature="imp" operator="+=">
+      <elements xsi:type="xtext:Keyword" value="import"/>
+      <elements xsi:type="xtext:Assignment" feature="imp" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.3"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="PointedName">
@@ -50,18 +50,18 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//PointedName"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="id" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.48"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" value="."/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.3"/>
-        </tokens>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="all" operator="?=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="all" operator="?=">
         <terminal xsi:type="xtext:Keyword" value=".*"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="MacroDef">
@@ -69,35 +69,35 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//MacroDef"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="macro"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="macro"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:Assignment" feature="args" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Assignment" feature="args" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.8"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Keyword" value="="/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Keyword" value="="/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="macro"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="macro"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Keyword" value="="/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Keyword" value="="/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="QModule">
@@ -105,18 +105,18 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//QModule"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="module"/>
-      <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+      <elements xsi:type="xtext:Keyword" value="module"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.6"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="("/>
-      <tokens xsi:type="xtext:Assignment" feature="intf" operator="=">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="("/>
+      <elements xsi:type="xtext:Assignment" feature="intf" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.18"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=")"/>
-      <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stmt" operator="=">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=")"/>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="stmt" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.32"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Name">
@@ -138,15 +138,15 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//QNameList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="names" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="names" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Storage">
@@ -154,8 +154,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="event"/>
-      <groups xsi:type="xtext:Keyword" value="mem"/>
+      <elements xsi:type="xtext:Keyword" value="event"/>
+      <elements xsi:type="xtext:Keyword" value="mem"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="QType">
@@ -163,40 +163,40 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//QType"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Keyword" value="bool"/>
-        <groups xsi:type="xtext:Keyword" value="real"/>
-        <groups xsi:type="xtext:Keyword" value="bv"/>
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Keyword" value="bv"/>
-          <tokens xsi:type="xtext:Keyword" value="{"/>
-          <tokens xsi:type="xtext:Assignment" feature="ta" operator="=">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value="bool"/>
+        <elements xsi:type="xtext:Keyword" value="real"/>
+        <elements xsi:type="xtext:Keyword" value="bv"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="bv"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" feature="ta" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="}"/>
-        </groups>
-        <groups xsi:type="xtext:Keyword" value="nat"/>
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Keyword" value="nat"/>
-          <tokens xsi:type="xtext:Keyword" value="{"/>
-          <tokens xsi:type="xtext:Assignment" feature="tb" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="nat"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="nat"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" feature="tb" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="}"/>
-        </groups>
-        <groups xsi:type="xtext:Keyword" value="int"/>
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Keyword" value="int"/>
-          <tokens xsi:type="xtext:Keyword" value="{"/>
-          <tokens xsi:type="xtext:Assignment" feature="tc" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="int"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="int"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" feature="tc" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="}"/>
-        </groups>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" cardinality="?" feature="dims" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="dims" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="QTypeList">
@@ -204,15 +204,15 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//QTypeList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="type" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="+">
-        <tokens xsi:type="xtext:Keyword" value="*"/>
-        <tokens xsi:type="xtext:Assignment" feature="t" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="+">
+        <elements xsi:type="xtext:Keyword" value="*"/>
+        <elements xsi:type="xtext:Assignment" feature="t" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="DimList">
@@ -220,11 +220,11 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//DimList"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="+">
-      <tokens xsi:type="xtext:Keyword" value="["/>
-      <tokens xsi:type="xtext:Assignment" feature="expr" operator="+=">
+      <elements xsi:type="xtext:Keyword" value="["/>
+      <elements xsi:type="xtext:Assignment" feature="expr" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="]"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="]"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="InOutName">
@@ -232,11 +232,11 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//InOutName"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives" cardinality="?">
-        <groups xsi:type="xtext:Keyword" value="?"/>
-        <groups xsi:type="xtext:Keyword" value="!"/>
-      </tokens>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+      <elements xsi:type="xtext:Alternatives" cardinality="?">
+        <elements xsi:type="xtext:Keyword" value="?"/>
+        <elements xsi:type="xtext:Keyword" value="!"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="InOutNameList">
@@ -244,13 +244,13 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//InOutNameList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.13"/>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="names" operator="+=">
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.13"/>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="names" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="InOutNameListComma">
@@ -258,10 +258,10 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//InOutNameListComma"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="+">
-      <tokens xsi:type="xtext:Assignment" feature="names" operator="+=">
+      <elements xsi:type="xtext:Assignment" feature="names" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=","/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=","/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Interface">
@@ -269,18 +269,18 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//Interface"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.9"/>
-          <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.9"/>
+          <elements xsi:type="xtext:Assignment" feature="type" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-          </tokens>
-        </groups>
-        <groups xsi:type="xtext:Keyword" value="event"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="names" operator="=">
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="event"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="names" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="InterfaceComma">
@@ -288,18 +288,18 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//InterfaceComma"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.9"/>
-          <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" cardinality="?" rule="//@rules.9"/>
+          <elements xsi:type="xtext:Assignment" feature="type" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-          </tokens>
-        </groups>
-        <groups xsi:type="xtext:Keyword" value="event"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="names" operator="=">
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="event"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="names" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.15"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="InterfaceList">
@@ -307,15 +307,15 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//InterfaceList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Assignment" feature="intf" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="intf" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="interfaces" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="interfaces" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.16"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="VerifTask">
@@ -323,26 +323,26 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="["/>
-        <tokens xsi:type="xtext:Keyword" value="ProveE"/>
-        <tokens xsi:type="xtext:Keyword" value="]"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="["/>
-        <tokens xsi:type="xtext:Keyword" value="ProveA"/>
-        <tokens xsi:type="xtext:Keyword" value="]"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="["/>
-        <tokens xsi:type="xtext:Keyword" value="DisProveE"/>
-        <tokens xsi:type="xtext:Keyword" value="]"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="["/>
-        <tokens xsi:type="xtext:Keyword" value="DisProveA"/>
-        <tokens xsi:type="xtext:Keyword" value="]"/>
-      </groups>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="["/>
+        <elements xsi:type="xtext:Keyword" value="ProveE"/>
+        <elements xsi:type="xtext:Keyword" value="]"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="["/>
+        <elements xsi:type="xtext:Keyword" value="ProveA"/>
+        <elements xsi:type="xtext:Keyword" value="]"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="["/>
+        <elements xsi:type="xtext:Keyword" value="DisProveE"/>
+        <elements xsi:type="xtext:Keyword" value="]"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="["/>
+        <elements xsi:type="xtext:Keyword" value="DisProveA"/>
+        <elements xsi:type="xtext:Keyword" value="]"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="ControlList">
@@ -350,9 +350,9 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//ControlList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="{"/>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.8"/>
-      <tokens xsi:type="xtext:Keyword" value="}"/>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
+      <elements xsi:type="xtext:Keyword" value="}"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="AssumeList">
@@ -360,10 +360,10 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//AssumeList"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="with"/>
-      <tokens xsi:type="xtext:Keyword" value="{"/>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.8"/>
-      <tokens xsi:type="xtext:Keyword" value="}"/>
+      <elements xsi:type="xtext:Keyword" value="with"/>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
+      <elements xsi:type="xtext:Keyword" value="}"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="FixpointEqList">
@@ -371,18 +371,18 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//FixpointEqList"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="*">
-      <tokens xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Keyword" value="mu"/>
-        <groups xsi:type="xtext:Keyword" value="nu"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="name" operator="+=">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value="mu"/>
+        <elements xsi:type="xtext:Keyword" value="nu"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="="/>
-      <tokens xsi:type="xtext:Assignment" feature="expr" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="="/>
+      <elements xsi:type="xtext:Assignment" feature="expr" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="OptUtyExpr">
@@ -390,10 +390,10 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//OptUtyExpr"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="_"/>
-      <groups xsi:type="xtext:Assignment" feature="tk" operator="=">
+      <elements xsi:type="xtext:Keyword" value="_"/>
+      <elements xsi:type="xtext:Assignment" feature="tk" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="OptUtyExprList">
@@ -401,13 +401,13 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//OptUtyExprList"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="?">
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.23"/>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="exprs" operator="+=">
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.23"/>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="exprs" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.23"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="UtyExprSelectList">
@@ -415,11 +415,11 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//UtyExprSelectList"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="+">
-      <tokens xsi:type="xtext:Keyword" value="["/>
-      <tokens xsi:type="xtext:Assignment" feature="tk" operator="=">
+      <elements xsi:type="xtext:Keyword" value="["/>
+      <elements xsi:type="xtext:Assignment" feature="tk" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="]"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="]"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="UtyExpr">
@@ -427,297 +427,297 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//UtyExpr"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="instant"/>
-      <groups xsi:type="xtext:Keyword" value="inside"/>
-      <groups xsi:type="xtext:Keyword" value="terminate"/>
-      <groups xsi:type="xtext:Keyword" value="true"/>
-      <groups xsi:type="xtext:Keyword" value="false"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.43"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.44"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.45"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.46"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.47"/>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" feature="op" operator="=">
+      <elements xsi:type="xtext:Keyword" value="instant"/>
+      <elements xsi:type="xtext:Keyword" value="inside"/>
+      <elements xsi:type="xtext:Keyword" value="terminate"/>
+      <elements xsi:type="xtext:Keyword" value="true"/>
+      <elements xsi:type="xtext:Keyword" value="false"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.43"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.44"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.45"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.46"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.47"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="op" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.37"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="+"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="-"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="abs"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="sat"/>
-        <tokens xsi:type="xtext:Keyword" value="{"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value="}"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:Assignment" feature="t7" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="+"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="-"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="abs"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="sat"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Assignment" feature="t7" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="der"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="reverse"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="{"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value="::"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="der"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="reverse"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value="::"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="}"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="next"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="nat2bv"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="int2bv"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="arr2bv"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="tup2bv"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="bv2nat"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="bv2int"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="nat2real"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="int2real"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="sin"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="cos"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="exp"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="next"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="nat2bv"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="int2bv"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="arr2bv"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="tup2bv"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="bv2nat"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="bv2int"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="nat2real"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="int2real"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="sin"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="cos"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="exp"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="log"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=","/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="log"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="sizeOf"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="forall"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.31"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="sizeOf"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="forall"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="exists"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.31"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="exists"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="sum"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.31"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="sum"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="X"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="G"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="F"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="PA"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="PF"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="PSX"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="PMX"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="E"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="A"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="[]"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="&lt;>"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="[:]"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="&lt;:>"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="mu"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="X"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="G"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="F"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="PA"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="PF"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="PSX"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="PMX"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="E"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="A"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="[]"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="&lt;>"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="[:]"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="&lt;:>"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="mu"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="."/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="nu"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="nu"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="."/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="fixpoints"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.22"/>
-        <tokens xsi:type="xtext:Keyword" value="in"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr2" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="fixpoints"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.22"/>
+        <elements xsi:type="xtext:Keyword" value="in"/>
+        <elements xsi:type="xtext:Assignment" feature="expr2" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="forall"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="forall"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=":"/>
-        <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="."/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="exists"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="exists"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=":"/>
-        <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.10"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="."/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="UtyAction">
@@ -725,45 +725,45 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//UtyAction"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="emit"/>
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="next"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="next"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Keyword" value="="/>
-        <tokens xsi:type="xtext:Assignment" feature="t2" operator="=">
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="emit"/>
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="next"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="next"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Keyword" value="="/>
+        <elements xsi:type="xtext:Assignment" feature="t2" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="der"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Keyword" value="&lt;-"/>
-        <tokens xsi:type="xtext:Assignment" feature="t4" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="der"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Keyword" value="&lt;-"/>
+        <elements xsi:type="xtext:Assignment" feature="t4" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="assume"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="assert"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-      </groups>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="assume"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="assert"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="case_list">
@@ -771,13 +771,13 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//case_list"/>
     </type>
     <alternatives xsi:type="xtext:Group" cardinality="*">
-      <tokens xsi:type="xtext:Assignment" feature="exp" operator="+=">
+      <elements xsi:type="xtext:Assignment" feature="exp" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.29"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="do"/>
-      <tokens xsi:type="xtext:Assignment" feature="stmt" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="do"/>
+      <elements xsi:type="xtext:Assignment" feature="stmt" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.34"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="dUtyExpr">
@@ -785,9 +785,9 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//dUtyExpr"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="("/>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      <tokens xsi:type="xtext:Keyword" value=")"/>
+      <elements xsi:type="xtext:Keyword" value="("/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.26"/>
+      <elements xsi:type="xtext:Keyword" value=")"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="dUtyExprs">
@@ -795,8 +795,8 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//dUtyExprs"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.29"/>
-      <tokens xsi:type="xtext:Keyword" value=";"/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.29"/>
+      <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="Generic">
@@ -804,17 +804,17 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//Generic"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="("/>
-      <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-      <tokens xsi:type="xtext:Keyword" value="="/>
-      <tokens xsi:type="xtext:Assignment" feature="t6" operator="=">
+      <elements xsi:type="xtext:Keyword" value="("/>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+      <elements xsi:type="xtext:Keyword" value="="/>
+      <elements xsi:type="xtext:Assignment" feature="t6" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=".."/>
-      <tokens xsi:type="xtext:Assignment" feature="t5" operator="=">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=".."/>
+      <elements xsi:type="xtext:Assignment" feature="t5" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value=")"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=")"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="LocStmt">
@@ -822,17 +822,17 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//LocStmt"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="{"/>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Assignment" feature="locals" operator="+=">
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Assignment" feature="locals" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.18"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </tokens>
-      <tokens xsi:type="xtext:Assignment" feature="stmt" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="stmt" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.34"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="}"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="SeqStmt">
@@ -848,22 +848,22 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//Stmt"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Assignment" feature="left" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="left" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.33"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Keyword" value="||"/>
-          <groups xsi:type="xtext:Keyword" value="|||"/>
-          <groups xsi:type="xtext:RuleCall" rule="//@rules.40"/>
-          <groups xsi:type="xtext:Keyword" value="&amp;&amp;"/>
-          <groups xsi:type="xtext:Keyword" value="&amp;&amp;&amp;"/>
-          <groups xsi:type="xtext:RuleCall" rule="//@rules.38"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="right" operator="+=">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Keyword" value="||"/>
+          <elements xsi:type="xtext:Keyword" value="|||"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.40"/>
+          <elements xsi:type="xtext:Keyword" value="&amp;&amp;"/>
+          <elements xsi:type="xtext:Keyword" value="&amp;&amp;&amp;"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="right" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.33"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="AtomicStmt">
@@ -871,118 +871,118 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//AtomicStmt"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="nothing"/>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.27"/>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.36"/>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="weak"/>
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="immediate"/>
-        <tokens xsi:type="xtext:Keyword" value="abort"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        <tokens xsi:type="xtext:Keyword" value="when"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="nothing"/>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.27"/>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.36"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="weak"/>
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="immediate"/>
+        <elements xsi:type="xtext:Keyword" value="abort"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+        <elements xsi:type="xtext:Keyword" value="when"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.30"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="immediate"/>
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Keyword" value="during"/>
-          <groups xsi:type="xtext:Keyword" value="final"/>
-        </tokens>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        <tokens xsi:type="xtext:Keyword" value="do"/>
-        <tokens xsi:type="xtext:Assignment" feature="t03" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="immediate"/>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Keyword" value="during"/>
+          <elements xsi:type="xtext:Keyword" value="final"/>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+        <elements xsi:type="xtext:Keyword" value="do"/>
+        <elements xsi:type="xtext:Assignment" feature="t03" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="abstract"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="case"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.28"/>
-        <tokens xsi:type="xtext:Keyword" value="default"/>
-        <tokens xsi:type="xtext:Assignment" feature="t15" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="abstract"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="case"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.28"/>
+        <elements xsi:type="xtext:Keyword" value="default"/>
+        <elements xsi:type="xtext:Assignment" feature="t15" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="choose"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.31"/>
-        <tokens xsi:type="xtext:Assignment" feature="t23" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="choose"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+        <elements xsi:type="xtext:Assignment" feature="t23" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="do"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        <tokens xsi:type="xtext:Keyword" value="while"/>
-        <tokens xsi:type="xtext:Assignment" feature="t06" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="do"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+        <elements xsi:type="xtext:Keyword" value="while"/>
+        <elements xsi:type="xtext:Assignment" feature="t06" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.30"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="for"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.31"/>
-        <tokens xsi:type="xtext:Group" cardinality="?">
-          <tokens xsi:type="xtext:Keyword" value="do"/>
-          <tokens xsi:type="xtext:Alternatives">
-            <groups xsi:type="xtext:Keyword" value="||"/>
-            <groups xsi:type="xtext:Keyword" value="&amp;&amp;"/>
-            <groups xsi:type="xtext:Keyword" value="|||"/>
-            <groups xsi:type="xtext:Keyword" value="&amp;&amp;&amp;"/>
-            <groups xsi:type="xtext:RuleCall" rule="//@rules.40"/>
-            <groups xsi:type="xtext:RuleCall" rule="//@rules.38"/>
-          </tokens>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="t" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="for"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.31"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="do"/>
+          <elements xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:Keyword" value="||"/>
+            <elements xsi:type="xtext:Keyword" value="&amp;&amp;"/>
+            <elements xsi:type="xtext:Keyword" value="|||"/>
+            <elements xsi:type="xtext:Keyword" value="&amp;&amp;&amp;"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.40"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.38"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="t" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="if"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.29"/>
-        <tokens xsi:type="xtext:Assignment" feature="t13" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="if"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.29"/>
+        <elements xsi:type="xtext:Assignment" feature="t13" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="else"/>
-        <tokens xsi:type="xtext:Assignment" feature="t14" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="else"/>
+        <elements xsi:type="xtext:Assignment" feature="t14" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="let"/>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        <tokens xsi:type="xtext:Keyword" value="="/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="let"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+        <elements xsi:type="xtext:Keyword" value="="/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.26"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Assignment" feature="t24" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Assignment" feature="t24" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="loop"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="while"/>
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.29"/>
-        <tokens xsi:type="xtext:Assignment" feature="t07" operator="=">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="loop"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.35"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="while"/>
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.29"/>
+        <elements xsi:type="xtext:Assignment" feature="t07" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
-      <groups xsi:type="xtext:RuleCall" rule="//@rules.32"/>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.32"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="NamedStmt">
@@ -990,52 +990,52 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/quartz/editor/Quartz#//NamedStmt"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Group" cardinality="?">
-          <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-          <tokens xsi:type="xtext:Keyword" value=":"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="pause"/>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Group" cardinality="?">
-          <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-          <tokens xsi:type="xtext:Keyword" value=":"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="halt"/>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        <tokens xsi:type="xtext:Keyword" value=":"/>
-        <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+          <elements xsi:type="xtext:Keyword" value=":"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="pause"/>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+          <elements xsi:type="xtext:Keyword" value=":"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="halt"/>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="("/>
-        <tokens xsi:type="xtext:Assignment" feature="exprs" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Assignment" feature="exprs" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.24"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value=")"/>
-        <tokens xsi:type="xtext:Keyword" value=";"/>
-      </groups>
-      <groups xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Group" cardinality="?">
-          <tokens xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-          <tokens xsi:type="xtext:Keyword" value=","/>
-          <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="name" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value=":"/>
-        </tokens>
-        <tokens xsi:type="xtext:Keyword" value="every"/>
-        <tokens xsi:type="xtext:Assignment" feature="expr" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=":"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="every"/>
+        <elements xsi:type="xtext:Assignment" feature="expr" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.29"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="t10" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="t10" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.35"/>
-        </tokens>
-      </groups>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="NOT">
@@ -1043,8 +1043,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="!"/>
-      <groups xsi:type="xtext:Keyword" value="not"/>
+      <elements xsi:type="xtext:Keyword" value="!"/>
+      <elements xsi:type="xtext:Keyword" value="not"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="AND">
@@ -1052,8 +1052,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="&amp;"/>
-      <groups xsi:type="xtext:Keyword" value="and"/>
+      <elements xsi:type="xtext:Keyword" value="&amp;"/>
+      <elements xsi:type="xtext:Keyword" value="and"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="XOR">
@@ -1061,8 +1061,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="^"/>
-      <groups xsi:type="xtext:Keyword" value="xor"/>
+      <elements xsi:type="xtext:Keyword" value="^"/>
+      <elements xsi:type="xtext:Keyword" value="xor"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="OR">
@@ -1070,8 +1070,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="|"/>
-      <groups xsi:type="xtext:Keyword" value="or"/>
+      <elements xsi:type="xtext:Keyword" value="|"/>
+      <elements xsi:type="xtext:Keyword" value="or"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="IMP">
@@ -1079,8 +1079,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="->"/>
-      <groups xsi:type="xtext:Keyword" value="imp"/>
+      <elements xsi:type="xtext:Keyword" value="->"/>
+      <elements xsi:type="xtext:Keyword" value="imp"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="EQU">
@@ -1088,8 +1088,8 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives">
-      <groups xsi:type="xtext:Keyword" value="&lt;->"/>
-      <groups xsi:type="xtext:Keyword" value="equ"/>
+      <elements xsi:type="xtext:Keyword" value="&lt;->"/>
+      <elements xsi:type="xtext:Keyword" value="equ"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="BVCONST">
@@ -1103,11 +1103,11 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="0o"/>
-      <tokens xsi:type="xtext:CharacterRange" cardinality="+">
+      <elements xsi:type="xtext:Keyword" value="0o"/>
+      <elements xsi:type="xtext:CharacterRange" cardinality="+">
         <left value="0"/>
         <right value="7"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="HEXCONST">
@@ -1115,17 +1115,17 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="0x"/>
-      <tokens xsi:type="xtext:Alternatives" cardinality="+">
-        <groups xsi:type="xtext:CharacterRange">
+      <elements xsi:type="xtext:Keyword" value="0x"/>
+      <elements xsi:type="xtext:Alternatives" cardinality="+">
+        <elements xsi:type="xtext:CharacterRange">
           <left value="0"/>
           <right value="9"/>
-        </groups>
-        <groups xsi:type="xtext:CharacterRange">
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
           <left value="A"/>
           <right value="F"/>
-        </groups>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="NATCONST">
@@ -1142,30 +1142,30 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives" cardinality="?">
-        <groups xsi:type="xtext:Keyword" value="+"/>
-        <groups xsi:type="xtext:Keyword" value="-"/>
-      </tokens>
-      <tokens xsi:type="xtext:CharacterRange" cardinality="+">
+      <elements xsi:type="xtext:Alternatives" cardinality="?">
+        <elements xsi:type="xtext:Keyword" value="+"/>
+        <elements xsi:type="xtext:Keyword" value="-"/>
+      </elements>
+      <elements xsi:type="xtext:CharacterRange" cardinality="+">
         <left value="0"/>
         <right value="9"/>
-      </tokens>
-      <tokens xsi:type="xtext:Keyword" value="."/>
-      <tokens xsi:type="xtext:CharacterRange" cardinality="+">
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="."/>
+      <elements xsi:type="xtext:CharacterRange" cardinality="+">
         <left value="0"/>
         <right value="9"/>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="?">
-        <tokens xsi:type="xtext:Keyword" value="e"/>
-        <tokens xsi:type="xtext:Alternatives" cardinality="?">
-          <groups xsi:type="xtext:Keyword" value="+"/>
-          <groups xsi:type="xtext:Keyword" value="-"/>
-        </tokens>
-        <tokens xsi:type="xtext:CharacterRange" cardinality="+">
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Keyword" value="e"/>
+        <elements xsi:type="xtext:Alternatives" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="+"/>
+          <elements xsi:type="xtext:Keyword" value="-"/>
+        </elements>
+        <elements xsi:type="xtext:CharacterRange" cardinality="+">
           <left value="0"/>
           <right value="9"/>
-        </tokens>
-      </tokens>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="ID">
@@ -1173,33 +1173,33 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:CharacterRange">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:CharacterRange">
           <left value="a"/>
           <right value="z"/>
-        </groups>
-        <groups xsi:type="xtext:CharacterRange">
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
           <left value="A"/>
           <right value="Z"/>
-        </groups>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="*">
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="_"/>
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:CharacterRange">
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="_"/>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:CharacterRange">
             <left value="a"/>
             <right value="z"/>
-          </groups>
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
             <left value="A"/>
             <right value="Z"/>
-          </groups>
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
             <left value="0"/>
             <right value="9"/>
-          </groups>
-        </tokens>
-      </tokens>
+          </elements>
+        </elements>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
@@ -1207,10 +1207,10 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="/*"/>
-      <tokens xsi:type="xtext:UntilToken">
+      <elements xsi:type="xtext:Keyword" value="/*"/>
+      <elements xsi:type="xtext:UntilToken">
         <terminal xsi:type="xtext:Keyword" value="*/"/>
-      </tokens>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
@@ -1218,17 +1218,17 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Group">
-      <tokens xsi:type="xtext:Keyword" value="//"/>
-      <tokens xsi:type="xtext:NegatedToken" cardinality="*">
+      <elements xsi:type="xtext:Keyword" value="//"/>
+      <elements xsi:type="xtext:NegatedToken" cardinality="*">
         <terminal xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Keyword" value="&#xA;"/>
-          <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+          <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+          <elements xsi:type="xtext:Keyword" value="&#xD;"/>
         </terminal>
-      </tokens>
-      <tokens xsi:type="xtext:Group" cardinality="?">
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
-        <tokens xsi:type="xtext:Keyword" value="&#xA;"/>
-      </tokens>
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+      </elements>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="WS">
@@ -1236,10 +1236,10 @@
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
     <alternatives xsi:type="xtext:Alternatives" cardinality="+">
-      <groups xsi:type="xtext:Keyword" value=" "/>
-      <groups xsi:type="xtext:Keyword" value="&#x9;"/>
-      <groups xsi:type="xtext:Keyword" value="&#xD;"/>
-      <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+      <elements xsi:type="xtext:Keyword" value=" "/>
+      <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+      <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+      <elements xsi:type="xtext:Keyword" value="&#xA;"/>
     </alternatives>
   </rules>
 </xtext:Grammar>

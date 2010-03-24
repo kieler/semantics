@@ -78,11 +78,6 @@ public abstract class AbstractEsiRuntimeModule extends DefaultRuntimeModule {
 		return de.cau.cs.kieler.sim.esi.validation.EsiJavaValidator.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
-	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
-		return org.eclipse.xtext.naming.SimpleNameProvider.class;
-	}
-
 	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return de.cau.cs.kieler.sim.esi.scoping.EsiScopeProvider.class;

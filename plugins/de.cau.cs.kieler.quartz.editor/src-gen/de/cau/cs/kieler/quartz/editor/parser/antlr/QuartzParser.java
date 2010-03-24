@@ -25,6 +25,8 @@ public class QuartzParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPa
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_SL_COMMENT", "RULE_ML_COMMENT");
 		de.cau.cs.kieler.quartz.editor.parser.antlr.internal.InternalQuartzParser parser = createParser(tokenStream);
 		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
+		parser.setSyntaxErrorProvider(getSyntaxErrorProvider());
+		parser.setUnorderedGroupHelper(getUnorderedGroupHelper().get());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);

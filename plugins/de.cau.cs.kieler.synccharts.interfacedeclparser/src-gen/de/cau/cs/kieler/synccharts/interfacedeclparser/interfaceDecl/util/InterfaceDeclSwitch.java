@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.util;
 

@@ -13,8 +13,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtext.ui.core.editor.XtextEditor;
-import org.eclipse.xtext.ui.core.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -105,6 +105,7 @@ public class EsterelToSyncChartsDataComponent extends JSONObjectDataComponent im
 
             System.out.println("Reading Esterel Source Code.");
             IXtextDocument document = xeditor.getDocument();
+            
             rootState.setBodyText(document.get());
 
             System.out.println("Parsing Esterel Source Code.");
