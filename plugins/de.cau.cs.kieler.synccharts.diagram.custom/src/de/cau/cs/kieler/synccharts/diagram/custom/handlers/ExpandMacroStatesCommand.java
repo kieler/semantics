@@ -125,7 +125,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
 
         XtendComponent transformation = new XtendComponent();
         transformation.addMetaModel(metaModel);
-        transformation.setInvoke("transformations::expandReferenceStates2::transform(model)");
+        transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
         transformation.setOutputSlot("transformedModel");
         workflow.addComponent(transformation);
 

@@ -26,11 +26,12 @@ expandMacroState(State target) :
 
 /*expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
 State expandMacroStateWithSyncchartStateReference (State referencingState):
-    let referencedState = referencingState.bodyReference.castToState():
+    //let referencedState = referencingState.bodyReference.castToState():
+    let referencedState = referencingState.bodyReference.copyState() :
     let referencedExpandedState = transform(referencedState) :
     let regions = referencedState.regions :
     let newName = getExpandedStateName(referencingState, referencedState) :
-    referencingState.regions.addAll(regions) -> 
+    referencingState.regions.addAll(regions) ->
     referencingState.setLabel(newName) ->
     referencingState.changeTypeToNormal() ->
     referencingState.renamings.executeRenaming() ->
@@ -71,3 +72,10 @@ Signal getSignalForName(State state, String name) :
             ((state.parentRegion != null || state.parentRegion.parentState != null) ?
                 getSignalForName(state.parentRegion.parentState, name) :
                 null);
+
+State copyState(Object object) :
+    (State) copy(object);
+    
+Object copy(Object object) :
+	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.copy(java.lang.Object)
+;

@@ -266,4 +266,8 @@ public final class Utils {
         }
         return null;
     }
+    
+	public final static EObject copy(Object state){
+		return EcoreUtil.copy((EObject) state);
+	}
 }
