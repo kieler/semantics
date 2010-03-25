@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.viewmanagement;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.draw2d.ColorConstants;
@@ -30,6 +28,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,43 +52,65 @@ import de.cau.cs.kieler.viewmanagement.RunLogic;
 public class SimpleHighlighter extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
+    /** The root edit part of the diagram. */
     private DiagramEditPart rootEditPart;
+
+    /** The editor. */
     private DiagramEditor editor;
 
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
-        String stateVariableKey = this.getProperties()[1].getValue();
-        String disco = this.getProperties()[2].getValue();
+        String highlightVariableKey = this.getProperties()[1].getValue();
+
+        String urlKey = "uri";
+        String redKey = "red";
+        String greenKey = "green";
+        String blueKey = "blue";
+
         HighlightingManager.lockedReset(editor);
         // some sanity checks
-        if (rootEditPart != null && data.has(stateVariableKey)) {
+        if (rootEditPart != null && data.has(highlightVariableKey)) {
             try {
                 // find all states that are active
-                Object stateData = data.get(stateVariableKey);
+                JSONArray array = data.getJSONArray(highlightVariableKey);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    String urlValue = obj.getString(urlKey);
+                    int redValue = Integer.parseInt(obj.getString(redKey));
+                    int greenValue = Integer.parseInt(obj.getString(greenKey));
+                    int blueValue = Integer.parseInt(obj.getString(blueKey));
 
-                StringTokenizer tokenizer = new StringTokenizer(stateData
-                        .toString(), " ,");
-                List<EditPart> highlightedStates = new ArrayList<EditPart>();
+                    EditPart editPart = getEditPart(urlValue, rootEditPart);
 
-                while (tokenizer.hasMoreElements()) {
-                    String stateName = tokenizer.nextToken();
-
-                    EditPart affectedState = getEditPart(stateName,
-                            rootEditPart);
-
-                    if (affectedState == null) {
-                        continue;
-                    }
-
-                    highlightedStates.add(affectedState);
-                }
-
-                for (EditPart editPart : highlightedStates) {
+                    Device device = ColorConstants.red.getDevice();
                     HighlightingManager.lockedHighlight(editor, editPart,
-                            getColor(disco.equalsIgnoreCase("true")), null);
+                            new Color(device, redValue, greenValue, blueValue),
+                            null);
                 }
+
+                // StringTokenizer tokenizer = new StringTokenizer(stateData
+                // .toString(), " ,");
+                // List<EditPart> highlightedStates = new ArrayList<EditPart>();
+                //
+                // while (tokenizer.hasMoreElements()) {
+                // String stateName = tokenizer.nextToken();
+                //
+                // EditPart affectedState = getEditPart(stateName,
+                // rootEditPart);
+                //
+                // if (affectedState == null) {
+                // continue;
+                // }
+                //
+                // highlightedStates.add(affectedState);
+                // }
+                //
+                // for (EditPart editPart : highlightedStates) {
+                // HighlightingManager.lockedHighlight(editor, editPart,
+                // getColor(disco.equalsIgnoreCase("true")), null);
+                // }
             } catch (JSONException e0) {
                 e0.printStackTrace();
             }
@@ -115,6 +136,11 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
         return new Color(device, red, green, blue);
     }
 
+    /**
+     * Get the input editor.
+     * 
+     * @return the input editor
+     */
     DiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
         DiagramEditor diagramEditor = null;
@@ -136,6 +162,13 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
         return diagramEditor;
     }
 
+    /**
+     * Get the diagram editor identified by the key.
+     * 
+     * @param kiemEditorProperty
+     *            the key
+     * @return the editor
+     */
     DiagramEditor getEditor(String kiemEditorProperty) {
         if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
             return null;
@@ -223,7 +256,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
         KiemProperty[] properties = new KiemProperty[3];
         properties[0] = new KiemProperty("SyncChart Editor",
                 new KiemPropertyTypeEditor(), "");
-        properties[1] = new KiemProperty("highlight key", "state");
+        properties[1] = new KiemProperty("highlight key", "highlight");
         properties[2] = new KiemProperty("disco", "false");
         return properties;
     }
