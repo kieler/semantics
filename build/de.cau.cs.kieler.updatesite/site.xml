@@ -6,6 +6,9 @@
    <feature url="features/de.cau.cs.kieler.core_0.1.0.qualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.core.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.core.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.kiml_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kiml" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
@@ -57,6 +60,11 @@
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
+      </description>
+   </category-def>
+   <category-def name="KIELER sources" label="KIELER sources">
+      <description>
+         Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform (sources)
       </description>
    </category-def>
 </site>
