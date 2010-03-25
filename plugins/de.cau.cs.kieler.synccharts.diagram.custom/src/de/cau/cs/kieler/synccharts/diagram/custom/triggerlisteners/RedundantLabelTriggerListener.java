@@ -89,7 +89,9 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                         if (eObject instanceof Transition) {
                             Transition trans = (Transition) eObject;
                             State parent = trans.getSourceState();
-                            if (parent.getOutgoingTransitions().size() == 1) {
+                            if (parent != null
+                                    && parent.getOutgoingTransitions() != null
+                                    && parent.getOutgoingTransitions().size() == 1) {
                                 List<EditPart> parts = ModelingUtil
                                         .getEditParts(dep, trans);
                                 for (EditPart edPart : parts) {
@@ -102,7 +104,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                         } else if (eObject instanceof Region) {
                             Region region = (Region) eObject;
                             State parent = region.getParentState();
-                            if (parent != null
+                            if (parent != null && parent.getRegions() != null
                                     && parent.getRegions().size() == 1) {
                                 List<EditPart> parts = ModelingUtil
                                         .getEditParts(dep, region);
