@@ -84,11 +84,6 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.mwe.core"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.xtend"
          version="0.0.0"
          search-location="self"/>
@@ -134,33 +129,49 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.mwe.ui"
+         id="org.eclipse.emf.emfindex.runtime"
          version="0.0.0"
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.emfindex.runtime"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.emfindex.ui"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <includes
          id="de.itemis.xtext.antlr.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <includes
          id="org.eclipse.emf.codegen.ecore"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <includes
          id="org.eclipse.emf.codegen"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <includes
          id="org.eclipse.emf.ecore.editor"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe2.runtime.sdk"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe.core"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe.ui"
+         version="0.0.0"
+         search-location="self"/>
 
    <plugin
          id="org.eclipse.jdt.core"
