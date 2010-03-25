@@ -24,6 +24,8 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -59,6 +61,7 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
         String stateVariableKey = this.getProperties()[1].getValue();
+        String disco = this.getProperties()[2].getValue();
         HighlightingManager.lockedReset(editor);
         // some sanity checks
         if (rootEditPart != null && data.has(stateVariableKey)) {
@@ -85,13 +88,31 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
 
                 for (EditPart editPart : highlightedStates) {
                     HighlightingManager.lockedHighlight(editor, editPart,
-                            ColorConstants.red, null);
+                            getColor(disco.equalsIgnoreCase("true")), null);
                 }
             } catch (JSONException e0) {
                 e0.printStackTrace();
             }
         }
         return null;
+    }
+
+    /**
+     * Get the color for the given state or transition.
+     * 
+     * @param isDisco
+     *            true if the disco modus should be on
+     * @return the color
+     */
+    private Color getColor(final boolean isDisco) {
+        if (!isDisco) {
+            return ColorConstants.red;
+        }
+        Device device = ColorConstants.red.getDevice();
+        int red = (int) (Math.random() * 256);
+        int green = (int) (Math.random() * 256);
+        int blue = (int) (Math.random() * 256);
+        return new Color(device, red, green, blue);
     }
 
     DiagramEditor getInputEditor() {
@@ -199,10 +220,11 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
      */
     @Override
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
+        KiemProperty[] properties = new KiemProperty[3];
         properties[0] = new KiemProperty("SyncChart Editor",
                 new KiemPropertyTypeEditor(), "");
         properties[1] = new KiemProperty("highlight key", "state");
+        properties[2] = new KiemProperty("disco", "false");
         return properties;
     }
 
@@ -233,43 +255,6 @@ public class SimpleHighlighter extends JSONObjectDataComponent implements
                     }
                 }
             }
-
-            // List<EditPart> children = parent.getChildren();
-            // EObject modelElem = ((View) parent.getModel()).getElement();
-            // EObject test =
-            // modelElem.eResource().getEObject(elementURIFragment);
-            // System.out.println(test);
-            // if (modelElem instanceof State) {
-            // State state = (State) modelElem;
-            // for (Transition t : state.getOutgoingTransitions()) {
-            // if (t.equals(t.eResource().getEObject(elementURIFragment))) {
-            // EditPart part = ModelingUtil.getEditPart(t, parent);
-            // // then return
-            // System.out.println(part);
-            // return part;
-            // }
-            // }
-            // }
-            // for (Object child : children) {
-            // if (child instanceof ShapeEditPart) {
-            // View view = (View) ((ShapeEditPart) child).getModel();
-            // EObject modelElement = view.getElement();
-            // if (modelElement.equals(modelElement.eResource()
-            // .getEObject(elementURIFragment))) {
-            // // then return
-            // return (ShapeEditPart) child;
-            // }
-            //
-            // }
-            // // if node was not found yet, search recursively
-            // if (child instanceof EditPart) {
-            // EditPart result = getEditPart(elementURIFragment,
-            // (EditPart) child);
-            // if (result != null) {
-            // return result;
-            // }
-            // }
-            // }
         } catch (Exception e) {
             return null;
         }
