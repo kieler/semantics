@@ -725,7 +725,8 @@ public class Execution extends Job {
 		// remotely by other
 		// plug-in)
 		KiemPlugin.getDefault().setExecution(null);
-		KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
+		KiemPlugin.getDefault().getKIEMViewInstance().updateViewSync();
+		//throw new RuntimeException();
 	}
 
 	// -------------------------------------------------------------------------
