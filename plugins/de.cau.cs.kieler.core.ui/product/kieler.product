@@ -15,6 +15,10 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
    </aboutInfo>
 
    <configIni use="default">
+      <linux>/de.cau.cs.kieler.core.ui/product/config.ini</linux>
+      <macosx>/de.cau.cs.kieler.core.ui/product/config.ini</macosx>
+      <solaris>/de.cau.cs.kieler.core.ui/product/config.ini</solaris>
+      <win32>/de.cau.cs.kieler.core.ui/product/config.ini</win32>
    </configIni>
 
    <launcherArgs>
