@@ -12,50 +12,98 @@
    <feature url="features/de.cau.cs.kieler.kiml_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kiml" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.kiml.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kiml.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.dataflow_0.1.0.qualifier.jar" id="de.cau.cs.kieler.dataflow" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.dataflow.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.dataflow.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.synccharts_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.ksbase_0.1.0.qualifier.jar" id="de.cau.cs.kieler.ksbase" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.ksbase.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.ksbase.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.viewmanagement_0.1.0.qualifier.jar" id="de.cau.cs.kieler.viewmanagement" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.viewmanagement.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.viewmanagement.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.sim.kiem_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sim.kiem" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.sim.kiem.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sim.kiem.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.dependencies_0.1.0.qualifier.jar" id="de.cau.cs.kieler.dependencies" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.dependencies.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.dependencies.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.sim.ptolemy_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.sim.ptolemy.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sim.ptolemy.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.synccharts.sim.ptolemy_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.sim.ptolemy" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.source.sim.ptolemy_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.sim.ptolemy.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.synccharts.textual_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.textual" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.source.textual_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.textual.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.esterel_0.1.0.qualifier.jar" id="de.cau.cs.kieler.esterel" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.esterel.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.esterel.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.krep_0.1.0.qualifier.jar" id="de.cau.cs.kieler.krep" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.krep.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.krep.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.quartz_0.1.0.qualifier.jar" id="de.cau.cs.kieler.quartz" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.quartz.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.quartz.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.sc_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sc" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.sc.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sc.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.kev_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kev" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.kev.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kev.source" version="0.1.0.qualifier">
+      <category name="KIELER sources"/>
+   </feature>
    <feature url="features/net.ogdf.lib_1.0.0.qualifier.jar" id="net.ogdf.lib" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/net.ogdf.lib.source_1.0.0.qualifier.jar" id="net.ogdf.lib.source" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
+      <category name="KIELER sources"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
