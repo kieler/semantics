@@ -514,6 +514,15 @@
         	      <test property="org.eclipse.core.resources.extension" value="kixs"/>
                </and>
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem"/>
+               <and>
+                  <instanceof
+                        value="org.eclipse.core.resources.IFile">
+                  </instanceof>
+                  <test
+                        property="org.eclipse.core.resources.extension"
+                        value="kits">
+                  </test>
+               </and>
             </or>
          </triggerPoints>
          <possibleChildren>
