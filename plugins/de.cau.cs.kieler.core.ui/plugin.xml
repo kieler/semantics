@@ -8,6 +8,15 @@
             id="de.cau.cs.kieler"
             name="KIELER">
       </category>
+      <view
+            allowMultiple="true"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.core.ui.views.BugReportView"
+            icon="icons/kiel_16.gif"
+            id="de.cau.cs.kieler.core.ui.bugReportView"
+            name="Bug Report View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -17,6 +26,10 @@
                id="de.cau.cs.kieler"
                label="KIELER"
                mnemonic="K">
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.bugReport"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -87,6 +100,13 @@
             description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
             id="de.cau.cs.kieler.core.ui.command.removeMarkers"
             name="Remove Problem Markers">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.ui.handler.ReportBugHandler"
+            description="Report a bug in KIELER or make suggestions about possible enhancements."
+            id="de.cau.cs.kieler.core.ui.bugReport"
+            name="Report Bug or Enhancement...">
       </command>
    </extension>
    <extension
