@@ -860,6 +860,38 @@ _case __LABEL__: (void) 0;						\
 #define _setValInit
 #endif
 
+//// MY CODE FOR TESTING ///////////////////////
+
+//! Emission of a valued signal 's', type boolean.
+#define EMITBOOL(s, val) do {						\
+    valSigInt[s] = val;							\
+    trace3t("EMITBOOL:", "emits %s/%d, value %d\n",			\
+	    s2signame[s], s, val)					\
+    _checkEMIT(s)							\
+    signals |= u2b(s);						        \
+  } while (0)
+
+//! Emission of a valued signal 's', type boolean, combined with & .
+#define EMIBOOLAND(s, val) do {					\
+    valSigInt[s] & val;						\
+    trace4t("EMIBOOLAND:", "emits %s/%d, value %d, result %d\n",		\
+	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
+    signals |= u2b(s);						        \
+  } while (0)
+
+//! Emission of a valued signal 's', type boolean, combined with | .
+#define EMIBOOLOR(s, val) do {					\
+    valSigInt[s] | val;						\
+    trace4t("EMIBOOLOR:", "emits %s/%d, value %d, result %d\n",		\
+	    s2signame[s], s, val, valSigInt[s])			\
+    _checkEMIT(s)							\
+    signals |= u2b(s);						        \
+  } while (0)
+
+
+///////////////////////////////////////////////
+
 //! Emission of a valued signal 's', type integer.
 #define EMITINT(s, val) do {						\
     valSigInt[s] = val;							\

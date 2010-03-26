@@ -88,12 +88,13 @@ public final class Helper {
         fillDependencyList(state);
         fillSortedThreadList();
         optimizeSortedStates();
-
+        /*
         printDependencyList();
         printStatePlusTransitionList(sortedStates);
         for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
             printStatePlusTransitionList(spt);
         }
+        */
 
         return sortedStates;
     }
@@ -858,7 +859,9 @@ public final class Helper {
             edgeType = dependency.getDependencyType();
             sourceInt = threadListUnsorted.indexOf(sourceSpt);
             targetInt = threadListUnsorted.indexOf(targetSpt);
-            dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
+            if (dependency.getDependencyType() != CONTROL_FLOW_EDGE) {
+                dependencyGraph.addEdge(sourceInt, targetInt, edgeType);
+            }
         }
 
         // Make a topological sort of the dependency graph.
@@ -957,12 +960,19 @@ public final class Helper {
                     Dependency depOne = new Dependency(spt, optimizedSpt, CONTROL_FLOW_EDGE);
                     Dependency depTwo = new Dependency(optimizedSpt, spt, CONTROL_FLOW_EDGE);
 
-                    if (stateDependencies.contains(depOne) || stateDependencies.contains(depTwo)) {
-                        if (!isSignalDependent(spt.getTransition())
-                                && !hasDependentState(spt.getTransition())) {
-                            sptListTmp.add(spt);
+                    ArrayList<Transition> dependencyTransition = new ArrayList<Transition>();
+                    if (stateDependencies.contains(depOne)) {
+                        dependencyTransition.add(optimizedSpt.getTransition());
+                    } else if (stateDependencies.contains(depTwo)) {
+                        dependencyTransition.add(spt.getTransition());
+                    }
+                    for (Transition transition : dependencyTransition) {
+                        if (!isSignalDependent(transition) && !hasDependentState(transition)) {
                             added = true;
                         }
+                    }
+                    if (added) {
+                        sptListTmp.add(spt);
                     }
                 }
                 tmp.add(sptListTmp);

@@ -40,7 +40,7 @@
 	«ELSEIF this.trigger.metaType == SignalReference-»
 		PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)
 	«ELSE-»
-		/* unknown if request /*
+		/* unknown if request */
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -99,43 +99,29 @@
 «DEFINE signalAndValue FOR Emission-»
 	«IF this.newValue.metaType == synccharts::ComplexExpression-»
 		sig_«this.signal.name», «EXPAND checkExpression FOR this.newValue-»
+	«ELSEIF this.newValue.metaType == synccharts::BooleanValue-»
+		sig_«this.signal.name», «EXPAND getValue FOR this.newValue-»
 	«ELSE-»
 		sig_«this.signal.name», «((IntValue)this.newValue).value-»
 	«ENDIF-»
 «ENDDEFINE»
 
-«DEFINE operatorEQ FOR ComplexExpression-»
-	«EXPAND complexExpression FOR ((ComplexExpression)this.subExpressions.get(0))-» == «((IntValue)this.subExpressions.get(1)).value»
-«ENDDEFINE»
-
 «DEFINE complexExpression FOR ComplexExpression-»
-	«IF  this.operator == OperatorType::ADD || this.operator == OperatorType::SUB || this.operator == OperatorType::MULT || this.operator == OperatorType::DIV || this.operator == OperatorType::MOD-»
-		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
-		«EXPAND syncChartsOpToCOp FOR this.operator-»
-		«EXPAND checkExpression FOR this.subExpressions.get(1)-»
-	«ENDIF-»
 	«IF this.operator == OperatorType::PRE-»
 		«EXPAND preOperator FOR this.subExpressions.get(0)-»
-	«ENDIF»
-	«IF this.operator == OperatorType::EQ-»
-		«EXPAND operatorEQ FOR this-»
-	«ENDIF-»
-	«IF this.operator == OperatorType::AND || this.operator == OperatorType::OR-»
-		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
-		«EXPAND syncChartsOpToCOp FOR this.operator-»
-		«EXPAND checkExpression FOR this.subExpressions.get(1)-»
-	«ENDIF»
-	«IF this.operator == OperatorType::NOT-»
+	«ELSEIF this.operator == OperatorType::NOT-»
 		«EXPAND syncChartsOpToCOp FOR this.operator-»
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
-	«ENDIF»
-	«IF this.operator == OperatorType::VAL-»
+	«ELSEIF this.operator == OperatorType::VAL-»
 		«IF this.parentExpression.operator == OperatorType::PRE-»
 			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 		«ELSE-»
 			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 		«ENDIF-»
-		«REM»VAL(unten)«ENDREM»
+	«ELSE-»
+		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
+		«EXPAND syncChartsOpToCOp FOR this.operator-»
+		«EXPAND checkExpression FOR this.subExpressions.get(1)-»
 	«ENDIF-»
 «ENDDEFINE»
 

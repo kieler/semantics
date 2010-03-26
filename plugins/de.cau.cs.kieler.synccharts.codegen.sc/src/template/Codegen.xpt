@@ -39,8 +39,6 @@
 	
 	int tick(){
 	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
-	/* should move to sc.h ?? */
-	reset();
 «ENDDEFINE»
 
 «DEFINE start FOR Region-»
