@@ -15,7 +15,7 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
    </aboutInfo>
 
    <configIni use="default">
-      <macosx>/de.cau.cs.kieler.core.ui/product/config.ini</macosx>
+      <macosx></macosx>
    </configIni>
 
    <launcherArgs>
