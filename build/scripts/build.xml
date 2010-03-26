@@ -28,6 +28,8 @@
     <property name="doc.libIncludes"                     value="${system.doc.libIncludes}" />
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
     <property name="doc.destination"                     value="doc" />
+    <property name="standard.doc.destination"            value="${doc.destination}" />
+    <property name="custom.doc.destination"              value="${doc.destination}" />
     <property name="doc.doclets"                         value="com.sun.tools.doclets.standard.Standard" />
     <property name="doc.docletPath"                      value="." />
     <property name="doc.excludes"                        value=" "/>
@@ -35,6 +37,7 @@
 
     <property name="plugin"              value=" "/>
     <!-- property name="feature"         value=" "/   # see declaration in call.antRunner -->
+    <property name="customContextQualifier" value=" "/>
     <property name="product"             value=" "/>
     <property name="executables"         value=" "/>
     <property name="checkstyle.excludes" value=" "/>
@@ -151,6 +154,7 @@
             <arg value="-DbuildProperties=${scriptdir}/build.properties" />
                 <!-- the property configuration file
                      examined by build.xml, one of the PDE build scripts -->
+            <arg value="-DcustomContextQualifier=${customContextQualifier}" />
             <arg value="-DupdateSiteCategoryDescriptorJobName=${updateSiteCategoryDescriptorJobName}" />
                 <!-- name of the dedicated import (svn checkout) job -->
             <arg value="-DupdateSiteCategoryDescriptor=${updateSiteCategoryDescriptor}" />
@@ -296,6 +300,10 @@
             <fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
             <fileset dir="${basedir}/update-site/features/" includes="**/*"/>
             <fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
+            <fileset dir="${basedir}/features/" includes="*.source/**/*"/>
+            <fileset dir="${basedir}/plugins/" includes="*.source_*/**/*"/>
+            <dirset  dir="${basedir}/features/" includes="*.source"/>
+            <dirset  dir="${basedir}/plugins/" includes="*.source_*"/>
         </delete>
     </target>
     
@@ -306,11 +314,53 @@
 
         <!-- ${feature} is set here first - ant keeps it in mind as "depends"-called targets
              will be executed in the same property context as calling targets
-             (in contrast ant will loose properties set of target executions called via ant / antcall);
+             (in contrast ant will loose properties set in target executions called via ant / antcall);
              in case of running build.multiple.features ${feature} is pre-setted -->
         <property name="feature" value="${featureParam}" />
+        <property name="individualSourceBundles" value="true" />
 
         <echo message="feature: ${feature}" />
+
+        <!-- for proper source feature generation PDE needs to get a super feature containing
+             the "to be build" feature and the related "to be generated" source feature;
+             therefore we generate the artificial feature de.cau.cs.kieler.buildHelper,
+             and add our feature to be build (${feature});
+             in case we do want to have a source feature we must add the source feature
+             containment reference, too;
+             therefore we need to check the demand for a source feature first;
+             (if regexp pattern doesn't match a line the property won't be set) -->
+
+	<loadfile property="generate.sourcefeature">
+                <fileset file="${basedir}/features/${feature}/build.properties" />
+                <filterchain>
+                    <linecontainsregexp>
+                        <regexp pattern="^\s*generate.feature" />
+                        <!-- ^ : beginning of a line
+                             \s: space / tab / line feed / ... character -->
+                    </linecontainsregexp>
+                </filterchain>
+        </loadfile>
+
+        <mkdir dir="${basedir}/features/de.cau.cs.kieler.buildHelper" />
+        <delete file="${basedir}/features/de.cau.cs.kieler.buildHelper/*" />
+	
+        <!-- dump out the artificial super feature depending on the demand of a soure feature
+             (generate.sourcefeature is set) -->
+        <if>
+            <isset property="generate.sourcefeature" />
+            <then>
+                <concat destfile="${basedir}/features/de.cau.cs.kieler.buildHelper/feature.xml">&lt;feature id=&quot;de.cau.cs.kieler.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${featureParam}&quot; /&gt;${line.separator}    &lt;includes id=&quot;${featureParam}.source&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+            </then>
+            <else>
+                <concat destfile="${basedir}/features/de.cau.cs.kieler.buildHelper/feature.xml">&lt;feature id=&quot;de.cau.cs.kieler.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${featureParam}&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+            </else>
+        </if>
+
+        <!-- copy the original feature's build.properties to the super feature,
+             as generate.feature must be declared there!
+             (will have no effect on ${feature}) -->
+        <copy file="${basedir}/features/${feature}/build.properties"
+              tofile="${basedir}/features/de.cau.cs.kieler.buildHelper/build.properties" overwrite="true" />
 
         <tstamp />
         <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
@@ -321,10 +371,11 @@
         <!-- generate build.xml scripts for feature and plugins -->
         <ant antfile="${genericTargets}" target="generateScript">
             <property name="type" value="feature"/>
-            <property name="id" value="${feature}"/>
+            <!--property name="id" value="${feature}"/-->
+            <property name="id" value="de.cau.cs.kieler.buildHelper"/>
         </ant>
-    </target>    
-
+    </target>
+    
     <!-- =========================================================================================== -->
 
     <target name="editScripts.loadFeatureClasspath" if="eclipse.running"
@@ -507,19 +558,6 @@
         description="target for complete feature building, checking and publishing">
         
         <echo message="Bundles to be build: ${bundles}" />
-        
-        <for param="bundle" list="${bundles}">
-            <sequential>
-                <if>
-                    <available file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
-                    <then>
-                        <copy overwrite="true"
-                              file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" 
-                              tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
-                    </then>
-                </if>    
-            </sequential>
-        </for>
  
         <!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->        
         <ant antfile="build.xml" dir="${basedir}/features/${feature}">
@@ -544,6 +582,34 @@
                  needed by succeeding feature builds while resolving dependencies
                  (jar-ed version is not sufficient) -->        
         </ant>
+        
+        <if>
+            <available file="${basedir}/features/${feature}.source/feature.xml" />
+            <then>
+	        <ant antfile="build.xml" dir="${basedir}/features/${feature}.source">
+                    <property name="javacDebugInfo" value="true" />
+                    <property name="feature.destination" value="${basedir}/update-site/features" />
+                    <property name="plugin.destination" value="${basedir}/update-site/plugins" />
+                    <property name="feature.base" value="${basedir}/update-site/" />
+                    <property name="updateJar.omitRootfiles" value="true" />
+                    <target name="clean" />
+                    <target name="build.update.jar" />
+                </ant>
+            </then>
+        </if>
+
+        <for param="bundle" list="${bundles}">
+            <sequential>
+                <if>
+                    <available file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
+                    <then>
+                        <copy overwrite="true"
+                              file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" 
+                              tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
+                    </then>
+                </if>    
+            </sequential>
+        </for>
 
         <!-- run feature's assemble.p2.xml: generate update site entry -->
         <antcall target="build.updatesiteEntry" />
@@ -553,7 +619,7 @@
                 <if>
                     <available file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup" />
                     <then>
-                        <copy overwrite="true"
+                        <move overwrite="true"
                               file="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.backup"
                               tofile="${basedir}/plugins/@{bundle}/META-INF/MANIFEST.MF" />
                     </then>
@@ -574,7 +640,17 @@
         <property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 
         <echo message="STARTING p2 stuff" />
-        <ant antfile="assemble.${feature}.p2.xml" />
+
+
+        <replaceregexp file="${basedir}/assemble.de.cau.cs.kieler.buildHelper.p2.xml"
+                 match=".*de\.cau\.cs\.kieler\.buildHelper_.*"
+                 replace="" byline="true" />
+        <!-- replace file="${basedir}/assemble.de.cau.cs.kieler.buildHelper.p2.xml"
+                 token="		&lt;customGather dir=&quot;features/de.cau.cs.kieler.buildHelper/&quot; projectName=&quot;de.cau.cs.kieler.buildHelper_1.0.0&quot; propertyName=&quot;feature.base&quot; propertyValue=&quot;$${eclipse.base}&quot; subFolder=&quot;/features&quot; /&gt;"
+                 value="" / -->
+
+        <!-- ant antfile="assemble.${feature}.p2.xml" / -->
+        <ant antfile="assemble.de.cau.cs.kieler.buildHelper.p2.xml" />
     </target>
     
     <!-- =========================================================================================== -->
@@ -628,6 +704,31 @@
             <param name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
         </foreach>
     </target>
+
+    <!-- =========================================================================================== -->
+
+    <target name="build.multiple.updatesiteEntries" if="eclipse.running" depends="init"
+        description="target for complete feature collection building, checking and publishing">
+
+        <condition property="features" value="${featureParam}">
+            <not>
+                <equals arg1="${featureParam}" arg2=" "/>
+            </not>
+        </condition>
+        
+        <condition property="forceContextQualifier" value="${DSTAMP}${TSTAMP}" else="${customContextQualifier}">
+            <equals arg1="${customContextQualifier}" arg2=" "/>
+        </condition>
+
+        <echo message="${features}" />
+
+        <!-- setting the executable flag on launcher binaries
+             CAUTION: foreach is a ant-contrib task declared above! -->
+        <foreach list="${features}" param="feature" target="build.updatesiteEntry">
+            <param name="no.clean" value="true" />
+            <param name="forceContextQualifier" value="v${forceContextQualifier}" />
+        </foreach>
+    </target>
     
     <!-- =========================================================================================== -->
 
@@ -675,6 +776,10 @@
         
         <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
         
+        <!-- to zip the customized config.ini into our product
+             (during update.launcher) its path is determined here -->
+        <dirname property="config.dir" file="${product}" />
+
         <!-- setting the executable flag on launcher binaries
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach param="zipfile" target="update.launcher">
@@ -697,6 +802,7 @@
             <patternset includes="${basename}/${basename}" />
             <patternset includes="${executables}" />
         </unzip>
+	<copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/kieler/configuration/config.ini" overwrite="true" />
         <touch>
             <fileset dir="${basedir}/${buildLabel}/${platform}" />
         </touch>
@@ -704,6 +810,7 @@
             <zipfileset dir="${basedir}/${buildLabel}/${platform}" filemode="755" />
         </zip>
         <delete dir="${basedir}/${buildLabel}/${platform}" />
+
     </target>
     
     <!-- =========================================================================================== -->
