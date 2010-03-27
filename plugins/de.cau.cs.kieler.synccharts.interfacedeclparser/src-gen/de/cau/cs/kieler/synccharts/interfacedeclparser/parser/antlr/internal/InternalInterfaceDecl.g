@@ -234,6 +234,35 @@ ruleStateExtend returns [EObject current=null]
 	    }
 
 )
+))
+    |(	'renaming' 
+    {
+        createLeafNode(grammarAccess.getStateExtendAccess().getRenamingKeyword_5_0(), null); 
+    }
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getStateExtendAccess().getRenamingsRenamingsParserRuleCall_5_1_0(), currentNode); 
+	    }
+		lv_renamings_11_0=ruleRenamings		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getStateExtendRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"renamings",
+	        		lv_renamings_11_0, 
+	        		"Renamings", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
 )))+
 ;
 
@@ -591,6 +620,85 @@ ruleSignals returns [EObject current=null]
 ))*)	';' 
     {
         createLeafNode(grammarAccess.getSignalsAccess().getSemicolonKeyword_1(), null); 
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleRenamings
+entryRuleRenamings returns [EObject current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getRenamingsRule(), currentNode); }
+	 iv_ruleRenamings=ruleRenamings 
+	 { $current=$iv_ruleRenamings.current; } 
+	 EOF 
+;
+
+// Rule Renamings
+ruleRenamings returns [EObject current=null] 
+    @init { @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+    	lastConsumedNode = currentNode;
+    }:
+(((
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getRenamingsAccess().getRenamingsRenamingParserRuleCall_0_0_0(), currentNode); 
+	    }
+		lv_renamings_0_0=ruleRenaming		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRenamingsRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"renamings",
+	        		lv_renamings_0_0, 
+	        		"Renaming", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)(	',' 
+    {
+        createLeafNode(grammarAccess.getRenamingsAccess().getCommaKeyword_0_1_0(), null); 
+    }
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getRenamingsAccess().getRenamingsRenamingParserRuleCall_0_1_1_0(), currentNode); 
+	    }
+		lv_renamings_2_0=ruleRenaming		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRenamingsRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"renamings",
+	        		lv_renamings_2_0, 
+	        		"Renaming", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+))*)	';' 
+    {
+        createLeafNode(grammarAccess.getRenamingsAccess().getSemicolonKeyword_1(), null); 
     }
 )
 ;
@@ -1705,6 +1813,81 @@ ruleVariable returns [EObject current=null]
 
 )
 ))?)
+;
+
+
+
+
+
+// Entry rule entryRuleRenaming
+entryRuleRenaming returns [EObject current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getRenamingRule(), currentNode); }
+	 iv_ruleRenaming=ruleRenaming 
+	 { $current=$iv_ruleRenaming.current; } 
+	 EOF 
+;
+
+// Rule Renaming
+ruleRenaming returns [EObject current=null] 
+    @init { @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+    	lastConsumedNode = currentNode;
+    }:
+((
+(
+		lv_oldID_0_0=RULE_ID
+		{
+			createLeafNode(grammarAccess.getRenamingAccess().getOldIDIDTerminalRuleCall_0_0(), "oldID"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRenamingRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"oldID",
+	        		lv_oldID_0_0, 
+	        		"ID", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)	'/' 
+    {
+        createLeafNode(grammarAccess.getRenamingAccess().getSolidusKeyword_1(), null); 
+    }
+(
+(
+		lv_newID_2_0=RULE_ID
+		{
+			createLeafNode(grammarAccess.getRenamingAccess().getNewIDIDTerminalRuleCall_2_0(), "newID"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRenamingRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"newID",
+	        		lv_newID_2_0, 
+	        		"ID", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+))
 ;
 
 

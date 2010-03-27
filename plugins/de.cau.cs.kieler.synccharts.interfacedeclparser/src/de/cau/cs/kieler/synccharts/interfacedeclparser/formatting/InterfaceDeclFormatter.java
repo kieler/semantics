@@ -39,6 +39,7 @@ public class InterfaceDeclFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap().after(ga.getOutputSignalsAccess().getSemicolonKeyword_1());
         c.setLinewrap().after(ga.getInputSignalsAccess().getSemicolonKeyword_1());
         c.setLinewrap().after(ga.getInOutputSignalsAccess().getSemicolonKeyword_1());
+        c.setLinewrap().after(ga.getRenamingsAccess().getSemicolonKeyword_1());
         
         // break line after region declaration
         c.setLinewrap().after(ga.getRegionSignalDecAccess().getSemicolonKeyword_4());
@@ -48,6 +49,7 @@ public class InterfaceDeclFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(ga.getOutputSignalsAccess().getCommaKeyword_0_1_0());
         c.setNoSpace().before(ga.getInOutputSignalsAccess().getCommaKeyword_0_1_0());
         c.setNoSpace().before(ga.getSignalsAccess().getCommaKeyword_0_1_0());
+        c.setNoSpace().before(ga.getRenamingsAccess().getCommaKeyword_0_1_0());
         c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_2_0_2_0());
         c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_2_1_2_0());
         c.setNoSpace().before(ga.getRegionSignalDecAccess().getCommaKeyword_3_0_0());
@@ -59,6 +61,7 @@ public class InterfaceDeclFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(ga.getOutputSignalsAccess().getSemicolonKeyword_1());
         c.setNoSpace().before(ga.getInOutputSignalsAccess().getSemicolonKeyword_1());
         c.setNoSpace().before(ga.getSignalsAccess().getSemicolonKeyword_1());
+        c.setNoSpace().before(ga.getRenamingsAccess().getSemicolonKeyword_1());
         c.setNoSpace().before(ga.getRegionSignalDecAccess().getSemicolonKeyword_4());
         // as well as colon for regions
         c.setNoSpace().before(ga.getRegionSignalDecAccess().getColonKeyword_1());

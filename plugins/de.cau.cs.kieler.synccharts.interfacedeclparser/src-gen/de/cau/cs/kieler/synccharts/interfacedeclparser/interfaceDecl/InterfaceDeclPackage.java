@@ -114,13 +114,22 @@ public interface InterfaceDeclPackage extends EPackage
   int STATE_EXTEND__SIGNALS = 4;
 
   /**
+   * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_EXTEND__RENAMINGS = 5;
+
+  /**
    * The number of structural features of the '<em>State Extend</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_EXTEND_FEATURE_COUNT = 5;
+  int STATE_EXTEND_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl <em>Region Signal Dec</em>}' class.
@@ -197,6 +206,34 @@ public interface InterfaceDeclPackage extends EPackage
   int SIGNALS_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RenamingsImpl <em>Renamings</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RenamingsImpl
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getRenamings()
+   * @generated
+   */
+  int RENAMINGS = 3;
+
+  /**
+   * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RENAMINGS__RENAMINGS = 0;
+
+  /**
+   * The number of structural features of the '<em>Renamings</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RENAMINGS_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InputSignalsImpl <em>Input Signals</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -204,7 +241,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getInputSignals()
    * @generated
    */
-  int INPUT_SIGNALS = 3;
+  int INPUT_SIGNALS = 4;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -232,7 +269,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getOutputSignals()
    * @generated
    */
-  int OUTPUT_SIGNALS = 4;
+  int OUTPUT_SIGNALS = 5;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -260,7 +297,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getInOutputSignals()
    * @generated
    */
-  int IN_OUTPUT_SIGNALS = 5;
+  int IN_OUTPUT_SIGNALS = 6;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -347,6 +384,17 @@ public interface InterfaceDeclPackage extends EPackage
   EReference getStateExtend_Signals();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRenamings <em>Renamings</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Renamings</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRenamings()
+   * @see #getStateExtend()
+   * @generated
+   */
+  EReference getStateExtend_Renamings();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec <em>Region Signal Dec</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -409,6 +457,27 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    */
   EReference getSignals_Signals();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings <em>Renamings</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Renamings</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings
+   * @generated
+   */
+  EClass getRenamings();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings#getRenamings <em>Renamings</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Renamings</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings#getRenamings()
+   * @see #getRenamings()
+   * @generated
+   */
+  EReference getRenamings_Renamings();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InputSignals <em>Input Signals</em>}'.
@@ -547,6 +616,14 @@ public interface InterfaceDeclPackage extends EPackage
     EReference STATE_EXTEND__SIGNALS = eINSTANCE.getStateExtend_Signals();
 
     /**
+     * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE_EXTEND__RENAMINGS = eINSTANCE.getStateExtend_Renamings();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RegionSignalDecImpl <em>Region Signal Dec</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -597,6 +674,24 @@ public interface InterfaceDeclPackage extends EPackage
      * @generated
      */
     EReference SIGNALS__SIGNALS = eINSTANCE.getSignals_Signals();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RenamingsImpl <em>Renamings</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.RenamingsImpl
+     * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getRenamings()
+     * @generated
+     */
+    EClass RENAMINGS = eINSTANCE.getRenamings();
+
+    /**
+     * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RENAMINGS__RENAMINGS = eINSTANCE.getRenamings_Renamings();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InputSignalsImpl <em>Input Signals</em>}' class.

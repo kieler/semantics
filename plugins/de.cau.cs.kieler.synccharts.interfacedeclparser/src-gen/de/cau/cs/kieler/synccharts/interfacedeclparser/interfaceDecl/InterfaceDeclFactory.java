@@ -53,6 +53,15 @@ public interface InterfaceDeclFactory extends EFactory
   Signals createSignals();
 
   /**
+   * Returns a new object of class '<em>Renamings</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Renamings</em>'.
+   * @generated
+   */
+  Renamings createRenamings();
+
+  /**
    * Returns a new object of class '<em>Input Signals</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

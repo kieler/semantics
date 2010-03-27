@@ -38,11 +38,13 @@ protected class ThisRootNode extends RootToken {
 			case 0: return new StateExtend_Alternatives(this, this, 0, inst);
 			case 1: return new RegionSignalDec_Group(this, this, 1, inst);
 			case 2: return new Signals_Group(this, this, 2, inst);
-			case 3: return new InputSignals_Group(this, this, 3, inst);
-			case 4: return new OutputSignals_Group(this, this, 4, inst);
-			case 5: return new InOutputSignals_Group(this, this, 5, inst);
-			case 6: return new Signal_Alternatives(this, this, 6, inst);
-			case 7: return new Variable_Group(this, this, 7, inst);
+			case 3: return new Renamings_Group(this, this, 3, inst);
+			case 4: return new InputSignals_Group(this, this, 4, inst);
+			case 5: return new OutputSignals_Group(this, this, 5, inst);
+			case 6: return new InOutputSignals_Group(this, this, 6, inst);
+			case 7: return new Signal_Alternatives(this, this, 7, inst);
+			case 8: return new Variable_Group(this, this, 8, inst);
+			case 9: return new Renaming_Group(this, this, 9, inst);
 			default: return null;
 		}	
 	}	
@@ -54,7 +56,7 @@ protected class ThisRootNode extends RootToken {
  * StateExtend:
  *   (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
  *   "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
- *   signals+=Signals)+; 
+ *   signals+=Signals|"renaming" renamings+=Renamings)+; 
  * 
  * //==============================================================================
  * // "Buckets" containing the Signals / Regions with Signals
@@ -64,7 +66,7 @@ protected class ThisRootNode extends RootToken {
 
 // (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
 // "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
-// signals+=Signals)+
+// signals+=Signals|"renaming" renamings+=Renamings)+
 protected class StateExtend_Alternatives extends AlternativesToken {
 
 	public StateExtend_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -84,6 +86,7 @@ protected class StateExtend_Alternatives extends AlternativesToken {
 			case 2: return new StateExtend_Group_2(parent, this, 2, inst);
 			case 3: return new StateExtend_Group_3(parent, this, 3, inst);
 			case 4: return new StateExtend_Group_4(parent, this, 4, inst);
+			case 5: return new StateExtend_Group_5(parent, this, 5, inst);
 			default: return null;
 		}	
 	}	
@@ -521,6 +524,97 @@ protected class StateExtend_SignalsAssignment_4_1 extends AssignmentToken  {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new StateExtend_SignalKeyword_4_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+// "renaming" renamings+=Renamings
+protected class StateExtend_Group_5 extends GroupToken {
+	
+	public StateExtend_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getGroup_5();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_RenamingsAssignment_5_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "renaming"
+protected class StateExtend_RenamingKeyword_5_0 extends KeywordToken  {
+	
+	public StateExtend_RenamingKeyword_5_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getRenamingKeyword_5_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new StateExtend_Alternatives(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
+		}	
+	}	
+		
+}
+
+// renamings+=Renamings
+protected class StateExtend_RenamingsAssignment_5_1 extends AssignmentToken  {
+	
+	public StateExtend_RenamingsAssignment_5_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateExtendAccess().getRenamingsAssignment_5_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("renamings",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("renamings");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getRenamingsRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getStateExtendAccess().getRenamingsRenamingsParserRuleCall_5_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new StateExtend_RenamingKeyword_5_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -1705,6 +1799,227 @@ protected class Signals_SemicolonKeyword_1 extends KeywordToken  {
 
 
 /************ end Rule Signals ****************/
+
+
+/************ begin Rule Renamings ****************
+ *
+ * Renamings:
+ *   (renamings+=Renaming ("," renamings+=Renaming)*) ";";
+ *
+ **/
+
+// (renamings+=Renaming ("," renamings+=Renaming)*) ";"
+protected class Renamings_Group extends GroupToken {
+	
+	public Renamings_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_SemicolonKeyword_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getRenamingsRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// renamings+=Renaming ("," renamings+=Renaming)*
+protected class Renamings_Group_0 extends GroupToken {
+	
+	public Renamings_Group_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getGroup_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_Group_0_1(parent, this, 0, inst);
+			case 1: return new Renamings_RenamingsAssignment_0_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// renamings+=Renaming
+protected class Renamings_RenamingsAssignment_0_0 extends AssignmentToken  {
+	
+	public Renamings_RenamingsAssignment_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getRenamingsAssignment_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renaming_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("renamings",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("renamings");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getRenamingRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRenamingsAccess().getRenamingsRenamingParserRuleCall_0_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			default: return parent.createParentFollower(next, actIndex , index, consumed);
+		}	
+	}	
+}
+
+// ("," renamings+=Renaming)*
+protected class Renamings_Group_0_1 extends GroupToken {
+	
+	public Renamings_Group_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getGroup_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_RenamingsAssignment_0_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class Renamings_CommaKeyword_0_1_0 extends KeywordToken  {
+	
+	public Renamings_CommaKeyword_0_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getCommaKeyword_0_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_Group_0_1(parent, this, 0, inst);
+			case 1: return new Renamings_RenamingsAssignment_0_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// renamings+=Renaming
+protected class Renamings_RenamingsAssignment_0_1_1 extends AssignmentToken  {
+	
+	public Renamings_RenamingsAssignment_0_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getRenamingsAssignment_0_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renaming_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("renamings",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("renamings");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getRenamingRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getRenamingsAccess().getRenamingsRenamingParserRuleCall_0_1_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Renamings_CommaKeyword_0_1_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+// ";"
+protected class Renamings_SemicolonKeyword_1 extends KeywordToken  {
+	
+	public Renamings_SemicolonKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRenamingsAccess().getSemicolonKeyword_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renamings_Group_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+
+/************ end Rule Renamings ****************/
 
 
 /************ begin Rule InputSignals ****************
@@ -4406,5 +4721,132 @@ protected class Variable_HostTypeAssignment_3_1 extends AssignmentToken  {
 
 
 /************ end Rule Variable ****************/
+
+
+/************ begin Rule Renaming ****************
+ *
+ * Renaming returns synccharts::Renaming:
+ *   oldID=ID "/" newID=ID;
+ *
+ **/
+
+// oldID=ID "/" newID=ID
+protected class Renaming_Group extends GroupToken {
+	
+	public Renaming_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getRenamingAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renaming_NewIDAssignment_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getRenamingRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// oldID=ID
+protected class Renaming_OldIDAssignment_0 extends AssignmentToken  {
+	
+	public Renaming_OldIDAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRenamingAccess().getOldIDAssignment_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("oldID",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("oldID");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getRenamingAccess().getOldIDIDTerminalRuleCall_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// "/"
+protected class Renaming_SolidusKeyword_1 extends KeywordToken  {
+	
+	public Renaming_SolidusKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRenamingAccess().getSolidusKeyword_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renaming_OldIDAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// newID=ID
+protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
+	
+	public Renaming_NewIDAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getRenamingAccess().getNewIDAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Renaming_SolidusKeyword_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("newID",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("newID");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getRenamingAccess().getNewIDIDTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule Renaming ****************/
 
 }

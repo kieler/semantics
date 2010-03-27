@@ -29,7 +29,8 @@ StateExtend:
 	("input" "output" (inOutputSignals+=InOutputSignals))  |
 	("output" (outputSignals+=OutputSignals)) |
 	("input" (inputSignals+=InputSignals)) |
-	("signal" (signals+=Signals)) 	
+	("signal" (signals+=Signals)) |
+	("renaming" (renamings+=Renamings)) 	
 	)+
 	;
 
@@ -48,6 +49,10 @@ RegionSignalDec:
 Signals:
 	(signals+=Signal ("," (signals+=Signal))*) ";"
 	;
+	
+Renamings:
+    (renamings+=Renaming ("," (renamings+=Renaming))*) ";"
+    ;
 	
 InputSignals:
 	(signals+=Signal ("," (signals+=Signal))*) ";"
@@ -88,6 +93,11 @@ Variable returns synccharts::Variable:
 	(type=ValueType)?
 	("host" hostType=STRING)?
 ;
+
+Renaming returns synccharts::Renaming: 
+    oldID=ID "/" newID=ID
+;
+
 		
 enum ValueType returns synccharts::ValueType:
 	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 

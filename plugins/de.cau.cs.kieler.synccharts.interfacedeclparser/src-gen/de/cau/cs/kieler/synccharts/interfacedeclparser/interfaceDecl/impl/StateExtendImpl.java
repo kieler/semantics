@@ -10,6 +10,7 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InputSignal
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.OutputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec;
+import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend;
 
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getOutputSignals <em>Output Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getInputSignals <em>Input Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.StateExtendImpl#getRenamings <em>Renamings</em>}</li>
  * </ul>
  * </p>
  *
@@ -95,6 +97,16 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * @ordered
    */
   protected EList<Signals> signals;
+
+  /**
+   * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRenamings()
+   * @generated
+   * @ordered
+   */
+  protected EList<Renamings> renamings;
 
   /**
    * <!-- begin-user-doc -->
@@ -192,6 +204,20 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Renamings> getRenamings()
+  {
+    if (renamings == null)
+    {
+      renamings = new EObjectContainmentEList<Renamings>(Renamings.class, this, InterfaceDeclPackage.STATE_EXTEND__RENAMINGS);
+    }
+    return renamings;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -207,6 +233,8 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
         return ((InternalEList<?>)getInputSignals()).basicRemove(otherEnd, msgs);
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
+      case InterfaceDeclPackage.STATE_EXTEND__RENAMINGS:
+        return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -231,6 +259,8 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
         return getInputSignals();
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         return getSignals();
+      case InterfaceDeclPackage.STATE_EXTEND__RENAMINGS:
+        return getRenamings();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -266,6 +296,10 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signals>)newValue);
         return;
+      case InterfaceDeclPackage.STATE_EXTEND__RENAMINGS:
+        getRenamings().clear();
+        getRenamings().addAll((Collection<? extends Renamings>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -295,6 +329,9 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         getSignals().clear();
         return;
+      case InterfaceDeclPackage.STATE_EXTEND__RENAMINGS:
+        getRenamings().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -319,6 +356,8 @@ public class StateExtendImpl extends MinimalEObjectImpl.Container implements Sta
         return inputSignals != null && !inputSignals.isEmpty();
       case InterfaceDeclPackage.STATE_EXTEND__SIGNALS:
         return signals != null && !signals.isEmpty();
+      case InterfaceDeclPackage.STATE_EXTEND__RENAMINGS:
+        return renamings != null && !renamings.isEmpty();
     }
     return super.eIsSet(featureID);
   }

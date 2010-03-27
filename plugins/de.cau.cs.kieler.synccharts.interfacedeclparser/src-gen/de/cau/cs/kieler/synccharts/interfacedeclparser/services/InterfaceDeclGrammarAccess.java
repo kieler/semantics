@@ -39,11 +39,15 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSignalKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cSignalsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cSignalsSignalsParserRuleCall_4_1_0 = (RuleCall)cSignalsAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cRenamingKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cRenamingsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cRenamingsRenamingsParserRuleCall_5_1_0 = (RuleCall)cRenamingsAssignment_5_1.eContents().get(0);
 		
 		//StateExtend:
 		//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
 		//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
-		//  signals+=Signals)+; 
+		//  signals+=Signals|"renaming" renamings+=Renamings)+; 
 		//
 		////==============================================================================
 		//// "Buckets" containing the Signals / Regions with Signals
@@ -52,7 +56,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 
 		//(regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
 		//"output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
-		//signals+=Signals)+
+		//signals+=Signals|"renaming" renamings+=Renamings)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//regions+=RegionSignalDec
@@ -111,6 +115,18 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Signals
 		public RuleCall getSignalsSignalsParserRuleCall_4_1_0() { return cSignalsSignalsParserRuleCall_4_1_0; }
+
+		//"renaming" renamings+=Renamings
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"renaming"
+		public Keyword getRenamingKeyword_5_0() { return cRenamingKeyword_5_0; }
+
+		//renamings+=Renamings
+		public Assignment getRenamingsAssignment_5_1() { return cRenamingsAssignment_5_1; }
+
+		//Renamings
+		public RuleCall getRenamingsRenamingsParserRuleCall_5_1_0() { return cRenamingsRenamingsParserRuleCall_5_1_0; }
 	}
 
 	public class RegionSignalDecElements extends AbstractParserRuleElementFinder {
@@ -334,6 +350,50 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_0_1_1_0() { return cSignalsSignalParserRuleCall_0_1_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
+	}
+
+	public class RenamingsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Renamings");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Assignment cRenamingsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final RuleCall cRenamingsRenamingParserRuleCall_0_0_0 = (RuleCall)cRenamingsAssignment_0_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
+		private final Keyword cCommaKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
+		private final Assignment cRenamingsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
+		private final RuleCall cRenamingsRenamingParserRuleCall_0_1_1_0 = (RuleCall)cRenamingsAssignment_0_1_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Renamings:
+		//  (renamings+=Renaming ("," renamings+=Renaming)*) ";";
+		public ParserRule getRule() { return rule; }
+
+		//(renamings+=Renaming ("," renamings+=Renaming)*) ";"
+		public Group getGroup() { return cGroup; }
+
+		//renamings+=Renaming ("," renamings+=Renaming)*
+		public Group getGroup_0() { return cGroup_0; }
+
+		//renamings+=Renaming
+		public Assignment getRenamingsAssignment_0_0() { return cRenamingsAssignment_0_0; }
+
+		//Renaming
+		public RuleCall getRenamingsRenamingParserRuleCall_0_0_0() { return cRenamingsRenamingParserRuleCall_0_0_0; }
+
+		//("," renamings+=Renaming)*
+		public Group getGroup_0_1() { return cGroup_0_1; }
+
+		//","
+		public Keyword getCommaKeyword_0_1_0() { return cCommaKeyword_0_1_0; }
+
+		//renamings+=Renaming
+		public Assignment getRenamingsAssignment_0_1_1() { return cRenamingsAssignment_0_1_1; }
+
+		//Renaming
+		public RuleCall getRenamingsRenamingParserRuleCall_0_1_1_0() { return cRenamingsRenamingParserRuleCall_0_1_1_0; }
 
 		//";"
 		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
@@ -924,6 +984,38 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getHostTypeSTRINGTerminalRuleCall_3_1_0() { return cHostTypeSTRINGTerminalRuleCall_3_1_0; }
 	}
+
+	public class RenamingElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Renaming");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOldIDAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOldIDIDTerminalRuleCall_0_0 = (RuleCall)cOldIDAssignment_0.eContents().get(0);
+		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNewIDAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNewIDIDTerminalRuleCall_2_0 = (RuleCall)cNewIDAssignment_2.eContents().get(0);
+		
+		//Renaming returns synccharts::Renaming:
+		//  oldID=ID "/" newID=ID;
+		public ParserRule getRule() { return rule; }
+
+		//oldID=ID "/" newID=ID
+		public Group getGroup() { return cGroup; }
+
+		//oldID=ID
+		public Assignment getOldIDAssignment_0() { return cOldIDAssignment_0; }
+
+		//ID
+		public RuleCall getOldIDIDTerminalRuleCall_0_0() { return cOldIDIDTerminalRuleCall_0_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
+
+		//newID=ID
+		public Assignment getNewIDAssignment_2() { return cNewIDAssignment_2; }
+
+		//ID
+		public RuleCall getNewIDIDTerminalRuleCall_2_0() { return cNewIDIDTerminalRuleCall_2_0; }
+	}
 	
 	
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
@@ -1065,11 +1157,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	private StateExtendElements pStateExtend;
 	private RegionSignalDecElements pRegionSignalDec;
 	private SignalsElements pSignals;
+	private RenamingsElements pRenamings;
 	private InputSignalsElements pInputSignals;
 	private OutputSignalsElements pOutputSignals;
 	private InOutputSignalsElements pInOutputSignals;
 	private SignalElements pSignal;
 	private VariableElements pVariable;
+	private RenamingElements pRenaming;
 	private ValueTypeElements unknownRuleValueType;
 	private CombineOperatorElements unknownRuleCombineOperator;
 	
@@ -1097,7 +1191,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	//StateExtend:
 	//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
 	//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
-	//  signals+=Signals)+; 
+	//  signals+=Signals|"renaming" renamings+=Renamings)+; 
 	//
 	////==============================================================================
 	//// "Buckets" containing the Signals / Regions with Signals
@@ -1130,6 +1224,16 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalsRule() {
 		return getSignalsAccess().getRule();
+	}
+
+	//Renamings:
+	//  (renamings+=Renaming ("," renamings+=Renaming)*) ";";
+	public RenamingsElements getRenamingsAccess() {
+		return (pRenamings != null) ? pRenamings : (pRenamings = new RenamingsElements());
+	}
+	
+	public ParserRule getRenamingsRule() {
+		return getRenamingsAccess().getRule();
 	}
 
 	//InputSignals:
@@ -1198,6 +1302,16 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVariableRule() {
 		return getVariableAccess().getRule();
+	}
+
+	//Renaming returns synccharts::Renaming:
+	//  oldID=ID "/" newID=ID;
+	public RenamingElements getRenamingAccess() {
+		return (pRenaming != null) ? pRenaming : (pRenaming = new RenamingElements());
+	}
+	
+	public ParserRule getRenamingRule() {
+		return getRenamingAccess().getRule();
 	}
 
 	//enum ValueType returns synccharts::ValueType:

@@ -13,6 +13,7 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDe
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.OutputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec;
+import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend;
 
@@ -50,6 +51,13 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * @generated
    */
   private EClass signalsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass renamingsEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -203,6 +211,16 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getStateExtend_Renamings()
+  {
+    return (EReference)stateExtendEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getRegionSignalDec()
   {
     return regionSignalDecEClass;
@@ -256,6 +274,26 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
   public EReference getSignals_Signals()
   {
     return (EReference)signalsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRenamings()
+  {
+    return renamingsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRenamings_Renamings()
+  {
+    return (EReference)renamingsEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -354,6 +392,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
     createEReference(stateExtendEClass, STATE_EXTEND__OUTPUT_SIGNALS);
     createEReference(stateExtendEClass, STATE_EXTEND__INPUT_SIGNALS);
     createEReference(stateExtendEClass, STATE_EXTEND__SIGNALS);
+    createEReference(stateExtendEClass, STATE_EXTEND__RENAMINGS);
 
     regionSignalDecEClass = createEClass(REGION_SIGNAL_DEC);
     createEReference(regionSignalDecEClass, REGION_SIGNAL_DEC__REGION);
@@ -362,6 +401,9 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
 
     signalsEClass = createEClass(SIGNALS);
     createEReference(signalsEClass, SIGNALS__SIGNALS);
+
+    renamingsEClass = createEClass(RENAMINGS);
+    createEReference(renamingsEClass, RENAMINGS__RENAMINGS);
 
     inputSignalsEClass = createEClass(INPUT_SIGNALS);
     createEReference(inputSignalsEClass, INPUT_SIGNALS__SIGNALS);
@@ -413,6 +455,7 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
     initEReference(getStateExtend_OutputSignals(), this.getOutputSignals(), null, "outputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStateExtend_InputSignals(), this.getInputSignals(), null, "inputSignals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStateExtend_Signals(), this.getSignals(), null, "signals", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateExtend_Renamings(), this.getRenamings(), null, "renamings", null, 0, -1, StateExtend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(regionSignalDecEClass, RegionSignalDec.class, "RegionSignalDec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRegionSignalDec_Region(), theSyncchartsPackage.getRegion(), null, "region", null, 0, 1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -421,6 +464,9 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
 
     initEClass(signalsEClass, Signals.class, "Signals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSignals_Signals(), theSyncchartsPackage.getSignal(), null, "signals", null, 0, -1, Signals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(renamingsEClass, Renamings.class, "Renamings", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRenamings_Renamings(), theSyncchartsPackage.getRenaming(), null, "renamings", null, 0, -1, Renamings.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputSignalsEClass, InputSignals.class, "InputSignals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInputSignals_Signals(), theSyncchartsPackage.getSignal(), null, "signals", null, 0, -1, InputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

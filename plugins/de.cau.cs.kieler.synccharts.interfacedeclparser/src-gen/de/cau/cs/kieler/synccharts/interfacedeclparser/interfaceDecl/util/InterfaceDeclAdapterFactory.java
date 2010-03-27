@@ -93,6 +93,11 @@ public class InterfaceDeclAdapterFactory extends AdapterFactoryImpl
         return createSignalsAdapter();
       }
       @Override
+      public Adapter caseRenamings(Renamings object)
+      {
+        return createRenamingsAdapter();
+      }
+      @Override
       public Adapter caseInputSignals(InputSignals object)
       {
         return createInputSignalsAdapter();
@@ -170,6 +175,21 @@ public class InterfaceDeclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSignalsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings <em>Renamings</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings
+   * @generated
+   */
+  public Adapter createRenamingsAdapter()
   {
     return null;
   }

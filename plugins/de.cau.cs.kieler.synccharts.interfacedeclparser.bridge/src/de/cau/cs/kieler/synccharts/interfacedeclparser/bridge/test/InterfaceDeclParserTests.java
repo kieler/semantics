@@ -37,6 +37,7 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Renaming;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -167,6 +168,18 @@ public class InterfaceDeclParserTests {
                 throw new KielerException("Missing var " + prefix + "var"
                         + letter + " in serialized String.");
         }
+    }
+    
+    
+    @Test
+    public void testParseRenaming() throws Exception {
+        parse("renaming a/b;");
+        for (Renaming r : rootState.getRenamings()) {
+            if (r.getOldID().equals("a") && r.getNewID().equals("b"))
+                return;
+        }
+        throw new KielerException(
+                "There should be a renaming a/b, but there is not...");
     }
 
     // TODO: this is not the way

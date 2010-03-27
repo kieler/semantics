@@ -70,6 +70,7 @@ public class InterfaceDeclFactoryImpl extends EFactoryImpl implements InterfaceD
       case InterfaceDeclPackage.STATE_EXTEND: return createStateExtend();
       case InterfaceDeclPackage.REGION_SIGNAL_DEC: return createRegionSignalDec();
       case InterfaceDeclPackage.SIGNALS: return createSignals();
+      case InterfaceDeclPackage.RENAMINGS: return createRenamings();
       case InterfaceDeclPackage.INPUT_SIGNALS: return createInputSignals();
       case InterfaceDeclPackage.OUTPUT_SIGNALS: return createOutputSignals();
       case InterfaceDeclPackage.IN_OUTPUT_SIGNALS: return createInOutputSignals();
@@ -109,6 +110,17 @@ public class InterfaceDeclFactoryImpl extends EFactoryImpl implements InterfaceD
   {
     SignalsImpl signals = new SignalsImpl();
     return signals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Renamings createRenamings()
+  {
+    RenamingsImpl renamings = new RenamingsImpl();
+    return renamings;
   }
 
   /**

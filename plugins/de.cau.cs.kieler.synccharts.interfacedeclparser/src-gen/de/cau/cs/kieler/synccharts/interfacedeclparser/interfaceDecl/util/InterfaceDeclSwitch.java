@@ -116,6 +116,13 @@ public class InterfaceDeclSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case InterfaceDeclPackage.RENAMINGS:
+      {
+        Renamings renamings = (Renamings)theEObject;
+        T result = caseRenamings(renamings);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case InterfaceDeclPackage.INPUT_SIGNALS:
       {
         InputSignals inputSignals = (InputSignals)theEObject;
@@ -185,6 +192,22 @@ public class InterfaceDeclSwitch<T>
    * @generated
    */
   public T caseSignals(Signals object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Renamings</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Renamings</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRenamings(Renamings object)
   {
     return null;
   }

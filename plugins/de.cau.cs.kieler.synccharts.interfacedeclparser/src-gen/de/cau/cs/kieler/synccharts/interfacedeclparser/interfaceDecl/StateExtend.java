@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getOutputSignals <em>Output Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getInputSignals <em>Input Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend#getRenamings <em>Renamings</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,5 +111,21 @@ public interface StateExtend extends EObject
    * @generated
    */
   EList<Signals> getSignals();
+
+  /**
+   * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Renamings</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Renamings</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InterfaceDeclPackage#getStateExtend_Renamings()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Renamings> getRenamings();
 
 } // StateExtend
