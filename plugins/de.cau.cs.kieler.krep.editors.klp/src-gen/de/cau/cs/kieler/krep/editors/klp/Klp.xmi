@@ -20,15 +20,15 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Line"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Group" cardinality="*">
-          <tokens xsi:type="xtext:Assignment" feature="labels" operator="+=">
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Assignment" feature="labels" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value=":"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="instruction" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=":"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="instruction" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Instruction">
@@ -36,15 +36,15 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Instruction"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
-        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Decl">
@@ -52,12 +52,12 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Decl"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" feature="scope" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="scope" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SetClk">
@@ -65,13 +65,13 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//SetClk"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="SETCLK"/>
-        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+        <elements xsi:type="xtext:Keyword" value="SETCLK"/>
+        <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="clk" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="clk" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SetPC">
@@ -79,13 +79,13 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//SetPC"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="SETPC"/>
-        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+        <elements xsi:type="xtext:Keyword" value="SETPC"/>
+        <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="label" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Prio">
@@ -93,13 +93,13 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Prio"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="PRIO"/>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="reg" operator="=">
+        <elements xsi:type="xtext:Keyword" value="PRIO"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="prio" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="prio" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Done">
@@ -107,10 +107,10 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Done"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="DONE"/>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="pc" operator="=">
+        <elements xsi:type="xtext:Keyword" value="DONE"/>
+        <elements xsi:type="xtext:Assignment" feature="pc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Binop">
@@ -118,23 +118,23 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Binop"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" feature="op" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="op" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.15"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="to" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="to" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="arg1" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="arg1" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
-        </tokens>
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Assignment" feature="arg2" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Assignment" feature="arg2" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="val" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="val" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
-          </groups>
-        </tokens>
+          </elements>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Jmp">
@@ -142,10 +142,10 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Jmp"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="JMP"/>
-        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+        <elements xsi:type="xtext:Keyword" value="JMP"/>
+        <elements xsi:type="xtext:Assignment" feature="label" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="CJmp">
@@ -153,15 +153,15 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//CJmp"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" feature="cond" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="cond" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="label" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Move">
@@ -169,20 +169,20 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Move"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
-        </tokens>
-        <tokens xsi:type="xtext:Assignment" feature="to" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="to" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </tokens>
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Assignment" feature="from" operator="=">
+        </elements>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Assignment" feature="from" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="val" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="val" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
-          </groups>
-        </tokens>
+          </elements>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Label">
@@ -206,18 +206,18 @@
         <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/input"/>
           <literal value="INPUT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/output"/>
           <literal value="OUTPUT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/local"/>
           <literal value="LOCAL"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="Operator">
@@ -225,110 +225,110 @@
         <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/add"/>
           <literal value="ADD"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/iadd"/>
           <literal value="IADD"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/sub"/>
           <literal value="SUB"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/mul"/>
           <literal value="MUL"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/div"/>
           <literal value="DIV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/and"/>
           <literal value="AND"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/or"/>
           <literal value="OR"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/xor"/>
           <literal value="XOR"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/lt"/>
           <literal value="LT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/le"/>
           <literal value="LE"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/eq"/>
           <literal value="EQ"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ge"/>
           <literal value="GE"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/gt"/>
           <literal value="GT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/neq"/>
           <literal value="NEQ"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/isub"/>
           <literal value="ISUB"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/imul"/>
           <literal value="IMUL"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/idiv"/>
           <literal value="IDIV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/iand"/>
           <literal value="IAND"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ior"/>
           <literal value="IOR"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ixor"/>
           <literal value="IXOR"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ilt"/>
           <literal value="ILT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ile"/>
           <literal value="ILE"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ieq"/>
           <literal value="IEQ"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ige"/>
           <literal value="IGE"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/igt"/>
           <literal value="IGT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ineq"/>
           <literal value="INEQ"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="JumpKind">
@@ -336,22 +336,22 @@
         <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jt"/>
           <literal value="JT"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jf"/>
           <literal value="JF"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jz"/>
           <literal value="JZ"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jnz"/>
           <literal value="JNZ"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="MoveKind">
@@ -359,30 +359,30 @@
         <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/cmov"/>
           <literal value="CVMOV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/vcmov"/>
           <literal value="VCMOV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/vvmov"/>
           <literal value="VVMOV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/ccmov"/>
           <literal value="CCMOV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/ivmov"/>
           <literal value="IVMOV"/>
-        </groups>
-        <groups xsi:type="xtext:EnumLiteralDeclaration">
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/icmov"/>
           <literal value="ICMOV"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Read">
@@ -390,19 +390,19 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Read"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Assignment" feature="pre" operator="?=">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Assignment" feature="pre" operator="?=">
             <terminal xsi:type="xtext:Keyword" value="pre"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="("/>
-          <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="("/>
+          <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value=")"/>
-        </groups>
-        <groups xsi:type="xtext:Assignment" feature="reg" operator="=">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=")"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="reg" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="INT">
@@ -410,11 +410,11 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Alternatives" cardinality="?">
-          <groups xsi:type="xtext:Keyword" value="+"/>
-          <groups xsi:type="xtext:Keyword" value="-"/>
-        </tokens>
-        <tokens xsi:type="xtext:RuleCall" cardinality="+" rule="/0/@rules.23"/>
+        <elements xsi:type="xtext:Alternatives" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="+"/>
+          <elements xsi:type="xtext:Keyword" value="-"/>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" cardinality="+" rule="/0/@rules.23"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="ID">
@@ -422,15 +422,15 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
-          <groups xsi:type="xtext:Keyword" value="_"/>
-        </tokens>
-        <tokens xsi:type="xtext:Alternatives" cardinality="*">
-          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
-          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
-          <groups xsi:type="xtext:Keyword" value="_"/>
-        </tokens>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+        </elements>
+        <elements xsi:type="xtext:Alternatives" cardinality="*">
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="WS">
@@ -438,10 +438,10 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Keyword" value="&#x9;"/>
-        <groups xsi:type="xtext:Keyword" value=" "/>
-        <groups xsi:type="xtext:Keyword" value="&#xD;"/>
-        <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+        <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+        <elements xsi:type="xtext:Keyword" value=" "/>
+        <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xA;"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="COMMENT">
@@ -449,10 +449,10 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="#"/>
-        <tokens xsi:type="xtext:UntilToken">
+        <elements xsi:type="xtext:Keyword" value="#"/>
+        <elements xsi:type="xtext:UntilToken">
           <terminal xsi:type="xtext:Keyword" value="&#xA;"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="DIGIT">
@@ -469,14 +469,14 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:CharacterRange">
+        <elements xsi:type="xtext:CharacterRange">
           <left value="a"/>
           <right value="z"/>
-        </groups>
-        <groups xsi:type="xtext:CharacterRange">
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
           <left value="A"/>
           <right value="Z"/>
-        </groups>
+        </elements>
       </alternatives>
     </rules>
   </xtext:Grammar>
@@ -489,33 +489,33 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="^"/>
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:CharacterRange">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="^"/>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:CharacterRange">
             <left value="a"/>
             <right value="z"/>
-          </groups>
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
             <left value="A"/>
             <right value="Z"/>
-          </groups>
-          <groups xsi:type="xtext:Keyword" value="_"/>
-        </tokens>
-        <tokens xsi:type="xtext:Alternatives" cardinality="*">
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+        </elements>
+        <elements xsi:type="xtext:Alternatives" cardinality="*">
+          <elements xsi:type="xtext:CharacterRange">
             <left value="a"/>
             <right value="z"/>
-          </groups>
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
             <left value="A"/>
             <right value="Z"/>
-          </groups>
-          <groups xsi:type="xtext:Keyword" value="_"/>
-          <groups xsi:type="xtext:CharacterRange">
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+          <elements xsi:type="xtext:CharacterRange">
             <left value="0"/>
             <right value="9"/>
-          </groups>
-        </tokens>
+          </elements>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="INT">
@@ -532,56 +532,56 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Keyword" value="&quot;"/>
-          <tokens xsi:type="xtext:Alternatives" cardinality="*">
-            <groups xsi:type="xtext:Group">
-              <tokens xsi:type="xtext:Keyword" value="\"/>
-              <tokens xsi:type="xtext:Alternatives">
-                <groups xsi:type="xtext:Keyword" value="b"/>
-                <groups xsi:type="xtext:Keyword" value="t"/>
-                <groups xsi:type="xtext:Keyword" value="n"/>
-                <groups xsi:type="xtext:Keyword" value="f"/>
-                <groups xsi:type="xtext:Keyword" value="r"/>
-                <groups xsi:type="xtext:Keyword" value="&quot;"/>
-                <groups xsi:type="xtext:Keyword" value="'"/>
-                <groups xsi:type="xtext:Keyword" value="\"/>
-              </tokens>
-            </groups>
-            <groups xsi:type="xtext:NegatedToken">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="&quot;"/>
+          <elements xsi:type="xtext:Alternatives" cardinality="*">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Keyword" value="\"/>
+              <elements xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="b"/>
+                <elements xsi:type="xtext:Keyword" value="t"/>
+                <elements xsi:type="xtext:Keyword" value="n"/>
+                <elements xsi:type="xtext:Keyword" value="f"/>
+                <elements xsi:type="xtext:Keyword" value="r"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+              </elements>
+            </elements>
+            <elements xsi:type="xtext:NegatedToken">
               <terminal xsi:type="xtext:Alternatives">
-                <groups xsi:type="xtext:Keyword" value="\"/>
-                <groups xsi:type="xtext:Keyword" value="&quot;"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
               </terminal>
-            </groups>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="&quot;"/>
-        </groups>
-        <groups xsi:type="xtext:Group">
-          <tokens xsi:type="xtext:Keyword" value="'"/>
-          <tokens xsi:type="xtext:Alternatives" cardinality="*">
-            <groups xsi:type="xtext:Group">
-              <tokens xsi:type="xtext:Keyword" value="\"/>
-              <tokens xsi:type="xtext:Alternatives">
-                <groups xsi:type="xtext:Keyword" value="b"/>
-                <groups xsi:type="xtext:Keyword" value="t"/>
-                <groups xsi:type="xtext:Keyword" value="n"/>
-                <groups xsi:type="xtext:Keyword" value="f"/>
-                <groups xsi:type="xtext:Keyword" value="r"/>
-                <groups xsi:type="xtext:Keyword" value="&quot;"/>
-                <groups xsi:type="xtext:Keyword" value="'"/>
-                <groups xsi:type="xtext:Keyword" value="\"/>
-              </tokens>
-            </groups>
-            <groups xsi:type="xtext:NegatedToken">
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="&quot;"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="'"/>
+          <elements xsi:type="xtext:Alternatives" cardinality="*">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Keyword" value="\"/>
+              <elements xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="b"/>
+                <elements xsi:type="xtext:Keyword" value="t"/>
+                <elements xsi:type="xtext:Keyword" value="n"/>
+                <elements xsi:type="xtext:Keyword" value="f"/>
+                <elements xsi:type="xtext:Keyword" value="r"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+              </elements>
+            </elements>
+            <elements xsi:type="xtext:NegatedToken">
               <terminal xsi:type="xtext:Alternatives">
-                <groups xsi:type="xtext:Keyword" value="\"/>
-                <groups xsi:type="xtext:Keyword" value="'"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
               </terminal>
-            </groups>
-          </tokens>
-          <tokens xsi:type="xtext:Keyword" value="'"/>
-        </groups>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="'"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
@@ -589,10 +589,10 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="/*"/>
-        <tokens xsi:type="xtext:UntilToken">
+        <elements xsi:type="xtext:Keyword" value="/*"/>
+        <elements xsi:type="xtext:UntilToken">
           <terminal xsi:type="xtext:Keyword" value="*/"/>
-        </tokens>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
@@ -600,17 +600,17 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="//"/>
-        <tokens xsi:type="xtext:NegatedToken" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value="//"/>
+        <elements xsi:type="xtext:NegatedToken" cardinality="*">
           <terminal xsi:type="xtext:Alternatives">
-            <groups xsi:type="xtext:Keyword" value="&#xA;"/>
-            <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+            <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+            <elements xsi:type="xtext:Keyword" value="&#xD;"/>
           </terminal>
-        </tokens>
-        <tokens xsi:type="xtext:Group" cardinality="?">
-          <tokens xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
-          <tokens xsi:type="xtext:Keyword" value="&#xA;"/>
-        </tokens>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
+          <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="WS">
@@ -618,10 +618,10 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
-        <groups xsi:type="xtext:Keyword" value=" "/>
-        <groups xsi:type="xtext:Keyword" value="&#x9;"/>
-        <groups xsi:type="xtext:Keyword" value="&#xD;"/>
-        <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+        <elements xsi:type="xtext:Keyword" value=" "/>
+        <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xA;"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="ANY_OTHER">

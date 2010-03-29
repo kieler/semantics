@@ -249,16 +249,16 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPcLabelParserRuleCall_1_0 = (RuleCall)cPcAssignment_1.eContents().get(0);
 		
 		//Done returns klp::Done:
-		//  "DONE" pc=Label?;
+		//  "DONE" pc=Label;
 		public ParserRule getRule() { return rule; }
 
-		//"DONE" pc=Label?
+		//"DONE" pc=Label
 		public Group getGroup() { return cGroup; }
 
 		//"DONE"
 		public Keyword getDONEKeyword_0() { return cDONEKeyword_0; }
 
-		//pc=Label?
+		//pc=Label
 		public Assignment getPcAssignment_1() { return cPcAssignment_1; }
 
 		//Label
@@ -1014,7 +1014,7 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Done returns klp::Done:
-	//  "DONE" pc=Label?;
+	//  "DONE" pc=Label;
 	public DoneElements getDoneAccess() {
 		return (pDone != null) ? pDone : (pDone = new DoneElements());
 	}

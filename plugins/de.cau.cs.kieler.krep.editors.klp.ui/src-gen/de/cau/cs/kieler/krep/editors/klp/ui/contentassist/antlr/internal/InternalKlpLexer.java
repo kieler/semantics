@@ -1,8 +1,8 @@
-package de.cau.cs.kieler.krep.editors.klp.contentassist.antlr.internal;
+package de.cau.cs.kieler.krep.editors.klp.ui.contentassist.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import. 
 // Currently there is no other way to specify the superclass for the lexer.
-import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 
 
 import org.antlr.runtime.*;
@@ -75,14 +75,14 @@ public class InternalKlpLexer extends Lexer {
     public InternalKlpLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g"; }
+    public String getGrammarFileName() { return "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g"; }
 
     // $ANTLR start T14
     public final void mT14() throws RecognitionException {
         try {
             int _type = T14;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:10:5: ( 'INPUT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:10:7: 'INPUT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:10:5: ( 'INPUT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:10:7: 'INPUT'
             {
             match("INPUT"); 
 
@@ -100,8 +100,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT15() throws RecognitionException {
         try {
             int _type = T15;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:11:5: ( 'OUTPUT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:11:7: 'OUTPUT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:11:5: ( 'OUTPUT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:11:7: 'OUTPUT'
             {
             match("OUTPUT"); 
 
@@ -119,8 +119,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT16() throws RecognitionException {
         try {
             int _type = T16;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:12:5: ( 'LOCAL' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:12:7: 'LOCAL'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:12:5: ( 'LOCAL' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:12:7: 'LOCAL'
             {
             match("LOCAL"); 
 
@@ -138,8 +138,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT17() throws RecognitionException {
         try {
             int _type = T17;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:13:5: ( 'ADD' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:13:7: 'ADD'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:13:5: ( 'ADD' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:13:7: 'ADD'
             {
             match("ADD"); 
 
@@ -157,8 +157,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT18() throws RecognitionException {
         try {
             int _type = T18;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:14:5: ( 'IADD' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:14:7: 'IADD'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:14:5: ( 'IADD' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:14:7: 'IADD'
             {
             match("IADD"); 
 
@@ -176,8 +176,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT19() throws RecognitionException {
         try {
             int _type = T19;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:15:5: ( 'SUB' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:15:7: 'SUB'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:15:5: ( 'SUB' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:15:7: 'SUB'
             {
             match("SUB"); 
 
@@ -195,8 +195,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT20() throws RecognitionException {
         try {
             int _type = T20;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:16:5: ( 'MUL' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:16:7: 'MUL'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:16:5: ( 'MUL' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:16:7: 'MUL'
             {
             match("MUL"); 
 
@@ -214,8 +214,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT21() throws RecognitionException {
         try {
             int _type = T21;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:17:5: ( 'DIV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:17:7: 'DIV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:17:5: ( 'DIV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:17:7: 'DIV'
             {
             match("DIV"); 
 
@@ -233,8 +233,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT22() throws RecognitionException {
         try {
             int _type = T22;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:18:5: ( 'AND' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:18:7: 'AND'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:18:5: ( 'AND' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:18:7: 'AND'
             {
             match("AND"); 
 
@@ -252,8 +252,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT23() throws RecognitionException {
         try {
             int _type = T23;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:19:5: ( 'OR' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:19:7: 'OR'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:19:5: ( 'OR' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:19:7: 'OR'
             {
             match("OR"); 
 
@@ -271,8 +271,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT24() throws RecognitionException {
         try {
             int _type = T24;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:20:5: ( 'XOR' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:20:7: 'XOR'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:20:5: ( 'XOR' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:20:7: 'XOR'
             {
             match("XOR"); 
 
@@ -290,8 +290,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT25() throws RecognitionException {
         try {
             int _type = T25;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:21:5: ( 'LT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:21:7: 'LT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:21:5: ( 'LT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:21:7: 'LT'
             {
             match("LT"); 
 
@@ -309,8 +309,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT26() throws RecognitionException {
         try {
             int _type = T26;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:22:5: ( 'LE' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:22:7: 'LE'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:22:5: ( 'LE' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:22:7: 'LE'
             {
             match("LE"); 
 
@@ -328,8 +328,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT27() throws RecognitionException {
         try {
             int _type = T27;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:23:5: ( 'EQ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:23:7: 'EQ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:23:5: ( 'EQ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:23:7: 'EQ'
             {
             match("EQ"); 
 
@@ -347,8 +347,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT28() throws RecognitionException {
         try {
             int _type = T28;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:24:5: ( 'GE' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:24:7: 'GE'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:24:5: ( 'GE' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:24:7: 'GE'
             {
             match("GE"); 
 
@@ -366,8 +366,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT29() throws RecognitionException {
         try {
             int _type = T29;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:25:5: ( 'GT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:25:7: 'GT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:25:5: ( 'GT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:25:7: 'GT'
             {
             match("GT"); 
 
@@ -385,8 +385,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT30() throws RecognitionException {
         try {
             int _type = T30;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:26:5: ( 'NEQ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:26:7: 'NEQ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:26:5: ( 'NEQ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:26:7: 'NEQ'
             {
             match("NEQ"); 
 
@@ -404,8 +404,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT31() throws RecognitionException {
         try {
             int _type = T31;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:27:5: ( 'ISUB' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:27:7: 'ISUB'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:27:5: ( 'ISUB' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:27:7: 'ISUB'
             {
             match("ISUB"); 
 
@@ -423,8 +423,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT32() throws RecognitionException {
         try {
             int _type = T32;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:28:5: ( 'IMUL' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:28:7: 'IMUL'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:28:5: ( 'IMUL' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:28:7: 'IMUL'
             {
             match("IMUL"); 
 
@@ -442,8 +442,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT33() throws RecognitionException {
         try {
             int _type = T33;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:29:5: ( 'IDIV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:29:7: 'IDIV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:29:5: ( 'IDIV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:29:7: 'IDIV'
             {
             match("IDIV"); 
 
@@ -461,8 +461,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT34() throws RecognitionException {
         try {
             int _type = T34;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:30:5: ( 'IAND' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:30:7: 'IAND'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:30:5: ( 'IAND' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:30:7: 'IAND'
             {
             match("IAND"); 
 
@@ -480,8 +480,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT35() throws RecognitionException {
         try {
             int _type = T35;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:31:5: ( 'IOR' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:31:7: 'IOR'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:31:5: ( 'IOR' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:31:7: 'IOR'
             {
             match("IOR"); 
 
@@ -499,8 +499,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT36() throws RecognitionException {
         try {
             int _type = T36;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:32:5: ( 'IXOR' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:32:7: 'IXOR'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:32:5: ( 'IXOR' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:32:7: 'IXOR'
             {
             match("IXOR"); 
 
@@ -518,8 +518,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT37() throws RecognitionException {
         try {
             int _type = T37;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:33:5: ( 'ILT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:33:7: 'ILT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:33:5: ( 'ILT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:33:7: 'ILT'
             {
             match("ILT"); 
 
@@ -537,8 +537,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT38() throws RecognitionException {
         try {
             int _type = T38;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:34:5: ( 'ILE' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:34:7: 'ILE'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:34:5: ( 'ILE' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:34:7: 'ILE'
             {
             match("ILE"); 
 
@@ -556,8 +556,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT39() throws RecognitionException {
         try {
             int _type = T39;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:35:5: ( 'IEQ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:35:7: 'IEQ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:35:5: ( 'IEQ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:35:7: 'IEQ'
             {
             match("IEQ"); 
 
@@ -575,8 +575,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT40() throws RecognitionException {
         try {
             int _type = T40;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:36:5: ( 'IGE' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:36:7: 'IGE'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:36:5: ( 'IGE' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:36:7: 'IGE'
             {
             match("IGE"); 
 
@@ -594,8 +594,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT41() throws RecognitionException {
         try {
             int _type = T41;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:37:5: ( 'IGT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:37:7: 'IGT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:37:5: ( 'IGT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:37:7: 'IGT'
             {
             match("IGT"); 
 
@@ -613,8 +613,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT42() throws RecognitionException {
         try {
             int _type = T42;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:38:5: ( 'INEQ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:38:7: 'INEQ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:38:5: ( 'INEQ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:38:7: 'INEQ'
             {
             match("INEQ"); 
 
@@ -632,8 +632,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT43() throws RecognitionException {
         try {
             int _type = T43;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:39:5: ( 'JT' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:39:7: 'JT'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:39:5: ( 'JT' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:39:7: 'JT'
             {
             match("JT"); 
 
@@ -651,8 +651,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT44() throws RecognitionException {
         try {
             int _type = T44;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:40:5: ( 'JF' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:40:7: 'JF'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:40:5: ( 'JF' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:40:7: 'JF'
             {
             match("JF"); 
 
@@ -670,8 +670,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT45() throws RecognitionException {
         try {
             int _type = T45;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:41:5: ( 'JZ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:41:7: 'JZ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:41:5: ( 'JZ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:41:7: 'JZ'
             {
             match("JZ"); 
 
@@ -689,8 +689,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT46() throws RecognitionException {
         try {
             int _type = T46;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:42:5: ( 'JNZ' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:42:7: 'JNZ'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:42:5: ( 'JNZ' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:42:7: 'JNZ'
             {
             match("JNZ"); 
 
@@ -708,8 +708,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT47() throws RecognitionException {
         try {
             int _type = T47;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:43:5: ( 'CVMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:43:7: 'CVMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:43:5: ( 'CVMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:43:7: 'CVMOV'
             {
             match("CVMOV"); 
 
@@ -727,8 +727,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT48() throws RecognitionException {
         try {
             int _type = T48;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:44:5: ( 'VCMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:44:7: 'VCMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:44:5: ( 'VCMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:44:7: 'VCMOV'
             {
             match("VCMOV"); 
 
@@ -746,8 +746,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT49() throws RecognitionException {
         try {
             int _type = T49;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:45:5: ( 'VVMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:45:7: 'VVMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:45:5: ( 'VVMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:45:7: 'VVMOV'
             {
             match("VVMOV"); 
 
@@ -765,8 +765,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT50() throws RecognitionException {
         try {
             int _type = T50;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:46:5: ( 'CCMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:46:7: 'CCMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:46:5: ( 'CCMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:46:7: 'CCMOV'
             {
             match("CCMOV"); 
 
@@ -784,8 +784,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT51() throws RecognitionException {
         try {
             int _type = T51;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:47:5: ( 'IVMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:47:7: 'IVMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:47:5: ( 'IVMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:47:7: 'IVMOV'
             {
             match("IVMOV"); 
 
@@ -803,8 +803,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT52() throws RecognitionException {
         try {
             int _type = T52;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:48:5: ( 'ICMOV' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:48:7: 'ICMOV'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:48:5: ( 'ICMOV' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:48:7: 'ICMOV'
             {
             match("ICMOV"); 
 
@@ -822,8 +822,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT53() throws RecognitionException {
         try {
             int _type = T53;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:49:5: ( ':' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:49:7: ':'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:49:5: ( ':' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:49:7: ':'
             {
             match(':'); 
 
@@ -840,8 +840,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT54() throws RecognitionException {
         try {
             int _type = T54;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:50:5: ( 'SETCLK' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:50:7: 'SETCLK'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:50:5: ( 'SETCLK' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:50:7: 'SETCLK'
             {
             match("SETCLK"); 
 
@@ -859,8 +859,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT55() throws RecognitionException {
         try {
             int _type = T55;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:51:5: ( 'SETPC' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:51:7: 'SETPC'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:51:5: ( 'SETPC' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:51:7: 'SETPC'
             {
             match("SETPC"); 
 
@@ -878,8 +878,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT56() throws RecognitionException {
         try {
             int _type = T56;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:52:5: ( 'PRIO' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:52:7: 'PRIO'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:52:5: ( 'PRIO' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:52:7: 'PRIO'
             {
             match("PRIO"); 
 
@@ -897,8 +897,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT57() throws RecognitionException {
         try {
             int _type = T57;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:53:5: ( 'DONE' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:53:7: 'DONE'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:53:5: ( 'DONE' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:53:7: 'DONE'
             {
             match("DONE"); 
 
@@ -916,8 +916,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT58() throws RecognitionException {
         try {
             int _type = T58;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:54:5: ( 'JMP' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:54:7: 'JMP'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:54:5: ( 'JMP' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:54:7: 'JMP'
             {
             match("JMP"); 
 
@@ -935,8 +935,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT59() throws RecognitionException {
         try {
             int _type = T59;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:55:5: ( '(' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:55:7: '('
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:55:5: ( '(' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:55:7: '('
             {
             match('('); 
 
@@ -953,8 +953,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT60() throws RecognitionException {
         try {
             int _type = T60;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:56:5: ( ')' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:56:7: ')'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:56:5: ( ')' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:56:7: ')'
             {
             match(')'); 
 
@@ -971,8 +971,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mT61() throws RecognitionException {
         try {
             int _type = T61;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:57:5: ( 'pre' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:57:7: 'pre'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:57:5: ( 'pre' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:57:7: 'pre'
             {
             match("pre"); 
 
@@ -990,10 +990,10 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_INT() throws RecognitionException {
         try {
             int _type = RULE_INT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2124:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2124:12: ( '+' | '-' )? ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:12: ( '+' | '-' )? ( RULE_DIGIT )+
             {
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2124:12: ( '+' | '-' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:12: ( '+' | '-' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1002,7 +1002,7 @@ public class InternalKlpLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -1020,7 +1020,7 @@ public class InternalKlpLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2124:23: ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:23: ( RULE_DIGIT )+
             int cnt2=0;
             loop2:
             do {
@@ -1034,7 +1034,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2124:23: RULE_DIGIT
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:23: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -1064,8 +1064,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2126:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2126:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1077,7 +1077,7 @@ public class InternalKlpLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2126:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
             loop3:
             do {
                 int alt3=2;
@@ -1090,7 +1090,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -1125,8 +1125,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2128:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2128:11: ( '\\t' | ' ' | '\\r' | '\\n' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2129:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2129:11: ( '\\t' | ' ' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -1152,11 +1152,11 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2130:14: ( '#' ( options {greedy=false; } : . )* '\\n' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2130:16: '#' ( options {greedy=false; } : . )* '\\n'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:14: ( '#' ( options {greedy=false; } : . )* '\\n' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:16: '#' ( options {greedy=false; } : . )* '\\n'
             {
             match('#'); 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2130:20: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:20: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -1172,7 +1172,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2130:48: .
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:48: .
             	    {
             	    matchAny(); 
 
@@ -1199,8 +1199,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_DIGIT() throws RecognitionException {
         try {
             int _type = RULE_DIGIT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2132:12: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2132:14: '0' .. '9'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2133:12: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2133:14: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1217,8 +1217,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_LETTER() throws RecognitionException {
         try {
             int _type = RULE_LETTER;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2134:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2134:15: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2135:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2135:15: ( 'a' .. 'z' | 'A' .. 'Z' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1244,10 +1244,10 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_STRING() throws RecognitionException {
         try {
             int _type = RULE_STRING;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1259,16 +1259,16 @@ public class InternalKlpLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("2136:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 7, 0, input);
+                    new NoViableAltException("2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 7, 0, input);
 
                 throw nvae;
             }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1284,7 +1284,7 @@ public class InternalKlpLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1301,7 +1301,7 @@ public class InternalKlpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:62: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:62: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1327,10 +1327,10 @@ public class InternalKlpLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop6:
                     do {
                         int alt6=3;
@@ -1346,7 +1346,7 @@ public class InternalKlpLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1363,7 +1363,7 @@ public class InternalKlpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2136:129: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:129: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1405,12 +1405,12 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ML_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2138:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2138:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2138:24: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:24: ( options {greedy=false; } : . )*
             loop8:
             do {
                 int alt8=2;
@@ -1435,7 +1435,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2138:52: .
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:52: .
             	    {
             	    matchAny(); 
 
@@ -1463,12 +1463,12 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop9:
             do {
                 int alt9=2;
@@ -1481,7 +1481,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1502,7 +1502,7 @@ public class InternalKlpLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:40: ( ( '\\r' )? '\\n' )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1511,9 +1511,9 @@ public class InternalKlpLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: ( '\\r' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1522,7 +1522,7 @@ public class InternalKlpLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2140:41: '\\r'
+                            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1552,8 +1552,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ANY_OTHER() throws RecognitionException {
         try {
             int _type = RULE_ANY_OTHER;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2142:16: ( . )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:2142:18: .
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2143:16: ( . )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2143:18: .
             {
             matchAny(); 
 
@@ -1567,7 +1567,7 @@ public class InternalKlpLexer extends Lexer {
     // $ANTLR end RULE_ANY_OTHER
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:8: ( T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | RULE_INT | RULE_ID | RULE_WS | RULE_COMMENT | RULE_DIGIT | RULE_LETTER | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_ANY_OTHER )
+        // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:8: ( T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | RULE_INT | RULE_ID | RULE_WS | RULE_COMMENT | RULE_DIGIT | RULE_LETTER | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_ANY_OTHER )
         int alt12=58;
         int LA12_0 = input.LA(1);
 
@@ -2622,406 +2622,406 @@ public class InternalKlpLexer extends Lexer {
         }
         switch (alt12) {
             case 1 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:10: T14
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:10: T14
                 {
                 mT14(); 
 
                 }
                 break;
             case 2 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:14: T15
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:14: T15
                 {
                 mT15(); 
 
                 }
                 break;
             case 3 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:18: T16
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:18: T16
                 {
                 mT16(); 
 
                 }
                 break;
             case 4 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:22: T17
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:22: T17
                 {
                 mT17(); 
 
                 }
                 break;
             case 5 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:26: T18
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:26: T18
                 {
                 mT18(); 
 
                 }
                 break;
             case 6 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:30: T19
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:30: T19
                 {
                 mT19(); 
 
                 }
                 break;
             case 7 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:34: T20
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:34: T20
                 {
                 mT20(); 
 
                 }
                 break;
             case 8 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:38: T21
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:38: T21
                 {
                 mT21(); 
 
                 }
                 break;
             case 9 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:42: T22
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:42: T22
                 {
                 mT22(); 
 
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:46: T23
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:46: T23
                 {
                 mT23(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:50: T24
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:50: T24
                 {
                 mT24(); 
 
                 }
                 break;
             case 12 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:54: T25
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:54: T25
                 {
                 mT25(); 
 
                 }
                 break;
             case 13 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:58: T26
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:58: T26
                 {
                 mT26(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:62: T27
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:62: T27
                 {
                 mT27(); 
 
                 }
                 break;
             case 15 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:66: T28
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:66: T28
                 {
                 mT28(); 
 
                 }
                 break;
             case 16 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:70: T29
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:70: T29
                 {
                 mT29(); 
 
                 }
                 break;
             case 17 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:74: T30
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:74: T30
                 {
                 mT30(); 
 
                 }
                 break;
             case 18 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:78: T31
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:78: T31
                 {
                 mT31(); 
 
                 }
                 break;
             case 19 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:82: T32
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:82: T32
                 {
                 mT32(); 
 
                 }
                 break;
             case 20 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:86: T33
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:86: T33
                 {
                 mT33(); 
 
                 }
                 break;
             case 21 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:90: T34
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:90: T34
                 {
                 mT34(); 
 
                 }
                 break;
             case 22 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:94: T35
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:94: T35
                 {
                 mT35(); 
 
                 }
                 break;
             case 23 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:98: T36
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:98: T36
                 {
                 mT36(); 
 
                 }
                 break;
             case 24 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:102: T37
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:102: T37
                 {
                 mT37(); 
 
                 }
                 break;
             case 25 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:106: T38
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:106: T38
                 {
                 mT38(); 
 
                 }
                 break;
             case 26 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:110: T39
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:110: T39
                 {
                 mT39(); 
 
                 }
                 break;
             case 27 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:114: T40
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:114: T40
                 {
                 mT40(); 
 
                 }
                 break;
             case 28 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:118: T41
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:118: T41
                 {
                 mT41(); 
 
                 }
                 break;
             case 29 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:122: T42
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:122: T42
                 {
                 mT42(); 
 
                 }
                 break;
             case 30 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:126: T43
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:126: T43
                 {
                 mT43(); 
 
                 }
                 break;
             case 31 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:130: T44
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:130: T44
                 {
                 mT44(); 
 
                 }
                 break;
             case 32 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:134: T45
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:134: T45
                 {
                 mT45(); 
 
                 }
                 break;
             case 33 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:138: T46
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:138: T46
                 {
                 mT46(); 
 
                 }
                 break;
             case 34 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:142: T47
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:142: T47
                 {
                 mT47(); 
 
                 }
                 break;
             case 35 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:146: T48
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:146: T48
                 {
                 mT48(); 
 
                 }
                 break;
             case 36 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:150: T49
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:150: T49
                 {
                 mT49(); 
 
                 }
                 break;
             case 37 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:154: T50
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:154: T50
                 {
                 mT50(); 
 
                 }
                 break;
             case 38 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:158: T51
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:158: T51
                 {
                 mT51(); 
 
                 }
                 break;
             case 39 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:162: T52
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:162: T52
                 {
                 mT52(); 
 
                 }
                 break;
             case 40 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:166: T53
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:166: T53
                 {
                 mT53(); 
 
                 }
                 break;
             case 41 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:170: T54
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:170: T54
                 {
                 mT54(); 
 
                 }
                 break;
             case 42 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:174: T55
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:174: T55
                 {
                 mT55(); 
 
                 }
                 break;
             case 43 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:178: T56
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:178: T56
                 {
                 mT56(); 
 
                 }
                 break;
             case 44 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:182: T57
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:182: T57
                 {
                 mT57(); 
 
                 }
                 break;
             case 45 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:186: T58
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:186: T58
                 {
                 mT58(); 
 
                 }
                 break;
             case 46 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:190: T59
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:190: T59
                 {
                 mT59(); 
 
                 }
                 break;
             case 47 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:194: T60
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:194: T60
                 {
                 mT60(); 
 
                 }
                 break;
             case 48 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:198: T61
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:198: T61
                 {
                 mT61(); 
 
                 }
                 break;
             case 49 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:202: RULE_INT
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:202: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
             case 50 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:211: RULE_ID
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:211: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
             case 51 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:219: RULE_WS
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:219: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
             case 52 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:227: RULE_COMMENT
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:227: RULE_COMMENT
                 {
                 mRULE_COMMENT(); 
 
                 }
                 break;
             case 53 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:240: RULE_DIGIT
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:240: RULE_DIGIT
                 {
                 mRULE_DIGIT(); 
 
                 }
                 break;
             case 54 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:251: RULE_LETTER
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:251: RULE_LETTER
                 {
                 mRULE_LETTER(); 
 
                 }
                 break;
             case 55 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:263: RULE_STRING
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:263: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
             case 56 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:275: RULE_ML_COMMENT
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:275: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
             case 57 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:291: RULE_SL_COMMENT
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:291: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
             case 58 :
-                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/contentassist/antlr/internal/InternalKlp.g:1:307: RULE_ANY_OTHER
+                // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:1:307: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 

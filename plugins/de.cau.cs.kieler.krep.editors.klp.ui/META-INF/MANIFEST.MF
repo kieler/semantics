@@ -7,14 +7,16 @@ Bundle-SymbolicName: de.cau.cs.kieler.krep.editors.klp.ui; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.krep.editors.klp;visibility:=reexport,
- org.eclipse.xtext.ui.core,
- org.eclipse.xtext.ui.common,
+ org.eclipse.xtext.ui,
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.ui,
- org.antlr.runtime
+ org.antlr.runtime,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.krep.editors.klp.contentassist,
- de.cau.cs.kieler.krep.editors.klp.contentassist.antlr
-Bundle-Activator: de.cau.cs.kieler.krep.editors.klp.internal.KlpActivator
+Export-Package: de.cau.cs.kieler.krep.editors.klp.ui.contentassist,
+ de.cau.cs.kieler.krep.editors.klp.ui.contentassist.antlr,
+ de.cau.cs.kieler.krep.editors.klp.ui.contentassist.antlr
+Bundle-Activator: de.cau.cs.kieler.krep.editors.klp.ui.internal.KlpActivator
 Import-Package: org.apache.log4j

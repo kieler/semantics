@@ -9,15 +9,15 @@ options {
 }
 
 @lexer::header {
-package de.cau.cs.kieler.krep.editors.klp.contentassist.antlr.internal;
+package de.cau.cs.kieler.krep.editors.klp.ui.contentassist.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import. 
 // Currently there is no other way to specify the superclass for the lexer.
-import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
 @parser::header {
-package de.cau.cs.kieler.krep.editors.klp.contentassist.antlr.internal; 
+package de.cau.cs.kieler.krep.editors.klp.ui.contentassist.antlr.internal; 
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
-import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.AbstractInternalContentAssistParser;
+import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.AbstractInternalContentAssistParser;
 import de.cau.cs.kieler.krep.editors.klp.services.KlpGrammarAccess;
 
 }
@@ -66,7 +66,7 @@ entryRuleKLP
 ;
 
 // Rule KLP
-ruleKLP 
+ruleKLP
     @init {
 		int stackSize = keepStackSize();
     }
@@ -94,7 +94,7 @@ entryRuleLine
 ;
 
 // Rule Line
-ruleLine 
+ruleLine
     @init {
 		int stackSize = keepStackSize();
     }
@@ -122,7 +122,7 @@ entryRuleInstruction
 ;
 
 // Rule Instruction
-ruleInstruction 
+ruleInstruction
     @init {
 		int stackSize = keepStackSize();
     }
@@ -150,7 +150,7 @@ entryRuleDecl
 ;
 
 // Rule Decl
-ruleDecl 
+ruleDecl
     @init {
 		int stackSize = keepStackSize();
     }
@@ -178,7 +178,7 @@ entryRuleSetClk
 ;
 
 // Rule SetClk
-ruleSetClk 
+ruleSetClk
     @init {
 		int stackSize = keepStackSize();
     }
@@ -206,7 +206,7 @@ entryRuleSetPC
 ;
 
 // Rule SetPC
-ruleSetPC 
+ruleSetPC
     @init {
 		int stackSize = keepStackSize();
     }
@@ -234,7 +234,7 @@ entryRulePrio
 ;
 
 // Rule Prio
-rulePrio 
+rulePrio
     @init {
 		int stackSize = keepStackSize();
     }
@@ -262,7 +262,7 @@ entryRuleDone
 ;
 
 // Rule Done
-ruleDone 
+ruleDone
     @init {
 		int stackSize = keepStackSize();
     }
@@ -290,7 +290,7 @@ entryRuleBinop
 ;
 
 // Rule Binop
-ruleBinop 
+ruleBinop
     @init {
 		int stackSize = keepStackSize();
     }
@@ -318,7 +318,7 @@ entryRuleJmp
 ;
 
 // Rule Jmp
-ruleJmp 
+ruleJmp
     @init {
 		int stackSize = keepStackSize();
     }
@@ -346,7 +346,7 @@ entryRuleCJmp
 ;
 
 // Rule CJmp
-ruleCJmp 
+ruleCJmp
     @init {
 		int stackSize = keepStackSize();
     }
@@ -374,7 +374,7 @@ entryRuleMove
 ;
 
 // Rule Move
-ruleMove 
+ruleMove
     @init {
 		int stackSize = keepStackSize();
     }
@@ -402,7 +402,7 @@ entryRuleLabel
 ;
 
 // Rule Label
-ruleLabel 
+ruleLabel
     @init {
 		int stackSize = keepStackSize();
     }
@@ -430,7 +430,7 @@ entryRuleReg
 ;
 
 // Rule Reg
-ruleReg 
+ruleReg
     @init {
 		int stackSize = keepStackSize();
     }
@@ -458,7 +458,7 @@ entryRuleRead
 ;
 
 // Rule Read
-ruleRead 
+ruleRead
     @init {
 		int stackSize = keepStackSize();
     }
@@ -1327,7 +1327,7 @@ rule__Done__Group__1
 :
 (
 { before(grammarAccess.getDoneAccess().getPcAssignment_1()); }
-(rule__Done__PcAssignment_1)?
+(rule__Done__PcAssignment_1)
 { after(grammarAccess.getDoneAccess().getPcAssignment_1()); }
 )
 
@@ -1652,6 +1652,7 @@ rule__Read__Group_0__3
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 

@@ -78,11 +78,6 @@ public abstract class AbstractKlpRuntimeModule extends DefaultRuntimeModule {
 		return de.cau.cs.kieler.krep.editors.klp.validation.KlpJavaValidator.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
-	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
-		return org.eclipse.xtext.naming.SimpleNameProvider.class;
-	}
-
 	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return de.cau.cs.kieler.krep.editors.klp.scoping.KlpScopeProvider.class;
@@ -96,6 +91,11 @@ public abstract class AbstractKlpRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.generator.scoping.ImportURIScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return org.eclipse.xtext.scoping.impl.ImportUriGlobalScopeProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
+	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return org.eclipse.xtext.naming.SimpleNameProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment

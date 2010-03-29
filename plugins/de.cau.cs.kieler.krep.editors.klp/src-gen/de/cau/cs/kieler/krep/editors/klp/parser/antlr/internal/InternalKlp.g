@@ -56,7 +56,12 @@ import de.cau.cs.kieler.krep.editors.klp.services.KlpGrammarAccess;
     @Override
     protected String getFirstRuleName() {
     	return "KLP";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected KlpGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 
@@ -643,7 +648,7 @@ ruleDone returns [EObject current=null]
 	    }
 
 )
-)?)
+))
 ;
 
 
