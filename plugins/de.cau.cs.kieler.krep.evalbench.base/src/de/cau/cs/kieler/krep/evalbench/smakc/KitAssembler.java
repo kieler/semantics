@@ -109,8 +109,6 @@ public class KitAssembler implements IAssembler {
             writer.close();
             // execute external assembler program
             final String fileName = kitFile.getName();
-            // final String filePrefix = fileName.substring(0, fileName
-            // .lastIndexOf('.'));
             final String[] command = { "/home/esterel/bin/smakc", fileName };
             final Process process = Runtime.getRuntime().exec(command, null,
                     kitFile.getParentFile());
