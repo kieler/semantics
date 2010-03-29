@@ -42,6 +42,6 @@ Import-Package: de.cau.cs.kieler.esterel.cec,
  org.eclipse.xpand2,
  org.eclipse.xpand2.output,
  org.eclipse.xtend.typesystem.emf,
- org.eclipse.xtext.ui.core.editor,
- org.eclipse.xtext.ui.core.editor.model
+ org.eclipse.xtext.ui.editor,
+ org.eclipse.xtext.ui.editor.model
 
