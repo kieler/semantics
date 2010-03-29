@@ -62,12 +62,17 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
         @Override
         protected String getFirstRuleName() {
         	return "Trace";	
-       	} 
+       	}
+       	
+       	@Override
+       	protected RifGrammarAccess getGrammarAccess() {
+       		return grammarAccess;
+       	}
 
 
 
     // $ANTLR start entryRuleTrace
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:72:1: entryRuleTrace returns [EObject current=null] : iv_ruleTrace= ruleTrace EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:77:1: entryRuleTrace returns [EObject current=null] : iv_ruleTrace= ruleTrace EOF ;
     public final EObject entryRuleTrace() throws RecognitionException {
         EObject current = null;
 
@@ -75,8 +80,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:73:2: (iv_ruleTrace= ruleTrace EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:74:2: iv_ruleTrace= ruleTrace EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:78:2: (iv_ruleTrace= ruleTrace EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:79:2: iv_ruleTrace= ruleTrace EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTraceRule(), currentNode); 
             pushFollow(FOLLOW_ruleTrace_in_entryRuleTrace75);
@@ -102,7 +107,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrace
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:81:1: ruleTrace returns [EObject current=null] : ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:86:1: ruleTrace returns [EObject current=null] : ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? ) ;
     public final EObject ruleTrace() throws RecognitionException {
         EObject current = null;
 
@@ -118,17 +123,17 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:86:6: ( ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:87:1: ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:91:6: ( ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:92:1: ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:87:1: ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:87:2: RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )?
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:92:1: ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:92:2: RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )?
             {
             match(input,RULE_INPUTS,FOLLOW_RULE_INPUTS_in_ruleTrace119); 
              
                 createLeafNode(grammarAccess.getTraceAccess().getINPUTSTerminalRuleCall_0(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:91:1: ( (lv_inputs_1_0= ruledecl ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:96:1: ( (lv_inputs_1_0= ruledecl ) )*
             loop1:
             do {
                 int alt1=2;
@@ -141,10 +146,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:92:1: (lv_inputs_1_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:97:1: (lv_inputs_1_0= ruledecl )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:92:1: (lv_inputs_1_0= ruledecl )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:93:3: lv_inputs_1_0= ruledecl
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:97:1: (lv_inputs_1_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:98:3: lv_inputs_1_0= ruledecl
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getInputsDeclParserRuleCall_1_0(), currentNode); 
@@ -190,7 +195,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
              
                 createLeafNode(grammarAccess.getTraceAccess().getOUTPUTSTerminalRuleCall_3(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:123:1: ( (lv_outputs_4_0= ruledecl ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:128:1: ( (lv_outputs_4_0= ruledecl ) )*
             loop2:
             do {
                 int alt2=2;
@@ -203,10 +208,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:124:1: (lv_outputs_4_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:129:1: (lv_outputs_4_0= ruledecl )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:124:1: (lv_outputs_4_0= ruledecl )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:125:3: lv_outputs_4_0= ruledecl
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:129:1: (lv_outputs_4_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:130:3: lv_outputs_4_0= ruledecl
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getOutputsDeclParserRuleCall_4_0(), currentNode); 
@@ -252,7 +257,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
              
                 createLeafNode(grammarAccess.getTraceAccess().getLOCALSTerminalRuleCall_6(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:155:1: ( (lv_local_7_0= ruledecl ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:160:1: ( (lv_local_7_0= ruledecl ) )*
             loop3:
             do {
                 int alt3=2;
@@ -265,10 +270,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:156:1: (lv_local_7_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:161:1: (lv_local_7_0= ruledecl )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:156:1: (lv_local_7_0= ruledecl )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:157:3: lv_local_7_0= ruledecl
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:161:1: (lv_local_7_0= ruledecl )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:162:3: lv_local_7_0= ruledecl
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getLocalDeclParserRuleCall_7_0(), currentNode); 
@@ -310,7 +315,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getTraceAccess().getCommercialAtNumberSignKeyword_8(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:183:1: ( (lv_tick_9_0= ruleTick ) )+
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:188:1: ( (lv_tick_9_0= ruleTick ) )+
             int cnt4=0;
             loop4:
             do {
@@ -324,10 +329,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:184:1: (lv_tick_9_0= ruleTick )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:189:1: (lv_tick_9_0= ruleTick )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:184:1: (lv_tick_9_0= ruleTick )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:185:3: lv_tick_9_0= ruleTick
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:189:1: (lv_tick_9_0= ruleTick )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:190:3: lv_tick_9_0= ruleTick
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTraceAccess().getTickTickParserRuleCall_9_0(), currentNode); 
@@ -369,7 +374,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 cnt4++;
             } while (true);
 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:207:3: ( ruleStatus )?
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:212:3: ( ruleStatus )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -378,7 +383,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
             }
             switch (alt5) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:207:4: ruleStatus
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:212:4: ruleStatus
                     {
                     pushFollow(FOLLOW_ruleStatus_in_ruleTrace262);
                     ruleStatus();
@@ -413,7 +418,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuledecl
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:215:1: entryRuledecl returns [EObject current=null] : iv_ruledecl= ruledecl EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:220:1: entryRuledecl returns [EObject current=null] : iv_ruledecl= ruledecl EOF ;
     public final EObject entryRuledecl() throws RecognitionException {
         EObject current = null;
 
@@ -421,8 +426,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:216:2: (iv_ruledecl= ruledecl EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:217:2: iv_ruledecl= ruledecl EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:221:2: (iv_ruledecl= ruledecl EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:222:2: iv_ruledecl= ruledecl EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDeclRule(), currentNode); 
             pushFollow(FOLLOW_ruledecl_in_entryRuledecl292);
@@ -448,7 +453,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruledecl
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:224:1: ruledecl returns [EObject current=null] : ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:229:1: ruledecl returns [EObject current=null] : ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) ) ;
     public final EObject ruledecl() throws RecognitionException {
         EObject current = null;
 
@@ -459,17 +464,17 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:229:6: ( ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:230:1: ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:234:6: ( ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:235:1: ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:230:1: ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:230:2: ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:235:1: ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:235:2: ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:230:2: ( (lv_name_0_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:231:1: (lv_name_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:235:2: ( (lv_name_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:236:1: (lv_name_0_0= RULE_STRING )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:231:1: (lv_name_0_0= RULE_STRING )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:232:3: lv_name_0_0= RULE_STRING
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:236:1: (lv_name_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:237:3: lv_name_0_0= RULE_STRING
             {
             lv_name_0_0=(Token)input.LT(1);
             match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruledecl344); 
@@ -502,11 +507,11 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getDeclAccess().getColonKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:258:1: ( (lv_type_2_0= ruleType ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:259:1: (lv_type_2_0= ruleType )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:263:1: ( (lv_type_2_0= ruleType ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:264:1: (lv_type_2_0= ruleType )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:259:1: (lv_type_2_0= ruleType )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:260:3: lv_type_2_0= ruleType
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:264:1: (lv_type_2_0= ruleType )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:265:3: lv_type_2_0= ruleType
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDeclAccess().getTypeTypeParserRuleCall_2_0(), currentNode); 
@@ -561,7 +566,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleType
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:290:1: entryRuleType returns [String current=null] : iv_ruleType= ruleType EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:295:1: entryRuleType returns [String current=null] : iv_ruleType= ruleType EOF ;
     public final String entryRuleType() throws RecognitionException {
         String current = null;
 
@@ -569,8 +574,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:291:2: (iv_ruleType= ruleType EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:292:2: iv_ruleType= ruleType EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:296:2: (iv_ruleType= ruleType EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:297:2: iv_ruleType= ruleType EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTypeRule(), currentNode); 
             pushFollow(FOLLOW_ruleType_in_entryRuleType417);
@@ -596,7 +601,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleType
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:299:1: ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'bool' | kw= 'int' ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:304:1: ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'bool' | kw= 'int' ) ;
     public final AntlrDatatypeRuleToken ruleType() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -605,10 +610,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:304:6: ( (kw= 'bool' | kw= 'int' ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:305:1: (kw= 'bool' | kw= 'int' )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:309:6: ( (kw= 'bool' | kw= 'int' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:310:1: (kw= 'bool' | kw= 'int' )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:305:1: (kw= 'bool' | kw= 'int' )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:310:1: (kw= 'bool' | kw= 'int' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -620,13 +625,13 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("305:1: (kw= 'bool' | kw= 'int' )", 6, 0, input);
+                    new NoViableAltException("310:1: (kw= 'bool' | kw= 'int' )", 6, 0, input);
 
                 throw nvae;
             }
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:306:2: kw= 'bool'
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:311:2: kw= 'bool'
                     {
                     kw=(Token)input.LT(1);
                     match(input,13,FOLLOW_13_in_ruleType466); 
@@ -638,7 +643,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:313:2: kw= 'int'
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:318:2: kw= 'int'
                     {
                     kw=(Token)input.LT(1);
                     match(input,14,FOLLOW_14_in_ruleType485); 
@@ -672,7 +677,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTick
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:326:1: entryRuleTick returns [EObject current=null] : iv_ruleTick= ruleTick EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:331:1: entryRuleTick returns [EObject current=null] : iv_ruleTick= ruleTick EOF ;
     public final EObject entryRuleTick() throws RecognitionException {
         EObject current = null;
 
@@ -680,8 +685,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:327:2: (iv_ruleTick= ruleTick EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:328:2: iv_ruleTick= ruleTick EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:332:2: (iv_ruleTick= ruleTick EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:333:2: iv_ruleTick= ruleTick EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTickRule(), currentNode); 
             pushFollow(FOLLOW_ruleTick_in_entryRuleTick525);
@@ -707,7 +712,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTick
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:335:1: ruleTick returns [EObject current=null] : ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:340:1: ruleTick returns [EObject current=null] : ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* ) ;
     public final EObject ruleTick() throws RecognitionException {
         EObject current = null;
 
@@ -722,14 +727,14 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:340:6: ( ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:341:1: ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:345:6: ( ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:346:1: ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:341:1: ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:341:2: () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:346:1: ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:346:2: () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )*
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:341:2: ()
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:342:5: 
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:346:2: ()
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:347:5: 
             {
              
                     temp=factory.create(grammarAccess.getTickAccess().getTickAction_0().getType().getClassifier());
@@ -748,11 +753,11 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getTickAccess().getStepKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:356:1: ( (lv_nr_2_0= RULE_INT ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:357:1: (lv_nr_2_0= RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:361:1: ( (lv_nr_2_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:362:1: (lv_nr_2_0= RULE_INT )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:357:1: (lv_nr_2_0= RULE_INT )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:358:3: lv_nr_2_0= RULE_INT
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:362:1: (lv_nr_2_0= RULE_INT )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:363:3: lv_nr_2_0= RULE_INT
             {
             lv_nr_2_0=(Token)input.LT(1);
             match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleTick596); 
@@ -781,7 +786,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:380:2: ( (lv_input_3_0= ruleData ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:385:2: ( (lv_input_3_0= ruleData ) )*
             loop7:
             do {
                 int alt7=2;
@@ -794,10 +799,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:381:1: (lv_input_3_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:386:1: (lv_input_3_0= ruleData )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:381:1: (lv_input_3_0= ruleData )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:382:3: lv_input_3_0= ruleData
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:386:1: (lv_input_3_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:387:3: lv_input_3_0= ruleData
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTickAccess().getInputDataParserRuleCall_3_0(), currentNode); 
@@ -839,7 +844,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getTickAccess().getOutsKeyword_4(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:408:1: ( (lv_output_5_0= ruleData ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:413:1: ( (lv_output_5_0= ruleData ) )*
             loop8:
             do {
                 int alt8=2;
@@ -852,10 +857,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:409:1: (lv_output_5_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:414:1: (lv_output_5_0= ruleData )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:409:1: (lv_output_5_0= ruleData )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:410:3: lv_output_5_0= ruleData
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:414:1: (lv_output_5_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:415:3: lv_output_5_0= ruleData
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTickAccess().getOutputDataParserRuleCall_5_0(), currentNode); 
@@ -897,7 +902,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getTickAccess().getLocsKeyword_6(), null); 
                 
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:436:1: ( (lv_local_7_0= ruleData ) )*
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:441:1: ( (lv_local_7_0= ruleData ) )*
             loop9:
             do {
                 int alt9=2;
@@ -910,10 +915,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:437:1: (lv_local_7_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:442:1: (lv_local_7_0= ruleData )
             	    {
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:437:1: (lv_local_7_0= ruleData )
-            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:438:3: lv_local_7_0= ruleData
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:442:1: (lv_local_7_0= ruleData )
+            	    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:443:3: lv_local_7_0= ruleData
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTickAccess().getLocalDataParserRuleCall_7_0(), currentNode); 
@@ -974,7 +979,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleData
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:468:1: entryRuleData returns [EObject current=null] : iv_ruleData= ruleData EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:473:1: entryRuleData returns [EObject current=null] : iv_ruleData= ruleData EOF ;
     public final EObject entryRuleData() throws RecognitionException {
         EObject current = null;
 
@@ -982,8 +987,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:469:2: (iv_ruleData= ruleData EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:470:2: iv_ruleData= ruleData EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:474:2: (iv_ruleData= ruleData EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:475:2: iv_ruleData= ruleData EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataRule(), currentNode); 
             pushFollow(FOLLOW_ruleData_in_entryRuleData723);
@@ -1009,7 +1014,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleData
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:477:1: ruleData returns [EObject current=null] : ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:482:1: ruleData returns [EObject current=null] : ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) ;
     public final EObject ruleData() throws RecognitionException {
         EObject current = null;
 
@@ -1020,10 +1025,10 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:482:6: ( ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:487:6: ( ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:488:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:488:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )
             int alt10=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -1043,20 +1048,20 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("483:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )", 10, 0, input);
+                    new NoViableAltException("488:1: ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) )", 10, 0, input);
 
                 throw nvae;
             }
 
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_val_0_0= RULE_INT ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:488:2: ( (lv_val_0_0= RULE_INT ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:483:2: ( (lv_val_0_0= RULE_INT ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_val_0_0= RULE_INT )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:488:2: ( (lv_val_0_0= RULE_INT ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:489:1: (lv_val_0_0= RULE_INT )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:484:1: (lv_val_0_0= RULE_INT )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:485:3: lv_val_0_0= RULE_INT
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:489:1: (lv_val_0_0= RULE_INT )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:490:3: lv_val_0_0= RULE_INT
                     {
                     lv_val_0_0=(Token)input.LT(1);
                     match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleData775); 
@@ -1089,13 +1094,13 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:508:6: ( (lv_true_1_0= 'T' ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:513:6: ( (lv_true_1_0= 'T' ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:508:6: ( (lv_true_1_0= 'T' ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:509:1: (lv_true_1_0= 'T' )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:513:6: ( (lv_true_1_0= 'T' ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:514:1: (lv_true_1_0= 'T' )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:509:1: (lv_true_1_0= 'T' )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:510:3: lv_true_1_0= 'T'
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:514:1: (lv_true_1_0= 'T' )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:515:3: lv_true_1_0= 'T'
                     {
                     lv_true_1_0=(Token)input.LT(1);
                     match(input,18,FOLLOW_18_in_ruleData804); 
@@ -1124,13 +1129,13 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:530:6: ( (lv_false_2_0= 'F' ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:535:6: ( (lv_false_2_0= 'F' ) )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:530:6: ( (lv_false_2_0= 'F' ) )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:531:1: (lv_false_2_0= 'F' )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:535:6: ( (lv_false_2_0= 'F' ) )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:536:1: (lv_false_2_0= 'F' )
                     {
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:531:1: (lv_false_2_0= 'F' )
-                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:532:3: lv_false_2_0= 'F'
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:536:1: (lv_false_2_0= 'F' )
+                    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:537:3: lv_false_2_0= 'F'
                     {
                     lv_false_2_0=(Token)input.LT(1);
                     match(input,19,FOLLOW_19_in_ruleData841); 
@@ -1181,7 +1186,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleStatus
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:559:1: entryRuleStatus returns [String current=null] : iv_ruleStatus= ruleStatus EOF ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:564:1: entryRuleStatus returns [String current=null] : iv_ruleStatus= ruleStatus EOF ;
     public final String entryRuleStatus() throws RecognitionException {
         String current = null;
 
@@ -1189,8 +1194,8 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:560:2: (iv_ruleStatus= ruleStatus EOF )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:561:2: iv_ruleStatus= ruleStatus EOF
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:565:2: (iv_ruleStatus= ruleStatus EOF )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:566:2: iv_ruleStatus= ruleStatus EOF
             {
              currentNode = createCompositeNode(grammarAccess.getStatusRule(), currentNode); 
             pushFollow(FOLLOW_ruleStatus_in_entryRuleStatus891);
@@ -1216,7 +1221,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleStatus
-    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:568:1: ruleStatus returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' ) ;
+    // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:573:1: ruleStatus returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' ) ;
     public final AntlrDatatypeRuleToken ruleStatus() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -1227,11 +1232,11 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:573:6: ( (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' ) )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:574:1: (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:578:6: ( (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' ) )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:579:1: (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' )
             {
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:574:1: (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' )
-            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:575:2: kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.'
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:579:1: (kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.' )
+            // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:580:2: kw= 'The' kw= 'execution' kw= 'lasted' this_INT_3= RULE_INT kw= '.' this_INT_5= RULE_INT kw= 'second.'
             {
             kw=(Token)input.LT(1);
             match(input,20,FOLLOW_20_in_ruleStatus940); 

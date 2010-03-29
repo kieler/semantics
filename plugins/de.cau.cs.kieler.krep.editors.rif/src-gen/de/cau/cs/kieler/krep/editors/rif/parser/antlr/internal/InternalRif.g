@@ -55,7 +55,12 @@ import de.cau.cs.kieler.krep.editors.rif.services.RifGrammarAccess;
     @Override
     protected String getFirstRuleName() {
     	return "Trace";	
-   	} 
+   	}
+   	
+   	@Override
+   	protected RifGrammarAccess getGrammarAccess() {
+   		return grammarAccess;
+   	}
 }
 
 @rulecatch { 
