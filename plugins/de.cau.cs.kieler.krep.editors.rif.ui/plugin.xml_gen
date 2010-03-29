@@ -6,7 +6,7 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.XtextEditor"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="rif"
@@ -17,8 +17,8 @@
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclarationHandler"
-            commandId="org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclaration">
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
                     definitionId="de.cau.cs.kieler.krep.editors.rif.Rif.Editor.opened">
@@ -26,7 +26,7 @@
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.handler.ValidateActionHandler"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
             commandId="de.cau.cs.kieler.krep.editors.rif.Rif.validate">
          <activeWhen>
             <reference
@@ -40,7 +40,7 @@
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
-                    <test property="org.eclipse.xtext.ui.core.editor.XtextEditor.languageName" 
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
                         value="de.cau.cs.kieler.krep.editors.rif.Rif" 
                         forcePluginActivation="true"/>
                 </with>        
@@ -50,21 +50,21 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="de.cau.cs.kieler.krep.editors.rif.Rif"
             name="Rif">
             <keywordReference id="de.cau.cs.kieler.krep.editors.rif.ui.keyword_Rif"/>
         </page>
         <page
             category="de.cau.cs.kieler.krep.editors.rif.Rif"
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
             id="de.cau.cs.kieler.krep.editors.rif.Rif.coloring"
             name="Syntax Coloring">
             <keywordReference id="de.cau.cs.kieler.krep.editors.rif.ui.keyword_Rif"/>
         </page>
         <page
             category="de.cau.cs.kieler.krep.editors.rif.Rif"
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.templates.XtextTemplatePreferencePage"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
             id="de.cau.cs.kieler.krep.editors.rif.Rif.templates"
             name="Templates">
             <keywordReference id="de.cau.cs.kieler.krep.editors.rif.ui.keyword_Rif"/>
@@ -101,7 +101,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
-			<command commandId="org.eclipse.xtext.ui.core.editor.FindReferences">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
                 	<reference definitionId="de.cau.cs.kieler.krep.editors.rif.Rif.Editor.opened">
                 	</reference>
@@ -111,8 +111,8 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.findrefs.FindReferencesHandler"
-            commandId="org.eclipse.xtext.ui.core.editor.FindReferences">
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
                     definitionId="de.cau.cs.kieler.krep.editors.rif.Rif.Editor.opened">
@@ -126,13 +126,13 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="rif">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.krep.editors.rif.RifExecutableExtensionFactory:org.eclipse.xtext.ui.core.resource.IResourceUIServiceProvider"
+            class="de.cau.cs.kieler.krep.editors.rif.ui.RifExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="rif">
         </resourceServiceProvider>
     </extension>
