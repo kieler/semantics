@@ -641,9 +641,11 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     
     dump("REGIONS COUNT:" + mainRegion.innerStates.get(0).regions.size) ->
   	
-
-   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
-   												.select(e|e.isLocal()).name) ->
+// FIXME: changed to test if SRDirector is ok
+//   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
+//   												.select(e|e.isLocal()).name) ->
+   	this.createSRDirector(mainRegion.innerStates.get(0).signals
+  												.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
@@ -1245,7 +1247,10 @@ create EntityType this createMacroStateRefinementEntity(
 	   									 state.parentRegion, 
 	   									 getMovedSignalNames()) : null ->
    	//create SyncChartDirector
-   	this.createSyncChartDirector(getMovedSignalNames()) ->
+// FIXME: changed to test if SRDirector is ok
+//   	this.createSyncChartDirector(getMovedSignalNames()) ->
+   	this.createSRDirector(getMovedSignalNames()) ->
+
 //   	//add termination signal
 //   	this.addTerminationSignalToModalController(modalModel, state) ->
 //   	//add KielerNormalTermination
@@ -1469,8 +1474,22 @@ Void createSyncChartDirector(EntityType entity,
 	 p1.setName("statesignals") ->
 	 p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 p1.setValue(stateSignalNames.flatten().toString()) ->
-    p0.setName("Kieler SyncChart Director") ->
+    p0.setName("XXX Kieler SyncChart Director") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
+	p0.property.add(p1) ->
+	entity.property.add(p0) 
+;
+
+//Create a "SYNCCHART Director" (for macro state definition)
+Void createSRDirector(EntityType entity, 
+							 List[String] stateSignalNames):
+    let p0 = new PropertyType:
+	 let p1 = new PropertyType:
+	 p1.setName("statesignals") ->
+	 p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+	 p1.setValue(stateSignalNames.flatten().toString()) ->
+    p0.setName("SR Director") ->
+	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.property.add(p1) ->
 	entity.property.add(p0) 
 ;
@@ -1499,7 +1518,7 @@ Void createMainSyncChartDirector(EntityType entity,
   	 	p5.setName("statesignals") ->
 	 	p5.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 	p5.setValue(stateSignalNames.flatten().toString()) ->
-    p0.setName("Kieler SyncChart Director") ->
+    p0.setName("XXX Kieler SyncChart Director") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	p0.property.add(p2) ->

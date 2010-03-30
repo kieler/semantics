@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN" "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <entity class="ptolemy.actor.TypedCompositeActor" name="ABRO_918158682_simulation">
-  <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director">
-    <property class="ptolemy.data.expr.Parameter" name="iterations" value="0"/>
-    <property class="ptolemy.data.expr.Parameter" name="synchronizeToRealTime" value="false"/>
-    <property class="ptolemy.data.expr.Parameter" name="timeResolution" value="1.0E-10"/>
-    <property class="ptolemy.data.expr.Parameter" name="period" value="0"/>
-    <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[finished_1546280833_ABO_200586989, finished_850847849_ABO_200586989]"/>
+  <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director">
+    <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[finished_1118587627_ABO_200586989, finished_2071979422_ABO_200586989]"/>
   </property>
   <entity class="ptolemy.domains.modal.modal.ModalModel" name="ABRO_918158682_region_1">
     <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
@@ -50,50 +46,50 @@
     </relation>
     <link port="O" relation="ORelation"/>
     <link port="_Controller.O" relation="ORelation"/>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
       <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
       <property name="input"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
     </port>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
       <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
       <property name="output"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
     </port>
-    <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989iRelation">
+    <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989iRelation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
     </relation>
-    <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-    <link port="_Controller.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-    <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oRelation">
+    <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+    <link port="_Controller.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+    <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oRelation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
     </relation>
-    <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-    <link port="_Controller.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+    <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+    <link port="_Controller.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
       <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
       <property name="input"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
     </port>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
       <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
       <property name="output"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
     </port>
-    <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989iRelation">
+    <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989iRelation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
     </relation>
-    <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-    <link port="_Controller.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-    <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oRelation">
+    <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+    <link port="_Controller.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+    <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oRelation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
     </relation>
-    <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
-    <link port="_Controller.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+    <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
+    <link port="_Controller.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
     <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="A">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -119,25 +115,25 @@
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
         <property name="input"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
         <property name="input"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -168,10 +164,10 @@
     <link port="ABO_200586989.B" relation="BRelation"/>
     <link port="ABO_200586989.R" relation="RRelation"/>
     <link port="ABO_200586989.O" relation="ORelation"/>
-    <link port="ABO_200586989.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-    <link port="ABO_200586989.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-    <link port="ABO_200586989.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-    <link port="ABO_200586989.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+    <link port="ABO_200586989.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+    <link port="ABO_200586989.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+    <link port="ABO_200586989.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+    <link port="ABO_200586989.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="ABO_200586989">
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="A">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -197,31 +193,31 @@
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
         <property name="input"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
         <property name="input"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+      <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director">
+      <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director">
         <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[]"/>
       </property>
       <entity class="ptolemy.domains.modal.modal.ModalModel" name="ABO_200586989_region_1">
@@ -256,50 +252,50 @@
         </relation>
         <link port="O" relation="ORelation"/>
         <link port="_Controller.O" relation="ORelation"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
           <property name="input"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
           <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
         </port>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
           <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
         </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989iRelation">
+        <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989iRelation">
           <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
         </relation>
-        <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-        <link port="_Controller.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-        <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oRelation">
+        <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+        <link port="_Controller.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+        <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oRelation">
           <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
         </relation>
-        <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-        <link port="_Controller.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+        <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+        <link port="_Controller.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
           <property name="input"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
           <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
         </port>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
           <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
         </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989iRelation">
+        <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989iRelation">
           <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
         </relation>
-        <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-        <link port="_Controller.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-        <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oRelation">
+        <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+        <link port="_Controller.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+        <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oRelation">
           <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
         </relation>
-        <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
-        <link port="_Controller.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+        <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
+        <link port="_Controller.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
         <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="A">
             <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -319,25 +315,25 @@
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
             <property name="input"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
             <property name="input"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -362,7 +358,7 @@
             <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
-            <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="(finished_850847849_ABO_200586989i_isPresent &amp;&amp; finished_1546280833_ABO_200586989i_isPresent)"/>
+            <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="(finished_2071979422_ABO_200586989i_isPresent &amp;&amp; finished_1118587627_ABO_200586989i_isPresent)"/>
             <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="O=1"/>
           </relation>
           <link port="WaitAandB_375787636.outgoingPort" relation="WaitAandB_375787636_transition_1"/>
@@ -371,10 +367,10 @@
         <link port="WaitAandB_375787636.A" relation="ARelation"/>
         <link port="WaitAandB_375787636.B" relation="BRelation"/>
         <link port="WaitAandB_375787636.O" relation="ORelation"/>
-        <link port="WaitAandB_375787636.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-        <link port="WaitAandB_375787636.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-        <link port="WaitAandB_375787636.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-        <link port="WaitAandB_375787636.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+        <link port="WaitAandB_375787636.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+        <link port="WaitAandB_375787636.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+        <link port="WaitAandB_375787636.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+        <link port="WaitAandB_375787636.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
         <entity class="ptolemy.domains.modal.modal.Refinement" name="WaitAandB_375787636">
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="A">
             <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -394,31 +390,31 @@
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
             <property name="input"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
             <property name="input"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+          <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
             <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director">
+          <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director">
             <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[]"/>
           </property>
           <entity class="ptolemy.domains.modal.modal.ModalModel" name="WaitAandB_375787636_region_2">
@@ -433,50 +429,50 @@
             </relation>
             <link port="B" relation="BRelation"/>
             <link port="_Controller.B" relation="BRelation"/>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
               <property name="input"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
             </port>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
               <property name="output"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
             </port>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989iRelation">
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989iRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-            <link port="_Controller.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oRelation">
+            <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+            <link port="_Controller.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-            <link port="_Controller.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+            <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+            <link port="_Controller.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
               <property name="input"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
             </port>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
               <property name="output"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
             </port>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989iRelation">
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989iRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-            <link port="_Controller.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oRelation">
+            <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+            <link port="_Controller.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
-            <link port="_Controller.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+            <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
+            <link port="_Controller.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
             <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
               <port class="ptolemy.domains.modal.modal.RefinementPort" name="B">
                 <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -484,25 +480,25 @@
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
                 <property name="input"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
                 <property name="output"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
                 <property name="input"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
                 <property name="output"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -522,7 +518,7 @@
                 <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="0"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
-                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_1546280833_ABO_200586989o=1"/>
+                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_1118587627_ABO_200586989o=1"/>
               </relation>
               <link port="dB_1936187045.outgoingPort" relation="dB_1936187045_transition_1"/>
               <link port="dB_1936187045.incomingPort" relation="dB_1936187045_transition_1"/>
@@ -540,7 +536,7 @@
                 <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="B_isPresent"/>
-                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_1546280833_ABO_200586989o=1"/>
+                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_1118587627_ABO_200586989o=1"/>
               </relation>
               <link port="wB_1936187044.outgoingPort" relation="wB_1936187044_transition_1"/>
               <link port="dB_1936187045.incomingPort" relation="wB_1936187044_transition_1"/>
@@ -558,50 +554,50 @@
             </relation>
             <link port="A" relation="ARelation"/>
             <link port="_Controller.A" relation="ARelation"/>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
               <property name="input"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
             </port>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
               <property name="output"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
             </port>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989iRelation">
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989iRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-            <link port="_Controller.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989iRelation"/>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oRelation">
+            <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+            <link port="_Controller.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989iRelation"/>
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-            <link port="_Controller.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oRelation"/>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+            <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+            <link port="_Controller.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oRelation"/>
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
               <property name="input"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
             </port>
-            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+            <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
               <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
               <property name="output"/>
               <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
               <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
             </port>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989iRelation">
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989iRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-            <link port="_Controller.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989iRelation"/>
-            <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oRelation">
+            <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+            <link port="_Controller.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989iRelation"/>
+            <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oRelation">
               <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
             </relation>
-            <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
-            <link port="_Controller.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oRelation"/>
+            <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
+            <link port="_Controller.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oRelation"/>
             <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
               <port class="ptolemy.domains.modal.modal.RefinementPort" name="A">
                 <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -609,25 +605,25 @@
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989i">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989i">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
                 <property name="input"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1546280833_ABO_200586989o">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_1118587627_ABO_200586989o">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
                 <property name="output"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989i">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989i">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
                 <property name="input"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
               </port>
-              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_850847849_ABO_200586989o">
+              <port class="ptolemy.domains.modal.modal.ModalPort" name="finished_2071979422_ABO_200586989o">
                 <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
                 <property name="output"/>
                 <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -647,7 +643,7 @@
                 <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="0"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
-                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_850847849_ABO_200586989o=1"/>
+                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_2071979422_ABO_200586989o=1"/>
               </relation>
               <link port="dA_1848246074.outgoingPort" relation="dA_1848246074_transition_1"/>
               <link port="dA_1848246074.incomingPort" relation="dA_1848246074_transition_1"/>
@@ -665,7 +661,7 @@
                 <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
                 <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="A_isPresent"/>
-                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_850847849_ABO_200586989o=1"/>
+                <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="finished_2071979422_ABO_200586989o=1"/>
               </relation>
               <link port="wA_1848246075.outgoingPort" relation="wA_1848246075_transition_1"/>
               <link port="dA_1848246074.incomingPort" relation="wA_1848246075_transition_1"/>
@@ -677,66 +673,66 @@
           </relation>
           <link port="WaitAandB_375787636_region_2.B" relation="B_RELATION"/>
           <link port="B" relation="B_RELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989i_RELATION">
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989i_RELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-            <vertex name="finished_1546280833_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+            <vertex name="finished_1118587627_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
           </relation>
-          <link port="WaitAandB_375787636_region_2.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-          <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-          <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1546280833_ABO_200586989o_COMBINE">
-            <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_1546280833_ABO_200586989o'"/>
+          <link port="WaitAandB_375787636_region_2.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+          <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+          <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1118587627_ABO_200586989o_COMBINE">
+            <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_1118587627_ABO_200586989o'"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="combine function" value="1"/>
           </entity>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION">
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
           </relation>
-          <link port="finished_1546280833_ABO_200586989o_COMBINE.input" relation="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
-          <link port="WaitAandB_375787636_region_2.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989o_RELATION">
+          <link port="finished_1118587627_ABO_200586989o_COMBINE.input" relation="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
+          <link port="WaitAandB_375787636_region_2.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989o_RELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-            <vertex name="finished_1546280833_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
+            <vertex name="finished_1118587627_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
           </relation>
-          <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989o_RELATION"/>
-          <link port="finished_1546280833_ABO_200586989o_COMBINE.output" relation="finished_1546280833_ABO_200586989o_RELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989i_RELATION">
+          <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989o_RELATION"/>
+          <link port="finished_1118587627_ABO_200586989o_COMBINE.output" relation="finished_1118587627_ABO_200586989o_RELATION"/>
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989i_RELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-            <vertex name="finished_850847849_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+            <vertex name="finished_2071979422_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
           </relation>
-          <link port="WaitAandB_375787636_region_2.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-          <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-          <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_850847849_ABO_200586989o_COMBINE">
-            <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_850847849_ABO_200586989o'"/>
+          <link port="WaitAandB_375787636_region_2.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+          <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+          <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_2071979422_ABO_200586989o_COMBINE">
+            <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_2071979422_ABO_200586989o'"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="combine function" value="1"/>
           </entity>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION">
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
           </relation>
-          <link port="finished_850847849_ABO_200586989o_COMBINE.input" relation="finished_850847849_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
-          <link port="WaitAandB_375787636_region_2.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989o_RELATION">
+          <link port="finished_2071979422_ABO_200586989o_COMBINE.input" relation="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
+          <link port="WaitAandB_375787636_region_2.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_2_COMBINERELATION"/>
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989o_RELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-            <vertex name="finished_850847849_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
+            <vertex name="finished_2071979422_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
           </relation>
-          <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989o_RELATION"/>
-          <link port="finished_850847849_ABO_200586989o_COMBINE.output" relation="finished_850847849_ABO_200586989o_RELATION"/>
+          <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989o_RELATION"/>
+          <link port="finished_2071979422_ABO_200586989o_COMBINE.output" relation="finished_2071979422_ABO_200586989o_RELATION"/>
           <relation class="ptolemy.actor.TypedIORelation" name="A_RELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
             <vertex name="A_RELATIONVERTEX" value="{0.0, 0.0}"/>
           </relation>
           <link port="WaitAandB_375787636_region_1.A" relation="A_RELATION"/>
           <link port="A" relation="A_RELATION"/>
-          <link port="WaitAandB_375787636_region_1.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION">
+          <link port="WaitAandB_375787636_region_1.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
           </relation>
-          <link port="finished_1546280833_ABO_200586989o_COMBINE.input" relation="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
-          <link port="WaitAandB_375787636_region_1.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
-          <link port="WaitAandB_375787636_region_1.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-          <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION">
+          <link port="finished_1118587627_ABO_200586989o_COMBINE.input" relation="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
+          <link port="WaitAandB_375787636_region_1.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
+          <link port="WaitAandB_375787636_region_1.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+          <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION">
             <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
           </relation>
-          <link port="finished_850847849_ABO_200586989o_COMBINE.input" relation="finished_850847849_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
-          <link port="WaitAandB_375787636_region_1.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
+          <link port="finished_2071979422_ABO_200586989o_COMBINE.input" relation="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
+          <link port="WaitAandB_375787636_region_1.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oWaitAandB_375787636_region_1_COMBINERELATION"/>
         </entity>
       </entity>
       <relation class="ptolemy.actor.TypedIORelation" name="A_RELATION">
@@ -766,48 +762,48 @@
       </relation>
       <link port="O" relation="O_RELATION"/>
       <link port="O_COMBINE.output" relation="O_RELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989i_RELATION">
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989i_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="finished_1546280833_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+        <vertex name="finished_1118587627_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="ABO_200586989_region_1.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-      <link port="finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-      <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1546280833_ABO_200586989o_COMBINE">
-        <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_1546280833_ABO_200586989o'"/>
+      <link port="ABO_200586989_region_1.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+      <link port="finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+      <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1118587627_ABO_200586989o_COMBINE">
+        <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_1118587627_ABO_200586989o'"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="combine function" value="1"/>
       </entity>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oABO_200586989_region_1_COMBINERELATION">
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oABO_200586989_region_1_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
       </relation>
-      <link port="finished_1546280833_ABO_200586989o_COMBINE.input" relation="finished_1546280833_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
-      <link port="ABO_200586989_region_1.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989o_RELATION">
+      <link port="finished_1118587627_ABO_200586989o_COMBINE.input" relation="finished_1118587627_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
+      <link port="ABO_200586989_region_1.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989o_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="finished_1546280833_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
+        <vertex name="finished_1118587627_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989o_RELATION"/>
-      <link port="finished_1546280833_ABO_200586989o_COMBINE.output" relation="finished_1546280833_ABO_200586989o_RELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989i_RELATION">
+      <link port="finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989o_RELATION"/>
+      <link port="finished_1118587627_ABO_200586989o_COMBINE.output" relation="finished_1118587627_ABO_200586989o_RELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989i_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="finished_850847849_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+        <vertex name="finished_2071979422_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="ABO_200586989_region_1.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-      <link port="finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-      <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_850847849_ABO_200586989o_COMBINE">
-        <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_850847849_ABO_200586989o'"/>
+      <link port="ABO_200586989_region_1.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+      <link port="finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+      <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_2071979422_ABO_200586989o_COMBINE">
+        <property class="ptolemy.data.expr.Parameter" name="signal name" value="'finished_2071979422_ABO_200586989o'"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="combine function" value="1"/>
       </entity>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oABO_200586989_region_1_COMBINERELATION">
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oABO_200586989_region_1_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
       </relation>
-      <link port="finished_850847849_ABO_200586989o_COMBINE.input" relation="finished_850847849_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
-      <link port="ABO_200586989_region_1.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989o_RELATION">
+      <link port="finished_2071979422_ABO_200586989o_COMBINE.input" relation="finished_2071979422_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
+      <link port="ABO_200586989_region_1.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oABO_200586989_region_1_COMBINERELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989o_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="finished_850847849_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
+        <vertex name="finished_2071979422_ABO_200586989o_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989o_RELATION"/>
-      <link port="finished_850847849_ABO_200586989o_COMBINE.output" relation="finished_850847849_ABO_200586989o_RELATION"/>
+      <link port="finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989o_RELATION"/>
+      <link port="finished_2071979422_ABO_200586989o_COMBINE.output" relation="finished_2071979422_ABO_200586989o_RELATION"/>
     </entity>
   </entity>
   <relation class="ptolemy.actor.TypedIORelation" name="A_RELATION">
@@ -858,28 +854,28 @@
   </relation>
   <link port="O_COMBINE.input" relation="OABRO_918158682_region_1_COMBINERELATION"/>
   <link port="ABRO_918158682_region_1.O" relation="OABRO_918158682_region_1_COMBINERELATION"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989i_RELATION">
+  <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989i_RELATION">
     <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-    <vertex name="finished_1546280833_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+    <vertex name="finished_1118587627_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
   </relation>
-  <link port="ABRO_918158682_region_1.finished_1546280833_ABO_200586989i" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-  <link port="finished_1546280833_ABO_200586989o_COMBINE.output" relation="finished_1546280833_ABO_200586989i_RELATION"/>
-  <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1546280833_ABO_200586989o_COMBINE"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="finished_1546280833_ABO_200586989oABRO_918158682_region_1_COMBINERELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-  </relation>
-  <link port="finished_1546280833_ABO_200586989o_COMBINE.input" relation="finished_1546280833_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
-  <link port="ABRO_918158682_region_1.finished_1546280833_ABO_200586989o" relation="finished_1546280833_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989i_RELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-    <vertex name="finished_850847849_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
-  </relation>
-  <link port="ABRO_918158682_region_1.finished_850847849_ABO_200586989i" relation="finished_850847849_ABO_200586989i_RELATION"/>
-  <link port="finished_850847849_ABO_200586989o_COMBINE.output" relation="finished_850847849_ABO_200586989i_RELATION"/>
-  <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_850847849_ABO_200586989o_COMBINE"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="finished_850847849_ABO_200586989oABRO_918158682_region_1_COMBINERELATION">
+  <link port="ABRO_918158682_region_1.finished_1118587627_ABO_200586989i" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+  <link port="finished_1118587627_ABO_200586989o_COMBINE.output" relation="finished_1118587627_ABO_200586989i_RELATION"/>
+  <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_1118587627_ABO_200586989o_COMBINE"/>
+  <relation class="ptolemy.actor.TypedIORelation" name="finished_1118587627_ABO_200586989oABRO_918158682_region_1_COMBINERELATION">
     <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
   </relation>
-  <link port="finished_850847849_ABO_200586989o_COMBINE.input" relation="finished_850847849_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
-  <link port="ABRO_918158682_region_1.finished_850847849_ABO_200586989o" relation="finished_850847849_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
+  <link port="finished_1118587627_ABO_200586989o_COMBINE.input" relation="finished_1118587627_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
+  <link port="ABRO_918158682_region_1.finished_1118587627_ABO_200586989o" relation="finished_1118587627_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
+  <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989i_RELATION">
+    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+    <vertex name="finished_2071979422_ABO_200586989i_RELATIONVERTEX" value="{0.0, 0.0}"/>
+  </relation>
+  <link port="ABRO_918158682_region_1.finished_2071979422_ABO_200586989i" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+  <link port="finished_2071979422_ABO_200586989o_COMBINE.output" relation="finished_2071979422_ABO_200586989i_RELATION"/>
+  <entity class="ptolemy.actor.kiel.KielerCombine" name="finished_2071979422_ABO_200586989o_COMBINE"/>
+  <relation class="ptolemy.actor.TypedIORelation" name="finished_2071979422_ABO_200586989oABRO_918158682_region_1_COMBINERELATION">
+    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+  </relation>
+  <link port="finished_2071979422_ABO_200586989o_COMBINE.input" relation="finished_2071979422_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
+  <link port="ABRO_918158682_region_1.finished_2071979422_ABO_200586989o" relation="finished_2071979422_ABO_200586989oABRO_918158682_region_1_COMBINERELATION"/>
 </entity>

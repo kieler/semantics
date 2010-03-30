@@ -360,7 +360,7 @@ public class ExecutePtolemyModel {
             }
             if (child instanceof ModalModel) {
                 ModalModel modalModel = (ModalModel) child;
-
+                
                 fillKielerIOList(kielerIOList, modalModel.entityList());
             }
 
