@@ -15,7 +15,6 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
    </aboutInfo>
 
    <configIni use="default">
-      <macosx></macosx>
    </configIni>
 
    <launcherArgs>
@@ -153,6 +152,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.quartz" version="0.1.0.qualifier"/>
       <feature id="de.cau.cs.kieler.sc" version="0.1.0.qualifier"/>
       <feature id="de.cau.cs.kieler.kev" version="0.1.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.krep" version="0.1.0.qualifier"/>
       <feature id="net.ogdf.lib" version="1.0.0.qualifier"/>
    </features>
 
