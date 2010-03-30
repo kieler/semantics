@@ -46,7 +46,7 @@ import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
 public class ModelTransformationHandler extends AbstractHandler {
 	
 	/** The constant generatedModelName. */
-	static final String generatedModelName = "generated.moml";
+	static final String generatedModelName = "RailController.moml";
 	
 	//-------------------------------------------------------------------------
 	
