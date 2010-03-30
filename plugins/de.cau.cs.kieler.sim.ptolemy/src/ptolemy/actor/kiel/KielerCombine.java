@@ -49,9 +49,11 @@ import java.util.LinkedList;
 //// KielerNormalTermination
 
 /**
- KielerCombine Actor for SyncCharts Simulation within Ptolemy II.
+ NormalTermination Actor for Syncchart Simulation within Ptolemy
  
  @author Christian Motika
+ @version $Id: ModelRailwayIO.java 44783 2009-06-07 16:41:17Z $
+ @since Ptolemy II 0.2
  @Pt.AcceptedRating Red (cmot)
  */
 public class KielerCombine extends TypedAtomicActor {
@@ -124,38 +126,49 @@ public class KielerCombine extends TypedAtomicActor {
      *  @exception IllegalActionException If calling send() or super.fire()
      * throws it.
      */
-    public void fire() throws IllegalActionException {
+   public void fire() throws IllegalActionException {
         super.fire();
-
-        // check if any ports have known inputs
-        for (int i = 0; i < input.getWidth(); i++) {
-            if (input.isKnown(i) && input.hasToken(i)) {
-                _present = true;
-                // get the token
-                IntToken in = (IntToken) input.get(i);
+        
+        //Actor is scheduled
+        if (_debugging) {
+            _debug("KIELER combine scheduled.");
+        }
+        
+    	//check if any ports have known inputs
+    	for (int i = 0; i < input.getWidth(); i++) {
+    		if (input.isKnown(i) && input.hasToken(i)) {
+    	        _present = true;
+    	        if (_debugging) {
+    	            _debug("KIELER combine: Port " + i + " has token.");
+    	        }
+    	        
+    	        IntToken in = (IntToken) input.get(i);
                 if (in != null) {
-                    // apply commutative+associative combine function 
                     _value = _updateFunction(in.intValue(), _value);
-                }
-            }
-        }
+                }    	        
+    		}
+    	}
 
-        if (!_present) {
-            // check if all ports are cleared (known w/o any token)
-            boolean allKnown = true;
-            for (int i = 0; i < input.getWidth(); i++) {
-                allKnown &= input.isKnown(i);
-            }
-            // if no token can arrive, clear the output
-            if (allKnown) {
-                output.sendClear(0);
-                value.sendClear(0);
-            }
-        } else {
-            // send out combined integer token if presentToken
-            output.send(0, new IntToken(1));
-            value.send(0, new IntToken(_value));
-        }
+    	if (!_present) {
+    	        _debug("Checking iff unknown by all connected ports");
+        	//check if all ports are cleared (known w/o any token)
+        	boolean allKnown = true;
+        	for (int i = 0; i < input.getWidth(); i++) {
+        		allKnown &= input.isKnown(i);
+                        _debug("allKnown after "+input.getName()+":"+allKnown);
+        	}
+        	if (allKnown) {
+                    _debug("Sending clear out");
+                    output.sendClear(0);
+                    value.sendClear(0);
+        	}
+    	}
+    	else  {
+        	//send out integer token if presentToken
+    	        _debug("Sending value "+_value+" out");
+        	output.send(0, new IntToken(1));
+        	value.send(0, new IntToken(_value));
+    	}
 
     }
 
@@ -170,14 +183,14 @@ public class KielerCombine extends TypedAtomicActor {
 
     //-------------------------------------------------------------------------
     public boolean prefire() throws IllegalActionException {
-    	  //cleanup for next run
-    	_countDownRegions = input.getWidth();
-        _present = false;
-        resetValue();
         return true;
     }
 
     public boolean postfire() throws IllegalActionException {
+        //cleanup for next run
+        _countDownRegions = input.getWidth();
+        _present = false;
+        resetValue();
     	  return true;
     }
     

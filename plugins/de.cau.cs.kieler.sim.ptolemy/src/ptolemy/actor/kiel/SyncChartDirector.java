@@ -253,8 +253,7 @@ public class SyncChartDirector extends FixedPointDirector {
                 //enabledTransitions = modalModel.getController().enabledTransitions(transitionList);
 
 			
-                //go thru all enabled transitions, these outputs are possibly emmitted (= NOT in mustnot)!
-//              for (Transition transition: enabledTransitions) {
+                //go thru all possibly enabled transitions, these outputs are possibly emmitted (= NOT in mustnot)!
                 for (Transition transition: possiblyEnabledTransitions) {
                         OutputActionsAttribute outputActions = transition.outputActions;
                                         if (outputActions != null) {
@@ -416,7 +415,9 @@ public class SyncChartDirector extends FixedPointDirector {
         }//next stateSignal
     	
 
-   		//check for unknown signals and set them to absent (clear())
+   		//(OUTDATED COMMENT)check for unknown signals and set them to absent (clear())
+    	        // go thru all unknown signals and set them to absent (clear()) ONLY
+    	        // if they cannot be emitted (cannotSignals) 
             List receivers = this._receivers; //_actorsFired.iterator();
 
         	System.out.println("CHECK "+receivers.size());
@@ -428,7 +429,7 @@ public class SyncChartDirector extends FixedPointDirector {
 
                     //System.out.println("TEST FOR "+this._elementName + " " + receiverSignalName);
                    
-                    //if they are still unknown then assume signal absence
+                    //if they are still unknown then assume signal absence iff contained in cannotSignals
                     if (!receiver.isKnown()) {
                     	try {
                             String receiverSignalName = receiver.getContainer().getName();
