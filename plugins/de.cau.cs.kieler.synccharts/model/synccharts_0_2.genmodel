@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts/src"
+    modelPluginID="de.cau.cs.kieler.synccharts" modelName="Synccharts_0_2" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>synccharts_0_2.ecore</foreignModel>
+  <genPackages prefix="Synccharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="synccharts_0_2.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts_0_2.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//CombineOperator/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts_0_2.ecore#//OperatorType">
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/LEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/GEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/NOT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/VAL"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/PRE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/DIV"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//OperatorType/MOD"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts_0_2.ecore#//StateType">
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//StateType/NORMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//StateType/CONDITIONAL"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//StateType/REFERENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//StateType/TEXTUAL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts_0_2.ecore#//TransitionType">
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//TransitionType/WEAKABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//TransitionType/STRONGABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//TransitionType/NORMALTERMINATION"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts_0_2.ecore#//ValueType">
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/PURE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/UNSIGNED"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts_0_2.ecore#//ValueType/HOST"/>
+    </genEnums>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Action">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Action/effects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Action/trigger"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Action/delay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Action/isImmediate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Action/label"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Assignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Assignment/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Assignment/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//ComplexExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//ComplexExpression/subExpressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//ComplexExpression/operator"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="synccharts_0_2.ecore#//Effect"/>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Emission">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Emission/signal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Emission/newValue"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Expression"/>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//TextualCode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//TextualCode/code"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//TextualCode/type"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Region">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Region/innerStates"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Region/parentState"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Signal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Signal/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Signal/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Signal/isOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Signal/combineOperator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Signal/hostCombineOperator"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Signal/parentScope"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//SignalReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//SignalReference/signal"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Substitution">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Substitution/parentScope"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Substitution/formal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Substitution/actual"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//State">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//State/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//State/regions"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//State/parentRegion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//State/isInitial"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//State/isFinal"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Transition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Transition/priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Transition/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Transition/targetState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Transition/sourceState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Transition/isHistory"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//ValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//ValuedObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//ValuedObject/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//ValuedObject/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//ValuedObject/hostType"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Variable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Variable/value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Variable/parentScope"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//VariableReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//VariableReference/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Value"/>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//FloatValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//BooleanValue/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="synccharts_0_2.ecore#//Scope">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Scope/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Scope/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/outgoingTransitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/suspensionTrigger"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/exitActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/innerActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/entryActions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/bodyReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/bodyContents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/bodyText"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/interfaceDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts_0_2.ecore#//Scope/renamings"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts_0_2.ecore#//Parseable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts_0_2.ecore#//Parseable/text"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
