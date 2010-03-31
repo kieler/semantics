@@ -643,7 +643,7 @@
     <children xmi:type="notation:Node" xmi:id="_3uIkcDyvEd-JQpnsTW0-1Q" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_3uIkcTyvEd-JQpnsTW0-1Q" type="5001">
       <children xmi:type="notation:Node" xmi:id="_DInqwDywEd-JQpnsTW0-1Q" type="2001">
-        <element xmi:type="ecore:EAttribute" href="synccharts_0_2.ecore#//Parseable/text"/>
+        <element xmi:type="ecore:EAttribute" href="synccharts_0_2.ecore#//Parsable/text"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_DInqwTywEd-JQpnsTW0-1Q"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_3uIkcjyvEd-JQpnsTW0-1Q"/>
@@ -656,7 +656,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_3uJLgzyvEd-JQpnsTW0-1Q"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_3uH9YTyvEd-JQpnsTW0-1Q" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="synccharts_0_2.ecore#//Parseable"/>
+    <element xmi:type="ecore:EClass" href="synccharts_0_2.ecore#//Parsable"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3uH9YjyvEd-JQpnsTW0-1Q" x="872" y="903"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_wv4xsXqYEd6nBdJEKpuS9w"/>

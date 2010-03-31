@@ -11,7 +11,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Parseable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Parsable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
@@ -187,12 +187,12 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" eType="#//TextualCode"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceDeclaration" eType="#//Parseable"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceDeclaration" eType="#//Parsable"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renamings" upperBound="-1"
         eType="#//Substitution" containment="true" eOpposite="#//Substitution/parentScope"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parseable">
+  <eClassifiers xsi:type="ecore:EClass" name="Parsable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
