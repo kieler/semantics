@@ -34,6 +34,7 @@
         upperBound="-1" eType="#//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
         eType="#//OperatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostOperator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
@@ -64,6 +65,7 @@
     <eLiterals name="MULT" value="8" literal="*"/>
     <eLiterals name="DIV" value="9" literal="/"/>
     <eLiterals name="MOD" value="13" literal="mod"/>
+    <eLiterals name="HOST" value="16" literal="host"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="innerStates" upperBound="-1"
@@ -152,6 +154,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentScope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="const" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableReference" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
