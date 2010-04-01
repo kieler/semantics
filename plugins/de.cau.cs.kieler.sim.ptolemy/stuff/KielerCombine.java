@@ -46,10 +46,11 @@ import java.net.*;
 import java.util.LinkedList;
 
 //////////////////////////////////////////////////////////////////////////
-//// KielerNormalTermination
+//// SRCombine
 
 /**
- NormalTermination Actor for Syncchart Simulation within Ptolemy
+ SRCombine Actor for combining synchronous signals (ports with a token
+ or no token) using a combine function.
  
  @author Christian Motika
  @version $Id: ModelRailwayIO.java 44783 2009-06-07 16:41:17Z $

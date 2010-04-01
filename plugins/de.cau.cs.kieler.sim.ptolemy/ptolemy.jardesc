@@ -24,12 +24,14 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.modal.modal"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueSet.kernel"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.util"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.vergil.kernel"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.kernel.undo.test"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueSet.actor"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.domains"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.ct.kernel.solver"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo.Sinewave"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.kernel"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.vergil.toolbox"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.actor"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.moml.jxta"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.moml.filter"/>
@@ -37,8 +39,8 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.actor.gui"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.actor.lib.logic"/>
-        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo.ConstNonconst"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.combinedValueToken.kernel"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo.ConstNonconst"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.firstValueToken.domains.fsm.kernel"/>
         <javaElement handleIdentifier="=ptolemy/&lt;util.testsuite"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.domains.fsm"/>
@@ -65,6 +67,7 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.data.expr"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.unit"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.domains.continuous.lib"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.vergil.basic"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.graph.sched"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.graph.mapping"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.util"/>
@@ -73,13 +76,15 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.domains.fsm.kernel"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.kernel.undo"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.math"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.vergil.kernel.attributes"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.component.data.type"/>
-        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.generic.actor.lib"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.combinedValueToken.domains.fsm"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.generic.actor.lib"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.configuredSolvers.lattice"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.component"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.combinedValueToken.domains"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.sr.kernel"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.actor.gui.style"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.kernel.doc"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.ct.lib"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.actor"/>
@@ -95,13 +100,14 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data"/>
         <javaElement handleIdentifier="=ptolemy/&lt;diva.util"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;diva.graph"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.domains.continuous"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.actor.util"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.dimensionSystem.data"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueSet.domains.fsm"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueSet.data"/>
-        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.firstValueToken.actor"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.modal"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.firstValueToken.actor"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.kernel"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.generic.actor"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueEqualPriority.data"/>
@@ -109,8 +115,8 @@
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.lattice.academicFalseTrueSet"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.kernel.attributes"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.combinedValueToken.actor"/>
-        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo.Workflow"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.vergil.icon"/>
+        <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.demo.Workflow"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token.firstValueToken.test.auto"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.domains.ct"/>
         <javaElement handleIdentifier="=ptolemy/&lt;ptolemy.data.properties.token"/>
