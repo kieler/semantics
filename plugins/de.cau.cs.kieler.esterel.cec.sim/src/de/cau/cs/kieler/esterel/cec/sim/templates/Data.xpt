@@ -60,9 +60,11 @@ int main(){
 «ENDDEFINE»
 
 «DEFINE OutputFunctions(String modName) FOR Output»
-  «FOREACH signal AS sig»«modName»_O_«sig.name»(){
+  «FOREACH signal AS sig»«modName»_O_«sig.name»(«IF sig.channel.type.matches("integer")»int i«ENDIF»){
    	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+	cJSON_AddTrueToObject(value, "present");
+	«IF sig.channel.type.matches("integer")»	cJSON_AddNumberToObject(value, "value", i);
+	«ENDIF»
 	cJSON_AddItemToObject(output, "«sig.name»", value);
   } 
 «ENDFOREACH-»
