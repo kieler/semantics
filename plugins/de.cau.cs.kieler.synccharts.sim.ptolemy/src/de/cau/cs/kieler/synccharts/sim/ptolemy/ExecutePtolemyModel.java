@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ptolemy.actor.kiel.KielerCombine;
+import ptolemy.domains.sr.lib.Combine;
 import ptolemy.actor.kiel.KielerIO;
 import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
@@ -61,9 +61,9 @@ public class ExecutePtolemyModel {
     public class ModelOutput {
         public String signalName;
         public boolean present;
-        public KielerCombine actor;
+        public Combine actor;
 
-        public ModelOutput(String signalName, KielerCombine actor) {
+        public ModelOutput(String signalName, Combine actor) {
             this.signalName = signalName;
             this.actor = actor;
             this.present = false;
@@ -305,8 +305,8 @@ public class ExecutePtolemyModel {
         // do *NOT* recursively for children, just a flat top-level search
         for (int c = 0; c < children.size(); c++) {
             Object child = children.get(c);
-            if (child instanceof KielerCombine) {
-                KielerCombine as = (KielerCombine) child;
+            if (child instanceof Combine) {
+                Combine as = (Combine) child;
                 if (as.getAttribute("signal name") != null) {
                     // this is only true for output not for local signals
                     String signalName = ((Parameter) as.getAttribute("signal name"))

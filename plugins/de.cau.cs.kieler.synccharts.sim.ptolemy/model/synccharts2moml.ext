@@ -78,7 +78,7 @@ Void addCombineFunction(EntityType baseEntity, String name) :
    let e = new EntityType:
    let p1 = new PropertyType:
    e.setName(name) ->
-   e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
+   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
    	p1.setName("combine function") ->
    	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
    	p1.setValue("1") ->
@@ -97,7 +97,7 @@ Void addEnvironmentCombineFunction(EntityType baseEntity,
    let p1 = new PropertyType:
    let p2 = new PropertyType:
    e.setName(name) ->
-   e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
+   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
    	p2.setName("combine function") ->
    	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
    	p2.setValue("1") ->
