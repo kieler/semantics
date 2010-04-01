@@ -3,17 +3,17 @@
 «EXTENSION template::Helper»
 
 «DEFINE getRealThreadPriority FOR State-»
-	«REM»
 	«getRealThreadPriority(this)-»
-	«ENDREM»
+	«REM»
 	«getRealOptimizedThreadPriority(this)-»
+	«ENDREM»
 «ENDDEFINE»
 
 «DEFINE getWeakThreadPriority FOR State-»
-	«REM»
 	«getWeakThreadPriority(this)-»
-	«ENDREM»
+	«REM»
 	«getOptimizedWeakThreadPriority(this)-» 
+	«ENDREM»
 «ENDDEFINE»
 
 getOptimizedWeakThreadPriority
@@ -21,39 +21,41 @@ getOptimizedWeakThreadPriority
 «DEFINE priorityReduction FOR Action-»
 	«IF this.eRootContainer.metaType == Transition-»
 		«IF hasDependentState((Transition)this.eRootContainer)-»
-			/* prio reduction */
-			PRIO(«EXPAND getRealThreadPriority FOR ((Transition)this.eRootContainer).targetState»);
+		/* priority reduction */
+		PRIO(«EXPAND getRealThreadPriority FOR ((Transition)this.eRootContainer).targetState»);
 		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE realPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-		/* real reduction */
+		/* priority real */
 		PRIO(«EXPAND getRealThreadPriority FOR this»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-		/* weak reduction */
+		/* priority weak */
 		PRIO(« EXPAND getWeakThreadPriority FOR this»);
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE transitionPrio FOR Transition-»
-	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
-		/* prio after transition */
+		/* priority after transition */
 		PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
+	«REM»
+	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
 	«ENDIF-»
+	«ENDREM»
 «ENDDEFINE»
 
 «DEFINE sourcePrio FOR Transition-»
-	/* prio of source */
 	«REM»
-	PRIO(«getSmallestThreadPriority(this.sourceState)»);
+	PRIO(«EXPAND getRealThreadPriority FOR this.targetState-»);
 	«ENDREM»
-	PRIO(«EXPAND getRealThreadPriority FOR this.sourceState-»);
+	/* priority to source */
+	PRIO(«getSmallestThreadPriority(this.sourceState)»);
 «ENDDEFINE»
 
 «DEFINE mainThreadPrio FOR State-»

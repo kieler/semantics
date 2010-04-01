@@ -7,9 +7,7 @@
 		JOINELSE(L_«getStateNameByFlag(this.sourceState, 3)»_afterJoin);
 	«ENDIF-»
 	«EXPAND triggersAndEffects FOR this-»
-	«IF hasDependentState(this)-»
-		«EXPAND CodegenPriority::sourcePrio FOR this»
-	«ENDIF-»
+	«EXPAND CodegenPriority::sourcePrio FOR this»
 «ENDDEFINE»
 
 «DEFINE oneTransition FOR Transition-»
@@ -32,7 +30,6 @@
 «DEFINE stateAbortion FOR Transition-»
 	«IF this.type != TransitionType::NORMALTERMINATION-»
 		«IF !(this.sourceState.regions.isEmpty)-»
-			«REM»if strong prio after abort otherwise prio bevore abort ?«ENDREM»
 			ABORT;
 			«EXPAND CodegenPriority::realPrio FOR this.targetState»
 		«ENDIF-»

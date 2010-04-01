@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -165,15 +166,21 @@ public class WorkflowGenerator {
             StatusManager.getManager().handle(status, StatusManager.LOG);
         }
 
+        File file;
         if (sim) {
-            File simFile = new File(outPath + "sim.c");
-            beautifyFiles(simFile);
-            simFile = new File(outPath + "sim_data.c");
-            beautifyFiles(simFile);
+            file = new File(outPath + "sim.c");
+            File dataFile = new File(outPath + "sim_data.c");
+            beautifyFiles(dataFile);
         } else {
-            File file = new File(outPath + filename + ".c");
-            beautifyFiles(file);
+            file = new File(outPath + filename + ".c");
         }
+        beautifyFiles(file);
+//        PriorityOptimizer pO = new PriorityOptimizer(file);
+//        try {
+//            pO.optimize();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
     
     private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
