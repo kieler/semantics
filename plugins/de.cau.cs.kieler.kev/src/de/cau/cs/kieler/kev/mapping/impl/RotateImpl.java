@@ -7,8 +7,9 @@ package de.cau.cs.kieler.kev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -16,8 +17,10 @@ import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.Rotate;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
+
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 
+import org.apache.batik.dom.svg.SVGOMPoint;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +30,7 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGLocatable;
+import org.w3c.dom.svg.SVGPoint;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Rotate</b></em>'. <!--
@@ -85,7 +89,13 @@ public class RotateImpl extends AnimationImpl implements Rotate {
     /**
      * A hashmap used for the animation, need to be created only once.
      */
-    private HashMap<String, String> hashMap = null;
+    private HashMap<String, RotateAttributeRecord> inputHashMap = null;
+    
+    private RotateAttributeRecord lastValues = null;
+    
+//    private SVGOMPoint initialPointOfElement = null;
+    
+    private String initialAttribute = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -227,50 +237,11 @@ public class RotateImpl extends AnimationImpl implements Rotate {
         return result.toString();
     }
 
-    // Computes the range values
-    private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
-        ArrayList<String> range = new ArrayList<String>();
-        if (Pattern.matches("[-]?[\\d]+[.]{2,3}[-]?[\\d]+", value)) {
-            Scanner sc = new Scanner(value).useDelimiter("[.]+");
-            // We have exactly two values
-            float first, last, numberOfRangeValues;
-            first = sc.nextFloat();
-            last = sc.nextFloat();
-
-            numberOfRangeValues = Math.abs(first - last);
-            float x = numberOfRangeValues / numberOfInputValues;
-            if (first <= last) {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString((x * i) + first));
-                }
-            } else {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString(first - (x * i)));
-                }
-            }
-        } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
-            // Get a list of comma separted values
-            range = MapAnimations.getInstance().attributeParser(value, false);
-        } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
-            for (int i = 0; i < numberOfInputValues; i++) {
-                range.add(value);
-            }
-        } // else we have invalid values for move x_range and y_range
-        return range;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.kev.mapping.Animation#applyAnimation(de.cau.cs.kieler.sim.kiem.json.JSONObject
-     * , java.lang.String)
-     */
     public void apply(Object jsonObject, String svgElementID) {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
-        //String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
@@ -281,59 +252,166 @@ public class RotateImpl extends AnimationImpl implements Rotate {
             }
         } else {
             jsonValue = ((JSONObject) jsonObject).optString(getKey());    
-        }        
+        }
         
-        if (jsonValue != null) {
-            if (jsonValue.indexOf("$") == 0) {
-                jsonValue = ((JSONObject) jsonObject).optString(jsonValue.substring(1));
-            }
-            float pivotX = 0, pivotY = 0;
-            if (getAnchorPoint() != null && !getAnchorPoint().equals("")) {
-                Scanner sc = new Scanner(getAnchorPoint()).useDelimiter("[,]");
-                try {
-                    if (sc.hasNext()) {
-                        pivotX = Float.parseFloat(sc.next());
+        
+        // Now apply the animation.
+        if (elem != null) {
+            try {
+                SVGLocatable locatable = (SVGLocatable) elem;//svgDoc.getRootElement();
+//                if (initialPointOfElement == null) {
+//                    initialPointOfElement = new SVGOMPoint(locatable.getBBox().getX(), locatable.getBBox().getY());
+//                }
+
+                String anchorPointValue, angleRange, angleValue, attribute;        
+                
+                if (getInput().equals("")) {
+                    // If no input is set, return the value of actual json key.
+                    anchorPointValue = getAnchorPoint();
+                    angleRange = getAngleRange();
+                    
+                    if (anchorPointValue.indexOf("$") == 0) {
+                        anchorPointValue = ((JSONObject) jsonObject).optString(anchorPointValue.substring(1));
                     }
-                    if (sc.hasNext()) {
-                        pivotY = Float.parseFloat(sc.next());
+                    if (angleRange.indexOf("$") == 0) {
+                        angleRange = ((JSONObject) jsonObject).optString(angleRange.substring(1));
                     }
-                } catch (NumberFormatException e) {
-                    Activator
-                            .reportInfoMessage("The rotate animation has wrong values for the pivot element. [SVGElementID: "
-                                    + svgElementID + "]");
-                }
-            } else {
-                // If no anchor_point is specified set the point to origin of the current element
-                setAnchorPoint("0,0");
-            }
-            String angle = hashMap.get(jsonValue);
-            if (angle != null) {
-                if (angle.indexOf("$") == 0) {
-                    angle = ((JSONObject) jsonObject).optString(angle.substring(1));
-                    if (angle == null) {
-                        // Rotation without an valid angle value makes no sense
-                        return;
-                    }
-                }
-                if (elem != null) {
-                    // Now apply the animation
-                    try {
-                        // Get the BoundingBox of the element "elem"
-                        SVGLocatable locatable = (SVGLocatable) elem;
-                        elem.setAttribute("transform", "rotate(" + angle + ","
+                    
+                    angleValue = currentMapAnimation.computeRangeValue(jsonValue, angleRange, angleRange);
+                    
+                    //We don't need to apply the Animation, if nothing has changed
+                    if (!angleValue.equals(lastValues.angleRange) || !anchorPointValue.equals(lastValues.anchorPoint)) {
+                        lastValues.anchorPoint = anchorPointValue;
+                        lastValues.angleRange = angleValue;
+                        float pivotX, pivotY;
+
+                        if (anchorPointValue.equals("")) {
+                            pivotX = 0;
+                            pivotY = 0; 
+                        } else { 
+                            Scanner sc = new Scanner(anchorPointValue).useDelimiter(",").useLocale(Locale.US);
+                            if (sc.hasNextFloat()) {
+                                pivotX = sc.nextFloat();
+                                if (sc.hasNextFloat()) {
+                                    pivotY = sc.nextFloat();
+                                } else {
+                                    pivotX = 0;
+                                    pivotY = 0;
+                                }
+                            } else {
+                                pivotX = 0;
+                                pivotY = 0;
+                            }
+                        }
+                        
+                        if (angleValue.equals("")) {
+                            angleValue = "0";
+                        } 
+
+                        //if the set already contains the key it must have been modified
+                        if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                            attribute = elem.getAttribute("transform");
+                        } else {
+                            attribute = initialAttribute;
+                        }                       
+//                        elem.setAttribute("transform", "rotate(" + angleValue + ","
+//                                + (initialPointOfElement.getX() + pivotX) + ","
+//                                + (initialPointOfElement.getY() + pivotY) + ")");
+                        elem.setAttribute("transform", attribute + "rotate(" + angleValue + ","
                                 + (locatable.getBBox().getX() + pivotX) + ","
                                 + (locatable.getBBox().getY() + pivotY) + ")");
-                    } catch (DOMException e) {
-                        Activator.reportErrorMessage(
-                                "Something went wrong, setting an DOM element.", e);
-                    } catch (NumberFormatException e1) {
-                        Activator.reportErrorMessage(
-                                "Wrong format for pivot element in rotate animation", e1);
+                    }
+                } else {
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            angleRange = inputHashMap.get(inputValue).angleRange;
+                            anchorPointValue = inputHashMap.get(inputValue).anchorPoint;
+                            
+                            if (angleRange.indexOf("$") == 0) {
+                                angleRange = ((JSONObject) jsonObject).optString(angleRange.substring(1));
+                            }
+                            if (anchorPointValue.indexOf("$") == 0) {
+                                anchorPointValue = ((JSONObject) jsonObject).optString(anchorPointValue.substring(1));
+                            }
+
+                            //If the inputValue doesn't match the jsonValue exactly it must be an range, so  we need
+                            //to compute the correct values
+                            angleValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, angleRange);
+
+                            //We don't need to apply the Animation, if nothing has changed
+                            if (!angleValue.equals(lastValues.angleRange) || !anchorPointValue.equals(lastValues.anchorPoint)) {
+                                lastValues.anchorPoint = anchorPointValue;
+                                lastValues.angleRange = angleValue;
+                                float pivotX, pivotY;
+
+                                if (anchorPointValue.equals("")) {
+                                    pivotX = 0;
+                                    pivotY = 0; 
+                                } else { 
+                                    Scanner sc = new Scanner(anchorPointValue).useDelimiter(",").useLocale(Locale.US);
+                                    if (sc.hasNextFloat()) {
+                                        pivotX = sc.nextFloat();
+                                        if (sc.hasNextFloat()) {
+                                            pivotY = sc.nextFloat();
+                                        } else {
+                                            //The second value has a wrong format
+                                            pivotX = 0;
+                                            pivotY = 0;
+                                        }
+                                    } else {
+                                        //The first value has a wrong format
+                                        pivotX = 0;
+                                        pivotY = 0;
+                                    }
+                                }
+                                
+                                if (angleValue.equals("")) {
+                                    angleValue = "0";
+                                } 
+//                                System.out.println(locatable.getBBox().getX() + ", " +locatable.getBBox().getY());
+
+//                                System.out.println("SVGElementID: "+svgElementID+ "  "+pivotX + ", "+pivotY+ " "+ angleValue + locatable.getBBox().getX()+" ->" +locatable.getBBox().getY());
+//                                System.out.println((locatable.getBBox().getX() + pivotX)+" ->" +(locatable.getBBox().getY() + pivotY));                               
+//                                elem.setAttribute("transform", "rotate(" + angleValue + ","
+//                                        + (initialPointOfElement.getX() + pivotX) + ","
+//                                        + (initialPointOfElement.getY() + pivotY) + ")");
+                                //if the set already contains the key it must have been modified
+                                if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                                    attribute = elem.getAttribute("transform");
+                                } else {
+                                    attribute = initialAttribute;
+                                }
+                                
+                                
+//                                System.out.println(pivotX+","+ pivotY + " <--> "+ initialPointOfElement.getX()+","+initialPointOfElement.getY());
+//                                System.out.println((initialPointOfElement.getX() + pivotX)+","+(initialPointOfElement.getY() + pivotY));
+                                elem.setAttribute("transform", attribute + "rotate(" + angleValue + ","
+                                        + (locatable.getBBox().getX() + pivotX) + ","
+                                        + (locatable.getBBox().getY() + pivotY) + ")");
+//                                System.out.println("initial attribute: "+initialAttribute);
+//                                System.out.println(elem.getAttribute("transform"));
+                            }
+
+                            return;
+                        }
                     }
                 }
+            } catch (DOMException e1) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
+                        e1);
             }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+                    + " doesn't exists in "
+                    + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
     }
+    
 
     /*
      * (non-Javadoc)
@@ -341,7 +419,20 @@ public class RotateImpl extends AnimationImpl implements Rotate {
      * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
      */
     public void initialize(String svgElementID) {
-        // General initializing for each animation. 
+        // General initializing for each animation.
+        SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
+        Element elem = svgDoc.getElementById(svgElementID);
+//        SVGLocatable locatable = (SVGLocatable) elem;//svgDoc.getRootElement();
+//        initialPointOfElement = new SVGOMPoint(locatable.getBBox().getX(), locatable.getBBox().getY());
+        if (elem != null) {
+            initialAttribute = elem.getAttribute("transform");
+        } else {
+            initialAttribute = "";
+        }
+
+
+        
+        
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
@@ -353,14 +444,6 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                 if (jsonKey.indexOf("$") == 0) {
                     setKey(jsonKey.substring(1));
                 }
-//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
-//                    try {
-//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
-//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
-//                    } catch (NumberFormatException e) {
-//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
-//                    }
-//                }
             }
 
 
@@ -375,13 +458,62 @@ public class RotateImpl extends AnimationImpl implements Rotate {
                 setInput("");
             }
     
-            ArrayList<String> inputArray, angleRange;
-            inputArray = currentMapAnimation.attributeParser(getInput(), true);
-            angleRange = computeRange(getAngleRange(), inputArray.size());
-    
-            // mapping of input to angle_range
-            this.hashMap = currentMapAnimation.mapInputToOutput(inputArray, angleRange);
+            //Read all input values and set the x-range and y-range values to default values if necessary
+            ArrayList<String> inputList, anchorPointList, angleRangeList;
+            inputList = currentMapAnimation.parser(getInput());
+            angleRangeList = currentMapAnimation.parser(getAngleRange());
+            anchorPointList = currentMapAnimation.parser(getAnchorPoint());
+            
+            inputHashMap = new HashMap<String, RotateAttributeRecord>();
+            RotateAttributeRecord dataRecord;
+            for (int i = 0; i < inputList.size(); i++) {
+                dataRecord = this.new RotateAttributeRecord();
+                if (i < anchorPointList.size()) {
+                    dataRecord.anchorPoint = anchorPointList.get(i);
+                } else {
+                    dataRecord.anchorPoint = "";
+                }
+                
+                if (i < angleRangeList.size()) {
+                    dataRecord.angleRange = angleRangeList.get(i);
+                } else {
+                    dataRecord.angleRange = "";
+                }
+                //Only add a value if it doesn't already exists
+                if (!inputHashMap.containsKey(inputList.get(i))) {
+                    inputHashMap.put(inputList.get(i), dataRecord);
+                }
+            }
+            //Set default values for x and y-range if no input is set
+            if (inputList.size() == 0) {
+                if (anchorPointList.size() > 0) {
+                    setAnchorPoint(anchorPointList.get(0));
+                } else {
+                    setAnchorPoint("");
+                }
+                
+                if (angleRangeList.size() > 0) {
+                    setAngleRange(angleRangeList.get(0));
+                } else {
+                    setAngleRange("");
+                }
+            }
+            
+            lastValues = new RotateAttributeRecord();
+            
         }
+
+//            ArrayList<String> inputArray, angleRange;
+//            inputArray = currentMapAnimation.attributeParser(getInput(), true);
+//            angleRange = computeRange(getAngleRange(), inputArray.size());
+//    
+//            // mapping of input to angle_range
+//            this.hashMap = currentMapAnimation.mapInputToOutput(inputArray, angleRange);
+//        }
+    }
+    
+    private class RotateAttributeRecord {
+        String anchorPoint, angleRange;
     }
 
 } // RotateImpl

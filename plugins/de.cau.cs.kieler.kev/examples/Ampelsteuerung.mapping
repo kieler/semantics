@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/Trafficlight.svg">
+	<svgElement id="cGreen">
+		<animation xsi:type="mapping:Colorize" input="drive, stop" fillColor="green, none" key="car" />
+	</svgElement>
+	<svgElement id="pRed">
+		<animation xsi:type="mapping:Colorize" input="drive, stop" key="car"
+			fillColor="red, #626262" />
+	</svgElement>
+	<svgElement id="cRed">
+		<animation xsi:type="mapping:Colorize" input="stop, drive" fillColor="red, none" key="car" />
+	</svgElement>
+	<svgElement id="pGreen">
+		<animation xsi:type="mapping:Colorize" input="stop, drive" key="car"
+			fillColor="green, #626262" />
+	</svgElement>
+</mapping:SVGFile>

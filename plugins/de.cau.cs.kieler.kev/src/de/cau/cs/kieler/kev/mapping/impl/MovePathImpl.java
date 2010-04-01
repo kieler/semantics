@@ -5,10 +5,11 @@
  */
 package de.cau.cs.kieler.kev.mapping.impl;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Pattern;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Scanner;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
@@ -16,10 +17,7 @@ import de.cau.cs.kieler.kev.mapping.MovePath;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 
-import org.apache.batik.dom.svg.SVGOMElement;
-import org.apache.batik.dom.svg.SVGOMMPathElement;
 import org.apache.batik.dom.svg.SVGOMPathElement;
-import org.apache.batik.dom.svg.SVGPathSupport;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +29,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGLocatable;
-import org.w3c.dom.svg.SVGPathElement;
 import org.w3c.dom.svg.SVGPoint;
 
 /**
@@ -88,11 +85,14 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
      * @ordered
      */
     protected String anchorPoint = ANCHOR_POINT_EDEFAULT;
-    
-    
-    private Point point = null;
 
-    private HashMap<String, HashMap<String, String>> hashMapList = null;
+    private SVGPoint lastPoint = null;
+
+    private HashMap<String, MovePathAttributeRecord> inputHashMap = null;
+    
+    private MovePathAttributeRecord lastValues = null;
+    
+    private String initialAttribute = null;
 
     /**
      * The default value of the '{@link #getAutoOrientation() <em>Auto Orientation</em>}' attribute.
@@ -284,122 +284,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         return result.toString();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
-     */
-    public void initialize(String svgElementID) {
-        SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
-        Element elem = svgDoc.getElementById(svgElementID);
-
-        // Check whether the Element is a clone and not already created
-        if (elem == null && isClonedElement(svgElementID)) {
-            String originalID = svgElementID.substring(1, svgElementID.lastIndexOf("_"));
-
-            // System.out.println("Original: "+originalID+ " Clone: "+svgElementID);
-
-            Element original, clone;
-            original = svgDoc.getElementById(originalID);
-            clone = (Element) original.cloneNode(true); // We need a deep clone with all child
-                                                        // elements if exists (see the text-element
-                                                        // for example)
-            clone.setAttribute("id", svgElementID);     // Now the new id of the Element needs to be set
-
-            Node parentNode = original.getParentNode();
-            parentNode.appendChild(clone);// Append the new Element to the DOM-Tree
-//            elem = clone;// Set the pointer to the cloned element
-        }     
-        
-        // General initializing for each animation. 
-        //MapAnimations currentMapAnimation = Activator.getCurrentMapAnimation();
-        //System.out.println("Mapanimation pointer: "+currentMapAnimation);
-       // if (currentMapAnimation != null) {
-            // Check current key and set it to the element id if it doesn't exists.
-            if (getKey() == null || getKey().equals("")) {
-                setKey(svgElementID);
-            } else {
-                String jsonKey = getKey();
-                // Otherwise we have a link to another JSON value.
-                if (jsonKey.indexOf("$") == 0) {
-                    setKey(jsonKey.substring(1));
-                }
-//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
-//                    try {
-//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
-//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
-//                    } catch (NumberFormatException e) {
-//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
-//                    }
-//                }
-            }
-        
-            // Initialize values if necessary
-            if (getPath() == null) {
-                setPath("");
-            }
-            if (getAutoOrientation() == null) {
-                setAutoOrientation("");
-            }
-            if (getAnchorPoint() == null) {
-                setAnchorPoint("");
-            }
-            if (getInput() == null) {
-                setInput("");
-            }
-    
-            // Set auto_orientation per default to false
-            if (getAutoOrientation() == null || !getAutoOrientation().equalsIgnoreCase("true")) {
-                setAutoOrientation("false");
-            } else {
-                if (getAutoOrientation().equalsIgnoreCase("true")) {
-                    // This check is needed to get a valid boolean for later access
-                    setAutoOrientation("true");
-                }
-            }
-            // Initialize the anchorpoint
-            point = new Point();
-    
-            if (getAnchorPoint() != null && !getAnchorPoint().equals("")) {
-                if (Pattern.matches("[-]?\\d+([.]\\d+)?[,]{1}[-]?\\d+([.]\\d+)?", getAnchorPoint())) {
-                    String[] anchorPointValues = getAnchorPoint().split(",");
-                    point.setLocation(Float.parseFloat(anchorPointValues[0]), Float
-                            .parseFloat(anchorPointValues[1]));
-                }
-            }
-            
-            hashMapList = new HashMap<String, HashMap<String, String>>();
-
-            SVGOMPathElement path = SVGOMPathElement.class.cast(svgDoc.getElementById(getPath()));
-            ArrayList<String> inputArray, xPos, yPos, angle;
-            inputArray = MapAnimations.getInstance().attributeParser(getInput(),true);
-            float pathLength, stepLength;
-            pathLength = path.getTotalLength();
-            stepLength = pathLength / inputArray.size();
-            SVGPoint p, p_old = null;
-            xPos = new ArrayList<String>();
-            yPos = new ArrayList<String>();
-            angle = new ArrayList<String>();
-
-            for (int i = 0; i < inputArray.size(); i++) {
-                p = path.getPointAtLength(i * stepLength);
-                xPos.add(Float.toString(p.getX()));
-                yPos.add(Float.toString(p.getY()));
-                if (i > 0) {
-                    angle.add(computeAngle(p, p_old));
-                } else {
-                    angle.add("0");
-                }
-                p_old = p;
-            }
-
-            hashMapList.put("xPos", MapAnimations.getInstance().mapInputToOutput(inputArray, xPos));
-            hashMapList.put("yPos", MapAnimations.getInstance().mapInputToOutput(inputArray, yPos));
-            hashMapList.put("angle", MapAnimations.getInstance().mapInputToOutput(inputArray, angle));
-        
-    
-    }
-
+    //vorher SVGPoint
     private String computeAngle(SVGPoint p1, SVGPoint p2) {
         final double RADTODEG = 180.0 / Math.PI;
         double deltaX, deltaY, alpha;
@@ -426,17 +311,12 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         }
         return Double.toString(alpha);
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.kev.mapping.Animation#apply(de.cau.cs.kieler.sim.kiem.json.JSONObject,
-     * java.lang.String)
-     */
+    
     public void apply(Object jsonObject, String svgElementID) {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
@@ -448,57 +328,217 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         } else {
             jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
-
-        // Now apply the animation
+        
+        
+        // Now apply the animation.
         if (elem != null) {
             try {
-                String xValue, yValue, angleValue;
-                if (hashMapList.containsKey("xPos") && hashMapList.containsKey("yPos")) {
-                    xValue = hashMapList.get("xPos").get(jsonValue);
-                    yValue = hashMapList.get("yPos").get(jsonValue);
-                    angleValue = hashMapList.get("angle").get(jsonValue);
+                SVGLocatable locatable = (SVGLocatable) elem;
+                SVGOMPathElement path;
+                String pathValue, anchorPointValue, autoOrientationValue, angleValue, xValue, yValue, attribute;        
+                
+                if (getInput().equals("")) {
+                    // If no input is set, return the value of actual json key.
+                    pathValue = getPath();
+                    anchorPointValue = getAnchorPoint();
+                    autoOrientationValue = getAutoOrientation();
+                    
+                    if (pathValue.indexOf("$") == 0) {
+                        pathValue = ((JSONObject) jsonObject).optString(pathValue.substring(1));
+                    }
+                    if (anchorPointValue.indexOf("$") == 0) {
+                        anchorPointValue = ((JSONObject) jsonObject).optString(anchorPointValue.substring(1));
+                    }
+                    if (autoOrientationValue.indexOf("$") == 0) {
+                        autoOrientationValue = ((JSONObject) jsonObject).optString(autoOrientationValue.substring(1));
+                    }                    
+                    
+                    lastValues.path = pathValue;
+                    lastValues.autoOrientation = autoOrientationValue;
+                    lastValues.anchorPoint = anchorPointValue;
+                    float pivotX, pivotY;
 
-                    // System.out.println("xValue: "+xValue+" yValue: "+yValue);
-
-                    // BoundingBox is always the same. so get the x,y position of the upperleft
-                    // corner
-                    SVGLocatable locatable = (SVGLocatable) elem;
-
-                    if (xValue == null) {
-                        xValue = "0";
-                        if (yValue == null) {
-                            return;
-                        }
+                    if (anchorPointValue.equals("")) {
+                        pivotX = 0;
+                        pivotY = 0;
                     } else {
-                        xValue = Double.toString(Float.parseFloat(xValue)
-                                - locatable.getBBox().getX() - point.getX());
+
+                        if (anchorPointValue.equals("")) {
+                            pivotX = 0;
+                            pivotY = 0; 
+                        } else { 
+                            Scanner sc = new Scanner(anchorPointValue).useDelimiter(",").useLocale(Locale.US);
+                            if (sc.hasNextFloat()) {
+                                pivotX = sc.nextFloat();
+                                if (sc.hasNextFloat()) {
+                                    pivotY = sc.nextFloat();
+                                } else {
+                                    pivotX = 0;
+                                    pivotY = 0;
+                                }
+                            } else {
+                                pivotX = 0;
+                                pivotY = 0;
+                            }
+                        }
                     }
 
-                    if (yValue == null) {
-                        yValue = "0";
-                        if (xValue == null) {
+                    if (pathValue.equals("")) {
+                        return; //Without a valid path it makes no sense
+                    } else {
+                        path = SVGOMPathElement.class.cast(svgDoc.getElementById(pathValue));
+                        
+                        Double currentValue = Double.parseDouble(jsonValue) % path.getTotalLength();
+                        SVGPoint currentPoint;
+                        if (path != null) {
+                            currentPoint = path.getPointAtLength(currentValue.floatValue());//new point
+                        } else {
                             return;
                         }
-                    } else {
-                        yValue = Double.toString(Float.parseFloat(yValue)
-                                - locatable.getBBox().getY() - point.getY());
+       
+                        if (lastPoint != null) {
+                            angleValue = computeAngle(currentPoint, lastPoint);
+                        } else {
+                            angleValue = "";
+                        }
+
+                        xValue = Double.toString(currentPoint.getX() - locatable.getBBox().getX() - pivotX);
+                        yValue = Double.toString(currentPoint.getY() - locatable.getBBox().getY() - pivotY);                            
+
+                        lastPoint = currentPoint;
                     }
-
-                    String attrib = "translate(" + xValue + "," + yValue + ")";
-                    elem.setAttribute("transform", attrib);
-                    // System.out.println(elem.getAttribute("transform"));
-                    // System.out.println(elem.getAttribute("id")+": "+xValue+", "+yValue+" BBox: "+locatable.getBBox().getX()+
-                    // " "+locatable.getBBox().getY()+" Anchorpoint:"+anchorPoint.getX()+", "+anchorPoint.getY()+
-                    // "BBox-Width-Height: "+locatable.getBBox().getWidth()+
-                    // ", "+locatable.getBBox().getHeight());
-
+                    
+                    //if the set already contains the key it must have been modified
+                    if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                        attribute = elem.getAttribute("transform");
+                    } else {
+                        attribute = initialAttribute;
+                    } 
+                    attribute += "translate(" + xValue + "," + yValue + ")";
                     if (angleValue != null && !angleValue.equals("") && xValue != null
                             && !xValue.equals("") && yValue != null && !yValue.equals("")) {
-                        if (getAutoOrientation().equals("true")) {
-                            elem.setAttribute("transform", attrib + "rotate(" + angleValue
-                                    + "," + (locatable.getBBox().getX() + point.getX())
-                                    + "," + (locatable.getBBox().getY() + point.getY())
-                                    + ")");
+                        if (autoOrientationValue.equals("true")) {
+                            attribute += "rotate(" + angleValue + "," + (locatable.getBBox().getX() + pivotX) + "," + (locatable.getBBox().getY() + pivotY) + ")";
+//                            elem.setAttribute("transform", attrib + "rotate(" + angleValue
+//                                    + "," + (locatable.getBBox().getX() + pivotX)
+//                                    + "," + (locatable.getBBox().getY() + pivotY)
+//                                    + ")");
+                        } 
+                    }
+                    elem.setAttribute("transform", attribute);
+                } else {
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            pathValue = inputHashMap.get(inputValue).path;
+                            autoOrientationValue = inputHashMap.get(inputValue).autoOrientation;
+                            anchorPointValue = inputHashMap.get(inputValue).anchorPoint;
+                            
+                            if (pathValue.indexOf("$") == 0) {
+                                pathValue = ((JSONObject) jsonObject).optString(pathValue.substring(1));
+                            }
+                            if (autoOrientationValue.indexOf("$") == 0) {
+                                autoOrientationValue = ((JSONObject) jsonObject).optString(autoOrientationValue.substring(1));
+                            }                            
+                            if (anchorPointValue.indexOf("$") == 0) {
+                                anchorPointValue = ((JSONObject) jsonObject).optString(anchorPointValue.substring(1));
+                            }
+                            
+                            lastValues.path = pathValue;
+                            lastValues.autoOrientation = autoOrientationValue;
+                            lastValues.anchorPoint = anchorPointValue;
+                            float pivotX, pivotY;
+
+                            if (anchorPointValue.equals("")) {
+                                pivotX = 0;
+                                pivotY = 0;
+                            } else {
+
+                                if (anchorPointValue.equals("")) {
+                                    pivotX = 0;
+                                    pivotY = 0; 
+                                } else { 
+                                    Scanner sc = new Scanner(anchorPointValue).useDelimiter(",").useLocale(Locale.US);
+                                    if (sc.hasNextFloat()) {
+                                        pivotX = sc.nextFloat();
+                                        if (sc.hasNextFloat()) {
+                                            pivotY = sc.nextFloat();
+                                        } else {
+                                            pivotX = 0;
+                                            pivotY = 0;
+                                        }
+                                    } else {
+                                        pivotX = 0;
+                                        pivotY = 0;
+                                    }
+                                }
+                            }
+
+                            if (pathValue.equals("")) {
+                                return; //Without a valid path it makes no sense
+                            } else {
+                                path = SVGOMPathElement.class.cast(svgDoc.getElementById(pathValue));
+                                
+                                String currentValue, pathRange;
+                                
+                                pathRange = "0.." + Math.round(Math.floor(path.getTotalLength())); 
+                                currentValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, pathRange);
+
+                                SVGPoint currentPoint;
+                                if (path != null && !currentValue.equals("")) {
+                                    currentPoint = path.getPointAtLength(Float.parseFloat(currentValue));//new point
+                                } else {
+                                    return;
+                                }
+               
+                                if (lastPoint != null) {
+                                    angleValue = computeAngle(currentPoint, lastPoint);
+                                } else {
+                                    angleValue = "";
+                                }
+
+                                xValue = Double.toString(currentPoint.getX() - locatable.getBBox().getX() - pivotX);
+                                yValue = Double.toString(currentPoint.getY() - locatable.getBBox().getY() - pivotY);                            
+
+                                lastPoint = currentPoint;
+                            }
+                            
+                            
+
+//                            String attrib = "translate(" + xValue + "," + yValue + ")";
+//                            elem.setAttribute("transform", attrib);
+//                            if (angleValue != null && !angleValue.equals("") && xValue != null
+//                                    && !xValue.equals("") && yValue != null && !yValue.equals("")) {
+//                                if (autoOrientationValue.equals("true")) {
+//                                    elem.setAttribute("transform", attrib + "rotate(" + angleValue
+//                                            + "," + (locatable.getBBox().getX() + pivotX)
+//                                            + "," + (locatable.getBBox().getY() + pivotY)
+//                                            + ")");
+//                                } 
+//                            }
+                            //if the set already contains the key it must have been modified
+                            if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                                attribute = elem.getAttribute("transform");
+                            } else {
+                                attribute = initialAttribute;
+                            } 
+                            attribute += "translate(" + xValue + "," + yValue + ")";
+                            if (angleValue != null && !angleValue.equals("") && xValue != null
+                                    && !xValue.equals("") && yValue != null && !yValue.equals("")) {
+                                if (autoOrientationValue.equals("true")) {
+                                    attribute += "rotate(" + angleValue + "," + (locatable.getBBox().getX() + pivotX) + "," + (locatable.getBBox().getY() + pivotY) + ")";
+//                                    elem.setAttribute("transform", attrib + "rotate(" + angleValue
+//                                            + "," + (locatable.getBBox().getX() + pivotX)
+//                                            + "," + (locatable.getBBox().getY() + pivotY)
+//                                            + ")");
+                                } 
+                            }
+                            elem.setAttribute("transform", attribute);                            
+                            return;
                         }
                     }
                 }
@@ -513,4 +553,130 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
         }
     }
 
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.kev.mapping.Animation#initialize()
+     */
+    public void initialize(String svgElementID) {
+        SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
+        Element elem = svgDoc.getElementById(svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
+        if (elem != null) {
+            initialAttribute = elem.getAttribute("transform");
+        } else {
+            initialAttribute = "";
+        }
+        
+        
+        // Check whether the Element is a clone and not already created
+        if (elem == null && isClonedElement(svgElementID)) {
+            String originalID = svgElementID.substring(1, svgElementID.lastIndexOf("_"));
+
+            // System.out.println("Original: "+originalID+ " Clone: "+svgElementID);
+
+            Element original, clone;
+            original = svgDoc.getElementById(originalID);
+            clone = (Element) original.cloneNode(true); // We need a deep clone with all child
+            // elements if exists (see the text-element
+            // for example)
+            clone.setAttribute("id", svgElementID);     // Now the new id of the Element needs to be set
+
+            Node parentNode = original.getParentNode();
+            parentNode.appendChild(clone);// Append the new Element to the DOM-Tree
+            //            elem = clone;// Set the pointer to the cloned element
+        }     
+
+        // General initializing for each animation. 
+        //MapAnimations currentMapAnimation = Activator.getCurrentMapAnimation();
+        //System.out.println("Mapanimation pointer: "+currentMapAnimation);
+        // if (currentMapAnimation != null) {
+        // Check current key and set it to the element id if it doesn't exists.
+        if (getKey() == null || getKey().equals("")) {
+            setKey(svgElementID);
+        } else {
+            String jsonKey = getKey();
+            // Otherwise we have a link to another JSON value.
+            if (jsonKey.indexOf("$") == 0) {
+                setKey(jsonKey.substring(1));
+            }
+        }
+
+        // Initialize values if necessary
+        if (getPath() == null) {
+            setPath("");
+        }
+        if (getAutoOrientation() == null) {
+            setAutoOrientation("");
+        }
+        if (getAnchorPoint() == null) {
+            setAnchorPoint("");
+        }
+        if (getInput() == null) {
+            setInput("");
+        }
+
+
+        //Read all input values and set the x-range and y-range values to default values if necessary
+        ArrayList<String> inputList, autoOrientationList, pathList, anchorPointList;
+        inputList = currentMapAnimation.parser(getInput());
+        autoOrientationList = currentMapAnimation.parser(getAutoOrientation());
+        pathList = currentMapAnimation.parser(getPath());
+        anchorPointList = currentMapAnimation.parser(getAnchorPoint()); 
+
+        inputHashMap = new HashMap<String, MovePathAttributeRecord>();
+        MovePathAttributeRecord dataRecord;
+        for (int i = 0; i < inputList.size(); i++) {
+            dataRecord = this.new MovePathAttributeRecord();
+            if (i < autoOrientationList.size()) {
+                dataRecord.autoOrientation = autoOrientationList.get(i);
+            } else {
+                dataRecord.autoOrientation = "";
+            }
+
+            if (i < pathList.size()) {
+                dataRecord.path = pathList.get(i);
+            } else {
+                dataRecord.path = "";
+            }
+
+            if (i < anchorPointList.size()) {
+                dataRecord.anchorPoint = anchorPointList.get(i);
+            } else {
+                dataRecord.anchorPoint = "";
+            }
+            //Only add a value if it doesn't already exists
+            if (!inputHashMap.containsKey(inputList.get(i))) {
+                inputHashMap.put(inputList.get(i), dataRecord);
+            }
+        }
+        //Set default values for x and y-range if no input is set
+        if (inputList.size() == 0) {
+            if (autoOrientationList.size() > 0) {
+                setAutoOrientation(autoOrientationList.get(0));
+            } else {
+                setAutoOrientation("");
+            }
+
+            if (pathList.size() > 0) {
+                setPath(pathList.get(0));
+            } else {
+                setPath("");
+            }
+
+            if (anchorPointList.size() > 0) {
+                setAnchorPoint(anchorPointList.get(0));
+            } else {
+                setAnchorPoint("");
+            }
+        }
+
+        lastValues = new MovePathAttributeRecord();
+    }
+
+    private class MovePathAttributeRecord {
+        String anchorPoint, path, autoOrientation;
+    }
+    
 } // MovePathImpl

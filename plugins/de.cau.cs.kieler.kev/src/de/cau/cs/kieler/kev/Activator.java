@@ -21,7 +21,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 import de.cau.cs.kieler.kev.views.KevView;
 
 /**

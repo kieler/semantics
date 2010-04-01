@@ -16,6 +16,10 @@
     <animation xsi:type="mapping:Colorize" key="pRed.present" input="true" fillColor="red"/>
     <animation xsi:type="mapping:Colorize" key="pRed.present" input="false" fillColor="#626262"/>
   </svgElement>
+  <svgElement id="pRedRotate">
+    <animation xsi:type="mapping:Rotate" key="Counter_1" input="0..100" angleRange="0..360" anchorPoint="36, 39" />    
+  </svgElement>
+  
   <svgElement id="pGreen">
     <animation xsi:type="mapping:Colorize" key="pGreen.present" input="true" fillColor="lime"/>
     <animation xsi:type="mapping:Colorize" key="pGreen.present" input="false" fillColor="#626262"/>

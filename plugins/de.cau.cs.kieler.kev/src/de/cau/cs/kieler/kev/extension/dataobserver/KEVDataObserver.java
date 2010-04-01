@@ -55,6 +55,7 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
         if (MapAnimations.getInstance() != null) {
             MapAnimations.getInstance().doAnimations(jSONObject);
         }
+//        System.out.println(jSONObject);
 //        try {
 //            // For refreshing the svg document, we only need to be called every 10 ms.
 //            // TODO: Should be changeable in the Kev properties view
@@ -125,6 +126,11 @@ public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObj
                     true, null);
         }
 
+    }
+    
+    
+    public boolean isDeltaObserver() {
+        return false;
     }
     
     /**

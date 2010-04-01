@@ -3,11 +3,11 @@
   <svgElement id="water">
     <animation xsi:type="mapping:Move" input="0..50" xRange="$x_range" yRange="71..350" key="Counter_1" />
     <animation xsi:type="mapping:Move" input="51..100" yRange="350..71" key="Counter_1" />
-   <animation xsi:type="mapping:Opacity" key="Counter_1" input="0..50,51..100,110..120, 122..130" opacity="1..0,0..1,0.5,1" />
+   <animation xsi:type="mapping:Opacity" key="Counter_1" input="0..50;51..100;110..120; 122..130" opacity="1..0;0..1;0.5;1" />
   </svgElement>
   <svgElement id="text">
-    <animation xsi:type="mapping:Text" textValue="$textString" />
-    <animation xsi:type="mapping:Colorize" key="Counter_1" input="0,10,50" fillColor="red, green, blue" strokeColor="black,none,yellow"/>
+    <animation xsi:type="mapping:Text" input="0..30" textValue="$textString" key="Counter_1" />
+    <animation xsi:type="mapping:Colorize" key="Counter_1" input="0;10;50" fillColor="red; green; blue" strokeColor="black;none; yellow"/>
   </svgElement>
   
 </mapping:SVGFile>

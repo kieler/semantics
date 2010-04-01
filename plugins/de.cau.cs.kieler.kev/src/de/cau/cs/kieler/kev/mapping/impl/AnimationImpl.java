@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.Animation;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
-import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
 
 import org.eclipse.emf.common.notify.Notification;
 

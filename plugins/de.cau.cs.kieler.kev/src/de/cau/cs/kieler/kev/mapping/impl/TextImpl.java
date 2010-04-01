@@ -7,6 +7,7 @@ package de.cau.cs.kieler.kev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.Text;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
+
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -102,8 +104,10 @@ public class TextImpl extends AnimationImpl implements Text {
     /**
      * The hashmap for mapping the input values to output
      */
-    private HashMap<String, HashMap<String, String>> hashMapList = null;
+    private HashMap<String, TextAttributeRecord> inputHashMap = null;
 
+    private TextAttributeRecord lastValues = null;
+    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -277,13 +281,14 @@ public class TextImpl extends AnimationImpl implements Text {
         return result.toString();
     }
 
-    public void apply(final Object jsonObject, final String svgElementID) {
+    
+    public void apply(Object jsonObject, String svgElementID) {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
-        //String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
-        // Check whether JSON object is an JSONAArray.
+        // Check whether JSON object is an JSONAArray
         String jsonValue;
         if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
@@ -291,69 +296,123 @@ public class TextImpl extends AnimationImpl implements Text {
                 return;
             }
         } else {
-            jsonValue = ((JSONObject) jsonObject).optString(getKey());
+            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
         
-
-        if (getInput().equals("")) {
-            // If no input is set, return the value of actual json key
-            String textValue = getTextValue();
-            if (textValue != null) {
-                if (textValue.indexOf("$") == 0) {
-                    textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
-                }
-                // Now apply the animation
-                if (elem != null) {
-                    try {
-                        // We need to read the first child, to get the textcontent of the tag
-                        if (elem.getChildNodes() != null) {
-                            elem.getChildNodes().item(0).setNodeValue(textValue);
+        
+        // Now apply the animation.
+        if (elem != null) {
+            try {
+                String fontFamilyValue, fontSizeValue, textValue;        
+                
+                if (getInput().equals("")) {
+                    // If no input is set, return the value of actual json key.
+                    textValue = getTextValue();
+                    fontFamilyValue = getFontFamily();
+                    fontSizeValue = getFontSize();
+                    
+                    if (textValue.indexOf("$") == 0) {
+                        textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
+                    }
+                    if (fontFamilyValue.indexOf("$") == 0) {
+                        fontFamilyValue = ((JSONObject) jsonObject).optString(fontFamilyValue.substring(1));
+                    }
+                    if (fontSizeValue.indexOf("$") == 0) {
+                        fontSizeValue = ((JSONObject) jsonObject).optString(fontSizeValue.substring(1));
+                    }
+                    
+                    //We don't need to apply the Animation, if nothing has changed
+                    if (!textValue.equals(lastValues.textValue) || !fontFamilyValue.equals(lastValues.fontFamily) || !fontSizeValue.equals(lastValues.fontSize)) {
+                        lastValues.textValue = textValue;
+                        lastValues.fontFamily = fontFamilyValue;
+                        lastValues.fontSize = fontSizeValue;
+                        
+                        String styleAttrib = elem.getAttribute("style");
+                        if (fontFamilyValue.equals("")) {
+                            fontFamilyValue = "Arial";
+                        } else {
+                            styleAttrib = styleAttrib.replaceAll("font-size:[^;]*[;]?", "");
+                            styleAttrib = "font-size:" + fontFamilyValue + ";" + styleAttrib;
+                            
                         }
-                    } catch (DOMException e) {
-                        Activator
-                        .reportErrorMessage("Something went wrong, setting an DOM element.", e);
-                    }
-                }
-            }
-        } else if (jsonValue != null) {
-            String textValue = hashMapList.get("text_value").get(jsonValue);
-            if (textValue != null) {
-                if (textValue.indexOf("$") == 0) {
-                    textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
-                }
-                //System.out.println(textValue);
-                if (elem != null) {
-                    String styleAttrib, specialValue;
-                    styleAttrib = elem.getAttribute("style");
+                        if (fontSizeValue.equals("")) {
+                            fontSizeValue = "10";
+                        } else {
+                            styleAttrib = styleAttrib.replaceAll("font-family:[^;]*[;]?", "");
+                            styleAttrib = "font-family:" + fontSizeValue + ";" + styleAttrib;                            
+                        }
 
-                    specialValue = hashMapList.get("font_size").get(jsonValue);
-                    if (specialValue != null && !specialValue.equals("")) {
-                        styleAttrib = styleAttrib.replaceAll("font-size:[^;]*[;]?", "");
-                        styleAttrib = "font-size:" + specialValue + ";" + styleAttrib;
-                    }
-
-                    specialValue = hashMapList.get("font_family").get(jsonValue);
-                    if (specialValue != null && !specialValue.equals("")) {
-                        styleAttrib = styleAttrib.replaceAll("font-family:[^;]*[;]?", "");
-                        styleAttrib = "font-family:" + specialValue + ";" + styleAttrib;
-                    }
-                    //System.out.println(textValue);
-                    // Now apply the animation
-                    try {
-                        // Set the current style values for the element
                         elem.setAttribute("style", styleAttrib);
                         // We need to read the first child, to get the textcontent of the tag
                         if (elem.getChildNodes() != null) {
                             elem.getChildNodes().item(0).setNodeValue(textValue);
+                        } 
+                    }
+                } else {
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            textValue = inputHashMap.get(inputValue).textValue;
+                            fontFamilyValue = inputHashMap.get(inputValue).fontFamily;
+                            fontSizeValue = inputHashMap.get(inputValue).fontSize;
+                            
+                            if (textValue.indexOf("$") == 0) {
+                                textValue = ((JSONObject) jsonObject).optString(textValue.substring(1));
+                            }
+                            if (fontFamilyValue.indexOf("$") == 0) {
+                                fontFamilyValue = ((JSONObject) jsonObject).optString(fontFamilyValue.substring(1));
+                            }
+                            if (fontSizeValue.indexOf("$") == 0) {
+                                fontSizeValue = ((JSONObject) jsonObject).optString(fontSizeValue.substring(1));
+                            }
+
+                            //We don't need to apply the Animation, if nothing has changed
+                            if (!textValue.equals(lastValues.textValue) || !fontFamilyValue.equals(lastValues.fontFamily) || !fontSizeValue.equals(lastValues.fontSize)) {
+                                lastValues.textValue = textValue;
+                                lastValues.fontFamily = fontFamilyValue;
+                                lastValues.fontSize = fontSizeValue;
+                                
+                                String styleAttrib = elem.getAttribute("style");
+                                if (fontFamilyValue.equals("")) {
+                                    fontFamilyValue = "Arial";
+                                } else {
+                                    styleAttrib = styleAttrib.replaceAll("font-size:[^;]*[;]?", "");
+                                    styleAttrib = "font-size:" + fontFamilyValue + ";" + styleAttrib;
+                                    
+                                }
+                                if (fontSizeValue.equals("")) {
+                                    fontSizeValue = "10";
+                                } else {
+                                    styleAttrib = styleAttrib.replaceAll("font-family:[^;]*[;]?", "");
+                                    styleAttrib = "font-family:" + fontSizeValue + ";" + styleAttrib;                            
+                                }
+
+                                elem.setAttribute("style", styleAttrib);
+                                // We need to read the first child, to get the textcontent of the tag
+                                if (elem.getChildNodes() != null) {
+                                    elem.getChildNodes().item(0).setNodeValue(textValue);
+                                } 
+                            }
+                            return;
                         }
-                    } catch (DOMException e) {
-                        Activator.reportErrorMessage(
-                                "Something went wrong, setting an DOM element.", e);
                     }
                 }
+            } catch (DOMException e1) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
+                        e1);
             }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+                    + " doesn't exists in "
+                    + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
     }
+    
+    
 
     /*
      * (non-Javadoc)
@@ -373,14 +432,6 @@ public class TextImpl extends AnimationImpl implements Text {
                 if (jsonKey.indexOf("$") == 0) {
                     setKey(jsonKey.substring(1));
                 }
-//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
-//                    try {
-//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
-//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
-//                    } catch (NumberFormatException e) {
-//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
-//                    }
-//                }
             }
     
     
@@ -397,30 +448,67 @@ public class TextImpl extends AnimationImpl implements Text {
             if (getInput() == null) {
                 setInput("");
             }
-    
-            hashMapList = new HashMap<String, HashMap<String, String>>();
-    
-            ArrayList<String> inputList, outputList;
-            //inputList = currentMapAnimation.attributeParser(getInput(), true);
+            //Read all input values and set the x-range and y-range values to default values if necessary
+            ArrayList<String> inputList, fontFamilyList, fontSizeList, textValueList;
             inputList = currentMapAnimation.parser(getInput());
+            fontFamilyList = currentMapAnimation.parser(getFontFamily());
+            fontSizeList = currentMapAnimation.parser(getFontSize());
+            textValueList = currentMapAnimation.parser(getTextValue());
             
-            // map the text_values
-            //outputList = currentMapAnimation.attributeParser(getText_value(), false);
-            outputList = currentMapAnimation.parser(getTextValue());
-            hashMapList.put("text_value", currentMapAnimation.mapInputToOutput(inputList, outputList));
-    
-            // map the font_size values
-            //outputList = currentMapAnimation.attributeParser(getFont_size(), false);
-            outputList = currentMapAnimation.parser(getFontSize());
-            hashMapList.put("font_size", currentMapAnimation.mapInputToOutput(inputList, outputList));
-    
-            // map the font_family values
-            //outputList = currentMapAnimation.attributeParser(getFont_family(), false);
-            outputList = currentMapAnimation.parser(getFontFamily());
-            hashMapList.put("font_family", currentMapAnimation.mapInputToOutput(inputList, outputList));
-//            System.out.println(inputList);
-//            System.out.println(hashMapList);
+            inputHashMap = new HashMap<String, TextAttributeRecord>();
+            TextAttributeRecord dataRecord;
+            for (int i = 0; i < inputList.size(); i++) {
+                dataRecord = this.new TextAttributeRecord();
+                if (i < fontFamilyList.size()) {
+                    dataRecord.fontFamily = fontFamilyList.get(i);
+                } else {
+                    dataRecord.fontFamily = "";
+                }
+                
+                if (i < fontSizeList.size()) {
+                    dataRecord.fontSize = fontSizeList.get(i);
+                } else {
+                    dataRecord.fontSize = "";
+                }
+                
+                if (i < textValueList.size()) {
+                    dataRecord.textValue = textValueList.get(i);
+                } else {
+                    dataRecord.textValue = "";
+                }
+                //Only add a value if it doesn't already exists
+                if (!inputHashMap.containsKey(inputList.get(i))) {
+                    inputHashMap.put(inputList.get(i), dataRecord);
+                }
+            }
+            //Set default values for x and y-range if no input is set
+            if (inputList.size() == 0) {
+                if (fontFamilyList.size() > 0) {
+                    setFontFamily(fontFamilyList.get(0));
+                } else {
+                    setFontFamily("");
+                }
+                
+                if (fontSizeList.size() > 0) {
+                    setFontSize(fontSizeList.get(0));
+                } else {
+                    setFontSize("");
+                }
+                
+                if (textValueList.size() > 0) {
+                    setTextValue(textValueList.get(0));
+                } else {
+                    setTextValue("");
+                }                
+            }
+            
+            lastValues = new TextAttributeRecord();
+            
         }
+    }
+    
+    private class TextAttributeRecord {
+        String fontSize, fontFamily, textValue;
     }
 
 } // TextImpl

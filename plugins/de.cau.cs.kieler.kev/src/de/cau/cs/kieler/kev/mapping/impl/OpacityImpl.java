@@ -8,7 +8,6 @@ package de.cau.cs.kieler.kev.mapping.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
@@ -62,7 +61,9 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
     /**
      * The hashmap for mapping the input to the corresponding opacity values
      */
-    private HashMap<String, String> hashMapList = null;
+    private HashMap<String, OpacityAttributeRecord> inputHashMap = null;
+    
+    private OpacityAttributeRecord lastValues = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -170,77 +171,13 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
         return result.toString();
     }
 
-    /**
-     * Maps the current JSON value from an input range to an output range
-     * 
-     * @param jsonValue
-     * @param input
-     * @param output
-     * @return
-     */
-    private final double computeRangeValue(String jsonValue, String input, String output) {
-        double value;
-        if (input.matches("[-]?\\d+[.]{2,3}[-]?\\d+") && output.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
-            double leftInput, rightInput, leftOutput, rightOutput, diffInput, diffOutput, stepDistance;
-            boolean direction;
-            
-            Scanner s = new Scanner(input).useDelimiter("[.]{2,3}");
-            leftInput = s.nextFloat();
-            rightInput = s.nextFloat();
-
-            if (Math.min(leftInput, rightInput) == leftInput) {
-                direction = false;
-            } else {
-                direction = true;
-            }
-            
-            diffInput = Math.abs(leftInput - rightInput);
-
-            s = new Scanner(output).useDelimiter("[.]{2,3}");
-            leftOutput = s.nextFloat();
-            rightOutput = s.nextFloat();
-            
-            if (Math.min(leftOutput, rightOutput) == leftOutput) {
-                direction ^= false;
-            } else {
-                direction ^= true;
-            }
-
-            diffOutput = Math.abs(leftOutput - rightOutput);
-
-            // Compute the step-distance
-            if (direction) {
-                value = Math.abs(Double.parseDouble(jsonValue) - rightInput); 
-            } else {
-                value = Math.abs(Double.parseDouble(jsonValue) - leftInput); 
-            }
-            stepDistance = diffOutput / diffInput;
-            
-            
-            return (value * stepDistance);
-
-        } else if (input.matches("[-]?\\d+[.]{2,3}[-]?\\d+") && output.matches("[-]?\\d([.]\\d+)?")) {
-            return Double.parseDouble(output);
-        } else if (input.matches("[-]?\\d([.]\\d+)?") && output.matches("[-]?\\d+[.]{2,3}[-]?\\d+")) {
-            Scanner s = new Scanner(output).useDelimiter("[.]{2,3}");
-            return s.nextDouble();
-
-        } else {
-            return Double.NaN;
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.kev.mapping.Animation#apply(java.lang.Object, java.lang.String)
-     */
     public void apply(Object jsonObject, String svgElementID) {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
-        // Check whether JSON object is an JSONAArray.
+        // Check whether JSON object is an JSONAArray
         String jsonValue;
         if (getAccessID() != null && !getAccessID().equals("")) {
             jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
@@ -248,59 +185,82 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 return;
             }
         } else {
-            jsonValue = ((JSONObject) jsonObject).optString(getKey());
+            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
-
-        String opacityValue;
+        
+        
         // Now apply the animation.
         if (elem != null) {
             try {
+                String opacityValue, opacityRange;        
+                
                 if (getInput().equals("")) {
-                    // If no input is set, return the value of actual json key
-                    opacityValue = getOpacity();
-                    if (opacityValue.indexOf("$") == 0) {
-                        opacityValue = ((JSONObject) jsonObject).optString(opacityValue.substring(1));
-//                        System.out.println(svgElementID + " "+getKey()+" "+opacityValue);
+                    // If no input is set, return the value of actual json key.
+                    opacityRange = getOpacity();
+                    
+                    if (opacityRange.indexOf("$") == 0) {
+                        opacityRange = ((JSONObject) jsonObject).optString(opacityRange.substring(1));
+                    }
+                    
+                    opacityValue = currentMapAnimation.computeRangeValue(jsonValue, opacityRange, opacityRange);
+                    
+                    //We don't need to apply the Animation, if nothing has changed
+                    if (!opacityValue.equals(lastValues.opacity)) {
+                        lastValues.opacity = opacityValue;
+
+                        if (opacityValue.equals("")) {
+                            opacityValue = "1"; //Default value (visible)
+                        } 
+                        String attrib = elem.getAttribute("style");
+                        attrib = attrib.replaceAll("opacity:\\d+([.]\\d+)?[;]?", "");
+                        //elem.setAttribute("style", "opacity:" + Double.parseDouble(opacityValue) + ";" + attrib);
+                        elem.setAttribute("style", "opacity:" + opacityValue + ";" + attrib);
                     }
                 } else {
-                    opacityValue = hashMapList.get(jsonValue);
-                    if (opacityValue == null) {
-                        Iterator<String> iterator = hashMapList.keySet().iterator();
-                        String range;
-                        double rangeValue;
-                        opacityValue = "";
-                        while (iterator.hasNext()) {
-                            range = iterator.next();
-                            if (MapAnimations.getInstance().valueMatchesRange(jsonValue, range)) {
-                                opacityValue = hashMapList.get(range);
-                                rangeValue = computeRangeValue(jsonValue, range, opacityValue);
-                                if (rangeValue != Double.NaN) {
-                                    opacityValue = Double.toString(rangeValue);
-                                    break; // Now we found the right range so we can go on.
-                                } 
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            opacityRange = inputHashMap.get(inputValue).opacity;
+                            
+                            if (opacityRange.indexOf("$") == 0) {
+                                opacityRange = ((JSONObject) jsonObject).optString(opacityRange.substring(1));
                             }
-                        }
-                        if (opacityValue.equals("NaN")) {
-                            // Something went wrong with computing the range -> maybe wrong format
+
+                            //If the inputValue doesn't match the jsonValue exactly it must be an range, so  we need
+                            //to compute the correct values
+                            opacityValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, opacityRange);
+                            
+                            //We don't need to apply the Animation, because nothing has changed
+                            if (!opacityValue.equals(lastValues.opacity)) {
+                                lastValues.opacity = opacityValue;
+
+                                if (opacityValue.equals("")) {
+                                    opacityValue = "1"; //Default value (visible)
+                                } 
+                                String attrib = elem.getAttribute("style");
+                                attrib = attrib.replaceAll("opacity:\\d+([.]\\d+)?[;]?", "");
+                                //elem.setAttribute("style", "opacity:" + Double.parseDouble(opacityValue) + ";" + attrib);
+                                elem.setAttribute("style", "opacity:" + opacityValue + ";" + attrib);
+                            }
                             return;
                         }
                     }
                 }
-                //System.out.println("Opacity: "+svgElementID+ " Value: " +opacityValue+ " JSONValue: "+jsonValue+ " JSONKey: "+getKey());
-                String attrib = elem.getAttribute("style");
-                attrib = attrib.replaceAll("opacity:\\d+([.]\\d+)?[;]?", "");
-                elem.setAttribute("style", "opacity:" + Double.parseDouble(opacityValue) + ";"
-                        + attrib);
             } catch (DOMException e1) {
                 Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
                         e1);
             }
         } else {
-            Activator.reportErrorMessage("Opacity-Animation: SVGElement with ID: " + svgElementID
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
                     + " doesn't exists in "
                     + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
-    }
+    }    
+
 
     /*
      * (non-Javadoc)
@@ -320,14 +280,6 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 if (jsonKey.indexOf("$") == 0) {
                     setKey(jsonKey.substring(1));
                 }
-//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
-//                    try {
-//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
-//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
-//                    } catch (NumberFormatException e) {
-//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
-//                    }
-//                }
             }
             
             // Now initialize some animation specific stuff.
@@ -340,30 +292,44 @@ public class OpacityImpl extends AnimationImpl implements Opacity {
                 setInput("");
             }
 
-            ArrayList<String> outputList, inputList;
+            //Read all input values and set the x-range and y-range values to default values if necessary
+            ArrayList<String> inputList, opacityList;
             inputList = currentMapAnimation.parser(getInput());
-            outputList =  currentMapAnimation.parser(getOpacity());
-
-            hashMapList = currentMapAnimation.mapInputToOutput(inputList, outputList);
+            opacityList = currentMapAnimation.parser(getOpacity());
             
-            // Delete all values which were not needed anymore (eg. more input values than output values)
-            if (inputList.size() > hashMapList.size()) {
-//                System.out.println("Before: "+getInput());
-                setInput(inputList.subList(0, hashMapList.size()).toString().replaceAll("[\\[\\]]", ""));
-//                System.out.println("After: "+getInput());                
+            
+            inputHashMap = new HashMap<String, OpacityAttributeRecord>();
+            OpacityAttributeRecord dataRecord;
+            for (int i = 0; i < inputList.size(); i++) {
+                dataRecord = this.new OpacityAttributeRecord();
+                if (i < opacityList.size()) {
+                    dataRecord.opacity = opacityList.get(i);
+                } else {
+                    dataRecord.opacity = "";
+                }
+                
+                //Only add a value if it doesn't already exists
+                if (!inputHashMap.containsKey(inputList.get(i))) {
+                    inputHashMap.put(inputList.get(i), dataRecord);
+                }
             }
             
-            // Not nessasary i guess but it's more secure to proof the outputlist as well
-//            if (outputList.size() > hashMapList.size()) {
-//                setInput(outputList.subList(0, hashMapList.size()).toString().replaceAll("[\\[\\]]", ""));
-//            }
+            //Set default values for x and y-range if no input is set
+            if (inputList.size() == 0) {
+                if (opacityList.size() > 0) {
+                    setOpacity(opacityList.get(0));
+                } else {
+                    setOpacity("");
+                }
+            }
             
-//           
-//            System.out.println("Input: "+inputList);
-//            System.out.println("Output: "+outputList);
-//        
-//            System.out.println(hashMapList);
+            lastValues = new OpacityAttributeRecord();
         }
+    }
+    
+    //innerclass for animation specific values
+    private class OpacityAttributeRecord {
+        String opacity;
     }
 
 } // OpacityImpl

@@ -7,10 +7,9 @@ package de.cau.cs.kieler.kev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.Iterator;
 
-import org.json.JSONArray;
+
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.kev.Activator;
@@ -85,7 +84,11 @@ public class MoveImpl extends AnimationImpl implements Move {
     /**
      * The hashmap for mapping the input values to output
      */
-    private HashMap<String, HashMap<String, String>> hashMapList = null;
+    private HashMap<String, MoveAttributeRecord> inputHashMap = null;
+    
+    private MoveAttributeRecord lastValues = null;
+    
+    private String initialAttribute = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -227,47 +230,6 @@ public class MoveImpl extends AnimationImpl implements Move {
         return result.toString();
     }
 
-    // Computes the range values
-    private final ArrayList<String> computeRange(String value, int numberOfInputValues) {
-        ArrayList<String> range = new ArrayList<String>();
-        if (Pattern.matches("[-]?[\\d]+[.]{2,3}[-]?[\\d]+", value)) {
-            Scanner sc = new Scanner(value).useDelimiter("[.]+");
-            // We have exactly two values
-            float first, last, numberOfRangeValues;
-            first = sc.nextFloat();
-            last = sc.nextFloat();
-
-            numberOfRangeValues = Math.abs(first - last);
-            // System.out.println("first: "+first+ " last: "+last+
-            // " NumberofRangeValues:"+numberOfRangeValues);
-            float x = numberOfRangeValues / numberOfInputValues;
-            // System.out.println(x);
-            if (first <= last) {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString((x * i) + first));
-                }
-            } else {
-                for (int i = 0; i < numberOfInputValues; i++) {
-                    range.add(Float.toString(first - (x * i)));
-                }
-            }
-        } else if (Pattern.matches("([-]?\\d+([.]\\d+)?[,])+[-]?\\d+([.]\\d+)?", value)) {
-            // Get a list of comma separted values
-            range = MapAnimations.getInstance().attributeParser(value, false);
-        } else if (Pattern.matches("[-]?\\d+([.]\\d+)?", value)) {
-            for (int i = 0; i < numberOfInputValues; i++) {
-                range.add(value);
-            }
-        } else if (Pattern.matches("$([^$,])+", value)) {
-            // if the $-operator exists, we add the key to the range as it is
-            // System.out.println(value);
-            range.add(value);
-        }
-        // else we have invalid values for move x_range and y_range
-        // System.out.println("Range size:"+ range.size());
-        return range;
-    }
-
     /**
      * <!-- begin-user-doc -->
      * 
@@ -279,6 +241,7 @@ public class MoveImpl extends AnimationImpl implements Move {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
@@ -290,82 +253,103 @@ public class MoveImpl extends AnimationImpl implements Move {
         } else {
             jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
-
+        
+        
+        // Now apply the animation.
         if (elem != null) {
             try {
-                // BoundingBox is always the same. so get the x,y position of the upperleft
-                // corner
                 SVGLocatable locatable = (SVGLocatable) elem;
-
-                String xValue, yValue;
-                xValue = hashMapList.get("x_range").get(jsonValue);
-                yValue = hashMapList.get("y_range").get(jsonValue);
-
-                // Move-animation makes only sense if at least one of theses attributes exists
-                if (xValue != null || yValue != null) {
-
-                    if (xValue != null) {
-                        if (xValue.indexOf("$") == 0) {
-                            xValue = ((JSONObject) jsonObject).optString(xValue.substring(1));
-                            // System.out.println("stimmt "+xValue);
-                            if (xValue.equals("")) {
-                                xValue = "0"; // Set shift in x-direction to zero
-                            } else {
-                                // compute the distance between bounding box and origin
-                                try {
-                                    xValue = Float.toString(Float.parseFloat(xValue)
-                                            - locatable.getBBox().getX());
-                                    // System.out.println("OK");
-                                } catch (NumberFormatException e) {
-                                    Activator.reportErrorMessage(
-                                            "The x_range-attribute has a wrong number format!",
-                                            e);
-                                }
-                            }
-                        } else {
-                            // compute the distance between bounding box and origin
-                            try {
-                                xValue = Float.toString(Float.parseFloat(xValue)
-                                        - locatable.getBBox().getX());
-                            } catch (NumberFormatException e) {
-                                Activator.reportErrorMessage(
-                                        "The x_range-attribute has a wrong number format!", e);
-                            }
-                        }
-                    } else {
-                        xValue = "0"; // Set shift in x-direction to zero
+                String xValue, yValue, xRange, yRange, attribute;        
+                
+                if (getInput().equals("")) {
+                    // If no input is set, return the value of actual json key.
+                    xRange = getXRange();
+                    yRange = getYRange();
+                    
+                    if (xRange.indexOf("$") == 0) {
+                        xRange = ((JSONObject) jsonObject).optString(xRange.substring(1));
                     }
-
-                    if (yValue != null) {
-                        if (yValue.indexOf("$") == 0) {
-                            yValue = ((JSONObject) jsonObject).optString(yValue.substring(1));
-                            if (yValue.equals("")) {
-                                yValue = "0"; // Set shift in x-direction to zero
-                            } else {
-                                // compute the distance between bounding box and origin
-                                try {
-                                    yValue = Float.toString(Float.parseFloat(yValue)
-                                            - locatable.getBBox().getY());
-                                } catch (NumberFormatException e) {
-                                    Activator.reportErrorMessage(
-                                            "The y_range-attribute has a wrong number format!",
-                                            e);
-                                }
-                            }
-                        } else {
-                            // compute the distance between bounding box and origin
-                            try {
-                                yValue = Float.toString(Float.parseFloat(yValue)
-                                        - locatable.getBBox().getY());
-                            } catch (NumberFormatException e) {
-                                Activator.reportErrorMessage(
-                                        "The y_range-attribute has a wrong number format!", e);
-                            }
-                        }
-                    } else {
-                        yValue = "0"; // Set shift in x-direction to zero
+                    if (yRange.indexOf("$") == 0) {
+                        yRange = ((JSONObject) jsonObject).optString(yRange.substring(1));
                     }
-                    elem.setAttribute("transform", "translate(" + xValue + "," + yValue + ")");
+                    
+                    xValue = currentMapAnimation.computeRangeValue(jsonValue, xRange, xRange);
+                    yValue = currentMapAnimation.computeRangeValue(jsonValue, yRange, yRange);
+                    
+                    //We don't need to apply the Animation, if nothing has changed
+                    if (!xValue.equals(lastValues.xRange) || !yValue.equals(lastValues.yRange)) {
+                        lastValues.xRange = xValue;
+                        lastValues.yRange = yValue;
+
+                        if (xValue.equals("")) {
+                            xValue = "0";
+                        } else {
+                            xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+                        }
+                        if (yValue.equals("")) {
+                            yValue = "0";
+                        } else {
+                            yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
+                        }
+                        
+                        //if the set already contains the key it must have been modified
+                        if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                            attribute = elem.getAttribute("transform");
+                        } else {
+                            attribute = initialAttribute;
+                        }                         
+                        elem.setAttribute("transform", attribute + "translate(" + xValue + "," + yValue + ")");
+                    }
+                } else {
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            xRange = inputHashMap.get(inputValue).xRange;
+                            yRange = inputHashMap.get(inputValue).yRange;
+                            
+                            if (xRange.indexOf("$") == 0) {
+                                xRange = ((JSONObject) jsonObject).optString(xRange.substring(1));
+                            }
+                            if (yRange.indexOf("$") == 0) {
+                                yRange = ((JSONObject) jsonObject).optString(yRange.substring(1));
+                            }
+
+                            //If the inputValue doesn't match the jsonValue exactly it must be an range, so  we need
+                            //to compute the correct values
+                            xValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, xRange);
+                            yValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, yRange);
+
+                            //We don't need to apply the Animation, if nothing has changed
+                            if (!xValue.equals(lastValues.xRange) || !yValue.equals(lastValues.yRange)) {
+                                lastValues.xRange = xValue;
+                                lastValues.yRange = yValue;
+
+                                if (xValue.equals("")) {
+                                    xValue = "0";
+                                } else {
+                                    xValue = Float.toString(Float.parseFloat(xValue) - locatable.getBBox().getX());
+                                }
+                                if (yValue.equals("")) {
+                                    yValue = "0";
+                                } else {
+                                    yValue = Float.toString(Float.parseFloat(yValue) - locatable.getBBox().getY());
+                                }
+                                
+                                //if the set already contains the key it must have been modified
+                                if (currentMapAnimation.getModifiedKeyMap().containsKey(svgElementID)) {
+                                    attribute = elem.getAttribute("transform");
+                                } else {
+                                    attribute = initialAttribute;
+                                }                                 
+                                elem.setAttribute("transform", attribute + "translate(" + xValue + "," + yValue + ")");
+                            }
+                            return;
+                        }
+                    }
                 }
             } catch (DOMException e1) {
                 Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
@@ -385,6 +369,13 @@ public class MoveImpl extends AnimationImpl implements Move {
      */
     public void initialize(String svgElementID) {
         // General initializing for each animation. 
+        SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
+        Element elem = svgDoc.getElementById(svgElementID);
+        if (elem != null) {
+            initialAttribute = elem.getAttribute("transform");
+        } else {
+            initialAttribute = "";
+        }
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         if (currentMapAnimation != null) {
             // Check current key and set it to the element id if it doesn't exists.
@@ -406,28 +397,76 @@ public class MoveImpl extends AnimationImpl implements Move {
 //                }
             }
             
-            hashMapList = new HashMap<String, HashMap<String, String>>();
-    
+            
             // If the attribute is null, set the default value to the empty string
             if (getXRange() == null) {
                 setXRange("");
             }
-    
             if (getYRange() == null) {
                 setYRange("");
             }
             if (getInput() == null) {
                 setInput("");
+            }            
+            
+            //Read all input values and set the x-range and y-range values to default values if necessary
+            ArrayList<String> inputList, xRange, yRange;
+            inputList = currentMapAnimation.parser(getInput());
+            xRange = currentMapAnimation.parser(getXRange());
+            yRange = currentMapAnimation.parser(getYRange());
+            
+            inputHashMap = new HashMap<String, MoveAttributeRecord>();
+            MoveAttributeRecord dataRecord;
+            for (int i = 0; i < inputList.size(); i++) {
+                dataRecord = this.new MoveAttributeRecord();
+                if (i < xRange.size()) {
+                    dataRecord.xRange = xRange.get(i);
+                } else {
+                    dataRecord.xRange = "";
+                }
+                
+                if (i < yRange.size()) {
+                    dataRecord.yRange = yRange.get(i);
+                } else {
+                    dataRecord.yRange = "";
+                }
+                //Only add a value if it doesn't already exists
+                if (!inputHashMap.containsKey(inputList.get(i))) {
+                    inputHashMap.put(inputList.get(i), dataRecord);
+                }
             }
-    
-            ArrayList<String> outputList, inputList;
-            inputList = currentMapAnimation.attributeParser(getInput(), true);
-    
-            outputList = computeRange(getXRange(), inputList.size());
-            hashMapList.put("x_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = computeRange(getYRange(), inputList.size());
-            hashMapList.put("y_range", currentMapAnimation.mapInputToOutput(inputList, outputList));
+            //Set default values for x and y-range if no input is set
+            if (inputList.size() == 0) {
+                if (xRange.size() > 0) {
+                    setXRange(xRange.get(0));
+                } else {
+                    setXRange("");
+                }
+                
+                if (yRange.size() > 0) {
+                    setYRange(yRange.get(0));
+                } else {
+                    setYRange("");
+                }
+            }
+            
+            lastValues = new MoveAttributeRecord();
+            
         }
+        
+        
+        //System.out.println(currentMapAnimation.computeRangeValue("3", "0..100.35", "30..-22.3"));
+//        System.out.println(currentMapAnimation.computeRangeValue("3", "0..100", "-10..100"));
+//        System.out.println(currentMapAnimation.computeRangeValue("-1000", "-1003..3", "-10...100"));
+//        System.out.println(currentMapAnimation.computeRangeValue("3", "-10..100", "0..100"));
+//        System.out.println(currentMapAnimation.computeRangeValue("3", "-10..100", "-10..100"));
+//        System.out.println(currentMapAnimation.computeRangeValue("3", "-10..100", "-10..-20"));
+        
     }
-
+    
+    //innerclass for animation specific values
+    private class MoveAttributeRecord {
+        String xRange, yRange;
+    }
+    
 } // MoveImpl

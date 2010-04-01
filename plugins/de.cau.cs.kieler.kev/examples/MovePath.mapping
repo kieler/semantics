@@ -1,11 +1,98 @@
 <?xml version="1.0" encoding="ASCII"?>
 <mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.kev.mapping/1.0" filename="resource:examples/MovePathExample.svg">
   <svgElement id="rocket3">
-    <animation xsi:type="mapping:MovePath" input="1..360" path="path_top" anchorPoint="0,5" autoOrientation="false" key="Counter_1" />
-    <animation xsi:type="mapping:Opacity" input="1..10, 20..35" opacity="0.1,0.35" key="Counter_1" />
+    <animation xsi:type="mapping:MovePath" path="path_top" anchorPoint="0,5" autoOrientation="false" key="Counter_1" />
+    <animation xsi:type="mapping:Opacity" input="-1.3..10.5; 20..35; 50..100" opacity="0.1;0.35;0.3..0.9" key="Counter_1" />
     <animation xsi:type="mapping:Opacity" opacity="1" key="Counter_1" />    
   </svgElement>
   <svgElement id="rocket4">
     <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
   </svgElement>
-</mapping:SVGFile>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>  
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+    <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+    <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+    <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="1..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="40..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="60..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="80..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+  <svgElement id="rocket4">
+    <animation xsi:type="mapping:MovePath" input="100..360" path="path_bottom" key="Counter_1" anchorPoint="0,5" autoOrientation="true" />
+  </svgElement>
+ </mapping:SVGFile>

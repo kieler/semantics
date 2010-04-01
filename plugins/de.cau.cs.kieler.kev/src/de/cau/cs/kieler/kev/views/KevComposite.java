@@ -25,6 +25,8 @@ import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -242,12 +244,22 @@ public class KevComposite extends Composite implements ISelectionListener {
                                 saveSVGDocument();
                             }
                         }
-                        // System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY()
-                        // +" XOnScreenPos: "+ e.getXOnScreen() + " YOnScreenPos: "+
-                        // e.getYOnScreen());
+//                         System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY());
+//                         +" XOnScreenPos: "+ svgCanvas.getX() + " YOnScreenPos: "+
+//                         svgCanvas.getY());
                     }
 
                 });
+                
+//                svgCanvas.addMouseMotionListener(new MouseMotionAdapter() {
+//
+//                    public void mouseMoved(MouseEvent arg0) {
+//                        // TODO Auto-generated method stub
+//                        System.out.println(arg0.getX()+","+arg0.getY());
+//                    }
+//                    
+//                });
+                
             } else {// Otherwise set the sourcepath to the current document uri
                 svgCanvas = EclipseJSVGCanvas.getInstance();
                 // If svgDocument already exists, set the current svgURI for the refresh button

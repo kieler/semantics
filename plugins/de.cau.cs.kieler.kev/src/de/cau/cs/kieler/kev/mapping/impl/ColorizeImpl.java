@@ -7,8 +7,7 @@ package de.cau.cs.kieler.kev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.Iterator;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.Colorize;
@@ -24,7 +23,6 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -105,10 +103,10 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     /**
      * The hashmap for mapping the input values to output
      */
-    private HashMap<String, HashMap<String, String>> hashMapList = null;
-
-    private int arrayIndex = 0;
+    private HashMap<String, ColorizeAttributeRecord> inputHashMap = null;
     
+    private ColorizeAttributeRecord lastValues = null;
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -293,6 +291,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         // Get the current SVGDocument for manipulation.
         SVGDocument svgDoc = EclipseJSVGCanvas.getInstance().getSVGDocument();
         Element elem = svgDoc.getElementById(svgElementID);
+        MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
         // Check whether JSON object is an JSONAArray
         String jsonValue;
@@ -305,45 +304,126 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
             jsonValue = ((JSONObject) jsonObject).optString(getKey());    
         }
         
-//        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
-
+        
+        // Now apply the animation.
         if (elem != null) {
-            // Do RunnableAnimation
             try {
-                String styleAttribute, hashValue;
-                styleAttribute = elem.getAttribute("style");
-
-                hashValue = hashMapList.get("fill_color").get(jsonValue);
-                if (hashValue != null) {
-                    if (hashValue.indexOf("$") == 0) {
-                        hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+                String strokeColorValue, strokeWidthValue, fillColorValue;        
+                
+                if (getInput().equals("")) {
+                    // If no input is set, return the value of actual json key.
+                    strokeColorValue = getStrokeColor();
+                    strokeWidthValue = getStrokeWidth();
+                    fillColorValue = getFillColor();
+                    
+                    if (strokeColorValue.indexOf("$") == 0) {
+                        strokeColorValue = ((JSONObject) jsonObject).optString(strokeColorValue.substring(1));
                     }
-                    styleAttribute = styleAttribute.replaceAll("fill:[^;]*[;]?", "");
-                    styleAttribute = "fill:" + hashValue + ";" + styleAttribute;
-                }
-
-                hashValue = hashMapList.get("stroke_color").get(jsonValue);
-                if (hashValue != null) {
-                    if (hashValue.indexOf("$") == 0) {
-                        hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+                    if (strokeWidthValue.indexOf("$") == 0) {
+                        strokeWidthValue = ((JSONObject) jsonObject).optString(strokeWidthValue.substring(1));
                     }
-                    styleAttribute = styleAttribute.replaceAll("stroke:[^;]*[;]?", "");
-                    styleAttribute = "stroke:" + hashValue + ";" + styleAttribute;
-                }
-
-                hashValue = hashMapList.get("stroke_width").get(jsonValue);
-                if (hashValue != null) {
-                    if (hashValue.indexOf("$") == 0) {
-                        hashValue = ((JSONObject) jsonObject).optString(hashValue.substring(1));
+                    if (fillColorValue.indexOf("$") == 0) {
+                        fillColorValue = ((JSONObject) jsonObject).optString(fillColorValue.substring(1));
                     }
-                    styleAttribute = styleAttribute.replaceAll("stroke-width:[^;]*[;]?", "");
-                    styleAttribute = "stroke-width:" + hashValue + ";" + styleAttribute;
+                    
+                    //We don't need to apply the Animation, if nothing has changed
+                    if (!strokeColorValue.equals(lastValues.strokeColor) || !strokeWidthValue.equals(lastValues.strokeWidth) || !fillColorValue.equals(lastValues.strokeWidth)) {
+                        lastValues.strokeColor = strokeColorValue;
+                        lastValues.strokeWidth = strokeWidthValue;
+                        lastValues.fillColor = fillColorValue;
+                        String styleAttribute = elem.getAttribute("style");
+                        
+                        if (strokeColorValue.equals("")) {
+                            strokeColorValue = "none";
+                        } else {
+                            styleAttribute = styleAttribute.replaceAll("stroke:[^;]*[;]?", "");
+                            styleAttribute = "stroke:" + strokeColorValue + ";" + styleAttribute;                            
+                        }
+                        if (strokeWidthValue.equals("")) {
+                            strokeWidthValue = "none";
+                        } else {
+                            styleAttribute = styleAttribute.replaceAll("stroke-width:[^;]*[;]?", "");
+                            styleAttribute = "stroke-width:" + strokeWidthValue + ";" + styleAttribute;
+                        }
+                        if (fillColorValue.equals("")) {
+                            fillColorValue = "none";
+                        } else {
+                            styleAttribute = styleAttribute.replaceAll("fill:[^;]*[;]?", "");
+                            styleAttribute = "fill:" + fillColorValue + ";" + styleAttribute;
+                        }
+
+                        // Set the current style attribute
+                        elem.setAttribute("style", styleAttribute);
+                    }
+                } else {
+                    //Check whether the input matches the value
+                    Iterator<String> it = inputHashMap.keySet().iterator();
+                    String inputValue;
+                    
+                    while (it.hasNext()) {
+                        inputValue = it.next();
+                        if (jsonValue.equals(inputValue) || currentMapAnimation.valueMatchesRange(jsonValue, inputValue) ) {
+                            strokeColorValue = inputHashMap.get(inputValue).strokeColor;
+                            fillColorValue = inputHashMap.get(inputValue).fillColor;
+                            strokeWidthValue = inputHashMap.get(inputValue).strokeWidth;
+
+                            
+                            if (strokeColorValue.indexOf("$") == 0) {
+                                strokeColorValue = ((JSONObject) jsonObject).optString(strokeColorValue.substring(1));
+                            }
+                            if (fillColorValue.indexOf("$") == 0) {
+                                fillColorValue = ((JSONObject) jsonObject).optString(fillColorValue.substring(1));
+                            }
+                            if (strokeWidthValue.indexOf("$") == 0) {
+                                strokeWidthValue = ((JSONObject) jsonObject).optString(strokeWidthValue.substring(1));
+                            }
+
+                            //If the inputValue doesn't match the jsonValue exactly it must be an range, so  we need
+                            //to compute the correct values
+                            //strokeWidthValue = currentMapAnimation.computeRangeValue(jsonValue, inputValue, strokeWidthValue);
+
+                            //We don't need to apply the Animation, if nothing has changed
+                            if (!strokeColorValue.equals(lastValues.strokeColor) || !strokeWidthValue.equals(lastValues.strokeWidth) || !fillColorValue.equals(lastValues.strokeWidth)) {
+                                lastValues.strokeColor = strokeColorValue;
+                                lastValues.strokeWidth = strokeWidthValue;
+                                lastValues.fillColor = fillColorValue;
+                                String styleAttribute = elem.getAttribute("style");
+                                
+                                if (strokeColorValue.equals("")) {
+                                    strokeColorValue = "none";
+                                } else {
+                                    styleAttribute = styleAttribute.replaceAll("stroke:[^;]*[;]?", "");
+                                    styleAttribute = "stroke:" + strokeColorValue + ";" + styleAttribute;                            
+                                }
+                                if (strokeWidthValue.equals("")) {
+                                    strokeWidthValue = "none";
+                                } else {
+                                    styleAttribute = styleAttribute.replaceAll("stroke-width:[^;]*[;]?", "");
+                                    styleAttribute = "stroke-width:" + strokeWidthValue + ";" + styleAttribute;
+                                }
+                                if (fillColorValue.equals("")) {
+                                    fillColorValue = "none";
+                                } else {
+                                    styleAttribute = styleAttribute.replaceAll("fill:[^;]*[;]?", "");
+                                    styleAttribute = "fill:" + fillColorValue + ";" + styleAttribute;
+                                }
+
+                                // Set the current style attribute
+                                elem.setAttribute("style", styleAttribute);
+                            }
+
+                            return;
+                        }
+                    }
                 }
-                // Set the current style attribute
-                elem.setAttribute("style", styleAttribute);
             } catch (DOMException e1) {
-                Activator.reportErrorMessage("Something went wrong, setting an DOM element.");
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.",
+                        e1);
             }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: " + svgElementID
+                    + " doesn't exists in "
+                    + EclipseJSVGCanvas.getInstance().getSVGDocument().getURL());
         }
     }
 
@@ -365,19 +445,7 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
                 if (jsonKey.indexOf("$") == 0) {
                     setKey(jsonKey.substring(1));
                 }
-//                } else if (jsonKey.matches(".+\\[\\d+\\]")) { // This means the json key points to an json array
-//                    try {
-//                        this.arrayIndex = Integer.parseInt(jsonKey.substring(jsonKey.indexOf("["), jsonKey.indexOf("]")));
-//                        setKey(jsonKey.substring(0,jsonKey.indexOf("[")));
-//                    } catch (NumberFormatException e) {
-//                        Activator.reportErrorMessage("Error during parsing. Arrayindex of JSON Key is not a number! [" + jsonKey + "]");
-//                    }
-//                }
             }
-            
-            // Now initialize some animation specific stuff.
-            
-            this.hashMapList = new HashMap<String, HashMap<String, String>>();
             
             // Initialize values if necessary
             if (getFillColor() == null) {
@@ -393,21 +461,70 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
                 setInput("");
             }
             
+            
+            //Read all input values and set the x-range and y-range values to default values if necessary
+            ArrayList<String> inputList, fillColorList, strokeColorList, strokeWidthList;
+            inputList = currentMapAnimation.parser(getInput());
+            fillColorList = currentMapAnimation.parser(getFillColor());
+            strokeColorList = currentMapAnimation.parser(getStrokeColor());
+            strokeWidthList = currentMapAnimation.parser(getStrokeWidth());
+            
+            inputHashMap = new HashMap<String, ColorizeAttributeRecord>();
+            ColorizeAttributeRecord dataRecord;
+            for (int i = 0; i < inputList.size(); i++) {
+                dataRecord = this.new ColorizeAttributeRecord();
+                if (i < fillColorList.size()) {
+                    dataRecord.fillColor = fillColorList.get(i);
+                } else {
+                    dataRecord.fillColor = "";
+                }
+                
+                if (i < strokeColorList.size()) {
+                    dataRecord.strokeColor = strokeColorList.get(i);
+                } else {
+                    dataRecord.strokeColor = "";
+                }
+                
+                if (i < strokeWidthList.size()) {
+                    dataRecord.strokeWidth = strokeWidthList.get(i);
+                } else {
+                    dataRecord.strokeWidth = "";
+                }
+                
+                //Only add a value if it doesn't already exists
+                if (!inputHashMap.containsKey(inputList.get(i))) {
+                    inputHashMap.put(inputList.get(i), dataRecord);
+                }
+            }
+            //Set default values for x and y-range if no input is set
+            if (inputList.size() == 0) {
+                if (fillColorList.size() > 0) {
+                    setFillColor(fillColorList.get(0));
+                } else {
+                    setFillColor("");
+                }
+                
+                if (strokeColorList.size() > 0) {
+                    setStrokeColor(strokeColorList.get(0));
+                } else {
+                    setStrokeColor("");
+                }
 
-            ArrayList<String> outputList, inputList;
-            inputList = currentMapAnimation.attributeParser(getInput(), true);
+                if (strokeWidthList.size() > 0) {
+                    setStrokeWidth(strokeWidthList.get(0));
+                } else {
+                    setStrokeWidth("");
+                }
+            }
             
-            // Map input values to output values.
-            outputList = currentMapAnimation.attributeParser(getFillColor(), false);
-            this.hashMapList.put("fill_color", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = currentMapAnimation.attributeParser(getStrokeColor(), false);
-            this.hashMapList.put("stroke_color", currentMapAnimation.mapInputToOutput(inputList, outputList));
-            outputList = currentMapAnimation.attributeParser(getStrokeWidth(), false);
-            this.hashMapList.put("stroke_width", currentMapAnimation.mapInputToOutput(inputList, outputList));
+            lastValues = new ColorizeAttributeRecord();
             
-        } else {
-            Activator.reportErrorMessage("Mapping file hasn't been load properly - reload mapping file!");
         }
-
     }
+    
+    private class ColorizeAttributeRecord {
+        String fillColor, strokeWidth, strokeColor;
+    }
+    
+    
 } // ColorizeImpl
