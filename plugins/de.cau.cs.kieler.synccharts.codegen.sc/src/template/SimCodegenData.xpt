@@ -72,7 +72,7 @@ void setInputs(){
 		value = cJSON_GetObjectItem(child, "value");
 		«EXPAND setSignalValue FOR (Signal)signal-»
 		if (present != NULL && present->type) {
-			«((Signal)signal).parentState.id»_I_«((Signal)signal).name»();
+			«((State)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»();
 		}
 	}
   	«ENDIF-»
@@ -87,7 +87,7 @@ void printOutputs(){
 «ENDDEFINE»
 
 «DEFINE setSignalValue FOR Signal-»
-	«IF this.type == ValueType::INTEGER || this.type == ValueType::BOOL-»
+	«IF this.type == ValueType::INT || this.type == ValueType::BOOL-»
 		if (value != NULL && value->type == 3) { 
 			valSigInt[sig_«this.name»] = value->valueint;
 		}

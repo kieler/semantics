@@ -3,7 +3,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE trigger FOR Action-»
-	«IF !(this.triggersAndEffects == null)-»
+	«IF !(this.label == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
@@ -46,7 +46,7 @@
 
 «DEFINE effects FOR Action-»
 	«FOREACH this.effects AS effect-»
-		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
+		«IF ((Emission)effect).signal.type == ValueType::INT-»
 			«EXPAND valuedIntegerSignal FOR ((Emission)effect)-»
 		«ELSEIF ((Emission)effect).signal.type == ValueType::BOOL-»
 			«EXPAND valuedBooleanSignal FOR ((Emission)effect)-»
@@ -113,7 +113,7 @@
 		«EXPAND syncChartsOpToCOp FOR this.operator-»
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
 	«ELSEIF this.operator == OperatorType::VAL-»
-		«IF this.parentExpression.operator == OperatorType::PRE-»
+		«IF ((ComplexExpression)(this.eContainer)).operator == OperatorType::PRE-»
 			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 		«ELSE-»
 			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
