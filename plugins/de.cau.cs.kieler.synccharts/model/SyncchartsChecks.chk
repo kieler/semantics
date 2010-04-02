@@ -64,7 +64,7 @@ context State if (signals.size>0)
    this.signals.forAll(s| s.name.length>0);
 
 // TODO: verify those check conditions when variables work
-context State if (interfaceDeclaration.text.length > 0)
+context State if (interfaceDeclaration.length > 0)
   WARNING "The Interfacedeclaration is not empty but there are no signals and variables defined" :
   	(!this.signals.isEmpty) || (!this.regions.select(r | (!r.variables.isEmpty || !r.signals.isEmpty)).isEmpty);
    
@@ -113,7 +113,7 @@ context Region if(parentState != null && parentState.regions.size > 1)
 
 // ================================================================================================
 // Signals
-context Signal if (eContainer != null && (eContainer.eContainer) != null && (eContainer.eContainer.eContainer) != null) 
+context Signal if (parentState != null && parentState.parentRegion != null && parentState.parentRegion.parentState != null) 
     ERROR "Only signals in the root state may be global inputs or outputs." :
 	((!isInput) && (!isOutput));
 
@@ -123,20 +123,23 @@ context Signal if ((initialValue == null) || (initialValue == ""))
 	
 context Signal
 	ERROR "Signals need unique names in a State or Region declaration." :
-	( eContainer != null && ((Region)eContainer).signals.forAll(s| (s.name != name) || (s == this)) ||
-	  ((State)eContainer) != null && ((State)eContainer).signals.forAll(s| (s.name != name) || (s == this)) )
+	( parentRegion != null && parentRegion.signals.forAll(s| (s.name != name) || (s == this)) ||
+	  parentState != null && parentState.signals.forAll(s| (s.name != name) || (s == this)) )
 	;
 		
 context Signal if (isInput || (! isOutput && ! isInput))
 	WARNING "Signal never read." :
-	( eContainer != null && eContainer.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0 );
+	( parentState != null && parentState.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0);
 
 context Signal if (isOutput || (! isInput && ! isOutput))
 	WARNING "Signal never emitted." :
-	( eContainer != null && eContainer.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0 );
+	( parentState != null && parentState.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0 ) ||
+	( parentRegion != null && parentRegion.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0);
+
 context Variable
 	ERROR "Variables need unique names in a Region declaration." :
-	(((Region)eContainer) != null && ((Region)eContainer).signals.forAll(s| (s.name != name) || (s == this)) )
+	( parentRegion != null && parentRegion.signals.forAll(s| (s.name != name) || (s == this)) )
 	;
 
 context ValuedObject
@@ -197,12 +200,12 @@ context Emission if (!(signal.type == ValueType::PURE)) ERROR "Valued signals mu
 // ================================================================================================
 // Actions
 
-context Action if (label != null && label.text.trim().compareTo("") != 0 ) 
+context Action if (triggersAndEffects != null && triggersAndEffects.trim().compareTo("") != 0 ) 
     ERROR "Triggers and Effects String has not correctly been parsed yet! Action children are empty
            but triggers and effects string contains text." :
     (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
     
 // Only Transitions can have a triggers without effects
-context Action if (this.eContainer.metaType==State)
+context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
 	ERROR "Trigger must have an effect." :
 	effects.size > 0;
