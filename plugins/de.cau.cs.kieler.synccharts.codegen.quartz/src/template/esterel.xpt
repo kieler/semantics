@@ -101,7 +101,7 @@ end module
 
 «DEFINE Effect FOR Emission»emit «signal.name»;«ENDDEFINE»
 «DEFINE Effect FOR Assignment»«variable» := «expression»;«ENDDEFINE»
-«DEFINE Effect FOR HostCode»«code»;«ENDDEFINE»
+«DEFINE Effect FOR TextualCode»«code»;«ENDDEFINE»
 «DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
 «REM» Trigger «ENDREM»
 «DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
@@ -112,7 +112,7 @@ end module
 «DEFINE Trigger FOR ComplexExpression»
   («FOREACH subExpressions AS sub SEPARATOR " " + operator.toString() + " "» «EXPAND Trigger FOR sub» «ENDFOREACH»)
 «ENDDEFINE»
-«DEFINE Trigger FOR HostCode»«code»«ENDDEFINE»
+«DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
 «DEFINE Trigger FOR Expression»//ERROR: unknown expression«ENDDEFINE»
 
 
