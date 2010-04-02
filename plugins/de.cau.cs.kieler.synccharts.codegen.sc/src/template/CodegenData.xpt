@@ -24,7 +24,7 @@ void setInputs(){
   «FOREACH allSignals(this.innerStates.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
     if ((1<<i) & rand) {
-      «((State)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»();
+      «((Signal)signal).parentState.id»_I_«((Signal)signal).name»();
     }
     i++;
   	«ENDIF-»

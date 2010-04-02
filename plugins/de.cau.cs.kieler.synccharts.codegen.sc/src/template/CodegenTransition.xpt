@@ -39,7 +39,7 @@
 «ENDDEFINE»
 
 «DEFINE triggersAndEffects FOR Transition-»
-	«IF (this.label != null)-»
+	«IF (this.triggersAndEffects != null)-»
 		«IF (this.trigger != null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
