@@ -31,7 +31,7 @@ context State if (type == StateType::CONDITIONAL)
 
 context State if (type != StateType::REFERENCE && type != StateType::TEXTUAL) 
 	ERROR "Only textual or reference states may contain body text!" :
-	(bodyText == null) || (bodyText.code.matches("\\s*"));
+	(bodyText == null) || (bodyText.matches("\\s*")); 
 // ================================================================================================
 // General States 
 context State if (parentRegion != null && parentRegion.parentState != null && isInitial == false) // not checked for root state 
