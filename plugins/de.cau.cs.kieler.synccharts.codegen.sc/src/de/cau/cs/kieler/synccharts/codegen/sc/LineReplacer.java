@@ -110,7 +110,8 @@ public class LineReplacer {
      * @throws IOException
      */
     public void replace() throws IOException {
-        File tempFile = new File("temp");
+        String newFile = file.getParent() + File.separator + "temp.c";
+        File tempFile = new File(newFile);
         String line;
 
         fw = new FileWriter(tempFile);

@@ -26,16 +26,8 @@ public class PriorityOptimizer {
      *             if file does not exist
      */
     public void optimize() throws IOException {
+        priorities.clear();
         insertPriorities();
-        System.out.println(priorities.size());
-        System.out.println(priorities);
-        for (Integer i : priorities) {
-            System.out.print(i + "\t");
-        }
-        System.out.println();
-        for (Integer i : priorities) {
-            System.out.print(priorities.indexOf(i) + "\t");
-        }
         setRules();
         lineReplacer.setFile(file);
         lineReplacer.replace();

@@ -174,13 +174,14 @@ public class WorkflowGenerator {
         } else {
             file = new File(outPath + filename + ".c");
         }
+        file.setExecutable(true);
         beautifyFiles(file);
-//        PriorityOptimizer pO = new PriorityOptimizer(file);
-//        try {
-//            pO.optimize();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        PriorityOptimizer pO = new PriorityOptimizer(file);
+        try {
+            pO.optimize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {

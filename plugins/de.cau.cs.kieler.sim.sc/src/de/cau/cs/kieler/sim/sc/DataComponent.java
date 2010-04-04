@@ -70,7 +70,6 @@ public class DataComponent extends AbstractAutomatedProducer {
         try {
             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
         } catch (IOException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         }
 
