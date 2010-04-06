@@ -56,7 +56,7 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * gathers results and terminates the execution.
  * 
  * @author soh
- * @kieler.rating 2010-02-01 proposed yellow
+ * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public final class AutomationManager implements StatusListener {
 
@@ -886,6 +886,7 @@ public final class AutomationManager implements StatusListener {
             } catch (InterruptedException e0) {
                 e0.printStackTrace();
             }
+            waiter.cancel();
         }
     }
 
