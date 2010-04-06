@@ -17,35 +17,42 @@ package de.cau.cs.kieler.sim.kiem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISaveablePart2;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
+import org.osgi.framework.Bundle;
+import org.eclipse.core.runtime.FileLocator;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -53,7 +60,6 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
  * This activator class controls the life cycle of the KiemPlugin. It also
@@ -97,6 +103,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static KiemPlugin plugin;
+    
+    /** The parent shell iff a GUI is used. This shell may be used to prompt a 
+     * save-dialog to save execution files. UI's should listen to the KiemEvent CALL_FOR_SHELL
+     * and then call the method setShell() of KiemPlugin. */
+    private static Shell parentShell;
 
     /** List of available dataProducers and dataObservers. */
     private List<AbstractDataComponent> dataComponentList;
@@ -110,11 +121,17 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** Current value of the aimed step duration in ms. */
     private int aimedStepDuration;
 
-    /** The KIEM view instance. */
-    private KiemView kIEMViewInstance;
-
     /** The event manager to handle notification of DataComponents. */
     private EventManager eventManager;
+    
+    /** The current master DataComponent if any. */
+    private DataComponentWrapper currentMaster;
+
+    /** True iff table or properties where modified. */
+    private boolean isDirty;
+
+    /** The currently opened file if any, null otherwise. */
+    private IPath currentFile;
 
     // -------------------------------------------------------------------------
 
@@ -132,7 +149,22 @@ public class KiemPlugin extends AbstractUIPlugin {
         updateEventManager();
         execution = null;
         aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
-        kIEMViewInstance = null;
+        this.currentMaster = null;
+        this.currentFile = null;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the parent shell that KIEM shoudl use to display user dialogs.
+     * 
+     * @param parentShellParam
+     *            the new shell
+     */
+    public void setShell(Shell parentShellParam) {
+        if (parentShellParam != null) {
+            KiemPlugin.parentShell = parentShellParam;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -225,36 +257,6 @@ public class KiemPlugin extends AbstractUIPlugin {
      * plug-ins where not loaded) then an error message will bring this to the
      * user's attention. <BR>
      * <BR>
-     * This method is called from the KiemProxyEditor that acts as a proxy for
-     * passing the editoInput from the Workbench to the KiemView.
-     * 
-     * @param editorInput
-     *            the file editor input to open
-     */
-    public void openFile(final IEditorInput editorInput) {
-        if (!(editorInput instanceof IFileEditorInput)) {
-            throw new RuntimeException(
-                    "Invalid Input: Must be IFileEditorInput");
-        }
-
-        IPath executionFile = ((IFileEditorInput) editorInput).getFile()
-                .getFullPath();
-        try {
-            openFile(executionFile, false);
-        } catch (IOException e0) {
-            // TODO Auto-generated catch block
-            // most likely can't happen
-            e0.printStackTrace();
-        }
-    }
-
-    /**
-     * Opens an Execution File (*.execution) and tries to update the
-     * dataComponentWrapperList according to this file. If the components or
-     * properties loaded do not exist in the environment (e.g., the according
-     * plug-ins where not loaded) then an error message will bring this to the
-     * user's attention. <BR>
-     * <BR>
      * This method can be called from another plug-in and is part of the KIEM
      * API.
      * 
@@ -291,6 +293,38 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Opens an Execution File (*.execution) and tries to update the
+     * dataComponentWrapperList according to this file. If the components or
+     * properties loaded do not exist in the environment (e.g., the according
+     * plug-ins where not loaded) then an error message will bring this to the
+     * user's attention. <BR>
+     * <BR>
+     * This method is called from the KiemProxyEditor that acts as a proxy for
+     * passing the editoInput from the Workbench to the KiemView.
+     * 
+     * @param editorInput
+     *            the file editor input to open
+     */
+    public void openFile(final IEditorInput editorInput) {
+        if (!(editorInput instanceof IFileEditorInput)) {
+            throw new RuntimeException(
+                    "Invalid Input: Must be IFileEditorInput");
+        }
+
+        IPath executionFile = ((IFileEditorInput) editorInput).getFile()
+                .getFullPath();
+        try {
+            openFile(executionFile, false);
+        } catch (IOException e0) {
+            // TODO Auto-generated catch block
+            // most likely can't happen
+            e0.printStackTrace();
+        }
+    }
+    
     /**
      * Opens an Execution File (*.execution) and tries to update the
      * dataComponentWrapperList according to this file. If the components or
@@ -330,6 +364,25 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     /**
+     * Opens an Execution File (*.execution) and tries to update the
+     * dataComponentWrapperList according to this file. If the components or
+     * properties loaded do not exist in the environment (e.g., the according
+     * plug-ins where not loaded) then an error message will bring this to the
+     * user's attention. <BR>
+     * <BR>
+     * This method can be called from another plug-in and is part of the KIEM
+     * API.
+     * 
+     * @param executionFile
+     *            the execution file to open
+     * @param readOnly
+     *            the readonly flag indicates that the file is locked for
+     *            writing
+     * 
+     * @throws IOException
+     *             if the file was not found
+     */
+    /**
      * Open a file from a given InputStream.
      * 
      * @param executionFile
@@ -353,7 +406,16 @@ public class KiemPlugin extends AbstractUIPlugin {
                     return;
                 }
 
-                if (kIEMViewInstance.promptToSaveOnClose() == ISaveablePart2.NO) {
+                // ask for a shell
+                if (eventManager != null) {
+                    eventManager.notify(new KiemEvent(KiemEvent.CALL_FOR_SHELL));
+                }
+                
+                //FIXME: scheduling problem, race condition!
+                
+                // if no one provided a shell or the user does'nt have changes to save...
+                if (KiemPlugin.parentShell == null
+                    || promptToSaveOnClose(KiemPlugin.parentShell) == ISaveablePart2.NO) {
                     boolean loadSuccessful = false;
                     // safely clear (w/ calling DataComponent destructors)
                     clearDataComponentWrapperList();
@@ -389,20 +451,17 @@ public class KiemPlugin extends AbstractUIPlugin {
                         showError(null, null, e, false);
                         e.printStackTrace();
                     }
-                    // update the KiemView table
-                    kIEMViewInstance.updateViewAsync();
-                    // reset the KIEM view (in cases it hangs because
-                    // of faulty components)
-                    kIEMViewInstance.setAllEnabled(true);
-                    kIEMViewInstance
-                            .updateEnabledEnabledDisabledUpDownAddDelete();
+                    if (eventManager != null) {
+                        // update the KiemView table
+                        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
+                        // reset the KIEM view (in cases it hangs because
+                        // of faulty components)
+                        eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+                    }
                     // update the current file, dirty flag
-                    kIEMViewInstance.setCurrentFile(executionFile);
-                    kIEMViewInstance.checkForSingleEnabledMaster(false);
-                    kIEMViewInstance.getAimedStepDurationTextField().update();
-                    // update the KiemView table
-                    kIEMViewInstance.updateViewAsync();
-                    kIEMViewInstance.setDirty(false);
+                    setCurrentFile(executionFile);
+                    checkForSingleEnabledMaster(false);
+                    setDirty(false);
                     if (loadSuccessful) {
                         if (eventManager != null) {
                             eventManager.notify(new KiemEvent(KiemEvent.LOAD,
@@ -414,14 +473,184 @@ public class KiemPlugin extends AbstractUIPlugin {
                         // whenever the
                         // user clicks to save the schedule
                         if (readOnly) {
-                            kIEMViewInstance.setCurrentFile(null);
+                            setCurrentFile(null);
                         }
                     }
                 }
             }
         });
     }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the file name (without possible extension) of the currently opened
+     * file, if any, or "noname" otherwise.
+     * 
+     * @return the active project name
+     */
+    public String getActiveProjectName() {
+        try {
+            IWorkbenchPage page = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getActivePage();
+            String name = page.getActiveEditor().getEditorInput().getName();
+            int i = name.indexOf(".");
+            if (i > -1) {
+                name = name.substring(0, i);
+            }
+            return name;
+        } catch (Exception e) {
+            return "noname";
+        }
+    }
 
+    
+    // -------------------------------------------------------------------------
+    /**
+     * Sets the current file.
+     * 
+     * @param currentFileParam
+     *            the new currently opened file
+     */
+    public void setCurrentFile(final IPath currentFileParam) {
+        this.currentFile = currentFileParam;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Prompt to save on close if the current file was modified (is dirty).
+     * 
+     * @param parentShellParam
+     *            the parent shell 
+     * @return an int value indicating the users decision
+     */
+    public int promptToSaveOnClose(Shell parentShellParam) {
+        this.setShell(parentShellParam);
+        if (this.isDirty()) {
+            String fileName = "noname.execution";
+            if (KiemPlugin.getDefault().getCurrentFile() != null) {
+                fileName = KiemPlugin.getDefault().getCurrentFile().toFile().getName();
+            }
+
+            String[] buttons = { "Yes", "No", "Cancel" };
+
+            MessageDialog dlg = new MessageDialog(parentShell,
+                    "Save Execution", null, "'" + fileName
+                    + "' has been modified. Save changes?",
+                    MessageDialog.QUESTION, buttons, 2);
+
+            int answer = dlg.open();
+
+            if (answer == 0) { // YES
+                // try to save or open saveas dialog
+                this.doSave(null, parentShellParam);
+                // check is saved
+                if (this.isDirty()) {
+                    // user has not saved (e.g. canceled saving)
+                    return ISaveablePart2.CANCEL;
+                } else {
+                    // user has saved, its safe to close view
+                    return ISaveablePart2.NO;
+                }
+            } else if (answer == 1) { // NO
+                return ISaveablePart2.NO;
+            }
+            // CANCEL
+            return ISaveablePart2.CANCEL;
+        } else {
+            return ISaveablePart2.NO;
+        }
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the current file.
+     * 
+     * @return the current file
+     */
+    public IPath getCurrentFile() {
+        return this.currentFile;
+    }
+
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the current master.
+     * 
+     * @return the current file
+     */
+    public DataComponentWrapper getCurrentMaster() {
+        return this.currentMaster;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Check for single enabled master. This is just a wrapper for the method
+     * {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
+     * 
+     * @param silent
+     *            if true, the warning dialog will be suppressed
+     * 
+     */
+    public void checkForSingleEnabledMaster(final boolean silent) {
+        checkForSingleEnabledMaster(silent, null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Check the current selection (enabled DataComponentWrappers) for a just a
+     * single enabled master. If any second enabled master is found it will be
+     * disabled and the user is notified with a warning dialog - depending on
+     * the silent-flag.
+     * 
+     * @param silent
+     *            if true, the warning dialog will be suppressed
+     * @param dataComponentWrapper
+     *            the DataComponentWrapper that is allowed to be the master or
+     *            null
+     */
+    public void checkForSingleEnabledMaster(final boolean silent,
+            final DataComponentWrapper dataComponentWrapper) {
+        currentMaster = null;
+        if (dataComponentWrapper != null && dataComponentWrapper.isMaster()
+                && dataComponentWrapper.isEnabled()) {
+            // preset NEW selection
+            currentMaster = dataComponentWrapper;
+        }
+
+        for (int c = 0; c < getDataComponentWrapperList().size(); c++) {
+            DataComponentWrapper dataComponentTemp = this
+                    .getDataComponentWrapperList().get(c);
+            dataComponentTemp.getDataComponent().masterSetKIEMInstance(null);
+
+            if (dataComponentTemp.isMaster() && dataComponentTemp.isEnabled()
+                    && dataComponentTemp != currentMaster) {
+                if (currentMaster == null) {
+                    currentMaster = dataComponentTemp;
+                } else {
+                    if (!silent) {
+                        showWarning(Messages.mWarningAtMostOneMaster.replace(
+                                "%COMPONENTNAME", dataComponentTemp.getName()));
+                    }
+                    // disable it//
+                    dataComponentTemp.setEnabled(false);
+                    // if this method is called during initial loading
+                    // then we do not want to set the dirty flag
+                    if (!silent) {
+                        setDirty(true);
+                    }
+                    this.updateViewAsync();
+                }
+            }
+        }
+        if (currentMaster != null) {
+            currentMaster.getDataComponent().masterSetKIEMInstance(this);
+        }
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -547,60 +776,10 @@ public class KiemPlugin extends AbstractUIPlugin {
      * used to update the KiemView table from within the execution thread.
      */
     public void updateViewAsync() {
-        if (this.kIEMViewInstance != null) {
-            this.kIEMViewInstance.updateViewAsync();
-
+        if (eventManager != null) {
+            // update the KiemView table
+            eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         }
-    }
-
-    /**
-     * Updates the steps in the Step text field asynchronously. This method is
-     * used to update the KiemView steps from within the execution thread.
-     */
-    public void updateStepsAsync() {
-        if (this.kIEMViewInstance != null) {
-            this.kIEMViewInstance.updateStepsAsync();
-
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the view focus to the KiemView instance. This method is called by
-     * the AimedStepDuration text field if the used wants to leave its focus by
-     * pressing [ENTER].
-     */
-    public void setViewFocus() {
-        if (this.kIEMViewInstance != null) {
-            this.kIEMViewInstance.setFocus();
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the KiemView instance.
-     * 
-     * @return the KiemView instance
-     */
-    public KiemView getKIEMViewInstance() {
-        return this.kIEMViewInstance;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the KIEM view instance. This method is called by the constructor of
-     * the Class {@link de.cau.cs.kieler.sim.kiem.ui.views.KiemView} so that
-     * this plug-in (or the execution thread) is able to trigger updates on the
-     * view.
-     * 
-     * @param kIEMViewInstanceParam
-     *            the one and only KiemView instance
-     */
-    public void setKIEMViewInstance(final KiemView kIEMViewInstanceParam) {
-        this.kIEMViewInstance = kIEMViewInstanceParam;
     }
 
     // -------------------------------------------------------------------------
@@ -638,7 +817,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (execution != null) {
             this.execution.setAimedStepDuration(aimedStepDuration);
         }
-        this.getKIEMViewInstance().updateViewAsync();
+        this.updateViewAsync();
         notifyConfigurationProviders(AIMED_STEP_DURATION_ID, aimedStepDurationi
                 + "");
     }
@@ -805,6 +984,92 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Do save method that can be called from outside (e.g., a user interface view).
+     * 
+     * @param monitor
+     *            the monitor
+     * @param parentShellParam
+     *            the parent shell
+     */
+    public void doSave(final IProgressMonitor monitor,
+                       Shell parentShellParam) {
+        KiemPlugin.getDefault().setShell(parentShellParam);
+        if (KiemPlugin.getDefault().getCurrentFile() == null) {
+            this.doSaveAs(parentShell);
+            return;
+        }
+        try {
+            URI fileURI = URI.createPlatformResourceURI(KiemPlugin.getDefault().getCurrentFile()
+                    .toOSString(), true);
+
+            // resolve relative workspace paths
+            URIConverter uriConverter = new ExtensibleURIConverterImpl();
+            OutputStream outputStream = uriConverter
+                    .createOutputStream(fileURI);
+            ObjectOutputStream out = new ObjectOutputStream(outputStream);
+
+            out.writeObject(KiemPlugin.getDefault()
+                    .getDataComponentWrapperList());
+
+            out.close();
+            outputStream.close();
+
+            if (KiemPlugin.getDefault().getEventManager() != null) {
+                KiemPlugin.getDefault().getEventManager().notify(
+                        new KiemEvent(KiemEvent.SAVE, getCurrentFile()));
+            }
+        } catch (IOException e) {
+            // TODO: error behavior
+            e.printStackTrace();
+        }
+        setDirty(false);
+    }
+
+    /**
+     * Do save as method that can be called from outside (e.g., a user interface view).
+     * 
+     * @param parentShellParam  
+     *            the parent shell to open the save dialog in
+     */
+    public void doSaveAs(Shell parentShellParam) {
+        KiemPlugin.getDefault().setShell(parentShellParam);
+        SaveAsDialog dlg = new SaveAsDialog(parentShell);
+        dlg.setBlockOnOpen(true);
+        dlg.setOriginalName(this.getActiveProjectName() + ".execution");
+        if (dlg.open() == SaveAsDialog.OK) {
+            this.currentFile = dlg.getResult();
+            this.doSave(null, parentShell);
+        }
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks whether dirty flag is true. Dirty means that the currentFile has
+     * been modified since the last save/load action.
+     * 
+     * @return true, if is dirty
+     */
+    public boolean isDirty() {
+        return this.isDirty;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the dirty flag. Dirty means that the currentFile has
+     * been modified since the last save/load action.
+     * 
+     * @param isDirtyParam
+     *            the new dirty
+     */
+    public void setDirty(boolean isDirtyParam) {
+        this.isDirty = isDirtyParam;
+    }
+
+    // -------------------------------------------------------------------------
+
     private boolean testNumberOfProducersObservers() {
         // count all (enabled) data producer and observer
         int countEnabledProducer = 0;
@@ -822,12 +1087,16 @@ public class KiemPlugin extends AbstractUIPlugin {
             } // end if enabled
         } // next c
         if (countEnabledProducer < 1) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID,
                     null, false);
             return false;
         } else if (countEnabledObserver < 1) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID,
                     null, false);
             return false;
@@ -934,15 +1203,21 @@ public class KiemPlugin extends AbstractUIPlugin {
             return true;
         }
 
-        this.kIEMViewInstance.setAllEnabled(false);
+        if (eventManager != null) {
+            eventManager.notify(new KiemEvent(KiemEvent.DISABLE_UI));
+        }
 
         if (!testNumberOfProducersObservers()) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             return false;
         }
 
         if (!testForKiemPropertyError()) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             return false;
         }
 
@@ -950,12 +1225,16 @@ public class KiemPlugin extends AbstractUIPlugin {
         try {
             globalInitialVariables = distributeInitialKeys();
         } catch (Exception e) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             return false;
         }
 
         if (!initializeDataComponents()) {
-            this.kIEMViewInstance.setAllEnabled(true);
+            if (eventManager != null) {
+                eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+            }
             return false;
         }
 
@@ -973,7 +1252,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         this.execution.schedule();
 
-        this.kIEMViewInstance.setAllEnabled(true);
+        if (eventManager != null) {
+            eventManager.notify(new KiemEvent(KiemEvent.ENABLE_UI));
+        }
         return true;
     }
 
@@ -1224,6 +1505,40 @@ public class KiemPlugin extends AbstractUIPlugin {
             pluginID2 = pluginID;
         }
         return pluginID2;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Show warning dialog with the message.
+     * 
+     * @param message
+     *            the message to present
+     */
+    private void showWarning(final String message) {
+        if (parentShell != null) {
+            MessageDialog.openWarning(parentShell,
+                    Messages.mViewTitle, message);
+        } else {
+            showWarning(message, KiemPlugin.PLUGIN_ID, null, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Show error dialog with the message.
+     * 
+     * @param message
+     *            the message to present
+     */
+    @SuppressWarnings("unused")
+    private void showError(final String message) {
+        if (parentShell != null) {
+            MessageDialog.openError(parentShell,
+                    Messages.mViewTitle, message);
+        } else {
+            showError(message, KiemPlugin.PLUGIN_ID, null, true);
+        }
     }
 
     // -------------------------------------------------------------------------
