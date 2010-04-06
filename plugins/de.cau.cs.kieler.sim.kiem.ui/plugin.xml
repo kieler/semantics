@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.sim.kiem.toolbarContributor" name="de.cau.cs.kieler.sim.kiem.toolbarContributor" schema="schema/de.cau.cs.kieler.sim.kiem.toolbarContributor.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.ui.KiemEventListener">
+      </content>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sim.kiem.ui.views.KiemView"
+            icon="icons/kiemIcon.png"
+            id="de.cau.cs.kieler.sim.kiem.view"
+            name="Execution Manager"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
