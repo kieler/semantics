@@ -67,8 +67,8 @@ public abstract class AttributeAwareConnection extends SplineConnection
     }
     
     /** Contains all possible decorations and conditions when they are to be displayed. */
-    private List<Pair<Decoration, ICondition>> conditionalFigures
-            = new LinkedList<Pair<Decoration, ICondition>>();
+    private List<Pair<Decoration, ICondition<EObject>>> conditionalFigures
+            = new LinkedList<Pair<Decoration, ICondition<EObject>>>();
     /** This figure's corresponding model element. */
     private EObject modelElement;
     /** 
@@ -105,7 +105,7 @@ public abstract class AttributeAwareConnection extends SplineConnection
      */
     public void notifyChanged(final Notification notification) {
         defaultDeco.apply(this);
-        for (Pair<Decoration, ICondition> cf : conditionalFigures) {
+        for (Pair<Decoration, ICondition<EObject>> cf : conditionalFigures) {
             if (cf.getSecond().evaluate(modelElement)) {
                 cf.getFirst().apply(this);
                 break;
@@ -148,8 +148,8 @@ public abstract class AttributeAwareConnection extends SplineConnection
      * @param condition the condition
      */
     protected void addConditionalDecoration(final RotatableDecoration sourceDeco,
-            final RotatableDecoration targetDeco, final ICondition condition) {
-        conditionalFigures.add(new Pair<Decoration, ICondition>(
+            final RotatableDecoration targetDeco, final ICondition<EObject> condition) {
+        conditionalFigures.add(new Pair<Decoration, ICondition<EObject>>(
                 new Decoration(sourceDeco, targetDeco), condition));
     }
 

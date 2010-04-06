@@ -40,8 +40,8 @@ import de.cau.cs.kieler.core.util.Pair;
 public abstract class AttributeAwareSwitchFigure extends Figure implements IAttributeAwareFigure {
 
     /** Contains all possible figures and conditions when they are to be displayed. */
-    private List<Pair<IFigure, ICondition>> conditionalFigures
-            = new LinkedList<Pair<IFigure, ICondition>>();
+    private List<Pair<IFigure, ICondition<EObject>>> conditionalFigures
+            = new LinkedList<Pair<IFigure, ICondition<EObject>>>();
     /** This figure's corresponding model element. */
     private EObject modelElement;
     /**
@@ -123,7 +123,7 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
     public void notifyChanged(final Notification notification) {
         IFigure oldFigure = currentFigure;
         currentFigure = defaultFigure;
-        for (Pair<IFigure, ICondition> cf : conditionalFigures) {
+        for (Pair<IFigure, ICondition<EObject>> cf : conditionalFigures) {
             if (cf.getSecond().evaluate(modelElement)) {
                 currentFigure = cf.getFirst();
                 break;
@@ -164,7 +164,7 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
         
         // set proper initial figure
         currentFigure = defaultFigure;
-        for (Pair<IFigure, ICondition> cf : conditionalFigures) {
+        for (Pair<IFigure, ICondition<EObject>> cf : conditionalFigures) {
             if (cf.getSecond().evaluate(modelElement)) {
                 currentFigure = cf.getFirst();
                 break;
@@ -178,7 +178,7 @@ public abstract class AttributeAwareSwitchFigure extends Figure implements IAttr
      * @param figure the figure
      * @param condition the condition
      */
-    protected void addConditionalFigure(final IFigure figure, final ICondition condition) {
-        conditionalFigures.add(new Pair<IFigure, ICondition>(figure, condition));
+    protected void addConditionalFigure(final IFigure figure, final ICondition<EObject> condition) {
+        conditionalFigures.add(new Pair<IFigure, ICondition<EObject>>(figure, condition));
     }
 }

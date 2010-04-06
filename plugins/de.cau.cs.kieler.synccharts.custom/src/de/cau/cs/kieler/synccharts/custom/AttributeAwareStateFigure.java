@@ -21,6 +21,7 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
@@ -44,39 +45,45 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     /** line width for initial states. */
     private static final int INIT_LINE_WIDTH = 4;
     
-    private static final ICondition COND_NORMAL = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_NORMAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
-    private static final ICondition COND_CONDITIONAL = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_CONDITIONAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.CONDITIONAL);
-    private static final ICondition COND_REFERENCE = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_REFERENCE = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.REFERENCE);
-    private static final ICondition COND_TEXTUAL = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_TEXTUAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.TEXTUAL);
 
-    private static final ICondition COND_INITIAL = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_INITIAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_IsInitial(), true);
-    private static final ICondition COND_FINAL = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_FINAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_IsFinal(), true);
 
-    private static final ICondition COND_NOREGIONS = new ListSizeCondition(
+    private static final ICondition<EObject> COND_NOREGIONS = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_Regions(), 0);
-    private static final ICondition COND_NOSIGNALS = new ListSizeCondition(
+    private static final ICondition<EObject> COND_NOSIGNALS = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_Signals(), 0);
-    private static final ICondition COND_NOENTRYACT = new ListSizeCondition(
+    private static final ICondition<EObject> COND_NOENTRYACT = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_EntryActions(), 0);
-    private static final ICondition COND_NOINSIDEACT = new ListSizeCondition(
+    private static final ICondition<EObject> COND_NOINSIDEACT = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_InnerActions(), 0);
-    private static final ICondition COND_NOEXITACT = new ListSizeCondition(
+    private static final ICondition<EObject> COND_NOEXITACT = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_ExitActions(), 0);
     
-    private static final ICondition COND_SIMPLE = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_SIMPLE = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS, COND_NOENTRYACT,
             COND_NOINSIDEACT, COND_NOEXITACT
     });
-    private static final ICondition COND_SIMPLE_INITIAL = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_SIMPLE_INITIAL = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_INITIAL, COND_SIMPLE
     });
-    private static final ICondition COND_SIMPLE_FINAL = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_SIMPLE_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_FINAL, COND_SIMPLE
     });
     

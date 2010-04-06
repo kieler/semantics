@@ -26,7 +26,7 @@ import de.cau.cs.kieler.core.util.ICondition;
  * @author schm
  * @author msp
  */
-public class FeatureValueCondition implements ICondition {
+public class FeatureValueCondition implements ICondition<EObject> {
 
     private EStructuralFeature feature;
     private Object value;
@@ -47,12 +47,9 @@ public class FeatureValueCondition implements ICondition {
     /**
      * {@inheritDoc}
      */
-    public boolean evaluate(final Object object) {
+    public boolean evaluate(final EObject object) {
         try {
-            if (object instanceof EObject) {
-                EObject modelElement = (EObject) object;
-                return value.equals(modelElement.eGet(feature));
-            }
+            return value.equals(object.eGet(feature));
         } catch (Exception e) {
             /* nothing. If an exception occurs, simply go on and return false.*/
         }

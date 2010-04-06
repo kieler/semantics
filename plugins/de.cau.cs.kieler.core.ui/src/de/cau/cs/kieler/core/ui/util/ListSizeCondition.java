@@ -27,7 +27,7 @@ import de.cau.cs.kieler.core.util.ICondition;
  * @author schm
  * @author msp
  */
-public class ListSizeCondition implements ICondition {
+public class ListSizeCondition implements ICondition<EObject> {
 
     private EStructuralFeature feature;
     private int size;
@@ -46,13 +46,10 @@ public class ListSizeCondition implements ICondition {
     /**
      * {@inheritDoc}
      */
-    public boolean evaluate(final Object object) {
-        if (object instanceof EObject) {
-            EObject modelElement = (EObject) object;
-            Object modelFeature = modelElement.eGet(feature);
-            if (modelFeature instanceof EList<?>) {
-                return (size == ((EList<?>) modelFeature).size());
-            }
+    public boolean evaluate(final EObject object) {
+        Object modelFeature = object.eGet(feature);
+        if (modelFeature instanceof EList<?>) {
+            return (size == ((EList<?>) modelFeature).size());
         }
         return false;
     }

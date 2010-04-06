@@ -20,6 +20,7 @@ import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareConnection;
 import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
@@ -39,22 +40,28 @@ import de.cau.cs.kieler.synccharts.TransitionType;
  */
 public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 
-    private static final ICondition COND_WEAKAB = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_WEAKAB = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.WEAKABORT);
-    private static final ICondition COND_STRONGAB = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_STRONGAB = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.STRONGABORT);
-    private static final ICondition COND_TERMINATION = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_TERMINATION = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
-    private static final ICondition COND_HISTORY = new FeatureValueCondition(
+    private static final ICondition<EObject> COND_HISTORY = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getTransition_IsHistory(), Boolean.TRUE);
 
-    private static final ICondition COND_WEAKAB_HIST = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_WEAKAB_HIST = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_WEAKAB, COND_HISTORY
     });
-    private static final ICondition COND_STRONGAB_HIST = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_STRONGAB_HIST = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_STRONGAB, COND_HISTORY
     });
-    private static final ICondition COND_TERMINATION_HIST = new CompoundCondition(new ICondition[] {
+    @SuppressWarnings("unchecked")
+    private static final ICondition<EObject> COND_TERMINATION_HIST = new CompoundCondition<EObject>(
+            new ICondition[] {
             COND_TERMINATION, COND_HISTORY
     });
     
