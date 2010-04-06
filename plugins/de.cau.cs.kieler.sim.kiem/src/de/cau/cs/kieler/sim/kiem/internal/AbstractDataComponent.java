@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
  * The DataComponent class implements the basic behavior of a data observer and/or data producer
@@ -42,9 +41,6 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
 
     /** The KIEM instance. For access to the execution thread. */
     private KiemPlugin kIEMInstance;
-
-    /** The KIEM view instance. Thread iff this DataComponent is a master */
-    private KiemView kIEMViewInstance;
 
     /** The properties of the DataComponent. */
     private KiemProperty[] properties;
@@ -521,7 +517,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
             }
             if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
                 kIEMInstance.getExecution().setAimedStepDuration(aimedStepDuration);
-                kIEMViewInstance.updateViewAsync();
+                KiemPlugin.getDefault().updateViewAsync();
                 return;
             }
         }
@@ -605,7 +601,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
                 break;
             }
         }
-        kIEMViewInstance.updateViewAsync();
+        KiemPlugin.getDefault().updateViewAsync();
         return;
     }
 
@@ -672,10 +668,8 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * @param kIEMViewInstanceParam
      *            the KIEM view instance
      */
-    public final void masterSetKIEMInstances(final KiemPlugin kIEMInstanceParam,
-            final KiemView kIEMViewInstanceParam) {
+    public final void masterSetKIEMInstance(final KiemPlugin kIEMInstanceParam) {
         this.kIEMInstance = kIEMInstanceParam;
-        this.kIEMViewInstance = kIEMViewInstanceParam;
     }
 
     // -------------------------------------------------------------------------
