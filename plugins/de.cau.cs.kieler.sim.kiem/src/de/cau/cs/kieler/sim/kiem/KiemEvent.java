@@ -143,12 +143,30 @@ public class KiemEvent {
      */
     public static final int ERROR_PAUSE = 17;
 
+    /** This constant is triggered when the KIEMPlugin needs shell to provide
+     * a dialog. If no shell is provided (anyone calling setShell()) then
+     * the default case is assumed for a headless operation. */
+    public static final int CALL_FOR_SHELL = 99;
+    
     /**
      * This constant is triggered when the Execution Manager finished building
      * the view.
      */
     public static final int VIEW_DONE = 100;
+    
+    /** This constant is triggered when the view may need to refresh. */
+    public static final int VIEW_REFRESH = 101;
+    
+    /** This constant is triggered when the opened execution file is edited. */
+    public static final int SET_DIRTY = 102;
+    
+    /** This constant is triggered when the UI should be locked. */
+    public static final int DISABLE_UI = 103;
 
+    /** This constant is triggered when the UI is released after a lock. */
+    public static final int ENABLE_UI = 104;
+
+    
     // -------------------------------------------------------------------------
 
     /**
