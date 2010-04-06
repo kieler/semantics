@@ -725,8 +725,7 @@ public class Execution extends Job {
 		// remotely by other
 		// plug-in)
 		KiemPlugin.getDefault().setExecution(null);
-		KiemPlugin.getDefault().getKIEMViewInstance().updateViewSync();
-		//throw new RuntimeException();
+		KiemPlugin.getDefault().updateViewAsync();
 	}
 
 	// -------------------------------------------------------------------------
@@ -1087,7 +1086,8 @@ public class Execution extends Job {
 					}
 
 					// update steps in kiem view
-					KiemPlugin.getDefault().updateStepsAsync();
+					//KiemPlugin.getDefault().updateStepsAsync();
+					//is now done by listening to the STEP_INFO event
 
 					// System.out.println("-- execution step -------------------------------");
 
