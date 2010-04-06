@@ -332,6 +332,10 @@ public class Graph {
         return result;
     }
 
+    private boolean hasNoIncomings(final int node) {
+        return adjacencyList.get(node).isEmpty();
+    }
+
     private int breakCycle() {
         int out = cycleProblems.get(0);
         cycleProblems.remove(0);

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class LineReplacer {
 
-    static private ArrayList<Tuple<String, String>> rules;
+    private static ArrayList<Tuple<String, Tuple<String, String>>> rules;
     private static File file;
     private static BufferedReader in;
     private static FileWriter fw;
@@ -28,7 +28,7 @@ public class LineReplacer {
      * @param replacingRules
      *            list of rules for replacement.
      */
-    public LineReplacer(final ArrayList<Tuple<String, String>> replacingRules) {
+    public LineReplacer(final ArrayList<Tuple<String, Tuple<String, String>>> replacingRules) {
         super();
         rules = replacingRules;
     }
@@ -46,13 +46,13 @@ public class LineReplacer {
      */
     public LineReplacer() {
         super();
-        rules = new ArrayList<Tuple<String, String>>();
+        rules = new ArrayList<Tuple<String, Tuple<String, String>>>();
     }
 
     /**
      * @return the replacingRules
      */
-    public ArrayList<Tuple<String, String>> getReplacingRules() {
+    public ArrayList<Tuple<String, Tuple<String, String>>> getReplacingRules() {
         return rules;
     }
 
@@ -60,22 +60,23 @@ public class LineReplacer {
      * @param replacingRules
      *            the replacingRules to set
      */
-    public void setReplacingRules(final ArrayList<Tuple<String, String>> replacingRules) {
+    public void setReplacingRules(
+            final ArrayList<Tuple<String, Tuple<String, String>>> replacingRules) {
         rules = replacingRules;
     }
 
     /**
-     * @param file
+     * @param replacingFile
      *            the file to set
      */
-    public void setFile(File replacingFile) {
-        this.file = replacingFile;
+    public void setFile(final File replacingFile) {
+        file = replacingFile;
     }
 
     /**
      * @return the rules
      */
-    public static ArrayList<Tuple<String, String>> getRules() {
+    public static ArrayList<Tuple<String, Tuple<String, String>>> getRules() {
         return rules;
     }
 
@@ -85,23 +86,29 @@ public class LineReplacer {
      * @param rule
      *            the rule to add
      */
-    public void addRule(final Tuple<String, String> rule) {
+    public void addRule(final Tuple<String, Tuple<String, String>> rule) {
         rules.add(rule);
     }
 
     /**
      * Adds a rule to the list of rules.
      * 
+     * @param contains
+     *            the string, the line must contain to replace something
+     * 
      * @param toReplace
      *            the string that will be replaced
      * @param replacement
      *            the replacement
      */
-    public void addRule(final String toReplace, final String replacement) {
+    public void addRule(final String contains, final String toReplace, final String replacement) {
         Tuple<String, String> rule = new Tuple<String, String>();
+        Tuple<String, Tuple<String, String>> completeRule = new Tuple<String, Tuple<String, String>>();
         rule.setO1(toReplace);
         rule.setO2(replacement);
-        rules.add(rule);
+        completeRule.setO1(contains);
+        completeRule.setO2(rule);
+        rules.add(completeRule);
     }
 
     /**
@@ -127,14 +134,18 @@ public class LineReplacer {
         tempFile.renameTo(file);
     }
 
-    private static String replaceLine(String line) {
+    private static String replaceLine(final String line) {
         String out = line;
-        for (Tuple<String, String> rule : rules) {
-            String toReplace = rule.getO1();
-            String replacement = rule.getO2();
-            if (line.matches(".*" + toReplace + ".*")) {
-                out = line.replaceAll(toReplace, replacement);
-                break;
+        for (Tuple<String, Tuple<String, String>> rule : rules) {
+            String contains = rule.getO1();
+            Tuple<String, String> onlyRule = rule.getO2();
+            String toReplace = onlyRule.getO1();
+            String replacement = onlyRule.getO2();
+            if (line.contains(contains)) {
+                if (line.matches(".*" + toReplace + ".*")) {
+                    out = line.replaceAll(toReplace, replacement);
+                    break;
+                }
             }
         }
         return out;

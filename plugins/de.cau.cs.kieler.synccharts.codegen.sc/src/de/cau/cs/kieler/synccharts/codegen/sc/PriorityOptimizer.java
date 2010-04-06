@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,16 +11,20 @@ public class PriorityOptimizer {
     private static ArrayList<Integer> priorities = new ArrayList<Integer>();
     private static LineReplacer lineReplacer = new LineReplacer();
     private static File file;
-    
-    public PriorityOptimizer(File f) {
+
+    /**
+     * Constructor that sets the file.
+     * 
+     * @param f
+     *            file to optimize priorities for
+     */
+    public PriorityOptimizer(final File f) {
         file = f;
     }
 
     /**
      * Starts the optimization of the given file and replaces all unoptimized priorities.
      * 
-     * @param file
-     *            file to optimize
      * @throws IOException
      *             if file does not exist
      */
@@ -48,15 +51,15 @@ public class PriorityOptimizer {
             int newPriority = priorities.indexOf(priority) + 1;
             String prioToReplace = "PRIO\\s*\\(\\s*" + priority + "\\s*\\)";
             String prioReplacement = "PRIO\\(" + newPriority + "\\)";
-            lineReplacer.addRule(prioToReplace, prioReplacement);
+            lineReplacer.addRule("PRIO", prioToReplace, prioReplacement);
 
             String tickstartToReplace = "TICKSTART\\s*\\(\\s*" + priority + "\\s*\\)";
             String tickstartReplacement = "TICKSTART\\(" + newPriority + "\\)";
-            lineReplacer.addRule(tickstartToReplace, tickstartReplacement);
+            lineReplacer.addRule("TICKSTART", tickstartToReplace, tickstartReplacement);
 
             String forkToReplace = ",\\s*" + priority + "\\s*\\)";
             String forkReplacement = ", " + newPriority + "\\)";
-            lineReplacer.addRule(forkToReplace, forkReplacement);
+            lineReplacer.addRule("FORK", forkToReplace, forkReplacement);
         }
     }
 
