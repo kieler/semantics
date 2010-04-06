@@ -19,12 +19,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -61,7 +60,6 @@ public final class Helper {
     private static ArrayList<StatePlusTransition> neighborStates = new ArrayList<StatePlusTransition>();
     private static ArrayList<Region> neighborRegions = new ArrayList<Region>();
     private static ArrayList<State> checkedStates = new ArrayList<State>();
-    private static ArrayList<StatePlusTransition> checkedSpt = new ArrayList<StatePlusTransition>();
     private static ArrayList<Signal> allSignals = new ArrayList<Signal>();
     private static ArrayList<Signal> triggerSignals = new ArrayList<Signal>();
     private static ArrayList<Signal> effectSignals = new ArrayList<Signal>();
@@ -97,10 +95,10 @@ public final class Helper {
         for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
             printStatePlusTransitionList(spt);
         }
-//        for (StatePlusTransition spt : sortedStates) {
-//            System.out.println(spt.getState().getId() + " - "
-//                    + getRealOptimizedThreadPriority(spt.getState()));
-//        }
+        for (StatePlusTransition spt : sortedStates) {
+            System.out.println(spt.getState().getId() + " - "
+                    + getRealOptimizedThreadPriority(spt.getState()));
+        }
         return sortedStates;
     }
 
@@ -323,7 +321,7 @@ public final class Helper {
                 Transition checkTransition = dep.getFirstState().getTransition();
                 if (checkTransition != null && checkTransition.equals(transition)) {
                     out.add(dep.getSecondState());
-                } 
+                }
             }
         }
         return out;
@@ -768,9 +766,9 @@ public final class Helper {
     }
 
     private static void fillEffectSignals(final Transition transition) {
-        EList<Effect> tmpEffectSignals = transition.getEffects();
-        // put all effect signals into the list
-        for (Effect effect : tmpEffectSignals) {
+        EList<Effect> triggerEffectSignals = transition.getEffects();
+        // put all effect signals from transition into the list
+        for (Effect effect : triggerEffectSignals) {
             EObject eObject = effect;
             boolean hasNext = true;
             while (hasNext) {
@@ -788,6 +786,33 @@ public final class Helper {
                 }
             }
         }
+        
+        // put all effect signals from actions into the list
+        State sourceState = transition.getSourceState();
+        EList<Action> innerActions = sourceState.getInnerActions();
+        for (Action action : innerActions) {
+            EList<Effect> actionEffects = action.getEffects();
+            
+            for (Effect effect : actionEffects) {
+                EObject eObject = effect;
+                boolean hasNext = true;
+                while (hasNext) {
+                    if (eObject instanceof Emission) {
+                        // put trigger signal into the list
+                        Signal effectSignal = ((Emission) eObject).getSignal();
+                        if (!effectSignals.contains(effectSignal)) {
+                            effectSignals.add(effectSignal);
+                        }
+                    }
+                    if (eObject.eAllContents().hasNext()) {
+                        eObject = eObject.eAllContents().next();
+                    } else {
+                        hasNext = false;
+                    }
+                }
+            }
+        }
+        
         // if the target state has an immediate
         // outgoing transition put its signals to the source state ones
         for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
@@ -949,44 +974,11 @@ public final class Helper {
 
             }
         }
-        // optimzedSortedStates.clear();
-        // for (StatePlusTransition spt : sortedStates) {
-        // // System.out.println(spt.getState().getId());
-        // boolean added = addSptToOptimizedList(spt);
-        // if (!added) {
-        // ArrayList<StatePlusTransition> addList = new
-        // ArrayList<StatePlusTransition>();
-        // addList.add(spt);
-        // optimzedSortedStates.add(addList);
-        // }
-        // }
-        // // removeNeedlessLists();
     }
 
     private static void fillOptimizedStates(final State state) {
         optimzedSortedStates.clear();
         optimizeSortedStates(getRootState(state).getParentRegion());
-    }
-
-    // private static void removeNeedlessLists() {
-    // ArrayList<ArrayList<StatePlusTransition>> newList;
-    // newList = new ArrayList<ArrayList<StatePlusTransition>>();
-    // for (ArrayList<StatePlusTransition> sptList : optimzedSortedStates) {
-    // if (!isNotNeeded(sptList)) {
-    // newList.add(sptList);
-    // }
-    // }
-    // optimzedSortedStates = newList;
-    // }
-
-    private static boolean isNotNeeded(final ArrayList<StatePlusTransition> sptList) {
-        boolean size = sptList.size() == 1;
-        boolean root = sptList.get(0).getState().getParentRegion().getParentState() == null;
-        boolean transition = sptList.get(0).getState().getOutgoingTransitions().isEmpty();
-        boolean onEntry = sptList.get(0).getState().getEntryActions().isEmpty();
-        boolean onInside = sptList.get(0).getState().getInnerActions().isEmpty();
-        boolean regions = sptList.get(0).getState().getRegions().size() == 1;
-        return size && transition && onEntry && onInside && regions && root;
     }
 
     private static int getOptimizedPriority(final State state, final boolean weak) {
@@ -998,24 +990,79 @@ public final class Helper {
             spt = getStateProperties(state);
         }
 
+        /*
+         * if state is weak take the priority without searching in the combined list
+         */
         if (weak) {
-            return getIndexWithoutTransition(spt, false);
+            return getIndexWithoutTransition(spt, false) + 1;
         }
+
         ArrayList<StatePlusTransition> listWithState = getListWithState(spt);
 
-        for (StatePlusTransition listSpt : listWithState) {
-            int newPriority = getIndexWithoutTransition(listSpt, false) + 1;
-            if (containsSignalDependency(listWithState)) {
-                if (newPriority > out && isSignalDependent(listSpt.getTransition())) {
-                    out = newPriority;
+        // all hierarchical states
+        boolean hierarchicalInThread = containsHierarchicalState(listWithState);
+        ArrayList<StatePlusTransition> hierarchicalSpts = new ArrayList<StatePlusTransition>();
+        if (hierarchicalInThread) {
+            for (StatePlusTransition listSpt : listWithState) {
+                if (isHieracrchical(listSpt.getState())) {
+                    hierarchicalSpts.add(listSpt);
                 }
-            } else {
-                if (newPriority > out) {
-                    out = newPriority;
+            }
+        } else {
+            hierarchicalSpts = listWithState;
+        }
+
+        boolean containsSigDep = containsSignalDependency(hierarchicalSpts);
+        ArrayList<StatePlusTransition> dependentSpts = new ArrayList<StatePlusTransition>();
+        if (containsSigDep) {
+            for (StatePlusTransition listSpt : hierarchicalSpts) {
+                if (isSignalDependent(listSpt.getTransition())) {
+                    dependentSpts.add(listSpt);
                 }
+            }
+        } else {
+            dependentSpts = hierarchicalSpts;
+        }
+
+        out = getSmallestIDFromList(dependentSpts);
+
+        return out;
+    }
+
+    @SuppressWarnings("unused")
+    private static int getBiggestIDFromList(final ArrayList<StatePlusTransition> sptList) {
+        int out = MAX_PRIO;
+        for (StatePlusTransition spt : sptList) {
+            int newPriority = getIndexWithoutTransition(spt, false) + 1;
+            if (newPriority < out) {
+                out = newPriority;
             }
         }
         return out;
+    }
+
+    private static int getSmallestIDFromList(final ArrayList<StatePlusTransition> sptList) {
+        int out = 0;
+        for (StatePlusTransition spt : sptList) {
+            int newPriority = getIndexWithoutTransition(spt, false) + 1;
+            if (newPriority > out) {
+                out = newPriority;
+            }
+        }
+        return out;
+    }
+
+    private static boolean containsHierarchicalState(final ArrayList<StatePlusTransition> sptList) {
+        for (StatePlusTransition spt : sptList) {
+            if (isHieracrchical(spt.getState())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isHieracrchical(final State state) {
+        return !state.getRegions().isEmpty();
     }
 
     private static ArrayList<StatePlusTransition> getListWithState(final StatePlusTransition spt) {
@@ -1040,95 +1087,13 @@ public final class Helper {
         return false;
     }
 
-    private static State getRootState(State state) {
+    private static State getRootState(final State state) {
         if (state.getParentRegion().getParentState() == null) {
             return state;
         } else {
             return getRootState(state.getParentRegion().getParentState());
         }
     }
-
-//    private static boolean addSptToOptimizedList(final StatePlusTransition spt) {
-//        boolean added = false;
-//        if (spt.getType() != STRONG_STATE) {
-//            ArrayList<ArrayList<StatePlusTransition>> sptTmp;
-//            sptTmp = new ArrayList<ArrayList<StatePlusTransition>>();
-//            for (ArrayList<StatePlusTransition> sptList : optimzedSortedStates) {
-//                ArrayList<StatePlusTransition> sptListTmp = new ArrayList<StatePlusTransition>();
-//                for (StatePlusTransition optimizedSpt : sptList) {
-//                    sptListTmp.add(optimizedSpt);
-//
-//                    // exists control flow path between two states?
-//                    /*
-//                     * if (existsEdgePath(spt, optimizedSpt, CONTROL_FLOW_EDGE)) {
-//                     * sptListTmp.add(spt); added = true; }
-//                     */
-//                    Dependency depOne = new Dependency(spt, optimizedSpt, CONTROL_FLOW_EDGE);
-//                    Dependency depTwo = new Dependency(optimizedSpt, spt, CONTROL_FLOW_EDGE);
-//
-//                    ArrayList<Transition> dependencyTransition = new ArrayList<Transition>();
-//                    if (stateDependencies.contains(depOne)) {
-//                        dependencyTransition.add(optimizedSpt.getTransition());
-//                    } else if (stateDependencies.contains(depTwo)) {
-//                        dependencyTransition.add(spt.getTransition());
-//                    }
-//                    for (Transition transition : dependencyTransition) {
-//                        if (!isSignalDependent(transition) && !hasDependentState(transition)) {
-//                            added = true;
-//                        }
-//                    }
-//                    if (added) {
-//                        sptListTmp.add(spt);
-//                    }
-//                }
-//                sptTmp.add(sptListTmp);
-//            }
-//            optimzedSortedStates = sptTmp;
-//        }
-//        return added;
-//    }
-
-    // private static boolean existsEdgePath(final StatePlusTransition fromSpt,
-    // final StatePlusTransition toSpt, final int edgeType) {
-    // checkedSpt.clear();
-    // existsEdgePathHelper(fromSpt, toSpt, edgeType);
-    // return true;
-    // }
-    //
-    // private static boolean existsEdgePathHelper(final StatePlusTransition
-    // fromSpt,
-    // final StatePlusTransition toSpt, final int edgeType) {
-    // if (!checkedSpt.contains(fromSpt)) {
-    // checkedSpt.add(fromSpt);
-    // ArrayList<StatePlusTransition> neighborSpts =
-    // getSptNeighborsByEdge(fromSpt, edgeType);
-    // if (neighborSpts.contains(toSpt)) {
-    // return true;
-    // } else {
-    // for (StatePlusTransition spt : neighborSpts) {
-    // return existsEdgePathHelper(spt, toSpt, edgeType);
-    // }
-    // }
-    // }
-    // return false;
-    // }
-    //
-    // private static ArrayList<StatePlusTransition> getSptNeighborsByEdge(
-    // final StatePlusTransition spt, final int edgeType) {
-    // ArrayList<StatePlusTransition> out = new
-    // ArrayList<StatePlusTransition>();
-    // for (Dependency dep : stateDependencies) {
-    // if (dep.getDependencyType() == edgeType) {
-    // if (dep.getFirstState().getState().equals(spt.getState())) {
-    // out.add(spt);
-    // }
-    // if (dep.getFirstState().getState().equals(spt.getState())) {
-    // out.add(spt);
-    // }
-    // }
-    // }
-    // return out;
-    // }
 
     private static ArrayList<ArrayList<StatePlusTransition>> getStateSetsOfARegion(final State state) {
         ArrayList<ArrayList<StatePlusTransition>> out = new ArrayList<ArrayList<StatePlusTransition>>();
@@ -1150,7 +1115,8 @@ public final class Helper {
         return out;
     }
 
-    private static void addSptsToList(State state, ArrayList<StatePlusTransition> sptList) {
+    private static void addSptsToList(final State state,
+            final ArrayList<StatePlusTransition> sptList) {
         if (state.getOutgoingTransitions().isEmpty()) {
             StatePlusTransition spt = getStateProperties(state);
             sptList.add(spt);
@@ -1200,7 +1166,7 @@ public final class Helper {
             Transition transition = state.getOutgoingTransitions().get(i);
             State targetState = transition.getTargetState();
             if (notPut.contains(targetState)) {
-                if (!hasDependentStateForAll(transition)) {
+                if (!hasDependentStateForAll(transition) && !isHieracrchical(targetState)) {
                     // end for path
                     addSptsToList(targetState, sptList);
                     findPrioritySets(targetState, sptList, notPut);
@@ -1208,8 +1174,8 @@ public final class Helper {
             }
         }
     }
-    
-    private static boolean hasDependentStateForAll(Transition transition) {
+
+    private static boolean hasDependentStateForAll(final Transition transition) {
         State sourceState = transition.getSourceState();
         State targetState = transition.getTargetState();
         for (Transition trans : sourceState.getOutgoingTransitions()) {

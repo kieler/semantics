@@ -3,17 +3,17 @@
 «EXTENSION template::Helper»
 
 «DEFINE getRealThreadPriority FOR State-»
+	«getRealOptimizedThreadPriority(this)-»
 	«REM»
 	«getRealThreadPriority(this)-»
 	«ENDREM»
-	«getRealOptimizedThreadPriority(this)-»
 «ENDDEFINE»
 
 «DEFINE getWeakThreadPriority FOR State-»
+	«getOptimizedWeakThreadPriority(this)-» 
 	«REM»
 	«getWeakThreadPriority(this)-»
 	«ENDREM»
-	«getOptimizedWeakThreadPriority(this)-» 
 «ENDDEFINE»
 
 getOptimizedWeakThreadPriority
@@ -42,7 +42,7 @@ getOptimizedWeakThreadPriority
 «ENDDEFINE»
 
 «DEFINE transitionPrio FOR Transition-»
-	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
+	«IF getRealOptimizedThreadPriority(this.targetState) < getRealOptimizedThreadPriority(this.sourceState)-»
 		/* priority after transition */
 		PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
 	«ENDIF-»

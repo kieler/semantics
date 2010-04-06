@@ -3,22 +3,24 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-	«IF !isSimpleHierarchical(this)-»
-		L_«getStateNameByFlag(this, 3)-»:
-	«ENDIF-»
-	«IF !this.regions.isEmpty-»
-		«EXPAND stateWithRegions FOR this-»
-	«ENDIF»
-	«EXPAND CodegenMisc::localSignals FOR this-»
-	«IF this.outgoingTransitions.isEmpty-»
-		«EXPAND stateWithoutTransition FOR this-»
-	«ELSEIF this.outgoingTransitions.size == 1-»
-		«EXPAND stateWithMoreTransitions FOR this»
-		«REM» AWAIT:
-			«EXPAND stateWithOneTransition FOR this-»
-		«ENDREM»
-	«ELSE-»
-		«EXPAND stateWithMoreTransitions FOR this»
+	«IF !this.isFinal-»
+		«IF !isSimpleHierarchical(this)-»
+			L_«getStateNameByFlag(this, 3)-»:
+		«ENDIF-»
+		«IF !this.regions.isEmpty-»
+			«EXPAND stateWithRegions FOR this-»
+		«ENDIF»
+		«EXPAND CodegenMisc::localSignals FOR this-»
+		«IF this.outgoingTransitions.isEmpty-»
+			«EXPAND stateWithoutTransition FOR this-»
+		«ELSEIF this.outgoingTransitions.size == 1-»
+			«EXPAND stateWithMoreTransitions FOR this»
+			«REM» AWAIT:
+				«EXPAND stateWithOneTransition FOR this-»
+			«ENDREM»
+		«ELSE-»
+			«EXPAND stateWithMoreTransitions FOR this»
+		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
 
