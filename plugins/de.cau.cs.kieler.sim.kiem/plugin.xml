@@ -4,19 +4,7 @@
    <extension-point id="de.cau.cs.kieler.sim.kiem.string.datacomponent" name="de.cau.cs.kieler.sim.kiem.string.datacomponent" schema="schema/de.cau.cs.kieler.sim.kiem.string.datacomponent.exsd"/>
    <extension-point id="de.cau.cs.kieler.sim.kiem.json.datacomponent" name="de.cau.cs.kieler.sim.kiem.json.datacomponent" schema="schema/de.cau.cs.kieler.sim.kiem.json.datacomponent.exsd"/>
    <extension-point id="de.cau.cs.kieler.sim.kiem.configurationProvider" name="de.cau.cs.kieler.sim.kiem.configurationProvider" schema="schema/de.cau.cs.kieler.sim.kiem.configurationProvider.exsd"/>
-   <extension-point id="de.cau.cs.kieler.sim.kiem.toolbarContributor" name="de.cau.cs.kieler.sim.kiem.toolbarContributor" schema="schema/de.cau.cs.kieler.sim.kiem.toolbarContributor.exsd"/>
    <extension-point id="de.cau.cs.kieler.sim.kiem.eventListener" name="de.cau.cs.kieler.sim.kiem.eventListener" schema="schema/de.cau.cs.kieler.sim.kiem.eventListener.exsd"/>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.sim.kiem.ui.views.KiemView"
-            icon="icons/kiemIcon.png"
-            id="de.cau.cs.kieler.sim.kiem.view"
-            name="Execution Manager"
-            restorable="true">
-      </view>
-   </extension>
    <extension
          point="org.eclipse.ui.editors">
       <editor
