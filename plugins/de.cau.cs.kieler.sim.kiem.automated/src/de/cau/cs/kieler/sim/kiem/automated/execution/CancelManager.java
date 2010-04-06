@@ -270,7 +270,7 @@ public final class CancelManager {
         KiemPlugin.getDefault().notifyConfigurationProviders(
                 KiemPlugin.TIMEOUT_ID, timeout + "");
         timeout -= DISPLACEMENT;
-        KiemPlugin.getDefault().getKIEMViewInstance().setDirty(false);
+        KiemPlugin.getDefault().setDirty(false);
     }
 
     /**
@@ -290,7 +290,7 @@ public final class CancelManager {
             KiemPlugin.getDefault().notifyConfigurationProviders(
                     KiemPlugin.TIMEOUT_ID, oldTimeout + "");
         }
-        KiemPlugin.getDefault().getKIEMViewInstance().setDirty(false);
+        KiemPlugin.getDefault().setDirty(false);
     }
 
     // --------------------------------------------------------------------------

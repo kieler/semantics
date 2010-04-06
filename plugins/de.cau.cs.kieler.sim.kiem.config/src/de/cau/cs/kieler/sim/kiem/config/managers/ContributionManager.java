@@ -168,7 +168,7 @@ public final class ContributionManager extends AbstractManager {
         }
 
         // update the visibility of the boxes in the KIEM view
-        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
+        KiemPlugin.getDefault().updateViewAsync();
 
         save();
     }
@@ -195,7 +195,7 @@ public final class ContributionManager extends AbstractManager {
         this.isInAdvancedMode = isInAdvancedModeParam;
 
         // update visibility of the config data component in the KIEM view
-        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
+        KiemPlugin.getDefault().updateViewAsync();
 
         save();
     }

@@ -56,9 +56,9 @@ public class OpenWizardAction extends Action implements IViewActionDelegate {
 
                 try {
                     // save the editor if it is dirty to prevent constant popups
-                    if (KiemPlugin.getDefault().getKIEMViewInstance().isDirty()) {
-                        KiemPlugin.getDefault().getKIEMViewInstance().doSave(
-                                null);
+                    if (KiemPlugin.getDefault().isDirty()) {
+                        KiemPlugin.getDefault().doSave(
+                                null, null);
                     }
                 } catch (NullPointerException e0) {
                     // view not opened

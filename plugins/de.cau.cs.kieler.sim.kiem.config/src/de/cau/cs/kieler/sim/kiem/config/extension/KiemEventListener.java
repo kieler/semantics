@@ -156,7 +156,7 @@ public final class KiemEventListener implements IKiemEventListener {
         } else {
             loadImminent = false;
         }
-        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
+        KiemPlugin.getDefault().updateViewAsync();
     }
 
     /**

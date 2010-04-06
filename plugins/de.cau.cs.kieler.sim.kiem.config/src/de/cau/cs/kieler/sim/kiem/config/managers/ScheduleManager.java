@@ -281,7 +281,7 @@ public final class ScheduleManager extends AbstractManager implements
         notifyListeners(new KiemConfigEvent(
                 KiemConfigEvent.FILE_LOCATION_CHANGED));
 
-        KiemPlugin.getDefault().getKIEMViewInstance().updateViewAsync();
+        KiemPlugin.getDefault().updateViewAsync();
         save();
     }
 

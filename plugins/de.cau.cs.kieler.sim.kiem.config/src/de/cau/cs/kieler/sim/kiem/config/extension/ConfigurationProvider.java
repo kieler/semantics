@@ -56,6 +56,6 @@ public class ConfigurationProvider implements IKiemConfigurationProvider {
                 .updateCurrentProperty(wrapper, value);
 
         // inform the KIEM that a property in his view was changed
-        KiemPlugin.getDefault().getKIEMViewInstance().setDirty(true);
+        KiemPlugin.getDefault().setDirty(true);
     }
 }

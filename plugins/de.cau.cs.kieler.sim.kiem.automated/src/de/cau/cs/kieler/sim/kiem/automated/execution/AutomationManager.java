@@ -243,7 +243,7 @@ public final class AutomationManager implements StatusListener {
         }
 
         // store the currently opened file.
-        IPath currentFile = KiemPlugin.getDefault().getKIEMViewInstance()
+        IPath currentFile = KiemPlugin.getDefault()
                 .getCurrentFile();
         Execution exec = KiemPlugin.getDefault().getExecution();
         if (exec != null) {
