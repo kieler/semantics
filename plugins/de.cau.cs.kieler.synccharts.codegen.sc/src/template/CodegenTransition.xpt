@@ -28,14 +28,18 @@
 «ENDDEFINE»
 
 «DEFINE stateAbortion FOR Transition-»
-	«IF this.type != TransitionType::NORMALTERMINATION-»
-		«IF !(this.sourceState.regions.isEmpty)-»
-			ABORT;
-			«EXPAND CodegenPriority::realPrio FOR this.targetState»
+	«IF this.targetState.isFinal-»
+		TERM;
+	«ELSE-»
+		«IF this.type != TransitionType::NORMALTERMINATION-»
+			«IF !(this.sourceState.regions.isEmpty)-»
+				ABORT;
+				«EXPAND CodegenPriority::realPrio FOR this.targetState»
+			«ENDIF-»
+			«EXPAND CodegenPriority::priorityReduction FOR this-»
 		«ENDIF-»
-		«EXPAND CodegenPriority::priorityReduction FOR this-»
+		«EXPAND transitionGoto FOR this-»
 	«ENDIF-»
-	«EXPAND transitionGoto FOR this-»
 «ENDDEFINE»
 
 «DEFINE triggersAndEffects FOR Transition-»
