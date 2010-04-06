@@ -23,9 +23,9 @@ import org.eclipse.draw2d.geometry.Rectangle;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareConnection;
 import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
-import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
-import de.cau.cs.kieler.core.ui.util.ICondition;
+import de.cau.cs.kieler.core.util.CompoundCondition;
+import de.cau.cs.kieler.core.util.ICondition;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;

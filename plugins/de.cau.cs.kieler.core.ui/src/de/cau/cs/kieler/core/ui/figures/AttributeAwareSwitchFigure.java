@@ -27,7 +27,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.core.ui.util.ICondition;
+import de.cau.cs.kieler.core.util.ICondition;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**

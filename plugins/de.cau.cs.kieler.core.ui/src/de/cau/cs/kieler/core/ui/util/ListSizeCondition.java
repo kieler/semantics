@@ -18,6 +18,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import de.cau.cs.kieler.core.util.ICondition;
+
 /**
  * A condition that checks whether a featured list of an EObject has a certain size.
  * 

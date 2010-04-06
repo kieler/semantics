@@ -17,6 +17,8 @@ package de.cau.cs.kieler.core.ui.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import de.cau.cs.kieler.core.util.ICondition;
+
 /**
  * A condition that evaluates a feature of an EOject.
  * 

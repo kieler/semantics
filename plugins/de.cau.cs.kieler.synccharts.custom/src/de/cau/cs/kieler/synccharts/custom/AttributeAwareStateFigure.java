@@ -24,10 +24,10 @@ import org.eclipse.emf.common.notify.Notifier;
 
 import de.cau.cs.kieler.core.ui.figures.AttributeAwareSwitchFigure;
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
-import de.cau.cs.kieler.core.ui.util.CompoundCondition;
 import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
-import de.cau.cs.kieler.core.ui.util.ICondition;
 import de.cau.cs.kieler.core.ui.util.ListSizeCondition;
+import de.cau.cs.kieler.core.util.CompoundCondition;
+import de.cau.cs.kieler.core.util.ICondition;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.State;
