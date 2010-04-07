@@ -14,19 +14,12 @@
 
 package de.cau.cs.kieler.sim.kiem.ui.views;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IMenuListener;
@@ -60,10 +53,7 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISaveablePart2;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartConstants;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
@@ -618,7 +608,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @param message
      *            the message to present
      */
-    private void showWarning(final String message) {
+    public void showWarning(final String message) {
         MessageDialog.openWarning(viewer.getControl().getShell(), Messages.mViewTitle, message);
     }
 
@@ -630,8 +620,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @param message
      *            the message to present
      */
-    @SuppressWarnings("unused")
-    private void showError(final String message) {
+    public void showError(final String message) {
         MessageDialog.openError(viewer.getControl().getShell(), Messages.mViewTitle, message);
     }
 

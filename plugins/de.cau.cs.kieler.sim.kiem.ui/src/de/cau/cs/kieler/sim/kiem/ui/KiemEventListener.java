@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.sim.kiem.ui;
 
-import org.eclipse.ui.IWorkbenchPartConstants;
-
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
