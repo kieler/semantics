@@ -402,8 +402,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // stop any running execution
                     KiemPlugin.getDefault().execution.stopExecutionSync();
                     showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID,
-                            null, false);
-                    return;
+                            null, true);
+                    //return;
                 }
 
                 // ask for a shell
