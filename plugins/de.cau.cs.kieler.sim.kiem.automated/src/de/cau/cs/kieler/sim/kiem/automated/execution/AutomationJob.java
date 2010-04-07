@@ -43,6 +43,8 @@ public class AutomationJob extends WorkbenchJob {
     private List<IPath> modelFiles;
     /** The list of properties for the execution. */
     private List<KiemProperty> properties;
+    /** True if no GUI output should be used. */
+    private boolean headless;
 
     // --------------------------------------------------------------------------
 
@@ -56,15 +58,19 @@ public class AutomationJob extends WorkbenchJob {
      *            list of model files
      * @param propertiesParam
      *            list of properties
+     * @param headlessParam
+     *            if true no GUI output will be generated
      */
     public AutomationJob(final IPath[] executionFilesParam,
             final List<IPath> modelFilesParam,
-            final List<KiemProperty> propertiesParam) {
+            final List<KiemProperty> propertiesParam,
+            final boolean headlessParam) {
         super("Automated execution");
 
         this.executionFiles = executionFilesParam;
         this.modelFiles = modelFilesParam;
         this.properties = propertiesParam;
+        this.headless = headlessParam;
 
         setUser(true);
     }
@@ -99,7 +105,7 @@ public class AutomationJob extends WorkbenchJob {
                 try {
                     List<IterationResult> results = AutomationManager
                             .getInstance().doAutomatedExecution(executionFiles,
-                                    modelFiles, properties, monitor);
+                                    modelFiles, properties, monitor, headless);
 
                     AutomationManager.getInstance().notifyExecutionFinished(
                             results);

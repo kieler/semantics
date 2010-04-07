@@ -221,12 +221,14 @@ public final class AutomationManager implements StatusListener {
      *            the list of properties that should be set
      * @param monitorParam
      *            the progress monitor
+     * @param headless
+     *            true if the run should be headless
      * @return the list of results
      */
     protected List<IterationResult> doAutomatedExecution(
             final IPath[] executionFiles, final List<IPath> modelFiles,
             final List<KiemProperty> properties,
-            final IProgressMonitor monitorParam) {
+            final IProgressMonitor monitorParam, final boolean headless) {
         // list of results for returning to calls by other plugins
         List<IterationResult> results = new LinkedList<IterationResult>();
         // set monitor
@@ -234,17 +236,18 @@ public final class AutomationManager implements StatusListener {
         CancelManager.getInstance().setMonitor(monitorParam);
 
         // set up monitor
-        String taskName = "Performing automated execution.";
-        int executionlength = executionFiles.length * modelFiles.size();
-        if (executionlength > 1) {
-            monitor.beginTask(taskName, executionlength);
-        } else {
-            monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
+        if (monitor != null) {
+            String taskName = "Performing automated execution.";
+            int executionlength = executionFiles.length * modelFiles.size();
+            if (executionlength > 1) {
+                monitor.beginTask(taskName, executionlength);
+            } else {
+                monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
+            }
         }
 
         // store the currently opened file.
-        IPath currentFile = KiemPlugin.getDefault()
-                .getCurrentFile();
+        IPath currentFile = KiemPlugin.getDefault().getCurrentFile();
         Execution exec = KiemPlugin.getDefault().getExecution();
         if (exec != null) {
             exec.stopExecutionSync();
@@ -257,7 +260,8 @@ public final class AutomationManager implements StatusListener {
 
             for (final IPath execution : executionFiles) {
 
-                executeExecutionFile(modelFiles, properties, results, execution);
+                executeExecutionFile(modelFiles, properties, results,
+                        execution, headless);
 
                 if (CancelManager.getInstance().isExecutionCanceled() != CancelStatus.NOT_CANCELED) {
                     CancelManager.getInstance().resetExecutionCancel();
@@ -271,7 +275,9 @@ public final class AutomationManager implements StatusListener {
         } finally {
             running = false;
             KiemAutomatedPlugin.removeErrorListener(this);
-            monitor.done();
+            if (monitor != null) {
+                monitor.done();
+            }
             if (currentFile != null) {
                 try {
                     KiemPlugin.getDefault().openFile(currentFile, false);
@@ -280,8 +286,9 @@ public final class AutomationManager implements StatusListener {
                     Tools.showWarning("Couldn't restore file.", e0, false);
                 }
             }
-
-            refreshView();
+            if (!headless) {
+                refreshView();
+            }
         }
         return results;
     }
@@ -297,22 +304,30 @@ public final class AutomationManager implements StatusListener {
      *            the list of results
      * @param executionFile
      *            the path to the execution file
+     * @param headless
+     *            if the method should run headless
      */
     private void executeExecutionFile(final List<IPath> modelFiles,
             final List<KiemProperty> properties,
-            final List<IterationResult> results, final IPath executionFile) {
+            final List<IterationResult> results, final IPath executionFile,
+            final boolean headless) {
         try {
             KiemPlugin.getDefault().openFile(executionFile, true);
         } catch (IOException e0) {
-            // execution file not found, write to error log
-            addExecutionFileFailedToPanel(executionFile, e0);
+            if (!headless) {
+                // execution file not found, write to error log
+                addExecutionFileFailedToPanel(executionFile, e0);
+            }
             return; // continue with next file
         }
 
         // load timeout here as execution file might carry his own timeout
         CancelManager.loadTimeout();
-        // create a new table on the panel
-        addExecutionFileToPanel(executionFile);
+
+        if (!headless) {
+            // create a new table on the panel
+            addExecutionFileToPanel(executionFile);
+        }
 
         // set up adding of results to the table
         cachedResults = new LinkedList<AbstractResult>();
@@ -326,7 +341,7 @@ public final class AutomationManager implements StatusListener {
             if (supportedFiles.contains(model.getFileExtension().trim())) {
                 worstResult = ResultStatus.DONE;
                 firstModelFirstRun = executeModelFile(properties, results,
-                        executionFile, firstModelFirstRun, model);
+                        executionFile, firstModelFirstRun, model, headless);
 
                 ModelResult modelResult = new ModelResult(model.toOSString());
                 modelResult.setStatus(worstResult);
@@ -335,16 +350,20 @@ public final class AutomationManager implements StatusListener {
             }
             CancelManager.getInstance().resetModelFileCancel();
 
-            // update progress
-            monitor.worked(1);
+            if (monitor != null) {
+                // update progress
+                monitor.worked(1);
+            }
             if (CancelManager.getInstance().isExecutionFileCanceled() != CancelStatus.NOT_CANCELED) {
                 CancelManager.getInstance().resetExecutionFileCancel();
                 break;
             }
         }
 
-        flushCachedResults();
-        addModelFileResultsToPanel(cachedModelResults, executionFile);
+        if (!headless) {
+            flushCachedResults();
+            addModelFileResultsToPanel(cachedModelResults, executionFile);
+        }
         CancelManager.restoreTimeout();
     }
 
@@ -363,11 +382,14 @@ public final class AutomationManager implements StatusListener {
      *            true if it is the first valid run on the first valid model
      * @param model
      *            the model file
+     * @param headless
+     *            true if the method should run headless
      * @return true if the run was not valid
      */
     private boolean executeModelFile(final List<KiemProperty> properties,
             final List<IterationResult> results, final IPath execution,
-            final boolean firstModelFirstRun, final IPath model) {
+            final boolean firstModelFirstRun, final IPath model,
+            final boolean headless) {
         boolean result = firstModelFirstRun;
         CancelManager manager = CancelManager.getInstance();
         // the index of the current iteration
@@ -404,21 +426,24 @@ public final class AutomationManager implements StatusListener {
         boolean canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
         while (remainingRuns-- > 0 && !canceled) {
 
-            // update progress
-            monitor.subTask(execution.toOSString() + " : " + model.toOSString()
-                    + " Iteration No. " + iteration + " ( at least "
-                    + remainingRuns + " remaining )");
+            if (monitor != null) {
+                // update progress
+                monitor.subTask(execution.toOSString() + " : "
+                        + model.toOSString() + " Iteration No. " + iteration
+                        + " ( at least " + remainingRuns + " remaining )");
+            }
+
             currentResult = new IterationResult(model.toOSString(), iteration);
             results.add(currentResult);
 
-            if (!result) {
+            if (!result && !headless) {
                 // add result to panel unless first run where table columns have
                 // to be initialized
                 addResultToPanel();
             }
 
             // execute
-            executeIteration();
+            executeIteration(headless);
 
             if (currentResult.getStatus() != ResultStatus.ERROR) {
                 switch (manager.isIterationCanceled()) {
@@ -441,7 +466,9 @@ public final class AutomationManager implements StatusListener {
                 if (result) {
                     // add after run to ensure that all columns
                     // contributed by producers are filled
-                    addResultToPanel();
+                    if (!headless) {
+                        addResultToPanel();
+                    }
                     result = false;
                 }
             } else {
@@ -454,8 +481,10 @@ public final class AutomationManager implements StatusListener {
             setMessageOnResult();
             message = "";
 
-            // update the view through the display thread
-            refreshView();
+            if (!headless) {
+                // update the view through the display thread
+                refreshView();
+            }
 
             canceled = manager.isModelFileCanceled() != CancelStatus.NOT_CANCELED;
             if (!canceled) {
@@ -481,10 +510,10 @@ public final class AutomationManager implements StatusListener {
     /**
      * Handles the execution of a single iteration.
      * 
-     * @param unitsForThisIteration
-     *            how many work units are available for this iteration
+     * @param headless
+     *            true if the method should run headless
      */
-    private void executeIteration() {
+    private void executeIteration(final boolean headless) {
         Execution exec = null;
         stepDoneMutex = new Semaphore(0);
         // start the thread for checking for timeouts, monitor canceling,...
@@ -497,7 +526,9 @@ public final class AutomationManager implements StatusListener {
             // call to KIEM to initialize
             if (kIEMInstance.initExecution()) {
                 currentResult.setStatus(ResultStatus.RUNNING);
-                refreshView();
+                if (!headless) {
+                    refreshView();
+                }
                 exec = kIEMInstance.getExecution();
 
                 // step until no component wants another step
@@ -667,12 +698,14 @@ public final class AutomationManager implements StatusListener {
      *            the list of properties that should be set
      * @param monitorParam
      *            the progress monitor
+     * @param headless
+     *            true if the run should be headless
      * @return the list of results
      */
     protected List<IterationResult> doAutomatedExecution(
             final List<ScheduleData> schedules, final List<IPath> modelFiles,
             final List<KiemProperty> properties,
-            final IProgressMonitor monitorParam) {
+            final IProgressMonitor monitorParam, final boolean headless) {
 
         // convert schedules to paths
         IPath[] paths = new IPath[schedules.size()];
@@ -680,7 +713,8 @@ public final class AutomationManager implements StatusListener {
             paths[i] = schedules.get(i).getLocation();
         }
 
-        return doAutomatedExecution(paths, modelFiles, properties, monitorParam);
+        return doAutomatedExecution(paths, modelFiles, properties,
+                monitorParam, headless);
     }
 
     // --------------------------------------------------------------------------
@@ -710,12 +744,15 @@ public final class AutomationManager implements StatusListener {
      *            the model files
      * @param properties
      *            the properties
+     * @param headless
+     *            if true no GUI output will be generated
      */
     public void executeAsync(final IPath[] executionFiles,
-            final List<IPath> modelFiles, final List<KiemProperty> properties) {
+            final List<IPath> modelFiles, final List<KiemProperty> properties,
+            final boolean headless) {
 
         AutomationJob job = new AutomationJob(executionFiles, modelFiles,
-                properties);
+                properties, headless);
         job.schedule();
     }
 
@@ -743,9 +780,12 @@ public final class AutomationManager implements StatusListener {
      *            the model files
      * @param properties
      *            the properties
+     * @param headless
+     *            if true no GUI output will be generated
      */
     public void executeAsync(final List<ScheduleData> selected,
-            final List<IPath> modelFiles, final List<KiemProperty> properties) {
+            final List<IPath> modelFiles, final List<KiemProperty> properties,
+            final boolean headless) {
 
         // convert schedules to paths
         IPath[] array = new IPath[selected.size()];
@@ -753,7 +793,7 @@ public final class AutomationManager implements StatusListener {
             array[i] = selected.get(i).getLocation();
         }
 
-        executeAsync(array, modelFiles, properties);
+        executeAsync(array, modelFiles, properties, headless);
     }
 
     // --------------------------------------------------------------------------
