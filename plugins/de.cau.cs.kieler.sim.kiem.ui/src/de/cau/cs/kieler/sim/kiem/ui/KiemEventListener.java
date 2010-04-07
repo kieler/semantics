@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.sim.kiem.ui;
 
+import org.eclipse.ui.IWorkbenchPartConstants;
+
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -31,11 +33,13 @@ public class KiemEventListener implements IKiemEventListener {
         }
         else if (event.isEvent(KiemEvent.SAVE)) {
             KiemPlugin.getDefault().setDirty(false);
+            KiemView.getInstance().setDirty(false);
 //            // rebuild view toolbar buttons
 //            KiemView.getInstance().buildLocalToolBar();
         }
         else if (event.isEvent(KiemEvent.LOAD)) {
             KiemPlugin.getDefault().setDirty(false);
+            KiemView.getInstance().setDirty(false);
 //            // rebuild view toolbar buttons
 //            KiemView.getInstance().buildLocalToolBar();
         }
