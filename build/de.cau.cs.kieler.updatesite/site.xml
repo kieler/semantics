@@ -105,6 +105,9 @@
    <feature url="features/net.ogdf.lib.source_1.0.0.qualifier.jar" id="net.ogdf.lib.source" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER sources"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.kiml.graphviz_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
