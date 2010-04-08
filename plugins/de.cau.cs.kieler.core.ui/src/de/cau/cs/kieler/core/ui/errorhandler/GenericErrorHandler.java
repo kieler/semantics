@@ -27,6 +27,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWTError;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressConstants;
@@ -228,8 +229,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
 
             dialog = openInternalQuestionDialog(PlatformUI.getWorkbench()
                     .getActiveWorkbenchWindow().getShell(),
-                    MSG_FATAL_ERROR_TITLE, MessageFormat.format(
-                            MSG_FATAL_ERROR, new Object[] { msg }), detail, 1);
+                    MSG_FATAL_ERROR_TITLE, msg + MSG_FATAL_ERROR, detail, 1);
 
             return dialog.open() == 0;
         } catch (Throwable th) {
@@ -290,8 +290,11 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
                 dialog.close();
             }
             // @see WorkbenchAdvisor#getWorkbenchConfigurer()
-            // if (workbenchConfigurer != null)
-            // workbenchConfigurer.emergencyClose();
+            BusyIndicator.showWhile(null, new Runnable() {
+                public void run() {
+                    System.exit(-1);
+                }
+            });
         } catch (RuntimeException re) {
             // Workbench may be in such bad shape (no OS handles left, out of
             // memory, etc)
@@ -300,6 +303,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
                     + "workbench emergency close."; //$NON-NLS-1$
             System.err.println(message);
             re.printStackTrace();
+            System.exit(-1);
             throw re;
         } catch (Error e) {
             // Workbench may be in such bad shape (no OS handles left, out of
@@ -308,6 +312,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
             System.err
                     .println("Fatal error happened during workbench emergency close."); //$NON-NLS-1$
             e.printStackTrace();
+            System.exit(-1);
             throw e;
         }
     }
