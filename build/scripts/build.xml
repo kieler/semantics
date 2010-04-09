@@ -342,7 +342,9 @@
         </loadfile>
 
         <mkdir dir="${basedir}/features/de.cau.cs.kieler.buildHelper" />
+        <mkdir dir="${basedir}/features/de.cau.cs.kieler.buildHelper/sourceTemplateFeature" />
         <delete file="${basedir}/features/de.cau.cs.kieler.buildHelper/*" />
+        <delete file="${basedir}/features/de.cau.cs.kieler.buildHelper/sourceTemplateFeature/*" />
 	
         <!-- dump out the artificial super feature depending on the demand of a soure feature
              (generate.sourcefeature is set) -->
@@ -374,6 +376,19 @@
             <!--property name="id" value="${feature}"/-->
             <property name="id" value="de.cau.cs.kieler.buildHelper"/>
         </ant>
+
+        <if>
+            <isset property="generate.sourcefeature" />
+            <then>
+                <!-- in case the source feature has been by generated via the call above
+                     append " sources" to its label
+                     \1 in 'replace' refers to '('<pattern>')' in 'match' -->
+                <replaceregexp file="${basedir}/features/${feature}.source/feature.xml"
+                     match="(&lt;feature .* label=&quot;[^&quot;]*)&quot;"
+                     replace="\1 sources&quot;"
+                     byline="true" />
+            </then>
+        </if>
     </target>
     
     <!-- =========================================================================================== -->
@@ -775,10 +790,6 @@
         <delete dir="${buildLabel}"/> <!-- here: the N.kieler folder -->
         
         <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
-        
-        <!-- to zip the customized config.ini into our product
-             (during update.launcher) its path is determined here -->
-        <dirname property="config.dir" file="${product}" />
 
         <!-- setting the executable flag on launcher binaries
              CAUTION: foreach is a ant-contrib task declared above! -->
@@ -795,6 +806,10 @@
         description="private target for updating the permission flags of the launcher and other binaries">
         <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755
              ${binaries} my contain a comma separated list of further executables -->
+        
+        <!-- to zip the customized config.ini into our product
+             (during update.launcher) its path is determined here -->
+        <dirname property="config.dir" file="${product}" />
         
         <basename file="${zipfile}" property="platform" suffix="zip" />
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
