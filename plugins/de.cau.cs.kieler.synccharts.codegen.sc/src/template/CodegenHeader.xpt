@@ -2,6 +2,27 @@
 
 «EXTENSION template::Helper»
 
+«DEFINE staticHeader FOR Region-»
+«FILE innerStates.first().label+".h"»
+#ifndef _«innerStates.first().label.toUpperCase()»_H
+#define _«innerStates.first().label.toUpperCase()»_H
+  
+  «FOREACH allSignals(this.innerStates.first()) AS signal-»
+  	«IF ((Signal)signal).isInput-»
+  void «((Signal)signal).parentState.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  	«ENDIF-»
+  	«IF ((Signal)signal).isOutput-»
+  void «((Signal)signal).parentState.id»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  	«ENDIF-»
+  «ENDFOREACH-»
+  
+  int «innerStates.first().label»_reset();
+  int «innerStates.first().label»();
+  
+#endif
+«ENDFILE»
+«ENDDEFINE»
+
 «DEFINE main FOR Region-»
 	«FILE "misc.h"-»
 «EXPAND header FOR this-»

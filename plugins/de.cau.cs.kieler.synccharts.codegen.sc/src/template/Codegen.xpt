@@ -15,11 +15,17 @@
 		«EXPAND step-»
 		«ENDFILE-»
 		«EXPAND CodegenData::main»
+		«EXPAND CodegenHeader::staticHeader»
 	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
+	«IF !this.eAllContents.select(e|e.metaType==ComplexExpression && ((ComplexExpression)e).operator==OperatorType::PRE).isEmpty-»
+	#define _SC_USE_PRE //;
+	«ENDIF-»
+	
 	#include "sc.h"
+	#include "«innerStates.first().label».h"
 	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
 	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
 	#define _SC_valSigInt_SIZE «allSignals(this.innerStates.first()).size»
@@ -52,6 +58,16 @@
 
 «DEFINE step FOR Region»
 int «innerStates.first().id»(){
-  return tick();
+  int notdone = tick();
+  «IF !this.eAllContents.select(e|e.metaType==ComplexExpression && ((ComplexExpression)e).operator==OperatorType::PRE).isEmpty-»
+	int i;
+	«ENDIF-»
+  callOutputs();
+    «IF !this.eAllContents.select(e|e.metaType==ComplexExpression && ((ComplexExpression)e).operator==OperatorType::PRE).isEmpty-»
+	for(i=0;i<_SC_valSigInt_SIZE;i++){
+	  valSigIntPre[i] = valSigInt[i];
+	}
+	«ENDIF-»
+  return notdone;
 }
 «ENDDEFINE»

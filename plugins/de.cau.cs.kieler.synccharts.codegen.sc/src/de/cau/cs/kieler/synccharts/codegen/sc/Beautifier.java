@@ -45,6 +45,7 @@ public class Beautifier {
             newLineBegin(line, "const char");
             newLineBegin(line, "#define");
             newLineBegin(line, "#ifndef");
+            newLineBegin(line, "#include");
             
             if (!line.endsWith(":")) {
                 bw.write(tabs(tabNumber));
