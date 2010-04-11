@@ -1,0 +1,154 @@
+«IMPORT synccharts»
+
+«EXTENSION templates::helper»
+
+«DEFINE main FOR Region-»
+«FILE innerStates.first().label + ".strl"-»
+module «innerStates.first().label» : 
+«FOREACH innerStates.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-» 
+«ENDFOREACH-»
+«IF !innerStates.first().locals().isEmpty»
+signal
+ «FOREACH innerStates.first().locals() AS sig  SEPARATOR ","-»«sig.name» «EXPAND SignalType FOR sig»«ENDFOREACH»
+in
+«ENDIF»
+  «FOREACH innerStates.first().regions AS region SEPARATOR " || "»«EXPAND Constelation FOR region»«ENDFOREACH-»
+«IF !innerStates.first().locals().isEmpty»
+end signal
+«ENDIF»
+end module
+«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE Constelation FOR Region-»
+«IF canTerminate()»trap done in «ENDIF»
+  signal T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH» in
+    emit goto_«this.initial().id»;
+    loop
+      weak abort 
+        «FOREACH this.innerStates.sortStates() AS state-»
+        present goto_«state.id» then
+        «IF state.canBeTransient()»signal start_«state.id» in emit start_«state.id»;«ENDIF»     
+            «EXPAND Star FOR state-»                
+         «IF state.canBeTransient()»
+            present start_«state.id» else
+              emit T_«innerStates.first().id»;pause;
+            end present   
+          end signal
+          «ELSE»
+            emit T_«innerStates.first().id»;pause;
+          «ENDIF»
+        end present;
+        «ENDFOREACH-»
+        halt;
+      when T_«innerStates.first().id»;
+    end loop;
+  end signal;
+«IF canTerminate()»end trap«ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE SignalType FOR Signal»
+«IF type != ValueType::PURE» «IF initialValue.length>0»:= «initialValue.asInteger()»«ENDIF-» : «IF this.combineOperator!=CombineOperator::NONE» combine«ENDIF» integer 
+«IF combineOperator!=CombineOperator::NONE» with *«ENDIF»
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE Star FOR synccharts::State-»
+ % «id»
+ «IF !this.locals().isEmpty»
+ signal 
+ «FOREACH this.locals() AS s SEPARATOR ", "»
+    «s.name» «EXPAND SignalType FOR s»
+ «ENDFOREACH-»
+ in
+ «ENDIF»
+ «IF this.hasSAborts()»abort«ENDIF»
+ «IF this.hasWAborts()»weak abort«ENDIF»
+ «FOREACH entryActions AS action»«EXPAND Action FOR action»«ENDFOREACH»
+ «IF this.regions.isEmpty-»
+   «IF this.isFinal-»
+     exit done;
+   «ELSEIF this.innerActions.isEmpty-»halt;
+   «ELSE»
+     loop
+     pause;
+     «FOREACH innerActions AS action»«EXPAND Action FOR action»«ENDFOREACH»
+     end loop
+   «ENDIF-»
+ «ELSE-»
+ [
+   «FOREACH this.regions AS region SEPARATOR "||"-»
+   «EXPAND Constelation FOR region»
+   «ENDFOREACH-»
+   ]; 
+  «IF this.hasNT()-»
+    «FOREACH getNT().effects AS eff-»«EXPAND Effect FOR eff»«ENDFOREACH-»
+    emit goto_«getNT().targetState.id»;
+  «ENDIF-»
+«ENDIF»
+  «IF this.hasWAborts()» 
+    when
+    «FOREACH this.getWAborts() AS trans-»
+      case «IF trans.isImmediate»immediate «ENDIF-» «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF» do 
+      emit goto_«trans.targetState.id»;
+      «FOREACH trans.effects AS eff-»
+        «EXPAND Effect FOR eff»
+      «ENDFOREACH-»
+      «ENDFOREACH»
+       end abort;
+  «ENDIF»
+  «IF this.hasSAborts()» 
+    when
+    «FOREACH this.getSAborts() AS trans-»
+      case «IF trans.isImmediate»immediate «ENDIF-» «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF» do 
+      emit goto_«trans.targetState.id»;
+      «FOREACH trans.effects AS eff-»
+        «EXPAND Effect FOR eff»
+      «ENDFOREACH-»
+    «ENDFOREACH-»
+     end abort;
+  «ENDIF» 
+«IF !this.locals().isEmpty»
+ end signal;
+ «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Trigger FOR ComplexExpression»
+  «IF operator==OperatorType::PRE»
+  pre(«EXPAND Trigger FOR subExpressions.first()»)
+  «ELSEIF operator==OperatorType::VAL»
+  ?«EXPAND Trigger FOR subExpressions.first()»
+  «ELSEIF operator==OperatorType::NOT»
+  (not «EXPAND Trigger FOR subExpressions.first()»)
+  «ELSE»
+  («FOREACH subExpressions AS sub SEPARATOR " " + operator.toString() + " "» «EXPAND Trigger FOR sub» «ENDFOREACH»)
+  «ENDIF»
+«ENDDEFINE»
+
+«DEFINE Effect FOR Emission»emit «signal.name»«IF newValue!=null»(«EXPAND Trigger FOR newValue»)«ENDIF»;«ENDDEFINE»
+«DEFINE Effect FOR Assignment»«variable» := «expression»;«ENDDEFINE»
+«DEFINE Effect FOR HostCode»«code»;«ENDDEFINE»
+«DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
+«REM» Trigger «ENDREM»
+«DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR FloatValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR BooleanValue»«IF value»true«ELSE»false«ENDIF»«ENDDEFINE»
+«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
+«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+
+«DEFINE Trigger FOR HostCode»«code»«ENDDEFINE»
+«DEFINE Trigger FOR synccharts::Expression»//ERROR: unknown expression«ENDDEFINE»
+
+«DEFINE Action FOR Action»
+  «IF this.trigger!=null»
+  present «EXPAND Trigger FOR trigger» then
+  «ENDIF»
+  «FOREACH this.effects AS eff»«EXPAND Effect FOR eff»«ENDFOREACH»
+  «IF this.trigger!=null»
+  end present;
+  «ENDIF»
+«ENDDEFINE»
+
+
+
