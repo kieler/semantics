@@ -9,5 +9,16 @@
             name="CEC Esterel simulation">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/cec.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="Esterel Editor"
+               priority="8">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
