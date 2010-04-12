@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.interfacedeclparser.bridge;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +72,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
      * @param theInjector
      *            the injector.
      */
-    public InterfaceDeclParseCommand(final State rootElement, final Injector theInjector) {
+    public InterfaceDeclParseCommand(final State rootElement,
+            final Injector theInjector) {
         this.interfaceDeclaration = rootElement.getInterfaceDeclaration();
         this.injector = theInjector;
         this.rootState = rootElement;
@@ -106,6 +106,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void undo() {
         rootState.setInterfaceDeclaration(oldInterfaceDeclaration);
     }
@@ -146,7 +147,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
         } catch (Exception e) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Error parsing interface declaration "
-                            + "resource for serialization, possible reason: ", e);
+                            + "resource for serialization, possible reason: ",
+                    e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         return null;
@@ -161,9 +163,10 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
     private void prepareInterfaceDeclParse() throws KielerModelException {
         if (rootState == null) {
             throw new KielerModelException(
-                    "InterfaceDeclaration \nThe passed element to be parsed was null!", rootState);
+                    "InterfaceDeclaration \nThe passed element to be parsed was null!",
+                    rootState);
         }
-        State currentState = (State) rootState;
+        State currentState = rootState;
 
         try {
             // FIXME if there's just 1 signal left, a remove trigger is fired by
@@ -171,7 +174,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             // workaround: if there's just 1 signal add a new dummy signal
             // remove old signals
             if (currentState.getSignals().size() == 1) {
-                currentState.getSignals().add(SyncchartsFactory.eINSTANCE.createSignal());
+                currentState.getSignals().add(
+                        SyncchartsFactory.eINSTANCE.createSignal());
             }
             currentState.getSignals().clear();
             // remove all renamings
@@ -179,11 +183,13 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             // remove old signals and variables of regions
             for (Region r : currentState.getRegions()) {
                 if (r.getSignals().size() == 1) {
-                    r.getSignals().add(SyncchartsFactory.eINSTANCE.createSignal());
+                    r.getSignals().add(
+                            SyncchartsFactory.eINSTANCE.createSignal());
                 }
                 r.getSignals().clear();
                 if (r.getVariables().size() == 1) {
-                    r.getVariables().add(SyncchartsFactory.eINSTANCE.createVariable());
+                    r.getVariables().add(
+                            SyncchartsFactory.eINSTANCE.createVariable());
                 }
                 r.getVariables().clear();
             }
@@ -204,7 +210,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
      * @throws IOException
      *             internal parser error
      */
-    protected void parseInterfaceDecl() throws KielerModelException, IOException {
+    protected void parseInterfaceDecl() throws KielerModelException,
+            IOException {
 
         XtextResource resource = parse();
         EObject parsedObject = null;
@@ -213,8 +220,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
         }
 
         if (parsedObject != null && parsedObject instanceof StateExtend) {
-            injectSignalsAndVars((State) rootState, (StateExtend) parsedObject);
-            injectRenamings((State) rootState, (StateExtend) parsedObject);
+            injectSignalsAndVars(rootState, (StateExtend) parsedObject);
+            injectRenamings(rootState, (StateExtend) parsedObject);
         }
     }
 
@@ -229,21 +236,24 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
      *             error
      */
     private XtextResource parse() throws KielerModelException, IOException {
-        if (interfaceDeclaration == null || interfaceDeclaration.trim().length() == 0) {
+        if (interfaceDeclaration == null
+                || interfaceDeclaration.trim().length() == 0) {
             // nothing to do
             return null;
         }
         // set up the resource
-        ByteArrayInputStream stream = new ByteArrayInputStream(interfaceDeclaration.getBytes());
+        ByteArrayInputStream stream = new ByteArrayInputStream(
+                interfaceDeclaration.getBytes());
 
-        XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+        XtextResourceSet resourceSet = injector
+                .getInstance(XtextResourceSet.class);
         XtextResource resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
                         + "interfacedeclparser/dummy.ifd"));
 
         // FIXME: passing the parent to the scope provider in this static
         // way is veeeeery evil
-        InterfaceDeclScopeProvider.parent = rootState;
+        InterfaceDeclScopeProvider.setParent(rootState);
 
         // start the actual parsing
         Map<Object, Object> loadOptions = resourceSet.getLoadOptions();
@@ -253,8 +263,12 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
 
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null) {
-            throw new KielerModelException("\"" + interfaceDeclaration + "\""
-                    + "Could not parse interface declaration. Parser did return null.", rootState);
+            throw new KielerModelException(
+                    "\""
+                            + interfaceDeclaration
+                            + "\""
+                            + "Could not parse interface declaration. Parser did return null.",
+                    rootState);
         }
 
         // check for errors and add them to the exception
@@ -265,8 +279,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
                 parseErrorString.append("\n" + syntaxError.getMessage());
             }
             throw new KielerModelException(
-                    "Interface Declaration Parsing failed, possible reason: " + parseErrorString,
-                    rootState);
+                    "Interface Declaration Parsing failed, possible reason: "
+                            + parseErrorString, rootState);
         }
 
         return resource;
@@ -280,7 +294,8 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
      * @param se
      *            StateExtend object with parsed content
      */
-    private void injectSignalsAndVars(final State currentState, final StateExtend se) {
+    private void injectSignalsAndVars(final State currentState,
+            final StateExtend se) {
 
         // add signals to current state
         List<Signal> newSigs = new LinkedList<Signal>();
@@ -327,7 +342,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             currRegion.getVariables().addAll(newVars);
         }
     }
-    
+
     /**
      * Adds freshly created Renaming.
      * 
@@ -337,7 +352,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
      *            StateExtend object with parsed content
      */
     private void injectRenamings(final State currentState, final StateExtend se) {
-        
+
         // add renamings
         List<Renaming> newRenamings = new LinkedList<Renaming>();
         for (Renamings rens : se.getRenamings()) {

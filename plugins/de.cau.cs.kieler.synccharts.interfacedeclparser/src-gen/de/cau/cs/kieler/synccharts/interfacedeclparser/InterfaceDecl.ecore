@@ -26,6 +26,10 @@
         eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variables">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Variable"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signals">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="ecore:EClass ../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Signal"

@@ -44,6 +44,15 @@ public interface InterfaceDeclFactory extends EFactory
   RegionSignalDec createRegionSignalDec();
 
   /**
+   * Returns a new object of class '<em>Variables</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variables</em>'.
+   * @generated
+   */
+  Variables createVariables();
+
+  /**
    * Returns a new object of class '<em>Signals</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

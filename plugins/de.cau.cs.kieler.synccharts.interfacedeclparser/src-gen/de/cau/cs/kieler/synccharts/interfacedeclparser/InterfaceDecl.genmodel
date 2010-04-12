@@ -22,6 +22,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/vars"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//RegionSignalDec/signals"/>
     </genClasses>
+    <genClasses ecoreClass="InterfaceDecl.ecore#//Variables">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//Variables/vars"/>
+    </genClasses>
     <genClasses ecoreClass="InterfaceDecl.ecore#//Signals">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InterfaceDecl.ecore#//Signals/signals"/>
     </genClasses>

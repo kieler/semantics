@@ -16,6 +16,7 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSigna
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend;
+import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -44,6 +45,13 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * @generated
    */
   private EClass regionSignalDecEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass variablesEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -261,6 +269,26 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getVariables()
+  {
+    return variablesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVariables_Vars()
+  {
+    return (EReference)variablesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSignals()
   {
     return signalsEClass;
@@ -399,6 +427,9 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
     createEReference(regionSignalDecEClass, REGION_SIGNAL_DEC__VARS);
     createEReference(regionSignalDecEClass, REGION_SIGNAL_DEC__SIGNALS);
 
+    variablesEClass = createEClass(VARIABLES);
+    createEReference(variablesEClass, VARIABLES__VARS);
+
     signalsEClass = createEClass(SIGNALS);
     createEReference(signalsEClass, SIGNALS__SIGNALS);
 
@@ -461,6 +492,9 @@ public class InterfaceDeclPackageImpl extends EPackageImpl implements InterfaceD
     initEReference(getRegionSignalDec_Region(), theSyncchartsPackage.getRegion(), null, "region", null, 0, 1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRegionSignalDec_Vars(), theSyncchartsPackage.getVariable(), null, "vars", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRegionSignalDec_Signals(), theSyncchartsPackage.getSignal(), null, "signals", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(variablesEClass, Variables.class, "Variables", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVariables_Vars(), theSyncchartsPackage.getVariable(), null, "vars", null, 0, -1, Variables.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signalsEClass, Signals.class, "Signals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSignals_Signals(), theSyncchartsPackage.getSignal(), null, "signals", null, 0, -1, Signals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

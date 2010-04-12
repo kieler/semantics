@@ -178,6 +178,34 @@ public interface InterfaceDeclPackage extends EPackage
   int REGION_SIGNAL_DEC_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.VariablesImpl <em>Variables</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.VariablesImpl
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getVariables()
+   * @generated
+   */
+  int VARIABLES = 2;
+
+  /**
+   * The feature id for the '<em><b>Vars</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLES__VARS = 0;
+
+  /**
+   * The number of structural features of the '<em>Variables</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLES_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.SignalsImpl <em>Signals</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -185,7 +213,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getSignals()
    * @generated
    */
-  int SIGNALS = 2;
+  int SIGNALS = 3;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -213,7 +241,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getRenamings()
    * @generated
    */
-  int RENAMINGS = 3;
+  int RENAMINGS = 4;
 
   /**
    * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
@@ -241,7 +269,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getInputSignals()
    * @generated
    */
-  int INPUT_SIGNALS = 4;
+  int INPUT_SIGNALS = 5;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -269,7 +297,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getOutputSignals()
    * @generated
    */
-  int OUTPUT_SIGNALS = 5;
+  int OUTPUT_SIGNALS = 6;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -297,7 +325,7 @@ public interface InterfaceDeclPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getInOutputSignals()
    * @generated
    */
-  int IN_OUTPUT_SIGNALS = 6;
+  int IN_OUTPUT_SIGNALS = 7;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -436,6 +464,27 @@ public interface InterfaceDeclPackage extends EPackage
    * @generated
    */
   EReference getRegionSignalDec_Signals();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Variables</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables
+   * @generated
+   */
+  EClass getVariables();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables#getVars <em>Vars</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Vars</em>'.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables#getVars()
+   * @see #getVariables()
+   * @generated
+   */
+  EReference getVariables_Vars();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals <em>Signals</em>}'.
@@ -656,6 +705,24 @@ public interface InterfaceDeclPackage extends EPackage
      * @generated
      */
     EReference REGION_SIGNAL_DEC__SIGNALS = eINSTANCE.getRegionSignalDec_Signals();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.VariablesImpl <em>Variables</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.VariablesImpl
+     * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.InterfaceDeclPackageImpl#getVariables()
+     * @generated
+     */
+    EClass VARIABLES = eINSTANCE.getVariables();
+
+    /**
+     * The meta object literal for the '<em><b>Vars</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VARIABLES__VARS = eINSTANCE.getVariables_Vars();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl.SignalsImpl <em>Signals</em>}' class.

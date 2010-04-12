@@ -33,7 +33,8 @@ import de.cau.cs.kieler.synccharts.Variable;
  * @author car
  * 
  */
-public class InterfaceDeclTransientValueService extends DefaultTransientValueService {
+public class InterfaceDeclTransientValueService extends
+        DefaultTransientValueService {
 
     private static SyncchartsPackage sync = SyncchartsPackage.eINSTANCE;
 
@@ -41,7 +42,8 @@ public class InterfaceDeclTransientValueService extends DefaultTransientValueSer
      * {@inheritDoc}
      */
     @Override
-    public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
+    public boolean isTransient(final EObject owner,
+            final EStructuralFeature feature, final int index) {
 
         // TODO check whether variables need to be treated further.
         if (owner instanceof Variable) {
@@ -49,7 +51,8 @@ public class InterfaceDeclTransientValueService extends DefaultTransientValueSer
 
             // initial value
             if (feature.equals(sync.getValuedObject_InitialValue())
-                    && ((var.getInitialValue() != null) && var.getInitialValue().trim() != "")) {
+                    && ((var.getInitialValue() != null) && var
+                            .getInitialValue().trim() != "")) {
                 return false;
             }
         }
@@ -70,16 +73,15 @@ public class InterfaceDeclTransientValueService extends DefaultTransientValueSer
             } else if ((feature.equals(sync.getValuedObject_HostType())
                     && sig.getHostType() != null && sig.getHostType().length() > 0)
                     || (feature.equals(sync.getSignal_HostCombineOperator())
-                            && sig.getHostCombineOperator() != null && sig.getHostCombineOperator()
-                            .length() > 0)) {
+                            && sig.getHostCombineOperator() != null && sig
+                            .getHostCombineOperator().length() > 0)) {
                 // hosttype and hostcombine op
                 return false;
             } else if (feature.equals(sync.getValuedObject_Name())) {
                 // name
                 return false;
-            } else {
-                return true;
             }
+            return true;
         }
 
         // else return usual transientvalueservice return

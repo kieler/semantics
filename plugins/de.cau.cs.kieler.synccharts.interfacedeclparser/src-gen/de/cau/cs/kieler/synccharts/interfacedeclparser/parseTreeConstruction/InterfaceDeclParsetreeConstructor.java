@@ -37,14 +37,15 @@ protected class ThisRootNode extends RootToken {
 		switch(index) {
 			case 0: return new StateExtend_Alternatives(this, this, 0, inst);
 			case 1: return new RegionSignalDec_Group(this, this, 1, inst);
-			case 2: return new Signals_Group(this, this, 2, inst);
-			case 3: return new Renamings_Group(this, this, 3, inst);
-			case 4: return new InputSignals_Group(this, this, 4, inst);
-			case 5: return new OutputSignals_Group(this, this, 5, inst);
-			case 6: return new InOutputSignals_Group(this, this, 6, inst);
-			case 7: return new Signal_Alternatives(this, this, 7, inst);
-			case 8: return new Variable_Group(this, this, 8, inst);
-			case 9: return new Renaming_Group(this, this, 9, inst);
+			case 2: return new Variables_Group(this, this, 2, inst);
+			case 3: return new Signals_Group(this, this, 3, inst);
+			case 4: return new Renamings_Group(this, this, 4, inst);
+			case 5: return new InputSignals_Group(this, this, 5, inst);
+			case 6: return new OutputSignals_Group(this, this, 6, inst);
+			case 7: return new InOutputSignals_Group(this, this, 7, inst);
+			case 8: return new Signal_Alternatives(this, this, 8, inst);
+			case 9: return new Variable_Alternatives(this, this, 9, inst);
+			case 10: return new Renaming_Group(this, this, 10, inst);
 			default: return null;
 		}	
 	}	
@@ -57,7 +58,8 @@ protected class ThisRootNode extends RootToken {
  *   (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
  *   "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|"signal"
  *   signals+=Signals|"renaming" renamings+=Renamings)+; 
- * 
+ *  
+ *  
  * //==============================================================================
  * // "Buckets" containing the Signals / Regions with Signals
  * //==============================================================================
@@ -805,7 +807,7 @@ protected class RegionSignalDec_VarsAssignment_2_0_1 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -896,7 +898,7 @@ protected class RegionSignalDec_VarsAssignment_2_0_2_1 extends AssignmentToken  
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1221,7 +1223,7 @@ protected class RegionSignalDec_VarsAssignment_3_0_2 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1312,7 +1314,7 @@ protected class RegionSignalDec_VarsAssignment_3_0_3_1 extends AssignmentToken  
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1578,6 +1580,227 @@ protected class RegionSignalDec_SemicolonKeyword_4 extends KeywordToken  {
 
 
 /************ end Rule RegionSignalDec ****************/
+
+
+/************ begin Rule Variables ****************
+ *
+ * Variables:
+ *   (vars+=Variable ("," vars+=Variable)*) ";";
+ *
+ **/
+
+// (vars+=Variable ("," vars+=Variable)*) ";"
+protected class Variables_Group extends GroupToken {
+	
+	public Variables_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variables_SemicolonKeyword_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getVariablesRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// vars+=Variable ("," vars+=Variable)*
+protected class Variables_Group_0 extends GroupToken {
+	
+	public Variables_Group_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getGroup_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variables_Group_0_1(parent, this, 0, inst);
+			case 1: return new Variables_VarsAssignment_0_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class Variables_VarsAssignment_0_0 extends AssignmentToken  {
+	
+	public Variables_VarsAssignment_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getVarsAssignment_0_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("vars",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("vars");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getVariablesAccess().getVarsVariableParserRuleCall_0_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			default: return parent.createParentFollower(next, actIndex , index, consumed);
+		}	
+	}	
+}
+
+// ("," vars+=Variable)*
+protected class Variables_Group_0_1 extends GroupToken {
+	
+	public Variables_Group_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getGroup_0_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variables_VarsAssignment_0_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ","
+protected class Variables_CommaKeyword_0_1_0 extends KeywordToken  {
+	
+	public Variables_CommaKeyword_0_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getCommaKeyword_0_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variables_Group_0_1(parent, this, 0, inst);
+			case 1: return new Variables_VarsAssignment_0_0(parent, this, 1, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// vars+=Variable
+protected class Variables_VarsAssignment_0_1_1 extends AssignmentToken  {
+	
+	public Variables_VarsAssignment_0_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getVarsAssignment_0_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("vars",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("vars");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getVariablesAccess().getVarsVariableParserRuleCall_0_1_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Variables_CommaKeyword_0_1_0(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+// ";"
+protected class Variables_SemicolonKeyword_1 extends KeywordToken  {
+	
+	public Variables_SemicolonKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariablesAccess().getSemicolonKeyword_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variables_Group_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+
+/************ end Rule Variables ****************/
 
 
 /************ begin Rule Signals ****************
@@ -2696,13 +2919,13 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
 /************ begin Rule Signal ****************
  *
  * Signal returns synccharts::Signal:
- *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING)|name=ID (":="
- *   initialValue=STRING) ":" type=ValueType|name=ID (":=" initialValue=STRING) ("combine"
- *   type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType=STRING|
- *   name=ID (":=" initialValue=STRING) ":" hostType=STRING|name=ID (":=" initialValue=
- *   STRING) ("combine" hostType=STRING "with" hostCombineOperator=STRING)|name=ID (
- *   "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ("combine"
- *   hostType=STRING "with" hostCombineOperator=STRING); 
+ *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
+ *   initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
+ *   "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
+ *   =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+ *   initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
+ *   STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+ *   name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D); 
  * 
  * //==============================================================================
  * // synccharts elements as needed
@@ -2710,13 +2933,13 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
  *
  **/
 
-// name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING)|name=ID (":="
-// initialValue=STRING) ":" type=ValueType|name=ID (":=" initialValue=STRING) ("combine"
-// type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType=STRING|
-// name=ID (":=" initialValue=STRING) ":" hostType=STRING|name=ID (":=" initialValue=
-// STRING) ("combine" hostType=STRING "with" hostCombineOperator=STRING)|name=ID (
-// "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ("combine"
-// hostType=STRING "with" hostCombineOperator=STRING)
+// name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
+// initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
+// "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
+// =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+// initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
+// STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+// name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
 protected class Signal_Alternatives extends AlternativesToken {
 
 	public Signal_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2897,7 +3120,7 @@ protected class Signal_TypeAssignment_1_2 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING)
+// name=ID (":=" initialValue=STRING_D)
 protected class Signal_Group_2 extends GroupToken {
 	
 	public Signal_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2952,7 +3175,7 @@ protected class Signal_NameAssignment_2_0 extends AssignmentToken  {
 
 }
 
-// ":=" initialValue=STRING
+// ":=" initialValue=STRING_D
 protected class Signal_Group_2_1 extends GroupToken {
 	
 	public Signal_Group_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2996,7 +3219,7 @@ protected class Signal_ColonEqualsSignKeyword_2_1_0 extends KeywordToken  {
 		
 }
 
-// initialValue=STRING
+// initialValue=STRING_D
 protected class Signal_InitialValueAssignment_2_1_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_2_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3022,7 +3245,7 @@ protected class Signal_InitialValueAssignment_2_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_2_1_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSTRING_DTerminalRuleCall_2_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3032,7 +3255,7 @@ protected class Signal_InitialValueAssignment_2_1_1 extends AssignmentToken  {
 
 
 
-// name=ID (":=" initialValue=STRING) ":" type=ValueType
+// name=ID (":=" initialValue=STRING_D) ":" type=ValueType
 protected class Signal_Group_3 extends GroupToken {
 	
 	public Signal_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3087,7 +3310,7 @@ protected class Signal_NameAssignment_3_0 extends AssignmentToken  {
 
 }
 
-// ":=" initialValue=STRING
+// ":=" initialValue=STRING_D
 protected class Signal_Group_3_1 extends GroupToken {
 	
 	public Signal_Group_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3131,7 +3354,7 @@ protected class Signal_ColonEqualsSignKeyword_3_1_0 extends KeywordToken  {
 		
 }
 
-// initialValue=STRING
+// initialValue=STRING_D
 protected class Signal_InitialValueAssignment_3_1_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3157,7 +3380,7 @@ protected class Signal_InitialValueAssignment_3_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_3_1_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSTRING_DTerminalRuleCall_3_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3223,7 +3446,7 @@ protected class Signal_TypeAssignment_3_3 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING) ("combine" type=ValueType "with" combineOperator=
+// name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with" combineOperator=
 // CombineOperator)
 protected class Signal_Group_4 extends GroupToken {
 	
@@ -3279,7 +3502,7 @@ protected class Signal_NameAssignment_4_0 extends AssignmentToken  {
 
 }
 
-// ":=" initialValue=STRING
+// ":=" initialValue=STRING_D
 protected class Signal_Group_4_1 extends GroupToken {
 	
 	public Signal_Group_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3323,7 +3546,7 @@ protected class Signal_ColonEqualsSignKeyword_4_1_0 extends KeywordToken  {
 		
 }
 
-// initialValue=STRING
+// initialValue=STRING_D
 protected class Signal_InitialValueAssignment_4_1_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_4_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3349,7 +3572,7 @@ protected class Signal_InitialValueAssignment_4_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSTRING_DTerminalRuleCall_4_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3494,7 +3717,7 @@ protected class Signal_CombineOperatorAssignment_4_2_3 extends AssignmentToken  
 
 
 
-// name=ID ":" hostType=STRING
+// name=ID ":" hostType=STRING_D
 protected class Signal_Group_5 extends GroupToken {
 	
 	public Signal_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3571,7 +3794,7 @@ protected class Signal_ColonKeyword_5_1 extends KeywordToken  {
 		
 }
 
-// hostType=STRING
+// hostType=STRING_D
 protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_5_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3597,7 +3820,7 @@ protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_2_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_5_2_0();
 			return obj;
 		}
 		return null;
@@ -3606,7 +3829,7 @@ protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING) ":" hostType=STRING
+// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
 protected class Signal_Group_6 extends GroupToken {
 	
 	public Signal_Group_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3661,7 +3884,7 @@ protected class Signal_NameAssignment_6_0 extends AssignmentToken  {
 
 }
 
-// ":=" initialValue=STRING
+// ":=" initialValue=STRING_D
 protected class Signal_Group_6_1 extends GroupToken {
 	
 	public Signal_Group_6_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3705,7 +3928,7 @@ protected class Signal_ColonEqualsSignKeyword_6_1_0 extends KeywordToken  {
 		
 }
 
-// initialValue=STRING
+// initialValue=STRING_D
 protected class Signal_InitialValueAssignment_6_1_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_6_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3731,7 +3954,7 @@ protected class Signal_InitialValueAssignment_6_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_6_1_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSTRING_DTerminalRuleCall_6_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3762,7 +3985,7 @@ protected class Signal_ColonKeyword_6_2 extends KeywordToken  {
 		
 }
 
-// hostType=STRING
+// hostType=STRING_D
 protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_6_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3788,7 +4011,7 @@ protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_6_3_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_6_3_0();
 			return obj;
 		}
 		return null;
@@ -3797,8 +4020,8 @@ protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING) ("combine" hostType=STRING "with"
-// hostCombineOperator=STRING)
+// name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_D "with"
+// hostCombineOperator=STRING_D)
 protected class Signal_Group_7 extends GroupToken {
 	
 	public Signal_Group_7(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3853,7 +4076,7 @@ protected class Signal_NameAssignment_7_0 extends AssignmentToken  {
 
 }
 
-// ":=" initialValue=STRING
+// ":=" initialValue=STRING_D
 protected class Signal_Group_7_1 extends GroupToken {
 	
 	public Signal_Group_7_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3897,7 +4120,7 @@ protected class Signal_ColonEqualsSignKeyword_7_1_0 extends KeywordToken  {
 		
 }
 
-// initialValue=STRING
+// initialValue=STRING_D
 protected class Signal_InitialValueAssignment_7_1_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_7_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3923,7 +4146,7 @@ protected class Signal_InitialValueAssignment_7_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_7_1_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSTRING_DTerminalRuleCall_7_1_1_0();
 			return obj;
 		}
 		return null;
@@ -3932,7 +4155,7 @@ protected class Signal_InitialValueAssignment_7_1_1 extends AssignmentToken  {
 }
 
 
-// "combine" hostType=STRING "with" hostCombineOperator=STRING
+// "combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
 protected class Signal_Group_7_2 extends GroupToken {
 	
 	public Signal_Group_7_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3976,7 +4199,7 @@ protected class Signal_CombineKeyword_7_2_0 extends KeywordToken  {
 		
 }
 
-// hostType=STRING
+// hostType=STRING_D
 protected class Signal_HostTypeAssignment_7_2_1 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_7_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4002,7 +4225,7 @@ protected class Signal_HostTypeAssignment_7_2_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_7_2_1_0();
 			return obj;
 		}
 		return null;
@@ -4032,7 +4255,7 @@ protected class Signal_WithKeyword_7_2_2 extends KeywordToken  {
 		
 }
 
-// hostCombineOperator=STRING
+// hostCombineOperator=STRING_D
 protected class Signal_HostCombineOperatorAssignment_7_2_3 extends AssignmentToken  {
 	
 	public Signal_HostCombineOperatorAssignment_7_2_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4058,7 +4281,7 @@ protected class Signal_HostCombineOperatorAssignment_7_2_3 extends AssignmentTok
 		IInstanceDescription obj = current.cloneAndConsume("hostCombineOperator");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_7_2_3_0();
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0();
 			return obj;
 		}
 		return null;
@@ -4259,7 +4482,7 @@ protected class Signal_CombineOperatorAssignment_8_1_3 extends AssignmentToken  
 
 
 
-// name=ID ("combine" hostType=STRING "with" hostCombineOperator=STRING)
+// name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
 protected class Signal_Group_9 extends GroupToken {
 	
 	public Signal_Group_9(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4314,7 +4537,7 @@ protected class Signal_NameAssignment_9_0 extends AssignmentToken  {
 
 }
 
-// "combine" hostType=STRING "with" hostCombineOperator=STRING
+// "combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
 protected class Signal_Group_9_1 extends GroupToken {
 	
 	public Signal_Group_9_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4358,7 +4581,7 @@ protected class Signal_CombineKeyword_9_1_0 extends KeywordToken  {
 		
 }
 
-// hostType=STRING
+// hostType=STRING_D
 protected class Signal_HostTypeAssignment_9_1_1 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_9_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4384,7 +4607,7 @@ protected class Signal_HostTypeAssignment_9_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_9_1_1_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_9_1_1_0();
 			return obj;
 		}
 		return null;
@@ -4414,7 +4637,7 @@ protected class Signal_WithKeyword_9_1_2 extends KeywordToken  {
 		
 }
 
-// hostCombineOperator=STRING
+// hostCombineOperator=STRING_D
 protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentToken  {
 	
 	public Signal_HostCombineOperatorAssignment_9_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4440,7 +4663,7 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
 		IInstanceDescription obj = current.cloneAndConsume("hostCombineOperator");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_9_1_3_0();
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0();
 			return obj;
 		}
 		return null;
@@ -4457,29 +4680,64 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
 /************ begin Rule Variable ****************
  *
  * Variable returns synccharts::Variable:
- *   name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?;
+ *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
+ *   initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
+ *   initialValue=STRING_D) ":" hostType=STRING_D; 
+ * 		
+ * 	
+ *     
+ * 
+ *     
+ *       
+ *           
+ *           
+ *               
+ *           
+ *             
+ *     
+ * //  name=ID
+ * //  (":=" initialValue=STRING)?
+ * //  (type=ValueType)?
+ * //  ("host" hostType=STRING)?
  *
  **/
 
-// name=ID (":=" initialValue=STRING)? type=ValueType? ("host" hostType=STRING)?
-protected class Variable_Group extends GroupToken {
-	
-	public Variable_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
+// initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
+// initialValue=STRING_D) ":" hostType=STRING_D 
+// 
+//     
+//       
+//           
+//           
+//               
+//           
+//             
+//     
+// //  name=ID
+// //  (":=" initialValue=STRING)?
+// //  (type=ValueType)?
+// //  ("host" hostType=STRING)?
+protected class Variable_Alternatives extends AlternativesToken {
+
+	public Variable_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getVariableAccess().getGroup();
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getVariableAccess().getAlternatives();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_Group_3(parent, this, 0, inst);
-			case 1: return new Variable_TypeAssignment_2(parent, this, 1, inst);
-			case 2: return new Variable_Group_1(parent, this, 2, inst);
-			case 3: return new Variable_NameAssignment_0(parent, this, 3, inst);
+			case 0: return new Variable_NameAssignment_0(parent, this, 0, inst);
+			case 1: return new Variable_Group_1(parent, this, 1, inst);
+			case 2: return new Variable_Group_2(parent, this, 2, inst);
+			case 3: return new Variable_Group_3(parent, this, 3, inst);
+			case 4: return new Variable_Group_4(parent, this, 4, inst);
+			case 5: return new Variable_Group_5(parent, this, 5, inst);
 			default: return null;
 		}	
 	}	
@@ -4524,7 +4782,7 @@ protected class Variable_NameAssignment_0 extends AssignmentToken  {
 
 }
 
-// (":=" initialValue=STRING)?
+// name=ID ":" type=ValueType
 protected class Variable_Group_1 extends GroupToken {
 	
 	public Variable_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4539,7 +4797,174 @@ protected class Variable_Group_1 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_InitialValueAssignment_1_1(parent, this, 0, inst);
+			case 0: return new Variable_TypeAssignment_1_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// name=ID
+protected class Variable_NameAssignment_1_0 extends AssignmentToken  {
+	
+	public Variable_NameAssignment_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getNameAssignment_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("name",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("name");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":"
+protected class Variable_ColonKeyword_1_1 extends KeywordToken  {
+	
+	public Variable_ColonKeyword_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonKeyword_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_NameAssignment_1_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// type=ValueType
+protected class Variable_TypeAssignment_1_2 extends AssignmentToken  {
+	
+	public Variable_TypeAssignment_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getTypeAssignment_1_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonKeyword_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("type",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("type");
+		if(Boolean.TRUE.booleanValue()) {  
+			type = AssignmentType.ERC;
+			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_1_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// name=ID (":=" initialValue=STRING_D)
+protected class Variable_Group_2 extends GroupToken {
+	
+	public Variable_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group_2_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// name=ID
+protected class Variable_NameAssignment_2_0 extends AssignmentToken  {
+	
+	public Variable_NameAssignment_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getNameAssignment_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("name",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("name");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_2_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":=" initialValue=STRING_D
+protected class Variable_Group_2_1 extends GroupToken {
+	
+	public Variable_Group_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_InitialValueAssignment_2_1_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -4547,54 +4972,54 @@ protected class Variable_Group_1 extends GroupToken {
 }
 
 // ":="
-protected class Variable_ColonEqualsSignKeyword_1_0 extends KeywordToken  {
+protected class Variable_ColonEqualsSignKeyword_2_1_0 extends KeywordToken  {
 	
-	public Variable_ColonEqualsSignKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_ColonEqualsSignKeyword_2_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_1_0();
+		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_2_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_NameAssignment_0(parent, this, 0, inst);
+			case 0: return new Variable_NameAssignment_2_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// initialValue=STRING
-protected class Variable_InitialValueAssignment_1_1 extends AssignmentToken  {
+// initialValue=STRING_D
+protected class Variable_InitialValueAssignment_2_1_1 extends AssignmentToken  {
 	
-	public Variable_InitialValueAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_InitialValueAssignment_2_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getInitialValueAssignment_1_1();
+		return grammarAccess.getVariableAccess().getInitialValueAssignment_2_1_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_ColonEqualsSignKeyword_1_0(parent, this, 0, inst);
+			case 0: return new Variable_ColonEqualsSignKeyword_2_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("initialValue",false)) == null) return null;
+		if((value = current.getConsumable("initialValue",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getInitialValueSTRINGTerminalRuleCall_1_1_0();
+			element = grammarAccess.getVariableAccess().getInitialValueSTRING_DTerminalRuleCall_2_1_1_0();
 			return obj;
 		}
 		return null;
@@ -4603,42 +5028,8 @@ protected class Variable_InitialValueAssignment_1_1 extends AssignmentToken  {
 }
 
 
-// type=ValueType?
-protected class Variable_TypeAssignment_2 extends AssignmentToken  {
-	
-	public Variable_TypeAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getTypeAssignment_2();
-	}
 
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_Group_1(parent, this, 0, inst);
-			case 1: return new Variable_NameAssignment_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("type",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("type");
-		if(Boolean.TRUE.booleanValue()) {  
-			type = AssignmentType.ERC;
-			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_2_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// ("host" hostType=STRING)?
+// name=ID (":=" initialValue=STRING_D) ":" type=ValueType
 protected class Variable_Group_3 extends GroupToken {
 	
 	public Variable_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4653,64 +5044,477 @@ protected class Variable_Group_3 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_HostTypeAssignment_3_1(parent, this, 0, inst);
+			case 0: return new Variable_TypeAssignment_3_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// "host"
-protected class Variable_HostKeyword_3_0 extends KeywordToken  {
+// name=ID
+protected class Variable_NameAssignment_3_0 extends AssignmentToken  {
 	
-	public Variable_HostKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getHostKeyword_3_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_TypeAssignment_2(parent, this, 0, inst);
-			case 1: return new Variable_Group_1(parent, this, 1, inst);
-			case 2: return new Variable_NameAssignment_0(parent, this, 2, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// hostType=STRING
-protected class Variable_HostTypeAssignment_3_1 extends AssignmentToken  {
-	
-	public Variable_HostTypeAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Variable_NameAssignment_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getHostTypeAssignment_3_1();
+		return grammarAccess.getVariableAccess().getNameAssignment_3_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Variable_HostKeyword_3_0(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("name",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("name");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_3_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":=" initialValue=STRING_D
+protected class Variable_Group_3_1 extends GroupToken {
+	
+	public Variable_Group_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_InitialValueAssignment_3_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ":="
+protected class Variable_ColonEqualsSignKeyword_3_1_0 extends KeywordToken  {
+	
+	public Variable_ColonEqualsSignKeyword_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_3_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_NameAssignment_3_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// initialValue=STRING_D
+protected class Variable_InitialValueAssignment_3_1_1 extends AssignmentToken  {
+	
+	public Variable_InitialValueAssignment_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getInitialValueAssignment_3_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonEqualsSignKeyword_3_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("hostType",false)) == null) return null;
+		if((value = current.getConsumable("initialValue",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("initialValue");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getInitialValueSTRING_DTerminalRuleCall_3_1_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ":"
+protected class Variable_ColonKeyword_3_2 extends KeywordToken  {
+	
+	public Variable_ColonKeyword_3_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonKeyword_3_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group_3_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// type=ValueType
+protected class Variable_TypeAssignment_3_3 extends AssignmentToken  {
+	
+	public Variable_TypeAssignment_3_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getTypeAssignment_3_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonKeyword_3_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("type",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("type");
+		if(Boolean.TRUE.booleanValue()) {  
+			type = AssignmentType.ERC;
+			element = grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_3_3_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// name=ID ":" hostType=STRING_D
+protected class Variable_Group_4 extends GroupToken {
+	
+	public Variable_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_HostTypeAssignment_4_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// name=ID
+protected class Variable_NameAssignment_4_0 extends AssignmentToken  {
+	
+	public Variable_NameAssignment_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getNameAssignment_4_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("name",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("name");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_4_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":"
+protected class Variable_ColonKeyword_4_1 extends KeywordToken  {
+	
+	public Variable_ColonKeyword_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonKeyword_4_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_NameAssignment_4_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// hostType=STRING_D
+protected class Variable_HostTypeAssignment_4_2 extends AssignmentToken  {
+	
+	public Variable_HostTypeAssignment_4_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getHostTypeAssignment_4_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonKeyword_4_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("hostType",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_3_1_0();
+			element = grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_4_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
+protected class Variable_Group_5 extends GroupToken {
+	
+	public Variable_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_5();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_HostTypeAssignment_5_3(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// name=ID
+protected class Variable_NameAssignment_5_0 extends AssignmentToken  {
+	
+	public Variable_NameAssignment_5_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getNameAssignment_5_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("name",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("name");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_5_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":=" initialValue=STRING_D
+protected class Variable_Group_5_1 extends GroupToken {
+	
+	public Variable_Group_5_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getVariableAccess().getGroup_5_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_InitialValueAssignment_5_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// ":="
+protected class Variable_ColonEqualsSignKeyword_5_1_0 extends KeywordToken  {
+	
+	public Variable_ColonEqualsSignKeyword_5_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonEqualsSignKeyword_5_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_NameAssignment_5_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// initialValue=STRING_D
+protected class Variable_InitialValueAssignment_5_1_1 extends AssignmentToken  {
+	
+	public Variable_InitialValueAssignment_5_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getInitialValueAssignment_5_1_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonEqualsSignKeyword_5_1_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("initialValue",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("initialValue");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getInitialValueSTRING_DTerminalRuleCall_5_1_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ":"
+protected class Variable_ColonKeyword_5_2 extends KeywordToken  {
+	
+	public Variable_ColonKeyword_5_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getVariableAccess().getColonKeyword_5_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_Group_5_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// hostType=STRING_D
+protected class Variable_HostTypeAssignment_5_3 extends AssignmentToken  {
+	
+	public Variable_HostTypeAssignment_5_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getVariableAccess().getHostTypeAssignment_5_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Variable_ColonKeyword_5_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("hostType",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("hostType");
+		if(Boolean.TRUE.booleanValue()) { 
+			type = AssignmentType.LRC;
+			element = grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_5_3_0();
 			return obj;
 		}
 		return null;

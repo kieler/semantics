@@ -41,6 +41,7 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionSignalDecAccess().getAlternatives_2(), "rule__RegionSignalDec__Alternatives_2");
 					put(grammarAccess.getRegionSignalDecAccess().getAlternatives_3(), "rule__RegionSignalDec__Alternatives_3");
 					put(grammarAccess.getSignalAccess().getAlternatives(), "rule__Signal__Alternatives");
+					put(grammarAccess.getVariableAccess().getAlternatives(), "rule__Variable__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getStateExtendAccess().getGroup_1(), "rule__StateExtend__Group_1__0");
@@ -57,6 +58,9 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionSignalDecAccess().getGroup_3_0_3(), "rule__RegionSignalDec__Group_3_0_3__0");
 					put(grammarAccess.getRegionSignalDecAccess().getGroup_3_1(), "rule__RegionSignalDec__Group_3_1__0");
 					put(grammarAccess.getRegionSignalDecAccess().getGroup_3_1_3(), "rule__RegionSignalDec__Group_3_1_3__0");
+					put(grammarAccess.getVariablesAccess().getGroup(), "rule__Variables__Group__0");
+					put(grammarAccess.getVariablesAccess().getGroup_0(), "rule__Variables__Group_0__0");
+					put(grammarAccess.getVariablesAccess().getGroup_0_1(), "rule__Variables__Group_0_1__0");
 					put(grammarAccess.getSignalsAccess().getGroup(), "rule__Signals__Group__0");
 					put(grammarAccess.getSignalsAccess().getGroup_0(), "rule__Signals__Group_0__0");
 					put(grammarAccess.getSignalsAccess().getGroup_0_1(), "rule__Signals__Group_0_1__0");
@@ -90,9 +94,14 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getGroup_8_1(), "rule__Signal__Group_8_1__0");
 					put(grammarAccess.getSignalAccess().getGroup_9(), "rule__Signal__Group_9__0");
 					put(grammarAccess.getSignalAccess().getGroup_9_1(), "rule__Signal__Group_9_1__0");
-					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup_1(), "rule__Variable__Group_1__0");
+					put(grammarAccess.getVariableAccess().getGroup_2(), "rule__Variable__Group_2__0");
+					put(grammarAccess.getVariableAccess().getGroup_2_1(), "rule__Variable__Group_2_1__0");
 					put(grammarAccess.getVariableAccess().getGroup_3(), "rule__Variable__Group_3__0");
+					put(grammarAccess.getVariableAccess().getGroup_3_1(), "rule__Variable__Group_3_1__0");
+					put(grammarAccess.getVariableAccess().getGroup_4(), "rule__Variable__Group_4__0");
+					put(grammarAccess.getVariableAccess().getGroup_5(), "rule__Variable__Group_5__0");
+					put(grammarAccess.getVariableAccess().getGroup_5_1(), "rule__Variable__Group_5_1__0");
 					put(grammarAccess.getRenamingAccess().getGroup(), "rule__Renaming__Group__0");
 					put(grammarAccess.getStateExtendAccess().getRegionsAssignment_0(), "rule__StateExtend__RegionsAssignment_0");
 					put(grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_1_2(), "rule__StateExtend__InOutputSignalsAssignment_1_2");
@@ -109,6 +118,8 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_3_0_3_1(), "rule__RegionSignalDec__VarsAssignment_3_0_3_1");
 					put(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_2(), "rule__RegionSignalDec__SignalsAssignment_3_1_2");
 					put(grammarAccess.getRegionSignalDecAccess().getSignalsAssignment_3_1_3_1(), "rule__RegionSignalDec__SignalsAssignment_3_1_3_1");
+					put(grammarAccess.getVariablesAccess().getVarsAssignment_0_0(), "rule__Variables__VarsAssignment_0_0");
+					put(grammarAccess.getVariablesAccess().getVarsAssignment_0_1_1(), "rule__Variables__VarsAssignment_0_1_1");
 					put(grammarAccess.getSignalsAccess().getSignalsAssignment_0_0(), "rule__Signals__SignalsAssignment_0_0");
 					put(grammarAccess.getSignalsAccess().getSignalsAssignment_0_1_1(), "rule__Signals__SignalsAssignment_0_1_1");
 					put(grammarAccess.getRenamingsAccess().getRenamingsAssignment_0_0(), "rule__Renamings__RenamingsAssignment_0_0");
@@ -147,9 +158,18 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getHostTypeAssignment_9_1_1(), "rule__Signal__HostTypeAssignment_9_1_1");
 					put(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_9_1_3(), "rule__Signal__HostCombineOperatorAssignment_9_1_3");
 					put(grammarAccess.getVariableAccess().getNameAssignment_0(), "rule__Variable__NameAssignment_0");
-					put(grammarAccess.getVariableAccess().getInitialValueAssignment_1_1(), "rule__Variable__InitialValueAssignment_1_1");
-					put(grammarAccess.getVariableAccess().getTypeAssignment_2(), "rule__Variable__TypeAssignment_2");
-					put(grammarAccess.getVariableAccess().getHostTypeAssignment_3_1(), "rule__Variable__HostTypeAssignment_3_1");
+					put(grammarAccess.getVariableAccess().getNameAssignment_1_0(), "rule__Variable__NameAssignment_1_0");
+					put(grammarAccess.getVariableAccess().getTypeAssignment_1_2(), "rule__Variable__TypeAssignment_1_2");
+					put(grammarAccess.getVariableAccess().getNameAssignment_2_0(), "rule__Variable__NameAssignment_2_0");
+					put(grammarAccess.getVariableAccess().getInitialValueAssignment_2_1_1(), "rule__Variable__InitialValueAssignment_2_1_1");
+					put(grammarAccess.getVariableAccess().getNameAssignment_3_0(), "rule__Variable__NameAssignment_3_0");
+					put(grammarAccess.getVariableAccess().getInitialValueAssignment_3_1_1(), "rule__Variable__InitialValueAssignment_3_1_1");
+					put(grammarAccess.getVariableAccess().getTypeAssignment_3_3(), "rule__Variable__TypeAssignment_3_3");
+					put(grammarAccess.getVariableAccess().getNameAssignment_4_0(), "rule__Variable__NameAssignment_4_0");
+					put(grammarAccess.getVariableAccess().getHostTypeAssignment_4_2(), "rule__Variable__HostTypeAssignment_4_2");
+					put(grammarAccess.getVariableAccess().getNameAssignment_5_0(), "rule__Variable__NameAssignment_5_0");
+					put(grammarAccess.getVariableAccess().getInitialValueAssignment_5_1_1(), "rule__Variable__InitialValueAssignment_5_1_1");
+					put(grammarAccess.getVariableAccess().getHostTypeAssignment_5_3(), "rule__Variable__HostTypeAssignment_5_3");
 					put(grammarAccess.getRenamingAccess().getOldIDAssignment_0(), "rule__Renaming__OldIDAssignment_0");
 					put(grammarAccess.getRenamingAccess().getNewIDAssignment_2(), "rule__Renaming__NewIDAssignment_2");
 				}

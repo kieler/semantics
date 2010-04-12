@@ -88,6 +88,11 @@ public class InterfaceDeclAdapterFactory extends AdapterFactoryImpl
         return createRegionSignalDecAdapter();
       }
       @Override
+      public Adapter caseVariables(Variables object)
+      {
+        return createVariablesAdapter();
+      }
+      @Override
       public Adapter caseSignals(Signals object)
       {
         return createSignalsAdapter();
@@ -160,6 +165,21 @@ public class InterfaceDeclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createRegionSignalDecAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Variables
+   * @generated
+   */
+  public Adapter createVariablesAdapter()
   {
     return null;
   }
