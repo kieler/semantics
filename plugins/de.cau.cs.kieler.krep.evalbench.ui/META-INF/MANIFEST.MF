@@ -4,7 +4,7 @@ Bundle-Name: EvalBench UI
 Bundle-SymbolicName: de.cau.cs.kieler.krep.evalbench.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.krep.evalbench.ui.Activator
-Bundle-Vendor: Christian Albrechts Universität zu Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0",
