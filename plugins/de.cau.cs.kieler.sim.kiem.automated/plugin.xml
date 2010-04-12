@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.toolbarContributor">
-      <content
-            class="de.cau.cs.kieler.sim.kiem.automated.extension.ToolbarContributor"
-            id="de.cau.cs.kieler.sim.kiem.automated.toolbarContributor"
-            name="Toolbar Contributor">
-      </content>
-   </extension>
+   <extension-point id="de.cau.cs.kieler.sim.kiem.automated.AutomationListener" name="Automation Listener" schema="schema/de.cau.cs.kieler.sim.kiem.automated.AutomationListener.exsd"/>
+
    <extension
          name="Event Listener"
          point="de.cau.cs.kieler.sim.kiem.eventListener">
@@ -18,25 +12,7 @@
             name="EventListener">
       </content>
    </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            allowMultiple="true"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView"
-            icon="icons/kiemAutomated.png"
-            id="de.cau.cs.kieler.sim.kiem.automated.aebView"
-            name="Automated EvalBench"
-            restorable="true">
-      </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            class="de.cau.cs.kieler.sim.kiem.automated.extension.ToolbarContributor"
-            locationURI="toolbar:de.cau.cs.kieler.sim.kiem.automated.aebView">
-      </menuContribution>
-   </extension>
+   
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
@@ -45,100 +21,6 @@
             name="Trace Compare">
       </content>
    </extension>
-   <extension
-         point="org.eclipse.ui.viewActions">
-      <viewContribution
-            id="de.cau.cs.kieler.sim.kiem.automated.skipActions"
-            targetID="de.cau.cs.kieler.sim.kiem.automated.aebView">
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.SkipExecutionAction"
-               disabledIcon="icons/stopIcon.png"
-               hoverIcon="icons/stopIcon.png"
-               icon="icons/stopIcon.png"
-               id="de.cau.cs.kieler.sim.kiem.automated.stopRun"
-               label="Stop the automated run."
-               style="push"
-               toolbarPath="skipGroup"
-               tooltip="Stop the automated run.">
-         </action>
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.SkipExecutionFileAction"
-               disabledIcon="icons/stopExecFile.png"
-               hoverIcon="icons/stopExecFile.png"
-               icon="icons/stopExecFile.png"
-               id="de.cau.cs.kieler.sim.kiem.automated.skipExecFile"
-               label="Skip the current execution file."
-               style="push"
-               toolbarPath="skipGroup"
-               tooltip="Skip the currently running execution file.">
-         </action>
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.SkipModelFileAction"
-               disabledIcon="icons/stopModelFile.png"
-               hoverIcon="icons/stopModelFile.png"
-               icon="icons/stopModelFile.png"
-               id="de.cau.cs.kieler.sim.kiem.automated.skipModel"
-               label="Skip the current model file."
-               style="push"
-               toolbarPath="skipGroup"
-               tooltip="Skip the current model file.">
-         </action>
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.SkipIterationAction"
-               disabledIcon="icons/stopIteration.png"
-               hoverIcon="icons/stopIteration.png"
-               icon="icons/stopIteration.png"
-               id="de.cau.cs.kieler.sim.kiem.automated.skipIteration"
-               label="Skip the currently running iteration."
-               style="push"
-               toolbarPath="skipGroup"
-               tooltip="Skip the currently running iteration.">
-         </action>
-      </viewContribution>
-      <viewContribution
-            id="de.cau.cs.kieler.sim.kiem.automated.fileActions"
-            targetID="de.cau.cs.kieler.sim.kiem.automated.aebView">
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.ClearViewAction"
-               id="de.cau.cs.kieler.sim.kiem.automated.clear"
-               label="Clear"
-               style="push"
-               toolbarPath="fileActions"
-               tooltip="Clear the view of all tables.">
-         </action>
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.ExportTableAction"
-               id="de.cau.cs.kieler.sim.kiem.automated.exportTable"
-               label="Export"
-               style="push"
-               toolbarPath="fileActions"
-               tooltip="Export the currently displayed tables.">
-         </action>
-      </viewContribution>
-      <viewContribution
-            id="de.cau.cs.kieler.sim.kiem.automated.wizardActions"
-            targetID="de.cau.cs.kieler.sim.kiem.automated.aebView">
-         <action
-               class="de.cau.cs.kieler.sim.kiem.automated.ui.OpenWizardAction"
-               disabledIcon="icons/kiemAutomated.png"
-               hoverIcon="icons/kiemAutomated.png"
-               icon="icons/kiemAutomated.png"
-               id="de.cau.cs.kieler.sim.kiem.automated.openWizard"
-               label="Wizard"
-               style="push"
-               toolbarPath="wizardActions"
-               tooltip="Open the automated execution wizard.">
-         </action>
-      </viewContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
-            class="de.cau.cs.kieler.sim.kiem.automated.preferences.KiemAutoPreferencePage"
-            id="de.cau.cs.kieler.sim.kiem.automated.mainPage"
-            name="Automated Execution">
-      </page>
-   </extension>
+   
 
 </plugin>

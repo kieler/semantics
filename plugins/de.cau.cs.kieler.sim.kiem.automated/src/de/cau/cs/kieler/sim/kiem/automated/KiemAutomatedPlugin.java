@@ -13,15 +13,14 @@
  */
 package de.cau.cs.kieler.sim.kiem.automated;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.internal.statushandlers.StatusHandlerDescriptor;
 import org.eclipse.ui.internal.statushandlers.StatusHandlerRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -31,7 +30,6 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 
@@ -44,18 +42,6 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 @SuppressWarnings("restriction")
 public class KiemAutomatedPlugin extends AbstractUIPlugin {
 
-    /** path to the icon for kiem automated. */
-    private static final String AUTO_IMAGE_PATH = "icons/kiemAutomated.png";
-    /** path to the icon showing a green dot. */
-    private static final String TRUE_IMAGE_PATH = "icons/true.gif";
-    /** path to the icon showing a red dot. */
-    private static final String FALSE_IMAGE_PATH = "icons/false.gif";
-    /** path to the icon for created iterations. */
-    private static final String CREATED_IMAGE_PATH = "icons/created.gif";
-    /** path to the icon for running iterations. */
-    private static final String RUNNING_IMAGE_PATH = "icons/running.gif";
-    /** path to the icon for warnings. */
-    private static final String WARNING_IMAGE_PATH = "icons/warning.gif";
     /** The plug-in id. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.automated";
 
@@ -95,135 +81,12 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     // --------------------------------------------------------------------------
 
     /**
-     * Getter for the currently active page.
-     * 
-     * @return the currently active page.
-     */
-    public static IWorkbenchPage getActivePage() {
-        return getDefault().getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage();
-    }
-
-    /**
-     * Getter for the AutomatedEvalView.
-     * 
-     * @return the view
-     */
-    public static AutomatedEvalView getAutomatedEvalView() {
-        AutomatedEvalView result = null;
-
-        try {
-
-            result = (AutomatedEvalView) getDefault().getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage().showView(
-                            VIEW_ID, VIEW_ID, IWorkbenchPage.VIEW_CREATE);
-
-        } catch (PartInitException e0) {
-            e0.printStackTrace();
-        } catch (NullPointerException e0) {
-            // the view is not open
-            e0.printStackTrace();
-        }
-
-        return result;
-    }
-
-    /**
-     * Getter for the display of the active workbench.
-     * 
-     * @return the display
-     */
-    public static Display getDisplay() {
-        return getDefault().getWorkbench().getDisplay();
-    }
-
-    /**
      * Getter for the execution inside the KIEM.
      * 
      * @return the execution or null
      */
     public static Execution getKiemExecution() {
         return KiemPlugin.getDefault().getExecution();
-    }
-
-    /**
-     * Getter for the main shell of the active workbench.
-     * 
-     * @return the active shell
-     */
-    public static Shell getShell() {
-        return getDefault().getWorkbench().getActiveWorkbenchWindow()
-                .getShell();
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
-     * Getter for the imageDescriptor for this plug-in.
-     * 
-     * @return the image
-     */
-    public static ImageDescriptor getAutoImageDescriptor() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, AUTO_IMAGE_PATH);
-    }
-
-    /**
-     * Getter for the image for this plug-in.
-     * 
-     * @return the image
-     */
-    public static Image getAutoImage() {
-        return getAutoImageDescriptor().createImage();
-    }
-
-    /**
-     * Getter for the image for displaying a true state.
-     * 
-     * @return the image
-     */
-    public static Image getTrueImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, TRUE_IMAGE_PATH)
-                .createImage();
-    }
-
-    /**
-     * Getter for the image for displaying a false state.
-     * 
-     * @return the image
-     */
-    public static Image getFalseImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, FALSE_IMAGE_PATH)
-                .createImage();
-    }
-
-    /**
-     * Getter for the image for created iterations.
-     * 
-     * @return the image
-     */
-    public static Image getCreatedImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, CREATED_IMAGE_PATH)
-                .createImage();
-    }
-
-    /**
-     * Getter for the image for running iterations.
-     * 
-     * @return the image
-     */
-    public static Image getRunningImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, RUNNING_IMAGE_PATH)
-                .createImage();
-    }
-
-    /**
-     * Getter for the image for warnings.
-     * 
-     * @return the image
-     */
-    public static Image getWarningImage() {
-        return imageDescriptorFromPlugin(PLUGIN_ID, WARNING_IMAGE_PATH)
-                .createImage();
     }
 
     // --------------------------------------------------------------------------
@@ -354,4 +217,32 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
 
     // --------------------------------------------------------------------------
 
+    /**
+     * Get the list of listeners on the extension point.
+     * 
+     * @return the list of listeners
+     */
+    public static List<IAutomationListener> getListeners() {
+        List<IAutomationListener> result = new LinkedList<IAutomationListener>();
+
+        IConfigurationElement[] contributors = Platform
+                .getExtensionRegistry()
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.automated.AutomationListener");
+
+        for (IConfigurationElement element : contributors) {
+
+            if (element.isValid()) {
+                try {
+                    Object obj = element.createExecutableExtension("class");
+                    if (obj != null && obj instanceof IAutomationListener) {
+                        result.add((IAutomationListener) obj);
+                    }
+                } catch (CoreException e0) {
+                    e0.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 }

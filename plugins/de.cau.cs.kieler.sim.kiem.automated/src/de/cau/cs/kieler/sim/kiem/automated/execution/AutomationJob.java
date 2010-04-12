@@ -21,10 +21,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.progress.IProgressConstants;
-import org.eclipse.ui.progress.WorkbenchJob;
 
+import de.cau.cs.kieler.sim.kiem.automated.IAutomationListener;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.IterationResult;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -35,7 +34,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @author soh
  * @kieler.rating 2010-02-01 proposed yellow
  */
-public class AutomationJob extends WorkbenchJob {
+public class AutomationJob extends Job {
 
     /** The list of execution files for the execution. */
     private IPath[] executionFiles;
@@ -81,14 +80,12 @@ public class AutomationJob extends WorkbenchJob {
      * {@inheritDoc}
      */
     @Override
-    public IStatus runInUIThread(final IProgressMonitor monitor) {
-        try {
-            // activate the KIEM view in order to force eclipse to load its
-            // classes
-            KiemAutomatedPlugin.getActivePage().showView(
-                    "de.cau.cs.kieler.sim.kiem.view");
-        } catch (PartInitException e) {
-            e.printStackTrace();
+    public IStatus run(final IProgressMonitor monitor) {
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.doPreAutomationProcessing();
         }
 
         // first attempt to ignore error output, does nothing yet
@@ -109,14 +106,23 @@ public class AutomationJob extends WorkbenchJob {
 
                     AutomationManager.getInstance().notifyExecutionFinished(
                             results);
+
+                    done(new Status(IStatus.OK, KiemAutomatedPlugin.PLUGIN_ID,
+                            "Execution finished"));
                 } catch (RuntimeException e0) {
                     e0.printStackTrace();
 
                     done(new Status(IStatus.ERROR,
                             KiemAutomatedPlugin.PLUGIN_ID, "Execution aborted"));
+                } finally {
+                    List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                            .getListeners();
+
+                    for (IAutomationListener l : autoListeners) {
+                        l.doPostAutomationProcessing();
+                    }
                 }
-                done(new Status(IStatus.OK, KiemAutomatedPlugin.PLUGIN_ID,
-                        "Execution finished"));
+
             }
         };
         // start a new thread to prevent blocking the UI

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.IAutomatedComponent;
 import de.cau.cs.kieler.sim.kiem.automated.IAutomatedProducer;
+import de.cau.cs.kieler.sim.kiem.automated.IAutomationListener;
 import de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin;
 import de.cau.cs.kieler.sim.kiem.automated.data.AbstractResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ComponentResult;
@@ -39,15 +40,12 @@ import de.cau.cs.kieler.sim.kiem.automated.data.ModelResult;
 import de.cau.cs.kieler.sim.kiem.automated.data.ResultStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.CancelStatus;
 import de.cau.cs.kieler.sim.kiem.automated.execution.CancelManager.MonitorChecker;
-import de.cau.cs.kieler.sim.kiem.automated.views.AutomatedEvalView;
-import de.cau.cs.kieler.sim.kiem.automated.views.ExecutionFilePanel;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
 
 /**
  * The manager for handling the actual execution. It dispatches the execution
@@ -63,15 +61,10 @@ public final class AutomationManager implements StatusListener {
     /** The singleton instance of the AutomationManager. */
     private static AutomationManager instance = null;
 
-    /**
-     * The panel where the currently running execution should display its
-     * results.
-     */
-    private ExecutionFilePanel currentPanel;
     /** The results of the currently running execution. */
     private IterationResult currentResult;
     /** Holds the list of faulty results at the beginning of the execution file. */
-    private List<AbstractResult> cachedResults;
+    private List<IterationResult> cachedResults;
 
     /**
      * The list of all components that want to be notified when something
@@ -91,9 +84,6 @@ public final class AutomationManager implements StatusListener {
     /** True if the execution is running, false if not. */
     private boolean running = false;
 
-    /** The field for displaying the current step. */
-    private StepTextField stepTextField;
-
     /** The monitor that is monitoring the progress of the current execution. */
     private IProgressMonitor monitor;
 
@@ -110,7 +100,7 @@ public final class AutomationManager implements StatusListener {
 
     /** Singleton pattern. */
     private AutomationManager() {
-        stepTextField = new StepTextField();
+
     }
 
     // --------------------------------------------------------------------------
@@ -125,17 +115,6 @@ public final class AutomationManager implements StatusListener {
             instance = new AutomationManager();
         }
         return instance;
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
-     * Getter for the step text field.
-     * 
-     * @return the step text field
-     */
-    public StepTextField getStepTextField() {
-        return stepTextField;
     }
 
     // --------------------------------------------------------------------------
@@ -330,7 +309,7 @@ public final class AutomationManager implements StatusListener {
         }
 
         // set up adding of results to the table
-        cachedResults = new LinkedList<AbstractResult>();
+        cachedResults = new LinkedList<IterationResult>();
         List<AbstractResult> cachedModelResults = new LinkedList<AbstractResult>();
         boolean firstModelFirstRun = true;
 
@@ -592,16 +571,12 @@ public final class AutomationManager implements StatusListener {
      *            the execution file to add
      */
     private void addExecutionFileToPanel(final IPath executionFile) {
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                AutomatedEvalView automatedView = KiemAutomatedPlugin
-                        .getAutomatedEvalView();
-                currentPanel = automatedView.addExecutionFile(executionFile);
-            }
-        });
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.executionFileStarted(executionFile, null);
+        }
     }
 
     /**
@@ -613,17 +588,14 @@ public final class AutomationManager implements StatusListener {
      *            the exception that caused the error
      */
     private void addExecutionFileFailedToPanel(final IPath executionFile,
-            final IOException e0) {
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                AutomatedEvalView automatedView = KiemAutomatedPlugin
-                        .getAutomatedEvalView();
-                automatedView.addExecutionFileFailed(executionFile, e0);
-            }
-        });
+            final Exception e0) {
+
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.executionFileStarted(executionFile, e0);
+        }
     }
 
     /**
@@ -636,18 +608,12 @@ public final class AutomationManager implements StatusListener {
      */
     private void addModelFileResultsToPanel(
             final List<AbstractResult> modelResults, final IPath executionFile) {
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                AutomatedEvalView automatedView = KiemAutomatedPlugin
-                        .getAutomatedEvalView();
-                ExecutionFilePanel panel = automatedView
-                        .addExecutionFile(executionFile);
-                panel.addResult(modelResults);
-            }
-        });
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.receiveModelFileResults(executionFile, modelResults);
+        }
     }
 
     /**
@@ -655,34 +621,33 @@ public final class AutomationManager implements StatusListener {
      */
     private void addResultToPanel() {
         flushCachedResults();
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                currentPanel.addResult(currentResult);
-            }
-        });
+
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.receiveIterationResult(currentResult);
+        }
+
     }
 
     /**
      * Add any results that were not yet added to the results panel.
      */
     private void flushCachedResults() {
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                if (cachedResults != null && !cachedResults.isEmpty()) {
-                    if (!cachedResults.contains(currentResult)) {
-                        cachedResults.add(currentResult);
-                    }
-                    currentPanel.addResult(cachedResults);
-                    cachedResults = new LinkedList<AbstractResult>();
-                }
+
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+        if (cachedResults != null && !cachedResults.isEmpty()) {
+            if (!cachedResults.contains(currentResult)) {
+                cachedResults.add(currentResult);
             }
-        });
+
+            for (IAutomationListener l : autoListeners) {
+                l.receiveIterationResult(cachedResults);
+            }
+            cachedResults = new LinkedList<IterationResult>();
+        }
     }
 
     // --------------------------------------------------------------------------
@@ -852,7 +817,7 @@ public final class AutomationManager implements StatusListener {
             list.add(prop);
         }
 
-        ObserverNotifyThread notifyThread = new ObserverNotifyThread(list);
+        ObserverNotifier notifyThread = new ObserverNotifier(list);
         notifyThread.run();
         Exception excep = notifyThread.exception;
         if (excep != null) {
@@ -865,7 +830,7 @@ public final class AutomationManager implements StatusListener {
      * 
      * @author soh
      */
-    private class ObserverNotifyThread extends Thread {
+    private class ObserverNotifier {
 
         /** The list of properties to pass to the components. */
         private List<KiemProperty> list = null;
@@ -882,15 +847,13 @@ public final class AutomationManager implements StatusListener {
          * @param listParam
          *            the list of properties
          */
-        public ObserverNotifyThread(final List<KiemProperty> listParam) {
-            super();
+        public ObserverNotifier(final List<KiemProperty> listParam) {
             list = listParam;
         }
 
         /**
          * {@inheritDoc}
          */
-        @Override
         public void run() {
             Job waiter = new Job("Notify timeout.") {
 
@@ -1007,18 +970,6 @@ public final class AutomationManager implements StatusListener {
      * execution can resume.
      */
     public void notifyOnStepFinished() {
-        KiemAutomatedPlugin.getDisplay().asyncExec(new Runnable() {
-
-            public void run() {
-                Execution exec = KiemAutomatedPlugin.getKiemExecution();
-                if (exec != null) {
-                    stepTextField.updateTextfield(exec.getSteps() + "");
-                } else {
-                    stepTextField.updateTextfield(null);
-                }
-            }
-        });
-
         // release the thread waiting in executeIteration()
         stepDoneMutex.release();
     }
@@ -1047,14 +998,12 @@ public final class AutomationManager implements StatusListener {
      * Refresh the view.
      */
     private void refreshView() {
-        KiemAutomatedPlugin.getDisplay().syncExec(new Runnable() {
-            /**
-             * {@inheritDoc}
-             */
-            public void run() {
-                currentPanel.refresh();
-            }
-        });
+        List<IAutomationListener> autoListeners = KiemAutomatedPlugin
+                .getListeners();
+
+        for (IAutomationListener l : autoListeners) {
+            l.refresh();
+        }
     }
 
     // --------------------------------------------------------------------------

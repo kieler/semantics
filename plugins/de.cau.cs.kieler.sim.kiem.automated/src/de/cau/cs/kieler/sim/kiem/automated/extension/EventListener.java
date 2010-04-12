@@ -29,7 +29,7 @@ public class EventListener implements IKiemEventListener {
     /** The events that the listener is interested in. */
     private static final int[] EVENTS = { KiemEvent.CMD_PAUSE,
             KiemEvent.CMD_STOP, KiemEvent.ERROR_PAUSE, KiemEvent.ERROR_STOP,
-            KiemEvent.STEP_INFO, KiemEvent.STEP_DONE };
+            KiemEvent.STEP_DONE };
 
     // --------------------------------------------------------------------------
 
