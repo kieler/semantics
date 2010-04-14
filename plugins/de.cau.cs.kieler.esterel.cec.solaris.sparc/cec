@@ -1,0 +1,603 @@
+#!/bin/bash
+
+# Script front-end for cec, the Columbia Esterel Compiler
+
+# set -x # enable script debugging
+
+version="CEC The Columbia Esterel Compiler version 0.4"
+
+# Locate the directory in which this script resides; we will look for
+# the executable components there
+execfile=`which $0`
+
+# Follow any symbolic links
+while [ -h "$execfile" ]; do
+  newfile=`readlink ${execfile}`
+  case "$newfile" in
+    /*)
+       execfile=${newfile}
+       ;;
+    *)
+       execfile=`dirname "${execfile}"`/${newfile}
+       ;;
+  esac
+done
+
+# Strip the trailing filename, leaving a directory name
+# The "dirname" shell command should do this, but it's not portable
+case "$execfile" in
+  /*)
+   EXEDIR=`echo $execfile | sed s/\\\/[^\\\/]*$//`
+   #EXEDIR=`dirname "${execfile}"`
+    ;;
+  *)
+    EXEDIR="."
+esac
+
+STRLXML=${EXEDIR}/cec-strlxml
+XMLSTRL=${EXEDIR}/cec-xmlstrl
+EXPANDMOD=${EXEDIR}/cec-expandmodules
+DISMANTLE=${EXEDIR}/cec-dismantle
+ASTGRC=${EXEDIR}/cec-astgrc
+GRCOPT=${EXEDIR}/cec-grcopt
+GRCPDG=${EXEDIR}/cec-grcpdg
+PDGCCFG=${EXEDIR}/cec-pdgccfg
+EEC=${EXEDIR}/cec-eec
+SCFGC=${EXEDIR}/cec-scfgc
+PDGBLIF=${EXEDIR}/cec-pdgblif
+SMBLIF=${EXEDIR}/cec-smblif
+BLIFUTIL=${EXEDIR}/cec-blifutil
+GRCC=${EXEDIR}/cec-grcc2
+GRCBAL=${EXEDIR}/cec-grcbal
+BALASM=${EXEDIR}/cec-balasm
+VMWRAPPER=${EXEDIR}/cec-vm-wrapper
+
+BALVM=${EXEDIR}/balvm.c
+
+
+Usage() {    
+    echo "Usage: $0 [options] <.strl file> | <.sm file>
+
+Overall options:
+
+-v --verbose   Enable verbose mode
+--version      Print version information
+-h --help      Print this help message
+
+-B <basename>  Set the basename of the generated files
+-D <directory> Set the directory in which files will be placed
+-main <module> Set the name of the main (root) module
+--logfile <file> Specify a logfile
+-K             Keep all intermediate files
+--keep <ext>   Keep intermediate files of the given extension
+--eachcmd <cmd>   Preface each command with <cmd> e.g., --eachcmd time
+--pdgblifargs <args>  Supply the pdgblif pass with these extra arguments
+-s             Do modified schizophrenic expansion (experimental)
+
+C generation options:
+
+--pdg          Generate C code from PDGs (default)
+--lists        Generate list-based C code
+--lists-goto   Generate list-based C code with computed gotos
+--vm           Generate C code that uses the VM
+--vm-only      Create the balvm.c file by itself
+
+Circuit generation options: 
+
+--blif         Generate a BLIF circuit file
+--verilog      Generate a Verilog circuit file
+--sm           Generate an .sm state machine file
+--sis          Run sis to optimize BLIF output
+--sis-script <script> Run this sis script (script.rugged by default)
+
+" 1>&2
+
+    exit 1
+}
+
+
+# Print the C source code for the virtual machine
+
+DumpVM() {
+    cat <<EOF
+/* The Esterel Virtual Machine  */
+
+#ifdef DEBUG
+#  include <stdio.h>
+#endif
+
+#define MAX_THREADS	255
+#define MAX_STATES	255
+#define MAX_JOINS 	64
+#define MAX_SIGNALS	255
+#define MAX_STACK       32
+#define MAX_REGISTERS   255
+
+#define NO_ERROR        0
+#define UNKNOWN_ERROR   1
+
+/* Number of bytes to skip at the beginning of the bytecode */
+
+#  define BAL_PROGRAM_OFFSET    1
+
+#define EMIT 0
+#define RST 1
+#define SET 2
+#define STRT 3
+#define TICK 4
+#define JMP 5
+#define BST 6
+#define BCC 7
+#define BNZ 8
+#define SWC 9
+#define TRM 11
+#define LDI 12
+#define LDS 13
+#define LDR 14
+#define STR 15
+#define ADD 16
+#define SUB 17
+#define MUL 18
+#define DIV 19
+#define MOD 20
+#define CMP 21
+#define NEQ 22
+#define LT 23
+#define LEQ 24
+#define GT 25
+#define GEQ 26
+#define AND 27
+#define OR 28
+#define NEG 29
+#define NOT 30
+#define CDEC 31
+
+#define WORD(offset) (pc[(offset)] << 8 | pc[(offset)+1])
+#define BINOP(op) arg1 = (arg1 op arg2)
+#define UNARY(op) sp[-1] = op sp[-1];
+
+extern unsigned char *program;
+unsigned char *threads[MAX_THREADS]; /* Thread program counters */
+unsigned char states[MAX_STATES];     /* Inter-cycle state variables */
+unsigned char joins[MAX_JOINS];       /* Completion codes */
+unsigned char signals[MAX_SIGNALS];   /* Signal status variables */
+int stack[MAX_STACK];                 /* Arithmetic stack */
+int registers[MAX_REGISTERS];         /* Variables, signal values, etc. */
+
+int tick() {
+  int myth = 0;
+  unsigned char *pc = threads[myth];
+  int arg1, arg2;
+
+  unsigned char tmp;
+  int *sp = stack;
+  for(;;) {
+#ifdef DEBUG
+    printf("%.4x %.2x\n", pc - program, *pc);
+#endif
+    switch (*pc++) {
+    case EMIT: signals[*pc++] = 1; break;
+    case RST:  signals[*pc++] = 0; break;
+    case SET:  states[pc[0]] = pc[1]; pc += 2; break;
+    case STRT: threads[pc[0]] = program + WORD(1); pc += 3; break;
+    case TICK: return NO_ERROR;
+    case JMP:  pc = program + WORD(0); break;
+    case BST:  tmp = states[pc[0]]; pc = program + WORD(2*tmp+1); break;
+    case BCC:  tmp = joins[pc[0]]; pc = program + WORD(2*tmp+1); break;
+    case BNZ:  if (*(--sp)) pc = program + WORD(0); else pc += 2; break;
+    case SWC:  tmp = pc[0]; threads[myth] = ++pc; pc = threads[myth = tmp];
+      break;
+
+    case TRM:  if (joins[pc[0]] < pc[1]) joins[pc[0]] = pc[1]; pc += 2; break;
+    case LDI:  *(sp++) = WORD(0); pc += 2; break;
+    case LDS:  *(sp++) = signals[*pc++]; break;
+    case LDR:  *(sp++) = registers[*pc++]; break;
+    case STR:  registers[*pc++] = (*(--sp)); break;
+      	    	
+      /* Binary operators */
+    case ADD: case SUB: case MUL: case DIV: case MOD:
+    case CMP: case NEQ: case LT: case LEQ: case GT: case GEQ:
+    case AND: case OR:
+      --sp;
+      arg1 = sp[-1];
+      arg2 = sp[0];
+      switch (pc[-1]) {
+      default: ; /* never taken */
+      case ADD:  BINOP(+); break;
+      case SUB:  BINOP(-); break;
+      case MUL:  BINOP(*); break;
+      case DIV:  BINOP(/); break;
+      case MOD:  BINOP(%); break;
+      case CMP:  BINOP(==); break;
+      case NEQ:  BINOP(-); break;
+      case LT:   BINOP(<); break;
+      case LEQ:  BINOP(<=); break;
+      case GT:   BINOP(>); break;
+      case GEQ:  BINOP(>=); break;
+      case AND:  BINOP(&&); break;
+      case OR:   BINOP(||); break;
+      }
+      sp[-1] = arg1;
+      break;
+    case NEG:  UNARY(-); break;
+    case NOT:  UNARY(!); break;
+    case CDEC:
+      sp[-1] = 0 == (sp[-1] ? (--registers[*pc++]) : registers[*pc++]);
+      break;
+
+    default:
+#ifdef DEBUG
+      printf("Unrecognized instruction %d\n", pc[-1]);
+#endif
+      return UNKNOWN_ERROR;
+    }
+  }
+}
+
+EOF
+}
+
+# Convert an .strl file to an optimized GRC file
+
+StrlGRC() {
+    Run $STRLXML $1 $astfile &&
+    Run "$EXPANDMOD $expandargs" $astfile $expfile &&
+    Run $DISMANTLE $expfile $disfile &&
+    Run "$ASTGRC $astgrcargs" $disfile $grcfile &&
+    Run $GRCOPT $grcfile $optfile
+}
+
+# If requested, run the sis logic optimizer on the unoptimized BLIF file
+
+RunSis() {
+    RunVerb mv $bliffile ${unopt_bliffile}
+    RunVerb sis -t blif -T blif -c "\"source $sisscript\"" \
+	-o $bliffile ${unopt_bliffile}
+}
+
+# Once an SM file exists, combine it with an existing .blif file
+# and generate a BLIF file
+
+SMBLIF() {
+    RunVerb $SMBLIF $smfile $sm_bliffile &&
+    RunVerb sed '/^[.]end/d' $core_bliffile ">" $bliffile &&
+    RunVerb cat $sm_bliffile ">>" $bliffile &&
+    RunVerb echo ".end" ">>" $bliffile &&
+    if [ $sis -eq 1 ] ; then
+	RunSis
+    fi
+}
+
+# Return the value of the variable whose name is the first argument
+# so if foo=bar, `Val $foo` returns the value of variable bar
+Val() {
+    eval expr \$$1
+}
+
+# Run the given command, printing it if requested and writing it and
+# its standard error to a logfile if one is given
+# Special characters can be escaped so
+#   RunVerb echo foo ">" bar
+# writes to a file called bar
+RunVerb() {
+    if [ $verbose -ne 0 ] ; then
+	echo $*
+    fi
+    if [ ! -z "$logfile" ] ; then
+	echo $* >> $logfile
+	logredir="2>> $logfile" ; # send stderr to the logfile
+    else
+	logredir=""
+    fi
+    eval $eachcmd $* $logredir || {
+	echo "FAILURE: $1 terminated"
+	return 1
+    }
+    return 0
+}
+
+# Run <executable> <infile> <outfile>
+Run() {
+    RunVerb $1 "<" $2 ">" $3
+}
+
+# Calculate all the filename variables
+# DefineFilenames <basename>
+DefineFilenames() {
+    for ext in $extensions ; do
+	eval ${ext}file=$1.`echo $ext | sed s/_/./`
+    done
+}
+
+extensions="ast exp dis grc opt pdg top_v core_blif sm sm_blif blif unopt_blif v c bal ccfg scfg"
+
+# Keep none of the files by default
+for ext in $extensions ; do
+    eval keep${ext}=0
+done
+
+commandline="$0 $*"
+
+verbose=0
+sis=0
+basename=""
+directory=""
+sisscript="script.rugged"
+logfile=""
+output="pdg"
+eachcmd=""
+pdgblifargs=""
+strlfile=""
+suppliedsmfile=""
+astgrcargs=""
+ansiargs="-a"
+expandargs=""
+
+while [ $# -ne 0 ] ; do
+    case x"$1" in
+	x-K) # Keep all intermediate files
+	    for ext in $extensions ; do
+		eval keep${ext}=1
+	    done
+	    shift
+	    ;;
+	x--keep) # Keep a prescribed intermediate file
+	    shift
+	    if [ $# -eq 0 ] ; then
+		echo "--keep extension must be one of `echo $extensions | sed s/[_]/./g`" 1>&2
+		Usage
+	    fi
+	    ext=`echo $1 | sed 's/[.]/_/'`
+	    echo $extensions | grep -q $ext || {
+		echo "Unrecognized --keep extension \"$1\"" 1>&2
+		echo "Must be one of `echo $extensions | sed s/[_]/./g`" 1>&2
+		exit 1
+	    }
+	    eval keep${ext}=1
+	    shift
+	    ;;
+	x-B) # Set the basename
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    basename="$1"
+	    shift
+	    ;;
+	x-D) # Set the destination directory
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    # Strip off any trailing slashes from the directory name, then
+	    # add one
+	    directory=`echo $1 | sed 's/\\/\$//'`/
+	    shift
+	    ;;
+	x-main) # Set the root module name
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    expandargs="-main $1"
+	    shift
+	    ;;
+	x-v | x--verbose) # Set verbose mode
+	    verbose=1
+	    shift
+	    ;;
+	x--version) # Print the version number
+	    echo $version
+	    exit 0
+	    ;;
+	x--sis) # Enable sis optimization
+	    sis=1
+	    shift
+	    ;;
+	x--sis-script) # Specify the SIS optimization script
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    sisscript="$1"
+	    sis=1
+	    shift
+	    ;;
+	x--logfile) # Specify a logfile
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    logfile="$1"
+	    shift
+	    ;;
+	x--blif) # Specify BLIF output
+	    output="blif"
+	    shift
+	    ;;
+	x--verilog) # Specify Verilog output
+	    output="verilog"
+	    shift
+	    ;;
+	x--sm) # Specify .sm file output
+	    output="sm"
+	    shift
+	    ;;
+	x--pdg)
+	    output="pdg"
+	    shift
+	    ;;
+	x--lists)
+	    output="lists"
+	    shift
+	    ;;
+	x--lists-goto)
+	    output="lists-goto"
+	    shift
+	    ;;
+	x--vm)
+	    output="vm"
+	    shift
+	    ;;
+	x--vm-only)
+            DumpVM
+	    exit 0
+	    ;;
+	x--eachcmd) # Specify a time command
+	    shift
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    eachcmd="$1"
+	    shift
+	    ;;
+        x-s) # Specify different schizophrenic expansion
+	    shift
+	    astgrcargs="-s"
+	    ;;
+	x--pdgblifargs) # Specify extra commands for pdgblif
+	    shift 
+	    if [ $# -eq 0 ] ; then Usage ; fi
+	    pdgblifargs="$pdgblifargs $1"
+	    shift
+	    ;;
+        x--bal-source) # Specify assembly output
+            output="bals"
+            shift
+            ;;
+        x--bal-object) # Specify bytecode output
+            output="balo"
+            shift
+            ;;
+        x--bal-c) # Specify bytecode C
+            output="balc"
+            shift
+            ;;
+	x-h | x--help) # Help
+	    Usage
+	    ;;
+	x-*) # Unrecognized option
+	    echo "Unrecognized option \"$1\"" 1>&2
+	    Usage
+	    ;;
+	x*.strl) # argument ending in .strl: an .strl source file
+	    strlfile="$1"
+	    shift
+	    ;;
+	x*.sm) # argument ending in .sm: an .sm file
+	    suppliedsmfile="$1"
+	    shift
+	    ;;
+	*) # something else unrecognized
+	    echo "Unrecognized file type \"$1\"" 1>&2
+	    Usage
+	    ;;
+    esac
+done
+
+if [ ! -z "$logfile" ] ; then
+    echo $version > $logfile
+    echo $commandline >> $logfile
+fi
+
+if [ -z "$strlfile" -a -z "$suppliedsmfile" ] ; then
+    echo "Should have at least one source file"
+    echo "esterelfile:" 
+    echo $strlfile
+    Usage
+fi
+
+if [ -z "$basename"] ; then
+    # basename is the name of the first source file
+    basename=`echo $strlfile | sed 's/ .*$//
+                                      s/.*\\///
+                                      s/.strl//'`
+fi
+
+if [ $output == "verilog" ] ; then
+    pdgblifargs="$pdgblifargs --verilog $top_vfile"
+fi
+
+DefineFilenames ${directory}${basename}
+
+if [ ! -z "$strlfile" ] ; then
+    if [ ! -f $strlfile ] ; then
+	echo "$strlfile: No such file or directory" 1>&2
+	exit 1
+    fi &&
+    StrlGRC $strlfile &&
+    case "$output" in
+	sm)
+	    Run $GRCPDG $optfile $pdgfile 
+	    RunVerb $PDGBLIF --sm $smfile --verilog $top_vfile \
+               "<" $pdgfile ">" $core_bliffile &&
+	    keepsm=1 &&
+	    keepcore_blif=1 &&
+	    keeptop_v=1
+	    ;;
+	blif)
+	    Run $GRCPDG $optfile $pdgfile 
+	    RunVerb $PDGBLIF --sm $smfile "<" $pdgfile ">" $core_bliffile &&
+	    SMBLIF &&
+	    keepblif=1
+	    ;;
+	verilog)
+	    Run $GRCPDG $optfile $pdgfile 
+	    RunVerb $PDGBLIF --sm $smfile --verilog $top_vfile \
+                "<" $pdgfile ">" $core_bliffile &&
+	    SMBLIF &&
+	    RunVerb $BLIFUTIL -v "<" $bliffile ">" $vfile &&
+	    keepv=1 &&
+	    keeptop_v=1
+	    ;;
+	pdg)
+	    Run $GRCPDG $optfile $pdgfile
+	    Run $PDGCCFG $pdgfile $ccfgfile
+	    Run $EEC $ccfgfile $scfgfile
+	    Run "$SCFGC -B $basename" $scfgfile $cfile
+	    keepc=1
+	    ;;
+	lists-goto)
+	    Run "$GRCC -B $basename" $optfile $cfile
+	    keepc=1
+	    ;;
+	lists)
+	    Run "$GRCC -B $basename -a" $optfile $cfile
+	    keepc=1
+	    ;;
+        vm)
+            DumpVM > $cfile
+            Run $GRCBAL $optfile $balfile
+	    RunVerb $BALASM --c "<" $balfile ">>" $cfile
+	    RunVerb "$VMWRAPPER -B $basename" "<" $optfile ">>" $cfile
+            keepc=1
+            ;;
+    esac
+fi
+
+if [ -z "$basename" ] ; then
+    echo "basename"
+    echo $basename
+    basename=`echo $suppliedsmfile | sed 's/ .*$//
+                                      s/.*\\///
+                                      s/.sm//'`
+fi
+
+if [ ! -z "$suppliedsmfile" ] ; then
+    keepsm=1
+    DefineFilenames ${directory}${basename}
+    smfile="$suppliedsmfile" ; # only interesting if a basename was supplied
+    if [ ! -f $core_bliffile ] ; then
+	echo "$core_bliffile: No such file or directory" 1>&2
+	exit 1
+    fi &&
+    case "$output" in
+	blif)
+	    SMBLIF &&
+	    keepblif=1
+	    ;;
+	verilog)
+	    SMBLIF &&
+	    RunVerb $BLIFUTIL -v "<" $bliffile ">" $vfile &&
+	    keepv=1 &&
+	    keeptop_v=1
+	    ;;
+    esac
+fi
+
+# Delete all the unkept files
+for ext in $extensions ; do
+    if [ `Val keep${ext}` -eq 0 ] ; then
+	rm -f `Val ${ext}file`
+    fi
+done
+
+exit 0
