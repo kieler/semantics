@@ -42,6 +42,7 @@ import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Expression;
+import de.cau.cs.kieler.synccharts.Parsable;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
@@ -58,7 +59,7 @@ import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
  */
 public class ActionLabelParseCommand extends AbstractCommand {
 
-    private String newString;
+    private Parsable newString;
     private Injector injector;
 
     private EObject element;
@@ -73,7 +74,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
      * @param theInjector
      *            the Xtext Guice Injector
      */
-    public ActionLabelParseCommand(final IAdaptable theElement, final String theNewString,
+    public ActionLabelParseCommand(final IAdaptable theElement, final Parsable theNewString,
             final IAntlrParser parser, final Injector theInjector) {
         // the editing domain might be null if the object to be edited
         // does not belong to some resource, i.e. is not really part
@@ -106,7 +107,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
      * @param theInjector
      *            the Xtext Guice Injector
      */
-    public ActionLabelParseCommand(final EObject theElement, final String theNewString,
+    public ActionLabelParseCommand(final EObject theElement, final Parsable theNewString,
             final IAntlrParser parser, final Injector theInjector) {
         super();
         this.newString = theNewString;
@@ -142,7 +143,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
             action.setDelay(oldDelay);
             action.setIsImmediate(oldImmediate);
             action.setTrigger(oldTrigger);
-            action.setTriggersAndEffects(oldTriggersAndEffects);
+            action.setLabel(oldTriggersAndEffects);
             action.getEffects().clear();
             action.getEffects().addAll(oldEffects);
         }
@@ -152,7 +153,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
     private List<Effect> oldEffects;
     private int oldDelay;
     private boolean oldImmediate;
-    private String oldTriggersAndEffects;
+    private Parsable oldTriggersAndEffects;
     
     /**
      * Run the actual parse operation with the element and new string set by the
@@ -173,9 +174,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
         oldEffects.addAll(action.getEffects());
         oldDelay = action.getDelay();
         oldImmediate = action.isIsImmediate();
-        oldTriggersAndEffects = action.getTriggersAndEffects();
+        oldTriggersAndEffects = action.getLabel();
         
-        action.setTriggersAndEffects(newString);
+        action.setLabel(newString);
         // set some default values
         action.setTrigger(null);
         action.getEffects().clear();
@@ -187,11 +188,11 @@ public class ActionLabelParseCommand extends AbstractCommand {
         }
 
         // if the String is empty, we don't need to parse anything...
-        if (newString == null || newString.trim().length() == 0) {
+        if (newString == null || newString.getText().trim().length() == 0) {
             return;
         }
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(newString.getBytes());
+        ByteArrayInputStream stream = new ByteArrayInputStream(newString.getText().getBytes());
 
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         XtextResource resource = (XtextResource) resourceSet.createResource(URI

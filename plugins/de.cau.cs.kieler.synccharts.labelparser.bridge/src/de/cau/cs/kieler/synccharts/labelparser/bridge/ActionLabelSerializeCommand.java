@@ -17,11 +17,12 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 import org.eclipse.emf.common.command.AbstractCommand;
 
 import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Parsable;
 
 public class ActionLabelSerializeCommand extends AbstractCommand {
 
     private Action action;
-    private String oldLabel;
+    private Parsable oldLabel;
     
     public ActionLabelSerializeCommand(final Action theAction) {
         this.action = theAction;
@@ -33,17 +34,17 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
     }
 
     public void execute() {
-        String newLabel = null;
+        Parsable newLabel = null;
         if (action.getTrigger() != null || !action.getEffects().isEmpty() || action.isIsImmediate()) {
             newLabel = ActionLabelSerializer.toString(action);
         }
         if (newLabel == null) {
             // if there is no new valid value, set the old value so that there will be set
             // notifications in any case (required to trigger the parser again)
-            newLabel = action.getTriggersAndEffects();
+            newLabel = action.getLabel();
         }
-        oldLabel = action.getTriggersAndEffects();
-        action.setTriggersAndEffects(newLabel);
+        oldLabel = action.getLabel();
+        action.setLabel(newLabel);
     }
 
     public void redo() {
@@ -52,7 +53,7 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
     
     @Override
     public void undo() {
-        action.setTriggersAndEffects(oldLabel);
+        action.setLabel(oldLabel);
     }
 
     

@@ -17,6 +17,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.ui.errorhandler.ModelErrorHandler;
 import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Parsable;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.ValuedObject;
@@ -35,7 +36,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
 
     public TriggerListenerChangedTrigger() {
         super(NotificationFilter.createFeatureFilter(
-                SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects()).or(
+                SyncchartsPackage.eINSTANCE.getAction_Label()).or(
                 NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                         .getState_OutgoingTransitions())));
     }
@@ -46,18 +47,18 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
         Action action = null;
-        String newLabel = null;
-        String oldLabel = null;
+        Parsable newLabel = null;
+        Parsable oldLabel = null;
         
         Object feature = notification.getFeature();
         int type = notification.getEventType();
-        if(type == Notification.SET && feature.equals(SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects())){
+        if(type == Notification.SET && feature.equals(SyncchartsPackage.eINSTANCE.getAction_Label())){
             action = (Action) notification.getNotifier();
             newLabel = notification.getNewStringValue();
             oldLabel = notification.getOldStringValue();
         }else if(type == Notification.ADD && feature.equals(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())){
             action = (Action) notification.getNewValue();
-            newLabel = action.getTriggersAndEffects();
+            newLabel = action.getLabel();
             oldLabel = null;
         }
         CompoundCommand cc = new CompoundCommand();
