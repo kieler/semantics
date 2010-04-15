@@ -1,26 +1,17 @@
 package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
-import java.io.IOException;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.TriggerListener;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.ui.errorhandler.ModelErrorHandler;
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Parsable;
-import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.ValuedObject;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**
@@ -36,9 +27,10 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
 
     public TriggerListenerChangedTrigger() {
         super(NotificationFilter.createFeatureFilter(
-                SyncchartsPackage.eINSTANCE.getAction_Label()).or(
-                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                        .getState_OutgoingTransitions())));
+                SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects()).or(
+                NotificationFilter
+                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
+                                .getState_OutgoingTransitions())));
     }
 
     private ActionLabelProcessorWrapper actionLabelProcessor = new ActionLabelProcessorWrapper();
@@ -47,18 +39,22 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
         Action action = null;
-        Parsable newLabel = null;
-        Parsable oldLabel = null;
-        
+        String newLabel = null;
+        String oldLabel = null;
+
         Object feature = notification.getFeature();
         int type = notification.getEventType();
-        if(type == Notification.SET && feature.equals(SyncchartsPackage.eINSTANCE.getAction_Label())){
+        if (type == Notification.SET
+                && feature.equals(SyncchartsPackage.eINSTANCE
+                        .getAction_TriggersAndEffects())) {
             action = (Action) notification.getNotifier();
             newLabel = notification.getNewStringValue();
             oldLabel = notification.getOldStringValue();
-        }else if(type == Notification.ADD && feature.equals(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions())){
+        } else if (type == Notification.ADD
+                && feature.equals(SyncchartsPackage.eINSTANCE
+                        .getState_OutgoingTransitions())) {
             action = (Action) notification.getNewValue();
-            newLabel = action.getLabel();
+            newLabel = action.getTriggersAndEffects();
             oldLabel = null;
         }
         CompoundCommand cc = new CompoundCommand();
@@ -72,7 +68,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
                 // there was no change in the label but in the underlying model
                 // however, then parsing and serializing goes into an endless
                 // loop.
-               // && (oldLabel == null || newLabel.equals(oldLabel)) 
+                // && (oldLabel == null || newLabel.equals(oldLabel))
                 && action.eContainer() != null) {
             ModelErrorHandler.clearMarker(action);
             try {
@@ -83,7 +79,8 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
                 cc.append(actionLabelProcessor.getProcessActionCommand(action,
                         ActionLabelProcessorWrapper.SERIALIZE));
             } catch (Exception e) {
-                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "", e);
+                Status myStatus = new Status(IStatus.ERROR,
+                        Activator.PLUGIN_ID, "", e);
                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         }

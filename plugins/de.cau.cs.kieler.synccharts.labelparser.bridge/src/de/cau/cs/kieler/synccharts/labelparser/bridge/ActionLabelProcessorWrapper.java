@@ -19,14 +19,10 @@ import java.io.IOException;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.gmf.runtime.diagram.ui.commands.CommandProxy;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 
 import com.google.inject.Injector;
@@ -34,12 +30,11 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.ValuedObject;
+import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 
 /**
  * A wrapper class that provides methods to process (i.e. parse or serialize)
@@ -64,7 +59,8 @@ public class ActionLabelProcessorWrapper {
      */
     public ActionLabelProcessorWrapper() {
         // injector = new TransitionLabelStandaloneSetup()
-        injector = new ActionLabelStandaloneSetup().createInjectorAndDoEMFRegistration();
+        injector = new ActionLabelStandaloneSetup()
+                .createInjectorAndDoEMFRegistration();
         // serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IAntlrParser.class);
     }
@@ -92,7 +88,8 @@ public class ActionLabelProcessorWrapper {
      *             possible parser syntax errors
      */
     public void processAffectedActionLabels(final ValuedObject changedObject,
-            final EObject theParent, final boolean parse) throws KielerModelException, IOException {
+            final EObject theParent, final boolean parse)
+            throws KielerModelException, IOException {
         EObject parent = theParent;
         if (changedObject == null && parent == null) {
             return; // cannot handle this combination
@@ -133,17 +130,20 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
-    public Command getProcessAffectedActionLabelCommand(final ValuedObject changedObject,
-            final EObject theParent, final boolean parse){
+    public Command getProcessAffectedActionLabelCommand(
+            final ValuedObject changedObject, final EObject theParent,
+            final boolean parse) {
         EObject parent = theParent;
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (changedObject == null && parent == null) {
-            return UnexecutableCommand.INSTANCE; // cannot handle this combination
+            return UnexecutableCommand.INSTANCE; // cannot handle this
+                                                 // combination
         }
         if (parent == null) {
             parent = changedObject.eContainer();
             if (parent != null) {
-                return getProcessAffectedActionLabelCommand(changedObject, parent, parse);
+                return getProcessAffectedActionLabelCommand(changedObject,
+                        parent, parse);
             }
         }
         if (parent instanceof State) {
@@ -157,23 +157,26 @@ public class ActionLabelProcessorWrapper {
                 cc.append(getProcessActionCommand(action, parse));
             }
             if (((State) parent).getSuspensionTrigger() != null) {
-                cc.append(getProcessActionCommand(((State) parent).getSuspensionTrigger(), parse));
+                cc.append(getProcessActionCommand(((State) parent)
+                        .getSuspensionTrigger(), parse));
             }
             // do a recursive call
             for (Region childRegion : ((State) parent).getRegions()) {
-                cc.append(getProcessAffectedActionLabelCommand(changedObject, childRegion, parse));
+                cc.append(getProcessAffectedActionLabelCommand(changedObject,
+                        childRegion, parse));
             }
         } else if (parent instanceof Region) {
             for (State childState : ((Region) parent).getInnerStates()) {
                 for (Transition trans : childState.getOutgoingTransitions()) {
                     cc.append(getProcessActionCommand(trans, parse));
                 }
-                cc.append(getProcessAffectedActionLabelCommand(changedObject, childState, parse));
+                cc.append(getProcessAffectedActionLabelCommand(changedObject,
+                        childState, parse));
             }
         }
         return cc;
     }
-    
+
     /**
      * Trigger the parsing or serialization of Action labels of a given scope.
      * Starting from a given parent (i.e. State or Region) recursively iterate
@@ -188,11 +191,13 @@ public class ActionLabelProcessorWrapper {
      * @throws Exception
      *             if parsing has failed
      */
-    public static void processActionLabels(final EObject parent, final boolean parse)
-            throws Exception {
-        TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(parent);
+    public static void processActionLabels(final EObject parent,
+            final boolean parse) throws Exception {
+        TransactionalEditingDomain domain = TransactionUtil
+                .getEditingDomain(parent);
         final ActionLabelProcessorWrapper parser = new ActionLabelProcessorWrapper();
-        ActionLabelProcessCommand cmd = parser.new ActionLabelProcessCommand(parent, parse, parser);
+        ActionLabelProcessCommand cmd = parser.new ActionLabelProcessCommand(
+                parent, parse, parser);
         CommandStack stack = domain.getCommandStack();
         stack.execute(cmd);
         if (cmd.isError() && cmd.getException() != null) {
@@ -213,11 +218,11 @@ public class ActionLabelProcessorWrapper {
      * @throws KielerModelException
      *             possible parser syntax errors
      */
-    void processAction(final Action action, final boolean parse) throws KielerModelException,
-            IOException {
+    void processAction(final Action action, final boolean parse)
+            throws KielerModelException, IOException {
         if (parse == PARSE) {
-            ActionLabelParseCommand cmd = new ActionLabelParseCommand(action, action
-                    .getLabel(), parser, injector);
+            ActionLabelParseCommand cmd = new ActionLabelParseCommand(action,
+                    action.getTriggersAndEffects(), parser, injector);
             cmd.parse();
         } else {
 
@@ -225,7 +230,7 @@ public class ActionLabelProcessorWrapper {
             if (action.getTrigger() != null || !action.getEffects().isEmpty()) {
                 String newLabel = ActionLabelSerializer.toString(action);
                 if (newLabel != null) {
-                    action.setLabel(newLabel);
+                    action.setTriggersAndEffects(newLabel);
                 }
             }
         }
@@ -233,7 +238,8 @@ public class ActionLabelProcessorWrapper {
 
     Command getProcessActionCommand(final Action action, final boolean parse) {
         if (parse == PARSE) {
-            return new ActionLabelParseCommand(action, action.getLabel(), parser, injector);
+            return new ActionLabelParseCommand(action, action
+                    .getTriggersAndEffects(), parser, injector);
         } else {
             return new ActionLabelSerializeCommand(action);
         }
@@ -254,7 +260,8 @@ public class ActionLabelProcessorWrapper {
         private EObject parent;
         private boolean parse;
 
-        public ActionLabelProcessCommand(final EObject theParent, final boolean isParse,
+        public ActionLabelProcessCommand(final EObject theParent,
+                final boolean isParse,
                 final ActionLabelProcessorWrapper theParser) {
             this.parent = theParent;
             this.parse = isParse;

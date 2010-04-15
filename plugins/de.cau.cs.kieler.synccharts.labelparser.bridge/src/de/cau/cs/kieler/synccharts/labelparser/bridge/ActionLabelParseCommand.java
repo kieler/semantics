@@ -42,9 +42,6 @@ import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Expression;
-import de.cau.cs.kieler.synccharts.Parsable;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
 
 /**
@@ -59,7 +56,7 @@ import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
  */
 public class ActionLabelParseCommand extends AbstractCommand {
 
-    private Parsable newString;
+    private String newString;
     private Injector injector;
 
     private EObject element;
@@ -74,8 +71,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
      * @param theInjector
      *            the Xtext Guice Injector
      */
-    public ActionLabelParseCommand(final IAdaptable theElement, final Parsable theNewString,
-            final IAntlrParser parser, final Injector theInjector) {
+    public ActionLabelParseCommand(final IAdaptable theElement,
+            final String theNewString, final IAntlrParser parser,
+            final Injector theInjector) {
         // the editing domain might be null if the object to be edited
         // does not belong to some resource, i.e. is not really part
         // of the model yet. Then this command will fail.
@@ -85,12 +83,14 @@ public class ActionLabelParseCommand extends AbstractCommand {
         this.element = ((Action) (((EObjectAdapter) theElement).getRealObject()));
 
         TransactionalEditingDomain domain = TransactionUtil
-                .getEditingDomain(((Action) (((EObjectAdapter) theElement).getRealObject())));
+                .getEditingDomain(((Action) (((EObjectAdapter) theElement)
+                        .getRealObject())));
         if (domain == null) {
             // this is very evil, because then the element is not contained
             // by any resource, especially not by the diagram model
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    "Parser failed to parse the action string \"" + theNewString
+                    "Parser failed to parse the action string \""
+                            + theNewString
                             + "\"! The action object is not part of the model "
                             + "and hence has no editing domain.", null);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -107,8 +107,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
      * @param theInjector
      *            the Xtext Guice Injector
      */
-    public ActionLabelParseCommand(final EObject theElement, final Parsable theNewString,
-            final IAntlrParser parser, final Injector theInjector) {
+    public ActionLabelParseCommand(final EObject theElement,
+            final String theNewString, final IAntlrParser parser,
+            final Injector theInjector) {
         super();
         this.newString = theNewString;
         this.injector = theInjector;
@@ -127,23 +128,22 @@ public class ActionLabelParseCommand extends AbstractCommand {
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
-    
+
     /**
-     * {@inheritDoc}
-     * Simply calls execute.
+     * {@inheritDoc} Simply calls execute.
      */
     public void redo() {
         execute();
     }
-    
+
     @Override
     public void undo() {
-        if(element != null && element instanceof Action){
+        if (element != null && element instanceof Action) {
             Action action = (Action) element;
             action.setDelay(oldDelay);
             action.setIsImmediate(oldImmediate);
             action.setTrigger(oldTrigger);
-            action.setLabel(oldTriggersAndEffects);
+            action.setTriggersAndEffects(oldTriggersAndEffects);
             action.getEffects().clear();
             action.getEffects().addAll(oldEffects);
         }
@@ -153,8 +153,8 @@ public class ActionLabelParseCommand extends AbstractCommand {
     private List<Effect> oldEffects;
     private int oldDelay;
     private boolean oldImmediate;
-    private Parsable oldTriggersAndEffects;
-    
+    private String oldTriggersAndEffects;
+
     /**
      * Run the actual parse operation with the element and new string set by the
      * constructor before.
@@ -174,9 +174,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
         oldEffects.addAll(action.getEffects());
         oldDelay = action.getDelay();
         oldImmediate = action.isIsImmediate();
-        oldTriggersAndEffects = action.getLabel();
-        
-        action.setLabel(newString);
+        oldTriggersAndEffects = action.getTriggersAndEffects();
+
+        action.setTriggersAndEffects(newString);
         // set some default values
         action.setTrigger(null);
         action.getEffects().clear();
@@ -184,50 +184,38 @@ public class ActionLabelParseCommand extends AbstractCommand {
         action.setIsImmediate(false);
 
         if (element == null) {
-            throw new KielerModelException("Action object to be parsed is null.", action);
+            throw new KielerModelException(
+                    "Action object to be parsed is null.", action);
         }
 
         // if the String is empty, we don't need to parse anything...
-        if (newString == null || newString.getText().trim().length() == 0) {
+        if (newString == null || newString.trim().length() == 0) {
             return;
         }
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(newString.getText().getBytes());
+        ByteArrayInputStream stream = new ByteArrayInputStream(newString
+                .getBytes());
 
-        XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-        XtextResource resource = (XtextResource) resourceSet.createResource(URI
-                .createURI("platform:/resource/de.cau.cs.kieler.synccharts.labelparser/"
-                        + "dummy.action"));
+        XtextResourceSet resourceSet = injector
+                .getInstance(XtextResourceSet.class);
+        XtextResource resource = (XtextResource) resourceSet
+                .createResource(URI
+                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.labelparser/"
+                                + "dummy.action"));
         // set the scope where the Xtext linker shall search for Signals and
         // Variables
-        EObject parent = action.getParentStateEntryAction();
+        EObject parent = action.eContainer();
+
         if (parent == null) {
-            parent = action.getParentStateExitAction();
-        }
-        if (parent == null) {
-            parent = action.getParentStateInnerAction();
-        }
-        if (parent == null) {
-            parent = action.getParentStateSuspension();
-        }
-        if (parent == null && action instanceof Transition) {
-            // the source state is not the parent, but its parent region is
-            parent = ((Transition) action).getSourceState();
-            if (parent != null) {
-                parent = ((State) parent).getParentRegion();
-            }
-            // source and target might have been not correctly initialized
-            // e.g. because a resource is freshly loaded
-            if (parent == null) {
-                parent = action.eContainer();
-            }
-        }
-        if (parent == null) {
-            throw new KielerModelException("\"" + newString + "\""
-                    + "Can't find the right scope for the action. Scope is null.", action);
+            throw new KielerModelException(
+                    "\""
+                            + newString
+                            + "\""
+                            + "Can't find the right scope for the action. Scope is null.",
+                    action);
         }
         // FIXME: passing the parent to the scope provider in this static way is
-        // veeeeery evil
+        // veeeeery evil, someone should really fix this....
         ActionLabelScopeProvider.parent = parent;
 
         // now do parsing
@@ -236,13 +224,16 @@ public class ActionLabelParseCommand extends AbstractCommand {
         // when elements
         // are actually read. This helps to identify linking errors earlier,
         // i.e. now
-        loadOptions.put(org.eclipse.xtext.resource.XtextResource.OPTION_RESOLVE_ALL, true);
+        loadOptions.put(
+                org.eclipse.xtext.resource.XtextResource.OPTION_RESOLVE_ALL,
+                true);
         resource.load(stream, loadOptions);
 
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null) {
             throw new KielerModelException("\"" + newString + "\""
-                    + "Could not parse action string. Parser did return null.", action);
+                    + "Could not parse action string. Parser did return null.",
+                    action);
         }
 
         List<Diagnostic> errors = resource.getErrors();
@@ -256,14 +247,18 @@ public class ActionLabelParseCommand extends AbstractCommand {
                 }
             }
             throw new DiagnosticException("\"" + newString + "\""
-                    + " Parse errors in action String: " + parseErrorString, action, errors);
+                    + " Parse errors in action String: " + parseErrorString,
+                    action, errors);
         }
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Action)) {
-            throw new KielerModelException("\"" + newString + "\""
-                    + "Could not parse action string. Parser did not return an Action object but "
-                    + parsedObject, action);
+            throw new KielerModelException(
+                    "\""
+                            + newString
+                            + "\""
+                            + "Could not parse action string. Parser did not return an Action object but "
+                            + parsedObject, action);
         }
         Action newAction = (Action) parsedObject;
 
@@ -285,7 +280,8 @@ public class ActionLabelParseCommand extends AbstractCommand {
      * @param target
      *            the target of the movement
      */
-    public static void copyActionContents(final Action source, final Action target) {
+    public static void copyActionContents(final Action source,
+            final Action target) {
         target.setDelay(source.getDelay());
         target.setIsImmediate(source.isIsImmediate());
         // don't set any parent! it will accidently remove the object from the
@@ -307,5 +303,4 @@ public class ActionLabelParseCommand extends AbstractCommand {
         return true;
     }
 
-    
 }

@@ -17,45 +17,44 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 import org.eclipse.emf.common.command.AbstractCommand;
 
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Parsable;
 
 public class ActionLabelSerializeCommand extends AbstractCommand {
 
     private Action action;
-    private Parsable oldLabel;
-    
+    private String oldLabel;
+
     public ActionLabelSerializeCommand(final Action theAction) {
         this.action = theAction;
     }
-    
+
     @Override
     protected boolean prepare() {
         return true;
     }
 
     public void execute() {
-        Parsable newLabel = null;
-        if (action.getTrigger() != null || !action.getEffects().isEmpty() || action.isIsImmediate()) {
+        String newLabel = null;
+        if (action.getTrigger() != null || !action.getEffects().isEmpty()
+                || action.isIsImmediate()) {
             newLabel = ActionLabelSerializer.toString(action);
         }
         if (newLabel == null) {
-            // if there is no new valid value, set the old value so that there will be set
+            // if there is no new valid value, set the old value so that there
+            // will be set
             // notifications in any case (required to trigger the parser again)
-            newLabel = action.getLabel();
+            newLabel = action.getTriggersAndEffects();
         }
-        oldLabel = action.getLabel();
-        action.setLabel(newLabel);
+        oldLabel = action.getTriggersAndEffects();
+        action.setTriggersAndEffects(newLabel);
     }
 
     public void redo() {
         execute();
     }
-    
+
     @Override
     public void undo() {
-        action.setLabel(oldLabel);
+        action.setTriggersAndEffects(oldLabel);
     }
 
-    
-    
 }
