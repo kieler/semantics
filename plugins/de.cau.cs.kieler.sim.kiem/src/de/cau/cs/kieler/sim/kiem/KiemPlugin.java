@@ -539,7 +539,12 @@ public class KiemPlugin extends AbstractUIPlugin {
                     + "' has been modified. Save changes?",
                     MessageDialog.QUESTION, buttons, 2);
 
-            int answer = dlg.open();
+            int answer = -1;
+            try {
+                answer = dlg.open();
+            } catch (Exception e) {
+                answer = -1; // implicit NO on exception
+            }
 
             if (answer == 0) { // YES
                 // try to save or open saveas dialog
