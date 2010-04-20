@@ -631,7 +631,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_5_0_0 = (RuleCall)cNameAssignment_5_0.eContents().get(0);
 		private final Keyword cColonKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
 		private final Assignment cHostTypeAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_5_2_0 = (RuleCall)cHostTypeAssignment_5_2.eContents().get(0);
+		private final RuleCall cHostTypeSTRING_STerminalRuleCall_5_2_0 = (RuleCall)cHostTypeAssignment_5_2.eContents().get(0);
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
 		private final Assignment cNameAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_6_0_0 = (RuleCall)cNameAssignment_6_0.eContents().get(0);
@@ -641,7 +641,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInitialValueSTRING_DTerminalRuleCall_6_1_1_0 = (RuleCall)cInitialValueAssignment_6_1_1.eContents().get(0);
 		private final Keyword cColonKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		private final Assignment cHostTypeAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
-		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_6_3_0 = (RuleCall)cHostTypeAssignment_6_3.eContents().get(0);
+		private final RuleCall cHostTypeSTRING_STerminalRuleCall_6_3_0 = (RuleCall)cHostTypeAssignment_6_3.eContents().get(0);
 		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
 		private final Assignment cNameAssignment_7_0 = (Assignment)cGroup_7.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_7_0_0 = (RuleCall)cNameAssignment_7_0.eContents().get(0);
@@ -655,7 +655,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_7_2_1_0 = (RuleCall)cHostTypeAssignment_7_2_1.eContents().get(0);
 		private final Keyword cWithKeyword_7_2_2 = (Keyword)cGroup_7_2.eContents().get(2);
 		private final Assignment cHostCombineOperatorAssignment_7_2_3 = (Assignment)cGroup_7_2.eContents().get(3);
-		private final RuleCall cHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0 = (RuleCall)cHostCombineOperatorAssignment_7_2_3.eContents().get(0);
+		private final RuleCall cHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0 = (RuleCall)cHostCombineOperatorAssignment_7_2_3.eContents().get(0);
 		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
 		private final Assignment cNameAssignment_8_0 = (Assignment)cGroup_8.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_8_0_0 = (RuleCall)cNameAssignment_8_0.eContents().get(0);
@@ -672,19 +672,19 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_9_1 = (Group)cGroup_9.eContents().get(1);
 		private final Keyword cCombineKeyword_9_1_0 = (Keyword)cGroup_9_1.eContents().get(0);
 		private final Assignment cHostTypeAssignment_9_1_1 = (Assignment)cGroup_9_1.eContents().get(1);
-		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_9_1_1_0 = (RuleCall)cHostTypeAssignment_9_1_1.eContents().get(0);
+		private final RuleCall cHostTypeSTRING_STerminalRuleCall_9_1_1_0 = (RuleCall)cHostTypeAssignment_9_1_1.eContents().get(0);
 		private final Keyword cWithKeyword_9_1_2 = (Keyword)cGroup_9_1.eContents().get(2);
 		private final Assignment cHostCombineOperatorAssignment_9_1_3 = (Assignment)cGroup_9_1.eContents().get(3);
-		private final RuleCall cHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0 = (RuleCall)cHostCombineOperatorAssignment_9_1_3.eContents().get(0);
+		private final RuleCall cHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0 = (RuleCall)cHostCombineOperatorAssignment_9_1_3.eContents().get(0);
 		
 		//Signal returns synccharts::Signal:
 		//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
 		//  initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
 		//  "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
-		//  =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+		//  =STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
 		//  initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
-		//  STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
-		//  name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D); 
+		//  STRING_S)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+		//  name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S); 
 		//
 		////==============================================================================
 		//// synccharts elements as needed
@@ -694,10 +694,10 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
 		//initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
 		//"combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
-		//=STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+		//=STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
 		//initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
-		//STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
-		//name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
+		//STRING_S)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+		//name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//name=ID
@@ -818,7 +818,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//CombineOperator
 		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_4_2_3_0; }
 
-		//name=ID ":" hostType=STRING_D
+		//name=ID ":" hostType=STRING_S
 		public Group getGroup_5() { return cGroup_5; }
 
 		//name=ID
@@ -830,13 +830,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_5_1() { return cColonKeyword_5_1; }
 
-		//hostType=STRING_D
+		//hostType=STRING_S
 		public Assignment getHostTypeAssignment_5_2() { return cHostTypeAssignment_5_2; }
 
-		//STRING_D
-		public RuleCall getHostTypeSTRING_DTerminalRuleCall_5_2_0() { return cHostTypeSTRING_DTerminalRuleCall_5_2_0; }
+		//STRING_S
+		public RuleCall getHostTypeSTRING_STerminalRuleCall_5_2_0() { return cHostTypeSTRING_STerminalRuleCall_5_2_0; }
 
-		//name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
+		//name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 		public Group getGroup_6() { return cGroup_6; }
 
 		//name=ID
@@ -860,14 +860,14 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_6_2() { return cColonKeyword_6_2; }
 
-		//hostType=STRING_D
+		//hostType=STRING_S
 		public Assignment getHostTypeAssignment_6_3() { return cHostTypeAssignment_6_3; }
 
-		//STRING_D
-		public RuleCall getHostTypeSTRING_DTerminalRuleCall_6_3_0() { return cHostTypeSTRING_DTerminalRuleCall_6_3_0; }
+		//STRING_S
+		public RuleCall getHostTypeSTRING_STerminalRuleCall_6_3_0() { return cHostTypeSTRING_STerminalRuleCall_6_3_0; }
 
 		//name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_D "with"
-		//hostCombineOperator=STRING_D)
+		//hostCombineOperator=STRING_S)
 		public Group getGroup_7() { return cGroup_7; }
 
 		//name=ID
@@ -888,7 +888,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING_D
 		public RuleCall getInitialValueSTRING_DTerminalRuleCall_7_1_1_0() { return cInitialValueSTRING_DTerminalRuleCall_7_1_1_0; }
 
-		//"combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
+		//"combine" hostType=STRING_D "with" hostCombineOperator=STRING_S
 		public Group getGroup_7_2() { return cGroup_7_2; }
 
 		//"combine"
@@ -903,11 +903,11 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_7_2_2() { return cWithKeyword_7_2_2; }
 
-		//hostCombineOperator=STRING_D
+		//hostCombineOperator=STRING_S
 		public Assignment getHostCombineOperatorAssignment_7_2_3() { return cHostCombineOperatorAssignment_7_2_3; }
 
-		//STRING_D
-		public RuleCall getHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0() { return cHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0; }
+		//STRING_S
+		public RuleCall getHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0() { return cHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0; }
 
 		//name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)
 		public Group getGroup_8() { return cGroup_8; }
@@ -939,7 +939,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//CombineOperator
 		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_8_1_3_0; }
 
-		//name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
+		//name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 		public Group getGroup_9() { return cGroup_9; }
 
 		//name=ID
@@ -948,26 +948,26 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_9_0_0() { return cNameIDTerminalRuleCall_9_0_0; }
 
-		//"combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
+		//"combine" hostType=STRING_S "with" hostCombineOperator=STRING_S
 		public Group getGroup_9_1() { return cGroup_9_1; }
 
 		//"combine"
 		public Keyword getCombineKeyword_9_1_0() { return cCombineKeyword_9_1_0; }
 
-		//hostType=STRING_D
+		//hostType=STRING_S
 		public Assignment getHostTypeAssignment_9_1_1() { return cHostTypeAssignment_9_1_1; }
 
-		//STRING_D
-		public RuleCall getHostTypeSTRING_DTerminalRuleCall_9_1_1_0() { return cHostTypeSTRING_DTerminalRuleCall_9_1_1_0; }
+		//STRING_S
+		public RuleCall getHostTypeSTRING_STerminalRuleCall_9_1_1_0() { return cHostTypeSTRING_STerminalRuleCall_9_1_1_0; }
 
 		//"with"
 		public Keyword getWithKeyword_9_1_2() { return cWithKeyword_9_1_2; }
 
-		//hostCombineOperator=STRING_D
+		//hostCombineOperator=STRING_S
 		public Assignment getHostCombineOperatorAssignment_9_1_3() { return cHostCombineOperatorAssignment_9_1_3; }
 
-		//STRING_D
-		public RuleCall getHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0() { return cHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0; }
+		//STRING_S
+		public RuleCall getHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0() { return cHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0; }
 	}
 
 	public class VariableElements extends AbstractParserRuleElementFinder {
@@ -1003,7 +1003,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_4_0_0 = (RuleCall)cNameAssignment_4_0.eContents().get(0);
 		private final Keyword cColonKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
 		private final Assignment cHostTypeAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_4_2_0 = (RuleCall)cHostTypeAssignment_4_2.eContents().get(0);
+		private final RuleCall cHostTypeSTRING_STerminalRuleCall_4_2_0 = (RuleCall)cHostTypeAssignment_4_2.eContents().get(0);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Assignment cNameAssignment_5_0 = (Assignment)cGroup_5.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_5_0_0 = (RuleCall)cNameAssignment_5_0.eContents().get(0);
@@ -1013,12 +1013,12 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInitialValueSTRING_DTerminalRuleCall_5_1_1_0 = (RuleCall)cInitialValueAssignment_5_1_1.eContents().get(0);
 		private final Keyword cColonKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		private final Assignment cHostTypeAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cHostTypeSTRING_DTerminalRuleCall_5_3_0 = (RuleCall)cHostTypeAssignment_5_3.eContents().get(0);
+		private final RuleCall cHostTypeSTRING_STerminalRuleCall_5_3_0 = (RuleCall)cHostTypeAssignment_5_3.eContents().get(0);
 		
 		//Variable returns synccharts::Variable:
 		//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
-		//  initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
-		//  initialValue=STRING_D) ":" hostType=STRING_D; 
+		//  initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|name=ID (":="
+		//  initialValue=STRING_D) ":" hostType=STRING_S; 
 		//		
 		//	
 		//    
@@ -1038,8 +1038,8 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
-		//initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
-		//initialValue=STRING_D) ":" hostType=STRING_D 
+		//initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|name=ID (":="
+		//initialValue=STRING_D) ":" hostType=STRING_S 
 		//
 		//    
 		//      
@@ -1130,7 +1130,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_3_3_0() { return cTypeValueTypeEnumRuleCall_3_3_0; }
 
-		//name=ID ":" hostType=STRING_D
+		//name=ID ":" hostType=STRING_S
 		public Group getGroup_4() { return cGroup_4; }
 
 		//name=ID
@@ -1142,13 +1142,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_4_1() { return cColonKeyword_4_1; }
 
-		//hostType=STRING_D
+		//hostType=STRING_S
 		public Assignment getHostTypeAssignment_4_2() { return cHostTypeAssignment_4_2; }
 
-		//STRING_D
-		public RuleCall getHostTypeSTRING_DTerminalRuleCall_4_2_0() { return cHostTypeSTRING_DTerminalRuleCall_4_2_0; }
+		//STRING_S
+		public RuleCall getHostTypeSTRING_STerminalRuleCall_4_2_0() { return cHostTypeSTRING_STerminalRuleCall_4_2_0; }
 
-		//name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
+		//name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 		public Group getGroup_5() { return cGroup_5; }
 
 		//name=ID
@@ -1172,11 +1172,11 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_5_2() { return cColonKeyword_5_2; }
 
-		//hostType=STRING_D
+		//hostType=STRING_S
 		public Assignment getHostTypeAssignment_5_3() { return cHostTypeAssignment_5_3; }
 
-		//STRING_D
-		public RuleCall getHostTypeSTRING_DTerminalRuleCall_5_3_0() { return cHostTypeSTRING_DTerminalRuleCall_5_3_0; }
+		//STRING_S
+		public RuleCall getHostTypeSTRING_STerminalRuleCall_5_3_0() { return cHostTypeSTRING_STerminalRuleCall_5_3_0; }
 	}
 
 	public class RenamingElements extends AbstractParserRuleElementFinder {
@@ -1486,10 +1486,10 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
 	//  initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
 	//  "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
-	//  =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+	//  =STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
 	//  initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
-	//  STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
-	//  name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D); 
+	//  STRING_S)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+	//  name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S); 
 	//
 	////==============================================================================
 	//// synccharts elements as needed
@@ -1504,8 +1504,8 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Variable returns synccharts::Variable:
 	//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
-	//  initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
-	//  initialValue=STRING_D) ":" hostType=STRING_D; 
+	//  initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|name=ID (":="
+	//  initialValue=STRING_D) ":" hostType=STRING_S; 
 	//		
 	//	
 	//    

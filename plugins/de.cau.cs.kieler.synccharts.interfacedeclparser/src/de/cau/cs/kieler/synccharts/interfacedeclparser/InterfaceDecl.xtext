@@ -83,11 +83,11 @@ Signal returns synccharts::Signal:
 	name=ID (":=" initialValue=STRING_D) |
 	name=ID (":=" initialValue=STRING_D) ":" (type=ValueType) |
 	name=ID (":=" initialValue=STRING_D) ("combine" (type=ValueType) "with" (combineOperator=CombineOperator)) |
-	name=ID ":" (hostType=STRING_D) |
-	name=ID (":=" initialValue=STRING_D) ":" (hostType=STRING_D) |
-	name=ID (":=" initialValue=STRING_D) ("combine" (hostType=STRING_D) "with" (hostCombineOperator=STRING_D)) | 
+	name=ID ":" (hostType=STRING_S) |
+	name=ID (":=" initialValue=STRING_D) ":" (hostType=STRING_S) |
+	name=ID (":=" initialValue=STRING_D) ("combine" (hostType=STRING_D) "with" (hostCombineOperator=STRING_S)) | 
 	name=ID ("combine" (type=ValueType) "with" (combineOperator=CombineOperator)) |
-	name=ID ("combine" (hostType=STRING_D) "with" (hostCombineOperator=STRING_D))	
+	name=ID ("combine" (hostType=STRING_S) "with" (hostCombineOperator=STRING_S))	
 	)
 	;
 		
@@ -99,8 +99,8 @@ Variable returns synccharts::Variable:
     name=ID ":" (type=ValueType) |
     name=ID (":=" initialValue=STRING_D) |
     name=ID (":=" initialValue=STRING_D) ":" (type=ValueType) |
-    name=ID ":" (hostType=STRING_D) |
-    name=ID (":=" initialValue=STRING_D) ":" (hostType=STRING_D)
+    name=ID ":" (hostType=STRING_S) |
+    name=ID (":=" initialValue=STRING_D) ":" (hostType=STRING_S)
     )
 //  name=ID
 //  (":=" initialValue=STRING)?

@@ -1407,7 +1407,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                             {
                             int LA5_13 = input.LA(5);
 
-                            if ( (LA5_13==RULE_STRING_D) ) {
+                            if ( (LA5_13==RULE_STRING_S) ) {
                                 alt5=7;
                             }
                             else if ( ((LA5_13>=13 && LA5_13<=18)) ) {
@@ -1441,7 +1441,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     {
                     int LA5_4 = input.LA(3);
 
-                    if ( (LA5_4==RULE_STRING_D) ) {
+                    if ( (LA5_4==RULE_STRING_S) ) {
                         alt5=10;
                     }
                     else if ( ((LA5_4>=13 && LA5_4<=18)) ) {
@@ -1462,7 +1462,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     if ( ((LA5_5>=13 && LA5_5<=18)) ) {
                         alt5=2;
                     }
-                    else if ( (LA5_5==RULE_STRING_D) ) {
+                    else if ( (LA5_5==RULE_STRING_S) ) {
                         alt5=6;
                     }
                     else {
@@ -1768,7 +1768,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                         if ( (LA6_5==31) ) {
                             int LA6_8 = input.LA(5);
 
-                            if ( (LA6_8==RULE_STRING_D) ) {
+                            if ( (LA6_8==RULE_STRING_S) ) {
                                 alt6=6;
                             }
                             else if ( ((LA6_8>=13 && LA6_8<=18)) ) {
@@ -1803,7 +1803,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
                     {
                     int LA6_3 = input.LA(3);
 
-                    if ( (LA6_3==RULE_STRING_D) ) {
+                    if ( (LA6_3==RULE_STRING_S) ) {
                         alt6=5;
                     }
                     else if ( ((LA6_3>=13 && LA6_3<=18)) ) {
@@ -10686,21 +10686,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__HostTypeAssignment_5_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4243:1: rule__Signal__HostTypeAssignment_5_2 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4243:1: rule__Signal__HostTypeAssignment_5_2 : ( RULE_STRING_S ) ;
     public final void rule__Signal__HostTypeAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4247:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4248:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4247:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4248:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4248:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4249:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4248:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4249:1: RULE_STRING_S
             {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_5_2_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_5_28425); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_5_2_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_5_2_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_5_28425); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_5_2_0()); 
 
             }
 
@@ -10797,21 +10797,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__HostTypeAssignment_6_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4288:1: rule__Signal__HostTypeAssignment_6_3 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4288:1: rule__Signal__HostTypeAssignment_6_3 : ( RULE_STRING_S ) ;
     public final void rule__Signal__HostTypeAssignment_6_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4292:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4293:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4292:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4293:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4293:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4294:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4293:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4294:1: RULE_STRING_S
             {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_6_3_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_6_38518); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_6_3_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_6_3_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_6_38518); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_6_3_0()); 
 
             }
 
@@ -10945,21 +10945,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__HostCombineOperatorAssignment_7_2_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4348:1: rule__Signal__HostCombineOperatorAssignment_7_2_3 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4348:1: rule__Signal__HostCombineOperatorAssignment_7_2_3 : ( RULE_STRING_S ) ;
     public final void rule__Signal__HostCombineOperatorAssignment_7_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4352:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4353:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4352:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4353:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4353:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4354:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4353:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4354:1: RULE_STRING_S
             {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Signal__HostCombineOperatorAssignment_7_2_38642); 
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0()); 
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Signal__HostCombineOperatorAssignment_7_2_38642); 
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0()); 
 
             }
 
@@ -11136,21 +11136,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__HostTypeAssignment_9_1_1
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4423:1: rule__Signal__HostTypeAssignment_9_1_1 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4423:1: rule__Signal__HostTypeAssignment_9_1_1 : ( RULE_STRING_S ) ;
     public final void rule__Signal__HostTypeAssignment_9_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4427:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4428:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4427:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4428:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4428:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4429:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4428:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4429:1: RULE_STRING_S
             {
-             before(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_9_1_1_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_9_1_18797); 
-             after(grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_9_1_1_0()); 
+             before(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_9_1_1_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_9_1_18797); 
+             after(grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_9_1_1_0()); 
 
             }
 
@@ -11173,21 +11173,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Signal__HostCombineOperatorAssignment_9_1_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4438:1: rule__Signal__HostCombineOperatorAssignment_9_1_3 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4438:1: rule__Signal__HostCombineOperatorAssignment_9_1_3 : ( RULE_STRING_S ) ;
     public final void rule__Signal__HostCombineOperatorAssignment_9_1_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4442:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4443:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4442:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4443:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4443:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4444:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4443:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4444:1: RULE_STRING_S
             {
-             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Signal__HostCombineOperatorAssignment_9_1_38828); 
-             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0()); 
+             before(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Signal__HostCombineOperatorAssignment_9_1_38828); 
+             after(grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0()); 
 
             }
 
@@ -11549,21 +11549,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__HostTypeAssignment_4_2
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4588:1: rule__Variable__HostTypeAssignment_4_2 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4588:1: rule__Variable__HostTypeAssignment_4_2 : ( RULE_STRING_S ) ;
     public final void rule__Variable__HostTypeAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4592:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4593:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4592:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4593:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4593:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4594:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4593:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4594:1: RULE_STRING_S
             {
-             before(grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_4_2_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Variable__HostTypeAssignment_4_29138); 
-             after(grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_4_2_0()); 
+             before(grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_4_2_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Variable__HostTypeAssignment_4_29138); 
+             after(grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_4_2_0()); 
 
             }
 
@@ -11660,21 +11660,21 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start rule__Variable__HostTypeAssignment_5_3
-    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4633:1: rule__Variable__HostTypeAssignment_5_3 : ( RULE_STRING_D ) ;
+    // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4633:1: rule__Variable__HostTypeAssignment_5_3 : ( RULE_STRING_S ) ;
     public final void rule__Variable__HostTypeAssignment_5_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4637:1: ( ( RULE_STRING_D ) )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4638:1: ( RULE_STRING_D )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4637:1: ( ( RULE_STRING_S ) )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4638:1: ( RULE_STRING_S )
             {
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4638:1: ( RULE_STRING_D )
-            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4639:1: RULE_STRING_D
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4638:1: ( RULE_STRING_S )
+            // ../de.cau.cs.kieler.synccharts.interfacedeclparser.ui/src-gen/de/cau/cs/kieler/synccharts/interfacedeclparser/ui/contentassist/antlr/internal/InternalInterfaceDecl.g:4639:1: RULE_STRING_S
             {
-             before(grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_5_3_0()); 
-            match(input,RULE_STRING_D,FOLLOW_RULE_STRING_D_in_rule__Variable__HostTypeAssignment_5_39231); 
-             after(grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_5_3_0()); 
+             before(grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_5_3_0()); 
+            match(input,RULE_STRING_S,FOLLOW_RULE_STRING_S_in_rule__Variable__HostTypeAssignment_5_39231); 
+             after(grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_5_3_0()); 
 
             }
 
@@ -11990,14 +11990,14 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__Signal__CombineOperatorAssignment_4_2_3_in_rule__Signal__Group_4_2__35070 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_5_0_in_rule__Signal__Group_5__05112 = new BitSet(new long[]{0x0000000080000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_5__1_in_rule__Signal__Group_5__05121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__Signal__Group_5__15150 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_31_in_rule__Signal__Group_5__15150 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Signal__Group_5__2_in_rule__Signal__Group_5__15160 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_5_2_in_rule__Signal__Group_5__25188 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_6_0_in_rule__Signal__Group_6__05228 = new BitSet(new long[]{0x0000000800000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_6__1_in_rule__Signal__Group_6__05237 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group_6_1__0_in_rule__Signal__Group_6__15265 = new BitSet(new long[]{0x0000000080000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_6__2_in_rule__Signal__Group_6__15274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__Signal__Group_6__25303 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_31_in_rule__Signal__Group_6__25303 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Signal__Group_6__3_in_rule__Signal__Group_6__25313 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_6_3_in_rule__Signal__Group_6__35341 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_35_in_rule__Signal__Group_6_1__05384 = new BitSet(new long[]{0x0000000000000020L});
@@ -12015,7 +12015,7 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__Signal__Group_7_2__1_in_rule__Signal__Group_7_2__05662 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_7_2_1_in_rule__Signal__Group_7_2__15690 = new BitSet(new long[]{0x0000002000000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_7_2__2_in_rule__Signal__Group_7_2__15699 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_rule__Signal__Group_7_2__25728 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_37_in_rule__Signal__Group_7_2__25728 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Signal__Group_7_2__3_in_rule__Signal__Group_7_2__25738 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_7_2_3_in_rule__Signal__Group_7_2__35766 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_8_0_in_rule__Signal__Group_8__05808 = new BitSet(new long[]{0x0000001000000000L});
@@ -12031,11 +12031,11 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_9_0_in_rule__Signal__Group_9__06040 = new BitSet(new long[]{0x0000001000000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_9__1_in_rule__Signal__Group_9__06049 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group_9_1__0_in_rule__Signal__Group_9__16077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_rule__Signal__Group_9_1__06116 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_36_in_rule__Signal__Group_9_1__06116 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Signal__Group_9_1__1_in_rule__Signal__Group_9_1__06126 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostTypeAssignment_9_1_1_in_rule__Signal__Group_9_1__16154 = new BitSet(new long[]{0x0000002000000000L});
     public static final BitSet FOLLOW_rule__Signal__Group_9_1__2_in_rule__Signal__Group_9_1__16163 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_rule__Signal__Group_9_1__26192 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_37_in_rule__Signal__Group_9_1__26192 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Signal__Group_9_1__3_in_rule__Signal__Group_9_1__26202 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__HostCombineOperatorAssignment_9_1_3_in_rule__Signal__Group_9_1__36230 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__NameAssignment_1_0_in_rule__Variable__Group_1__06272 = new BitSet(new long[]{0x0000000080000000L});
@@ -12061,14 +12061,14 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__Variable__InitialValueAssignment_3_1_1_in_rule__Variable__Group_3_1__16734 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__NameAssignment_4_0_in_rule__Variable__Group_4__06772 = new BitSet(new long[]{0x0000000080000000L});
     public static final BitSet FOLLOW_rule__Variable__Group_4__1_in_rule__Variable__Group_4__06781 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__Variable__Group_4__16810 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_31_in_rule__Variable__Group_4__16810 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Variable__Group_4__2_in_rule__Variable__Group_4__16820 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__HostTypeAssignment_4_2_in_rule__Variable__Group_4__26848 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__NameAssignment_5_0_in_rule__Variable__Group_5__06888 = new BitSet(new long[]{0x0000000800000000L});
     public static final BitSet FOLLOW_rule__Variable__Group_5__1_in_rule__Variable__Group_5__06897 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__Group_5_1__0_in_rule__Variable__Group_5__16925 = new BitSet(new long[]{0x0000000080000000L});
     public static final BitSet FOLLOW_rule__Variable__Group_5__2_in_rule__Variable__Group_5__16934 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__Variable__Group_5__26963 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_31_in_rule__Variable__Group_5__26963 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__Variable__Group_5__3_in_rule__Variable__Group_5__26973 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Variable__HostTypeAssignment_5_3_in_rule__Variable__Group_5__37001 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_35_in_rule__Variable__Group_5_1__07044 = new BitSet(new long[]{0x0000000000000020L});
@@ -12117,20 +12117,20 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_4_2_18332 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_4_2_38363 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_5_08394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_5_28425 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_5_28425 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_6_08456 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__InitialValueAssignment_6_1_18487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_6_38518 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_6_38518 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_7_08549 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__InitialValueAssignment_7_1_18580 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_7_2_18611 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostCombineOperatorAssignment_7_2_38642 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Signal__HostCombineOperatorAssignment_7_2_38642 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_8_08673 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValueType_in_rule__Signal__TypeAssignment_8_1_18704 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCombineOperator_in_rule__Signal__CombineOperatorAssignment_8_1_38735 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Signal__NameAssignment_9_08766 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostTypeAssignment_9_1_18797 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Signal__HostCombineOperatorAssignment_9_1_38828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Signal__HostTypeAssignment_9_1_18797 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Signal__HostCombineOperatorAssignment_9_1_38828 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_08859 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_1_08890 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_1_28921 = new BitSet(new long[]{0x0000000000000002L});
@@ -12140,10 +12140,10 @@ public class InternalInterfaceDeclParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Variable__InitialValueAssignment_3_1_19045 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValueType_in_rule__Variable__TypeAssignment_3_39076 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_4_09107 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Variable__HostTypeAssignment_4_29138 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Variable__HostTypeAssignment_4_29138 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Variable__NameAssignment_5_09169 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Variable__InitialValueAssignment_5_1_19200 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_D_in_rule__Variable__HostTypeAssignment_5_39231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_S_in_rule__Variable__HostTypeAssignment_5_39231 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Renaming__OldIDAssignment_09262 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Renaming__NewIDAssignment_29293 = new BitSet(new long[]{0x0000000000000002L});
 

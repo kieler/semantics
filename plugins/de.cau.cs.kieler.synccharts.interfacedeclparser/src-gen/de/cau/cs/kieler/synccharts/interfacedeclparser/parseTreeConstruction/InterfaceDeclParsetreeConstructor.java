@@ -2922,10 +2922,10 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
  *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
  *   initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
  *   "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
- *   =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+ *   =STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
  *   initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
- *   STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
- *   name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D); 
+ *   STRING_S)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+ *   name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S); 
  * 
  * //==============================================================================
  * // synccharts elements as needed
@@ -2936,10 +2936,10 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
 // name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
 // initialValue=STRING_D) ":" type=ValueType|name=ID (":=" initialValue=STRING_D) (
 // "combine" type=ValueType "with" combineOperator=CombineOperator)|name=ID ":" hostType
-// =STRING_D|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D|name=ID (":="
+// =STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
 // initialValue=STRING_D) ("combine" hostType=STRING_D "with" hostCombineOperator=
-// STRING_D)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
-// name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
+// STRING_S)|name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator)|
+// name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 protected class Signal_Alternatives extends AlternativesToken {
 
 	public Signal_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3717,7 +3717,7 @@ protected class Signal_CombineOperatorAssignment_4_2_3 extends AssignmentToken  
 
 
 
-// name=ID ":" hostType=STRING_D
+// name=ID ":" hostType=STRING_S
 protected class Signal_Group_5 extends GroupToken {
 	
 	public Signal_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3794,7 +3794,7 @@ protected class Signal_ColonKeyword_5_1 extends KeywordToken  {
 		
 }
 
-// hostType=STRING_D
+// hostType=STRING_S
 protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_5_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3820,7 +3820,7 @@ protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_5_2_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_5_2_0();
 			return obj;
 		}
 		return null;
@@ -3829,7 +3829,7 @@ protected class Signal_HostTypeAssignment_5_2 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
+// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 protected class Signal_Group_6 extends GroupToken {
 	
 	public Signal_Group_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3985,7 +3985,7 @@ protected class Signal_ColonKeyword_6_2 extends KeywordToken  {
 		
 }
 
-// hostType=STRING_D
+// hostType=STRING_S
 protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_6_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4011,7 +4011,7 @@ protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_6_3_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_6_3_0();
 			return obj;
 		}
 		return null;
@@ -4021,7 +4021,7 @@ protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 
 
 // name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_D "with"
-// hostCombineOperator=STRING_D)
+// hostCombineOperator=STRING_S)
 protected class Signal_Group_7 extends GroupToken {
 	
 	public Signal_Group_7(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4155,7 +4155,7 @@ protected class Signal_InitialValueAssignment_7_1_1 extends AssignmentToken  {
 }
 
 
-// "combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
+// "combine" hostType=STRING_D "with" hostCombineOperator=STRING_S
 protected class Signal_Group_7_2 extends GroupToken {
 	
 	public Signal_Group_7_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4255,7 +4255,7 @@ protected class Signal_WithKeyword_7_2_2 extends KeywordToken  {
 		
 }
 
-// hostCombineOperator=STRING_D
+// hostCombineOperator=STRING_S
 protected class Signal_HostCombineOperatorAssignment_7_2_3 extends AssignmentToken  {
 	
 	public Signal_HostCombineOperatorAssignment_7_2_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4281,7 +4281,7 @@ protected class Signal_HostCombineOperatorAssignment_7_2_3 extends AssignmentTok
 		IInstanceDescription obj = current.cloneAndConsume("hostCombineOperator");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_7_2_3_0();
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_7_2_3_0();
 			return obj;
 		}
 		return null;
@@ -4482,7 +4482,7 @@ protected class Signal_CombineOperatorAssignment_8_1_3 extends AssignmentToken  
 
 
 
-// name=ID ("combine" hostType=STRING_D "with" hostCombineOperator=STRING_D)
+// name=ID ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 protected class Signal_Group_9 extends GroupToken {
 	
 	public Signal_Group_9(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4537,7 +4537,7 @@ protected class Signal_NameAssignment_9_0 extends AssignmentToken  {
 
 }
 
-// "combine" hostType=STRING_D "with" hostCombineOperator=STRING_D
+// "combine" hostType=STRING_S "with" hostCombineOperator=STRING_S
 protected class Signal_Group_9_1 extends GroupToken {
 	
 	public Signal_Group_9_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4581,7 +4581,7 @@ protected class Signal_CombineKeyword_9_1_0 extends KeywordToken  {
 		
 }
 
-// hostType=STRING_D
+// hostType=STRING_S
 protected class Signal_HostTypeAssignment_9_1_1 extends AssignmentToken  {
 	
 	public Signal_HostTypeAssignment_9_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4607,7 +4607,7 @@ protected class Signal_HostTypeAssignment_9_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostTypeSTRING_DTerminalRuleCall_9_1_1_0();
+			element = grammarAccess.getSignalAccess().getHostTypeSTRING_STerminalRuleCall_9_1_1_0();
 			return obj;
 		}
 		return null;
@@ -4637,7 +4637,7 @@ protected class Signal_WithKeyword_9_1_2 extends KeywordToken  {
 		
 }
 
-// hostCombineOperator=STRING_D
+// hostCombineOperator=STRING_S
 protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentToken  {
 	
 	public Signal_HostCombineOperatorAssignment_9_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4663,7 +4663,7 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
 		IInstanceDescription obj = current.cloneAndConsume("hostCombineOperator");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_DTerminalRuleCall_9_1_3_0();
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRING_STerminalRuleCall_9_1_3_0();
 			return obj;
 		}
 		return null;
@@ -4681,8 +4681,8 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
  *
  * Variable returns synccharts::Variable:
  *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
- *   initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
- *   initialValue=STRING_D) ":" hostType=STRING_D; 
+ *   initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|name=ID (":="
+ *   initialValue=STRING_D) ":" hostType=STRING_S; 
  * 		
  * 	
  *     
@@ -4703,8 +4703,8 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
  **/
 
 // name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID (":="
-// initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_D|name=ID (":="
-// initialValue=STRING_D) ":" hostType=STRING_D 
+// initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|name=ID (":="
+// initialValue=STRING_D) ":" hostType=STRING_S 
 // 
 //     
 //       
@@ -5220,7 +5220,7 @@ protected class Variable_TypeAssignment_3_3 extends AssignmentToken  {
 }
 
 
-// name=ID ":" hostType=STRING_D
+// name=ID ":" hostType=STRING_S
 protected class Variable_Group_4 extends GroupToken {
 	
 	public Variable_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5297,7 +5297,7 @@ protected class Variable_ColonKeyword_4_1 extends KeywordToken  {
 		
 }
 
-// hostType=STRING_D
+// hostType=STRING_S
 protected class Variable_HostTypeAssignment_4_2 extends AssignmentToken  {
 	
 	public Variable_HostTypeAssignment_4_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5323,7 +5323,7 @@ protected class Variable_HostTypeAssignment_4_2 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_4_2_0();
+			element = grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_4_2_0();
 			return obj;
 		}
 		return null;
@@ -5332,7 +5332,7 @@ protected class Variable_HostTypeAssignment_4_2 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_D
+// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 protected class Variable_Group_5 extends GroupToken {
 	
 	public Variable_Group_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5488,7 +5488,7 @@ protected class Variable_ColonKeyword_5_2 extends KeywordToken  {
 		
 }
 
-// hostType=STRING_D
+// hostType=STRING_S
 protected class Variable_HostTypeAssignment_5_3 extends AssignmentToken  {
 	
 	public Variable_HostTypeAssignment_5_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5514,7 +5514,7 @@ protected class Variable_HostTypeAssignment_5_3 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("hostType");
 		if(Boolean.TRUE.booleanValue()) { 
 			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getHostTypeSTRING_DTerminalRuleCall_5_3_0();
+			element = grammarAccess.getVariableAccess().getHostTypeSTRING_STerminalRuleCall_5_3_0();
 			return obj;
 		}
 		return null;
