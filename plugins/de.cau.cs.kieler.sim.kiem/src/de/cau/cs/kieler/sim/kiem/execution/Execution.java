@@ -159,19 +159,24 @@ public class Execution extends Job {
      * @return the timeout
      */
     private int getTimeout() {
-        Integer providedTimeout = KiemPlugin.getDefault().getIntegerValueFromProviders(
-                KiemPlugin.TIMEOUT_ID);
-        if (providedTimeout != null) {
-            return providedTimeout;
-        } else {
-            int aimedStepDurationTmp = KiemPlugin.getDefault().getAimedStepDuration();
-            int returnValue = Execution.TIMEOUTMULTIPLICITY * aimedStepDurationTmp;
-            if (returnValue < Execution.SECOND_WAITTIMEOUT) {
-                returnValue = Execution.SECOND_WAITTIMEOUT;
+        try {
+            Integer providedTimeout = KiemPlugin.getDefault().getIntegerValueFromProviders(
+                    KiemPlugin.TIMEOUT_ID);
+            if (providedTimeout != null) {
+                return providedTimeout;
+            } else {
+                int aimedStepDurationTmp = KiemPlugin.getDefault().getAimedStepDuration();
+                int returnValue = Execution.TIMEOUTMULTIPLICITY * aimedStepDurationTmp;
+                if (returnValue < Execution.SECOND_WAITTIMEOUT) {
+                    returnValue = Execution.SECOND_WAITTIMEOUT;
+                }
+                KiemPlugin.getDefault().notifyConfigurationProviders(KiemPlugin.TIMEOUT_ID,
+                        returnValue + "");
+                return (returnValue);
             }
-            KiemPlugin.getDefault().notifyConfigurationProviders(KiemPlugin.TIMEOUT_ID,
-                    returnValue + "");
-            return (returnValue);
+        }
+        catch (Exception e) {
+           return Execution.SECOND_WAITTIMEOUT; 
         }
     }
 
@@ -980,380 +985,387 @@ public class Execution extends Job {
             // timing variables
             resetTimingVariables();
         }
+        
+        try {
+            while (!this.stop) {
 
-        while (!this.stop) {
+                long starttime = System.currentTimeMillis();
+                long endtime = System.currentTimeMillis();
 
-            long starttime = System.currentTimeMillis();
-            long endtime = System.currentTimeMillis();
+                synchronized (this) {
+                    // pause if pause step is reached
+                    if (this.stepCounter == this.stepToPause) {
+                        // cancel stepPause
+                        this.stepToPause = -1;
+                        this.pauseExecutionSync();
+                        // update the GUI
+                        KiemPlugin.getDefault().updateViewAsync();
+                    }
 
-            synchronized (this) {
-                // pause if pause step is reached
-                if (this.stepCounter == this.stepToPause) {
-                    // cancel stepPause
-                    this.stepToPause = -1;
-                    this.pauseExecutionSync();
-                    // update the GUI
-                    KiemPlugin.getDefault().updateViewAsync();
-                }
+                    // test if we have to make a step (1) or if we are
+                    // in running mode (-1)
+                    // System.out.println("steps = "+steps);
+                    if ((steps == INFINITY_STEPS) || (steps != NO_STEPS)) {
 
-                // test if we have to make a step (1) or if we are
-                // in running mode (-1)
-                // System.out.println("steps = "+steps);
-                if ((steps == INFINITY_STEPS) || (steps != NO_STEPS)) {
-
-                    // make a step forward or backward according to steps
-                    if ((steps == FORWARD_STEP) || (steps == INFINITY_STEPS)) {
-                        if (this.stepCounter == this.stepCounterMax) {
-                            lastStepIsMostCurrent = true;
+                        // make a step forward or backward according to steps
+                        if ((steps == FORWARD_STEP) || (steps == INFINITY_STEPS)) {
+                            if (this.stepCounter == this.stepCounterMax) {
+                                lastStepIsMostCurrent = true;
+                            } else {
+                                lastStepIsMostCurrent = false;
+                            }
+                            // make a step forward
+                            this.stepCounter++;
                         } else {
                             lastStepIsMostCurrent = false;
+                            // make a step backward
+                            this.stepCounter--;
                         }
-                        // make a step forward
-                        this.stepCounter++;
-                    } else {
-                        lastStepIsMostCurrent = false;
-                        // make a step backward
-                        this.stepCounter--;
-                    }
 
-                    // update stepCounterMax
-                    if (this.stepCounter > this.stepCounterMax) {
-                        this.stepCounterMax = this.stepCounter;
-                    }
-
-                    // --------------------------------------------------
-
-                    // notify about steps
-                    for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                        KiemEvent infoEvent = new KiemEvent(KiemEvent.STEP_INFO,
-                                new Pair<Long, Long>(this.stepCounter, this.stepCounterMax));
-                        if (eventManager != null) {
-                            eventManager.notify(infoEvent);
+                        // update stepCounterMax
+                        if (this.stepCounter > this.stepCounterMax) {
+                            this.stepCounterMax = this.stepCounter;
                         }
-                        // dataComponentWrapperList.get(c).getDataComponent()
-                        // .notifyStep(this.stepCounter,this.stepCounterMax);
-                    }
 
-                    // update steps in kiem view
-                    // KiemPlugin.getDefault().updateStepsAsync();
-                    // is now done by listening to the STEP_INFO event
+                        // --------------------------------------------------
 
-                    // System.out.println("-- execution step -------------------------------");
-
-                    // ===========================================//
-                    // == P U R E P R O D U C E R (CALL) ==//
-                    // ===========================================//
-                    // only if this is not a history step
-                    if (!this.isHistoryStep()) {
+                        // notify about steps
                         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                            // call all pure producers first
-                            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
-                                    .get(c);
-                            timeout.timeout(getTimeout(), "isEnabled, isProducer, isObserver",
-                                    dataComponentWrapper, this);
-                            if (dataComponentWrapper.isEnabled()
-                                    && dataComponentWrapper.isProducerOnly()) {
-                                // System.out.println(c + ") " +
-                                // dataComponentWrapper.getName() +
-                                // " (Pure Producer) call");
-                                // make a step (within producerExecution's
-                                // monitor)
-                                timeout.timeout(getTimeout(), "step (call)", dataComponentWrapper,
-                                        this);
-                                // should normally not happen (if no errors)
-                                try {
-                                    producerExecutionArray[c].blockingStep();
-                                } catch (Exception e) {
-                                    if (!stop) {
-                                        KiemPlugin.getDefault().showWarning(null,
-                                                KiemPlugin.PLUGIN_ID, e, false);
+                            KiemEvent infoEvent = new KiemEvent(KiemEvent.STEP_INFO,
+                                    new Pair<Long, Long>(this.stepCounter, this.stepCounterMax));
+                            if (eventManager != null) {
+                                eventManager.notify(infoEvent);
+                            }
+                            // dataComponentWrapperList.get(c).getDataComponent()
+                            // .notifyStep(this.stepCounter,this.stepCounterMax);
+                        }
+
+                        // update steps in kiem view
+                        // KiemPlugin.getDefault().updateStepsAsync();
+                        // is now done by listening to the STEP_INFO event
+
+                        // System.out.println("-- execution step -------------------------------");
+
+                        // ===========================================//
+                        // == P U R E P R O D U C E R (CALL) ==//
+                        // ===========================================//
+                        // only if this is not a history step
+                        if (!this.isHistoryStep()) {
+                            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+                                // call all pure producers first
+                                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList
+                                        .get(c);
+                                timeout.timeout(getTimeout(), "isEnabled, isProducer, isObserver",
+                                        dataComponentWrapper, this);
+                                if (dataComponentWrapper.isEnabled()
+                                        && dataComponentWrapper.isProducerOnly()) {
+                                    // System.out.println(c + ") " +
+                                    // dataComponentWrapper.getName() +
+                                    // " (Pure Producer) call");
+                                    // make a step (within producerExecution's
+                                    // monitor)
+                                    timeout.timeout(getTimeout(), "step (call)", dataComponentWrapper,
+                                            this);
+                                    // should normally not happen (if no errors)
+                                    try {
+                                        producerExecutionArray[c].blockingStep();
+                                    } catch (Exception e) {
+                                        if (!stop) {
+                                            KiemPlugin.getDefault().showWarning(null,
+                                                    KiemPlugin.PLUGIN_ID, e, false);
+                                        }
                                     }
                                 }
-                            }
-                            timeout.abortTimeout();
-                        } // next pure producer
-                    } // end if not history step
+                                timeout.abortTimeout();
+                            } // next pure producer
+                        } // end if not history step
 
-                    // make a step - according to the dataComponentWrapperList
-                    // order
-                    for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                        DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+                        // make a step - according to the dataComponentWrapperList
+                        // order
+                        for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+                            DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
 
-                        // check whether DataComponent is DISABLED
-                        timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
-                        if (!dataComponentWrapper.isEnabled()) {
-                            timeout.abortTimeout();
-                            continue;
-                        }
-                        timeout.abortTimeout();
-
-                        // check whether DataComponent can handle HISTORY STEPS
-                        if (this.isHistoryStep()) {
-                            timeout.timeout(getTimeout(), "isHistoryObserver",
-                                    dataComponentWrapper, this);
-                            if (!dataComponentWrapper.isHistoryObserver()) {
+                            // check whether DataComponent is DISABLED
+                            timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
+                            if (!dataComponentWrapper.isEnabled()) {
                                 timeout.abortTimeout();
                                 continue;
                             }
+                            timeout.abortTimeout();
+
+                            // check whether DataComponent can handle HISTORY STEPS
+                            if (this.isHistoryStep()) {
+                                timeout.timeout(getTimeout(), "isHistoryObserver",
+                                        dataComponentWrapper, this);
+                                if (!dataComponentWrapper.isHistoryObserver()) {
+                                    timeout.abortTimeout();
+                                    continue;
+                                }
+                                timeout.timeout(getTimeout(), "isProducer, isObserver",
+                                        dataComponentWrapper, this);
+                                if (dataComponentWrapper.isProducerOnly()) {
+                                    timeout.abortTimeout();
+                                    continue;
+                                }
+                                timeout.abortTimeout();
+                            }
+
+                            // ===========================================//
+                            // == C O N S U M E R / P R O D U C E R ==//
+                            // ===========================================//
                             timeout.timeout(getTimeout(), "isProducer, isObserver",
                                     dataComponentWrapper, this);
-                            if (dataComponentWrapper.isProducerOnly()) {
-                                timeout.abortTimeout();
-                                continue;
-                            }
-                            timeout.abortTimeout();
-                        }
-
-                        // ===========================================//
-                        // == C O N S U M E R / P R O D U C E R ==//
-                        // ===========================================//
-                        timeout.timeout(getTimeout(), "isProducer, isObserver",
-                                dataComponentWrapper, this);
-                        if (dataComponentWrapper.isProducerObserver()) {
-                            // System.out.println(c + ") "
-                            // +dataComponentWrapper.getName() +
-                            // " (Norm Producer) call");
-                            // Observer AND Producer => blocking
-                            try {
-                                // make a step
-                                makeStepObserverProducer(dataComponentWrapper);
-                                // save current pool index for next invokation
-                                // only iff no history step
-                                if (!this.isHistoryStep()) {
-                                    dataComponentWrapper.setDeltaIndex(this.dataPool
-                                            .getPoolCounter());
-                                }
-                            } catch (Exception e) {
-                                if (!stop) {
-                                    KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e, false);
-                                }
-                            }
-                            // System.out.println(dataComponentWrapper.getName()
-                            // +
-                            // " (Norm Producer) return");
-                        } else if (dataComponentWrapper.isObserverOnly()) {
-                            // ===========================================//
-                            // == P U R E C O N S U M E R ==//
-                            // ===========================================//
-                            // System.out.println(c + ") "
-                            // +dataComponentWrapper.getName() +
-                            // " (Pure Observer) call");
-                            // pure Observer
-                            // set current data
-                            try {
-                                // get the current input data according to the
-                                // current step
-                                JSONObject oldData = getInputData(dataComponentWrapper);
-                                // System.out.println(dataComponentWrapper.getName()
-                                // + ": " +
-                                // oldData.toString());
-                                // set the oldData
-                                observerExecutionArray[c].setData(oldData);
-                            } catch (Exception e) {
-                                if (!stop) {
-                                    KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e, false);
-                                }
-                            }
-                            // call async method - no timeout
-                            try {
-                                if ((observerExecutionArray[c].step())) {
-                                    // ONLY if the step was successful
-                                    // == component was not skipped
-
-                                    // save current pool index for next
-                                    // invokation
+                            if (dataComponentWrapper.isProducerObserver()) {
+                                // System.out.println(c + ") "
+                                // +dataComponentWrapper.getName() +
+                                // " (Norm Producer) call");
+                                // Observer AND Producer => blocking
+                                try {
+                                    // make a step
+                                    makeStepObserverProducer(dataComponentWrapper);
+                                    // save current pool index for next invokation
                                     // only iff no history step
                                     if (!this.isHistoryStep()) {
                                         dataComponentWrapper.setDeltaIndex(this.dataPool
                                                 .getPoolCounter());
                                     }
+                                } catch (Exception e) {
+                                    if (!stop) {
+                                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
+                                                e, false);
+                                    }
                                 }
-                            } catch (Exception e) {
-                                if (!stop) {
-                                    KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(),
-                                            KiemPlugin.PLUGIN_ID, e, false);
-                                }
-                            }
-                        } else if ((!this.isHistoryStep()) && dataComponentWrapper.isProducerOnly()) {
-                            // ===========================================//
-                            // == P U R E P R O D U C E R (REAP) ==//
-                            // ===========================================//
-                            // only if not a history step
-                            timeout
-                                    .timeout(getTimeout(), "step (reap)", dataComponentWrapper,
-                                            this);
-                            try {
+                                // System.out.println(dataComponentWrapper.getName()
+                                // +
+                                // " (Norm Producer) return");
+                            } else if (dataComponentWrapper.isObserverOnly()) {
+                                // ===========================================//
+                                // == P U R E C O N S U M E R ==//
+                                // ===========================================//
                                 // System.out.println(c + ") "
                                 // +dataComponentWrapper.getName() +
-                                // " (Pure Producer) wait");
-                                // pure Producer
-                                // get blocking result
-                                producerExecutionArray[c].blockingWaitUntilDone();
-                                // now reap the results
-                                // note that due to sequential order we always
-                                // FIRST
-                                // reap the producer and only in the next
-                                // iteration
-                                // THEN call him again
-                            } catch (Exception e) {
-                                if (!stop) {
-                                    KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e, false);
+                                // " (Pure Observer) call");
+                                // pure Observer
+                                // set current data
+                                try {
+                                    // get the current input data according to the
+                                    // current step
+                                    JSONObject oldData = getInputData(dataComponentWrapper);
+                                    // System.out.println(dataComponentWrapper.getName()
+                                    // + ": " +
+                                    // oldData.toString());
+                                    // set the oldData
+                                    observerExecutionArray[c].setData(oldData);
+                                } catch (Exception e) {
+                                    if (!stop) {
+                                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
+                                                e, false);
+                                    }
                                 }
-                            }
+                                // call async method - no timeout
+                                try {
+                                    if ((observerExecutionArray[c].step())) {
+                                        // ONLY if the step was successful
+                                        // == component was not skipped
 
-                            // escape if stopped
-                            timeout.abortTimeout();
-                            if (this.stop) {
-                                return Status.CANCEL_STATUS;
-                            }
-
-                            // System.out.println(c + ") "
-                            // +dataComponentWrapper.getName() +
-                            // " (Pure Producer) done");
-                            try {
-                                JSONObject newData = producerExecutionArray[c].getData();
-                                if (newData != null) {
-                                    this.dataPool.putData(newData);
+                                        // save current pool index for next
+                                        // invokation
+                                        // only iff no history step
+                                        if (!this.isHistoryStep()) {
+                                            dataComponentWrapper.setDeltaIndex(this.dataPool
+                                                    .getPoolCounter());
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    if (!stop) {
+                                        KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(),
+                                                KiemPlugin.PLUGIN_ID, e, false);
+                                    }
                                 }
-                            } catch (Exception e) {
-                                if (!stop) {
-                                    KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
-                                            e, false);
+                            } else if ((!this.isHistoryStep()) && dataComponentWrapper.isProducerOnly()) {
+                                // ===========================================//
+                                // == P U R E P R O D U C E R (REAP) ==//
+                                // ===========================================//
+                                // only if not a history step
+                                timeout
+                                        .timeout(getTimeout(), "step (reap)", dataComponentWrapper,
+                                                this);
+                                try {
+                                    // System.out.println(c + ") "
+                                    // +dataComponentWrapper.getName() +
+                                    // " (Pure Producer) wait");
+                                    // pure Producer
+                                    // get blocking result
+                                    producerExecutionArray[c].blockingWaitUntilDone();
+                                    // now reap the results
+                                    // note that due to sequential order we always
+                                    // FIRST
+                                    // reap the producer and only in the next
+                                    // iteration
+                                    // THEN call him again
+                                } catch (Exception e) {
+                                    if (!stop) {
+                                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
+                                                e, false);
+                                    }
                                 }
-                            }
 
+                                // escape if stopped
+                                timeout.abortTimeout();
+                                if (this.stop) {
+                                    return Status.CANCEL_STATUS;
+                                }
+
+                                // System.out.println(c + ") "
+                                // +dataComponentWrapper.getName() +
+                                // " (Pure Producer) done");
+                                try {
+                                    JSONObject newData = producerExecutionArray[c].getData();
+                                    if (newData != null) {
+                                        this.dataPool.putData(newData);
+                                    }
+                                } catch (Exception e) {
+                                    if (!stop) {
+                                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID,
+                                                e, false);
+                                    }
+                                }
+
+                            }
+                        } // next producer/Observer
+                        timeout.abortTimeout();
+
+                        // calculate execution timings (and current step Duration)
+                        // do not floor => add 1ms
+                        endtime = System.currentTimeMillis();
+                        this.stepDuration = (int) (endtime - starttime) + 1;
+                        if (this.maximumStepDuration < this.stepDuration) {
+                            this.maximumStepDuration = this.stepDuration;
                         }
-                    } // next producer/Observer
-                    timeout.abortTimeout();
+                        if ((this.minimumStepDuration > this.stepDuration)
+                                || (this.minimumStepDuration == -1)) {
+                            this.minimumStepDuration = this.stepDuration;
+                        }
+                        if (this.weightedAverageStepDuration == 0) {
+                            // frist tick
+                            this.weightedAverageStepDuration = this.stepDuration;
+                        } else {
+                            // other ticks
+                            this.weightedAverageStepDuration += this.stepDuration;
+                            this.weightedAverageStepDuration /= 2;
+                        }
+                        this.accumulatedStepDurations += this.stepDuration;
 
-                    // calculate execution timings (and current step Duration)
-                    // do not floor => add 1ms
-                    endtime = System.currentTimeMillis();
-                    this.stepDuration = (int) (endtime - starttime) + 1;
-                    if (this.maximumStepDuration < this.stepDuration) {
-                        this.maximumStepDuration = this.stepDuration;
-                    }
-                    if ((this.minimumStepDuration > this.stepDuration)
-                            || (this.minimumStepDuration == -1)) {
-                        this.minimumStepDuration = this.stepDuration;
-                    }
-                    if (this.weightedAverageStepDuration == 0) {
-                        // frist tick
-                        this.weightedAverageStepDuration = this.stepDuration;
-                    } else {
-                        // other ticks
-                        this.weightedAverageStepDuration += this.stepDuration;
-                        this.weightedAverageStepDuration /= 2;
-                    }
-                    this.accumulatedStepDurations += this.stepDuration;
+                        // indicate step is done hence
+                        // reduce number of steps
+                        if (steps != INFINITY_STEPS) {
+                            steps = NO_STEPS;
+                        }
 
-                    // indicate step is done hence
-                    // reduce number of steps
-                    if (steps != INFINITY_STEPS) {
+                        // notify about the finished step (STEP_DONE)
+                        if (eventManager != null) {
+                            eventManager.notify(new KiemEvent(KiemEvent.STEP_DONE));
+                        }
+
+                    } // end if - make a step
+
+                    // got async pause command!
+                    if (pausedCommand) {
+                        pausedCommand = false;
                         steps = NO_STEPS;
                     }
 
-                    // notify about the finished step (STEP_DONE)
-                    if (eventManager != null) {
-                        eventManager.notify(new KiemEvent(KiemEvent.STEP_DONE));
-                    }
+                } // end synchronized
 
-                } // end if - make a step
-
-                // got async pause command!
-                if (pausedCommand) {
-                    pausedCommand = false;
-                    steps = NO_STEPS;
-                }
-
-            } // end synchronized
-
-            // stop if monitor is cancelled
-            if (monitor.isCanceled()) {
-                this.stopExecutionSync();
-            }
-            // escape if stopped
-            if (this.stop) {
-                return Status.OK_STATUS;
-            }
-
-            // delay if time of step is left (in run mode only)
-            if (steps == INFINITY_STEPS) {
-                int timeToDelay = this.aimedStepDuration - this.stepDuration;
-                if (timeToDelay > 0) {
-                    // remember aimed step duration
-                    int backupAimedStepDuration = this.aimedStepDuration;
-                    // do not delay the WHOLE amount of time if lager than a
-                    // second!
-                    while (timeToDelay > SECOND_WAITTIMEOUT) {
-                        try {
-                            Thread.sleep(SECOND_WAITTIMEOUT);
-                        } catch (Exception e) {
-                            // will try to sleep again anyways
-                        }
-                        timeToDelay -= SECOND_WAITTIMEOUT;
-                        if (backupAimedStepDuration != this.aimedStepDuration) {
-                            // if user changed aimedStepDuration during count
-                            // down,
-                            // then we do not wait any longer in this step!
-                            timeToDelay = 0;
-                            break;
-                        }
-                    }
-                    // delay the rest if necessary
-                    try {
-                        Thread.sleep(timeToDelay);
-                    } catch (Exception e) {
-                        if (!stop) {
-                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e,
-                                    false);
-                        }
-                    }
-                }
-
-            }
-
-            if (steps == NO_STEPS) {
-                // cancel stepPause
-                this.stepToPause = -1;
-            }
-
-            // stop if monitor is cancelled
-            if (monitor.isCanceled()) {
-                this.stopExecutionSync();
-            }
-            // escape if stopped
-            if (this.stop) {
-                return Status.OK_STATUS;
-            }
-
-            // delay while paused
-            while (steps == NO_STEPS) {
-                starttime = System.currentTimeMillis();
-                // System.out.println(">>PAUSED<<");
-                try {
-                    Thread.sleep(PAUSE_DEYLAY);
-                } catch (Exception e) {
-                    if (!stop) {
-                        KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
-                    }
-                }
                 // stop if monitor is cancelled
                 if (monitor.isCanceled()) {
                     this.stopExecutionSync();
                 }
-                // if stop is requested, jump out
+                // escape if stopped
                 if (this.stop) {
                     return Status.OK_STATUS;
                 }
-                endtime = System.currentTimeMillis();
-                accumulatedPlauseDurations += endtime - starttime;
-            }
 
-        } // next while not stop
+                // delay if time of step is left (in run mode only)
+                if (steps == INFINITY_STEPS) {
+                    int timeToDelay = this.aimedStepDuration - this.stepDuration;
+                    if (timeToDelay > 0) {
+                        // remember aimed step duration
+                        int backupAimedStepDuration = this.aimedStepDuration;
+                        // do not delay the WHOLE amount of time if lager than a
+                        // second!
+                        while (timeToDelay > SECOND_WAITTIMEOUT) {
+                            try {
+                                Thread.sleep(SECOND_WAITTIMEOUT);
+                            } catch (Exception e) {
+                                // will try to sleep again anyways
+                            }
+                            timeToDelay -= SECOND_WAITTIMEOUT;
+                            if (backupAimedStepDuration != this.aimedStepDuration) {
+                                // if user changed aimedStepDuration during count
+                                // down,
+                                // then we do not wait any longer in this step!
+                                timeToDelay = 0;
+                                break;
+                            }
+                        }
+                        // delay the rest if necessary
+                        try {
+                            Thread.sleep(timeToDelay);
+                        } catch (Exception e) {
+                            if (!stop) {
+                                KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e,
+                                        false);
+                            }
+                        }
+                    }
+
+                }
+
+                if (steps == NO_STEPS) {
+                    // cancel stepPause
+                    this.stepToPause = -1;
+                }
+
+                // stop if monitor is cancelled
+                if (monitor.isCanceled()) {
+                    this.stopExecutionSync();
+                }
+                // escape if stopped
+                if (this.stop) {
+                    return Status.OK_STATUS;
+                }
+
+                // delay while paused
+                while (steps == NO_STEPS) {
+                    starttime = System.currentTimeMillis();
+                    // System.out.println(">>PAUSED<<");
+                    try {
+                        Thread.sleep(PAUSE_DEYLAY);
+                    } catch (Exception e) {
+                        if (!stop) {
+                            KiemPlugin.getDefault().showWarning(null, KiemPlugin.PLUGIN_ID, e, false);
+                        }
+                    }
+                    // stop if monitor is cancelled
+                    if (monitor.isCanceled()) {
+                        this.stopExecutionSync();
+                    }
+                    // if stop is requested, jump out
+                    if (this.stop) {
+                        return Status.OK_STATUS;
+                    }
+                    endtime = System.currentTimeMillis();
+                    accumulatedPlauseDurations += endtime - starttime;
+                }
+
+            } // next while not stop
+        } catch (Exception e) {
+            // This should not happen during normal operation but may happen if
+            // Eclipse is terminated unexpectedly.
+            return Status.OK_STATUS;
+        }
+
         return Job.ASYNC_FINISH;
     }
 
