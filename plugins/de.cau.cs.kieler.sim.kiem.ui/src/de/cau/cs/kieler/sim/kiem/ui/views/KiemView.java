@@ -377,7 +377,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     ((DataComponentWrapper) event.getElement()).setUnfolded(false);
                     updateColumnsCollapsed();
                 }
-                updateView(false);
+                updateViewAsyncKeepSelection();
             }
 
             public void treeExpanded(final TreeExpansionEvent event) {
@@ -386,7 +386,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     ((DataComponentWrapper) event.getElement()).setUnfolded(true);
                     updateColumnsCollapsed();
                 }
-                updateView(false);
+                updateViewAsyncKeepSelection();
             }
         });
         viewer.addDoubleClickListener(new IDoubleClickListener() {
@@ -810,7 +810,19 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         });
     }
+    // -------------------------------------------------------------------------
 
+    /**
+     * Updates the table view asynchronously from within another thread.
+     */
+    public void updateViewAsyncKeepSelection() {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                updateView(false);
+            }
+        });
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -861,7 +873,12 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         }
         updateColumnsCollapsed();
-        viewer.refresh();
+        try {
+            viewer.refresh();
+        }
+        catch(Exception e) {
+            // catch any viewer refresh errors here
+        }
         refreshEnabledDisabledTextColors();
         if (deselect) {
             viewer.setSelection(null);
