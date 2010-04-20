@@ -526,7 +526,7 @@ public final class DataComponent  extends AbstractAutomatedProducer {
         }
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
-        if (fragments.length != 1) {
+        if (fragments == null || fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
         Bundle compiler = fragments[0];
