@@ -3,6 +3,9 @@
    <description name="KIELER nightly" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
       KIELER nightly update site
    </description>
+   <feature url="features/de.cau.cs.kieler.sdk_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sdk" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <feature url="features/de.cau.cs.kieler.core_0.1.0.qualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
