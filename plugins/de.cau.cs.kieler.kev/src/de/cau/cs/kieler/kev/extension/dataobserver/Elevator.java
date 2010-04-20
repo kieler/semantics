@@ -40,6 +40,20 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
 
     private boolean sec;
 
+    private final static String BUTTON_UP = "BUTTON_UP"; 
+    private final static String BUTTON_DOWN = "BUTTON_DOWN"; 
+    private final static String BUTTON_ALARM = "BUTTON_ALARM"; 
+    private final static String IS_UP = "IS_UP"; 
+    private final static String IS_DOWN = "IS_DOWN"; 
+    private final static String SECOND = "SECOND"; 
+    private final static String MOVE_UP = "MOVE_UP"; 
+    private final static String MOVE_DOWN = "MOVE_DOWN"; 
+    private final static String OPEN_DOOR = "OPEN_DOOR"; 
+    private final static String CLOSE_DOOR = "CLOSE_DOOR"; 
+    private final static String ALARM_LAMP = "ALARM_LAMP"; 
+    
+
+    
     private static final int MAX = 100;
     private static final int MIN = 0;
     private static final int STEP = 5;
@@ -53,13 +67,13 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
 
         try {
             // Handle outputs
-            if (jSONObject.has("MoveUp") && (JSONSignalValues.isPresent(jSONObject.get("MoveUp")))) {
+            if (jSONObject.has(MOVE_UP) && (JSONSignalValues.isPresent(jSONObject.get(MOVE_UP)))) {
                 pos += STEP;
                 if (pos > MAX)
                     pos = MAX;
             }
-            if (jSONObject.has("MoveDown")
-                    && (JSONSignalValues.isPresent(jSONObject.get("MoveDown")))) {
+            if (jSONObject.has(MOVE_DOWN)
+                    && (JSONSignalValues.isPresent(jSONObject.get(MOVE_DOWN)))) {
 
                 pos -= STEP;
                 if (pos < MIN)
@@ -67,41 +81,41 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
             }
             result.accumulate("elevator", pos);
 
-            if (jSONObject.has("OpenDoor")
-                    && (JSONSignalValues.isPresent(jSONObject.get("OpenDoor")))) {
+            if (jSONObject.has(OPEN_DOOR)
+                    && (JSONSignalValues.isPresent(jSONObject.get(OPEN_DOOR)))) {
                 doorOpen = true;
             }
 
-            if (jSONObject.has("CloseDoor")
-                    && (JSONSignalValues.isPresent(jSONObject.get("CloseDoor")))) {
+            if (jSONObject.has(CLOSE_DOOR)
+                    && (JSONSignalValues.isPresent(jSONObject.get(CLOSE_DOOR)))) {
                 doorOpen = false;
             }
 
             result.accumulate("door_left", doorOpen);
             result.accumulate("door_right", doorOpen);
 
-            result.accumulate("signal_alarm", jSONObject.has("AlarmLamp")
-                    && (JSONSignalValues.isPresent(jSONObject.get("AlarmLamp"))));
+            result.accumulate("signal_alarm", jSONObject.has(ALARM_LAMP)
+                    && (JSONSignalValues.isPresent(jSONObject.get(ALARM_LAMP))));
 
             // visualize inputs
-            result.accumulate("button_alarm", jSONObject.has("ButtonAlarm")
-                    && JSONSignalValues.isPresent(jSONObject.get("ButtonAlarm")));
+            result.accumulate("button_alarm", jSONObject.has(BUTTON_ALARM)
+                    && JSONSignalValues.isPresent(jSONObject.get(BUTTON_ALARM)));
 
-            result.accumulate("button_up", jSONObject.has("ButtonUp")
-                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonUp"))));
+            result.accumulate("button_up", jSONObject.has(BUTTON_UP)
+                    && (JSONSignalValues.isPresent(jSONObject.get(BUTTON_UP))));
 
-            result.accumulate("button_down", jSONObject.has("ButtonDown")
-                    && (JSONSignalValues.isPresent(jSONObject.get("ButtonDown"))));
+            result.accumulate("button_down", jSONObject.has(BUTTON_DOWN)
+                    && (JSONSignalValues.isPresent(jSONObject.get(BUTTON_DOWN))));
 
-            result.accumulate("signal_up", jSONObject.has("MoveUp")
-                    && (JSONSignalValues.isPresent(jSONObject.get("MoveUp"))));
-            result.accumulate("signal_down", jSONObject.has("MoveDown")
-                    && (JSONSignalValues.isPresent(jSONObject.get("MoveDown"))));
+            result.accumulate("signal_up", jSONObject.has(MOVE_UP)
+                    && (JSONSignalValues.isPresent(jSONObject.get(MOVE_UP))));
+            result.accumulate("signal_down", jSONObject.has(MOVE_DOWN)
+                    && (JSONSignalValues.isPresent(jSONObject.get(MOVE_DOWN))));
 
             // generate inputs
-            result.accumulate("IsUp", JSONSignalValues.newValue(pos == MAX));
-            result.accumulate("IsDown", JSONSignalValues.newValue(pos == MIN));
-            result.accumulate("Second", JSONSignalValues.newValue(sec));
+            result.accumulate(IS_UP, JSONSignalValues.newValue(pos == MAX));
+            result.accumulate(IS_DOWN, JSONSignalValues.newValue(pos == MIN));
+            result.accumulate(SECOND, JSONSignalValues.newValue(sec));
             sec = !sec;
 
         } catch (JSONException e) {
@@ -122,16 +136,17 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
     public JSONObject provideInitialVariables() {
         JSONObject returnObj = new JSONObject();
         try {
-            returnObj.accumulate("ButtonUp", JSONSignalValues.newValue(false));
-            returnObj.accumulate("ButtonDown", JSONSignalValues.newValue(false));
-            returnObj.accumulate("ButtonAlarm", JSONSignalValues.newValue(false));
-            returnObj.accumulate("IsUp", JSONSignalValues.newValue(false));
-            returnObj.accumulate("IsDown", JSONSignalValues.newValue(false));
-            returnObj.accumulate("Second", JSONSignalValues.newValue(false));
-            returnObj.accumulate("MoveUp", JSONSignalValues.newValue(false));
-            returnObj.accumulate("MoveDown", JSONSignalValues.newValue(false));
-            returnObj.accumulate("OpenDoor", JSONSignalValues.newValue(false));
-            returnObj.accumulate("AlarmLamp", JSONSignalValues.newValue(false));
+            returnObj.accumulate(BUTTON_UP, JSONSignalValues.newValue(false));
+            returnObj.accumulate(BUTTON_DOWN, JSONSignalValues.newValue(false));
+            returnObj.accumulate(BUTTON_ALARM, JSONSignalValues.newValue(false));
+            returnObj.accumulate(IS_UP, JSONSignalValues.newValue(false));
+            returnObj.accumulate(IS_DOWN, JSONSignalValues.newValue(false));
+            returnObj.accumulate(SECOND, JSONSignalValues.newValue(false));
+            returnObj.accumulate(MOVE_UP, JSONSignalValues.newValue(false));
+            returnObj.accumulate(MOVE_DOWN, JSONSignalValues.newValue(false));
+            returnObj.accumulate(OPEN_DOOR, JSONSignalValues.newValue(false));
+            returnObj.accumulate(CLOSE_DOOR, JSONSignalValues.newValue(false));
+            returnObj.accumulate(ALARM_LAMP, JSONSignalValues.newValue(false));
         } catch (JSONException e) {
             e.printStackTrace();
         }
