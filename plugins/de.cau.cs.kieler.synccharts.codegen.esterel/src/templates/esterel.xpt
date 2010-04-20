@@ -90,7 +90,7 @@ end module
   «IF this.hasWAborts()» 
     when
     «FOREACH this.getWAborts() AS trans-»
-      case «IF trans.isImmediate»immediate «ENDIF-» «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF» do 
+      case «IF trans.isImmediate»immediate «ELSEIF trans.delay>1»«trans.delay»«ENDIF-» «IF trans.trigger==null»tick«ELSE»[«EXPAND Trigger FOR trans.trigger»]«ENDIF» do 
       emit goto_«trans.targetState.id»;
       «FOREACH trans.effects AS eff-»
         «EXPAND Effect FOR eff»
