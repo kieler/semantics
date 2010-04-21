@@ -173,6 +173,50 @@
          version="0.0.0"
          search-location="self"/>
 
+   <includes
+         id="org.eclipse.uml2.diagram"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.uml2"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mapping"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mapping.ecore"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.ocl.uml"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.query.ocl"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.query"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.converter"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.codegen.ecore.ui"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecoretools"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.jdt.core"
          download-size="0"
