@@ -5,11 +5,17 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 
+/**
+ * @author ctr
+ *
+ * Generate Esterel from a SyncChart.   
+ *
+ */
 public class EsterelGenerator extends AbstractHandler implements IHandler {
 
     WorkflowGenerator wf = new WorkflowGenerator();
 
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
     	wf.invokeWorkflow();
         
         return null;

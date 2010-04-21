@@ -8,48 +8,60 @@ import java.util.Map.Entry;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
+/**
+ * @author ctr
+ * 
+ */
 public class Helper {
+    /**
+     * Sort the states inside a region according to their immediate transitions. An immediate
+     * transitions may only occur from a state to a successor state
+     * 
+     * @param states
+     *            all states of a region
+     * @return sorted list x
+     */
     public static List<State> sortStates(final List<State> states) {
-        LinkedList<State> res = new LinkedList<State>();
-        HashMap<State, Integer> todo = new HashMap<State, Integer>();
+        final LinkedList<State> res = new LinkedList<State>();
+        final HashMap<State, Integer> todo = new HashMap<State, Integer>();
         // Initialize List
-        
-        for(State s: states){
-            if(!todo.containsKey(s)){
+
+        for (final State s : states) {
+            if (!todo.containsKey(s)) {
                 todo.put(s, 0);
             }
-            for(Transition t: s.getOutgoingTransitions()){
-                if(t.isIsImmediate()){
+            for (final Transition t : s.getOutgoingTransitions()) {
+                if (t.isIsImmediate()) {
                     Integer value = todo.get(t.getTargetState());
-                    if(value == null){
-                        value=0;
+                    if (value == null) {
+                        value = 0;
                     }
-                    value++;                   
-                    todo.put(t.getTargetState(), value);                    
+                    value++;
+                    todo.put(t.getTargetState(), value);
                 }
             }
         }
-        
+
         while (!todo.isEmpty()) {
             // search for state without unhandled, ingoing immediate transitions
-            State s=null;
-            for(Entry<State, Integer> e: todo.entrySet()){
-                if(e.getValue()==0){
-                    s=e.getKey();
+            State s = null;
+            for (final Entry<State, Integer> e : todo.entrySet()) {
+                if (e.getValue() == 0) {
+                    s = e.getKey();
                     break;
                 }
             }
-            if(s==null){
+            if (s == null) {
                 // Cycle in immediate transitions, should be checked before
                 break;
             }
             res.add(s);
             todo.remove(s);
-            for(Transition t: s.getOutgoingTransitions()){
-                if(t.isIsImmediate()){
-                Integer value = todo.get(t.getTargetState());               
-                value--;                
-                todo.put(t.getTargetState(), value);
+            for (final Transition t : s.getOutgoingTransitions()) {
+                if (t.isIsImmediate()) {
+                    Integer value = todo.get(t.getTargetState());
+                    value--;
+                    todo.put(t.getTargetState(), value);
                 }
             }
         }
