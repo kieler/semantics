@@ -464,6 +464,9 @@ public class KepProtocol extends CommunicationProtocol {
                 if (((outputStatus[b] >> (index % BYTE_LEN)) & 1) == 1) {
                     s.setPresent(true);
                     outputs.add(s);
+                }else{
+                    s.setPresent(false);
+                    outputs.add(s);     
                 }
             }
             if (s.isValued()) {
