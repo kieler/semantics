@@ -32,7 +32,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 
 /**
@@ -142,5 +141,6 @@ public class ModelErrorHandler extends GenericErrorHandler {
         } catch (Exception e) { /* nothing */
         }
     }
+    
 
 }
