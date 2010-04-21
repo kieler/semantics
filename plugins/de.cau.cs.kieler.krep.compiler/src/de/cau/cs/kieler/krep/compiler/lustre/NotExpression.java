@@ -24,10 +24,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Lustre "not" operator.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class NotExpression extends Expression {
     private Expression expr;
@@ -59,7 +58,6 @@ public class NotExpression extends Expression {
         return false;
     }
 
-
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
@@ -83,9 +81,12 @@ public class NotExpression extends Expression {
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux, prog);
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux,
+                prog);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.NotExpression(getName(), eq.getExpr(), prog));
 

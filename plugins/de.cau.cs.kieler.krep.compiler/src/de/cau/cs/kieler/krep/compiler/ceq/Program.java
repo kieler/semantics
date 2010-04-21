@@ -557,14 +557,14 @@ public class Program {
     /**
      * Generate new variable. Implements singleton pattern.
      * 
-     * @param name
+     * @param n
      *            name of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public Variable getVar(final String name) {
-        Variable v = vars.get(name);
+    public Variable getVar(final String n) {
+        Variable v = vars.get(n);
         if (v == null) {
-            System.err.println("variable " + name + " not defined");
+            System.err.println("variable " + n + " not defined");
         }
         return v;
     }
@@ -572,7 +572,7 @@ public class Program {
     /**
      * Generate new, unique variable.
      * 
-     * @param name
+     * @param n
      *            name of the variable
      * @param kind
      *            io kind of the variable
@@ -580,10 +580,10 @@ public class Program {
      *            type of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public Variable getVar(final String name, final Kind kind, final Type type) {
-        Variable v = vars.get(name);
+    public Variable getVar(final String n, final Kind kind, final Type type) {
+        Variable v = vars.get(n);
         if (v == null) {
-            v = new Variable(name, kind, type);
+            v = new Variable(n, kind, type);
             addVar(v);
         }
         return v;
@@ -620,7 +620,7 @@ public class Program {
      * @param prefix
      *            prefix of the variables to reset
      */
-    public  void destroyTemp(final String prefix) {
+    public void destroyTemp(final String prefix) {
         Integer i = temps.get(prefix);
         if (i == null) {
             i = 1;
@@ -656,7 +656,7 @@ public class Program {
      * 
      * @return a unique name for a label
      */
-    public       String getLabel() {
+    public String getLabel() {
         labels++;
         return "L_" + labels;
     }

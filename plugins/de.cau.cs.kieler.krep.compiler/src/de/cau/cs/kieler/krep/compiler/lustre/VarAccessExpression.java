@@ -96,7 +96,8 @@ public class VarAccessExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
                         prog.getVar(var.getName()), false, prog));

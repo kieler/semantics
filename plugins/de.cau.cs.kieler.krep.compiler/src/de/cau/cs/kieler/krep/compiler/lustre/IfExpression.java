@@ -114,7 +114,8 @@ public class IfExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = expr1.declock(basename,
                 Expression.STAGE_INIT, c, aux, prog);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,

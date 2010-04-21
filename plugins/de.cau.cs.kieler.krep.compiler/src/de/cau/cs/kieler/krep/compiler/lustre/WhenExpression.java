@@ -107,7 +107,7 @@ public class WhenExpression extends Expression {
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
-            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 2,
                 cName.getName(), aux, prog);
         if (stage < 2) { // not inside when

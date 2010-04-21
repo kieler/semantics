@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.krep.compiler.klp;
 
-import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 import de.cau.cs.kieler.krep.compiler.util.Type;
@@ -21,10 +20,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Reading access to a register. Can read either previous or current value.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class RegAccess {
     private Variable var;

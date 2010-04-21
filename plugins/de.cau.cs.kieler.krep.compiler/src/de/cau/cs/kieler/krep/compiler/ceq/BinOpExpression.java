@@ -26,9 +26,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * CEQ binary operations, this includes comparison, arithmetic and logical operators.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  */
 public class BinOpExpression extends Expression {
@@ -47,7 +46,8 @@ public class BinOpExpression extends Expression {
      *            second expression
      * @param operator
      *            Operator
-     * @param p program that contains the expression
+     * @param p
+     *            program that contains the expression
      */
     public BinOpExpression(final String name, final Expression expr1, final Expression expr2,
             final Operator operator, final Program p) {
@@ -157,8 +157,8 @@ public class BinOpExpression extends Expression {
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(v1),
                     new RegAccess(v2), op));
         } else if (v1 != null && c2 != null) {
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r, new RegAccess(v1),
-                    c2.getVal(), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r,
+                    new RegAccess(v1), c2.getVal(), op));
         } else if (c1 != null && v2 != null) {
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.IMovInstruction(r, c1.getVal()));
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(r,
@@ -183,8 +183,8 @@ public class BinOpExpression extends Expression {
             VarAccessExpression temp2 = new VarAccessExpression(var2, false, getProg());
             instr.addAll(e2.toKlp(var2));
 
-            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(temp1),
-                    new RegAccess(temp2), op));
+            instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(
+                    temp1), new RegAccess(temp2), op));
             getProg().destroyTemp(getName());
             getProg().destroyTemp(getName());
         }
@@ -214,7 +214,8 @@ public class BinOpExpression extends Expression {
             e2 = c2;
         }
         if (c1 != null && c2 != null) {
-            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op), getProg());
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op),
+                    getProg());
         }
         return null;
 
@@ -234,7 +235,8 @@ public class BinOpExpression extends Expression {
             c2 = (ConstExpression) e2;
         }
         if (c1 != null && c2 != null) {
-            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op), getProg());
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op),
+                    getProg());
         } else if (c1 != null) {
             switch (op) {
             case ADD:

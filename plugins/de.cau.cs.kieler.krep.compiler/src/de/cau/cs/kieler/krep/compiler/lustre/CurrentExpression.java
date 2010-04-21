@@ -81,7 +81,7 @@ public class CurrentExpression extends Expression {
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
-            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux, prog);
         if (stage == 0) {
             if (!(expr instanceof WhenExpression)) {

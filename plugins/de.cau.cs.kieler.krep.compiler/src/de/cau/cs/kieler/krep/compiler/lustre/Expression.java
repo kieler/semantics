@@ -121,10 +121,12 @@ public abstract class Expression {
      *            clock
      * @param aux
      *            additional equations
+     * @param prog program that contains the expression
      * @return new expression, without current, ->, and when
      */
     public abstract de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String c, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog);
+            String c, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            de.cau.cs.kieler.krep.compiler.ceq.Program prog);
 
     /**
      * 

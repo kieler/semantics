@@ -24,10 +24,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Integer constant in a Lustre program.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class NumberExpression extends Expression {
     private int value;
@@ -91,7 +90,8 @@ public class NumberExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.ConstExpression(getName(), value, prog));
     }

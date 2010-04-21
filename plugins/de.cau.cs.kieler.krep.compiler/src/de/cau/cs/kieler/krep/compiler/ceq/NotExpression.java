@@ -70,7 +70,8 @@ public class NotExpression extends Expression {
             expr = expr.flatten(name, vars, es);
             Variable t = getProg().getTemp(name, expr.getType());
             es.add(expr);
-            return new NotExpression(t.getName(), new VarAccessExpression(t, false, getProg()), getProg());
+            return new NotExpression(t.getName(), new VarAccessExpression(t, false, getProg()),
+                    getProg());
         }
     }
 
@@ -86,8 +87,8 @@ public class NotExpression extends Expression {
             // Variable v = Variable.getTemp(name, e.getType());
             // VarAccess va = new VarAccess(v, false);
             instr.addAll(expr.toKlp(r));
-            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false, getProg())), 1,
-                    Operator.XOR));
+            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false,
+                    getProg())), 1, Operator.XOR));
             // System.err.println("Non trivial not:" + e.toString());
         } else {
             VarAccessExpression v = (VarAccessExpression) expr;

@@ -51,8 +51,6 @@ public abstract class Expression {
         this.setName(n);
     }
 
-    
-    
     /**
      * @return program that contains the expression
      */
@@ -60,17 +58,13 @@ public abstract class Expression {
         return prog;
     }
 
-
-
-   
     /**
-     * @param prog program that contains the expression
+     * @param p
+     *            program that contains the expression
      */
     protected void setProg(final Program p) {
         this.prog = p;
     }
-
-
 
     /**
      * Return the inferred type of the expression.
@@ -205,18 +199,18 @@ public abstract class Expression {
     protected void setName(final String n) {
         this.name = n;
     }
-    
+
     /**
      * Generate new variable. Implements singleton pattern.
      * 
-     * @param name
+     * @param n
      *            name of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public Variable getVar(final String name) {
-        return prog.getVar(name);
+    public Variable getVar(final String n) {
+        return prog.getVar(n);
     }
-    
+
     /**
      * Generate new, unique variable.
      * 

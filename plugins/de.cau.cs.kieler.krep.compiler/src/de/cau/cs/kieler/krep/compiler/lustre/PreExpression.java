@@ -94,7 +94,7 @@ public class PreExpression extends Expression {
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
-            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+            final de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         if (expr instanceof VarAccessExpression) {
             VarAccessExpression v = (VarAccessExpression) expr;
 
