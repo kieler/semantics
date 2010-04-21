@@ -24,14 +24,12 @@ import de.cau.cs.kieler.krep.compiler.klp.RegAccess;
 import de.cau.cs.kieler.krep.compiler.util.Debug;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
-
 /**
  * A Variable access in ceq. This includes the information, if the current or previous value is
  * accessed
  * 
-  * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
-* 
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  */
 public class VarAccessExpression extends Expression {
@@ -46,9 +44,11 @@ public class VarAccessExpression extends Expression {
      *            Variable that is read
      * @param previous
      *            access current or previous value
+     * @param p
+     *            program that contains the expression
      */
-    public VarAccessExpression(final Variable v, final boolean previous) {
-        super(v.getName());
+    public VarAccessExpression(final Variable v, final boolean previous, final Program p) {
+        super(v.getName(), p);
         this.var = v;
         this.pre = previous ? 1 : 0;
     }
@@ -64,7 +64,7 @@ public class VarAccessExpression extends Expression {
     public List<Variable> getDeps() {
         List<Variable> res = new ArrayList<Variable>();
         if (pre == 0) {
-            res.add(Program.getVar(getName()));
+            res.add(getProg().getVar(getName()));
         }
         return res;
     }

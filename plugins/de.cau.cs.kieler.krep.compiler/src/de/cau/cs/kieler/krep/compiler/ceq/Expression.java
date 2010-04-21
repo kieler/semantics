@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.klp.AbstractInstruction;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
@@ -34,15 +35,42 @@ public abstract class Expression {
      */
     private String name;
 
+    /** The program that contains this expression. */
+    private Program prog;
+
     /**
      * Generate new named expression, the actual expression is defined by the actual subclass.
      * 
      * @param n
      *            name of the expression.
+     * @param p
+     *            the program that contains the expression
      */
-    protected Expression(final String n) {
+    protected Expression(final String n, final Program p) {
+        setProg(p);
         this.setName(n);
     }
+
+    
+    
+    /**
+     * @return program that contains the expression
+     */
+    public Program getProg() {
+        return prog;
+    }
+
+
+
+   
+    /**
+     * @param prog program that contains the expression
+     */
+    protected void setProg(final Program p) {
+        this.prog = p;
+    }
+
+
 
     /**
      * Return the inferred type of the expression.
@@ -176,5 +204,31 @@ public abstract class Expression {
      */
     protected void setName(final String n) {
         this.name = n;
+    }
+    
+    /**
+     * Generate new variable. Implements singleton pattern.
+     * 
+     * @param name
+     *            name of the variable
+     * @return variable with same name if it exists, new temp variable otherwise
+     */
+    public Variable getVar(final String name) {
+        return prog.getVar(name);
+    }
+    
+    /**
+     * Generate new, unique variable.
+     * 
+     * @param n
+     *            name of the variable
+     * @param k
+     *            io kind of the variable
+     * @param t
+     *            type of the variable
+     * @return variable with same name if it exists, new temp variable otherwise
+     */
+    public Variable getVar(final String n, final Kind k, final Type t) {
+        return prog.getVar(n, k, t);
     }
 }

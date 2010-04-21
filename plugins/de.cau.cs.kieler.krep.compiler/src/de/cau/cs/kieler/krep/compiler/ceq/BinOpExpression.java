@@ -47,10 +47,11 @@ public class BinOpExpression extends Expression {
      *            second expression
      * @param operator
      *            Operator
+     * @param p program that contains the expression
      */
     public BinOpExpression(final String name, final Expression expr1, final Expression expr2,
-            final Operator operator) {
-        super(name);
+            final Operator operator, final Program p) {
+        super(name, p);
         this.e1 = expr1;
         this.e2 = expr2;
         this.op = operator;
@@ -78,9 +79,9 @@ public class BinOpExpression extends Expression {
         Debug.low("flatten: " + toString());
         if (!atom1) {
             Expression expr = e1.flatten(name, vars, es);
-            Variable v = Program.getTemp(name, e1.getType());
+            Variable v = getProg().getTemp(name, e1.getType());
             vars.put(v.getName(), v);
-            VarAccessExpression t = new VarAccessExpression(v, false);
+            VarAccessExpression t = new VarAccessExpression(v, false, getProg());
             expr.setName(t.getName());
             Debug.low("flatten: " + expr.toString() + "->" + t.getName());
             es.add(expr);
@@ -88,18 +89,18 @@ public class BinOpExpression extends Expression {
         }
         if (!atom2) {
             Expression expr = e2.flatten(name, vars, es);
-            Variable v = Program.getTemp(name, e2.getType());
+            Variable v = getProg().getTemp(name, e2.getType());
             vars.put(v.getName(), v);
-            VarAccessExpression t = new VarAccessExpression(v, false);
+            VarAccessExpression t = new VarAccessExpression(v, false, getProg());
             expr.setName(t.getName());
             es.add(expr);
             e2 = t;
         }
         if (!atom1) {
-            Program.destroyTemp(name);
+            getProg().destroyTemp(name);
         }
         if (!atom2) {
-            Program.destroyTemp(name);
+            getProg().destroyTemp(name);
         }
         return this;
     }
@@ -175,17 +176,17 @@ public class BinOpExpression extends Expression {
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.IBinOpInstruction(r, new RegAccess(r,
                     false), c2.getVal(), op));
         } else {
-            Variable var1 = Program.getTemp(getName(), e1.getType());
-            VarAccessExpression temp1 = new VarAccessExpression(var1, false);
+            Variable var1 = getProg().getTemp(getName(), e1.getType());
+            VarAccessExpression temp1 = new VarAccessExpression(var1, false, getProg());
             instr.addAll(e1.toKlp(var1));
-            Variable var2 = Program.getTemp(getName(), e2.getType());
-            VarAccessExpression temp2 = new VarAccessExpression(var2, false);
+            Variable var2 = getProg().getTemp(getName(), e2.getType());
+            VarAccessExpression temp2 = new VarAccessExpression(var2, false, getProg());
             instr.addAll(e2.toKlp(var2));
 
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.BinOpInstruction(r, new RegAccess(temp1),
                     new RegAccess(temp2), op));
-            Program.destroyTemp(getName());
-            Program.destroyTemp(getName());
+            getProg().destroyTemp(getName());
+            getProg().destroyTemp(getName());
         }
         return instr;
     }
@@ -213,7 +214,7 @@ public class BinOpExpression extends Expression {
             e2 = c2;
         }
         if (c1 != null && c2 != null) {
-            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op), getProg());
         }
         return null;
 
@@ -233,7 +234,7 @@ public class BinOpExpression extends Expression {
             c2 = (ConstExpression) e2;
         }
         if (c1 != null && c2 != null) {
-            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new ConstExpression(getName(), Operator.eval(c1.getVal(), c2.getVal(), op), getProg());
         } else if (c1 != null) {
             switch (op) {
             case ADD:

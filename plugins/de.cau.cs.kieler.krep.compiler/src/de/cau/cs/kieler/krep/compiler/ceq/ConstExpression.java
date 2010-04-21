@@ -25,9 +25,8 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Constant, can either be an integer number or a boolean.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
  * @author ctr
  */
 public class ConstExpression extends Expression {
@@ -41,9 +40,11 @@ public class ConstExpression extends Expression {
      *            name of the constant
      * @param value
      *            integer value
+     * @param p
+     *            program that contains the expression
      */
-    public ConstExpression(final String name, final int value) {
-        super(name);
+    public ConstExpression(final String name, final int value, final Program p) {
+        super(name, p);
         this.val = value;
         type = Type.INT;
     }
@@ -55,9 +56,11 @@ public class ConstExpression extends Expression {
      *            name of the constant
      * @param value
      *            boolean value
+     * @param p
+     *            program that contains the expression
      */
-    public ConstExpression(final String name, final boolean value) {
-        super(name);
+    public ConstExpression(final String name, final boolean value, final Program p) {
+        super(name, p);
         this.val = value ? 1 : 0;
         type = Type.BOOL;
     }

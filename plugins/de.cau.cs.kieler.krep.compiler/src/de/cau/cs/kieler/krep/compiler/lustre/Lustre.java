@@ -134,12 +134,12 @@ public class Lustre {
             LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux 
             = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
             Expression expr = e.getValue();
-            de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(e.getKey(), 0, null, aux);
+            de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(e.getKey(), 0, null, aux, res);
             eq.setName(e.getKey());
             res.addEq(eq);
 
             for (de.cau.cs.kieler.krep.compiler.ceq.Equation a : aux) {
-                res.addVar(de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(a.getName()));
+                res.addVar(res.getVar(a.getName()));
                 res.addEq(a);
             }
 

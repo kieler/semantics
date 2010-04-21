@@ -40,7 +40,7 @@ public class Program {
     /**
      * all used variables.
      */
-    private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
+    private HashMap<String, Variable> vars = new HashMap<String, Variable>();
 
     /**
      * input signals.
@@ -72,9 +72,9 @@ public class Program {
      */
     private DepGraph depGraph = null;
 
-    private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
+    private HashMap<String, Integer> temps = new HashMap<String, Integer>();
 
-    private static int labels;
+    private int labels;
 
     /**
      * generate empty program.
@@ -331,7 +331,7 @@ public class Program {
             if (expr instanceof VarAccessExpression) {
                 VarAccessExpression v = (VarAccessExpression) expr;
                 if (e.getClock() == null && e.getInit() == null) {
-                    equiv.put(e.getName(), Program.getVar(v.getName()));
+                    equiv.put(e.getName(), getVar(v.getName()));
                     Debug.low("\t" + e.getName() + " = " + v.getName());
                 }
 
@@ -359,7 +359,7 @@ public class Program {
                 if (!equiv.containsKey(eq.getName())) {
                     keep.add(eq);
                 } else {
-                    Variable v = Program.getVar(eq.getName());
+                    Variable v = getVar(eq.getName());
                     getVars().remove(eq.getName());
                     getLocals().remove(v);
                 }
@@ -437,7 +437,7 @@ public class Program {
         final LinkedList<Equation> keep = new LinkedList<Equation>();
         for (i = 0; i < getEqs().size(); i++) {
             final Equation eq = getEqs().get(i);
-            if (nReader[i] == 1 && getLocals().contains(Program.getVar(eq.getName()))) {
+            if (nReader[i] == 1 && getLocals().contains(getVar(eq.getName()))) {
                 Debug.low("replace " + eq.getName());
                 boolean ok = true;
                 for (final Equation e : getEqs()) {
@@ -447,7 +447,7 @@ public class Program {
                     }
                 }
                 if (ok) {
-                    getVars().remove(Program.getVar(eq.getName()).getName());
+                    getVars().remove(getVar(eq.getName()).getName());
                 }
             } else {
                 keep.add(eq);
@@ -544,7 +544,7 @@ public class Program {
      *            the new variables of the program
      */
     protected void setVars(final HashMap<String, Variable> v) {
-        Program.vars = v;
+        vars = v;
     }
 
     /**
@@ -561,7 +561,7 @@ public class Program {
      *            name of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public static Variable getVar(final String name) {
+    public Variable getVar(final String name) {
         Variable v = vars.get(name);
         if (v == null) {
             System.err.println("variable " + name + " not defined");
@@ -580,11 +580,11 @@ public class Program {
      *            type of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public static Variable getVar(final String name, final Kind kind, final Type type) {
+    public Variable getVar(final String name, final Kind kind, final Type type) {
         Variable v = vars.get(name);
         if (v == null) {
             v = new Variable(name, kind, type);
-
+            addVar(v);
         }
         return v;
     }
@@ -596,7 +596,7 @@ public class Program {
      *            of the new variable
      * @return new temporary variable
      */
-    public static Variable getTemp(final String prefix, final Type type) {
+    public Variable getTemp(final String prefix, final Type type) {
         Integer i = temps.get(prefix);
         if (i == null) {
             i = 0;
@@ -608,7 +608,9 @@ public class Program {
         if (v != null) {
             return v;
         } else {
-            return new Variable(temp, Kind.LOCAL, type);
+            Variable res = new Variable(temp, Kind.LOCAL, type);
+            addVar(res);
+            return res;
         }
     }
 
@@ -618,7 +620,7 @@ public class Program {
      * @param prefix
      *            prefix of the variables to reset
      */
-    public static void destroyTemp(final String prefix) {
+    public  void destroyTemp(final String prefix) {
         Integer i = temps.get(prefix);
         if (i == null) {
             i = 1;
@@ -630,7 +632,7 @@ public class Program {
     /**
      * @return number of defined variables
      */
-    public static int getMax() {
+    public int getMax() {
         return vars.size();
     }
 
@@ -642,7 +644,7 @@ public class Program {
      * @param variable
      *            the additional variable.
      */
-    public static void addVar(final String n, final Variable variable) {
+    public void addVar(final String n, final Variable variable) {
         if (vars.containsKey(n)) {
             System.err.println("variable " + n + " already defined");
         }
@@ -654,7 +656,7 @@ public class Program {
      * 
      * @return a unique name for a label
      */
-    public static String getLabel() {
+    public       String getLabel() {
         labels++;
         return "L_" + labels;
     }

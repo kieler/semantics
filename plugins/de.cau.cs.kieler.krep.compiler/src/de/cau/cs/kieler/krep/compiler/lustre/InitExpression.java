@@ -24,8 +24,7 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Initialization of Lustre flows.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -108,36 +107,35 @@ public class InitExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = expr1.declock(basename,
-                Expression.STAGE_INIT, c, aux);
+                Expression.STAGE_INIT, c, aux, prog);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
-                Expression.STAGE_INIT, c, aux);
+                Expression.STAGE_INIT, c, aux, prog);
         if (expr1.isAtom()) {
             eq2.setInit(eq1.getExpr());
             // e2.clock = this.clock;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
-                    .getTemp(basename, getType());
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = prog.getTemp(basename, getType());
             if (c != null) {
                 eq1.setClock(c);
             }
             eq1.setName(v.getName());
             aux.add(eq1);
-            eq2.setInit(new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+            eq2.setInit(new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false, prog));
         }
         if (stage < STAGE_INIT) { // not inside init
             return eq2;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
-                    .getTemp(basename, getType());
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = prog.getTemp(basename, getType());
             if (c != null) {
                 eq2.setClock(c);
             }
             eq2.setName(v.getName());
             aux.add(eq2);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false, prog));
         }
     }
 

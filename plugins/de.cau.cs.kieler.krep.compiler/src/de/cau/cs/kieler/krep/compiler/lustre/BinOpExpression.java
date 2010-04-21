@@ -142,14 +142,14 @@ public class BinOpExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String clock,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = expr1.declock(basename,
-                Expression.STAGE_INIT, clock, aux);
+                Expression.STAGE_INIT, clock, aux, prog);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
-                Expression.STAGE_INIT, clock, aux);
+                Expression.STAGE_INIT, clock, aux, prog);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression(getName(), eq1.getExpr(),
-                        eq2.getExpr(), oper));
+                        eq2.getExpr(), oper, prog));
     }
 
     @Override

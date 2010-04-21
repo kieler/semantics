@@ -95,7 +95,7 @@ public class Variable {
         this.type = t;
         id = nValue[getKindId(kind)]++;
 
-        Program.addVar(n, this);
+        //Program.addVar(n, this);
     }
 
     /**

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.krep.compiler.klp.CJmpInstruction.Cond;
 import de.cau.cs.kieler.krep.compiler.util.Type;
 
 /**
- * A transition in an Safe State Machine, consitiing of a trigger and a target state.
+ * A transition in an Safe State Machine, consisting of a trigger and a target state.
  * 
  * @kieler.rating 2010-02-05 yellow 
  *   review by cmot, msp, tam
@@ -80,7 +80,7 @@ public class Transition {
         if (trigger instanceof VarAccessExpression) {
             r = new RegAccess((VarAccessExpression) trigger);
         } else {
-            Variable v = Program.getVar(ssm, Kind.LOCAL, Type.BOOL);
+            Variable v = trigger.getVar(ssm, Kind.LOCAL, Type.BOOL);
             res.addAll(trigger.toKlp(v));
             r = new RegAccess(v, false);
         }

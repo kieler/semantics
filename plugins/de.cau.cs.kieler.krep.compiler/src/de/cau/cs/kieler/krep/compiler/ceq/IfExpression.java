@@ -30,10 +30,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Conditional: if e1 then e2 else e3.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
- *   
-* 
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
+ * 
+ * 
  * @author ctr
  */
 public class IfExpression extends Expression {
@@ -50,10 +49,12 @@ public class IfExpression extends Expression {
      *            expression for then case
      * @param e3
      *            expression for else case
+     * @param p
+     *            program that contains the expression
      */
     public IfExpression(final String name, final Expression e1, final Expression e2,
-            final Expression e3) {
-        super(name);
+            final Expression e3, final Program p) {
+        super(name, p);
         this.expr1 = e1;
         this.expr2 = e2;
         this.expr3 = e3;
@@ -99,16 +100,16 @@ public class IfExpression extends Expression {
     public LinkedList<AbstractInstruction> toKlp(final Variable r) {
         LinkedList<AbstractInstruction> instr = new LinkedList<AbstractInstruction>();
 
-        LabelInstruction lElse = LabelInstruction.get(Program.getLabel());
-        LabelInstruction lEnd = LabelInstruction.get(Program.getLabel());
+        LabelInstruction lElse = LabelInstruction.get(getProg().getLabel());
+        LabelInstruction lEnd = LabelInstruction.get(getProg().getLabel());
         RegAccess test;
         if (expr1 instanceof VarAccessExpression) {
             test = new RegAccess((VarAccessExpression) expr1);
         } else {
-            Variable v = Program.getTemp(getName(), Type.BOOL);
+            Variable v = getProg().getTemp(getName(), Type.BOOL);
             instr.addAll(expr1.toKlp(v));
             test = new RegAccess(v, false);
-            Program.destroyTemp(getName());
+            getProg().destroyTemp(getName());
         }
         instr.add(new CJmpInstruction(Cond.F, test, lElse));
         instr.addAll(expr2.toKlp(r));

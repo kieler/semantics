@@ -23,8 +23,7 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Lustre clock operator current.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  * 
@@ -81,20 +80,20 @@ public class CurrentExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux);
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux, prog);
         if (stage == 0) {
             if (!(expr instanceof WhenExpression)) {
                 System.err.println("internal error: no when inside current");
             }
             return res;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
-                    .getTemp(basename, getType());
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = prog.getTemp(basename, getType());
             res.setName(v.getName());
             aux.add(res);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false));
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(v, false, prog));
         }
     }
 

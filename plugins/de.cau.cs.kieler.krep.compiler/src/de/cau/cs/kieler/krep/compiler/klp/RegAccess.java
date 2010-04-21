@@ -50,7 +50,7 @@ public class RegAccess {
     public RegAccess(final VarAccessExpression v) {
         super();
         this.pre = v.isPre();
-        this.var = Program.getVar(v.getName());
+        this.var = v.getVar(v.getName());
     }
 
     @Override

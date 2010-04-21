@@ -38,9 +38,11 @@ public class NotExpression extends Expression {
      *            name of the expression
      * @param e
      *            sub-expression that is negated
+     * @param p
+     *            program that contains the expression
      */
-    public NotExpression(final String name, final Expression e) {
-        super(name);
+    public NotExpression(final String name, final Expression e, final Program p) {
+        super(name, p);
         this.expr = e;
     }
 
@@ -66,9 +68,9 @@ public class NotExpression extends Expression {
             return this;
         } else {
             expr = expr.flatten(name, vars, es);
-            Variable t = Program.getTemp(name, expr.getType());
+            Variable t = getProg().getTemp(name, expr.getType());
             es.add(expr);
-            return new NotExpression(t.getName(), new VarAccessExpression(t, false));
+            return new NotExpression(t.getName(), new VarAccessExpression(t, false, getProg()), getProg());
         }
     }
 
@@ -84,7 +86,7 @@ public class NotExpression extends Expression {
             // Variable v = Variable.getTemp(name, e.getType());
             // VarAccess va = new VarAccess(v, false);
             instr.addAll(expr.toKlp(r));
-            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false)), 1,
+            instr.add(new IBinOpInstruction(r, new RegAccess(new VarAccessExpression(r, false, getProg())), 1,
                     Operator.XOR));
             // System.err.println("Non trivial not:" + e.toString());
         } else {
@@ -111,7 +113,7 @@ public class NotExpression extends Expression {
         if (c == null) {
             return null;
         } else {
-            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0);
+            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0, getProg());
         }
     }
 
@@ -120,7 +122,7 @@ public class NotExpression extends Expression {
         expr = expr.staticEval();
         if (expr instanceof ConstExpression) {
             ConstExpression c = (ConstExpression) expr;
-            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0);
+            return new ConstExpression(c.getName(), c.getVal() == 0 ? 1 : 0, getProg());
         } else {
             return this;
         }

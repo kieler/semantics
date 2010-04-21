@@ -84,10 +84,10 @@ public class NotExpression extends Expression {
 
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux);
+            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux, de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux, prog);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                new de.cau.cs.kieler.krep.compiler.ceq.NotExpression(getName(), eq.getExpr()));
+                new de.cau.cs.kieler.krep.compiler.ceq.NotExpression(getName(), eq.getExpr(), prog));
 
     }
 

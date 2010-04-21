@@ -23,8 +23,7 @@ import de.cau.cs.kieler.krep.compiler.util.Debug;
 /**
  * Lustre previous expression.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
  * @author ctr
  */
@@ -94,13 +93,14 @@ public class PreExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         if (expr instanceof VarAccessExpression) {
             VarAccessExpression v = (VarAccessExpression) expr;
 
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
-                            de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(v.getName()), true));
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(prog.getVar(v
+                            .getName()), true, prog));
         } else {
             System.err.println("internal error: found nested pre");
             return null;

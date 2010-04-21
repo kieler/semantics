@@ -24,10 +24,9 @@ import de.cau.cs.kieler.krep.compiler.util.Type;
 /**
  * Implementation of the when operator.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp, tam
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp, tam
  * 
- * @author ctr 
+ * @author ctr
  */
 public class WhenExpression extends Expression {
     private Expression expr;
@@ -107,22 +106,21 @@ public class WhenExpression extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
-            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux,
+            de.cau.cs.kieler.krep.compiler.ceq.Program prog) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 2,
-                cName.getName(), aux);
+                cName.getName(), aux, prog);
         if (stage < 2) { // not inside when
             res.setClock(cName.getName());
             return res;
         } else {
-            de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Program
-                    .getTemp(basename, getType());
+            de.cau.cs.kieler.krep.compiler.ceq.Variable v = prog.getTemp(basename, getType());
 
             res.setName(v.getName());
             aux.add(res);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(), null,
-                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(
-                            de.cau.cs.kieler.krep.compiler.ceq.Program.getVar(v.getName()), false),
-                    cName.getName());
+                    new de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression(prog.getVar(v
+                            .getName()), false, prog), cName.getName());
         }
     }
 

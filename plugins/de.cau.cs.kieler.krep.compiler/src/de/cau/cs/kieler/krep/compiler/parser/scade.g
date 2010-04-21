@@ -1,26 +1,40 @@
 grammar scade;
 
 @lexer::header {
-  package parser;
+  package  de.cau.cs.kieler.krep.compiler.parser;
 }
 
 @header {
             
-  package parser;
+  package de.cau.cs.kieler.krep.compiler.parser;
   import java.util.LinkedList;
   
-  import ceq.*;
-  import ceq.Variable.Kind;
-  import ceq.Expression;
-  import prog.Type;
-  import lustre.Operator;
-//  import lustre.Scade;
-  
+ import org.antlr.runtime.*;
+ import java.util.Stack;
+ import java.util.List;
+ import java.util.ArrayList;
+
+import de.cau.cs.kieler.krep.compiler.ceq.Automaton;
+import de.cau.cs.kieler.krep.compiler.ceq.BinOpExpression;
+import de.cau.cs.kieler.krep.compiler.ceq.ConstExpression;
+import de.cau.cs.kieler.krep.compiler.ceq.Equation;
+import de.cau.cs.kieler.krep.compiler.ceq.Program;
+import de.cau.cs.kieler.krep.compiler.ceq.Expression;
+import de.cau.cs.kieler.krep.compiler.ceq.ScadeProgram;
+import de.cau.cs.kieler.krep.compiler.ceq.Scope;
+import de.cau.cs.kieler.krep.compiler.ceq.State;
+import de.cau.cs.kieler.krep.compiler.ceq.Transition;
+import de.cau.cs.kieler.krep.compiler.ceq.VarAccessExpression;
+import de.cau.cs.kieler.krep.compiler.ceq.Variable;
+import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
+import de.cau.cs.kieler.krep.compiler.util.Type;
+import de.cau.cs.kieler.krep.compiler.lustre.Operator;
+
   import java.util.HashMap;
 }
 
 @members {
-  Scade main;
+  ScadeProgram main;
   
 
  // LinkedList<Variable> inputs = new LinkedList<Variable>();
@@ -29,12 +43,12 @@ grammar scade;
   private LinkedList<Variable> toVar(LinkedList<String> vars, Kind io, Type t){
       LinkedList<Variable> res = new LinkedList<Variable>();
       for(String v: vars){
-          res.add(Program.get(v, io, t));
+          res.add(main.getVar(v, io, t));
       }
       return res;
   }
 
-  public void setProg(Scade main){
+  public void setProg(ScadeProgram main){
     this.main=main;
   }
 }
@@ -145,7 +159,7 @@ emission returns [LinkedList<Equation>  eqs]
         'emit' e=emission_body
         {
           for(String s:$e.ids){
-          $eqs.add(new Equation(s, $e.expr==null?new Const("True",1):$e.expr));
+          $eqs.add(new Equation(s, $e.expr==null?new ConstExpression("True",1, main):$e.expr));
                          
           } ;}
     ;
@@ -204,7 +218,7 @@ clock_expr
 expr returns [Expression expr]
     :  a = atom    { $expr= $a.expr; } 
             (op=bin_op b=atom 
-            {$expr=new BinOp($expr.toString(), $expr, $b.expr, $op.op);})?
+            {$expr=new BinOpExpression($expr.toString(), $expr, $b.expr, $op.op, main);})?
 //              | tempo_expr
 //    | op= bin_expr { $expr= $op.expr; }
 //    | relation_expr
@@ -213,24 +227,24 @@ expr returns [Expression expr]
 
 atom returns [Expression expr]         
     : a=bool_atom { $expr= $a.expr; }
-    | n=num { $expr= new Const("NUMBER", $n.val); }
+    | n=num { $expr= new ConstExpression("NUMBER", $n.val, main); }
     | id=id_expr  { $expr= $id.expr; }
     ;
 
 num returns [int val] : n=NUMBER  { $val=Integer.parseInt($n.text); };
 
 bool_atom returns [Expression expr] 
-    : 'true'     { $expr= new Const("TRUE", true); }
-    | 'false'    { $expr= new Const("False", false); }
+    : 'true'     { $expr= new ConstExpression("TRUE", true, main); }
+    | 'false'    { $expr= new ConstExpression("False", false, main); }
     ;
 
 id_expr returns [Expression expr]  
-    :  v=var { $expr = new VarAccess($v.var, false); }
-    | 'last' v=var  { $expr= new VarAccess($v.var, true); }
+    :  v=var { $expr = new VarAccessExpression($v.var, false, main); }
+    | 'last' v=var  { $expr= new VarAccessExpression($v.var, true, main); }
     ; 
 
 var returns [Variable var]
-    : '\''? id = ID { $var = Program.get($id.text); }
+    : '\''? id = ID { $var = main.getVar($id.text); }
     ;
 //////////////////////////////////////////////////////////////
 //bin_expr returns [Expression expr] 

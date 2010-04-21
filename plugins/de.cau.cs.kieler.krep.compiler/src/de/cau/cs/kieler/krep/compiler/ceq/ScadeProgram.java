@@ -84,7 +84,7 @@ public class ScadeProgram extends Program implements Scope {
      */
     public void setIO() {
         for (final Equation eq : getEqs()) {
-            final Variable v = Program.getVar(eq.getName());
+            final Variable v = getVar(eq.getName());
             if (!getLocals().contains(v)) {
                 getOutputs().add(v);
                 if (!getVars().containsKey(v.getName())) {
@@ -147,7 +147,7 @@ public class ScadeProgram extends Program implements Scope {
      *            type of new input signal
      */
     public void addInput(final String s, final Type t) {
-        Variable v = Program.getVar(s, Kind.INPUT, t);
+        Variable v = getVar(s, Kind.INPUT, t);
         addVar(v);
     }
 
