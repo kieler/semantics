@@ -54,7 +54,6 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
@@ -62,7 +61,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  * @author ctr
  * 
  */
-public class DataComponent extends AbstractAutomatedProducer {
+public class DataComponent extends JSONObjectDataComponent {
 
 	private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
@@ -71,10 +70,13 @@ public class DataComponent extends AbstractAutomatedProducer {
 	private PrintWriter toEsterel;
 	private BufferedReader fromEsterel;
 	private BufferedReader error;
-	private String outPath;
+	/*private String outPath;
 	private boolean validation;
-	private String fileLocation;
-
+	private String fileLocation;*/
+	private File strlFile=null;
+	private File dataFile=null;
+	private File simFile=null;
+	
 	private LinkedList<String> outputs;
 
 	/**
@@ -96,8 +98,6 @@ public class DataComponent extends AbstractAutomatedProducer {
 		JSONObject out = null;
 		try {
 
-			// InputStream input = new InputStream();
-
 			toEsterel.write(jSONObject.toString() + "\n");
 			toEsterel.flush();
 			while (error.ready()) {
@@ -105,16 +105,14 @@ public class DataComponent extends AbstractAutomatedProducer {
 			}
 
 			String receivedMessage = fromEsterel.readLine();
-			// print and delete debug information
-
-			out = new JSONObject(receivedMessage);
 			
+			// print and delete debug information
+			out = new JSONObject(receivedMessage);
 			for(String o:outputs){
 				if(!out.has(o)){
 					out.accumulate(o, JSONSignalValues.newValue(false));
 				}
 			}
-			
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			process.destroy();
@@ -157,8 +155,16 @@ public class DataComponent extends AbstractAutomatedProducer {
 		if (process != null) {
 			process.destroy();
 		}
-		// TODO: delete files
-
+		
+		if(strlFile!=null && strlFile.exists()){
+			strlFile.delete();
+		}
+		if(dataFile!=null && dataFile.exists()){
+			dataFile.delete();
+		}
+		if(simFile!=null && simFile.exists()){
+			simFile.delete();
+		}
 	}
 
 	@Override
@@ -215,10 +221,11 @@ public class DataComponent extends AbstractAutomatedProducer {
 
 			// compile Esterel to C
 			URL output = CEC.run(input.getURI()).toURL();
-
+			strlFile= new File(output.getPath());
 			// generate data.c
 			URL data = generateData();
-
+			dataFile= new File(data.getPath());
+			
 			// compile C code
 			Bundle bundle = Platform
 					.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
@@ -227,6 +234,7 @@ public class DataComponent extends AbstractAutomatedProducer {
 					new Path("simulation"), null));
 
 			File executable = File.createTempFile("sim", "");
+			simFile = executable;
 			String compiler = (getProperties()[0]).getValue();
 			String compile = compiler + " " + output.getPath() + " "
 					+ data.getPath() + " " + bundleLocation.getPath()
@@ -326,7 +334,7 @@ public class DataComponent extends AbstractAutomatedProducer {
 		return test;
 	}
 
-	public void setParameters(List<KiemProperty> properties)
+	/*public void setParameters(List<KiemProperty> properties)
 			throws KiemInitializationException {
 		validation = true;
 		for (KiemProperty p : properties) {
@@ -342,5 +350,5 @@ public class DataComponent extends AbstractAutomatedProducer {
 
 	public int wantsMoreSteps() {
 		return 0;
-	}
+	}*/
 }
