@@ -165,6 +165,9 @@ public class DataComponent extends JSONObjectDataComponent {
 		if(simFile!=null && simFile.exists()){
 			simFile.delete();
 		}
+		strlFile=null;
+		dataFile=null;
+		simFile=null;
 	}
 
 	@Override
@@ -211,10 +214,9 @@ public class DataComponent extends JSONObjectDataComponent {
 				}
 			}
 
-			if (!editor.getEditorInput().exists()
-					|| !(editor.getEditorInput() instanceof FileEditorInput)) {
+			if (myModel==null) {
 				throw new KiemInitializationException(
-						"Cannot simulate active editor", true, null);
+						"Cannot simulate active editor using the CEC", true, null);
 			}
 
 			FileEditorInput input = (FileEditorInput) editor.getEditorInput();
@@ -228,7 +230,7 @@ public class DataComponent extends JSONObjectDataComponent {
 			
 			// compile C code
 			Bundle bundle = Platform
-					.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
+					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
 
 			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
 					new Path("simulation"), null));
