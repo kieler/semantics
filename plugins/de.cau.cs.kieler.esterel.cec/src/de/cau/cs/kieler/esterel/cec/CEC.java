@@ -99,7 +99,7 @@ public class CEC {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
-            throw new KielerException("cec compiler not found", null);
+            throw new KielerException("cec native fragment not found", null);
         }
         Bundle compiler = fragments[0];
 
@@ -107,7 +107,7 @@ public class CEC {
         try {
             path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
         } catch (IOException e) {
-            throw new KielerException("cannot load file", e);
+            throw new KielerException("cec compiler not found", e);
         }
 
         String cmd = path + "cec-" + module;
