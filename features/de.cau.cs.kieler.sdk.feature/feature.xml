@@ -6,7 +6,7 @@
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/">
-      KIELER development kit providing binaries and source of the KIELER
+      KIELER development kit providing all binaries and sources of the KIELER
 features
    </description>
 
@@ -243,6 +243,14 @@ litigation.
          version="0.0.0"/>
 
    <includes
+         id="de.cau.cs.kieler.esterel_extended"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.esterel_extended.source"
+         version="0.0.0"/>
+
+   <includes
          id="de.cau.cs.kieler.kev"
          version="0.0.0"/>
 
@@ -280,14 +288,6 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.ksbase.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.quartz"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.quartz.source"
          version="0.0.0"/>
 
    <includes
