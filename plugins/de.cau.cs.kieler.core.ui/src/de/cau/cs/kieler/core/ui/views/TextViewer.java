@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.ui.Messages;
+
 /**
  * A Viewer for displaying some sort of text content.
  * 
@@ -41,7 +43,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 public class TextViewer extends ContentViewer {
 
     /** Font name used for displayed text. */
-    private static final String FONT_NAME = "monospace";
+    private static final String FONT_NAME = "monospace"; //$NON-NLS-1$
     /** Font size used for displayed text. */
     private static final int FONT_SIZE = 10;
 
@@ -109,8 +111,8 @@ public class TextViewer extends ContentViewer {
             }
         } catch (ClassCastException e) {
             // Ignore silently
-            Status myStatus = new Status(IStatus.ERROR, "de.cau.cs.kieler.core.ui",
-                    "Current selection is not text.", e);
+            Status myStatus = new Status(IStatus.ERROR, "de.cau.cs.kieler.core.ui", //$NON-NLS-1$
+                    Messages.TextViewer_2, e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }

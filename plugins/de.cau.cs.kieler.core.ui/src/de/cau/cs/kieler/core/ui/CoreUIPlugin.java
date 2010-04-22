@@ -29,7 +29,7 @@ import de.cau.cs.kieler.core.ui.listeners.RefactoringListener;
 public class CoreUIPlugin extends AbstractUIPlugin {
 
     /** the plug-in ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.ui";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.ui"; //$NON-NLS-1$
 
     /** the shared instance. */
     private static CoreUIPlugin plugin;

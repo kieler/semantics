@@ -50,10 +50,10 @@ import org.eclipse.ltk.core.refactoring.resource.RenameResourceDescriptor;
 public class RefactoringListener implements IRefactoringHistoryListener {
 
     /** File extension for diagram files. */
-    private static final String DIAGRAM_EXTENSION = "kids";
+    private static final String DIAGRAM_EXTENSION = "kids"; //$NON-NLS-1$
 
     /** File extension for model files. */
-    private static final String MODEL_EXTENSION = "kixs";
+    private static final String MODEL_EXTENSION = "kixs"; //$NON-NLS-1$
 
     /**
      * Contains the different refactoring operations.
@@ -247,7 +247,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                 if (partner != null) {
                     IPath srcName = path.removeFileExtension();
                     String name = srcName.segment(srcName.segmentCount() - 1);
-                    name = dest.toOSString() + IPath.SEPARATOR + name + "."
+                    name = dest.toOSString() + IPath.SEPARATOR + name + "." //$NON-NLS-1$
                             + DIAGRAM_EXTENSION;
                     IPath newPath = Path.fromOSString(Platform.getLocation()
                             .toOSString()

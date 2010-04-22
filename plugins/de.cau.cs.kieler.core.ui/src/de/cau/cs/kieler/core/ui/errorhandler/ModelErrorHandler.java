@@ -33,6 +33,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.ui.Messages;
 
 /**
  * A StatusHandler that displays error messages for KielerModelException Status

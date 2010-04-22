@@ -37,6 +37,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.statushandlers.WorkbenchErrorHandler;
 
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.ui.Messages;
 
 /**
  * Generic error handler, mainly taken from IDEWorkbenchErrorHandler. All
@@ -65,8 +66,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
 
     // private IWorkbenchConfigurer workbenchConfigurer;
 
-    // Pre-load all Strings trying to run as light as possible in case of fatal
-    // errors.
+    // Pre-load all Strings trying to run as light as possible in case of fatal errors.
     private static final String MSG_OUT_OF_MEMORY_ERROR = Messages.GenericErrorHandler_OutOfMemoryError;
 
     private static final String MSG_STACK_OVERFLOW_ERR = Messages.GenericErrorHandler_StackOverflowError;

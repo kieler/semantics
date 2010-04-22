@@ -167,7 +167,7 @@ public abstract class MonitoredOperation {
         final Maybe<IStatus> status = new Maybe<IStatus>();
         
         if (isUiThread) {
-            Thread thread = new Thread("Monitored Operation") {
+            Thread thread = new Thread("Monitored Operation") { //$NON-NLS-1$
                 public void run() {
                     runOperation(display, monitor, status);
                 }

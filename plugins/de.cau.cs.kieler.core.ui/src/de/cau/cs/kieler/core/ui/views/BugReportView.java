@@ -24,10 +24,10 @@ import org.eclipse.ui.part.ViewPart;
 public class BugReportView extends ViewPart {
 
     /** The url to the new ticket page. */
-    private static final String TRAC_URL = "http://rtsys.informatik.uni-kiel.de/trac/kieler/newticket";
+    private static final String TRAC_URL = "http://rtsys.informatik.uni-kiel.de/trac/kieler/newticket"; //$NON-NLS-1$
 
     /** The ID of this view. */
-    public static final String ID = "de.cau.cs.kieler.core.ui.bugReportView";
+    public static final String ID = "de.cau.cs.kieler.core.ui.bugReportView"; //$NON-NLS-1$
 
     /**
      * {@inheritDoc}

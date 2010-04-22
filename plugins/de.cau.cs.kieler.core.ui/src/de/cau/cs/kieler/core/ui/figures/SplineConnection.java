@@ -79,7 +79,7 @@ public class SplineConnection extends PolylineConnectionEx {
     /**
      * Temporary preference key.
      */
-    public static final String PREF_SPLINE_MODE = "Connectors.splineMode";
+    public static final String PREF_SPLINE_MODE = "Connectors.splineMode"; //$NON-NLS-1$
 
     /*
      * (non-Javadoc)

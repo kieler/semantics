@@ -17,6 +17,8 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+import de.cau.cs.kieler.core.ui.Messages;
+
 /**
  * Field editor for input of double values.
  * 
@@ -57,8 +59,8 @@ public class DoubleFieldEditor extends StringFieldEditor {
             final double theupperBound) {
         this.lowerBound = thelowerBound;
         this.upperBound = theupperBound;
-        setErrorMessage("Double Field requires double in the bounds ["
-                + thelowerBound + "," + theupperBound + "]");
+        setErrorMessage(Messages.DoubleFieldEditor_doubleBounds
+                + thelowerBound + "," + theupperBound + "]"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
