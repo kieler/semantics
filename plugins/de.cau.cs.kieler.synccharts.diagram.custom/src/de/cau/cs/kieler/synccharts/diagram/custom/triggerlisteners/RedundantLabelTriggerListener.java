@@ -32,29 +32,66 @@ import org.eclipse.ui.IEditorPart;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 
 /**
+ * This class is responsible for hiding redundant labels.
+ * 
+ * For example it hides the region id label if the parent state only has one
+ * region. It also hides the transition priority label if the source state only
+ * has one outgoing transition.
+ * 
  * @author soh
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
+
+    // private static NotificationFilter FILTER;
+    //
+    // {
+    // NotificationFilter eventType = NotificationFilter
+    // .createEventTypeFilter(Notification.ADD);
+    // eventType = eventType.or(NotificationFilter
+    // .createEventTypeFilter(Notification.ADD_MANY));
+    // eventType = eventType.or(NotificationFilter
+    // .createEventTypeFilter(Notification.REMOVE));
+    // eventType = eventType.or(NotificationFilter
+    // .createEventTypeFilter(Notification.REMOVE_MANY));
+    // NotificationFilter.RESOURCE_LOADED.or(eventType)
+    //
+    // NotificationFilter notifierType =
+    // NotificationFilter.createNotifierTypeFilter(SyncchartsPackage.);
+    //        
+    // FILTER = eventType;
+    // }
 
     /**
      * Creates a new RedundantLabelTriggerListener.
      * 
      */
     public RedundantLabelTriggerListener() {
+        super(
+                NotificationFilter.RESOURCE_LOADED
+                        .or(NotificationFilter
+                                .createFeatureFilter(
+                                        SyncchartsPackage.eINSTANCE
+                                                .getState_Regions())
+                                .or(
+                                        NotificationFilter
+                                                .createFeatureFilter(SyncchartsPackage.eINSTANCE
+                                                        .getState_OutgoingTransitions()))));
     }
 
     /**
      * Creates a new RedundantLabelTriggerListener.
      * 
      * @param filter
+     *            the filter
      */
-    public RedundantLabelTriggerListener(NotificationFilter filter) {
+    public RedundantLabelTriggerListener(final NotificationFilter filter) {
         super(filter);
     }
 
